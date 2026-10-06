@@ -1,11 +1,12 @@
 import feedparser
-from google import genai
+import google.generativeai as genai
 import os
 import random
+import time
 
 # GitHub secrets se Gemini API key lena
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
-client = genai.Client(api_key=GEMINI_API_KEY)
+genai.configure(api_key=GEMINI_API_KEY)
 
 def get_trending_news():
     # Google News se Hindi/India ki trending news uthana
@@ -31,32 +32,28 @@ def generate_script(news_headline):
     Keep it under 4-5 lines.
     """
     
-    # ⬇️ मॉडल्स की लिस्ट (सबसे हाईएस्ट से सबसे लोएस्ट की तरफ)
+    # ⬇️ तुम्हारा ऑटो-स्विच (Fallback) लॉजिक
     fallback_models = [
-        'gemini-2.5-flash',   # Future/Latest model
-        'gemini-2.0-flash',   # Current best fast model
-        'gemini-1.5-pro',     # Powerful but sometimes hits quota limits
-        'gemini-1.5-flash',   # Standard stable model
-        'gemini-1.5-flash-8b' # Basic lightweight model (hamesha khali milta hai)
+        'gemini-2.5-flash',   # Future model
+        'gemini-2.0-flash',   # Latest fast model
+        'gemini-1.5-pro',     # Powerful model
+        'gemini-1.5-flash',   # Standard model
+        'gemini-1.5-flash-8b' # Lightweight model
     ]
     
-    # ऑटो-स्विच लॉजिक (Fallback Loop)
     for model_name in fallback_models:
         print(f"🔄 Try kar raha hu model: {model_name}...")
         try:
-            response = client.models.generate_content(
-                model=model_name, 
-                contents=prompt
-            )
+            model = genai.GenerativeModel(model_name)
+            response = model.generate_content(prompt)
             print(f"✅ Success! Script '{model_name}' ne likhi hai.")
             return response.text.strip()
             
         except Exception as e:
-            # Agar error aati hai (busy, deprecated, limit crossed), toh agla try karega
-            print(f"⚠️ {model_name} fail ho gaya ya busy hai. Error: {e}")
+            print(f"⚠️ {model_name} fail ho gaya. Error: {e}")
             print("⏬ Niche wale model par switch kar raha hu...\n")
+            time.sleep(2) # Agle try se pehle thoda wait karega
             
-    # Agar saare models fail ho jayein (Rare case)
     return "Dosto, lagta hai aaj AI bhi thak gaya hai. Hum kal milte hain nayi news ke sath!"
 
 if __name__ == "__main__":
@@ -71,7 +68,6 @@ if __name__ == "__main__":
     print(script)
     print("--------------------\n")
     
-    # Is script ko ek text file me save karna
     with open("script.txt", "w", encoding="utf-8") as f:
         f.write(script)
     print("✅ Script successfully 'script.txt' me save ho gayi!")
