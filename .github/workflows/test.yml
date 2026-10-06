@@ -1,0 +1,26 @@
+name: Test Scraper
+
+on:
+  workflow_dispatch: # Isse hum manual button daba kar code run kar payenge
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest # GitHub ka free server
+    
+    steps:
+      - name: Code checkout karna
+        uses: actions/checkout@v3
+        
+      - name: Python setup karna
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          
+      - name: Zaroori libraries install karna
+        run: |
+          pip install feedparser google-generativeai
+          
+      - name: Scraper Code chalana
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python scraper.py
