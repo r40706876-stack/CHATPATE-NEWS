@@ -9,16 +9,51 @@ GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 
 def get_trending_news():
     url = "https://news.google.com/rss?hl=hi&gl=IN&ceid=IN:hi"
-    feed = feedparser.parse(url)
-    
-    top_entries = feed.entries[:5]
-    if not top_entries:
+    try:
+        feed = feedparser.parse(url)
+        top_entries = feed.entries[:5]
+        if not top_entries:
+            return "Market crash ho gaya, aur udhar dost ne 500 rupaye wapas nahi kiye."
+        return random.choice(top_entries).title
+    except:
         return "Market crash ho gaya, aur udhar dost ne 500 rupaye wapas nahi kiye."
-        
-    selected_news = random.choice(top_entries).title
-    return selected_news
+
+def get_active_model():
+    """Google API se direct un models ki list mangna jo is API Key ke liye available hain"""
+    url = f"https://generativelanguage.googleapis.com/v1beta/models?key={GEMINI_API_KEY}"
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            models_data = response.json().get('models', [])
+            
+            valid_models = []
+            for m in models_data:
+                # Sirf wo models chunna jo text generate kar sakte hain aur gemini series ke hain
+                if 'generateContent' in m.get('supportedGenerationMethods', []) and 'gemini' in m.get('name', '').lower():
+                    # 'models/' prefix hatana
+                    model_name = m['name'].replace('models/', '')
+                    valid_models.append(model_name)
+            
+            # Agar models mil gaye, toh sabse pehle 1.5-flash dhoondhna
+            if valid_models:
+                for preferred in ['gemini-1.5-flash', 'gemini-1.5-pro', 'gemini-pro']:
+                    for v in valid_models:
+                        if preferred in v:
+                            return v
+                return valid_models[0] # Agar preferred nahi mila toh list ka pehla de do
+    except Exception as e:
+        print(f"Error fetching models: {e}")
+    return None
 
 def generate_script(news_headline):
+    print("🔍 Google se aapki API Key ke active models nikal raha hu...")
+    active_model = get_active_model()
+    
+    if not active_model:
+        return "Error: Koi valid Gemini model nahi mila. Shayad API Key limit cross ho gayi hai."
+        
+    print(f"✅ Success! Google ne '{active_model}' model assign kiya hai.")
+    
     prompt = f"""
     You are a sarcastic, relatable Indian Gen-Z commentator.
     Take this trending news headline: "{news_headline}"
@@ -30,49 +65,30 @@ def generate_script(news_headline):
     Keep it under 4-5 lines.
     """
     
-    # Models ki list
-    fallback_models = [
-        'gemini-2.5-flash',
-        'gemini-2.0-flash',
-        'gemini-1.5-flash',
-        'gemini-1.5-pro',
-        'gemini-pro'
-    ]
+    api_url = f"https://generativelanguage.googleapis.com/v1beta/models/{active_model}:generateContent?key={GEMINI_API_KEY}"
+    headers = {'Content-Type': 'application/json'}
+    payload = {"contents": [{"parts": [{"text": prompt}]}]}
     
-    # Direct REST API call (No Google SDK required)
-    for model_name in fallback_models:
-        print(f"🔄 Try kar raha hu model: {model_name}...")
-        api_url = f"https://generativelanguage.googleapis.com/v1beta/models/{model_name}:generateContent?key={GEMINI_API_KEY}"
-        
-        payload = {
-            "contents": [{"parts": [{"text": prompt}]}]
-        }
-        
-        try:
-            response = requests.post(api_url, json=payload)
-            if response.status_code == 200:
-                result = response.json()
-                script_text = result['candidates'][0]['content']['parts'][0]['text']
-                print(f"✅ Success! Script '{model_name}' ne likhi hai.")
-                return script_text.strip()
-            else:
-                # Agar model available nahi hai, toh agla try karega
-                print(f"⚠️ {model_name} fail ho gaya. Status: {response.status_code}")
-                print("⏬ Niche wale model par switch kar raha hu...\n")
-                time.sleep(2)
-                
-        except Exception as e:
-            print(f"⚠️ API request me dikkat aayi: {e}")
-            time.sleep(2)
+    print(f"✍️ '{active_model}' se script likhwa raha hu...")
+    try:
+        response = requests.post(api_url, headers=headers, json=payload)
+        if response.status_code == 200:
+            result = response.json()
+            script_text = result['candidates'][0]['content']['parts'][0]['text']
+            return script_text.strip()
+        else:
+            print(f"⚠️ API Error Status: {response.status_code}")
+            print(f"Detail: {response.text}")
+    except Exception as e:
+        print(f"⚠️️ Request me dikkat aayi: {e}")
             
-    return "Dosto, lagta hai aaj AI bhi thak gaya hai. Hum kal milte hain nayi news ke sath!"
+    return "Dosto, lagta hai aaj AI thak gaya hai. Hum kal milte hain nayi news ke sath!"
 
 if __name__ == "__main__":
     print("📰 Trending News dhundh raha hu...")
     news = get_trending_news()
     print(f"Headline: {news}\n")
     
-    print("✍️ Gemini API se script likhwa raha hu...")
     script = generate_script(news)
     
     print("\n--- FINAL SCRIPT ---")
