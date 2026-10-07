@@ -1,0 +1,47 @@
+name: bakra-news
+on:
+  schedule:
+    - cron: "44 3 * * *"
+    - cron: "44 12 * * *"
+  workflow_dispatch:
+jobs:
+  reel:
+    runs-on: ubuntu-latest
+    permissions: {contents: write}
+    steps:
+      - uses: actions/checkout@v4
+      - name: zip kholo (sirf pehli baar)
+        run: |
+          if [ -f bakra_news_final.zip ]; then
+            unzip -q -o bakra_news_final.zip
+            rsync -a --exclude .github bakra_final/ ./
+            rm -rf bakra_final bakra_news_final.zip
+            git config user.name bot && git config user.email bot@users.noreply.github.com
+            git add -A && git commit -m "files unpack" && git push
+          fi
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg espeak-ng libraqm0
+      - run: pip install numpy scipy pillow onnxruntime
+      - uses: actions/cache@v4
+        with: {path: models_cache, key: kokoro-v1}
+      - run: |
+          mkdir -p models_cache
+          cd models_cache
+          test -f kokoro.int8.onnx || curl -sL -o kokoro.int8.onnx https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/kokoro-v1.0.int8.onnx
+          test -f voices-v1.0.bin || curl -sL -o voices-v1.0.bin https://github.com/thewh1teagle/kokoro-onnx/releases/download/model-files-v1.0/voices-v1.0.bin
+      - name: reel banao
+        env:
+          MODELS_DIR: models_cache
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: python run_daily.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: reel
+          path: |
+            out/*/reel.mp4
+            out/*/caption.txt
+      - name: done.txt save
+        run: |
+          git config user.name bot && git config user.email bot@users.noreply.github.com
+          git add done.txt && git commit -m "done topics" && git push || true
