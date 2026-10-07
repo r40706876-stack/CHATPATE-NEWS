@@ -1,4 +1,4 @@
-"""Gemini API (free tier) — एक छोटा helper. Key: GEMINI_API_KEY."""
+"""Gemini API (free tier). Model ka naam khud Google se poochhta hai."""
 import json
 import os
 import re
@@ -6,42 +6,69 @@ import time
 import urllib.error
 import urllib.request
 
-MODELS = [m for m in (os.getenv("GEMINI_MODEL"), "gemini-3.8-flash", "gemini-flash-latest", "gemini-3.8-flash-lite") if m]
+BASE = "https://generativelanguage.googleapis.com/v1beta"
+_models = []
+
+
+def _get(url, key, body=None):
+    req = urllib.request.Request(url, json.dumps(body).encode() if body else None,
+                                 {"Content-Type": "application/json", "x-goog-api-key": key})
+    with urllib.request.urlopen(req, timeout=180) as r:
+        return json.load(r)
+
+
+def models(key):
+    if _models:
+        return _models
+    names = []
+    try:
+        data = _get(f"{BASE}/models?pageSize=200", key)
+        for m in data.get("models", []):
+            n = m["name"].split("/")[-1]
+            if "generateContent" not in m.get("supportedGenerationMethods", []):
+                continue
+            if re.search(r"tts|image|embed|audio|live|vision|aqa|learnlm|gemma", n):
+                continue
+            names.append(n)
+    except Exception as e:
+        print("  model list nahi mili:", e)
+    def rank(n):
+        return (0 if "flash" in n and "lite" not in n else 1 if "flash" in n else 2,
+                0 if "latest" in n else 1, -len(re.findall(r"\d", n)), n)
+    names.sort(key=rank)
+    env = os.getenv("GEMINI_MODEL")
+    _models[:] = ([env] if env else []) + names[:5] + ["gemini-flash-latest"]
+    print("  Gemini models:", ", ".join(_models))
+    return _models
+
 
 def ask(prompt, search=False, json_mode=False, temperature=0.9):
-    """search=True → Google Search से ताज़ा जानकारी (grounding). लौटाता है text."""
     key = os.environ["GEMINI_API_KEY"]
-    body = {"contents": [{"parts": [{"text": prompt}]}],
-            "generationConfig": {"temperature": temperature}}
+    body = {"contents": [{"parts": [{"text": prompt}]}], "generationConfig": {"temperature": temperature}}
     if search:
         body["tools"] = [{"google_search": {}}]
     elif json_mode:
         body["generationConfig"]["responseMimeType"] = "application/json"
-    last = None
-    for model in MODELS:
-        url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
-        for attempt in range(3):
+    errors = []
+    for model in models(key):
+        for attempt in range(2):
             try:
-                req = urllib.request.Request(url, json.dumps(body).encode(),
-                                             {"Content-Type": "application/json", "x-goog-api-key": key})
-                with urllib.request.urlopen(req, timeout=180) as r:
-                    data = json.load(r)
-                parts = data["candidates"][0]["content"]["parts"]
-                return "".join(p.get("text", "") for p in parts)
+                data = _get(f"{BASE}/models/{model}:generateContent", key, body)
+                return "".join(p.get("text", "") for p in data["candidates"][0]["content"]["parts"])
             except urllib.error.HTTPError as e:
-                last = f"{model}: {e.code} {e.read()[:200]!r}"
-                if e.code == 429:
-                    time.sleep(25 * (attempt + 1))
+                msg = e.read().decode("utf-8", "ignore")[:300]
+                errors.append(f"{model}: {e.code} {msg}")
+                if e.code == 429 and "limit: 0" not in msg and attempt == 0:
+                    time.sleep(30)
                     continue
                 break
-            except Exception as e:                     # noqa: BLE001
-                last = f"{model}: {e!r}"
-                time.sleep(3)
-    raise RuntimeError("Gemini नहीं चला — " + str(last))
+            except Exception as e:
+                errors.append(f"{model}: {e!r}")
+                break
+    raise RuntimeError("Gemini nahi chala:\n  " + "\n  ".join(errors))
 
 
 def json_from(text):
-    """जवाब में से पहला JSON (```json ... ``` हो तब भी)."""
     m = re.search(r"```(?:json)?\s*(.+?)```", text, re.S)
     s = m.group(1) if m else text
     start = min([i for i in (s.find("{"), s.find("[")) if i >= 0] or [0])
