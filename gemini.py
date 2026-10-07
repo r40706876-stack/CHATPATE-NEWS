@@ -6,8 +6,7 @@ import time
 import urllib.error
 import urllib.request
 
-MODELS = [m for m in (os.getenv("GEMINI_MODEL"), "gemini-flash-latest", "gemini-2.5-flash") if m]
-
+MODELS = [m for m in (os.getenv("GEMINI_MODEL"), "gemini-3.8-flash", "gemini-flash-latest", "gemini-3.8-flash-lite") if m]
 
 def ask(prompt, search=False, json_mode=False, temperature=0.9):
     """search=True → Google Search से ताज़ा जानकारी (grounding). लौटाता है text."""
