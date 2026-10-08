@@ -259,9 +259,32 @@ def make_all(script, engine, out, key):
     return res
 
 
+LETTER = dict(zip("ABCDEFGHIJKLMNOPQRSTUVWXYZ", ["ए", "बी", "सी", "डी", "ई", "एफ़", "जी", "एच", "आई", "जे", "के", "एल", "एम",
+                                                  "एन", "ओ", "पी", "क्यू", "आर", "एस", "टी", "यू", "वी", "डब्ल्यू", "एक्स", "वाई", "ज़ेड"]))
+WORDS = {"wifi": "वाईफ़ाई", "wi-fi": "वाईफ़ाई", "reel": "रील", "reels": "रील्स", "phone": "फ़ोन", "online": "ऑनलाइन",
+         "offline": "ऑफ़लाइन", "app": "ऐप", "instagram": "इंस्टाग्राम", "video": "वीडियो", "comment": "कमेंट",
+         "follow": "फ़ॉलो", "share": "शेयर", "sale": "सेल", "ok": "ओके", "loan": "लोन", "bank": "बैंक", "mobile": "मोबाइल",
+         "recharge": "रिचार्ज", "data": "डेटा", "google": "गूगल", "youtube": "यूट्यूब", "marie": "मैरी", "ketchup": "केचप",
+         "maggi": "मैगी", "family": "फ़ैमिली", "group": "ग्रुप", "save": "सेव", "live": "लाइव", "news": "न्यूज़"}
+
+
+def speakable(text):
+    """आवाज़ के लिए: English शब्द देवनागरी में (EMI → ईएमआई), ताकि अटपटा न पढ़ा जाए. caption वैसा ही रहता है."""
+    def word(m):
+        w = m.group(0)
+        if w.lower() in WORDS:
+            return WORDS[w.lower()]
+        if w.isupper() and 2 <= len(w) <= 6:                       # RBI, EMI, LPG, UPI, ATM
+            return "".join(LETTER[c] for c in w)
+        return w
+    text = re.sub(r"[A-Za-z][A-Za-z-]*", word, text)
+    return re.sub(r"(\d+)\s*%", r"\1 परसेंट", text)
+
+
 def speak_script(script, out):
     """पूरी script एक ही engine से — ताकि किसी किरदार की आवाज़ बीच में न बदले."""
     out.mkdir(parents=True, exist_ok=True)
+    script = dict(script, lines=[dict(l, say=speakable(l["say"])) for l in script["lines"]])
     key = os.getenv("GEMINI_API_KEY")
     order = ["gemini", "edge", "kokoro"] if key else ["edge", "kokoro"]
     if os.getenv("TTS_ENGINE") in order:

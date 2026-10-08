@@ -103,6 +103,37 @@ def viral_news(n=8):
     return out[:n]
 
 
+KAAM_QUERIES = ("नया नियम लागू", "LPG सिलेंडर", "बैंक नियम बदलाव", "UPI नया नियम", "सरकारी योजना आवेदन",
+                "रेलवे नया नियम टिकट", "छुट्टी घोषित स्कूल बैंक", "पेट्रोल डीजल दाम", "महंगाई भत्ता", "मोबाइल रिचार्ज महंगा")
+
+
+def kaam_news(per_query=4, n=24):
+    """काम की खबरें: जेब, नियम, बैंक, गैस, ट्रेन, योजना, छुट्टी (पिछले 3 दिन)."""
+    out, seen = [], set()
+    for q in KAAM_QUERIES:
+        url = ("https://news.google.com/rss/search?q=" + urllib.parse.quote(q + " when:3d") + "&hl=hi&gl=IN&ceid=IN:hi")
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+            with urllib.request.urlopen(req, timeout=20) as r:
+                root = ET.fromstring(r.read())
+        except Exception as e:                        # noqa: BLE001
+            print("  काम की खबर नहीं मिली:", q, e)
+            continue
+        k = 0
+        for it in root.iter("item"):
+            title = (it.findtext("title") or "").strip()
+            key = title[:40]
+            if not title or key in seen or BAD.search(title) or CELEB.search(title) or recently_used(title):
+                continue
+            seen.add(key)
+            out.append({"kind": "kaam", "trend": title.rsplit(" - ", 1)[0], "source": title.rsplit(" - ", 1)[-1],
+                        "date": (it.findtext("pubDate") or "")[:16]})
+            k += 1
+            if k >= per_query:
+                break
+    return out[:n]
+
+
 def manual():
     f = ROOT / "topics.txt"
     if not f.exists():
@@ -168,6 +199,17 @@ def moments(today=None):
     out = [{"kind": "moment", "trend": name, "what": what} for a, b, name, what in CALENDAR if a <= d <= b]
     out += [{"kind": "evergreen", "trend": n, "what": w} for n, w in EVERGREEN]
     return [m for m in out if not recently_used(m["trend"] + " " + m["what"], days=3)]
+
+
+def collect_news(feed_file=None):
+    """काम की खबर वाले page के लिए: Gemini का कोई call नहीं (कोटा बचाओ)."""
+    c = {"kaam": kaam_news(), "viral": viral_news(), "news": news(feed_file), "insta": manual(),
+         "moments": [m for m in moments() if m["kind"] == "moment"],
+         "recent": [f"{d} {cat}: {t}" for d, cat, t in history(10)]
+         + [f"(अभी रिजेक्ट हुआ, ये बिल्कुल नहीं) {t}" for t in EXTRA_RECENT]}
+    json.dump(c, open(ROOT / "candidates_today.json", "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+    print(f"  topics: {len(c['kaam'])} काम की, {len(c['viral'])} वायरल, {len(c['news'])} Trends, {len(c['moments'])} त्योहार")
+    return c
 
 
 def collect(feed_file=None):

@@ -28,7 +28,7 @@ def models(key):
             n = m["name"].split("/")[-1]
             if "generateContent" not in m.get("supportedGenerationMethods", []):
                 continue
-            if re.search(r"tts|image|embed|audio|live|vision|aqa|learnlm|gemma", n):
+            if re.search(r"tts|image|embed|audio|live|vision|aqa|learnlm|gemma|research|computer|robotic|veo|imagen|lyria|nano|banana", n):
                 continue
             names.append(n)
     except Exception as e:                            # noqa: BLE001
@@ -44,6 +44,10 @@ def models(key):
     return _models
 
 
+class QuotaOver(RuntimeError):
+    """आज का free कोटा ख़त्म — दोबारा कोशिश बेकार."""
+
+
 def ask(prompt, search=False, json_mode=False, temperature=0.9, prefer=None):
     key = os.environ["GEMINI_API_KEY"]
     body = {"contents": [{"parts": [{"text": prompt}]}], "generationConfig": {"temperature": temperature}}
@@ -56,7 +60,7 @@ def ask(prompt, search=False, json_mode=False, temperature=0.9, prefer=None):
     if prefer:                                        # जैसे "pro": पहले वो, फिर बाक़ी
         order = [m for m in order if prefer in m] + [m for m in order if prefer not in m]
     for rnd in range(2):                              # सीमा लगे तो रुको नहीं, अगला model; सब पर लगे तभी एक बार रुको
-        busy = False
+        busy, daily_hits = False, 0
         for model in order:
             try:
                 t0 = time.time()
@@ -64,11 +68,15 @@ def ask(prompt, search=False, json_mode=False, temperature=0.9, prefer=None):
                 print(f"    Gemini {model}: {time.time() - t0:.0f}s")
                 return "".join(p.get("text", "") for p in data["candidates"][0]["content"]["parts"])
             except urllib.error.HTTPError as e:
-                msg = e.read().decode("utf-8", "ignore")[:300]
+                msg = e.read().decode("utf-8", "ignore")[:3000]
                 errors.append(f"{model}: {e.code} {msg[:120]}")
-                busy |= e.code in (429, 503) and "limit: 0" not in msg
+                daily = e.code == 429 and ("PerDay" in msg or "limit: 0" in msg)
+                daily_hits += daily
+                busy |= e.code in (429, 503) and not daily
             except Exception as e:                    # noqa: BLE001
                 errors.append(f"{model}: {e!r}")
+        if daily_hits and not busy:                   # हर model पर दिन वाली सीमा — रुको मत, साफ़ बताओ
+            raise QuotaOver("आज का Gemini कोटा ख़त्म")
         if not busy:
             break
         print("    सब models busy — 40s रुककर दोबारा")

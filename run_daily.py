@@ -54,8 +54,13 @@ def preview(eps):
             out.append(f"🪝 Hook: {ep['hook_text']}")
         if ep.get("hasi"):
             out.append(f"😂 क्यों चुना: {ep['hasi']}")
+        if ep.get("source"):
+            out.append(f"🔎 स्रोत: {ep['source']}  ← तथ्य एक बार ज़रूर जाँच लेना")
         for ln in ep.get("lines", []):
             mark = " 💥" if ln.get("punch") else ""
+            c = ln.get("card")
+            if c:
+                out.append(f"   📋 [{c.get('tag', '')}] {c.get('big', '')} — {c.get('sub', '')}")
             out.append(f"{NAME.get(ln.get('who'), ln.get('who'))}: {ln.get('say', '')}{mark}")
         poll = ep.get("poll") or []
         if len(poll) >= 2:
@@ -67,9 +72,16 @@ def preview(eps):
 
 
 def do_write(feed=None):
+    import gemini
+    import news_writer
     import telegram
-    import writer
-    eps = writer.write_options(candidates(feed), 3)
+    import topics
+    try:                                               # काम की खबर, देसी अंदाज़ (Gemini के सिर्फ़ 3 call)
+        eps = news_writer.write_options(topics.collect_news(feed), 3)
+    except gemini.QuotaOver:
+        telegram.send_text("⏳ Gemini का free कोटा अभी ख़त्म है। ये रोज़ दोपहर ~12:30 पर नया होता है, उसके बाद वाली बारी अपने-आप चलेगी।")
+        print("  आज का Gemini कोटा ख़त्म — रुक गया")
+        return
     json.dump({"sent_at": int(time.time()), "eps": eps}, open(PENDING, "w", encoding="utf-8"),
               ensure_ascii=False, indent=2)
     CHOICE.unlink(missing_ok=True)

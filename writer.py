@@ -19,7 +19,7 @@ import joke_bank
 ROOT = Path(__file__).parent
 WHO = {"bablu", "chacha", "pinky", "dadi", "riya", "bunty"}
 SCENE_OF = {"chacha": "chacha", "pinky": "pinky", "riya": "riya", "dadi": "dadi_call", "bunty": "bunty_call"}
-SCENES = {"studio", "studio_end", "chacha", "pinky", "dadi_call"}
+SCENES = {"studio", "studio_end", "chacha", "pinky", "dadi_call", "card"}
 
 CAST = """किरदार (हर एक की हँसी का अपना पक्का अंदाज़):
 - bablu: बबलू बकरा, reporter. ओवर-कॉन्फ़िडेंट, हर छोटी बात "ब्रेकिंग". उसके सवाल में ही joke का setup होता है.
@@ -270,6 +270,8 @@ def clean(ep, strict=True):
         assert ln.get("say") and ln.get("caption")
         if ln["who"] != "bablu":
             ln["scene"] = SCENE_OF[ln["who"]]
+        elif ln.get("card"):
+            ln["scene"] = "card"
         elif ln.get("scene") not in SCENES:
             ln["scene"] = "studio"
         if ln["who"] == "riya":                            # सड़क वाली लड़की = पिंकी
@@ -283,7 +285,7 @@ def clean(ep, strict=True):
     lines[0]["scene"] = "studio"
     lines[-1]["scene"] = "studio_end"
     for i, ln in enumerate(lines[1:-1], 1):                 # bablu का सवाल अगले मेहमान के scene में
-        if ln["who"] == "bablu" and lines[i + 1]["who"] != "bablu":
+        if ln["who"] == "bablu" and lines[i + 1]["who"] != "bablu" and not ln.get("card"):
             ln["scene"] = SCENE_OF[lines[i + 1]["who"]]
     for ln in lines:                                       # hashtag कभी बोले/लिखे न जाएँ
         for k in ("say", "caption"):

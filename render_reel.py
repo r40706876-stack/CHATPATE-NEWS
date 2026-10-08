@@ -225,12 +225,14 @@ def gradient(top, bottom):
 
 
 ICONS = ["₹", "DA", "%"]
+TAGLINE = "खबर सौ टका पक्की, अंदाज़ अधपका!"
+CLEAN = False                                   # काम की खबर: पीछे के डिब्बे, LIVE, ticker नहीं
 
 
 def bg_studio():
     img = gradient((18, 32, 78), (8, 12, 30))
     p = Pen(img)
-    for i, x in enumerate((90, 380, 670)):
+    for i, x in enumerate(() if CLEAN else (90, 380, 670)):
         p.rect((x, 470, x + 320, 760), (30, 60, 130), 18, (70, 110, 200), 4)
         sz = 120
         while sz > 34 and ImageDraw.Draw(Image.new("RGB", (1, 1))).textlength(ICONS[i], font=font(sz)) > 230:
@@ -260,7 +262,7 @@ def bg_mohalla(sign, sign_color, sx=560):
 
 
 # ---------------------------------------------------------------- overlays
-def overlay_static(headline):
+def overlay_static(headline, label="BREAKING"):
     """ऊपर logo + BREAKING पट्टी (हर frame पर एक जैसी)।"""
     img = Image.new("RGBA", (W, 420), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
@@ -268,12 +270,15 @@ def overlay_static(headline):
     d.rounded_rectangle((36, 40, 120, 124), radius=16, fill=(210, 30, 45))
     d.text((78, 84), "ब", font=font(58), fill="white", anchor="mm")
     d.text((142, 60), "बकरा न्यूज़", font=font(54), fill="white", anchor="lm")
-    d.text((144, 122), "सबसे तेज़, सबसे अधपकी खबर", font=font(30, False), fill=(255, 210, 120), anchor="lm")
+    d.text((144, 122), TAGLINE, font=font(30, False), fill=(255, 210, 120), anchor="lm")
     d.rounded_rectangle((860, 58, 1040, 112), radius=10, fill=(210, 30, 45))
     d.ellipse((884, 76, 904, 96), fill="white")
     d.text((965, 86), "LIVE", font=font(32), fill="white", anchor="mm")
     d.rectangle((0, 196, 300, 270), fill=(255, 205, 40))
-    d.text((150, 234), "BREAKING", font=font(44), fill=(150, 0, 20), anchor="mm")
+    fl = font(44)
+    while d.textlength(label, font=fl) > 270:
+        fl = font(fl.size - 2)
+    d.text((150, 234), label, font=fl, fill=(150, 0, 20), anchor="mm")
     d.rectangle((0, 270, W, 390), fill=(200, 20, 40))
     f = font(52)
     while d.textlength(headline, font=f) > W - 60:
@@ -297,6 +302,7 @@ def ticker_strip(msg):
 
 # ---------------------------------------------------------------- scene renderer with cache
 SCENES = {
+    "card": lambda: bg_studio(),
     "studio": lambda: bg_studio(),
     "studio_end": lambda: bg_studio(),
     "chacha": lambda: bg_mohalla("चाचा टी स्टॉल", (150, 60, 40)),
@@ -505,6 +511,8 @@ def scene_frame(scene, speaker, mouth_open, blink):
         p.rect((0, 1290, W, 1460), (150, 25, 40), 0)
         p.rect((0, 1290, W, 1306), (230, 190, 90), 0)
         p.text((W / 2, 1385), "बकरा न्यूज़", 64, (255, 230, 150))
+    elif scene == "card":                              # काम की खबर: ऊपर बड़ा card, बबलू नीचे कोने में
+        goat(p, 175, 1120, 0.5, speaker == "bablu" and mouth_open, blink, mic_ang=-60)
     elif scene.startswith("studio"):
         goat(p, 540, 880, 1.05, speaker == "bablu" and mouth_open, blink, mic_ang=-75)
         p.rect((0, 1290, W, 1460), (150, 25, 40), 0)                        # desk आगे
@@ -694,6 +702,110 @@ def poll_card(opts, age):
     return card
 
 
+_card = {}
+
+
+def _wrap(d, text, f, width):
+    lines, cur = [], ""
+    for wd in str(text).split():
+        if cur and d.textlength(cur + " " + wd, font=f) > width:
+            lines.append(cur)
+            cur = wd
+        else:
+            cur = (cur + " " + wd).strip()
+    return lines + ([cur] if cur else [])
+
+
+def draw_icon(d, kind, cx, cy, r):
+    """card का छोटा icon — रंगीन गोले में सफ़ेद चिह्न (emoji font पर निर्भर नहीं)."""
+    col = {"cylinder": (220, 60, 40), "calendar": (40, 110, 200), "rupee": (30, 150, 80), "bank": (90, 70, 170),
+           "phone": (30, 140, 170), "train": (200, 120, 20), "percent": (200, 40, 120), "check": (30, 150, 80),
+           "alert": (210, 40, 40), "gift": (200, 60, 150)}.get(kind, (60, 60, 90))
+    d.ellipse((cx - r, cy - r, cx + r, cy + r), fill=col)
+    w, k = "white", r / 50
+    if kind == "cylinder":
+        d.rounded_rectangle((cx - 18 * k, cy - 22 * k, cx + 18 * k, cy + 30 * k), int(12 * k), fill=w)
+        d.rectangle((cx - 8 * k, cy - 34 * k, cx + 8 * k, cy - 20 * k), fill=w)
+    elif kind == "calendar":
+        d.rounded_rectangle((cx - 28 * k, cy - 22 * k, cx + 28 * k, cy + 28 * k), int(6 * k), fill=w)
+        d.rectangle((cx - 28 * k, cy - 22 * k, cx + 28 * k, cy - 8 * k), fill=(255, 205, 40))
+        for i in range(3):
+            for j in range(2):
+                d.rectangle((cx - 20 * k + i * 16 * k, cy - 2 * k + j * 13 * k, cx - 12 * k + i * 16 * k, cy + 6 * k + j * 13 * k), fill=col)
+    elif kind == "check":
+        d.line([(cx - 22 * k, cy), (cx - 6 * k, cy + 18 * k), (cx + 24 * k, cy - 18 * k)], fill=w, width=int(10 * k))
+    elif kind == "alert":
+        d.polygon([(cx, cy - 30 * k), (cx + 30 * k, cy + 24 * k), (cx - 30 * k, cy + 24 * k)], fill=w)
+        d.text((cx, cy + 6 * k), "!", font=font(int(40 * k)), fill=col, anchor="mm")
+    elif kind == "phone":
+        d.rounded_rectangle((cx - 16 * k, cy - 30 * k, cx + 16 * k, cy + 30 * k), int(6 * k), fill=w)
+        d.rectangle((cx - 11 * k, cy - 22 * k, cx + 11 * k, cy + 18 * k), fill=col)
+    elif kind == "bank":
+        d.polygon([(cx, cy - 30 * k), (cx + 32 * k, cy - 12 * k), (cx - 32 * k, cy - 12 * k)], fill=w)
+        for i in range(4):
+            d.rectangle((cx - 26 * k + i * 15 * k, cy - 8 * k, cx - 19 * k + i * 15 * k, cy + 18 * k), fill=w)
+        d.rectangle((cx - 32 * k, cy + 20 * k, cx + 32 * k, cy + 28 * k), fill=w)
+    elif kind == "train":
+        d.rounded_rectangle((cx - 24 * k, cy - 28 * k, cx + 24 * k, cy + 20 * k), int(10 * k), fill=w)
+        d.rectangle((cx - 16 * k, cy - 20 * k, cx + 16 * k, cy - 4 * k), fill=col)
+        d.ellipse((cx - 16 * k, cy + 4 * k, cx - 6 * k, cy + 14 * k), fill=col)
+        d.ellipse((cx + 6 * k, cy + 4 * k, cx + 16 * k, cy + 14 * k), fill=col)
+    elif kind == "gift":
+        d.rectangle((cx - 26 * k, cy - 10 * k, cx + 26 * k, cy + 28 * k), fill=w)
+        d.rectangle((cx - 4 * k, cy - 10 * k, cx + 4 * k, cy + 28 * k), fill=col)
+        d.ellipse((cx - 20 * k, cy - 28 * k, cx, cy - 10 * k), outline=w, width=int(5 * k))
+        d.ellipse((cx, cy - 28 * k, cx + 20 * k, cy - 10 * k), outline=w, width=int(5 * k))
+    else:                                             # rupee / percent / बाक़ी: चिह्न लिखो
+        d.text((cx, cy + 2 * k), {"percent": "%"}.get(kind, "₹"), font=font(int(56 * k)), fill=w, anchor="mm")
+
+
+def card_layer(card, age):
+    """काम की खबर वाला card: छोटा लाल tag, बड़ी मुख्य बात, नीचे 1-2 लाइन."""
+    key = json.dumps(card, ensure_ascii=False)
+    if key not in _card:
+        img = Image.new("RGBA", (W, 660), (0, 0, 0, 0))
+        d = ImageDraw.Draw(img)
+        d.rounded_rectangle((50, 10, W - 50, 650), 40, fill=(255, 252, 240, 250), outline=(255, 205, 40), width=8)
+        if card.get("icon"):
+            draw_icon(d, card["icon"], 135, 95, 52)
+        if card.get("_N"):
+            d.rounded_rectangle((W - 190, 62, W - 85, 122), 30, fill=(20, 30, 70))
+            d.text((W - 137, 92), f"{card['_n']}/{card['_N']}", font=font(36), fill="white", anchor="mm")
+        if card.get("_src"):
+            fs0 = font(30, False)
+            src = "स्रोत: " + card["_src"]
+            while d.textlength(src, font=fs0) > W - 180 and len(src) > 12:
+                src = src[:-2]
+            d.text((W / 2, 615), src, font=fs0, fill=(130, 120, 110), anchor="mm")
+        y = 70
+        if card.get("tag"):
+            ft = font(46)
+            tw = d.textlength(card["tag"], font=ft)
+            d.rounded_rectangle((W / 2 - tw / 2 - 34, y - 38, W / 2 + tw / 2 + 34, y + 38), 38, fill=(200, 20, 40))
+            d.text((W / 2, y), card["tag"], font=ft, fill="white", anchor="mm")
+            y += 95
+        fb = font(96)
+        big = _wrap(d, card.get("big", ""), fb, W - 180)
+        while len(big) > 3 and fb.size > 60:
+            fb = font(fb.size - 8)
+            big = _wrap(d, card.get("big", ""), fb, W - 180)
+        for ln in big:
+            d.text((W / 2, y + fb.size * 0.6), ln, font=fb, fill=(20, 20, 40), anchor="mm")
+            y += int(fb.size * 1.25)
+        if card.get("sub"):
+            y += 15
+            fs = font(50, False)
+            for ln in _wrap(d, card["sub"], fs, W - 200)[:2 if card.get("_src") else 3]:
+                d.text((W / 2, y + 30), ln, font=fs, fill=(90, 70, 60), anchor="mm")
+                y += 66
+        _card[key] = img
+    img = _card[key]
+    s = min(1.0, 0.7 + age / 0.22 * 0.3)
+    if s < 1:
+        img = img.resize((int(img.width * s), int(img.height * s)))
+    return img, (W // 2 - img.width // 2, 420 + (660 - img.height) // 2), img
+
+
 def get_poll(script):
     p = script.get("poll")
     if isinstance(p, list) and len(p) >= 2:
@@ -788,6 +900,13 @@ def main(path="script.json", outname="bakra_news_demo.mp4"):
             ICONS.append(ic)
     ICONS = ICONS[:3]
     sr = 24000
+    global CLEAN
+    explain = script.get("format") == "explain"               # काम की खबर: नकली हँसी/झटके नहीं
+    CLEAN = explain
+    _bg.clear(); _cache.clear()
+    cards = [l for l in script["lines"] if l.get("card")]
+    for n, l in enumerate(cards, 1):
+        l["card"].update(_n=n, _N=len(cards), _src=str(script.get("source", ""))[:60])
     clips, timeline, cursor = [], [], 0.0
     sting = tone(sr, [523, 659, 784], 0.7, 0.3)
     clips.append((0.0, sting))
@@ -798,14 +917,16 @@ def main(path="script.json", outname="bakra_news_demo.mp4"):
         nz = np.where(np.abs(a) > 0.02)[0]
         a = a[max(0, nz[0] - 600): nz[-1] + 1200] if len(nz) else a
         dur = len(a) / sr
-        if i > 0 and line["scene"] != script["lines"][i - 1]["scene"]:
+        if i > 0 and (line["scene"] != script["lines"][i - 1]["scene"] or line.get("card")):
             clips.append((max(0, cursor - 0.12), whoosh_sfx(sr)))
         timeline.append({**line, "start": cursor, "end": cursor + dur, "audio": a})
         clips.append((cursor, a))
         cursor += dur
-        if line.get("punch"):
+        if line.get("punch") and not explain:
             clips.append((cursor + 0.05, tss_sfx(sr)))                               # बा-डम-त्स्स
             cursor += 0.75
+        elif line.get("card") or line.get("punch"):
+            cursor += 0.45                                    # card पढ़ने/बात बैठने का पल
         else:
             cursor += 0.22
     poll = get_poll(script)
@@ -825,7 +946,7 @@ def main(path="script.json", outname="bakra_news_demo.mp4"):
         w = seg["audio"][max(0, k - hop // 2): k + hop // 2]
         return float(np.sqrt(np.mean(w ** 2))) if len(w) else 0.0
 
-    top = overlay_static(script["breaking"])
+    top = overlay_static(script["breaking"], script.get("label", "BREAKING"))
     tick, tw = ticker_strip(script.get("ticker", "DA 3% बढ़ सकता है   •   सूत्र: बबलू के चाचा"))
     nframes = int(total * FPS)
     frames_dir = ROOT / "frames"
@@ -905,7 +1026,7 @@ def main(path="script.json", outname="bakra_news_demo.mp4"):
             z += 0.10 * min(1, age / dur)
         after = t - seg["end"]
         shake = (0, 0)
-        if seg.get("punch") and 0 <= after < 0.35:
+        if seg.get("punch") and not explain and 0 <= after < 0.35:
             amp = 18 * (1 - after / 0.35)
             shake = (amp * math.sin(after * 90), amp * math.cos(after * 70))
         frame = camera(frame, z, cx, cy, *shake)
@@ -930,7 +1051,10 @@ def main(path="script.json", outname="bakra_news_demo.mp4"):
             ImageDraw.Draw(frame).ellipse((884, 76 + slide, 904, 96 + slide), fill=(210, 30, 45))
 
         # punch के बाद: सफ़ेद flash + हँसी वाले चेहरे उड़ें
-        if seg.get("punch") and 0 <= after < 0.75:
+        if seg.get("card"):
+            frame.paste(*card_layer(seg["card"], t - seg["start"]))
+
+        if seg.get("punch") and not explain and 0 <= after < 0.75:
             if after < 0.07:
                 frame = Image.blend(frame, Image.new("RGB", (W, H), (255, 255, 255)), 0.5)
             laugh_burst(frame, after, seed=idx)
@@ -958,7 +1082,7 @@ def main(path="script.json", outname="bakra_news_demo.mp4"):
             frame.paste(*hook_layer(script["hook_text"], t))
 
         # "दादी का जवाब आख़िर तक" — रोककर रखने वाला sticker
-        if has_dadi and 0.5 < t < 3.6:
+        if has_dadi and not explain and 0.5 < t < 3.6:
             s_img = sticker_layer("दादी का जवाब आख़िर में है… देखते रहो!")
             frame.paste(s_img, (W // 2 - s_img.width // 2, 1240 + int(6 * math.sin(t * 6))), s_img)
 
@@ -973,12 +1097,18 @@ def main(path="script.json", outname="bakra_news_demo.mp4"):
         elif t >= timeline[-1]["end"] + 0.2:
             d = ImageDraw.Draw(frame)
             d.rounded_rectangle((90, 1440, 990, 1760), radius=30, fill=(255, 205, 40), outline=(0, 0, 0), width=6)
-            d.text((W / 2, 1530), "Follow करो", font=font(76), fill=(150, 0, 20), anchor="mm")
-            d.text((W / 2, 1650), "कल की अधपकी खबर भी आएगी!", font=font(50), fill=(20, 20, 30), anchor="mm")
+            if explain:
+                d.text((W / 2, 1520), "Follow करो", font=font(76), fill=(150, 0, 20), anchor="mm")
+                d.text((W / 2, 1625), TAGLINE, font=font(44), fill=(20, 20, 30), anchor="mm")
+                d.text((W / 2, 1700), "Save करो • Family group में भेजो", font=font(36, False), fill=(80, 60, 40), anchor="mm")
+            else:
+                d.text((W / 2, 1530), "Follow करो", font=font(76), fill=(150, 0, 20), anchor="mm")
+                d.text((W / 2, 1650), "कल की अधपकी खबर भी आएगी!", font=font(50), fill=(20, 20, 30), anchor="mm")
 
         # नीचे चलती ticker
-        off = int((t * 160) % tw)
-        frame.paste(tick.crop((off, 0, off + W, 90)), (0, H - 90))
+        if not explain:
+            off = int((t * 160) % tw)
+            frame.paste(tick.crop((off, 0, off + W, 90)), (0, H - 90))
         proc.stdin.write(frame.tobytes())
         if fi in (int(0.3 * FPS), int(timeline[0]["start"] * FPS) + 30, int(timeline[2]["start"] * FPS) + 40,
                   int(timeline[4]["end"] * FPS) - 5, nframes - 5):
