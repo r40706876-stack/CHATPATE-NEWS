@@ -1,9 +1,6 @@
 out/
-audio/
-models/*.onnx
-models/*.bin
 models_cache/
 __pycache__/
-mix.wav
-*.mp4
-frames/
+candidates_today.json
+script_today.json
+choice.json

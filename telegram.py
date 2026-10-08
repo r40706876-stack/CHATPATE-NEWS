@@ -25,3 +25,37 @@ def send_video(path, caption=""):
         ok = json.load(r).get("ok")
     print("  Telegram पर भेजा:", ok)
     return ok
+
+
+def _api(method, params=None):
+    tok = os.getenv("TELEGRAM_BOT_TOKEN")
+    data = json.dumps(params or {}).encode()
+    req = urllib.request.Request(f"https://api.telegram.org/bot{tok}/{method}", data,
+                                 {"Content-Type": "application/json"})
+    with urllib.request.urlopen(req, timeout=60) as r:
+        return json.load(r)
+
+
+def send_text(text):
+    if not (os.getenv("TELEGRAM_BOT_TOKEN") and os.getenv("TELEGRAM_CHAT_ID")):
+        print(text)
+        return False
+    for k in range(0, len(text), 3900):                  # Telegram की सीमा 4096
+        _api("sendMessage", {"chat_id": os.getenv("TELEGRAM_CHAT_ID"), "text": text[k:k + 3900]})
+    return True
+
+
+def read_replies(offset_file):
+    """नए जवाब [(unix समय, text)] — सिर्फ़ अपने chat से. offset फ़ाइल में याद रहता है."""
+    if not os.getenv("TELEGRAM_BOT_TOKEN"):
+        return []
+    off = int(Path(offset_file).read_text().strip() or 0) if Path(offset_file).exists() else 0
+    res = _api("getUpdates", {"offset": off, "timeout": 0}).get("result", [])
+    out = []
+    for u in res:
+        off = max(off, u["update_id"] + 1)
+        m = u.get("message") or {}
+        if str(m.get("chat", {}).get("id")) == str(os.getenv("TELEGRAM_CHAT_ID")) and m.get("text"):
+            out.append((m.get("date", 0), m["text"].strip()))
+    Path(offset_file).write_text(str(off))
+    return out

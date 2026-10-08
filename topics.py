@@ -18,6 +18,7 @@ import trends
 
 ROOT = Path(__file__).parent
 BAD = re.compile("|".join(map(re.escape, trends.BLOCK)), re.I)
+EXTRA_RECENT = []                                    # अभी-अभी रिजेक्ट हुई scripts के topics
 WEATHER = re.compile(r"मौसम|बारिश|आंधी|weather|rain|ठंड|गर्मी|तूफ़ान|तूफान|imd|ओले", re.I)
 
 
@@ -138,7 +139,8 @@ def insta_gemini():
 
 def collect(feed_file=None):
     c = {"viral": viral_news(), "insta": manual() + insta_gemini(), "news": news(feed_file),
-         "recent": [f"{d} {cat}: {t}" for d, cat, t in history(7)]}
+         "recent": [f"{d} {cat}: {t}" for d, cat, t in history(7)]
+         + [f"(अभी रिजेक्ट हुआ, ये बिल्कुल नहीं) {t}" for t in EXTRA_RECENT]}
     json.dump(c, open(ROOT / "candidates_today.json", "w", encoding="utf-8"), ensure_ascii=False, indent=2)
     print(f"  topics: {len(c['viral'])} viral खबरें, {len(c['insta'])} Insta trends, {len(c['news'])} Google Trends"
           f" | हाल के: {len(c['recent'])}")
