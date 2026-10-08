@@ -32,6 +32,13 @@ def main():
         import topics
         import writer
         c = topics.collect(a.feed)
+        # सुबह: खबर + Insta trend | शाम: पूरा viral/Insta वाला (बारी-बारी, ताकि हर बार एक जैसा न हो)
+        c["mode"] = "viral" if dt.datetime.utcnow().hour >= 9 else "news"
+        if not c["news"]:
+            c["mode"] = "viral"
+        if not (c["viral"] or c["insta"]):
+            c["mode"] = "news"
+        print("  mode:", c["mode"])
         script_path = writer.write(c)
         if script_path is None:
             return
@@ -48,7 +55,10 @@ def main():
     cap = script.get("caption_post", script.get("breaking", ""))
     (job / "caption.txt").write_text(cap, encoding="utf-8")
     with open(ROOT / "done.txt", "a", encoding="utf-8") as f:
-        for k in ("topic", "insta_used", "trend"):
+        today = (dt.datetime.utcnow() + dt.timedelta(hours=5, minutes=30)).date().isoformat()
+        topic = str(script.get("topic") or script.get("breaking") or "").replace("|", " ").strip()
+        f.write(f"{today}|{script.get('category', 'other')}|{topic} {script.get('news_used', '')}".strip() + "\n")
+        for k in ("insta_used", "trend"):
             if script.get(k):
                 f.write(str(script[k]).strip() + "\n")
         blob = json.dumps(script, ensure_ascii=False)

@@ -17,7 +17,7 @@ SCENE_OF = {"chacha": "chacha", "pinky": "pinky", "riya": "riya", "dadi": "dadi_
 SCENES = {"studio", "studio_end", "chacha", "pinky", "dadi_call"}
 
 CAST = """किरदार (हर कोई अपनी दुनिया से जवाब देता है):
-- bablu: बबलू बकरा, reporter. ओवर-कॉन्फ़िडेंट, हर खबर "ब्रेकिंग". खबर के बाद एक बेतुका "सूत्र" (हर बार नया, खबर से जुड़ा: "सूत्र मेरी छत की टंकी है, आधी उड़ चुकी है").
+- bablu: बबलू बकरा, reporter. ओवर-कॉन्फ़िडेंट, हर खबर "ब्रेकिंग". खबर के बाद एक बेतुका "सूत्र" (हर बार नया, खबर से जुड़ा: "सूत्र मेरा कार्ट है").
 - chacha: चाचा भैंसा, चाय वाले आम आदमी. ठंडे दिमाग़ से हर खबर को पैसे/महँगाई/घर के जुगाड़ से पलटते हैं.
 - pinky: पिंकी बिल्ली, Free Wi-Fi zone वाली Gen Z. Reels, followers, Instagram की भाषा, तीखा sarcasm.
   Insta trend ज़्यादातर इसी के मुँह से. मम्मी-पापा वाले relatable POV इसकी ताक़त.
@@ -29,20 +29,21 @@ CRAFT = """हँसी कैसे बनती है (हर punchline इ�
 2. तुलना-चढ़ाव: खबर के अंक/बात को घर की चीज़ से छोटा कर दो.
    अच्छा: "तीन परसेंट? बेटा, इतना तो पिछले हफ़्ते टमाटर बढ़ गया था।"
 3. तीन की सूची: दो आम बातें, तीसरी बेतुकी पर सच्ची.
-   अच्छा: "तैयारी पूरी है: फ़ोन चार्ज, इनवर्टर चार्ज… और पड़ोसी का वाई-फ़ाई पासवर्ड भी याद कर लिया।"
+   अच्छा: "शादी की तैयारी पूरी: कपड़े तैयार, गिफ़्ट तैयार… और खाने के बाद वाला बहाना भी तैयार।"
 4. घर का कड़वा सच: वो बात जो हर घर में होती है पर कोई बोलता नहीं.
-   अच्छा: "आंधी में मम्मी: बेटा उड़ जाए तो चलेगा, पर नई चादर नहीं उड़नी चाहिए!"
-5. पीढ़ी की तुलना (दादी): "डर? मैंने चालीस साल सास की आंधी झेली है, ये तो बस पचहत्तर की स्पीड है!"
+   अच्छा: "मम्मी: मुझे कुछ नहीं चाहिए… और सेल ख़त्म होते ही: तुमने मेरे लिए कुछ लिया ही नहीं!"
+5. पीढ़ी की तुलना (दादी): "हमारे ज़माने में भी Live होता था बेटा… जब बिजली आ जाती थी!"
 6. पुराना viral joke, नए कपड़ों में: वो मशहूर देसी joke/forward जो लोग पहले से जानते हैं (WhatsApp forward, पप्पू-teacher,
    doctor-patient, मम्मी की चप्पल, शर्मा जी का बेटा, रिश्तेदार "beta kya kar rahe ho", बिजली जाते ही पूरे मोहल्ले का "आआआ",
    मम्मी का "पाँच मिनट में आ रही हूँ", पापा का "हमारे ज़माने में", शादी का खाना, दुकानदार से मोल-भाव) — उसे आज की खबर पर फिट करो.
    पहचाना हुआ joke = तुरंत हँसी + comment "ye mere ghar ka hai". हर episode में कम से कम एक ऐसा (ज़्यादातर चाचा का).
-   अच्छा: "आंधी का अलर्ट? हमारे मोहल्ले में अलर्ट की ज़रूरत नहीं, बिजली जाते ही पूरा मोहल्ला एक साथ 'आआआ' बोलता है, वही सायरन है!"
+   अच्छा: "हमारे मोहल्ले को notification की ज़रूरत नहीं, बिजली जाते ही पूरा मोहल्ला एक साथ 'आआआ' बोलता है!"
    (जाति/धर्म/क्षेत्र/शरीर/औरतों पर बने पुराने jokes बिल्कुल नहीं.)
 सबसे मज़ेदार शब्द line के बिल्कुल आख़िर में. punch के बाद कोई explanation नहीं.
 ख़राब (ऐसा कभी मत लिखो):
-- "चाय की दुकान की पन्नी तो हमेशा उड़ ही जाती है" — बस observation, कोई twist नहीं.
-- "आंधी में Reels का pose बिगड़ जाएगा, literally scam है ये!" — तकिया-कलाम ज़बरदस्ती, joke नहीं.
+- "दुकान की पन्नी तो हमेशा उड़ ही जाती है" — बस observation, कोई twist नहीं.
+- "इससे Reels का pose बिगड़ जाएगा, literally scam है ये!" — तकिया-कलाम ज़बरदस्ती, joke नहीं.
+(ऊपर के उदाहरण सिर्फ़ तरीका समझाने को हैं; उनके topic/शब्द मत दोहराना.)
 - खबर दोहराना, "देखा आपने" वाली लंबी बातें, समझाना."""
 
 RULES = """नियम:
@@ -73,30 +74,48 @@ def _lists(c):
                       + (f" (line: {i['line']})" if i.get("line") else "")
                       + (" [मेरी feed से — इसे पहले लो]" if i.get("priority") else "")
                       for i in c.get("insta", [])) or "(कोई नहीं)"
-    return news, insta
+    viral = "\n".join(f"- {v['trend']}" for v in c.get("viral", [])) or "(कोई नहीं)"
+    recent = "\n".join(f"- {r}" for r in c.get("recent", [])) or "(कुछ नहीं)"
+    return news, insta, viral, recent
+
+
+MODE = {
+    "viral": "आज का episode VIRAL वाला है: सोशल मीडिया पर वायरल खबर या Instagram trend ही मुख्य topic हो (breaking: \"Viral: ...\").",
+    "news": "आज का episode NEWS वाला है: Google Trends की खबर मुख्य topic, साथ में एक Insta trend ज़रूर जुड़े.",
+}
 
 
 def prompt_room(c):
-    news, insta = _lists(c)
+    news, insta, viral, recent = _lists(c)
+    mode = c.get("mode", "news")
     return f"""तुम "बकरा न्यूज़" (नकली Hindi न्यूज़ चैनल, comedy Instagram page) के writers' room के head हो.
 
-आज की ट्रेंडिंग खबरें:
-{news}
+सोशल मीडिया पर वायरल खबरें (Google News):
+{viral}
 
 Instagram/social पर अभी viral:
 {insta}
+
+Google Trends की खबरें:
+{news}
+
+हाल में बन चुके episodes (इनका topic और category दोबारा मत लेना; मौसम/बारिश वाला लगातार बिल्कुल नहीं):
+{recent}
+
+{MODE.get(mode, MODE["news"])}
 
 {CAST}
 
 {CRAFT}
 
 काम (joke room):
-1. वो एक खबर चुनो जिस पर हर घर हँस सके, और एक Insta trend जो उससे जुड़ सके.
+1. वो एक topic चुनो जो आज सच में लोगों के feed में चल रहा है और जिस पर हर घर हँस सके (मौसम सिर्फ़ तब जब कोई और विकल्प न हो),
+   और एक Insta trend जो उससे जुड़ सके. "category" दो: viral/insta/money/tech/festival/entertainment/sports/weather/other.
 2. इन slots के लिए 6-6 अलग punchlines लिखो, हर एक अलग तरकीब से: "source" (बबलू का बेतुका सूत्र), "chacha" (कम से कम 3 पुराने मशहूर jokes पर), "pinky", "guest" (दादी), "ending" (comment करवाने वाला सवाल).
 3. हर punchline को सख़्ती से नंबर दो (1-10): "surprise" (उलटफेर कितना अनपेक्षित), "relate" (कितने घरों में होता है), "clear" (बिना context समझ आए).
    8 से कम औसत वाली को ईमानदारी से कम नंबर दो.
 सिर्फ़ JSON:
-{{"news_used": "...", "source_headline": "...", "insta_used": "list से हूबहू नाम या सदाबहार format", "guest": "dadi",
+{{"category": "...", "news_used": "...", "source_headline": "...", "insta_used": "list से हूबहू नाम या सदाबहार format", "guest": "dadi",
  "jokes": {{"source": [{{"text": "...", "trick": "...", "surprise": 0, "relate": 0, "clear": 0}}], "chacha": [], "pinky": [], "guest": [], "ending": []}}}}"""
 
 
@@ -120,7 +139,7 @@ Insta trend: {room.get('insta_used')} | मेहमान: {room.get('guest')}
 
 काम: इन jokes से episode लिखो (ज़रूरत हो तो और तेज़ कर दो). फिर punch-up: हर punch line को सख़्त editor की तरह 1-10 दो;
 जो 8 से कम हो उसे दोबारा लिखो जब तक 8+ न हो. आख़िर में सिर्फ़ final episode JSON दो:
-{{"topic": "...", "news_used": "...", "insta_used": "...", "source_headline": "...", "breaking": "6-9 शब्द, सच्ची खबर",
+{{"topic": "...", "category": "{room.get('category', 'other')}", "news_used": "...", "insta_used": "...", "source_headline": "...", "breaking": "6-9 शब्द, सच्ची खबर",
  "icons": ["3 छोटे शब्द/चिह्न"], "ticker": "4 हिस्से '   •   ' से जुड़े, 1-2 असली बाक़ी मज़ाकिया",
  "lines": [{{"who": "bablu", "scene": "studio", "say": "...", "caption": "...", "punch": false, "insta": ""}}],
  "caption_post": "मज़ेदार लाइन + सवाल (family group में भेजो/tag करो) + असली खबर का source + 4-5 hashtags + (AI से बने किरदार)"}}"""
