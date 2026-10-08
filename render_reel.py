@@ -517,6 +517,19 @@ def scene_frame(scene, speaker, mouth_open, blink):
 
 
 _badge = {}
+_stk = {}
+
+
+def sticker_layer(text):
+    if text not in _stk:
+        f = font(40)
+        tw = int(ImageDraw.Draw(Image.new("RGB", (1, 1))).textlength(text, font=f))
+        img = Image.new("RGBA", (tw + 70, 80), (0, 0, 0, 0))
+        d = ImageDraw.Draw(img)
+        d.rounded_rectangle((0, 0, tw + 69, 79), 40, fill=(0, 0, 0, 215), outline=(255, 205, 40), width=4)
+        d.text((35, 40), text, font=f, fill=(255, 225, 60), anchor="lm")
+        _stk[text] = img
+    return _stk[text]
 _hook = {}
 
 
@@ -568,6 +581,124 @@ def insta_badge(name, age):
     return img, (W // 2 - img.width // 2, 1366), img
 
 
+
+# ---------------------------------------------------------------- animation helpers
+def tss_sfx(sr):
+    """बा-डम-त्स्स (punch के बाद)."""
+    out = np.zeros(int(sr * 0.9), np.float32)
+    def drum(f0, d):
+        t = np.arange(int(sr * d)) / sr
+        return np.sin(2 * np.pi * np.cumsum(f0 * np.exp(-t * 18) + 60) / sr) * np.exp(-t / 0.08)
+    out[: int(sr * 0.15)] += drum(180, 0.15) * 0.5
+    s = int(sr * 0.16)
+    out[s: s + int(sr * 0.15)] += drum(150, 0.15) * 0.5
+    c, n = int(sr * 0.32), int(sr * 0.55)
+    rng = np.random.default_rng(3)
+    cym = rng.standard_normal(n)
+    cym = cym - np.convolve(cym, np.ones(4) / 4, mode="same")
+    out[c: c + n] += (cym * np.exp(-np.arange(n) / sr / 0.18) * 0.35).astype(np.float32)
+    return out
+
+
+def whoosh_sfx(sr):
+    n = int(sr * 0.35)
+    rng = np.random.default_rng(5)
+    x = np.convolve(rng.standard_normal(n), np.ones(10) / 10, mode="same")
+    return (x * np.hanning(n) * 0.25).astype(np.float32)
+
+
+_laugh = {}
+
+
+def laugh_face(size, kind=0):
+    """😂 जैसा चेहरा, font के बिना (हर जगह चले)."""
+    key = (size, kind)
+    if key in _laugh:
+        return _laugh[key]
+    s = size * 2
+    im = Image.new("RGBA", (s, s), (0, 0, 0, 0))
+    d = ImageDraw.Draw(im)
+    d.ellipse((4, 4, s - 4, s - 4), fill=(255, 205, 50), outline=(200, 130, 0), width=max(2, s // 40))
+    if kind == 2:                                           # 💀 जैसा: सफ़ेद खोपड़ी
+        d.ellipse((4, 4, s - 4, s - 4), fill=(245, 245, 245), outline=(120, 120, 120), width=max(2, s // 40))
+        d.ellipse((s * .24, s * .34, s * .44, s * .56), fill=(40, 40, 40))
+        d.ellipse((s * .56, s * .34, s * .76, s * .56), fill=(40, 40, 40))
+        for k in range(4):
+            x = s * (.34 + k * .1)
+            d.rectangle((x, s * .70, x + s * .06, s * .82), fill=(40, 40, 40))
+    else:
+        w = max(3, s // 22)
+        d.arc((s * .2, s * .3, s * .44, s * .48), 200, 340, fill=(90, 50, 0), width=w)
+        d.arc((s * .56, s * .3, s * .8, s * .48), 200, 340, fill=(90, 50, 0), width=w)
+        d.chord((s * .24, s * .46, s * .76, s * .86), 0, 180, fill=(120, 30, 30))
+        d.chord((s * .30, s * .46, s * .70, s * .60), 0, 180, fill=(255, 255, 255))
+        if kind == 0:                                       # आँसू
+            d.ellipse((s * .06, s * .42, s * .2, s * .62), fill=(90, 180, 255))
+            d.ellipse((s * .8, s * .42, s * .94, s * .62), fill=(90, 180, 255))
+    im = im.resize((size, size), Image.LANCZOS)
+    _laugh[key] = im
+    return im
+
+
+def laugh_burst(frame, age, seed=0):
+    """punch के बाद नीचे से उड़ते हँसी वाले चेहरे."""
+    rng = np.random.default_rng(seed)
+    for k in range(9):
+        x0 = rng.uniform(60, W - 180)
+        delay = rng.uniform(0, 0.25)
+        a = age - delay
+        if a <= 0:
+            continue
+        y = 1500 - a * rng.uniform(900, 1400)
+        sz = int(rng.uniform(90, 150) * min(1, a / 0.12))
+        if sz < 10 or y < 300:
+            continue
+        x = x0 + 40 * math.sin(a * 8 + k)
+        em = laugh_face(sz, int(rng.integers(0, 3)))
+        frame.paste(em, (int(x), int(y)), em)
+
+
+def camera(frame, z, cx, cy, dx=0, dy=0):
+    if z <= 1.001 and not dx and not dy:
+        return frame
+    cw, ch = int(W / z), int(H / z)
+    x0 = int(min(max(cx - cw / 2 + dx, 0), W - cw))
+    y0 = int(min(max(cy - ch / 2 + dy, 0), H - ch))
+    return frame.crop((x0, y0, x0 + cw, y0 + ch)).resize((W, H), Image.BILINEAR)
+
+
+def poll_card(opts, age):
+    """आख़िर में: 1 या 2? — दो बटन उछलकर आते हैं."""
+    card = Image.new("RGBA", (W, 520), (0, 0, 0, 0))
+    d = ImageDraw.Draw(card)
+    d.rounded_rectangle((60, 0, W - 60, 500), 36, fill=(255, 205, 40, 250), outline=(0, 0, 0), width=6)
+    d.text((W // 2, 70), "कमेंट में लिखो 👇".replace(" 👇", ""), font=font(64), fill=(150, 0, 20), anchor="mm")
+    for i, o in enumerate(opts[:2]):
+        a = max(0.0, min(1.0, (age - 0.15 - i * 0.18) / 0.25))
+        if a <= 0:
+            continue
+        bounce = 1 + 0.15 * math.sin(a * math.pi)
+        bw, bh = int(840 * bounce * a), int(150 * bounce * a)
+        y = 150 + i * 175 + 75
+        col = (200, 20, 40) if i == 0 else (30, 90, 200)
+        d.rounded_rectangle((W // 2 - bw // 2, y - bh // 2, W // 2 + bw // 2, y + bh // 2), 30, fill=col)
+        if a > 0.6:
+            f = font(56)
+            txt = f"{i + 1} = {o}"
+            while d.textlength(txt, font=f) > 780 and f.size > 30:
+                f = font(f.size - 4)
+            d.text((W // 2, y), txt, font=f, fill="white", anchor="mm")
+    return card
+
+
+def get_poll(script):
+    p = script.get("poll")
+    if isinstance(p, list) and len(p) >= 2:
+        return [str(x)[:30] for x in p[:2]]
+    m = re.search(r"1\s*=\s*([^,।!?]+)[,।]?\s*2\s*=\s*([^,।!?…]+)", script["lines"][-1].get("caption", ""))
+    return [m.group(1).strip(), m.group(2).strip()] if m else None
+
+
 # ---------------------------------------------------------------- captions
 def caption_layer(words, active):
     """3-5 शब्दों का टुकड़ा, बोला जा रहा शब्द पीला।"""
@@ -584,12 +715,13 @@ def caption_layer(words, active):
     lines.append(cur)
     y = 165 - (len(lines) - 1) * 52
     for ln in lines:
-        total = d.textlength(" ".join(w for w, _ in ln), font=f)
+        total = sum(d.textlength(w + " ", font=font(82) if i == active else f) for w, i in ln)
         x = (W - total) / 2
         for w, i in ln:
             col = (255, 220, 40) if i == active else "white"
-            d.text((x, y), w, font=f, fill=col, anchor="lm", stroke_width=7, stroke_fill=(0, 0, 0))
-            x += d.textlength(w + " ", font=f)
+            ff = font(82) if i == active else f
+            d.text((x, y), w, font=ff, fill=col, anchor="lm", stroke_width=8, stroke_fill=(0, 0, 0))
+            x += d.textlength(w + " ", font=ff)
         y += 104
     return img
 
@@ -663,15 +795,18 @@ def main(path="script.json", outname="bakra_news_demo.mp4"):
         nz = np.where(np.abs(a) > 0.02)[0]
         a = a[max(0, nz[0] - 600): nz[-1] + 1200] if len(nz) else a
         dur = len(a) / sr
+        if i > 0 and line["scene"] != script["lines"][i - 1]["scene"]:
+            clips.append((max(0, cursor - 0.12), whoosh_sfx(sr)))
         timeline.append({**line, "start": cursor, "end": cursor + dur, "audio": a})
         clips.append((cursor, a))
         cursor += dur
         if line.get("punch"):
-            clips.append((cursor + 0.05, tone(sr, [330], 0.45, 0.25, sweep=-500)))   # "बोइंग"
-            cursor += 0.55
+            clips.append((cursor + 0.05, tss_sfx(sr)))                               # बा-डम-त्स्स
+            cursor += 0.75
         else:
             cursor += 0.22
-    total = cursor + 1.6                                                       # आख़िरी card
+    poll = get_poll(script)
+    total = cursor + (2.6 if poll else 1.6)                                    # आख़िरी card
     mix = np.zeros(int(total * sr) + sr, np.float32)
     for st, a in clips:
         s0 = int(st * sr)
@@ -697,11 +832,12 @@ def main(path="script.json", outname="bakra_news_demo.mp4"):
                              "-c:v", "libx264", "-preset", "medium", "-crf", "20", "-pix_fmt", "yuv420p",
                              "-c:a", "aac", "-b:a", "160k", "-shortest", "-movflags", "+faststart",
                              str(ROOT / outname)], stdin=subprocess.PIPE)
+    prev_frame = None
+    has_dadi = any(l["who"] == "dadi" for l in script["lines"])
     for fi in range(nframes):
         t = fi / FPS
-        seg = next((s for s in timeline if s["start"] <= t < s["end"] + 0.25), None)
-        if seg is None:
-            seg = timeline[0] if t < timeline[0]["start"] else timeline[-1]
+        past = [s for s in timeline if s["start"] <= t]          # अभी वाली (या अभी ख़त्म हुई) line
+        seg = past[-1] if past else timeline[0]
         speaking = seg["start"] <= t < seg["end"]
         mouth_open = speaking and loud(seg, t) > 0.035 and (fi % 3 != 0)
         blink = (fi % 90) in (0, 1, 2)
@@ -757,17 +893,44 @@ def main(path="script.json", outname="bakra_news_demo.mp4"):
             pip = bablu_pip(seg["who"] == "bablu" and mouth_open, blink)
             frame.paste(pip, (W - pip.width - 30, PANEL[1] - pip.height - 40), pip)
 
-        # punchline पर धीरे-धीरे zoom-in
-        if seg.get("punch") and t > seg["start"]:
-            z = 1 + 0.12 * min(1, (t - seg["start"]) / max(0.5, seg["end"] - seg["start"]))
-            cw, ch = int(W / z), int(H / z)
-            x0, y0 = int(720 - cw / 2 + (W / 2 - 720) / z), int(880 - ch * 0.42)
-            x0, y0 = max(0, min(W - cw, x0)), max(0, min(H - ch, y0))
-            frame = frame.crop((x0, y0, x0 + cw, y0 + ch)).resize((W, H), Image.BILINEAR)
+        # कैमरा: हर shot में धीमा push-in, punch पर तेज़ zoom, punch के बाद झटका
+        age = t - seg["start"]
+        dur = max(0.5, seg["end"] - seg["start"])
+        z = 1.0 + 0.04 * min(1, age / dur)
+        cx, cy = (720, 880) if seg["scene"] in ("chacha", "pinky") else (W / 2, 900)
+        if seg.get("punch") and age > 0:
+            z += 0.10 * min(1, age / dur)
+        after = t - seg["end"]
+        shake = (0, 0)
+        if seg.get("punch") and 0 <= after < 0.35:
+            amp = 18 * (1 - after / 0.35)
+            shake = (amp * math.sin(after * 90), amp * math.cos(after * 70))
+        frame = camera(frame, z, cx, cy, *shake)
+
+        # scene बदले तो whip-pan (पुराना बाएँ जाए, नया दाएँ से आए, motion blur के साथ)
+        idx = timeline.index(seg)
+        if idx > 0 and seg["scene"] != timeline[idx - 1]["scene"] and 0 <= age < 0.18 and prev_frame is not None:
+            k = age / 0.18
+            k = k * k * (3 - 2 * k)
+            blur = lambda im: im.resize((W // 10, H)).resize((W, H))
+            comp = Image.new("RGB", (W, H))
+            comp.paste(blur(prev_frame), (int(-W * k), 0))
+            comp.paste(blur(frame), (int(W * (1 - k)), 0))
+            frame = comp
+        else:
+            prev_frame = frame
 
         # ऊपर की पट्टी: पहले 0.6 सेकंड में ऊपर से फिसल कर आती है
         slide = int(-420 * max(0, 1 - t / 0.6))
         frame.paste(top, (0, slide), top)
+        if int(t * 2) % 2:                                    # LIVE का लाल dot टिमटिमाए
+            ImageDraw.Draw(frame).ellipse((884, 76 + slide, 904, 96 + slide), fill=(210, 30, 45))
+
+        # punch के बाद: सफ़ेद flash + हँसी वाले चेहरे उड़ें
+        if seg.get("punch") and 0 <= after < 0.75:
+            if after < 0.07:
+                frame = Image.blend(frame, Image.new("RGB", (W, H), (255, 255, 255)), 0.5)
+            laugh_burst(frame, after, seed=idx)
 
         # captions
         if speaking:
@@ -791,12 +954,20 @@ def main(path="script.json", outname="bakra_news_demo.mp4"):
         if script.get("hook_text") and t < 2.4:
             frame.paste(*hook_layer(script["hook_text"], t))
 
+        # "दादी का जवाब आख़िर तक" — रोककर रखने वाला sticker
+        if has_dadi and 0.5 < t < 3.6:
+            s_img = sticker_layer("दादी का जवाब आख़िर में है… देखते रहो!")
+            frame.paste(s_img, (W // 2 - s_img.width // 2, 1240 + int(6 * math.sin(t * 6))), s_img)
+
         # Insta trend वाली line पर गुलाबी badge
         if speaking and seg.get("insta"):
             frame.paste(*insta_badge(seg["insta"], t - seg["start"]))
 
         # आख़िरी card
-        if t >= timeline[-1]["end"] + 0.2:
+        if poll and t >= timeline[-1]["end"] + 0.2:
+            card = poll_card(poll, t - timeline[-1]["end"] - 0.2)
+            frame.paste(card, (0, 1250), card)
+        elif t >= timeline[-1]["end"] + 0.2:
             d = ImageDraw.Draw(frame)
             d.rounded_rectangle((90, 1440, 990, 1760), radius=30, fill=(255, 205, 40), outline=(0, 0, 0), width=6)
             d.text((W / 2, 1530), "Follow करो", font=font(76), fill=(150, 0, 20), anchor="mm")
