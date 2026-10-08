@@ -85,7 +85,7 @@ _gem_ok = {"model": None, "dead": False}
 
 def gemini_line(text, who, expr, key):
     voice, style = GEM.get(who, GEM["bablu"])
-    style = ", ".join(s for s in (style, MOOD.get(expr, "")) if s)
+    style = ", ".join(s for s in (style, MOOD.get(expr, expr if len(expr) > 12 else "")) if s)
     errors = []
     models = [_gem_ok["model"]] if _gem_ok["model"] else TTS_MODELS
     for model in models:
@@ -204,34 +204,85 @@ def kokoro_line(text, who, tmp):
 
 
 # ---------------------------------------------------------------- सब मिलाकर
+def split_by_silence(a, n):
+    """एक लंबी आवाज़ को n हिस्सों में काटो — सबसे लंबे ठहराव पर."""
+    if n == 1:
+        return [a]
+    hop = SR // 100                                       # 10ms
+    e = np.array([np.sqrt(np.mean(a[i:i + hop] ** 2)) for i in range(0, len(a) - hop, hop)])
+    quiet = e < max(0.01, e.max() * 0.04)
+    gaps, s = [], None
+    for k, q in enumerate(quiet):
+        if q and s is None:
+            s = k
+        if not q and s is not None:
+            if k - s >= 18:                               # ≥ 0.18s का ठहराव
+                gaps.append((k - s, (s + k) // 2))
+            s = None
+    if len(gaps) < n - 1:
+        raise ValueError(f"{n - 1} ठहराव चाहिए, मिले {len(gaps)}")
+    cuts = sorted(c for _, c in sorted(gaps, reverse=True)[: n - 1])
+    pts = [0] + [c * hop for c in cuts] + [len(a)]
+    return [a[pts[k]:pts[k + 1]] for k in range(n)]
+
+
+def gemini_character(lines, who, key):
+    """एक किरदार की सारी lines एक ही call में — आवाज़ हर line में एक जैसी."""
+    if len(lines) == 1:
+        return [gemini_line(lines[0]["say"], who, lines[0].get("expr", ""), key)]
+    joined = "\n\n".join(l["say"] for l in lines)
+    try:
+        a = gemini_line(joined + "\n", who, "हर लाइन के बाद पूरा एक सेकंड रुकना", key)
+        parts = split_by_silence(a, len(lines))
+        for l, p in zip(lines, parts):                    # लंबाई का अंदाज़ा: ~0.06s प्रति अक्षर
+            exp = len(l["say"]) * 0.06
+            if not (0.3 * exp < len(p) / SR < 3.0 * exp):
+                raise ValueError("हिस्से की लंबाई गड़बड़")
+        return parts
+    except ValueError as e:                               # काटना ठीक न बैठे → line-line, पर वही voice
+        print(f"  {who}: एक साथ वाली आवाज़ काट नहीं पाए ({e}), line-line बना रहे हैं")
+        return [gemini_line(l["say"], who, l.get("expr", ""), key) for l in lines]
+
+
+def make_all(script, engine, out, key):
+    lines = script["lines"]
+    res = [None] * len(lines)
+    if engine == "gemini":
+        for who in dict.fromkeys(l["who"] for l in lines):      # हर किरदार की आवाज़ शुरू में एक साथ
+            idx = [i for i, l in enumerate(lines) if l["who"] == who]
+            for i, a in zip(idx, gemini_character([lines[i] for i in idx], who, key)):
+                res[i] = a
+            print(f"  {who}: {len(idx)} lines की आवाज़ एक साथ बनी")
+    else:
+        for i, l in enumerate(lines):
+            res[i] = (edge_line if engine == "edge" else kokoro_line)(l["say"], l["who"], out / f"{i:02d}")
+    return res
+
+
 def speak_script(script, out):
+    """पूरी script एक ही engine से — ताकि किसी किरदार की आवाज़ बीच में न बदले."""
     out.mkdir(parents=True, exist_ok=True)
     key = os.getenv("GEMINI_API_KEY")
-    engine = "gemini" if key and os.getenv("TTS_ENGINE", "gemini") == "gemini" else "edge"
-    for i, line in enumerate(script["lines"]):
-        dst = out / f"{i:02d}.wav"
-        a = None
-        while a is None:
-            try:
-                if engine == "gemini":
-                    a = gemini_line(line["say"], line["who"], line.get("expr", ""), key)
-                elif engine == "edge":
-                    a = edge_line(line["say"], line["who"], dst)
-                else:
-                    a = kokoro_line(line["say"], line["who"], dst)
-            except Exception as e:                        # noqa: BLE001
-                nxt = {"gemini": "edge", "edge": "kokoro"}.get(engine)
-                print(f"  आवाज़ ({engine}) नहीं चली: {str(e)[:300]}")
-                if not nxt:
-                    raise
-                engine = nxt
-                print(f"  अब {engine} से")
+    order = ["gemini", "edge", "kokoro"] if key else ["edge", "kokoro"]
+    if os.getenv("TTS_ENGINE") in order:
+        order = order[order.index(os.getenv("TTS_ENGINE")):]
+    last = None
+    for engine in order:
+        try:
+            audios = make_all(script, engine, out, key)
+            break
+        except Exception as e:                            # noqa: BLE001
+            last = e
+            print(f"  आवाज़ ({engine}) पूरी नहीं बनी: {str(e)[:300]} → सारी lines अगले engine से")
+    else:
+        raise RuntimeError(f"कोई आवाज़ नहीं चली: {last}")
+    for i, (line, a) in enumerate(zip(script["lines"], audios)):
         tmp = out / f"{i:02d}_raw.wav"
         wavfile.write(tmp, SR, (np.clip(a, -1, 1) * 32767).astype(np.int16))
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(tmp), "-af", f"atempo={TEMPO}",
-                        "-ar", str(SR), "-ac", "1", str(dst)], check=True)
+                        "-ar", str(SR), "-ac", "1", str(out / f"{i:02d}.wav")], check=True)
         tmp.unlink(missing_ok=True)
-        print(f"  {i:02d} {line['who']:<7} [{engine}] {line['say'][:40]}")
+    print(f"  आवाज़: {engine} (सारी {len(audios)} lines, हर किरदार की एक ही voice)")
     return engine
 
 

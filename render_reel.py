@@ -232,7 +232,10 @@ def bg_studio():
     p = Pen(img)
     for i, x in enumerate((90, 380, 670)):
         p.rect((x, 470, x + 320, 760), (30, 60, 130), 18, (70, 110, 200), 4)
-        p.text((x + 160, 615), ICONS[i], 120 if len(ICONS[i]) < 3 else 80, (90, 140, 230))
+        sz = 120
+        while sz > 34 and ImageDraw.Draw(Image.new("RGB", (1, 1))).textlength(ICONS[i], font=font(sz)) > 230:
+            sz -= 6
+        p.text((x + 160, 615), ICONS[i], sz, (90, 140, 230))
     p.rect((0, 1290, W, 1460), (150, 25, 40), 0)                          # desk
     p.rect((0, 1290, W, 1306), (230, 190, 90), 0)
     p.text((W / 2, 1385), "बकरा न्यूज़", 64, (255, 230, 150))
@@ -561,7 +564,7 @@ def hook_layer(text, t):
 def insta_badge(name, age):
     if name not in _badge:
         f = font(40)
-        txt = f"INSTA TREND • {name}"
+        txt = f"INSTA TREND • {name.replace('_', ' ').strip()}"
         tw = int(ImageDraw.Draw(Image.new("RGB", (1, 1))).textlength(txt, font=f))
         img = Image.new("RGBA", (tw + 80, 84), (0, 0, 0, 0))
         g = Image.new("RGBA", img.size)
@@ -780,7 +783,7 @@ def main(path="script.json", outname="bakra_news_demo.mp4"):
     script = json.load(open(ROOT / path, encoding="utf-8"))
     ICONS = []
     for ic in (script.get("icons") or []) + ["₹", "NEWS", "%"]:
-        ic = re.sub(r"[^\u0900-\u097FA-Za-z0-9₹%&+!?. -]", "", str(ic)).strip()[:6]
+        ic = re.sub(r"[^\u0900-\u097FA-Za-z0-9₹%&+!?. -]", "", str(ic)).strip().upper()[:7]
         if ic and ic not in ICONS:
             ICONS.append(ic)
     ICONS = ICONS[:3]
