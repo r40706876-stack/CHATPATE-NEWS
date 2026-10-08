@@ -20,7 +20,7 @@ CAST = """किरदार (हर कोई अपनी दुनिया �
 - bablu: बबलू बकरा, reporter. ओवर-कॉन्फ़िडेंट, हर खबर "ब्रेकिंग". खबर के बाद एक बेतुका "सूत्र" (हर बार नया, खबर से जुड़ा: "सूत्र मेरा कार्ट है").
 - chacha: चाचा भैंसा, चाय वाले आम आदमी. ठंडे दिमाग़ से हर खबर को पैसे/महँगाई/घर के जुगाड़ से पलटते हैं.
 - pinky: पिंकी बिल्ली, Free Wi-Fi zone वाली Gen Z. Reels, followers, Instagram की भाषा, तीखा sarcasm.
-  Insta trend ज़्यादातर इसी के मुँह से. मम्मी-पापा वाले relatable POV इसकी ताक़त.
+  Insta trend ज़्यादातर इसी के मुँह से. मम्मी-पापा वाले relatable किस्से इसकी ताक़त.
 - dadi: 3D दादी (video call, कमज़ोर नेटवर्क). पुराने ज़माने से तुलना, घर का कड़वा सच, सबसे बड़ा punch. हर episode में मेहमान यही."""
 
 CRAFT = """हँसी कैसे बनती है (हर punchline इनमें से किसी तरकीब पर हो):
@@ -39,6 +39,10 @@ CRAFT = """हँसी कैसे बनती है (हर punchline इ�
    पहचाना हुआ joke = तुरंत हँसी + comment "ye mere ghar ka hai". हर episode में कम से कम एक ऐसा (ज़्यादातर चाचा का).
    अच्छा: "हमारे मोहल्ले को notification की ज़रूरत नहीं, बिजली जाते ही पूरा मोहल्ला एक साथ 'आआआ' बोलता है!"
    (जाति/धर्म/क्षेत्र/शरीर/औरतों पर बने पुराने jokes बिल्कुल नहीं.)
+हमारे सबसे अच्छे punch (यही स्तर चाहिए):
+   "हर दिवाली नया फ़ोन आता है… पुराने फ़ोन पर नया कवर!" | "तीन परसेंट? इतना तो टमाटर पिछले हफ़्ते बढ़ गया"
+   "बेटा उड़ जाए तो चलेगा, पर नई चादर नहीं उड़नी चाहिए!" | "बिजली जाते ही पूरा मोहल्ला 'आआआ' बोलता है"
+   "मैंने चालीस साल सास झेली है, ये तो बस पचहत्तर की स्पीड है!"
 सबसे मज़ेदार शब्द line के बिल्कुल आख़िर में. punch के बाद कोई explanation नहीं.
 ख़राब (ऐसा कभी मत लिखो):
 - "दुकान की पन्नी तो हमेशा उड़ ही जाती है" — बस observation, कोई twist नहीं.
@@ -50,7 +54,13 @@ RULES = """नियम:
 - CORE: खबर को आम घर की ज़िंदगी से जोड़ो (मम्मी, बजट, बिजली, WiFi, चार्जर, कपड़े, रिश्तेदार, EMI).
 - Instagram trend ज़रूरी: ऊपर की list से एक trend/viral line/format इस्तेमाल करो (वैसा ही, पहचान में आए). list खाली हो तो
   कोई सदाबहार Insta format लो: "POV: …", "Nobody: … / मम्मी: …", "Expectation vs Reality", "Me explaining to my mom".
-  जिस line में Insta trend है उस पर "insta": "trend का छोटा नाम".
+  जिस line में Insta trend है उस पर "insta": "trend का छोटा नाम" (screen पर badge अपने-आप दिखेगा).
+  "POV", "Nobody", "Expectation vs Reality" जैसे format के नाम कभी बोले नहीं जाएँगे — line सीधी बोलचाल में हो
+  ("बाहर आंधी है, और मम्मी कहती हैं…"), format का नाम सिर्फ़ "insta" field में.
+- पहले 2 सेकंड: "hook_text" = 3-6 शब्द, screen पर बड़ा पीला text, जो scroll रोक दे — खबर का सबसे चौंकाने वाला/बेतुका हिस्सा
+  (जैसे "गोभी में ज़िंदा कीड़ा 😱" नहीं, बल्कि "10 मिनट में कीड़ा डिलीवर!"). emoji मत डालो.
+- Stop-scroll test: हर punch ऐसा हो कि 20 साल का लड़का उसे पढ़कर family group में भेजे. "ठीक-ठाक" वाला joke = फेल, दोबारा लिखो.
+  सबसे अच्छे joke में एक ठोस, दिखने वाली तस्वीर होती है (चादर, सायरन, कवर) — गोल-मोल बात नहीं.
 - तकिया-कलाम ("हमें क्या, चाय पियो" / "Literally scam है ये!") सिर्फ़ तब जब punch को और तेज़ करे, वरना मत डालो.
 - Interaction: आख़िरी line comment करवाए — दो विकल्प वाला सवाल ("1 = मम्मी, 2 = पापा") या "उस दोस्त को tag करो जो…".
   caption_post भी इसी सवाल से शुरू हो.
@@ -140,7 +150,7 @@ Insta trend: {room.get('insta_used')} | मेहमान: {room.get('guest')}
 काम: इन jokes से episode लिखो (ज़रूरत हो तो और तेज़ कर दो). फिर punch-up: हर punch line को सख़्त editor की तरह 1-10 दो;
 जो 8 से कम हो उसे दोबारा लिखो जब तक 8+ न हो. आख़िर में सिर्फ़ final episode JSON दो:
 {{"topic": "...", "category": "{room.get('category', 'other')}", "news_used": "...", "insta_used": "...", "source_headline": "...", "breaking": "6-9 शब्द, सच्ची खबर",
- "icons": ["3 छोटे शब्द/चिह्न"], "ticker": "4 हिस्से '   •   ' से जुड़े, 1-2 असली बाक़ी मज़ाकिया",
+ "hook_text": "3-6 शब्द", "icons": ["3 छोटे शब्द, सिर्फ़ अक्षर, emoji नहीं"], "ticker": "4 हिस्से '   •   ' से जुड़े, 1-2 असली बाक़ी मज़ाकिया",
  "lines": [{{"who": "bablu", "scene": "studio", "say": "...", "caption": "...", "punch": false, "insta": ""}}],
  "caption_post": "मज़ेदार लाइन + सवाल (family group में भेजो/tag करो) + असली खबर का source + 4-5 hashtags + (AI से बने किरदार)"}}"""
 
@@ -182,8 +192,8 @@ def write(c, out="script_today.json"):
     last = None
     for _ in range(3):
         try:
-            room = gemini.json_from(gemini.ask(prompt_room(c), json_mode=True, temperature=1.0))
-            ep = clean(gemini.json_from(gemini.ask(prompt_script(room, c), json_mode=True, temperature=0.8)))
+            room = gemini.json_from(gemini.ask(prompt_room(c), json_mode=True, temperature=1.0, prefer="pro"))
+            ep = clean(gemini.json_from(gemini.ask(prompt_script(room, c), json_mode=True, temperature=0.8, prefer="pro")))
             json.dump({"room": room, "episode": ep}, open(ROOT / "episodes_today.json", "w", encoding="utf-8"),
                       ensure_ascii=False, indent=2)
             json.dump(ep, open(ROOT / out, "w", encoding="utf-8"), ensure_ascii=False, indent=2)

@@ -38,12 +38,13 @@ def models(key):
                 0 if "latest" in n else 1, -len(re.findall(r"\d", n)), n)
     names.sort(key=rank)
     env = os.getenv("GEMINI_MODEL")
-    _models[:] = ([env] if env else []) + names[:5] + ["gemini-flash-latest"]
+    pros = [n for n in names if "pro" in n][:2]
+    _models[:] = ([env] if env else []) + names[:5] + [p for p in pros if p not in names[:5]] + ["gemini-flash-latest"]
     print("  Gemini models:", ", ".join(_models))
     return _models
 
 
-def ask(prompt, search=False, json_mode=False, temperature=0.9):
+def ask(prompt, search=False, json_mode=False, temperature=0.9, prefer=None):
     key = os.environ["GEMINI_API_KEY"]
     body = {"contents": [{"parts": [{"text": prompt}]}], "generationConfig": {"temperature": temperature}}
     if search:
@@ -51,7 +52,10 @@ def ask(prompt, search=False, json_mode=False, temperature=0.9):
     elif json_mode:
         body["generationConfig"]["responseMimeType"] = "application/json"
     errors = []
-    for model in models(key):
+    order = models(key)
+    if prefer:                                        # जैसे "pro": पहले वो, फिर बाक़ी
+        order = [m for m in order if prefer in m] + [m for m in order if prefer not in m]
+    for model in order:
         for attempt in range(2):
             try:
                 data = _get(f"{BASE}/models/{model}:generateContent", key, body)

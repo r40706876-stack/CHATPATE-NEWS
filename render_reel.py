@@ -9,6 +9,7 @@ Step 5: script.json + audio/*.wav → 1080x1920 reel (MP4).
 - ऊपर हमेशा BREAKING पट्टी, नीचे चलती ticker
 """
 import json
+import re
 import math
 import subprocess
 from pathlib import Path
@@ -389,6 +390,63 @@ CALL = (330, 420, 1050, 1270)            # window: x0, y0, x1, y1
 _call_cache = {}
 
 
+PANEL = (392, 1440)                      # दादी वाला पूरा हिस्सा: y0, y1
+_panel, _pip = {}, {}
+
+
+def call_panel(who, expr, mouth, glitch=0):
+    key = (who, expr, mouth, glitch)
+    if key in _panel:
+        return _panel[key]
+    w, h = W, PANEL[1] - PANEL[0]
+    home = Image.open(ROOT / "assets" / "dadi" / "home.jpg").convert("RGB")
+    home = home.resize((w, int(home.height * w / home.width)))
+    home = home.crop((0, 150, w, 150 + h))
+    ch = Image.open(ROOT / "assets" / who / f"{expr}_{mouth}.webp").convert("RGBA")
+    s = 1.0 if who == "dadi" else 0.95
+    ch = ch.resize((int(ch.width * s), int(ch.height * s)), Image.LANCZOS)
+    home.paste(ch, (w // 2 - ch.width // 2 + 40, 40), ch)
+    if glitch:
+        sm = home.resize((w // (8 * glitch), h // (8 * glitch)), Image.NEAREST)
+        home = sm.resize((w, h), Image.NEAREST)
+    d = ImageDraw.Draw(home)
+    # ऊपर: video call पट्टी
+    d.rectangle((0, 0, w, 64), fill=(0, 0, 0))
+    d.ellipse((24, 20, 48, 44), fill=(230, 40, 50))
+    d.text((60, 32), "VIDEO CALL", font=font(32), fill="white", anchor="lm")
+    for k in range(4):
+        c = (255, 255, 255) if k == 0 else (90, 90, 90)
+        d.rectangle((w - 80 + k * 14, 46 - k * 8, w - 71 + k * 14, 50), fill=c)
+    # नीचे बाएँ: नाम की पट्टी (न्यूज़ चैनल जैसी)
+    name = {"dadi": "दादी", "riya": "रिया", "bunty": "बंटी"}.get(who, who)
+    d.rectangle((0, h - 150, 470, h - 82), fill=(200, 20, 40))
+    d.text((24, h - 116), f"{name} • घर से LIVE", font=font(40), fill="white", anchor="lm")
+    d.rectangle((0, h - 82, 380, h - 36), fill=(255, 205, 40))
+    d.text((24, h - 59), "नेटवर्क: 1 डंडी", font=font(28), fill=(120, 0, 20), anchor="lm")
+    if glitch:
+        d.text((w // 2, h // 2), "कनेक्ट हो रहा है…", font=font(56), fill="white", anchor="mm",
+               stroke_width=6, stroke_fill="black")
+    _panel[key] = home
+    return home
+
+
+def bablu_pip(mouth_open, blink):
+    key = (bool(mouth_open), bool(blink))
+    if key not in _pip:
+        st = scene_frame("studio", "bablu", mouth_open, blink)
+        face = st.crop((320, 600, 760, 1040)).resize((280, 280), Image.LANCZOS)
+        out = Image.new("RGBA", (296, 340), (0, 0, 0, 0))
+        m = Image.new("L", (280, 280), 0)
+        ImageDraw.Draw(m).ellipse((0, 0, 279, 279), fill=255)
+        d = ImageDraw.Draw(out)
+        d.ellipse((0, 0, 295, 295), fill=(255, 255, 255))
+        out.paste(face, (8, 8), m)
+        d.rounded_rectangle((60, 280, 236, 334), 14, fill=(200, 20, 40))
+        d.text((148, 307), "बबलू", font=font(32), fill="white", anchor="mm")
+        _pip[key] = out
+    return _pip[key]
+
+
 CALL_TITLE = {"dadi": "Video Call • दादी (घर से)", "riya": "Video Call • रिया (कॉलेज से)",
               "bunty": "Video Call • बंटी (स्टार्टअप ऑफ़िस से)"}
 
@@ -459,6 +517,32 @@ def scene_frame(scene, speaker, mouth_open, blink):
 
 
 _badge = {}
+_hook = {}
+
+
+def hook_layer(text, t):
+    if text not in _hook:
+        f = font(92)
+        d0 = ImageDraw.Draw(Image.new("RGB", (1, 1)))
+        words, lines, cur = text.split(), [], ""
+        for wd in words:
+            if cur and d0.textlength(cur + " " + wd, font=f) > W - 120:
+                lines.append(cur)
+                cur = wd
+            else:
+                cur = (cur + " " + wd).strip()
+        lines.append(cur)
+        img = Image.new("RGBA", (W, 130 * len(lines) + 40), (0, 0, 0, 0))
+        d = ImageDraw.Draw(img)
+        for i, ln in enumerate(lines):
+            d.text((W // 2, 75 + i * 130), ln, font=f, fill=(255, 225, 40), anchor="mm",
+                   stroke_width=10, stroke_fill=(0, 0, 0))
+        _hook[text] = img
+    img = _hook[text]
+    s = min(1.0, 0.6 + t / 0.25 * 0.4) if t < 0.25 else 1.0
+    if s < 1:
+        img = img.resize((int(img.width * s), int(img.height * s)))
+    return img, (W // 2 - img.width // 2, 980 - img.height // 2), img
 
 
 def insta_badge(name, age):
@@ -562,7 +646,12 @@ def bed_music(sr, dur):
 def main(path="script.json", outname="bakra_news_demo.mp4"):
     global ICONS
     script = json.load(open(ROOT / path, encoding="utf-8"))
-    ICONS = script.get("icons", ICONS)
+    ICONS = []
+    for ic in (script.get("icons") or []) + ["₹", "NEWS", "%"]:
+        ic = re.sub(r"[^\u0900-\u097FA-Za-z0-9₹%&+!?. -]", "", str(ic)).strip()[:6]
+        if ic and ic not in ICONS:
+            ICONS.append(ic)
+    ICONS = ICONS[:3]
     sr = 24000
     clips, timeline, cursor = [], [], 0.0
     sting = tone(sr, [523, 659, 784], 0.7, 0.3)
@@ -658,12 +747,15 @@ def main(path="script.json", outname="bakra_news_demo.mp4"):
                 dm, dex = "closed", "happy"
             cs = next(s for s in timeline if s["scene"] == seg["scene"])["start"]
             g = 2 if 0.0 <= t - cs < 0.5 else (1 if dadi_talk and 2.2 < t - seg["start"] < 2.45 else 0)
-            win = dadi_window(dex, "closed" if g else dm, g, cwho)
-            pop = min(1, (t - cs) / 0.25)
-            if pop < 1:
-                win = win.resize((max(1, int(win.width * pop)), max(1, int(win.height * pop))))
-            frame.paste(win, (CALL[0] + (CALL[2] - CALL[0]) // 2 - win.width // 2,
-                              CALL[1] + (CALL[3] - CALL[1]) // 2 - win.height // 2 + 30), win)
+            panel = call_panel(cwho, dex, "closed" if g else dm, g)
+            pop = min(1, (t - cs) / 0.2)
+            if pop < 1:                                       # नीचे से ऊपर फिसलकर आए
+                frame.paste(panel, (0, PANEL[0] + int((1 - pop) * 700)))
+            else:
+                frame.paste(panel, (0, PANEL[0]))
+            # बबलू छोटे गोले में (video call वाला PiP)
+            pip = bablu_pip(seg["who"] == "bablu" and mouth_open, blink)
+            frame.paste(pip, (W - pip.width - 30, PANEL[1] - pip.height - 40), pip)
 
         # punchline पर धीरे-धीरे zoom-in
         if seg.get("punch") and t > seg["start"]:
@@ -694,6 +786,10 @@ def main(path="script.json", outname="bakra_news_demo.mp4"):
                     frame.paste(cap, (0, 1450), cap)
                     break
                 base += len(c)
+
+        # शुरू में रोकने वाला बड़ा hook text
+        if script.get("hook_text") and t < 2.4:
+            frame.paste(*hook_layer(script["hook_text"], t))
 
         # Insta trend वाली line पर गुलाबी badge
         if speaking and seg.get("insta"):
