@@ -19,6 +19,9 @@ import trends
 ROOT = Path(__file__).parent
 BAD = re.compile("|".join(map(re.escape, trends.BLOCK)), re.I)
 EXTRA_RECENT = []                                    # अभी-अभी रिजेक्ट हुई scripts के topics
+# असली इंसान/celebrity का बयान — इस पर घर वाली हँसी नहीं बनती
+CELEB = re.compile(r"बोले|बोलीं|ने कहा|बयान|अभिनेता|अभिनेत्री|एक्ट्रेस|actor|actress|फ़ैन|फैन|बच्चन|चोपड़ा|"
+                   r"मंत्री|सांसद|विधायक|नेता|पार्टी|चुनाव|पुलिस|गिरफ़्तार|गिरफ्तार|मौत|हत्या|हादसा", re.I)
 WEATHER = re.compile(r"मौसम|बारिश|आंधी|weather|rain|ठंड|गर्मी|तूफ़ान|तूफान|imd|ओले", re.I)
 
 
@@ -92,7 +95,7 @@ def viral_news(n=8):
         for it in root.iter("item"):
             title = (it.findtext("title") or "").strip()
             key = title[:40]
-            if not title or key in seen or BAD.search(title) or recently_used(title):
+            if not title or key in seen or BAD.search(title) or CELEB.search(title) or recently_used(title):
                 continue
             seen.add(key)
             out.append({"kind": "viral", "trend": title.rsplit(" - ", 1)[0],
@@ -116,7 +119,7 @@ audience के बीच क्या viral है. ठोस नाम चा�
 - trending audio/गाना जिस पर reels बन रहे हैं
 - meme format या challenge
 - कोई viral वीडियो/किस्सा जिस पर सब मज़ाक कर रहे हैं
-सिर्फ़ वो जिन पर परिवार वाला हल्का मज़ाक बन सके. हादसा, अपराध, राजनीति, धर्म, जाति, किसी असली इंसान का मज़ाक, अश्लील — नहीं.
+सिर्फ़ वो जिन पर परिवार वाला हल्का मज़ाक बन सके (किसी celebrity/नेता का बयान या gossip नहीं). हादसा, अपराध, राजनीति, धर्म, जाति, किसी असली इंसान का मज़ाक, अश्लील — नहीं.
 इनसे अलग रखो (हाल में बन चुके): {recent}
 सिर्फ़ JSON (8 items तक):
 [{{"trend": "छोटा नाम", "what": "क्या है, 1 लाइन", "line": "viral line जैसी लोग बोलते हैं", "why_funny": "घर से कैसे जुड़ेगा"}}]"""
@@ -137,12 +140,42 @@ def insta_gemini():
         return []
 
 
+# त्योहार/मौसम — Instagram पर हर साल इन्हीं दिनों सबसे ज़्यादा comedy reels चलती हैं (2026 की तारीख़ें)
+CALENDAR = [
+    ("2026-10-01", "2026-10-20", "नवरात्रि (11-20 अक्टूबर)", "गरबा-डांडिया की तैयारी, नौ दिन व्रत, मम्मी का व्रत वाला खाना, कपड़ों पर ख़र्च"),
+    ("2026-10-12", "2026-10-21", "दशहरा (20 अक्टूबर)", "रावण दहन, मेला, बच्चों की ज़िद, घर का 'रावण' कौन"),
+    ("2026-10-10", "2026-11-07", "दिवाली की सफ़ाई", "पूरे घर की सफ़ाई, पुराना सामान, कबाड़ी, छत/टांड़, मम्मी का हुक्म"),
+    ("2026-10-20", "2026-10-29", "करवा चौथ (29 अक्टूबर)", "चाँद का इंतज़ार, पति का व्रत, सरगी, मेहंदी, गिफ़्ट की उम्मीद"),
+    ("2026-10-15", "2026-11-06", "दिवाली बोनस और सेल", "ऑफ़िस बोनस का इंतज़ार, ऑनलाइन सेल, कार्ट, मिठाई के डिब्बे घूमना"),
+    ("2026-10-25", "2026-11-06", "धनतेरस (6 नवंबर)", "बर्तन/सोना खरीदना, बजट, 'कुछ तो लेना पड़ता है'"),
+    ("2026-10-28", "2026-11-09", "दिवाली (8 नवंबर)", "पटाखे, रंगोली, रिश्तेदार, सोनपापड़ी का डिब्बा, बिजली की झालर"),
+    ("2026-11-08", "2026-11-12", "भाई दूज (11 नवंबर)", "भाई-बहन, गिफ़्ट, पैसे का लिफ़ाफ़ा"),
+    ("2026-10-15", "2026-12-15", "सर्दी शुरू", "रज़ाई/स्वेटर निकालना, नहाने से बचना, गीज़र, मम्मी की 'स्वेटर पहन'"),
+    ("2026-11-01", "2027-02-28", "शादी का सीज़न", "रिश्तेदार, शगुन, शादी का खाना, 'बेटा तुम्हारी कब'"),
+]
+EVERGREEN = [
+    ("WiFi और मम्मी", "मम्मी का WiFi बंद करना, password, 'फ़ोन रख'"),
+    ("बिजली का बिल", "AC, पापा का गुस्सा, 'लाइट बंद करो'"),
+    ("सैलरी आई और गई", "महीने की पहली तारीख़, EMI, 25 तारीख़ के बाद की हालत"),
+    ("रिश्तेदारों के सवाल", "नौकरी, शादी, नंबर, 'हमारे बेटे को देखो'"),
+    ("घर का रिमोट/चार्जर", "एक चार्जर, पाँच फ़ोन; रिमोट किसके हाथ"),
+    ("मेहमान आने वाले हैं", "घर की सफ़ाई, अच्छे बिस्किट छुपाना, 'बेटा नमस्ते करो'"),
+]
+
+
+def moments(today=None):
+    d = (today or dt.date.today()).isoformat()
+    out = [{"kind": "moment", "trend": name, "what": what} for a, b, name, what in CALENDAR if a <= d <= b]
+    out += [{"kind": "evergreen", "trend": n, "what": w} for n, w in EVERGREEN]
+    return [m for m in out if not recently_used(m["trend"] + " " + m["what"], days=3)]
+
+
 def collect(feed_file=None):
-    c = {"viral": viral_news(), "insta": manual() + insta_gemini(), "news": news(feed_file),
+    c = {"viral": viral_news(), "insta": manual() + insta_gemini(), "news": news(feed_file), "moments": moments(),
          "recent": [f"{d} {cat}: {t}" for d, cat, t in history(7)]
          + [f"(अभी रिजेक्ट हुआ, ये बिल्कुल नहीं) {t}" for t in EXTRA_RECENT]}
     json.dump(c, open(ROOT / "candidates_today.json", "w", encoding="utf-8"), ensure_ascii=False, indent=2)
-    print(f"  topics: {len(c['viral'])} viral खबरें, {len(c['insta'])} Insta trends, {len(c['news'])} Google Trends"
+    print(f"  topics: {len(c['viral'])} viral खबरें, {len(c['insta'])} Insta trends, {len(c['news'])} Google Trends, {len(c['moments'])} त्योहार/घर के पल"
           f" | हाल के: {len(c['recent'])}")
     return c
 

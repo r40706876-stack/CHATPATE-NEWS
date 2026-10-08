@@ -38,6 +38,8 @@ def _lists(c):
                       + (" [मेरी feed से — इसे पहले लो]" if i.get("priority") else "")
                       for i in c.get("insta", [])) or "(कोई नहीं)"
     viral = "\n".join(f"- {v['trend']}" for v in c.get("viral", [])) or "(कोई नहीं)"
+    viral += "\n\nत्योहार/मौसम/घर के पल (Instagram पर इन दिनों सबसे ज़्यादा चलते हैं):\n" + \
+        ("\n".join(f"- {m['trend']}: {m['what']}" for m in c.get("moments", [])) or "(कोई नहीं)")
     recent = "\n".join(f"- {r}" for r in c.get("recent", [])) or "(कुछ नहीं)"
     return news, insta, viral, recent
 
@@ -82,6 +84,44 @@ Google Trends की खबरें:
 {{"topic": "खबर, 8-12 शब्द", "category": "viral/insta/money/tech/festival/entertainment/sports/weather/other",
  "news_used": "...", "source_headline": "...", "insta_used": "...",
  "bridges": [{{"ghar": "घर की ठोस हालत", "rishta": "कौन-कौन"}}], "best": 0}}"""
+
+
+def prompt_plan(c, n=3):
+    """आज के n topics एक साथ — हर उम्मीदवार को 'हँसी की गुंजाइश' पर परखकर."""
+    news, insta, viral, recent = _lists(c)
+    return f"""तुम "बकरा न्यूज़" (Instagram पर Hindi comedy page, नकली न्यूज़ चैनल) के programming head हो.
+हमारी कोई मजबूरी नहीं कि हर खबर पर comedy ठूँसें. हम सिर्फ़ वो topic लेते हैं जिस पर अपने-आप हँसी बने.
+
+उम्मीदवार:
+वायरल खबरें:
+{viral}
+
+Instagram पर अभी viral:
+{insta}
+
+Google Trends:
+{news}
+
+हाल में बन चुके (दोबारा नहीं):
+{recent}
+
+Instagram पर 1M-15M views वाले Hindi comedy reels की सीख: हँसी घर के रिश्ते/पल पर आती है (मम्मी, पापा, सास-बहू, पति-पत्नी,
+रिश्तेदार, भाई-बहन, शादी, त्योहार की तैयारी, पैसा). त्योहार/मौसम के दिनों में उसी पर बने reels सबसे ज़्यादा share होते हैं.
+
+हर उम्मीदवार को मन में परखो:
+1. पहचान: क्या भारत का हर आम घर इसे ख़ुद जीता/जानता है? (celebrity का बयान, gossip, नीति, रिपोर्ट, कंपनी की खबर = नहीं)
+2. तस्वीर: क्या इसमें घर की कोई ठोस, दिखने वाली हालत है (झाड़ू, रज़ाई, थाली, चार्जर, लिफ़ाफ़ा)?
+3. तीन आवाज़ें: क्या चाचा (पैसा/मोहल्ला), पिंकी (Gen Z/मम्मी के dialogue) और दादी (पुराना ज़माना/roast) तीनों इस पर अलग-अलग हँसा सकते हैं?
+4. ताज़गी: आज/इस हफ़्ते लोग इसके बारे में सोच रहे हैं.
+किसी असली इंसान, नेता, धर्म, जाति, हादसे, अपराध पर कुछ नहीं. खबर तभी लो जब वो ख़ुद में मज़ेदार हो और सीधे घर से जुड़े;
+वरना त्योहार/मौसम/घर का पल लो — वो भी "ताज़ा" ही है.
+
+आज के {n} सबसे मज़ेदार topic चुनो — तीनों अलग दुनिया के (जैसे एक त्योहार, एक वायरल/Insta, एक घर का पल). हर एक के 3 "पुल"
+(घर की ठोस हालत + रिश्ता) और एक Insta trend (list से हूबहू, वरना सदाबहार: "Expectation vs Reality", "Me explaining to my mom", "Nobody: / मम्मी:").
+सिर्फ़ JSON:
+{{"topics": [{{"topic": "8-12 शब्द", "category": "festival/viral/insta/money/tech/entertainment/sports/weather/home/other",
+  "news_used": "...", "source_headline": "असली खबर हो तो उसकी headline, वरना त्योहार/पल का नाम", "insta_used": "...",
+  "hasi": "एक लाइन — इस पर हँसी क्यों आएगी", "bridges": [{{"ghar": "...", "rishta": "..."}}]}}]}}"""
 
 
 def prompt_mill(meta):
@@ -265,12 +305,13 @@ def clean(ep, strict=True):
     return ep
 
 
-def write_one(c):
-    """एक episode: पुल → 12 jokes → तुलना करके चुनना → जोड़ना. लौटाता है episode dict."""
+def write_one(c, meta0=None):
+    """एक episode: पुल → 12 jokes → तुलना करके चुनना → जोड़ना. लौटाता है episode dict.
+    meta0 (programming head का चुना topic) हो तो पुल वाला कदम छूट जाता है."""
     last = None
     for attempt in range(3):
         try:
-            meta = gemini.json_from(gemini.ask(prompt_bridge(c), json_mode=True, temperature=0.7))
+            meta = dict(meta0) if meta0 else gemini.json_from(gemini.ask(prompt_bridge(c), json_mode=True, temperature=0.7))
             b = meta.get("bridges") or []
             if b:                                           # सबसे अच्छा पुल सबसे ऊपर
                 k = int(meta.get("best", 0)) if str(meta.get("best", 0)).isdigit() else 0
@@ -293,6 +334,7 @@ def write_one(c):
             asm = gemini.json_from(gemini.ask(prompt_assemble(meta, pick), json_mode=True, temperature=0.6))
             expr = jd.get("dadi_expr") if jd.get("dadi_expr") in {"smug", "happy", "shock", "angry", "sad"} else "smug"
             ep = clean(build(meta, pick, asm, expr), strict=False)
+            ep["hasi"] = meta.get("hasi", "")
             print(f"  topic: {ep.get('topic')} | Insta: {ep.get('insta_used')}")
             return ep
         except Exception as e:                              # noqa: BLE001
@@ -302,20 +344,29 @@ def write_one(c):
 
 
 def write_options(c, n=3):
-    """n अलग-अलग topic/premise वाले episodes — तुम Telegram पर एक चुनोगे."""
-    eps, recent = [], list(c.get("recent", []))
+    """n अलग topic वाले episodes — तुम Telegram पर एक चुनोगे. topics एक ही बार में, हँसी की गुंजाइश देखकर."""
+    metas = []
+    try:
+        metas = gemini.json_from(gemini.ask(prompt_plan(c, n), json_mode=True, temperature=0.6)).get("topics", [])[:n]
+        for m in metas:
+            print("  topic चुना:", m.get("topic"), "|", m.get("hasi", ""))
+    except Exception as e:                                  # noqa: BLE001
+        print("  programming वाला कदम नहीं चला:", repr(e)[:150])
+    eps = []
     for k in range(n):
-        c2 = dict(c, recent=recent + [f"(आज का विकल्प {i + 1}, इससे बिल्कुल अलग topic लो) {e.get('topic')}"
-                                      for i, e in enumerate(eps)])
-        if k == 1:                                          # विविधता: दूसरा विकल्प दूसरे mode में
-            c2["mode"] = "viral" if c.get("mode") == "news" else "news"
+        m = metas[k] if k < len(metas) and m_ok(metas[k]) else None
+        c2 = dict(c, recent=list(c.get("recent", [])) + [f"(आज का विकल्प, इससे अलग topic लो) {e.get('topic')}" for e in eps])
         try:
-            eps.append(write_one(c2))
+            eps.append(write_one(c2, m))
         except Exception as e:                              # noqa: BLE001
             print(f"  विकल्प {k + 1} नहीं बना:", e)
     if not eps:
         raise SystemExit("एक भी script नहीं बनी")
     return eps
+
+
+def m_ok(m):
+    return bool(m.get("topic")) and bool(m.get("bridges"))
 
 
 def write(c, out="script_today.json"):

@@ -14,10 +14,12 @@ import datetime as dt
 import json
 import re
 import shutil
+import sys
 import time
 from pathlib import Path
 
 ROOT = Path(__file__).parent
+sys.stdout.reconfigure(line_buffering=True)            # GitHub log में हर कदम तुरंत दिखे
 PENDING, CHOICE, OFFSET = ROOT / "pending.json", ROOT / "choice.json", ROOT / "tg_offset.txt"
 NAME = {"bablu": "🐐 बबलू", "chacha": "🐃 चाचा", "pinky": "🐱 पिंकी", "dadi": "👵 दादी"}
 NUM = {"१": "1", "२": "2", "३": "3", "०": "0", "one": "1", "two": "2", "three": "3",
@@ -50,6 +52,8 @@ def preview(eps):
             out.append(f"📱 Insta trend: {ep['insta_used']}")
         if ep.get("hook_text"):
             out.append(f"🪝 Hook: {ep['hook_text']}")
+        if ep.get("hasi"):
+            out.append(f"😂 क्यों चुना: {ep['hasi']}")
         for ln in ep.get("lines", []):
             mark = " 💥" if ln.get("punch") else ""
             out.append(f"{NAME.get(ln.get('who'), ln.get('who'))}: {ln.get('say', '')}{mark}")

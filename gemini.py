@@ -13,7 +13,7 @@ _models = []
 def _get(url, key, body=None):
     req = urllib.request.Request(url, json.dumps(body).encode() if body else None,
                                  {"Content-Type": "application/json", "x-goog-api-key": key})
-    with urllib.request.urlopen(req, timeout=180) as r:
+    with urllib.request.urlopen(req, timeout=90) as r:
         return json.load(r)
 
 
@@ -55,21 +55,24 @@ def ask(prompt, search=False, json_mode=False, temperature=0.9, prefer=None):
     order = models(key)
     if prefer:                                        # जैसे "pro": पहले वो, फिर बाक़ी
         order = [m for m in order if prefer in m] + [m for m in order if prefer not in m]
-    for model in order:
-        for attempt in range(2):
+    for rnd in range(2):                              # सीमा लगे तो रुको नहीं, अगला model; सब पर लगे तभी एक बार रुको
+        busy = False
+        for model in order:
             try:
+                t0 = time.time()
                 data = _get(f"{BASE}/models/{model}:generateContent", key, body)
+                print(f"    Gemini {model}: {time.time() - t0:.0f}s")
                 return "".join(p.get("text", "") for p in data["candidates"][0]["content"]["parts"])
             except urllib.error.HTTPError as e:
                 msg = e.read().decode("utf-8", "ignore")[:300]
-                errors.append(f"{model}: {e.code} {msg}")
-                if e.code == 429 and "limit: 0" not in msg and attempt == 0:
-                    time.sleep(30)                    # thodi der ruk kar dobara
-                    continue
-                break                                 # agla model
+                errors.append(f"{model}: {e.code} {msg[:120]}")
+                busy |= e.code in (429, 503) and "limit: 0" not in msg
             except Exception as e:                    # noqa: BLE001
                 errors.append(f"{model}: {e!r}")
-                break
+        if not busy:
+            break
+        print("    सब models busy — 40s रुककर दोबारा")
+        time.sleep(40)
     raise RuntimeError("Gemini nahi chala:\n  " + "\n  ".join(errors))
 
 
