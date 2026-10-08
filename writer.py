@@ -5,6 +5,7 @@
 CORE: ट्रेंडिंग खबर + Instagram का ट्रेंड, मज़ाकिया तरीके से आम आदमी की ज़िंदगी से जुड़ा.
 """
 import json
+import re
 import os
 import sys
 from pathlib import Path
@@ -59,6 +60,10 @@ Instagram पर जुलाई-अक्टूबर 2026 में सच म
 - खबर दोहराना, "देखा आपने" वाली लंबी बातें, समझाना."""
 
 RULES = """नियम:
+- सबसे ज़रूरी — एक comic premise: पूरा episode एक ही मज़ेदार सोच पर टिका हो ("premise"), और खबर का एक key शब्द ("key_word",
+  जैसे "चाँद") हर मेहमान की punch line में वापस आए. हर जवाब उसी खबर/चीज़ को घर से जोड़े — कोई भी line दूसरे topic पर न भटके.
+  आख़िरी सवाल/poll भी उसी premise पर हो (जैसे "चाँद पर पहले कौन पहुँचा? 1 = रॉकेट, 2 = टमाटर के दाम").
+- भाषा: "say" और "caption" दोनों हिंदी (देवनागरी) में. English सिर्फ़ आम बोलचाल के शब्द (WiFi, reel, app). पूरा वाक्य English में कभी नहीं.
 - CORE: खबर को आम घर की ज़िंदगी से जोड़ो (मम्मी, बजट, बिजली, WiFi, चार्जर, कपड़े, रिश्तेदार, EMI).
 - Instagram trend ज़रूरी: ऊपर की list से एक trend/viral line/format इस्तेमाल करो (वैसा ही, पहचान में आए). list खाली हो तो
   कोई सदाबहार Insta format लो: "POV: …", "Nobody: … / मम्मी: …", "Expectation vs Reality", "Me explaining to my mom".
@@ -138,6 +143,31 @@ Google Trends की खबरें:
  "jokes": {{"source": [{{"text": "...", "trick": "...", "surprise": 0, "relate": 0, "clear": 0}}], "chacha": [], "pinky": [], "guest": [], "ending": []}}}}"""
 
 
+def gold_examples():
+    out = []
+    for f in ("examples_chaand.json", "examples_sale.json"):
+        p = ROOT / f
+        if p.exists():
+            j = json.load(open(p, encoding="utf-8"))
+            lines = "\n".join(f"  {l['who']}: {l['say']}" for l in j["lines"])
+            out.append(f"[{j.get('breaking', '')}] premise: {j.get('premise', '-')}\n{lines}")
+    return "\n\n".join(out)
+
+
+def prompt_critic(ep):
+    lines = "\n".join(f"{i}. {l['who']}: {l['say']}" for i, l in enumerate(ep["lines"]))
+    return f"""तुम Instagram के सबसे सख़्त Hindi comedy editor हो. ये episode देखो:
+खबर: {ep.get('breaking')} | premise: {ep.get('premise')} | key_word: {ep.get('key_word')}
+{lines}
+
+हर punch line (chacha, pinky, dadi, आख़िरी सवाल) को जाँचो:
+1. connection: क्या ये उसी खबर/premise से जुड़ी है और key_word या उसकी चीज़ वापस आती है? (नहीं = फेल)
+2. हँसी: क्या आख़िरी शब्दों में साफ़ पलटी है, और 20 साल का लड़का इसे family group में भेजेगा? (1-10)
+3. ये viral तरीकों में से कौन सा है: बेतुका-आत्मविश्वासी जवाब / ज़्यादा सच / कहानी-चुटकुला / शब्दों का खेल / तीन प्रकार / महँगाई-अतिशयोक्ति / आख़िर में सबसे तीखा जवाब.
+जो line फेल हो या 8 से कम हो, उसे दोबारा लिखो (हिंदी में, ≤ 20 शब्द, उसी किरदार के अंदाज़ में). बाक़ी lines जैसी हैं वैसी रखो.
+सिर्फ़ JSON: {{"fixes": [{{"index": 0, "say": "...", "caption": "..."}}], "verdict": "एक लाइन"}}"""
+
+
 def prompt_script(room, c):
     best = {}
     for slot, items in room.get("jokes", {}).items():
@@ -156,15 +186,18 @@ Insta trend: {room.get('insta_used')} | मेहमान: {room.get('guest')}
 
 {FORMAT}
 
+हमारे सबसे अच्छे पूरे episodes (ढाँचा, connection और लंबाई ऐसी ही — इनके शब्द/jokes मत दोहराना):
+{gold_examples()}
+
 काम: इन jokes से episode लिखो (ज़रूरत हो तो और तेज़ कर दो). फिर punch-up: हर punch line को सख़्त editor की तरह 1-10 दो;
 जो 8 से कम हो उसे दोबारा लिखो जब तक 8+ न हो. आख़िर में सिर्फ़ final episode JSON दो:
-{{"topic": "...", "category": "{room.get('category', 'other')}", "news_used": "...", "insta_used": "...", "source_headline": "...", "breaking": "6-9 शब्द, सच्ची खबर",
+{{"topic": "...", "premise": "एक लाइन की comic सोच", "key_word": "खबर का एक शब्द", "category": "{room.get('category', 'other')}", "news_used": "...", "insta_used": "...", "source_headline": "...", "breaking": "6-9 शब्द, सच्ची खबर",
  "hook_text": "3-6 शब्द", "poll": ["विकल्प 1", "विकल्प 2"], "icons": ["3 छोटे शब्द, सिर्फ़ अक्षर, emoji नहीं"], "ticker": "4 हिस्से '   •   ' से जुड़े, 1-2 असली बाक़ी मज़ाकिया",
  "lines": [{{"who": "bablu", "scene": "studio", "say": "...", "caption": "...", "punch": false, "insta": ""}}],
  "caption_post": "मज़ेदार लाइन + सवाल (family group में भेजो/tag करो) + असली खबर का source + 4-5 hashtags + (AI से बने किरदार)"}}"""
 
 
-def clean(ep):
+def clean(ep, strict=True):
     lines = ep["lines"]
     assert 5 <= len(lines) <= 10, f"lines: {len(lines)}"
     for ln in lines:
@@ -187,6 +220,15 @@ def clean(ep):
     for i, ln in enumerate(lines[1:-1], 1):                 # bablu का सवाल अगले मेहमान के scene में
         if ln["who"] == "bablu" and lines[i + 1]["who"] != "bablu":
             ln["scene"] = SCENE_OF[lines[i + 1]["who"]]
+    for ln in lines:                                       # captions हिंदी में हों
+        dev = len(re.findall(r"[\u0900-\u097F]", ln["caption"]))
+        lat = len(re.findall(r"[A-Za-z]", ln["caption"]))
+        assert dev >= lat, f"caption हिंदी में नहीं: {ln['caption'][:40]}"
+    kw = str(ep.get("key_word") or "").strip()
+    if kw and strict:
+        guests = [l for l in lines if l["who"] != "bablu"]
+        hit = sum(kw[:3] in l["say"] for l in guests)
+        assert hit >= max(1, len(guests) - 1), f"key_word '{kw}' मेहमानों की lines में नहीं — joke खबर से नहीं जुड़े"
     words = sum(len(l["say"].split()) for l in lines)
     assert words <= 130, f"बहुत लंबा: {words} शब्द"
     ep["icons"] = ((ep.get("icons") or []) + ["₹", "NEWS", "%"])[:3]
@@ -199,10 +241,21 @@ def write(c, out="script_today.json"):
         print(prompt_room(c) + "\n\n(GEMINI_API_KEY नहीं)")
         return None
     last = None
-    for _ in range(3):
+    for attempt in range(3):
+        strict = attempt < 2                                # आख़िरी कोशिश में keyword वाली सख़्ती ढीली
         try:
             room = gemini.json_from(gemini.ask(prompt_room(c), json_mode=True, temperature=1.0, prefer="pro"))
-            ep = clean(gemini.json_from(gemini.ask(prompt_script(room, c), json_mode=True, temperature=0.8, prefer="pro")))
+            ep = clean(gemini.json_from(gemini.ask(prompt_script(room, c), json_mode=True, temperature=0.8, prefer="pro")), strict)
+            try:                                           # तीसरी नज़र: सख़्त editor कमज़ोर lines दोबारा लिखे
+                fx = gemini.json_from(gemini.ask(prompt_critic(ep), json_mode=True, temperature=0.6, prefer="pro"))
+                for f in fx.get("fixes", []):
+                    i = int(f["index"])
+                    if 0 < i < len(ep["lines"]) and f.get("say") and f.get("caption"):
+                        ep["lines"][i]["say"], ep["lines"][i]["caption"] = f["say"], f["caption"]
+                print("  editor:", fx.get("verdict", ""), f"({len(fx.get('fixes', []))} lines सुधरीं)")
+                ep = clean(ep, strict)
+            except Exception as e:                         # noqa: BLE001
+                print("  editor वाला कदम छोड़ा:", str(e)[:120])
             json.dump({"room": room, "episode": ep}, open(ROOT / "episodes_today.json", "w", encoding="utf-8"),
                       ensure_ascii=False, indent=2)
             json.dump(ep, open(ROOT / out, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
