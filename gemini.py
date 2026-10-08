@@ -18,6 +18,7 @@ def _get(url, key, body=None):
 
 
 def models(key):
+    """Is key par jo text models chalte hain, unki list (flash pehle)."""
     if _models:
         return _models
     names = []
@@ -30,7 +31,7 @@ def models(key):
             if re.search(r"tts|image|embed|audio|live|vision|aqa|learnlm|gemma", n):
                 continue
             names.append(n)
-    except Exception as e:
+    except Exception as e:                            # noqa: BLE001
         print("  model list nahi mili:", e)
     def rank(n):
         return (0 if "flash" in n and "lite" not in n else 1 if "flash" in n else 2,
@@ -59,10 +60,10 @@ def ask(prompt, search=False, json_mode=False, temperature=0.9):
                 msg = e.read().decode("utf-8", "ignore")[:300]
                 errors.append(f"{model}: {e.code} {msg}")
                 if e.code == 429 and "limit: 0" not in msg and attempt == 0:
-                    time.sleep(30)
+                    time.sleep(30)                    # thodi der ruk kar dobara
                     continue
-                break
-            except Exception as e:
+                break                                 # agla model
+            except Exception as e:                    # noqa: BLE001
                 errors.append(f"{model}: {e!r}")
                 break
     raise RuntimeError("Gemini nahi chala:\n  " + "\n  ".join(errors))

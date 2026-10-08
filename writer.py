@@ -1,8 +1,8 @@
 """
-आज के topics → Bakra News का एक episode (script JSON), Gemini से.
-CORE: ट्रेंडिंग खबर + Instagram का ट्रेंड पकड़ो, उसे मज़ाकिया तरीके से आम आदमी की ज़िंदगी से जोड़ो.
-
-    python writer.py                 → script_today.json (candidates_today.json से)
+आज के topics → Bakra News का एक episode (script JSON), Gemini से — 2 चरण:
+  1. Joke room: topic चुनो (खबर + Insta trend), हर किरदार के लिए 6 punchline, हर एक को ख़ुद नंबर दो
+  2. Script + punch-up: सबसे ऊँचे नंबर वाले jokes से छोटा script, फिर कमज़ोर line दोबारा लिखो
+CORE: ट्रेंडिंग खबर + Instagram का ट्रेंड, मज़ाकिया तरीके से आम आदमी की ज़िंदगी से जुड़ा.
 """
 import json
 import os
@@ -13,113 +13,166 @@ import gemini
 
 ROOT = Path(__file__).parent
 WHO = {"bablu", "chacha", "pinky", "dadi", "riya", "bunty"}
-SCENE_OF = {"chacha": "chacha", "pinky": "pinky", "dadi": "dadi_call", "riya": "riya_call", "bunty": "bunty_call"}
+SCENE_OF = {"chacha": "chacha", "pinky": "pinky", "riya": "riya", "dadi": "dadi_call", "bunty": "bunty_call"}
+SCENES = {"studio", "studio_end", "chacha", "pinky", "dadi_call"}
 
-CAST = """किरदार (स्वभाव कभी मत बदलना):
-- bablu: बबलू बकरा, reporter. ज़रूरत से ज़्यादा आत्मविश्वासी, हर खबर "ब्रेकिंग". तकिया-कलाम: "खबर पक्की है, सूत्र मेरे चाचा हैं!" (सूत्र हर बार नया और बेतुका हो सकता है: "सूत्र मेरा कार्ट है").
-- chacha: चाचा भैंसा, चाय की दुकान वाले आम आदमी. धीमे, ठंडे दिमाग़ वाले, हर खबर को घर के खर्च/महँगाई/रोज़ की आदत से जोड़कर एक लाइन में पलट देते हैं. "हमें क्या, चाय पियो।"
-- pinky: पिंकी बिल्ली, Gen Z, Free Wi-Fi zone में. Instagram की भाषा, तीखा roast, viral lines इस्तेमाल करती है. "Literally scam है ये!"
-- dadi: 3D दादी, घर से video call पर (नेटवर्क कमज़ोर). चालाक, घर की असली समस्या पकड़ती हैं, सबसे बड़ा punch अक्सर उन्हीं का.
-- riya: 3D रिया (20), कॉलेज से video call पर. fact-checker, सपाट चेहरा, कम शब्दों में सीधा निशाना.
-- bunty: 3D बंटी (26), अपने "स्टार्टअप ऑफ़िस" से video call. हर trend में नया startup (सब फ़ेल), English buzzwords गलत जगह, ओवर-कॉन्फ़िडेंट.
-  (video call वाला मेहमान हर episode में एक ही: ज़्यादातर dadi; topic के हिसाब से कभी riya या bunty)"""
+CAST = """किरदार (हर कोई अपनी दुनिया से जवाब देता है):
+- bablu: बबलू बकरा, reporter. ओवर-कॉन्फ़िडेंट, हर खबर "ब्रेकिंग". खबर के बाद एक बेतुका "सूत्र" (हर बार नया, खबर से जुड़ा: "सूत्र मेरी छत की टंकी है, आधी उड़ चुकी है").
+- chacha: चाचा भैंसा, चाय वाले आम आदमी. ठंडे दिमाग़ से हर खबर को पैसे/महँगाई/घर के जुगाड़ से पलटते हैं.
+- pinky: पिंकी बिल्ली, Free Wi-Fi zone वाली Gen Z. Reels, followers, Instagram की भाषा, तीखा sarcasm.
+  Insta trend ज़्यादातर इसी के मुँह से. मम्मी-पापा वाले relatable POV इसकी ताक़त.
+- dadi: 3D दादी (video call, कमज़ोर नेटवर्क). पुराने ज़माने से तुलना, घर का कड़वा सच, सबसे बड़ा punch. हर episode में मेहमान यही."""
+
+CRAFT = """हँसी कैसे बनती है (हर punchline इनमें से किसी तरकीब पर हो):
+1. उलटफेर: setup एक दिशा में ले जाए, आख़िरी 2-3 शब्द उलट दें.
+   अच्छा: "हमारे घर में हर दिवाली नया फ़ोन आता है… पुराने फ़ोन पर, नया कवर!"
+2. तुलना-चढ़ाव: खबर के अंक/बात को घर की चीज़ से छोटा कर दो.
+   अच्छा: "तीन परसेंट? बेटा, इतना तो पिछले हफ़्ते टमाटर बढ़ गया था।"
+3. तीन की सूची: दो आम बातें, तीसरी बेतुकी पर सच्ची.
+   अच्छा: "तैयारी पूरी है: फ़ोन चार्ज, इनवर्टर चार्ज… और पड़ोसी का वाई-फ़ाई पासवर्ड भी याद कर लिया।"
+4. घर का कड़वा सच: वो बात जो हर घर में होती है पर कोई बोलता नहीं.
+   अच्छा: "आंधी में मम्मी: बेटा उड़ जाए तो चलेगा, पर नई चादर नहीं उड़नी चाहिए!"
+5. पीढ़ी की तुलना (दादी): "डर? मैंने चालीस साल सास की आंधी झेली है, ये तो बस पचहत्तर की स्पीड है!"
+6. पुराना viral joke, नए कपड़ों में: वो मशहूर देसी joke/forward जो लोग पहले से जानते हैं (WhatsApp forward, पप्पू-teacher,
+   doctor-patient, मम्मी की चप्पल, शर्मा जी का बेटा, रिश्तेदार "beta kya kar rahe ho", बिजली जाते ही पूरे मोहल्ले का "आआआ",
+   मम्मी का "पाँच मिनट में आ रही हूँ", पापा का "हमारे ज़माने में", शादी का खाना, दुकानदार से मोल-भाव) — उसे आज की खबर पर फिट करो.
+   पहचाना हुआ joke = तुरंत हँसी + comment "ye mere ghar ka hai". हर episode में कम से कम एक ऐसा (ज़्यादातर चाचा का).
+   अच्छा: "आंधी का अलर्ट? हमारे मोहल्ले में अलर्ट की ज़रूरत नहीं, बिजली जाते ही पूरा मोहल्ला एक साथ 'आआआ' बोलता है, वही सायरन है!"
+   (जाति/धर्म/क्षेत्र/शरीर/औरतों पर बने पुराने jokes बिल्कुल नहीं.)
+सबसे मज़ेदार शब्द line के बिल्कुल आख़िर में. punch के बाद कोई explanation नहीं.
+ख़राब (ऐसा कभी मत लिखो):
+- "चाय की दुकान की पन्नी तो हमेशा उड़ ही जाती है" — बस observation, कोई twist नहीं.
+- "आंधी में Reels का pose बिगड़ जाएगा, literally scam है ये!" — तकिया-कलाम ज़बरदस्ती, joke नहीं.
+- खबर दोहराना, "देखा आपने" वाली लंबी बातें, समझाना."""
 
 RULES = """नियम:
-1. CORE: trend को आम आदमी की रोज़ की ज़िंदगी से जोड़ो — घर का बजट, खाना, चार्जर, WiFi, मम्मी, शादी, रिश्तेदार, बिजली बिल, EMI.
-2. Instagram trend: अगर कोई Insta trend/viral line दी है जो खबर से जुड़ सके, तो उसे episode में ज़रूर पिरोओ (ज़्यादातर पिंकी के मुँह से, या दादी का ट्विस्ट). Viral line वैसी ही रखो जैसी लोग बोलते हैं ताकि पहचान में आए. अगर कोई अच्छी खबर नहीं है, तो सीधे Insta trend पर episode बनाओ ("Viral:" वाली breaking).
-3. हर punchline अपने-आप में समझ आए — दर्शक को पहले से कुछ पता न हो तो भी. पहले setup, फिर उलटा twist. छोटे, बोलचाल वाले वाक्य.
-4. खबर का तथ्य headline से बिल्कुल मेल खाए ("सकता है" को "हो गया" मत बनाओ). मज़ाक काल्पनिक, खबर नहीं.
-5. मनाही: हादसा, अपराध, राजनीति/नेता, धर्म, जाति, किसी असली इंसान या क्षेत्र का मज़ाक, शरीर, मर्द/औरत पर तंज़. मज़ाक हालात पर.
-6. ढाँचा (7-8 lines, बोलने में 30-40 सेकंड):
-   bablu studio (खबर + बेतुका सूत्र) → bablu chacha से सवाल → chacha punch → bablu pinky से सवाल → pinky बड़ा punch
-   → [वैकल्पिक: bablu video call पर एक मेहमान बुलाता है (dadi_call / riya_call / bunty_call) → वो सबसे बड़ा punch] → bablu studio_end (एक लाइन का निचोड़ + comment वाला सवाल).
-7. scene: bablu की पहली line "studio", आख़िरी "studio_end"; interview में bablu उसी guest के scene में ("chacha"/"pinky"/"dadi_call"/"riya_call"/"bunty_call").
-8. "say": बोलने वाला text, अंक शब्दों में (तीस हज़ार), English शब्द देवनागरी में (कार्ट, सेल). "caption": वही बात, अंक अंकों में (₹30,000), English शब्द चाहें तो Roman में.
-9. punch वाली lines पर "punch": true. dadi/riya/bunty की line पर "expr": happy/shock/angry/smug/sad में से एक.
-10. "breaking": ऊपर की पट्टी, 6-9 शब्द, सच्ची खबर. "icons": studio screen के 3 छोटे शब्द/चिह्न (जैसे ["SALE","₹","%"]). "ticker": 4 हिस्से "   •   " से जुड़े, 1-2 असली, बाक़ी मज़ाकिया.
-11. "caption_post": Instagram caption — मज़ेदार लाइन + सवाल (tag/comment) + असली खबर का source + 4-5 hashtags + आख़िर में "(AI से बने किरदार)"."""
+- CORE: खबर को आम घर की ज़िंदगी से जोड़ो (मम्मी, बजट, बिजली, WiFi, चार्जर, कपड़े, रिश्तेदार, EMI).
+- Instagram trend ज़रूरी: ऊपर की list से एक trend/viral line/format इस्तेमाल करो (वैसा ही, पहचान में आए). list खाली हो तो
+  कोई सदाबहार Insta format लो: "POV: …", "Nobody: … / मम्मी: …", "Expectation vs Reality", "Me explaining to my mom".
+  जिस line में Insta trend है उस पर "insta": "trend का छोटा नाम".
+- तकिया-कलाम ("हमें क्या, चाय पियो" / "Literally scam है ये!") सिर्फ़ तब जब punch को और तेज़ करे, वरना मत डालो.
+- Interaction: आख़िरी line comment करवाए — दो विकल्प वाला सवाल ("1 = मम्मी, 2 = पापा") या "उस दोस्त को tag करो जो…".
+  caption_post भी इसी सवाल से शुरू हो.
+- छोटा: कुल 7 lines, पूरे episode में 90 शब्द से कम (बोलने में ~30 सेकंड). bablu की हर line ≤ 15 शब्द, मेहमान का जवाब ≤ 20 शब्द.
+- खबर का तथ्य headline जैसा ("सकता है" को "हो गया" मत बनाओ). मज़ाक हालात पर: कोई असली इंसान, नेता, धर्म, जाति, क्षेत्र,
+  शरीर, मर्द/औरत पर तंज़, हादसा या अपराध नहीं."""
+
+FORMAT = """lines का ढाँचा (7 lines):
+1 bablu "studio": ब्रेकिंग + खबर (छोटी) + बेतुका सूत्र
+2 bablu "chacha": चाचा से छोटा सवाल   3 chacha: punch
+4 bablu "pinky": पिंकी से छोटा सवाल   5 pinky: punch (अक्सर Insta trend)
+6 bablu "dadi_call": दादी को video call पर बुलाओ + सवाल   7 dadi: सबसे बड़ा punch
+8 bablu "studio_end": एक मज़ेदार निचोड़ + comment वाला सवाल (कुल 8 lines भी चलेगा)
+"say": अंक शब्दों में, English शब्द देवनागरी में. "caption": वही, अंक अंकों में (₹30,000), English Roman में चल सकती है.
+punch वाली lines पर "punch": true. dadi पर "expr": happy/shock/angry/smug/sad."""
 
 
-def examples():
-    out = []
-    for f in ("examples_da.json", "examples_sale.json"):
-        p = ROOT / f
-        if p.exists():
-            j = json.load(open(p, encoding="utf-8"))
-            out.append(json.dumps({k: j[k] for k in ("breaking", "lines") if k in j}, ensure_ascii=False))
-    return "\n\n".join(out)
-
-
-def build_prompt(c):
+def _lists(c):
     news = "\n".join(f"- {n['trend']}: " + " | ".join(n["headlines"]) for n in c.get("news", [])) or "(कोई नहीं)"
     insta = "\n".join(f"- {i['trend']}" + (f" — {i.get('what', '')}" if i.get("what") else "")
                       + (f" (line: {i['line']})" if i.get("line") else "")
-                      + (" [मेरी feed से, पहले इसे देखो]" if i.get("priority") else "")
+                      + (" [मेरी feed से — इसे पहले लो]" if i.get("priority") else "")
                       for i in c.get("insta", [])) or "(कोई नहीं)"
-    return f"""तुम "बकरा न्यूज़" नाम के Hindi comedy Instagram page के head writer हो — नकली न्यूज़ चैनल जहाँ असली ट्रेंडिंग खबर पर
-reporter आम लोगों से राय लेता है और वो उसे अपनी घर की ज़िंदगी से जोड़कर मज़ेदार जवाब देते हैं.
+    return news, insta
 
-आज की ट्रेंडिंग खबरें (Google Trends India):
+
+def prompt_room(c):
+    news, insta = _lists(c)
+    return f"""तुम "बकरा न्यूज़" (नकली Hindi न्यूज़ चैनल, comedy Instagram page) के writers' room के head हो.
+
+आज की ट्रेंडिंग खबरें:
 {news}
 
-आज Instagram/social पर viral:
+Instagram/social पर अभी viral:
 {insta}
 
 {CAST}
 
+{CRAFT}
+
+काम (joke room):
+1. वो एक खबर चुनो जिस पर हर घर हँस सके, और एक Insta trend जो उससे जुड़ सके.
+2. इन slots के लिए 6-6 अलग punchlines लिखो, हर एक अलग तरकीब से: "source" (बबलू का बेतुका सूत्र), "chacha" (कम से कम 3 पुराने मशहूर jokes पर), "pinky", "guest" (दादी), "ending" (comment करवाने वाला सवाल).
+3. हर punchline को सख़्ती से नंबर दो (1-10): "surprise" (उलटफेर कितना अनपेक्षित), "relate" (कितने घरों में होता है), "clear" (बिना context समझ आए).
+   8 से कम औसत वाली को ईमानदारी से कम नंबर दो.
+सिर्फ़ JSON:
+{{"news_used": "...", "source_headline": "...", "insta_used": "list से हूबहू नाम या सदाबहार format", "guest": "dadi",
+ "jokes": {{"source": [{{"text": "...", "trick": "...", "surprise": 0, "relate": 0, "clear": 0}}], "chacha": [], "pinky": [], "guest": [], "ending": []}}}}"""
+
+
+def prompt_script(room, c):
+    best = {}
+    for slot, items in room.get("jokes", {}).items():
+        items = sorted(items, key=lambda j: -(j.get("surprise", 0) + j.get("relate", 0) + j.get("clear", 0)))
+        best[slot] = [j["text"] for j in items[:2]]
+    return f"""तुम "बकरा न्यूज़" के head writer हो. Joke room ने ये चुना:
+खबर: {room.get('news_used')} | headline: {room.get('source_headline')}
+Insta trend: {room.get('insta_used')} | मेहमान: {room.get('guest')}
+हर slot के 2 सबसे अच्छे jokes (पहला सबसे ऊपर): {json.dumps(best, ensure_ascii=False)}
+
+{CAST}
+
+{CRAFT}
+
 {RULES}
 
-पहले के दो अच्छे episodes (इनका अंदाज़ और लंबाई पकड़ो, बात नई लिखो):
-{examples()}
+{FORMAT}
 
-काम: सबसे मज़ेदार और सबसे relatable topic चुनो (खबर + Insta trend साथ आ सकें तो सबसे अच्छा). 2 अलग episodes लिखो,
-फिर ख़ुद सख़्त comedy editor बनकर जाँचो कि किस में punchlines ज़्यादा अपने-आप समझ आती हैं और ज़्यादा हँसी है; उसका index "best" में दो.
-सिर्फ़ JSON:
-{{"episodes": [{{"topic": "...", "news_used": "...", "insta_used": "Insta trend का नाम, ऊपर की list से हूबहू copy", "source_headline": "...", "breaking": "...", "icons": ["..","..",".."],
-  "ticker": "...", "lines": [{{"who": "bablu", "scene": "studio", "say": "...", "caption": "..."}}], "caption_post": "..."}}], "best": 0}}"""
+काम: इन jokes से episode लिखो (ज़रूरत हो तो और तेज़ कर दो). फिर punch-up: हर punch line को सख़्त editor की तरह 1-10 दो;
+जो 8 से कम हो उसे दोबारा लिखो जब तक 8+ न हो. आख़िर में सिर्फ़ final episode JSON दो:
+{{"topic": "...", "news_used": "...", "insta_used": "...", "source_headline": "...", "breaking": "6-9 शब्द, सच्ची खबर",
+ "icons": ["3 छोटे शब्द/चिह्न"], "ticker": "4 हिस्से '   •   ' से जुड़े, 1-2 असली बाक़ी मज़ाकिया",
+ "lines": [{{"who": "bablu", "scene": "studio", "say": "...", "caption": "...", "punch": false, "insta": ""}}],
+ "caption_post": "मज़ेदार लाइन + सवाल (family group में भेजो/tag करो) + असली खबर का source + 4-5 hashtags + (AI से बने किरदार)"}}"""
 
 
 def clean(ep):
     lines = ep["lines"]
     assert 5 <= len(lines) <= 10, f"lines: {len(lines)}"
-    for i, ln in enumerate(lines):
+    for ln in lines:
         assert ln["who"] in WHO, ln["who"]
         assert ln.get("say") and ln.get("caption")
         if ln["who"] != "bablu":
             ln["scene"] = SCENE_OF[ln["who"]]
-        elif ln.get("scene") not in {"studio", "studio_end", "chacha", "pinky", "dadi_call", "riya_call", "bunty_call"}:
+        elif ln.get("scene") not in SCENES:
             ln["scene"] = "studio"
+        if ln["who"] == "riya":                            # सड़क वाली लड़की = पिंकी
+            ln["who"], ln["scene"] = "pinky", "pinky"
+        if ln["who"] in ("bunty",):                        # मेहमान अभी सिर्फ़ दादी
+            ln["who"], ln["scene"] = "dadi", "dadi_call"
         if ln["who"] in ("dadi", "riya", "bunty") and ln.get("expr") not in {"neutral", "happy", "shock", "angry", "smug", "sad"}:
             ln["expr"] = "happy"
         ln["punch"] = bool(ln.get("punch"))
+        ln["insta"] = str(ln.get("insta") or "")[:24]
     lines[0]["scene"] = "studio"
     lines[-1]["scene"] = "studio_end"
-    for i, ln in enumerate(lines[1:-1], 1):                 # bablu का सवाल अगले guest के scene में
-        if ln["who"] == "bablu" and i + 1 < len(lines) and lines[i + 1]["who"] != "bablu":
+    for i, ln in enumerate(lines[1:-1], 1):                 # bablu का सवाल अगले मेहमान के scene में
+        if ln["who"] == "bablu" and lines[i + 1]["who"] != "bablu":
             ln["scene"] = SCENE_OF[lines[i + 1]["who"]]
-    icons = (ep.get("icons") or ["₹", "NEWS", "%"])[:3]
-    ep["icons"] = (icons + ["₹", "%", "!"])[:3]
-    ep.setdefault("ticker", ep["breaking"])
+    words = sum(len(l["say"].split()) for l in lines)
+    assert words <= 130, f"बहुत लंबा: {words} शब्द"
+    ep["icons"] = ((ep.get("icons") or []) + ["₹", "NEWS", "%"])[:3]
+    ep.setdefault("ticker", ep.get("breaking", ""))
     return ep
 
 
 def write(c, out="script_today.json"):
-    prompt = build_prompt(c)
     if not os.getenv("GEMINI_API_KEY"):
-        print(prompt + "\n\n(GEMINI_API_KEY नहीं — ऊपर का prompt Gemini app में चलाकर JSON script_today.json में रख सकते हो)")
+        print(prompt_room(c) + "\n\n(GEMINI_API_KEY नहीं)")
         return None
     last = None
     for _ in range(3):
         try:
-            data = gemini.json_from(gemini.ask(prompt, json_mode=True, temperature=1.0))
-            eps = [clean(e) for e in data["episodes"]]
-            ep = eps[int(data.get("best", 0)) % len(eps)]
-            json.dump(data, open(ROOT / "episodes_today.json", "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+            room = gemini.json_from(gemini.ask(prompt_room(c), json_mode=True, temperature=1.0))
+            ep = clean(gemini.json_from(gemini.ask(prompt_script(room, c), json_mode=True, temperature=0.8)))
+            json.dump({"room": room, "episode": ep}, open(ROOT / "episodes_today.json", "w", encoding="utf-8"),
+                      ensure_ascii=False, indent=2)
             json.dump(ep, open(ROOT / out, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
             print(f"  topic: {ep.get('topic')} | Insta: {ep.get('insta_used')}")
             return ROOT / out
         except Exception as e:                              # noqa: BLE001
             last = e
+            print("  दोबारा कोशिश:", e)
     raise SystemExit(f"script नहीं बनी: {last}")
 
 

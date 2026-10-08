@@ -238,7 +238,7 @@ def bg_studio():
     return img
 
 
-def bg_mohalla(sign, sign_color):
+def bg_mohalla(sign, sign_color, sx=560):
     img = gradient((120, 190, 245), (255, 220, 170))
     p = Pen(img)
     p.ell((800, 420, 980, 600), (255, 210, 80))
@@ -250,8 +250,8 @@ def bg_mohalla(sign, sign_color):
             p.rect((wx, y0 + 60, wx + 60, y0 + 140), (90, 130, 170), 6, INK, 3)
     p.line([(0, 600), (1080, 560)], (60, 60, 60), 4)                     # बिजली का तार
     p.rect((0, 1300, W, 1920), (190, 160, 120), 0)
-    p.rect((560, 430, 1000, 540), sign_color, 14, INK, 5)
-    p.text((780, 487), sign, 54, "white")
+    p.rect((sx, 430, sx + 440, 540), sign_color, 14, INK, 5)
+    p.text((sx + 220, 487), sign, 54, "white")
     return img
 
 
@@ -300,7 +300,88 @@ SCENES = {
     "dadi_call": lambda: bg_studio(),
     "riya_call": lambda: bg_studio(),
     "bunty_call": lambda: bg_studio(),
+    "riya_live": lambda: bg_mohalla("Free Wi-Fi Zone", (60, 90, 200)),
+    "riya": lambda: bg_mohalla("Free Wi-Fi Zone", (60, 90, 200), sx=40),
 }
+
+_street = {}
+
+
+def street_sprite(who, expr, mouth, height=900):
+    """3D किरदार को सड़क वाले scene में खड़ा करने के लिए (पैर ज़मीन पर)."""
+    key = (who, expr, mouth, height)
+    if key not in _street:
+        p = ROOT / "assets" / who / f"{expr}_{mouth}.webp"
+        if not p.exists():
+            p = ROOT / "assets" / who / f"{expr}_closed.webp"
+        if not p.exists():
+            p = ROOT / "assets" / who / "neutral_closed.webp"
+        im = Image.open(p).convert("RGBA")
+        im = im.resize((int(im.width * height / im.height), height), Image.LANCZOS)
+        sh = Image.new("RGBA", (im.width, 60), (0, 0, 0, 0))   # पैरों के नीचे परछाईं
+        ImageDraw.Draw(sh).ellipse((im.width * 0.2, 10, im.width * 0.8, 50), fill=(0, 0, 0, 70))
+        _street[key] = (im, sh)
+    return _street[key]
+
+
+# ---------------------------------------------------------------- 3D रिया: Instagram LIVE
+LIVE_COMMENTS = ["mummy same karti hai", "relatable 100%", "didi sahi bola", "mera ghar exact yahi",
+                 "tag kar raha hu bhai ko", "hahaha sach", "ye to har ghar ki kahani", "papa dekh lo"]
+
+
+def live_window(expr, mouth, who="riya"):
+    key = ("live", who, expr, mouth)
+    if key in _call_cache:
+        return _call_cache[key]
+    x0, y0, x1, y1 = CALL
+    w, h = x1 - x0, y1 - y0 + 80
+    home = Image.open(ROOT / "assets" / "dadi" / "home.jpg").convert("RGB")
+    home = home.resize((w, int(home.height * w / home.width))).crop((0, 120, w, 120 + h))
+    ch = Image.open(ROOT / "assets" / who / f"{expr}_{mouth}.webp").convert("RGBA")
+    home.paste(ch, (w // 2 - ch.width // 2 + 10, 110), ch)
+    win = Image.new("RGBA", (w + 24, h + 24), (0, 0, 0, 0))
+    g = Image.new("RGBA", win.size)
+    gd = ImageDraw.Draw(g)
+    for yy in range(win.height):                      # Instagram gradient border
+        k = yy / win.height
+        gd.line([(0, yy), (win.width, yy)], fill=(int(250 - 40 * k), int(80 + 60 * k), int(150 + 80 * k), 255))
+    m = Image.new("L", win.size, 0)
+    ImageDraw.Draw(m).rounded_rectangle((0, 0, win.width - 1, win.height - 1), 40, fill=255)
+    win.paste(g, (0, 0), m)
+    mask = Image.new("L", (w, h), 0)
+    ImageDraw.Draw(mask).rounded_rectangle((0, 0, w - 1, h - 1), 30, fill=255)
+    win.paste(home, (12, 12), mask)
+    d = ImageDraw.Draw(win)
+    d.ellipse((34, 34, 104, 104), fill=(255, 255, 255), outline=(240, 90, 160), width=6)
+    d.text((69, 69), "R", font=font(40), fill=(230, 80, 150), anchor="mm")
+    d.text((120, 56), "riya.ki.reels", font=font(34), fill="white", anchor="lm", stroke_width=3, stroke_fill=(0, 0, 0))
+    d.rounded_rectangle((120, 80, 210, 120), 10, fill=(230, 30, 90))
+    d.text((165, 100), "LIVE", font=font(28), fill="white", anchor="mm")
+    d.rounded_rectangle((222, 80, 360, 120), 10, fill=(0, 0, 0, 140))
+    d.text((291, 100), "2.4K देख रहे", font=font(24, False), fill="white", anchor="mm")
+    _call_cache[key] = win
+    return win
+
+
+def live_overlay(frame, ox, oy, ww, hh, t):
+    """तैरते दिल + नीचे चलते comments."""
+    d = ImageDraw.Draw(frame)
+    for k in range(6):
+        ph = (t * 0.6 + k / 6) % 1.0
+        x = ox + ww - 90 + 30 * math.sin(ph * 6 + k)
+        y = oy + hh - 120 - ph * 520
+        s = 26 * (1 - ph * 0.4)
+        col = [(255, 60, 110), (255, 120, 170), (255, 200, 60)][k % 3]
+        d.ellipse((x - s, y - s, x, y), fill=col)
+        d.ellipse((x - 4, y - s, x + s - 4, y), fill=col)
+        d.polygon([(x - s, y - s / 2), (x + s - 4, y - s / 2), (x - 2, y + s * 0.9)], fill=col)
+    base = int(t * 0.9)
+    for j in range(3):
+        txt = LIVE_COMMENTS[(base + j) % len(LIVE_COMMENTS)]
+        yy = oy + hh - 230 + j * 62
+        tw = d.textlength(txt, font=font(28, False))
+        d.rounded_rectangle((ox + 30, yy, ox + 60 + tw, yy + 48), 22, fill=(0, 0, 0))
+        d.text((ox + 45, yy + 24), txt, font=font(28, False), fill="white", anchor="lm")
 
 
 # ---------------------------------------------------------------- 3D दादी: खराब नेटवर्क वाली video call
@@ -354,7 +435,11 @@ def scene_frame(scene, speaker, mouth_open, blink):
         _bg[scene] = SCENES[scene]()
     img = _bg[scene].copy()
     p = Pen(img)
-    if scene.endswith("_call"):
+    if scene == "riya":
+        goat(p, 250, 960, 0.72, speaker == "bablu" and mouth_open, blink, mic_ang=-30)
+    elif scene == "riya_live":
+        goat(p, 190, 1000, 0.62, speaker == "bablu" and mouth_open, blink, mic_ang=-45)
+    elif scene.endswith("_call"):
         goat(p, 190, 1000, 0.62, speaker == "bablu" and mouth_open, blink, mic_ang=-45)
         p.rect((0, 1290, W, 1460), (150, 25, 40), 0)
         p.rect((0, 1290, W, 1306), (230, 190, 90), 0)
@@ -371,6 +456,32 @@ def scene_frame(scene, speaker, mouth_open, blink):
     out = img.resize((W, H), Image.LANCZOS)
     _cache[key] = out
     return out
+
+
+_badge = {}
+
+
+def insta_badge(name, age):
+    if name not in _badge:
+        f = font(40)
+        txt = f"INSTA TREND • {name}"
+        tw = int(ImageDraw.Draw(Image.new("RGB", (1, 1))).textlength(txt, font=f))
+        img = Image.new("RGBA", (tw + 80, 84), (0, 0, 0, 0))
+        g = Image.new("RGBA", img.size)
+        gd = ImageDraw.Draw(g)
+        for x in range(img.width):                       # Instagram जैसा gradient
+            k = x / img.width
+            gd.line([(x, 0), (x, 84)], fill=(int(250 - 60 * k), int(60 + 20 * k), int(120 + 100 * k), 255))
+        m = Image.new("L", img.size, 0)
+        ImageDraw.Draw(m).rounded_rectangle((0, 0, img.width - 1, 83), 42, fill=255)
+        img.paste(g, (0, 0), m)
+        ImageDraw.Draw(img).text((40, 42), txt, font=f, fill="white", anchor="lm")
+        _badge[name] = img
+    img = _badge[name]
+    s = min(1.0, age / 0.18)
+    if s < 1:
+        img = img.resize((max(1, int(img.width * s)), max(1, int(img.height * s))))
+    return img, (W // 2 - img.width // 2, 1366), img
 
 
 # ---------------------------------------------------------------- captions
@@ -506,11 +617,41 @@ def main(path="script.json", outname="bakra_news_demo.mp4"):
         mouth_open = speaking and loud(seg, t) > 0.035 and (fi % 3 != 0)
         blink = (fi % 90) in (0, 1, 2)
         frame = scene_frame(seg["scene"], seg["who"], mouth_open, blink).copy()
+        if seg["scene"] == "riya":                     # 3D रिया सड़क पर, पिंकी की जगह
+            talk = seg["who"] == "riya" and speaking
+            if talk:
+                lv = loud(seg, (fi - fi % 2) / FPS)
+                rm = "open" if lv > 0.09 else "half" if lv > 0.035 else "closed"
+                rex = seg.get("expr", "smug")
+            else:
+                rm, rex = "closed", "neutral"
+            im, sh = street_sprite("riya", rex, rm)
+            fx = 735 - im.width // 2
+            frame.paste(sh, (fx, 1270), sh)
+            frame.paste(im, (fx, 1300 - im.height), im)
+        if seg["scene"] == "riya_live":
+            talk = seg["who"] == "riya" and speaking
+            if talk:
+                lv = loud(seg, (fi - fi % 3) / FPS)
+                dm = "open" if lv > 0.09 else "half" if lv > 0.035 else "closed"
+                dex = seg.get("expr", "neutral")
+            else:
+                dm, dex = "closed", "smug"
+            cs = next(s for s in timeline if s["scene"] == "riya_live")["start"]
+            win = live_window(dex, dm)
+            pop = min(1, (t - cs) / 0.25)
+            if pop < 1:
+                win = win.resize((max(1, int(win.width * pop)), max(1, int(win.height * pop))))
+            ox = CALL[0] + (CALL[2] - CALL[0]) // 2 - win.width // 2
+            oy = 402 + (954 - win.height) // 2
+            frame.paste(win, (ox, oy), win)
+            if pop >= 1:
+                live_overlay(frame, ox, oy, win.width, win.height, t)
         if seg["scene"].endswith("_call"):
             cwho = seg["scene"][:-5]
             dadi_talk = seg["who"] == cwho and speaking
             if dadi_talk:
-                lv = loud(seg, (fi - fi % 3) / FPS)            # 8 fps जैसा video call
+                lv = loud(seg, (fi - fi % 2) / FPS)            # 12 fps, सिर्फ़ मुँह बदलता है
                 dm = "open" if lv > 0.09 else "half" if lv > 0.035 else "closed"
                 dex = seg.get("expr", "neutral")
             else:
@@ -553,6 +694,10 @@ def main(path="script.json", outname="bakra_news_demo.mp4"):
                     frame.paste(cap, (0, 1450), cap)
                     break
                 base += len(c)
+
+        # Insta trend वाली line पर गुलाबी badge
+        if speaking and seg.get("insta"):
+            frame.paste(*insta_badge(seg["insta"], t - seg["start"]))
 
         # आख़िरी card
         if t >= timeline[-1]["end"] + 0.2:

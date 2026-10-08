@@ -29,7 +29,7 @@ CAST = {
     "chacha": ("hm_psi", 0.92, 0.84),    # भैंसा चाचा: धीमे, भारी
     "pinky": ("hf_alpha", 1.05, 1.12),   # बिल्ली पिंकी: चुलबुली
     "dadi": ("hf_beta", 1.0, 0.90),      # 3D दादी (video call): भारी, बूढ़ी
-    "riya": ("hf_alpha", 1.0, 1.0),      # 3D रिया (video call): सपाट, sarcastic
+    "riya": ("hf_alpha", 1.05, 1.12),    # 3D रिया (सड़क पर, पिंकी वाली आवाज़): चुलबुली, sarcastic
     "bunty": ("hm_omega", 1.15, 1.02),   # 3D बंटी (video call): तेज़, जोशीला
 }
 
