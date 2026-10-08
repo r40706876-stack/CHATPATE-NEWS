@@ -1,11 +1,11 @@
-# बकरा न्यूज़ — रोज़ 2 बार (~9:15 सुबह, ~6:15 शाम IST) 3 scripts Telegram पर आती हैं.
+# बकरा न्यूज़ (काम की खबर, देसी अंदाज़) — रोज़ 2 बार (~8:30 सुबह, ~6:15 शाम IST) 3 scripts Telegram पर.
 # तुम 1 / 2 / 3 भेजो (0 = तीनों नई) → हर 15 मिनट पर check होता है → video Telegram पर.
 # Secrets: GEMINI_API_KEY, TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
 name: bakra-news
 on:
   schedule:
-    - cron: "44 3 * * *"     # scripts लिखो (सुबह)
-    - cron: "44 12 * * *"    # scripts लिखो (शाम)
+    - cron: "55 2 * * *"     # scripts लिखो (सुबह ~8:30 IST)
+    - cron: "44 13 * * *"    # scripts लिखो (शाम ~6:15 IST)
     - cron: "*/15 * * * *"   # तुम्हारा जवाब देखो
   workflow_dispatch:
     inputs:
@@ -15,10 +15,10 @@ on:
         options: [auto, write, check]
         default: auto
 concurrency:
-  group: bakra-${{ (github.event.schedule == '44 3 * * *' || github.event.schedule == '44 12 * * *' || inputs.mode == 'write') && 'write' || 'check' }}
+  group: bakra-${{ (github.event.schedule == '55 2 * * *' || github.event.schedule == '44 13 * * *' || inputs.mode == 'write') && 'write' || 'check' }}
   cancel-in-progress: false
 env:
-  MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || ((github.event.schedule == '44 3 * * *' || github.event.schedule == '44 12 * * *') && 'write' || 'check') }}
+  MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || ((github.event.schedule == '55 2 * * *' || github.event.schedule == '44 13 * * *') && 'write' || 'check') }}
   MODELS_DIR: models_cache
   GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
   TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
