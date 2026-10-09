@@ -44,23 +44,30 @@ def prompt_pick(c, n=3):
 
 {ALLOWED}
 
-इनमें से {n} अलग-अलग खबरें चुनो (अलग विषय: जैसे एक पैसा, एक नियम, एक त्योहार/योजना). हर एक के लिए Google पर
-खोजने लायक साफ़ query लिखो. सिर्फ़ JSON:
+इनमें से {n} अलग-अलग खबरें चुनो (अलग विषय: जैसे एक पैसा, एक नियम, एक त्योहार/योजना). हर एक के लिए Google News पर
+खोजने लायक छोटी query लिखो (2-5 शब्द, हिंदी में, जैसे "रेपो रेट बढ़ा" या "LPG आधार नियम"). सिर्फ़ JSON:
 {{"picks": [{{"topic": "खबर 8-12 शब्द", "why": "आम आदमी पर असर, एक लाइन", "query": "search query"}}]}}"""
 
 
-def prompt_facts(picks):
-    lst = "\n".join(f"{i + 1}. {p['topic']} — search: {p.get('query', p['topic'])}" for i, p in enumerate(picks))
-    return f"""Google Search करके इन खबरों के पक्के तथ्य निकालो (आज की तारीख़ के हिसाब से ताज़ा):
-{lst}
+def prompt_facts(picks, evidence):
+    """तथ्य: Google News की असली headlines से (Gemini का Search वाला कोटा बहुत कम है, इसलिए वो नहीं)."""
+    blocks = []
+    for i, p in enumerate(picks):
+        ev = evidence.get(i) or []
+        rows = "\n".join(f"   - {h} ({s}, {d})" for h, s, d in ev) or "   (कोई headline नहीं मिली)"
+        blocks.append(f"{i + 1}. {p['topic']}\n{rows}")
+    return f"""ये आज की खबरें हैं, और हर एक के नीचे Google News की असली headlines (प्रकाशक और तारीख़ के साथ):
+{chr(10).join(blocks)}
 
-नियम: सिर्फ़ वही लिखो जो search नतीजों में साफ़ लिखा है. अंक, तारीख़, नियम हूबहू. अंदाज़ा या अपनी जानकारी नहीं.
-अगर कोई बात पक्की नहीं मिली तो उसे छोड़ दो; अगर पूरी खबर ही पक्की नहीं तो "confidence": "low".
-सिर्फ़ JSON (कोई और text नहीं):
+इन headlines से पक्के तथ्य निकालो. नियम:
+- सिर्फ़ वही तथ्य जो headlines में साफ़ लिखा है — अंक, तारीख़, नियम हूबहू. अपनी जानकारी या अंदाज़ा बिल्कुल नहीं.
+- जो बात 2 या ज़्यादा प्रकाशकों में मिले, वो सबसे पक्की. headlines आपस में टकराएँ तो वो बात छोड़ दो.
+- confidence: "high" = 2+ प्रकाशक एक बात कहें; "medium" = एक भरोसेमंद प्रकाशक; "low" = headline नहीं या साफ़ नहीं.
+- "todo" सिर्फ़ तब, जब headline में हो; वरना "अपने बैंक/एजेंसी/दफ़्तर से पता करो" जैसा आम सुझाव.
+सिर्फ़ JSON:
 [{{"topic": "...", "confidence": "high/medium/low", "date": "कब से/कब तक",
-  "facts": ["तथ्य 1 (अंक/तारीख़ के साथ)", "तथ्य 2", "तथ्य 3"],
-  "who": "किस पर असर", "todo": "आम आदमी को क्या करना है (सिर्फ़ अगर स्रोत में हो)",
-  "source": "प्रकाशक/संस्था का नाम (जैसे PIB, RBI, Upstox, दैनिक भास्कर)"}}]"""
+  "facts": ["तथ्य 1 (अंक/तारीख़ के साथ)", "तथ्य 2"], "who": "किस पर असर", "todo": "...",
+  "source": "प्रकाशकों के नाम, जैसे 'दैनिक भास्कर, ABP News'"}}]"""
 
 
 def prompt_write(packs):
@@ -130,7 +137,11 @@ def write_options(c, n=3):
     picks = gemini.json_from(gemini.ask(prompt_pick(c, n), json_mode=True, temperature=0.4)).get("picks", [])[:n]
     for p in picks:
         print("  चुनी:", p.get("topic"), "|", p.get("why", ""))
-    packs = gemini.json_from(gemini.ask(prompt_facts(picks), search=True, temperature=0.2))
+    import topics
+    evidence = {i: topics.rss_search(p.get("query") or p["topic"]) for i, p in enumerate(picks)}
+    for i, p in enumerate(picks):
+        print(f"  सबूत: {p.get('topic')} → {len(evidence[i])} headlines")
+    packs = gemini.json_from(gemini.ask(prompt_facts(picks, evidence), json_mode=True, temperature=0.1))
     packs = [p for p in packs if str(p.get("confidence", "")).lower() != "low" and p.get("facts")]
     for p in packs:
         print("  तथ्य:", p.get("topic"), "|", p.get("source"), "|", p.get("confidence"))

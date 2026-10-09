@@ -134,6 +134,26 @@ def kaam_news(per_query=4, n=24):
     return out[:n]
 
 
+def rss_search(query, n=8, days=7):
+    """Google News में खोज (Gemini के बिना, free): [(headline, source, date)]."""
+    url = ("https://news.google.com/rss/search?q=" + urllib.parse.quote(f"{query} when:{days}d") + "&hl=hi&gl=IN&ceid=IN:hi")
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+        with urllib.request.urlopen(req, timeout=20) as r:
+            root = ET.fromstring(r.read())
+    except Exception as e:                            # noqa: BLE001
+        print("  खोज नहीं हुई:", query, e)
+        return []
+    out = []
+    for it in root.iter("item"):
+        title = (it.findtext("title") or "").strip()
+        if title:
+            out.append((title.rsplit(" - ", 1)[0], title.rsplit(" - ", 1)[-1], (it.findtext("pubDate") or "")[:16]))
+        if len(out) >= n:
+            break
+    return out
+
+
 def manual():
     f = ROOT / "topics.txt"
     if not f.exists():
