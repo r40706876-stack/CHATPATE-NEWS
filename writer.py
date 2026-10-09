@@ -301,7 +301,7 @@ def clean(ep, strict=True):
         hit = sum(kw[:3] in l["say"] for l in guests)
         assert hit >= max(1, len(guests) - 1), f"key_word '{kw}' मेहमानों की lines में नहीं — joke खबर से नहीं जुड़े"
     words = sum(len(l["say"].split()) for l in lines)
-    assert words <= 160, f"बहुत लंबा: {words} शब्द"
+    assert words <= 160 or not strict, f"बहुत लंबा: {words} शब्द"
     ep["icons"] = ((ep.get("icons") or []) + ["₹", "NEWS", "%"])[:3]
     ep.setdefault("ticker", ep.get("breaking", ""))
     return ep

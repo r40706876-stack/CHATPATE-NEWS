@@ -13,7 +13,7 @@ import writer
 
 ROOT = Path(__file__).parent
 ICONS = {"cylinder", "calendar", "rupee", "bank", "phone", "train", "percent", "check", "alert", "gift"}
-GOLD = ROOT / "examples_news_lpg.json"
+GOLDS = [ROOT / "examples_news_lpg.json", ROOT / "examples_news_rbi.json"]   # मालिक को पसंद आए नमूने
 
 ALLOWED = """सिर्फ़ ऐसी खबरें जो सीधे आम परिवार पर असर डालें: पैसा/दाम (गैस, पेट्रोल, सब्ज़ी, रिचार्ज), नए नियम (बैंक, UPI,
 आधार, PAN, टैक्स, ट्रेन टिकट, ड्राइविंग), सरकारी योजना (कौन ले सकता है, कैसे), छुट्टियाँ/त्योहार की तारीख़ें, exam/भर्ती
@@ -29,6 +29,45 @@ def _cands(c):
             extra = it.get("what") or " | ".join(it.get("headlines", [])[:1]) or it.get("source", "")
             out.append(f"- [{label}] {it['trend']}" + (f" ({extra})" if extra else ""))
     return "\n".join(out) or "(कोई नहीं — त्योहार/नियम वाली ताज़ा खबर ख़ुद Search से ढूँढो)"
+
+
+def gold_text(path):
+    g = json.load(open(path, encoding="utf-8"))
+    rows = []
+    for l in g["lines"]:
+        c = l.get("card")
+        rows.append(f"  {l['who']}: {l['say']}" + (f"   [CARD: {c['tag']} | {c['big']} | {c.get('sub', '')}]" if c else ""))
+    return f"[{g.get('topic')}]\n" + "\n".join(rows)
+
+
+MASALA = """मसाले का पैमाना (मालिक को यही पसंद आया — हर line इस स्तर की हो):
+- बबलू का "मतलब…" = तथ्य को घर/मोहल्ले की किसी ठोस तस्वीर से जोड़ो, आख़िर में हल्की पलटी:
+    "मतलब अब सिलेंडर भी पूछ रहा है: पहले बताओ, तुम हो कौन?"
+    "सब्सिडी ऐसे ग़ायब, जैसे मंदिर के बाहर से नई चप्पल!"
+    "मतलब पापा का 'बाहर खाना खाएँगे' वाला वादा, फिर अगले महीने पर!"
+    "बैंक को पैसा महँगा मिलेगा, तो आपको सस्ता कौन देगा, भइया?"
+- किरदार की चुटकी = शब्दों का खेल या मुहावरा उलटना, सबसे मज़ेदार शब्द आख़िर में:
+    "मशीन पर अंगूठा नहीं लगाया, तो सब्सिडी अंगूठा दिखा देगी!"   "अब उधार वाली चाय पर भी ब्याज लगेगा!"
+- दादी = किसे भेजना है, उस आदमी का चुटीला चित्रण: "उस लल्ला को भेजो, जो हर चीज़ EMI पर उठा लाता है!"
+- hook = चौंकाने वाला/चुटीला: "गैस सिलेंडर ने नया नखरा दिखाया है!", "EMI वालों के लिए बवाल वाली खबर!"
+ख़राब (सिर्फ़ सलाह/सीधी बात, कोई तस्वीर या पलटी नहीं — ऐसा कभी नहीं):
+    "बिना गारंटी के लाख रुपये मिल रहे हैं, अब बहाने छोड़ो और काम शुरू करो!"
+    "नाम बदलना कोई खेल नहीं, अधिकारी भाव नहीं देंगे!"
+"""
+
+
+def prompt_masala(eps):
+    """चौथा कदम: तथ्य वैसे ही, सिर्फ़ मज़ाकिया हिस्से और तीखे."""
+    return f"""तुम "बकरा न्यूज़" के comedy editor हो ("खबर सौ टका पक्की, अंदाज़ अधपका!"). ये scripts तैयार हैं:
+{json.dumps(eps, ensure_ascii=False, indent=1)}
+
+{MASALA}
+काम: हर script में सिर्फ़ ये हिस्से दोबारा लिखो, ताकि हर एक ऊपर वाले पैमाने तक पहुँचे:
+1. पहली line (hook) और "hook_text"   2. card वाली हर bablu line का "मतलब/यानी…" वाला हिस्सा (तथ्य वाला हिस्सा शब्दशः वैसा ही)
+3. chacha/pinky की line   4. dadi की line
+नियम: card, अंक, तारीख़, स्रोत बिल्कुल नहीं बदलना. कोई नया तथ्य नहीं. हर line ≤ 22 शब्द. देसी शब्द (भइया, गज़ब, बवाल, भौकाल,
+जुगाड़, तनिक, लल्ला) स्वाभाविक जगह. "say" में अंक शब्दों में और English short form देवनागरी में; "caption" भी उसी हिसाब से बदलो.
+वही JSON list लौटाओ (उतनी ही scripts, उतनी ही lines, वही क्रम) — सिर्फ़ JSON."""
 
 
 def prompt_pick(c, n=3):
@@ -71,9 +110,7 @@ def prompt_facts(picks, evidence):
 
 
 def prompt_write(packs):
-    gold = json.load(open(GOLD, encoding="utf-8")) if GOLD.exists() else {}
-    gold_lines = "\n".join(f"  {l['who']}: {l['say']}" + (f"   [CARD: {l['card']['tag']} | {l['card']['big']} | {l['card'].get('sub', '')}]"
-                                                            if l.get("card") else "") for l in gold.get("lines", []))
+    gold_lines = "\n\n".join(gold_text(g) for g in GOLDS if g.exists())
     return f"""तुम "बकरा न्यूज़" के head writer हो. अंदाज़: "खबर सौ टका पक्की, अंदाज़ अधपका!" — तथ्य पक्के, बोली गाँव-कस्बे वाली.
 तथ्य (सिर्फ़ इन्हीं से लिखना, कुछ जोड़ना नहीं):
 {json.dumps(packs, ensure_ascii=False, indent=1)}
@@ -99,7 +136,8 @@ icon इनमें से: {", ".join(sorted(ICONS))}.
 "यूपीआई", "वाईफ़ाई"), "caption" में अंकों में (1 अक्टूबर, 90%), English शब्द Roman में चल सकते हैं.
 कोई hashtag line में नहीं. किसी असली इंसान/नेता/धर्म/जाति पर मज़ाक नहीं.
 
-हमारा सबसे अच्छा नमूना (ढाँचा और अंदाज़ ऐसा ही — शब्द मत दोहराना):
+{MASALA}
+हमारे सबसे अच्छे नमूने (ढाँचा और अंदाज़ ऐसा ही — शब्द मत दोहराना):
 {gold_lines}
 
 सिर्फ़ JSON — हर खबर का एक episode:
@@ -111,25 +149,37 @@ icon इनमें से: {", ".join(sorted(ICONS))}.
   "caption_post": "एक मज़ेदार लाइन + वही सवाल + 'Family group में भेजो' + स्रोत: ... + 4-5 hashtags + (AI से बने किरदार)"}}]"""
 
 
-def finish(ep):
-    """काम की खबर वाले episode को पक्का करो."""
+def finish(ep, strict=True):
+    """काम की खबर वाले episode को पक्का करो. strict=False: लंबाई/cards की सख़्ती ढीली (कुछ भी न बने, उससे अच्छा)."""
     ep["format"], ep["label"] = "explain", "काम की खबर"
     ep.setdefault("key_word", "")
     ep.setdefault("icons", ["₹", "NEWS", "%"])
+    ep["source"] = ep.get("source") or "Google News"
+    ep["lines"] = [l for l in ep["lines"] if l.get("who") in writer.WHO and str(l.get("say", "")).strip()]
+    for ln in ep["lines"]:                                  # caption गड़बड़ हो तो बोली गई line ही caption
+        cap = str(ln.get("caption") or "")
+        if len(re.findall(r"[\u0900-\u097F]", cap)) < len(re.findall(r"[A-Za-z]", cap)) or len(cap) < 4:
+            ln["caption"] = ln["say"]
+    if not strict and len(ep["lines"]) > 10:
+        ep["lines"] = ep["lines"][:9] + ep["lines"][-1:]
     for ln in ep["lines"]:
         c = ln.get("card")
         if c:
-            assert c.get("big"), "card खाली"
+            if not c.get("big"):
+                ln.pop("card")
+                continue
             c["icon"] = c.get("icon") if c.get("icon") in ICONS else "check"
             c["big"] = str(c["big"])[:40]
             c["tag"] = str(c.get("tag", ""))[:28]
             c["sub"] = str(c.get("sub", ""))[:70]
     ep = writer.clean(ep, strict=False)
     n_cards = sum(1 for l in ep["lines"] if l.get("card"))
-    assert 2 <= n_cards <= 4, f"cards: {n_cards}"
     words = sum(len(l["say"].split()) for l in ep["lines"])
-    assert words <= 120, f"बहुत लंबा: {words} शब्द"
-    assert ep.get("source"), "स्रोत नहीं"
+    if strict:
+        assert 2 <= n_cards <= 4, f"cards: {n_cards}"
+        assert words <= 165, f"बहुत लंबा: {words} शब्द"
+    else:
+        assert n_cards >= 1, "एक भी card नहीं"
     return ep
 
 
@@ -147,12 +197,28 @@ def write_options(c, n=3):
         print("  तथ्य:", p.get("topic"), "|", p.get("source"), "|", p.get("confidence"))
     if not packs:
         raise SystemExit("एक भी खबर के पक्के तथ्य नहीं मिले")
+    raw = gemini.json_from(gemini.ask(prompt_write(packs), json_mode=True, temperature=0.8))
+    raw = [r for r in raw if isinstance(r, dict) and r.get("lines")]
+    try:                                                    # चौथा कदम: मसाला तेज़ करो (तथ्य/cards वही)
+        spicy = gemini.json_from(gemini.ask(prompt_masala(raw), json_mode=True, temperature=0.9))
+        if isinstance(spicy, list) and len(spicy) == len(raw):
+            for old, new in zip(raw, spicy):
+                if len(new.get("lines", [])) == len(old["lines"]):
+                    for lo, ln in zip(old["lines"], new["lines"]):
+                        if ln.get("say") and ln.get("who") == lo["who"]:
+                            lo["say"], lo["caption"] = ln["say"], ln.get("caption") or ln["say"]
+                    old["hook_text"] = new.get("hook_text") or old.get("hook_text")
+            print("  मसाला: lines और तीखी कीं")
+    except Exception as e:                                  # noqa: BLE001
+        print("  मसाला वाला कदम छोड़ा:", repr(e)[:120])
     eps = []
-    for ep in gemini.json_from(gemini.ask(prompt_write(packs), json_mode=True, temperature=0.8)):
-        try:
-            eps.append(finish(ep))
-        except Exception as e:                              # noqa: BLE001
-            print("  episode छोड़ा:", ep.get("topic"), "—", e)
+    for ep in raw:
+        for strict in (True, False):
+            try:
+                eps.append(finish(json.loads(json.dumps(ep)), strict))
+                break
+            except Exception as e:                          # noqa: BLE001
+                print(f"  episode ({'सख़्त' if strict else 'ढीला'}) नहीं बना:", ep.get("topic"), "—", e)
     if not eps:
         raise SystemExit("एक भी script नहीं बनी")
     return eps
