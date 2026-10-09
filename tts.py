@@ -265,7 +265,7 @@ WORDS = {"wifi": "वाईफ़ाई", "wi-fi": "वाईफ़ाई", "ree
          "offline": "ऑफ़लाइन", "app": "ऐप", "instagram": "इंस्टाग्राम", "video": "वीडियो", "comment": "कमेंट",
          "follow": "फ़ॉलो", "share": "शेयर", "sale": "सेल", "ok": "ओके", "loan": "लोन", "bank": "बैंक", "mobile": "मोबाइल",
          "recharge": "रिचार्ज", "data": "डेटा", "google": "गूगल", "youtube": "यूट्यूब", "marie": "मैरी", "ketchup": "केचप",
-         "maggi": "मैगी", "family": "फ़ैमिली", "group": "ग्रुप", "save": "सेव", "live": "लाइव", "news": "न्यूज़"}
+         "maggi": "मैगी", "family": "फ़ैमिली", "group": "ग्रुप", "save": "सेव", "live": "लाइव", "news": "न्यूज़", "and": "और", "or": "या", "the": ""}
 
 
 def speakable(text):
