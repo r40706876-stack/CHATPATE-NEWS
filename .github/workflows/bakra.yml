@@ -1,11 +1,11 @@
-# बकरा न्यूज़ (काम की खबर, देसी अंदाज़) — रोज़ 2 बार (~8:30 सुबह, ~6:15 शाम IST) 3 scripts Telegram पर.
+# बकरा न्यूज़ (काम की खबर, देसी अंदाज़) — रोज़ 2 बार (~8:30 सुबह, ~7:15 शाम IST) 3 scripts Telegram पर.
 # तुम 1 / 2 / 3 भेजो (0 = तीनों नई) → हर 15 मिनट पर check होता है → video Telegram पर.
-# Secrets: GEMINI_API_KEY, TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
+# Secrets: GEMINI_API_KEY (+ GEMINI_API_KEY2 जब पहली का कोटा ख़त्म हो), TELEGRAM_BOT_TOKEN, TELEGRAM_CHAT_ID
 name: bakra-news
 on:
   schedule:
     - cron: "55 2 * * *"     # scripts लिखो (सुबह ~8:30 IST)
-    - cron: "44 13 * * *"    # scripts लिखो (शाम ~6:15 IST)
+    - cron: "44 13 * * *"    # scripts लिखो (शाम ~7:15 IST)
     - cron: "*/15 * * * *"   # तुम्हारा जवाब देखो
   workflow_dispatch:
     inputs:
@@ -21,6 +21,7 @@ env:
   MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || ((github.event.schedule == '55 2 * * *' || github.event.schedule == '44 13 * * *') && 'write' || 'check') }}
   MODELS_DIR: models_cache
   GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+  GEMINI_API_KEY2: ${{ secrets.GEMINI_API_KEY2 }}
   TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
   TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
 jobs:
