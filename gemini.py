@@ -9,6 +9,7 @@ import urllib.request
 BASE = "https://generativelanguage.googleapis.com/v1beta"
 _models = {}                                      # हर key की अपनी model list
 _dead = set()
+_gone = set()                                     # 404 वाले (बंद हो चुके) models
 
 
 def keys():
@@ -69,6 +70,12 @@ def ask(prompt, search=False, json_mode=False, temperature=0.9, prefer=None):
             _dead.add(key)
             if n < len(ks):
                 print(f"    key {n} का कोटा ख़त्म → key {n + 1}")
+        except RuntimeError as e:                      # कोई और गड़बड़ — अगली key भी आज़माओ
+            last = e
+            if n < len(ks):
+                print(f"    key {n} नहीं चली → key {n + 1}")
+            elif not [k for k in ks if k in _dead]:
+                raise
     raise QuotaOver("सारी Gemini keys का आज का कोटा ख़त्म")
 
 
@@ -79,7 +86,7 @@ def _ask(key, prompt, search, json_mode, temperature, prefer):
     elif json_mode:
         body["generationConfig"]["responseMimeType"] = "application/json"
     errors = []
-    order = models(key)
+    order = [m for m in models(key) if m not in _gone]
     if prefer:                                        # जैसे "pro": पहले वो, फिर बाक़ी
         order = [m for m in order if prefer in m] + [m for m in order if prefer not in m]
     for rnd in range(2):                              # सीमा लगे तो रुको नहीं, अगला model; सब पर लगे तभी एक बार रुको
@@ -93,7 +100,9 @@ def _ask(key, prompt, search, json_mode, temperature, prefer):
             except urllib.error.HTTPError as e:
                 msg = e.read().decode("utf-8", "ignore")[:3000]
                 errors.append(f"{model}: {e.code} {msg[:120]}")
-                daily = e.code == 429 and ("PerDay" in msg or "limit: 0" in msg)
+                if e.code == 404:
+                    _gone.add(model)
+                daily = e.code == 429 and "PerMinute" not in msg       # मिनट वाली नहीं = दिन का कोटा ख़त्म
                 daily_hits += daily
                 busy |= e.code in (429, 503) and not daily
             except Exception as e:                    # noqa: BLE001
