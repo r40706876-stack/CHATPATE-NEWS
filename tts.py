@@ -285,12 +285,16 @@ def speak_script(script, out):
     """पूरी script एक ही engine से — ताकि किसी किरदार की आवाज़ बीच में न बदले."""
     out.mkdir(parents=True, exist_ok=True)
     script = dict(script, lines=[dict(l, say=speakable(l["say"])) for l in script["lines"]])
-    key = os.getenv("GEMINI_API_KEY")
-    order = ["gemini", "edge", "kokoro"] if key else ["edge", "kokoro"]
+    import gemini as _g
+    gkeys = _g.keys()                                  # पहली key की आवाज़ का कोटा ख़त्म हो तो दूसरी
+    key = gkeys[0] if gkeys else None
+    order = (["gemini"] * len(gkeys)) + ["edge", "kokoro"]
     if os.getenv("TTS_ENGINE") in order:
         order = order[order.index(os.getenv("TTS_ENGINE")):]
-    last = None
+    last, gi = None, 0
     for engine in order:
+        if engine == "gemini":
+            key, gi = gkeys[gi], gi + 1
         try:
             audios = make_all(script, engine, out, key)
             break

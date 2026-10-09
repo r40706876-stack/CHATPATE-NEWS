@@ -7,7 +7,14 @@ import urllib.error
 import urllib.request
 
 BASE = "https://generativelanguage.googleapis.com/v1beta"
-_models = []
+_models = {}                                      # हर key की अपनी model list
+_dead = set()
+
+
+def keys():
+    """सारी Gemini keys क्रम से: पहली का कोटा ख़त्म हो तो दूसरी."""
+    ks = [os.getenv(n, "").strip() for n in ("GEMINI_API_KEY", "GEMINI_API_KEY2", "GEMINI_API_KEY3")]
+    return list(dict.fromkeys(k for k in ks if k))
 
 
 def _get(url, key, body=None):
@@ -19,8 +26,8 @@ def _get(url, key, body=None):
 
 def models(key):
     """Is key par jo text models chalte hain, unki list (flash pehle)."""
-    if _models:
-        return _models
+    if key in _models:
+        return _models[key]
     names = []
     try:
         data = _get(f"{BASE}/models?pageSize=200", key)
@@ -39,9 +46,9 @@ def models(key):
     names.sort(key=rank)
     env = os.getenv("GEMINI_MODEL")
     pros = [n for n in names if "pro" in n][:2]
-    _models[:] = ([env] if env else []) + names[:5] + [p for p in pros if p not in names[:5]] + ["gemini-flash-latest"]
-    print("  Gemini models:", ", ".join(_models))
-    return _models
+    _models[key] = ([env] if env else []) + names[:5] + [p for p in pros if p not in names[:5]] + ["gemini-flash-latest"]
+    print("  Gemini models:", ", ".join(_models[key]))
+    return _models[key]
 
 
 class QuotaOver(RuntimeError):
@@ -49,7 +56,23 @@ class QuotaOver(RuntimeError):
 
 
 def ask(prompt, search=False, json_mode=False, temperature=0.9, prefer=None):
-    key = os.environ["GEMINI_API_KEY"]
+    """पहली key से; उसका आज का कोटा ख़त्म हो तो अगली key से."""
+    ks = keys()
+    if not ks:
+        raise RuntimeError("GEMINI_API_KEY नहीं मिली")
+    for n, key in enumerate(ks, 1):
+        if key in _dead:                              # इस run में पहले ही ख़त्म मिली — सीधे अगली
+            continue
+        try:
+            return _ask(key, prompt, search, json_mode, temperature, prefer)
+        except QuotaOver:
+            _dead.add(key)
+            if n < len(ks):
+                print(f"    key {n} का कोटा ख़त्म → key {n + 1}")
+    raise QuotaOver("सारी Gemini keys का आज का कोटा ख़त्म")
+
+
+def _ask(key, prompt, search, json_mode, temperature, prefer):
     body = {"contents": [{"parts": [{"text": prompt}]}], "generationConfig": {"temperature": temperature}}
     if search:
         body["tools"] = [{"google_search": {}}]
