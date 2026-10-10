@@ -278,6 +278,7 @@ def speakable(text):
             return "".join(LETTER[c] for c in w)
         return w
     text = re.sub(r"[A-Za-z][A-Za-z-]*", word, text)
+    text = re.sub(r"₹\s*([\d,]+)", lambda m: m.group(1).replace(",", "") + " रुपये", text)
     return re.sub(r"(\d+)\s*%", r"\1 परसेंट", text)
 
 

@@ -173,6 +173,65 @@ def do_render(script_path):
     print(f"तैयार: {job / 'reel.mp4'}")
 
 
+SPEAKER = {"बबलू": "bablu", "चाचा": "chacha", "पिंकी": "pinky", "दादी": "dadi"}
+SCENE = {"chacha": "chacha", "pinky": "pinky", "dadi": "dadi_call"}
+TOPICS_HEAD = ("# यहाँ अपनी पूरी script लिखो — हर line ऐसे: \"बबलू: ...\", \"चाचा: ...\", \"पिंकी: ...\", \"दादी: ...\"\n"
+               "# सबसे पहले इसी पर video बनेगा (15 मिनट के अंदर), फिर ये अपने-आप ख़ाली हो जाएगी.\n"
+               "# या बस एक लाइन का topic/viral बात लिखो — Gemini उस पर script बनाएगा.\n")
+
+
+def user_script():
+    """topics.txt में तुम्हारी लिखी पूरी script (बबलू:/चाचा:/पिंकी:/दादी: वाली lines) हो तो उसका episode."""
+    tf = ROOT / "topics.txt"
+    if not tf.exists():
+        return None
+    lines = []
+    for raw in tf.read_text(encoding="utf-8").splitlines():
+        if raw.strip().startswith("#") or ":" not in raw:
+            continue
+        head, say = raw.split(":", 1)
+        who = next((v for k, v in SPEAKER.items() if k in head), None)
+        say = say.strip().strip('"“”')
+        if who and len(head) < 40 and say:
+            lines.append({"who": who, "say": say, "caption": say})
+    if len(lines) < 3:
+        return None
+    for i, ln in enumerate(lines):                      # बबलू उसी के पास जिससे बात कर रहा है
+        if ln["who"] != "bablu":
+            ln["scene"] = SCENE[ln["who"]]
+            ln["punch"] = ln["say"].endswith(("!", "?"))
+            if ln["who"] == "dadi":
+                ln["expr"] = "smug"
+        else:
+            nxt = next((l["who"] for l in lines[i + 1:i + 2] if l["who"] != "bablu"), None)
+            prv = lines[i - 1]["who"] if i and lines[i - 1]["who"] != "bablu" else None
+            ln["scene"] = SCENE.get(nxt or prv, "studio") if i else "studio"
+    first = re.sub(r"^ब्रेकिंग न्यूज़[!।]?\s*", "", lines[0]["say"])
+    head = re.split(r"[!?।]", first)[0].strip()
+    words = head.split()
+    return {"format": "explain", "label": "BREAKING", "user_script": True, "category": "user",
+            "topic": head, "breaking": " ".join(words[:12]), "hook_text": " ".join(words[:5]),
+            "source": "", "lines": lines,
+            "caption_post": first[:180] + "\n\nआपके घर में भी ऐसा होता है? कमेंट में बताओ 👇\n\n#बकरान्यूज़ #desicomedy #funnyreels\n(AI से बने किरदार)"}
+
+
+def take_user_script():
+    """तुम्हारी script मिली तो उसी पर video (Gemini की ज़रूरत नहीं)."""
+    ep = user_script()
+    if not ep:
+        return False
+    import telegram
+    tf = ROOT / "topics.txt"
+    keep = ROOT / "meri_scripts.txt"                    # पुरानी scripts का रिकॉर्ड
+    with open(keep, "a", encoding="utf-8") as f:
+        f.write(f"\n===== {ist():%Y-%m-%d %H:%M} =====\n" + tf.read_text(encoding="utf-8"))
+    tf.write_text(TOPICS_HEAD, encoding="utf-8")
+    json.dump(ep, open(CHOICE, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+    telegram.send_text(f"✅ आपकी script मिल गई ({len(ep['lines'])} lines): {ep['topic']}\n🎬 उसी पर video बन रहा है, 10-15 मिनट…")
+    print("  तुम्हारी script मिली —", len(ep["lines"]), "lines → सीधे video")
+    return True
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("mode", nargs="?", default="auto", choices=["write", "check", "render", "auto"])
@@ -183,6 +242,8 @@ def main():
     if a.script:
         return do_render(ROOT / a.script)
     mode = a.mode
+    if mode in ("write", "check", "auto") and not CHOICE.exists() and take_user_script():
+        return                                          # तुम्हारी script पहले — बाक़ी काम अगली बार
     if mode == "auto":
         mode = "check" if PENDING.exists() else "write"
     if mode == "write":
@@ -191,9 +252,11 @@ def main():
         do_check()
     if mode == "render" or (mode == "check" and CHOICE.exists() and a.mode == "auto"):
         if CHOICE.exists():
+            mine = json.load(open(CHOICE, encoding="utf-8")).get("user_script")
             do_render(CHOICE)
             CHOICE.unlink()
-            PENDING.unlink(missing_ok=True)
+            if not mine:                                # तुम्हारी script से Gemini वाली scripts नहीं मिटतीं
+                PENDING.unlink(missing_ok=True)
 
 
 if __name__ == "__main__":
