@@ -1,0 +1,19 @@
+name: viral-check-test
+on: workflow_dispatch
+jobs:
+  t:
+    runs-on: ubuntu-latest
+    permissions: {contents: write}
+    env:
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GEMINI_API_KEY2: ${{ secrets.GEMINI_API_KEY2 }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: python viral_selftest.py
+      - if: always()
+        run: |
+          git config user.name bot && git config user.email bot@users.noreply.github.com
+          git add -f viral_test.txt 2>/dev/null || true
+          git diff --cached --quiet && exit 0
+          git commit -m "viral test result"
+          for i in 1 2 3; do git pull --rebase -X theirs && git push && break; sleep 5; done

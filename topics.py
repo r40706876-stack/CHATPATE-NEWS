@@ -148,7 +148,7 @@ def rss_search(query, n=8, days=7):
     for it in root.iter("item"):
         title = (it.findtext("title") or "").strip()
         if title:
-            out.append((title.rsplit(" - ", 1)[0], title.rsplit(" - ", 1)[-1], (it.findtext("pubDate") or "")[:16]))
+            out.append((title.rsplit(" - ", 1)[0], title.rsplit(" - ", 1)[-1], (it.findtext("pubDate") or "")[:25]))
         if len(out) >= n:
             break
     return out

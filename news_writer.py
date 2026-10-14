@@ -187,13 +187,18 @@ def finish(ep, strict=True):
 
 
 def write_options(c, n=3):
-    picks = gemini.json_from(gemini.ask(prompt_pick(c, n), json_mode=True, temperature=0.4)).get("picks", [])[:n]
-    for p in picks:
-        print("  चुनी:", p.get("topic"), "|", p.get("why", ""))
-    import topics
-    evidence = {i: topics.rss_search(p.get("query") or p["topic"]) for i, p in enumerate(picks)}
-    for i, p in enumerate(picks):
-        print(f"  सबूत: {p.get('topic')} → {len(evidence[i])} headlines")
+    import viral_check as vc
+    picks = gemini.json_from(gemini.ask(prompt_pick(c, n * 2), json_mode=True, temperature=0.4)).get("picks", [])
+    for p in picks:                                         # पहली जाँच: खबर सच में आज उठी हुई है? (free, Gemini नहीं)
+        sc, why, heads = vc.trend(p.get("query") or p["topic"])
+        p["trend"], p["_heads"] = {"score": sc, "why": why}, heads
+        print(f"  {'✅' if sc >= vc.TREND_MIN else '❌'} trend {sc}/10: {p.get('topic')} | {why}")
+    picks.sort(key=lambda p: -p["trend"]["score"])
+    c["rejected"] = [p for p in picks if p["trend"]["score"] < vc.TREND_MIN]
+    picks = [p for p in picks if p["trend"]["score"] >= vc.TREND_MIN][:n]
+    if not picks:
+        raise NoViral(c["rejected"])
+    evidence = {i: p.pop("_heads") for i, p in enumerate(picks)}
     packs = gemini.json_from(gemini.ask(prompt_facts(picks, evidence), json_mode=True, temperature=0.1))
     packs = [p for p in packs if str(p.get("confidence", "")).lower() != "low" and p.get("facts")]
     for p in packs:
@@ -224,4 +229,22 @@ def write_options(c, n=3):
                 print(f"  episode ({'सख़्त' if strict else 'ढीला'}) नहीं बना:", ep.get("topic"), "—", e)
     if not eps:
         raise SystemExit("एक भी script नहीं बनी")
-    return eps
+    for ep in eps:                                          # हर script पर उसकी खबर का trend नंबर
+        w = set(str(ep.get("topic", "")).split())
+        best = max(picks, key=lambda p: len(w & set(str(p.get("topic", "")).split())))
+        ep["trend"] = best["trend"]
+    vc.connect(eps)                                         # दूसरी जाँच: लोग जुड़ेंगे? (Gemini 1 call)
+    good = [e for e in eps if (e.get("connect") or {}).get("score", vc.CONNECT_MIN) >= vc.CONNECT_MIN]
+    for e in eps:
+        print(f"  {'✅' if e in good else '❌'} connect {(e.get('connect') or {}).get('score', '?')}/10: {e.get('topic')}")
+    c["rejected"] += [e for e in eps if e not in good]
+    if not good:
+        raise NoViral(c["rejected"])
+    return good
+
+
+class NoViral(RuntimeError):
+    """कोई खबर/script viral पैमाने पर पास नहीं हुई."""
+    def __init__(self, rejected):
+        super().__init__("कोई पास नहीं")
+        self.rejected = rejected

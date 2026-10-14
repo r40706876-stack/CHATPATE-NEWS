@@ -55,6 +55,9 @@ def preview(eps):
             out.append(f"🪝 Hook: {ep['hook_text']}")
         if ep.get("hasi"):
             out.append(f"😂 क्यों चुना: {ep['hasi']}")
+        import viral_check
+        if viral_check.line(ep):
+            out.append(viral_check.line(ep))
         if ep.get("source"):
             out.append(f"🔎 स्रोत: {ep['source']}  ← तथ्य एक बार ज़रूर जाँच लेना")
         for ln in ep.get("lines", []):
@@ -82,6 +85,16 @@ def do_write(feed=None):
     except gemini.QuotaOver:
         telegram.send_text("⏳ Gemini का free कोटा अभी ख़त्म है। ये रोज़ दोपहर ~12:30 पर नया होता है, उसके बाद वाली बारी अपने-आप चलेगी।")
         print("  आज का Gemini कोटा ख़त्म — रुक गया")
+        return
+    except news_writer.NoViral as e:
+        rows = []
+        for r in e.rejected[:6]:
+            t, cn = r.get("trend") or {}, r.get("connect") or {}
+            rows.append(f"❌ {r.get('topic')}\n   📈 {t.get('score', '?')}/10 {t.get('why', '')}"
+                        + (f"\n   ❤️ {cn.get('score')}/10 — {cn.get('weak', '')}" if cn else ""))
+        telegram.send_text("🔍 आज की कोई खबर viral पैमाने पर पास नहीं हुई, इसलिए script नहीं भेजी।\n\n" + "\n".join(rows)
+                           + "\n\n👉 फिर भी नई कोशिश चाहिए तो 0 भेजो।")
+        json.dump({"sent_at": int(time.time()), "eps": []}, open(PENDING, "w", encoding="utf-8"))
         return
     json.dump({"sent_at": int(time.time()), "eps": eps}, open(PENDING, "w", encoding="utf-8"),
               ensure_ascii=False, indent=2)
@@ -142,7 +155,7 @@ def log_done(script):
         topic = str(script.get("topic") or script.get("breaking") or "").replace("|", " ").strip()
         f.write(f"{ist().date().isoformat()}|{script.get('category', 'other')}|{topic} {script.get('news_used', '')}".strip() + "\n")
         for k in ("insta_used", "trend"):
-            if script.get(k):
+            if isinstance(script.get(k), str) and script[k]:
                 f.write(str(script[k]).strip() + "\n")
         blob = json.dumps(script, ensure_ascii=False)
         tf = ROOT / "topics.txt"                       # topics.txt की इस्तेमाल हुई line भी done
