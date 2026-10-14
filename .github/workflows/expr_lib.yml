@@ -42,7 +42,7 @@ jobs:
           pip install -q -r lp/requirements_base.txt onnxruntime==1.18.0 "huggingface_hub[cli]<0.26"
           test -d lp_weights/liveportrait || huggingface-cli download KlingTeam/LivePortrait --local-dir lp_weights --exclude "*.git*" "README.md" "docs"
           ls -R lp_weights | head -40 > lp_weights_list.txt; mkdir -p assets/expr; cp lp_weights_list.txt assets/expr/weights_${{ matrix.who }}.txt
-          ln -s $GITHUB_WORKSPACE/lp_weights lp/pretrained_weights
+          rm -rf lp/pretrained_weights && ln -s $GITHUB_WORKSPACE/lp_weights lp/pretrained_weights
       - name: भाव लगाओ (CPU)
         run: |
           mkdir -p assets/expr out
