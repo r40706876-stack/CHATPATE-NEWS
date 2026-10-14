@@ -1,0 +1,120 @@
+           appearance_feature_extractor.pth done.                               
+           Load motion_extractor from                live_portrait_wrapper.py:49
+           /home/runner/work/CHATPATE-NEWS/CHATPATE-                            
+           NEWS/lp_weights/liveportrait/base_models/                            
+           motion_extractor.pth done.                                           
+           Load warping_module from                  live_portrait_wrapper.py:52
+           /home/runner/work/CHATPATE-NEWS/CHATPATE-                            
+           NEWS/lp_weights/liveportrait/base_models/                            
+           warping_module.pth done.                                             
+[15:01:53] Load spade_generator from                 live_portrait_wrapper.py:55
+           /home/runner/work/CHATPATE-NEWS/CHATPATE-                            
+           NEWS/lp_weights/liveportrait/base_models/                            
+           spade_generator.pth done.                                            
+           Load stitching_retargeting_module from    live_portrait_wrapper.py:59
+           /home/runner/work/CHATPATE-NEWS/CHATPATE-                            
+           NEWS/lp_weights/liveportrait/retargeting_                            
+           models/stitching_retargeting_module.pth                              
+           done.                                                                
+/opt/hostedtoolcache/Python/3.10.22/x64/lib/python3.10/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py:69: UserWarning: Specified provider 'CUDAExecutionProvider' is not in available provider names.Available providers: 'AzureExecutionProvider, CPUExecutionProvider'
+  warnings.warn(
+           FaceAnalysisDIY warmup time: 0.093s           face_analysis_diy.py:79
+           LandmarkRunner warmup time: 0.057s        human_landmark_runner.py:95
+           Load source image from                   live_portrait_pipeline.py:90
+           ../drv/ramesh_src.png                                                
+           Load from template:                     live_portrait_pipeline.py:108
+           assets/examples/driving/laugh.pkl, NOT                               
+           the video, so the cropping video and                                 
+           audio are both NULL.                                                 
+Traceback (most recent call last):
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/lp/inference.py", line 66, in <module>
+    main()
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/lp/inference.py", line 62, in main
+    live_portrait_pipeline.execute(args)
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/lp/src/live_portrait_pipeline.py", line 110, in execute
+    c_d_eyes_lst = driving_template_dct['c_eyes_lst'] if 'c_eyes_lst' in driving_template_dct.keys() else driving_template_dct['c_d_eyes_lst'] # compatible with previous keys
+KeyError: 'c_d_eyes_lst'
+
+real	0m5.016s
+user	0m3.231s
+sys	0m0.749s
+           NEWS/lp_weights/liveportrait/base_models/                            
+           motion_extractor.pth done.                                           
+           Load warping_module from                  live_portrait_wrapper.py:52
+           /home/runner/work/CHATPATE-NEWS/CHATPATE-                            
+           NEWS/lp_weights/liveportrait/base_models/                            
+           warping_module.pth done.                                             
+[15:01:56] Load spade_generator from                 live_portrait_wrapper.py:55
+           /home/runner/work/CHATPATE-NEWS/CHATPATE-                            
+           NEWS/lp_weights/liveportrait/base_models/                            
+           spade_generator.pth done.                                            
+           Load stitching_retargeting_module from    live_portrait_wrapper.py:59
+           /home/runner/work/CHATPATE-NEWS/CHATPATE-                            
+           NEWS/lp_weights/liveportrait/retargeting_                            
+           models/stitching_retargeting_module.pth                              
+           done.                                                                
+/opt/hostedtoolcache/Python/3.10.22/x64/lib/python3.10/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py:69: UserWarning: Specified provider 'CUDAExecutionProvider' is not in available provider names.Available providers: 'AzureExecutionProvider, CPUExecutionProvider'
+  warnings.warn(
+           FaceAnalysisDIY warmup time: 0.154s           face_analysis_diy.py:79
+           LandmarkRunner warmup time: 0.054s        human_landmark_runner.py:95
+           Load source image from                   live_portrait_pipeline.py:90
+           ../drv/ramesh_src.png                                                
+           Load driving image from                 live_portrait_pipeline.py:139
+           assets/examples/driving/d19.jpg                                      
+           Start making driving motion template... live_portrait_pipeline.py:144
+Making motion templates... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+[15:01:57] Dump motion template to                 live_portrait_pipeline.py:172
+           assets/examples/driving/d19.pkl                                      
+           Prepared pasteback mask done.           live_portrait_pipeline.py:183
+           The output of image-driven portrait     live_portrait_pipeline.py:272
+           animation is an image.                                               
+🚀Animating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:06
+Concatenating result... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+[15:02:04] Animated image:                         live_portrait_pipeline.py:515
+           ../lp_out/ramesh_src--d19.jpg                                        
+           Animated image with concat:             live_portrait_pipeline.py:516
+           ../lp_out/ramesh_src--d19_concat.jpg                                 
+
+real	0m10.572s
+user	0m17.693s
+sys	0m1.688s
+           appearance_feature_extractor.pth done.                               
+           Load motion_extractor from                live_portrait_wrapper.py:49
+           /home/runner/work/CHATPATE-NEWS/CHATPATE-                            
+           NEWS/lp_weights/liveportrait/base_models/                            
+           motion_extractor.pth done.                                           
+           Load warping_module from                  live_portrait_wrapper.py:52
+           /home/runner/work/CHATPATE-NEWS/CHATPATE-                            
+           NEWS/lp_weights/liveportrait/base_models/                            
+           warping_module.pth done.                                             
+[15:02:07] Load spade_generator from                 live_portrait_wrapper.py:55
+           /home/runner/work/CHATPATE-NEWS/CHATPATE-                            
+           NEWS/lp_weights/liveportrait/base_models/                            
+           spade_generator.pth done.                                            
+           Load stitching_retargeting_module from    live_portrait_wrapper.py:59
+           /home/runner/work/CHATPATE-NEWS/CHATPATE-                            
+           NEWS/lp_weights/liveportrait/retargeting_                            
+           models/stitching_retargeting_module.pth                              
+           done.                                                                
+/opt/hostedtoolcache/Python/3.10.22/x64/lib/python3.10/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py:69: UserWarning: Specified provider 'CUDAExecutionProvider' is not in available provider names.Available providers: 'AzureExecutionProvider, CPUExecutionProvider'
+  warnings.warn(
+           FaceAnalysisDIY warmup time: 0.091s           face_analysis_diy.py:79
+           LandmarkRunner warmup time: 0.054s        human_landmark_runner.py:95
+           Load source image from                   live_portrait_pipeline.py:90
+           ../drv/ramesh_src.png                                                
+           Load from template:                     live_portrait_pipeline.py:108
+           assets/examples/driving/aggrieved.pkl,                               
+           NOT the video, so the cropping video                                 
+           and audio are both NULL.                                             
+Traceback (most recent call last):
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/lp/inference.py", line 66, in <module>
+    main()
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/lp/inference.py", line 62, in main
+    live_portrait_pipeline.execute(args)
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/lp/src/live_portrait_pipeline.py", line 110, in execute
+    c_d_eyes_lst = driving_template_dct['c_eyes_lst'] if 'c_eyes_lst' in driving_template_dct.keys() else driving_template_dct['c_d_eyes_lst'] # compatible with previous keys
+KeyError: 'c_d_eyes_lst'
+
+real	0m2.942s
+user	0m3.102s
+sys	0m0.736s
