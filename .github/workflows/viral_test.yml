@@ -1,5 +1,8 @@
 name: viral-check-test
-on: workflow_dispatch
+on:
+  workflow_dispatch:
+    inputs:
+      script: {default: viral_selftest.py}
 jobs:
   t:
     runs-on: ubuntu-latest
@@ -9,7 +12,7 @@ jobs:
       GEMINI_API_KEY2: ${{ secrets.GEMINI_API_KEY2 }}
     steps:
       - uses: actions/checkout@v4
-      - run: python viral_selftest.py
+      - run: python ${{ inputs.script || 'viral_selftest.py' }}
       - if: always()
         run: |
           git config user.name bot && git config user.email bot@users.noreply.github.com
