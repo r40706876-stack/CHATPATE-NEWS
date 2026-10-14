@@ -10,6 +10,7 @@ jobs:
     env:
       GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
       GEMINI_API_KEY2: ${{ secrets.GEMINI_API_KEY2 }}
+      PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
     steps:
       - uses: actions/checkout@v4
       - run: python ${{ inputs.script || 'viral_selftest.py' }}
