@@ -12,6 +12,7 @@ Bakra News — तुम चुनो, फिर video बने.
 import argparse
 import datetime as dt
 import json
+import os
 import re
 import shutil
 import sys
@@ -160,9 +161,12 @@ def do_render(script_path):
     try:
         import tts
         tts.speak_script(script, job / "audio")
-        import render_reel
-        render_reel.AUDIO = job / "audio"
-        render_reel.main(str((job / "script.json").relative_to(ROOT)), str((job / "reel.mp4").relative_to(ROOT)))
+        if os.getenv("PIXABAY_API_KEY") and os.getenv("REEL_STYLE", "real") == "real":
+            import render_real as renderer                 # असली visuals वाला format
+        else:
+            import render_reel as renderer                 # पुराना कार्टून वाला
+        renderer.AUDIO = job / "audio"
+        renderer.main(str((job / "script.json").relative_to(ROOT)), str((job / "reel.mp4").relative_to(ROOT)))
     except Exception as e:                             # noqa: BLE001
         telegram.send_text(f"❌ video नहीं बना: {str(e)[:300]}\nवही नंबर दोबारा भेजो, फिर कोशिश करूँगा.")
         raise

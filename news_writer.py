@@ -131,6 +131,9 @@ pinky (पिंकी बिल्ली, Gen Z — फ़ोन/UPI/online व
 7. bablu आख़िरी: comment वाला सवाल, दो विकल्प ("एक, … दो, …") — "poll" में भी वही दो (2-4 शब्द).
 बोली: हर script में 2-3 मशहूर देहाती/देसी शब्द, जो पूरे उत्तर भारत में समझे जाते हैं — भइया, का बात है, गज़ब, बवाल,
 भौकाल, जुगाड़, तनिक, चकाचक, धाँसू, लल्ला, ठेठ, चौपाल, "ना भइया". स्वाभाविक जगह पर, ज़बरदस्ती नहीं, और card पर कभी नहीं.
+हर line में "visual": Pixabay पर खोजने लायक 2-3 English शब्द, जो उस line की बात दिखाएँ (ठोस चीज़, भारत से जुड़ी):
+जैसे "indian train", "gas cylinder kitchen", "bank queue india", "mobile payment", "indian wedding food", "calculator money".
+लगातार 2-3 lines का एक ही visual चलेगा; किरदारों के चेहरे नहीं दिखते, इसलिए visual हमेशा बात/चीज़ का हो.
 icon इनमें से: {", ".join(sorted(ICONS))}.
 "say" में अंक शब्दों में ("एक अक्टूबर", "नब्बे परसेंट") और English शब्द/short form देवनागरी में ("ईएमआई", "आरबीआई",
 "यूपीआई", "वाईफ़ाई"), "caption" में अंकों में (1 अक्टूबर, 90%), English शब्द Roman में चल सकते हैं.
@@ -143,7 +146,7 @@ icon इनमें से: {", ".join(sorted(ICONS))}.
 सिर्फ़ JSON — हर खबर का एक episode:
 [{{"topic": "...", "category": "money/rules/bank/festival/scheme/tech/travel/weather/other", "breaking": "6-9 शब्द, सच्ची headline",
   "hook_text": "3-6 शब्द, screen पर बड़ा", "source": "स्रोत का नाम", "poll": ["...", "..."],
-  "lines": [{{"who": "bablu", "say": "...", "caption": "...", "card": {{"tag": "...", "big": "...", "sub": "...", "icon": "..."}}}},
+  "lines": [{{"who": "bablu", "say": "...", "caption": "...", "visual": "indian train", "card": {{"tag": "...", "big": "...", "sub": "...", "icon": "..."}}}},
             {{"who": "chacha", "say": "...", "caption": "...", "punch": true}},
             {{"who": "dadi", "say": "...", "caption": "...", "punch": true, "expr": "smug"}}],
   "caption_post": "एक मज़ेदार लाइन + वही सवाल + 'Family group में भेजो' + स्रोत: ... + 4-5 hashtags + (AI से बने किरदार)"}}]"""
