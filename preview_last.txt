@@ -1,6 +1,8 @@
-mobile payment india → VideoBG
-police cyber crime → VideoBG
-indian wedding → VideoBG
-customer service call → VideoBG
-grandmother smartphone → VideoBG
-smartphone hand → VideoBG
+indian railway platform → VideoBG
+vande bharat train → VideoBG
+crowded indian train → VideoBG
+tea stall india → VideoBG
+irctc train ticket → VideoBG
+smartphone video call → VideoBG
+old indian woman → VideoBG
+railway tracks india → VideoBG
