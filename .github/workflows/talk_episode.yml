@@ -5,7 +5,9 @@ on:
     inputs:
       script: {description: "episode की JSON (repo में)", default: "episodes/bijli.json"}
       prep: {description: "full / extcrop", default: "full"}
-      pose: {description: "सिर हिलने का अंदाज़ 0-45", default: "8"}
+      pose: {description: "सिर हिलने का अंदाज़ 0-45", default: "0"}
+      still: {description: "सिर स्थिर (yes = सिर्फ़ होंठ/आँख/चेहरा, शांत anchor जैसा)", default: "yes"}
+      expr: {description: "चेहरे के भाव की ताकत", default: "1.0"}
 env:
   GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
   GEMINI_API_KEY2: ${{ secrets.GEMINI_API_KEY2 }}
@@ -68,7 +70,8 @@ jobs:
           cd st
           time python inference.py --driven_audio ../st_in/${{ matrix.line }}/talk.wav \
             --source_image ../st_in/${{ matrix.line }}/source.png --result_dir ../st_out/${{ matrix.line }} \
-            --preprocess ${{ inputs.prep }} --pose_style ${{ inputs.pose }} --expression_scale 1.3 --cpu --batch_size 4
+            --preprocess ${{ inputs.prep }} --pose_style ${{ inputs.pose }} --expression_scale ${{ inputs.expr }} --cpu --batch_size 4 \
+            $( [ "${{ inputs.still }}" = "yes" ] && echo --still )
       - uses: actions/upload-artifact@v4
         with: {name: "clip-${{ matrix.line }}", path: st_out}
 

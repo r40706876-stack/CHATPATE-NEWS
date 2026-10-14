@@ -168,8 +168,11 @@ def post():
                 pip = fr.resize((300, 400)).crop((0, 30, 300, 330))
                 f.paste((255, 255, 255), (W - 346, VH - 456, W - 34, VH - 144), _ring())
                 f.paste(pip, (W - 340, VH - 450), mask)
-            else:
-                f.paste(fr.resize((W, VH), Image.LANCZOS), (0, 0))
+            else:                                                # editor वाली हरकत: हर line पर wide/close बदलो + धीमा zoom
+                z = (1.0 if i % 2 == 0 else 1.14) + 0.04 * (_ / max(1, counts[i]))
+                cw, ch = 960 / z, 1280 / z
+                x0, y0 = (960 - cw) / 2, (1280 - ch) * 0.3
+                f.paste(fr.crop((int(x0), int(y0), int(x0 + cw), int(y0 + ch))).resize((W, VH), Image.LANCZOS), (0, 0))
             c = chrome_cache(ep, ln, k, total, bg is not None)
             f.paste(c, (0, 0), c)
             wr.stdin.write(f.tobytes())
