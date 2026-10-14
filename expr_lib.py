@@ -37,23 +37,42 @@ def drivers(who, exprs):
             print("driver नहीं मिला:", who, e)
 
 
+# LivePortrait के साथ आने वाले भाव (Pixabay/Gemini की ज़रूरत नहीं): भाव → driver
+BUILTIN = {"hasi": "laugh.pkl", "gussa": "aggrieved.pkl", "sharm": "shy.pkl", "aankh": "wink.pkl",
+           "hairan": "d19.jpg", "udaas": "d8.jpg", "tanz": "d0.mp4"}
+
+
+def peak(video):
+    """पहले frame से सबसे ज़्यादा अलग frame = भाव का चरम."""
+    import numpy as np
+    from PIL import Image
+    tmp = video.with_suffix("")
+    tmp.mkdir(exist_ok=True)
+    subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", str(video), "-vf", "fps=5", str(tmp / "%03d.png")])
+    fr = sorted(tmp.glob("*.png"))
+    if not fr:
+        return
+    a0 = np.asarray(Image.open(fr[0]).convert("L"), np.float32)
+    best = max(fr, key=lambda f: np.abs(np.asarray(Image.open(f).convert("L"), np.float32) - a0).mean())
+    Image.open(best).convert("RGB").save(video.with_suffix(".jpg"), quality=92)
+    for f in fr:
+        f.unlink()
+    tmp.rmdir()
+
+
 def sheet():
     from PIL import Image
-    vids = sorted((ROOT / "assets/expr").glob("*.mp4"))
     tiles = []
-    for v in vids:
-        for t in (0.6, 1.6, 2.6):
-            p = ROOT / f"_t_{v.stem}_{t}.jpg"
-            subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-ss", str(t), "-i", str(v), "-frames:v", "1",
-                            "-vf", "scale=-2:300", str(p)])
-            if p.exists():
-                tiles.append(Image.open(p))
+    for p in sorted((ROOT / "assets/expr").glob("*.jpg")):
+        im = Image.open(p)
+        im.thumbnail((400, 300))
+        tiles.append(im)
     if not tiles:
         return
     w = max(t.width for t in tiles)
-    im = Image.new("RGB", (w * 3, 300 * ((len(tiles) + 2) // 3)), "black")
+    im = Image.new("RGB", (w * 7, 300 * ((len(tiles) + 6) // 7)), "black")
     for i, t in enumerate(tiles):
-        im.paste(t, ((i % 3) * w, (i // 3) * 300))
+        im.paste(t, ((i % 7) * w, (i // 7) * 300))
     im.save(ROOT / "preview_expr.jpg")
     for p in ROOT.glob("_t_*.jpg"):
         p.unlink()
@@ -62,6 +81,8 @@ def sheet():
 if __name__ == "__main__":
     if sys.argv[1] == "drivers":
         drivers(sys.argv[2], sys.argv[3].split(","))
+    elif sys.argv[1] == "still":                  # clip में सबसे तेज़ भाव वाला frame → .jpg
+        peak(Path(sys.argv[2]))
     elif sys.argv[1] == "source":
         import talk_episode
         talk_episode.source_img(sys.argv[2], ROOT / f"drv/{sys.argv[2]}_src.png")
