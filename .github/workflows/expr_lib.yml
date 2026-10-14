@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
     inputs:
       who: {description: "किरदार, comma से", default: "ramesh,bablu,chacha,dadi,pinky"}
-      exprs: {description: "भाव", default: "hasi,udaas,hairan,gussa,tanz,sharm,aankh"}
+      exprs: {description: "भाव", default: "hasi,udaas,hairan,gussa,tanz,sharm,cheekh"}
       mult: {description: "भाव की ताकत", default: "1.2"}
 jobs:
   plan:
@@ -50,7 +50,9 @@ jobs:
           for e in $(echo "${{ inputs.exprs }}" | tr ',' ' '); do
             d=$(python3 -c "import expr_lib;print(expr_lib.BUILTIN['$e'])")
             rm -rf lp_out
-            (cd lp && time python inference.py -s ../drv/${W}_src.png -d assets/examples/driving/$d -o ../lp_out \
+            src=lp/assets/examples/driving/$d
+            case "$d" in *.mp4) ffmpeg -loglevel error -y -i $src -t 3.2 -an drv/cut_$d && src=drv/cut_$d ;; esac
+            (cd lp && time python inference.py -s ../drv/${W}_src.png -d ../$src -o ../lp_out \
                --flag_force_cpu --no_flag_use_half_precision --driving_multiplier ${{ inputs.mult }}) > lp.log 2>&1 || true
             tail -40 lp.log >> assets/expr/log_${W}.txt
             f=$(ls lp_out/* 2>/dev/null | grep -v concat | head -1)

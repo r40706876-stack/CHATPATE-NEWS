@@ -38,8 +38,8 @@ def drivers(who, exprs):
 
 
 # LivePortrait के साथ आने वाले भाव (Pixabay/Gemini की ज़रूरत नहीं): भाव → driver
-BUILTIN = {"hasi": "laugh.pkl", "gussa": "aggrieved.pkl", "sharm": "shy.pkl", "aankh": "wink.pkl",
-           "hairan": "d19.jpg", "udaas": "d8.jpg", "tanz": "d0.mp4"}
+BUILTIN = {"hasi": "d12.mp4", "tanz": "d0.mp4", "gussa": "d18.mp4", "sharm": "d14.mp4",
+           "hairan": "d19.jpg", "udaas": "d8.jpg", "cheekh": "d9.jpg"}
 
 
 def peak(video):
