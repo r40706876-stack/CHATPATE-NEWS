@@ -3,12 +3,13 @@ name: talk-episode
 on:
   workflow_dispatch:
     inputs:
-      script: {description: "episode की JSON (repo में)", default: "episodes/demo_thagi.json"}
-      prep: {description: "full / extcrop", default: "extcrop"}
+      script: {description: "episode की JSON (repo में)", default: "episodes/bijli.json"}
+      prep: {description: "full / extcrop", default: "full"}
       pose: {description: "सिर हिलने का अंदाज़ 0-45", default: "8"}
 env:
   GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
   GEMINI_API_KEY2: ${{ secrets.GEMINI_API_KEY2 }}
+  PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
   TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
   TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
 jobs:

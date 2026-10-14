@@ -45,6 +45,14 @@ def prep(script_path):
         source_img(ln["who"], d / "source.png")
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(IN / f"audio/{i:02d}.wav"), "-ar", "16000",
                         "-ac", "1", str(d / "talk.wav")], check=True)
+    want = [(i, ln) for i, ln in enumerate(ep["lines"]) if ln.get("visual")]
+    if want:                                                   # b-roll: सिर्फ़ जाँचा हुआ, मेल वाला clip
+        import shutil
+        import visuals
+        (IN / "broll").mkdir(exist_ok=True)
+        for (i, ln), path in zip(want, visuals.pick_checked([(ln["say"], ln["visual"]) for _, ln in want])):
+            if path:
+                shutil.copy(path, IN / f"broll/{i}.mp4")
     json.dump(ep, open(IN / "episode.json", "w", encoding="utf-8"), ensure_ascii=False)
     print(json.dumps(list(range(len(ep["lines"])))))
 
@@ -77,71 +85,93 @@ def _wrap(text, f, width):
     return lines + [cur] if cur else lines
 
 
-def strap(who):
-    _, name, role = CHARS[who]
-    tv = Image.new("RGBA", (960, 1280), (0, 0, 0, 0))
-    d = ImageDraw.Draw(tv)
-    d.rectangle((640, 50, 920, 230), fill=(12, 16, 40, 230), outline=(200, 170, 90), width=3)
-    d.ellipse((700, 70, 860, 210), outline=(110, 150, 200), width=4)
-    d.ellipse((730, 90, 830, 190), fill=(40, 80, 130))
-    d.text((780, 140), "बकरा न्यूज़", font=tt.font(40), fill=(245, 225, 160), anchor="mm", stroke_width=3,
-           stroke_fill=(0, 0, 0))
-    d.rectangle((40, 1060, 600, 1200), fill=(10, 10, 14, 235), outline=(200, 170, 90), width=3)
-    d.text((70, 1105), name, font=tt.font(56), fill=(245, 225, 160), anchor="lm")
-    d.text((70, 1165), role, font=tt.font(30), fill=(220, 210, 190), anchor="lm")
-    return tv
+RED, YEL = (220, 30, 40), (255, 214, 0)
+VH = 1440                                                   # ऊपर का video हिस्सा 1080x1440, नीचे caption
 
 
-def frame_bg(ep, ln, k, total):
-    f = Image.new("RGB", (W, H), (8, 8, 10))
-    d = ImageDraw.Draw(f)
-    if k < FPS * 3 and ep.get("hook"):                              # पहले 3 सेकंड: hook बड़ा
-        for j, t in enumerate(_wrap(ep["hook"], tt.font(54), 980)[:2]):
-            d.text((W / 2, 95 + j * 72), t, font=tt.font(54), fill=(255, 214, 0), anchor="mm", stroke_width=3,
-                   stroke_fill=(0, 0, 0))
-    else:
-        d.text((W / 2, 90), "बकरा न्यूज़", font=tt.font(52), fill=(235, 215, 150), anchor="mm")
-        d.text((W / 2, 160), "खबर सौ टका पक्की, अंदाज़ अधपका!", font=tt.font(34), fill=(200, 190, 170), anchor="mm")
+def _cover(path, w, h):
+    rd = subprocess.Popen(["ffmpeg", "-loglevel", "error", "-stream_loop", "-1", "-i", str(path), "-vf",
+                           f"fps={FPS},scale={w}:{h}:force_original_aspect_ratio=increase,crop={w}:{h}",
+                           "-f", "rawvideo", "-pix_fmt", "rgb24", "-"], stdout=subprocess.PIPE)
+    while True:
+        raw = rd.stdout.read(w * h * 3)
+        if len(raw) < w * h * 3:
+            return
+        yield Image.frombuffer("RGB", (w, h), raw)
+
+
+def chrome(ep, ln, k, total, broll):
+    """ऊपर-नीचे की पट्टियाँ (RGBA, पूरे frame की)."""
+    o = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    d = ImageDraw.Draw(o)
+    d.rounded_rectangle((36, 40, 330, 104), 14, fill=RED + (255,))
+    d.text((183, 72), "बकरा न्यूज़", font=tt.font(40), fill="white", anchor="mm")
+    d.rounded_rectangle((346, 48, 470, 96), 12, fill=(0, 0, 0, 170))
+    d.ellipse((362, 64, 378, 80), fill=RED + (255,))
+    d.text((424, 72), "LIVE", font=tt.font(28), fill="white", anchor="mm")
+    d.text((W - 36, 72), "AI किरदार", font=tt.font(26), fill=(255, 255, 255, 200), anchor="rm")
+    if k < FPS * 3 and ep.get("hook"):                          # पहले 3 सेकंड: hook
+        rows = _wrap(ep["hook"], tt.font(64), 960)[:3]
+        y0 = 190
+        d.rounded_rectangle((30, y0 - 20, W - 30, y0 + 80 * len(rows) + 4), 22, fill=(0, 0, 0, 175))
+        for r, t in enumerate(rows):
+            d.text((W / 2, y0 + 40 + r * 80), t, font=tt.font(64), fill=YEL, anchor="mm")
+    _, name, role = CHARS[ln["who"]]
+    if broll:                                                    # b-roll पर: खबर वाली पट्टी
+        d.rectangle((0, VH - 150, W, VH - 90), fill=RED + (240,))
+        d.text((40, VH - 120), "मुख्य खबर", font=tt.font(36), fill="white", anchor="lm")
+    else:                                                        # किरदार पर: नाम-पट्टी
+        d.rectangle((0, VH - 170, 520, VH - 105), fill=RED + (245,))
+        d.text((36, VH - 138), name, font=tt.font(46), fill="white", anchor="lm")
+        d.rectangle((0, VH - 105, 640, VH - 55), fill=(255, 255, 255, 240))
+        d.text((36, VH - 80), role, font=tt.font(30), fill=(20, 20, 20), anchor="lm")
     cap = ln.get("caption") or ln["say"]
-    for j, t in enumerate(_wrap(cap, tt.font(50), 960)[:3]):
-        d.text((W / 2, 1610 + j * 70), t, font=tt.font(50), fill=(255, 255, 255), anchor="mm", stroke_width=4,
-               stroke_fill=(0, 0, 0))
-    d.text((W - 40, H - 40), "AI किरदार • काल्पनिक", font=tt.font(24), fill=(120, 120, 120), anchor="rs")
-    d.rectangle((0, H - 12, int(W * k / total), H), fill=(255, 214, 0))
-    return f
+    rows = _wrap(cap, tt.font(58), 980)[:4]
+    yc = VH + (H - VH - 40) / 2 - (len(rows) - 1) * 40
+    for r, t in enumerate(rows):
+        d.text((W / 2, yc + r * 80), t, font=tt.font(58), fill="white" if r % 2 == 0 else YEL, anchor="mm",
+               stroke_width=3, stroke_fill="black")
+    d.rectangle((0, H - 14, int(W * k / total), H), fill=YEL + (255,))
+    return o
 
 
 def post():
     ep = json.load(open(IN / "episode.json", encoding="utf-8"))
-    lens = [_secs(IN / f"audio/{i:02d}.wav") for i in range(len(ep["lines"]))]
+    n = len(ep["lines"])
+    lens = [_secs(IN / f"audio/{i:02d}.wav") for i in range(n)]
     counts = [max(1, round(s * FPS)) for s in lens]
     total = sum(counts)
-    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", *sum([["-i", str(IN / f"audio/{i:02d}.wav")]
-                    for i in range(len(lens))], []), "-filter_complex",
-                    "".join(f"[{i}:a]" for i in range(len(lens))) + f"concat=n={len(lens)}:v=0:a=1[a]",
+    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", *sum([["-i", str(IN / f"audio/{i:02d}.wav")] for i in range(n)], []),
+                    "-filter_complex", "".join(f"[{i}:a]" for i in range(n)) + f"concat=n={n}:v=0:a=1[a]",
                     "-map", "[a]", str(IN / "all.wav")], check=True)
     out = ROOT / "episode.mp4"
     wr = subprocess.Popen(["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}",
                            "-r", str(FPS), "-i", "-", "-i", str(IN / "all.wav"), "-c:v", "libx264", "-crf", "20",
                            "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "160k", "-shortest", str(out)],
                           stdin=subprocess.PIPE)
-    _, vign = tt.overlays("", "")
-    rng = np.random.default_rng(1)
+    mask = Image.new("L", (300, 300), 0)
+    ImageDraw.Draw(mask).ellipse((0, 0, 299, 299), fill=255)
     k = 0
     for i, ln in enumerate(ep["lines"]):
         clips = sorted((OUT / str(i)).rglob("*.mp4"))
-        over = strap(ln["who"])
+        face = _frames(clips[-1]) if clips else iter(())
+        still = Image.open(IN / f"{i}/source.png").convert("RGB")
+        br = IN / f"broll/{i}.mp4"
+        bg = _cover(br, W, VH) if br.exists() else None
         last = None
-        src = _frames(clips[-1]) if clips else iter(())
         for _ in range(counts[i]):
-            fr = next(src, None) or last or Image.open(IN / f"{i}/source.png").convert("RGB")
+            fr = next(face, None) or last or still
             last = fr
-            tv = fr.convert("RGBA")
-            tv.alpha_composite(over)
-            tv = tt.vhs(tv.convert("RGB"), k, rng)
-            tv = Image.composite(tv, Image.new("RGB", tv.size, (0, 0, 0)), vign)
-            f = frame_bg(ep, ln, k, total)
-            f.paste(tv, (TV_X, TV_Y))
+            f = Image.new("RGB", (W, H), (12, 12, 16))
+            if bg is not None:
+                f.paste(next(bg, None) or Image.new("RGB", (W, VH), (0, 0, 0)), (0, 0))
+                pip = fr.resize((300, 400)).crop((0, 30, 300, 330))
+                f.paste((255, 255, 255), (W - 346, VH - 456, W - 34, VH - 144), _ring())
+                f.paste(pip, (W - 340, VH - 450), mask)
+            else:
+                f.paste(fr.resize((W, VH), Image.LANCZOS), (0, 0))
+            c = chrome_cache(ep, ln, k, total, bg is not None)
+            f.paste(c, (0, 0), c)
             wr.stdin.write(f.tobytes())
             k += 1
     wr.stdin.close()
@@ -151,7 +181,24 @@ def post():
                     str(ROOT / "preview_episode.jpg")])
     print(f"बन गया: {out} ({total / FPS:.1f}s)")
     import telegram
-    telegram.send_video(out, f"🎬 पूरी episode test: {ep.get('title', '')} — {len(lens)} lines, AI हिलते चेहरे")
+    telegram.send_video(out, f"🎬 नया (आज का) look test: {ep.get('title', '')} — {n} lines")
+
+
+_cc = {}
+
+
+def chrome_cache(ep, ln, k, total, broll):
+    key = (id(ln), k < FPS * 3, broll, k * 100 // max(1, total))
+    if key not in _cc:
+        _cc.clear()
+        _cc[key] = chrome(ep, ln, k, total, broll)
+    return _cc[key]
+
+
+def _ring():
+    m = Image.new("L", (312, 312), 0)
+    ImageDraw.Draw(m).ellipse((0, 0, 311, 311), fill=255)
+    return m
 
 
 if __name__ == "__main__":
