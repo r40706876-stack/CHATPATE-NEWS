@@ -1,0 +1,280 @@
+           /home/runner/work/CHATPATE-NEWS/CHATPATE-                            
+           NEWS/lp_weights/liveportrait/base_models/                            
+           spade_generator.pth done.                                            
+           Load stitching_retargeting_module from    live_portrait_wrapper.py:59
+           /home/runner/work/CHATPATE-NEWS/CHATPATE-                            
+           NEWS/lp_weights/liveportrait/retargeting_                            
+           models/stitching_retargeting_module.pth                              
+           done.                                                                
+/opt/hostedtoolcache/Python/3.10.22/x64/lib/python3.10/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py:69: UserWarning: Specified provider 'CUDAExecutionProvider' is not in available provider names.Available providers: 'AzureExecutionProvider, CPUExecutionProvider'
+  warnings.warn(
+           FaceAnalysisDIY warmup time: 0.109s           face_analysis_diy.py:79
+           LandmarkRunner warmup time: 0.062s        human_landmark_runner.py:95
+           Load source image from                   live_portrait_pipeline.py:90
+           ../drv/dadi_src.png                                                  
+           Load driving video from:                live_portrait_pipeline.py:133
+           ../drv/cut_d12.mp4, FPS is 25                                        
+           Start making driving motion template... live_portrait_pipeline.py:144
+Making motion templates... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:09
+[15:06:59] Dump motion template to                 live_portrait_pipeline.py:172
+           ../drv/cut_d12.pkl                                                   
+           Prepared pasteback mask done.           live_portrait_pipeline.py:183
+           The animated video consists of 80       live_portrait_pipeline.py:270
+           frames.                                                              
+🚀Animating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:10:12
+Concatenating result... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+
+
+[15:17:16] Animated template: ../drv/cut_d12.pkl,  live_portrait_pipeline.py:503
+           you can specify `-d` argument with this                              
+           template path next time to avoid                                     
+           cropping video, motion making and                                    
+           protecting privacy.                                                  
+           Animated video:                         live_portrait_pipeline.py:504
+           ../lp_out/dadi_src--cut_d12.mp4                                      
+           Animated video with concat:             live_portrait_pipeline.py:505
+           ../lp_out/dadi_src--cut_d12_concat.mp4                               
+
+real	10m36.003s
+user	20m52.320s
+sys	0m27.369s
+           NEWS/lp_weights/liveportrait/base_models/                            
+           motion_extractor.pth done.                                           
+           Load warping_module from                  live_portrait_wrapper.py:52
+           /home/runner/work/CHATPATE-NEWS/CHATPATE-                            
+           NEWS/lp_weights/liveportrait/base_models/                            
+           warping_module.pth done.                                             
+[15:17:20] Load spade_generator from                 live_portrait_wrapper.py:55
+           /home/runner/work/CHATPATE-NEWS/CHATPATE-                            
+           NEWS/lp_weights/liveportrait/base_models/                            
+           spade_generator.pth done.                                            
+           Load stitching_retargeting_module from    live_portrait_wrapper.py:59
+           /home/runner/work/CHATPATE-NEWS/CHATPATE-                            
+           NEWS/lp_weights/liveportrait/retargeting_                            
+           models/stitching_retargeting_module.pth                              
+           done.                                                                
+/opt/hostedtoolcache/Python/3.10.22/x64/lib/python3.10/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py:69: UserWarning: Specified provider 'CUDAExecutionProvider' is not in available provider names.Available providers: 'AzureExecutionProvider, CPUExecutionProvider'
+  warnings.warn(
+           FaceAnalysisDIY warmup time: 0.109s           face_analysis_diy.py:79
+           LandmarkRunner warmup time: 0.062s        human_landmark_runner.py:95
+           Load source image from                   live_portrait_pipeline.py:90
+           ../drv/dadi_src.png                                                  
+           Load driving image from                 live_portrait_pipeline.py:139
+           ../lp/assets/examples/driving/d8.jpg                                 
+           Start making driving motion template... live_portrait_pipeline.py:144
+Making motion templates... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+[15:17:21] Dump motion template to                 live_portrait_pipeline.py:172
+           ../lp/assets/examples/driving/d8.pkl                                 
+           Prepared pasteback mask done.           live_portrait_pipeline.py:183
+           The output of image-driven portrait     live_portrait_pipeline.py:272
+           animation is an image.                                               
+🚀Animating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:07
+Concatenating result... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+[15:17:29] Animated image:                         live_portrait_pipeline.py:515
+           ../lp_out/dadi_src--d8.jpg                                           
+           Animated image with concat:             live_portrait_pipeline.py:516
+           ../lp_out/dadi_src--d8_concat.jpg                                    
+
+real	0m11.999s
+user	0m22.434s
+sys	0m1.245s
+           NEWS/lp_weights/liveportrait/base_models/                            
+           motion_extractor.pth done.                                           
+           Load warping_module from                  live_portrait_wrapper.py:52
+           /home/runner/work/CHATPATE-NEWS/CHATPATE-                            
+           NEWS/lp_weights/liveportrait/base_models/                            
+           warping_module.pth done.                                             
+[15:17:32] Load spade_generator from                 live_portrait_wrapper.py:55
+           /home/runner/work/CHATPATE-NEWS/CHATPATE-                            
+           NEWS/lp_weights/liveportrait/base_models/                            
+           spade_generator.pth done.                                            
+           Load stitching_retargeting_module from    live_portrait_wrapper.py:59
+           /home/runner/work/CHATPATE-NEWS/CHATPATE-                            
+           NEWS/lp_weights/liveportrait/retargeting_                            
+           models/stitching_retargeting_module.pth                              
+           done.                                                                
+/opt/hostedtoolcache/Python/3.10.22/x64/lib/python3.10/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py:69: UserWarning: Specified provider 'CUDAExecutionProvider' is not in available provider names.Available providers: 'AzureExecutionProvider, CPUExecutionProvider'
+  warnings.warn(
+           FaceAnalysisDIY warmup time: 0.111s           face_analysis_diy.py:79
+           LandmarkRunner warmup time: 0.062s        human_landmark_runner.py:95
+           Load source image from                   live_portrait_pipeline.py:90
+           ../drv/dadi_src.png                                                  
+           Load driving image from                 live_portrait_pipeline.py:139
+           ../lp/assets/examples/driving/d19.jpg                                
+           Start making driving motion template... live_portrait_pipeline.py:144
+Making motion templates... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+[15:17:33] Dump motion template to                 live_portrait_pipeline.py:172
+           ../lp/assets/examples/driving/d19.pkl                                
+           Prepared pasteback mask done.           live_portrait_pipeline.py:183
+           The output of image-driven portrait     live_portrait_pipeline.py:272
+           animation is an image.                                               
+🚀Animating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:07
+Concatenating result... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+[15:17:41] Animated image:                         live_portrait_pipeline.py:515
+           ../lp_out/dadi_src--d19.jpg                                          
+           Animated image with concat:             live_portrait_pipeline.py:516
+           ../lp_out/dadi_src--d19_concat.jpg                                   
+
+real	0m12.074s
+user	0m22.477s
+sys	0m1.332s
+           /home/runner/work/CHATPATE-NEWS/CHATPATE-                            
+           NEWS/lp_weights/liveportrait/base_models/                            
+           spade_generator.pth done.                                            
+           Load stitching_retargeting_module from    live_portrait_wrapper.py:59
+           /home/runner/work/CHATPATE-NEWS/CHATPATE-                            
+           NEWS/lp_weights/liveportrait/retargeting_                            
+           models/stitching_retargeting_module.pth                              
+           done.                                                                
+/opt/hostedtoolcache/Python/3.10.22/x64/lib/python3.10/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py:69: UserWarning: Specified provider 'CUDAExecutionProvider' is not in available provider names.Available providers: 'AzureExecutionProvider, CPUExecutionProvider'
+  warnings.warn(
+[15:17:45] FaceAnalysisDIY warmup time: 0.111s           face_analysis_diy.py:79
+           LandmarkRunner warmup time: 0.062s        human_landmark_runner.py:95
+           Load source image from                   live_portrait_pipeline.py:90
+           ../drv/dadi_src.png                                                  
+           Load driving video from:                live_portrait_pipeline.py:133
+           ../drv/cut_d18.mp4, FPS is 30                                        
+           Start making driving motion template... live_portrait_pipeline.py:144
+Making motion templates... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:11
+[15:18:03] Dump motion template to                 live_portrait_pipeline.py:172
+           ../drv/cut_d18.pkl                                                   
+           Prepared pasteback mask done.           live_portrait_pipeline.py:183
+[15:18:04] The animated video consists of 96       live_portrait_pipeline.py:270
+           frames.                                                              
+🚀Animating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:12:15
+Concatenating result... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+
+
+[15:30:23] Animated template: ../drv/cut_d18.pkl,  live_portrait_pipeline.py:503
+           you can specify `-d` argument with this                              
+           template path next time to avoid                                     
+           cropping video, motion making and                                    
+           protecting privacy.                                                  
+           Animated video:                         live_portrait_pipeline.py:504
+           ../lp_out/dadi_src--cut_d18.mp4                                      
+           Animated video with concat:             live_portrait_pipeline.py:505
+           ../lp_out/dadi_src--cut_d18_concat.mp4                               
+
+real	12m41.574s
+user	24m56.045s
+sys	0m33.812s
+           /home/runner/work/CHATPATE-NEWS/CHATPATE-                            
+           NEWS/lp_weights/liveportrait/base_models/                            
+           spade_generator.pth done.                                            
+           Load stitching_retargeting_module from    live_portrait_wrapper.py:59
+           /home/runner/work/CHATPATE-NEWS/CHATPATE-                            
+           NEWS/lp_weights/liveportrait/retargeting_                            
+           models/stitching_retargeting_module.pth                              
+           done.                                                                
+/opt/hostedtoolcache/Python/3.10.22/x64/lib/python3.10/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py:69: UserWarning: Specified provider 'CUDAExecutionProvider' is not in available provider names.Available providers: 'AzureExecutionProvider, CPUExecutionProvider'
+  warnings.warn(
+           FaceAnalysisDIY warmup time: 0.108s           face_analysis_diy.py:79
+           LandmarkRunner warmup time: 0.061s        human_landmark_runner.py:95
+           Load source image from                   live_portrait_pipeline.py:90
+           ../drv/dadi_src.png                                                  
+           Load driving video from:                live_portrait_pipeline.py:133
+           ../drv/cut_d0.mp4, FPS is 25                                         
+           Start making driving motion template... live_portrait_pipeline.py:144
+Making motion templates... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:09
+[15:30:43] Dump motion template to                 live_portrait_pipeline.py:172
+           ../drv/cut_d0.pkl                                                    
+           Prepared pasteback mask done.           live_portrait_pipeline.py:183
+[15:30:44] The animated video consists of 78       live_portrait_pipeline.py:270
+           frames.                                                              
+🚀Animating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:09:56
+Concatenating result... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+
+
+[15:40:43] Animated template: ../drv/cut_d0.pkl,   live_portrait_pipeline.py:503
+           you can specify `-d` argument with this                              
+           template path next time to avoid                                     
+           cropping video, motion making and                                    
+           protecting privacy.                                                  
+           Animated video:                         live_portrait_pipeline.py:504
+           ../lp_out/dadi_src--cut_d0.mp4                                       
+           Animated video with concat:             live_portrait_pipeline.py:505
+           ../lp_out/dadi_src--cut_d0_concat.mp4                                
+
+real	10m18.273s
+user	20m15.293s
+sys	0m26.925s
+           /home/runner/work/CHATPATE-NEWS/CHATPATE-                            
+           NEWS/lp_weights/liveportrait/base_models/                            
+           spade_generator.pth done.                                            
+           Load stitching_retargeting_module from    live_portrait_wrapper.py:59
+           /home/runner/work/CHATPATE-NEWS/CHATPATE-                            
+           NEWS/lp_weights/liveportrait/retargeting_                            
+           models/stitching_retargeting_module.pth                              
+           done.                                                                
+/opt/hostedtoolcache/Python/3.10.22/x64/lib/python3.10/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py:69: UserWarning: Specified provider 'CUDAExecutionProvider' is not in available provider names.Available providers: 'AzureExecutionProvider, CPUExecutionProvider'
+  warnings.warn(
+           FaceAnalysisDIY warmup time: 0.111s           face_analysis_diy.py:79
+           LandmarkRunner warmup time: 0.062s        human_landmark_runner.py:95
+           Load source image from                   live_portrait_pipeline.py:90
+           ../drv/dadi_src.png                                                  
+           Load driving video from:                live_portrait_pipeline.py:133
+           ../drv/cut_d14.mp4, FPS is 30                                        
+           Start making driving motion template... live_portrait_pipeline.py:144
+Making motion templates... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:11
+[15:41:07] Dump motion template to                 live_portrait_pipeline.py:172
+           ../drv/cut_d14.pkl                                                   
+           Prepared pasteback mask done.           live_portrait_pipeline.py:183
+           The animated video consists of 96       live_portrait_pipeline.py:270
+           frames.                                                              
+🚀Animating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:12:15
+Concatenating result... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+
+
+[15:53:26] Animated template: ../drv/cut_d14.pkl,  live_portrait_pipeline.py:503
+           you can specify `-d` argument with this                              
+           template path next time to avoid                                     
+           cropping video, motion making and                                    
+           protecting privacy.                                                  
+           Animated video:                         live_portrait_pipeline.py:504
+           ../lp_out/dadi_src--cut_d14.mp4                                      
+           Animated video with concat:             live_portrait_pipeline.py:505
+           ../lp_out/dadi_src--cut_d14_concat.mp4                               
+
+real	12m40.912s
+user	24m57.290s
+sys	0m33.241s
+           NEWS/lp_weights/liveportrait/base_models/                            
+           motion_extractor.pth done.                                           
+           Load warping_module from                  live_portrait_wrapper.py:52
+           /home/runner/work/CHATPATE-NEWS/CHATPATE-                            
+           NEWS/lp_weights/liveportrait/base_models/                            
+           warping_module.pth done.                                             
+           Load spade_generator from                 live_portrait_wrapper.py:55
+           /home/runner/work/CHATPATE-NEWS/CHATPATE-                            
+           NEWS/lp_weights/liveportrait/base_models/                            
+           spade_generator.pth done.                                            
+           Load stitching_retargeting_module from    live_portrait_wrapper.py:59
+           /home/runner/work/CHATPATE-NEWS/CHATPATE-                            
+           NEWS/lp_weights/liveportrait/retargeting_                            
+           models/stitching_retargeting_module.pth                              
+           done.                                                                
+/opt/hostedtoolcache/Python/3.10.22/x64/lib/python3.10/site-packages/onnxruntime/capi/onnxruntime_inference_collection.py:69: UserWarning: Specified provider 'CUDAExecutionProvider' is not in available provider names.Available providers: 'AzureExecutionProvider, CPUExecutionProvider'
+  warnings.warn(
+           FaceAnalysisDIY warmup time: 0.110s           face_analysis_diy.py:79
+[15:53:31] LandmarkRunner warmup time: 0.062s        human_landmark_runner.py:95
+           Load source image from                   live_portrait_pipeline.py:90
+           ../drv/dadi_src.png                                                  
+           Load driving image from                 live_portrait_pipeline.py:139
+           ../lp/assets/examples/driving/d9.jpg                                 
+           Start making driving motion template... live_portrait_pipeline.py:144
+Making motion templates... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+           Dump motion template to                 live_portrait_pipeline.py:172
+           ../lp/assets/examples/driving/d9.pkl                                 
+           Prepared pasteback mask done.           live_portrait_pipeline.py:183
+[15:53:32] The output of image-driven portrait     live_portrait_pipeline.py:272
+           animation is an image.                                               
+🚀Animating... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:07
+Concatenating result... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:00
+[15:53:40] Animated image:                         live_portrait_pipeline.py:515
+           ../lp_out/dadi_src--d9.jpg                                           
+           Animated image with concat:             live_portrait_pipeline.py:516
+           ../lp_out/dadi_src--d9_concat.jpg                                    
+
+real	0m12.030s
+user	0m22.509s
+sys	0m1.229s
