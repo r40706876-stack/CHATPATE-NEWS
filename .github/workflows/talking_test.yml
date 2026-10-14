@@ -7,6 +7,7 @@ on:
       who: {description: "आवाज़ किसकी (bablu/chacha/dadi)", default: "dadi"}
       name: {description: "नाम-पट्टी", default: "दादी"}
       role: {description: "पद", default: "तकनीकी सलाहकार • WhatsApp विभाग"}
+      fast: {description: "तेज़ (enhancer बंद)", default: "no"}
       text: {description: "क्या बोलें (~10 सेकंड)", default: "हाय राम! गलत यूपीआई पर पैसा चला जाए, तो घबराना नहीं बेटा। उन्नीस सौ तीस पर फ़ोन करो, और ये वीडियो उस लल्ला को भेजो, जो हर बार हड़बड़ी में पैसे भेज देता है!"}
 jobs:
   talk:
@@ -51,8 +52,9 @@ jobs:
       - name: चेहरा हिलाओ (CPU पर धीमा)
         run: |
           cd st
-          time python inference.py --driven_audio ../st_in/talk.wav --source_image ../st_in/source.png \
-            --result_dir ../st_out --still --preprocess full --enhancer gfpgan --cpu --batch_size 2
+          EXTRA="--enhancer gfpgan"; [ "${{ inputs.fast }}" = "yes" ] && EXTRA=""
+          time timeout 85m python inference.py --driven_audio ../st_in/talk.wav --source_image ../st_in/source.png \
+            --result_dir ../st_out --still --preprocess full --cpu --batch_size 4 $EXTRA
           ls -R ../st_out | head
       - name: पुराना TV look + Telegram
         run: |
