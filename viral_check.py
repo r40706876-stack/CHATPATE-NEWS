@@ -41,16 +41,16 @@ def _age_h(d):
 def trend(query):
     """(score 0-10, कारण, headlines) — headlines आगे तथ्यों के सबूत में काम आती हैं."""
     import topics
-    h7 = topics.rss_search(query, n=60, days=7)
+    h7 = topics.rss_search(query, n=100, days=7)
     h2 = [h for h in h7 if _age_h(h[2]) <= 48]
     src2 = {s.strip().lower() for _, s, _ in h2}
-    s = 0
-    s += 5 if len(src2) >= 8 else 4 if len(src2) >= 5 else 2 if len(src2) >= 3 else 1 if src2 else 0
-    fresh = len(h2) / max(1, len(h7))                     # सारी खबर पिछले 2 दिन की = अभी उठी है
-    s += 2 if fresh >= 0.6 and len(h2) >= 3 else 1 if fresh >= 0.3 else 0
+    n = len(src2)                                         # कितने अलग अख़बार/चैनल 2 दिन में (असली test में 4 से 36 तक)
+    s = 6 if n >= 25 else 5 if n >= 15 else 4 if n >= 10 else 3 if n >= 6 else 2 if n >= 3 else 1 if n else 0
+    fresh = len(h2) / max(1, len(h7))                     # 7 दिन की ज़्यादातर खबरें पिछले 2 दिन की = अभी उठी है
+    s += 2 if fresh >= 0.5 and len(h2) >= 5 else 1 if fresh >= 0.3 else 0
     q = _words(query)
     hit = next((t for t, _ in google_trends_today() if len(q & _words(t)) >= 1 and len(_words(t)) <= 6), None)
-    s += 3 if hit else 0
+    s += 2 if hit else 0
     why = f"{len(src2)} अख़बार/चैनल 2 दिन में, {len(h7)} खबरें 7 दिन में" + (f", Google Trends में: {hit}" if hit else "")
     return min(10, s), why, h7[:10]
 
