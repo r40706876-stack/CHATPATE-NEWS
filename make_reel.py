@@ -130,9 +130,10 @@ def main(script):
         if sprite:
             fr = list(sprite_frames(sprite, ln.get("expr"), amp_env(wav)))
             lines.append(ln), audio.append(wav), stills.append(fr[0]), faces.append(iter(fr))
-            continue
-        img = expr_img(ln["who"], ln.get("expr")) or Image.open(base).convert("RGB")
-        lines.append(ln), audio.append(wav), stills.append(img), faces.append(talking_still(img, amp_env(wav)))
+            img = fr[0]
+        else:
+            img = expr_img(ln["who"], ln.get("expr")) or Image.open(base).convert("RGB")
+            lines.append(ln), audio.append(wav), stills.append(img), faces.append(talking_still(img, amp_env(wav)))
         rp = ln.get("react_pose")                                # 3D किरदार का reaction pose (ठहाका/माथा पकड़ना…)
         sp_dir = (ep.get("sprite") or {}).get(ln.get("react_who", ln["who"]))
         if rp and sp_dir and (ROOT / sp_dir / f"{rp}.png").exists():
