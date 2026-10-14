@@ -30,9 +30,13 @@ CHARS = {   # किरदार: (तस्वीर, नाम, पद) — �
 _cut = {}
 
 
-def source_img(who, path):
-    """किरदार की फ़ोटो 960x1280; assets/bg/<who>.jpg हो तो पर्दा हटाकर गाँव वाली पृष्ठभूमि (हर video में वही)."""
-    im = Image.open(ROOT / CHARS[who][0]).convert("RGB")
+EXPRS = ("hasi", "hairan", "gussa", "tanz")       # assets/real/<who>_<expr>.png हो तो वही भाव वाली फ़ोटो
+
+
+def source_img(who, path, expr=""):
+    """किरदार की फ़ोटो 960x1280 (line के भाव वाली, अगर है); assets/bg/<who>.jpg हो तो गाँव वाली पृष्ठभूमि."""
+    ep = ROOT / f"assets/real/{who}_{expr}.png"
+    im = Image.open(ep if expr and ep.exists() else ROOT / CHARS[who][0]).convert("RGB")
     s = max(960 / im.width, 1280 / im.height)
     im = im.resize((int(im.width * s), int(im.height * s)), Image.LANCZOS)
     x0, y0 = (im.width - 960) // 2, int((im.height - 1280) * 0.25)
@@ -40,16 +44,16 @@ def source_img(who, path):
     bgp = ROOT / f"assets/bg/{who}.jpg"
     if bgp.exists():
         try:
-            if who not in _cut:
+            if (who, expr) not in _cut:
                 from rembg import new_session, remove
-                _cut[who] = remove(im, session=new_session("u2net_human_seg"))
+                _cut[(who, expr)] = remove(im, session=new_session("u2net_human_seg"))
             bg = Image.open(bgp).convert("RGB")
             k = max(960 / bg.width, 1280 / bg.height)
             bg = bg.resize((int(bg.width * k), int(bg.height * k)), Image.LANCZOS)
             bx, by = (bg.width - 960) // 2, (bg.height - 1280) // 2
             from PIL import ImageEnhance, ImageFilter
             bg = ImageEnhance.Brightness(bg.crop((bx, by, bx + 960, by + 1280)).filter(ImageFilter.GaussianBlur(5))).enhance(0.9)
-            bg.paste(_cut[who], (0, 0), _cut[who])
+            bg.paste(_cut[(who, expr)], (0, 0), _cut[(who, expr)])
             im = bg
         except Exception as e:                            # noqa: BLE001
             print("  पृष्ठभूमि नहीं बदली:", who, e)
@@ -75,7 +79,7 @@ def prep(script_path):
     for i, ln in enumerate(ep["lines"]):
         d = IN / str(i)
         d.mkdir(parents=True, exist_ok=True)
-        source_img(ln["who"], d / "source.png")
+        source_img(ln["who"], d / "source.png", ln.get("expr", ""))
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(IN / f"audio/{i:02d}.wav"), "-ar", "16000",
                         "-ac", "1", str(d / "talk.wav")], check=True)
     pairs = []                                                 # हर line के 1-2 visual (खोज), सब एक साथ जाँचे जाएँ
