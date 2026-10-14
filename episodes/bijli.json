@@ -21,7 +21,8 @@
    "who": "ramesh",
    "say": "बिजली का पता नहीं। बिल हर महीने टाइम पे आता है।",
    "punch": true,
-   "expr": "gussa"
+   "expr": "udaas",
+   "react": "tanz"
   },
   {
    "who": "bablu",
@@ -67,7 +68,8 @@
    "who": "bablu",
    "say": "विभाग ने साफ़ किया है, कटौती की कोई योजना नहीं है। कटौती बिना योजना के हो रही है।",
    "punch": true,
-   "expr": "tanz"
+   "expr": "tanz",
+   "react": "tanz"
   },
   {
    "who": "ramesh",
@@ -76,7 +78,7 @@
     "electric meter"
    ],
    "big": "भेजो उसको जिसका बिल बिजली से ज़्यादा आता है",
-   "expr": "gussa"
+   "expr": "udaas"
   }
  ]
 }

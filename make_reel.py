@@ -111,12 +111,12 @@ def main(script):
         lines.append(ln), audio.append(wav), stills.append(img), faces.append(talking_still(img, amp_env(wav)))
         if ln.get("punch"):                                     # punch के बाद किसी और का reaction (1.2 सेकंड)
             who = next((r for r in REACTORS if r in used and r != ln["who"] and
-                        (ROOT / f"assets/expr/{r}_{ln.get('react', 'hasi')}.mp4").exists()), None)
+                        (ROOT / f"assets/expr/{r}_{ln.get('react', 'tanz')}.mp4").exists()), None)
             if who:
                 rw = IN / f"audio/{i:02d}_r.wav"
                 subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "lavfi", "-i", "anullsrc=r=24000:cl=mono",
                                 "-t", "1.2", str(rw)], check=True)
-                clip = ROOT / f"assets/expr/{who}_{ln.get('react', 'hasi')}.mp4"
+                clip = ROOT / f"assets/expr/{who}_{ln.get('react', 'tanz')}.mp4"
                 lines.append({"who": who, "say": "", "caption": " ", "react": True})
                 audio.append(rw), stills.append(expr_img(who, ln.get("react", "hasi")) or img), faces.append(clip_frames(clip))
     ep2 = dict(ep, lines=lines)
