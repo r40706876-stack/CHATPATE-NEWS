@@ -27,18 +27,51 @@ CHARS = {   # किरदार: (तस्वीर, नाम, पद) — �
 }
 
 
+_cut = {}
+
+
 def source_img(who, path):
+    """किरदार की फ़ोटो 960x1280; assets/bg/<who>.jpg हो तो पर्दा हटाकर गाँव वाली पृष्ठभूमि (हर video में वही)."""
     im = Image.open(ROOT / CHARS[who][0]).convert("RGB")
     s = max(960 / im.width, 1280 / im.height)
     im = im.resize((int(im.width * s), int(im.height * s)), Image.LANCZOS)
     x0, y0 = (im.width - 960) // 2, int((im.height - 1280) * 0.25)
-    im.crop((x0, y0, x0 + 960, y0 + 1280)).save(path)
+    im = im.crop((x0, y0, x0 + 960, y0 + 1280))
+    bgp = ROOT / f"assets/bg/{who}.jpg"
+    if bgp.exists():
+        try:
+            if who not in _cut:
+                from rembg import new_session, remove
+                _cut[who] = remove(im, session=new_session("u2net_human_seg"))
+            bg = Image.open(bgp).convert("RGB")
+            k = max(960 / bg.width, 1280 / bg.height)
+            bg = bg.resize((int(bg.width * k), int(bg.height * k)), Image.LANCZOS)
+            bx, by = (bg.width - 960) // 2, (bg.height - 1280) // 2
+            from PIL import ImageEnhance, ImageFilter
+            bg = ImageEnhance.Brightness(bg.crop((bx, by, bx + 960, by + 1280)).filter(ImageFilter.GaussianBlur(5))).enhance(0.9)
+            bg.paste(_cut[who], (0, 0), _cut[who])
+            im = bg
+        except Exception as e:                            # noqa: BLE001
+            print("  पृष्ठभूमि नहीं बदली:", who, e)
+    im.save(path)
+
+
+def tighten(wav):
+    """शुरू/आख़िर की चुप्पी हटाओ + थोड़ा तेज़ (reel की रफ़्तार)."""
+    tmp = wav.with_suffix(".t.wav")
+    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(wav), "-af",
+                    "silenceremove=start_periods=1:start_threshold=-45dB,areverse,"
+                    "silenceremove=start_periods=1:start_threshold=-45dB,areverse,atempo=1.1,apad=pad_dur=0.15",
+                    str(tmp)], check=True)
+    tmp.replace(wav)
 
 
 def prep(script_path):
     ep = json.load(open(ROOT / script_path, encoding="utf-8"))
     import tts
     tts.speak_script(ep, IN / "audio")
+    for i in range(len(ep["lines"])):
+        tighten(IN / f"audio/{i:02d}.wav")
     for i, ln in enumerate(ep["lines"]):
         d = IN / str(i)
         d.mkdir(parents=True, exist_ok=True)
@@ -52,7 +85,7 @@ def prep(script_path):
         (IN / "broll").mkdir(exist_ok=True)
         for (i, ln), path in zip(want, visuals.pick_checked([(ln["say"], ln["visual"]) for _, ln in want])):
             if path:
-                shutil.copy(path, IN / f"broll/{i}.mp4")
+                shutil.copy(path, IN / f"broll/{i}{Path(path).suffix}")
     json.dump(ep, open(IN / "episode.json", "w", encoding="utf-8"), ensure_ascii=False)
     print(json.dumps(list(range(len(ep["lines"])))))
 
@@ -98,6 +131,17 @@ def _cover(path, w, h):
         if len(raw) < w * h * 3:
             return
         yield Image.frombuffer("RGB", (w, h), raw)
+
+
+def _kenburns(path, w, h, n):
+    im = Image.open(path).convert("RGB")
+    k = max(w / im.width, h / im.height) * 1.15
+    im = im.resize((int(im.width * k), int(im.height * k)), Image.LANCZOS)
+    for t in range(n):
+        z = 1 + 0.12 * (1 - t / max(1, n))                    # धीरे-धीरे zoom out
+        cw, ch = w * 1.15 / z, h * 1.15 / z
+        x0, y0 = (im.width - cw) / 2, (im.height - ch) / 2
+        yield im.crop((int(x0), int(y0), int(x0 + cw), int(y0 + ch))).resize((w, h), Image.BILINEAR)
 
 
 def chrome(ep, ln, k, total, broll):
@@ -156,8 +200,8 @@ def post():
         clips = sorted((OUT / str(i)).rglob("*.mp4"))
         face = _frames(clips[-1]) if clips else iter(())
         still = Image.open(IN / f"{i}/source.png").convert("RGB")
-        br = IN / f"broll/{i}.mp4"
-        bg = _cover(br, W, VH) if br.exists() else None
+        br = next(iter(sorted((IN / "broll").glob(f"{i}.*"))), None) if (IN / "broll").exists() else None
+        bg = (_kenburns(br, W, VH, counts[i]) if br.suffix == ".jpg" else _cover(br, W, VH)) if br else None
         last = None
         for _ in range(counts[i]):
             fr = next(face, None) or last or still

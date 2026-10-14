@@ -102,7 +102,7 @@ def plan(lines, topic=""):
 STOP = {"the", "a", "of", "in", "and", "with", "on", "indian", "india"}
 
 
-def candidates(query, k=4):
+def candidates(query, k=5):
     """Pixabay के पहले 15 video में से tags सबसे ज़्यादा मेल खाने वाले k (thumbnail के साथ)."""
     import urllib.parse as up
     key = os.getenv("PIXABAY_API_KEY")
@@ -126,8 +126,22 @@ def candidates(query, k=4):
         tags = {t.strip() for t in h.get("tags", "").lower().replace(",", " ").split()}
         out.append({"id": f"v{h['id']}", "url": v[size]["url"], "thumb": v[size].get("thumbnail") or "",
                     "tags": h.get("tags", ""), "match": len(want & tags)})
-    out.sort(key=lambda c: -c["match"])
-    return [c for c in out if c["match"] >= 1][:k]
+    try:                                                  # photos भी (भारत की photos videos से कहीं ज़्यादा हैं)
+        ph = _get_json(f"https://pixabay.com/api/?key={key}&q={q}&image_type=photo&per_page=20&safesearch=true").get("hits", [])
+    except Exception:                                     # noqa: BLE001
+        ph = []
+    for h in ph:
+        if f"i{h['id']}" in _used:
+            continue
+        tags = {t.strip() for t in h.get("tags", "").lower().replace(",", " ").split()}
+        out.append({"id": f"i{h['id']}", "url": h["largeImageURL"], "thumb": h.get("webformatURL", ""),
+                    "tags": h.get("tags", ""), "match": len(want & tags) - 0.5})   # बराबरी पर video पहले
+    seen, uniq = set(), []
+    for c in sorted(out, key=lambda c: -c["match"]):
+        if c["tags"] not in seen and c["match"] >= 0.5:
+            seen.add(c["tags"])
+            uniq.append(c)
+    return uniq[:k]
 
 
 def _thumb_part(url):
@@ -163,7 +177,8 @@ def pick_checked(items):
         j = picks[i] if i < len(picks) and isinstance(picks[i], int) else -1
         if 0 <= j < len(cs):
             _used.add(cs[j]["id"])
-            out.append(_download(cs[j]["url"], CACHE / f"{cs[j]['id']}.mp4"))
+            ext = ".mp4" if cs[j]["id"].startswith("v") else ".jpg"
+            out.append(_download(cs[j]["url"], CACHE / f"{cs[j]['id']}{ext}"))
             print(f"  ✅ clip: {items[i][1]} → {cs[j]['tags']}")
         else:
             out.append(None)
