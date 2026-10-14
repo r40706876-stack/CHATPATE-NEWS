@@ -24,7 +24,29 @@ def font(s):
 def prep(img, text, who):
     out = ROOT / "st_in"
     out.mkdir(exist_ok=True)
-    im = Image.open(ROOT / img).convert("RGBA")
+    raw = Image.open(ROOT / img)
+    if raw.mode != "RGBA":                                         # असली फ़ोटो: बस 3:4 में काटो (सिर ऊपर रहे)
+        im = raw.convert("RGB")
+        s = max(960 / im.width, 1280 / im.height)
+        im = im.resize((int(im.width * s), int(im.height * s)), Image.LANCZOS)
+        x0 = (im.width - 960) // 2
+        y0 = int((im.height - 1280) * 0.25)
+        im.crop((x0, y0, x0 + 960, y0 + 1280)).save(out / "source.png")
+        im = None
+    else:
+        im = raw.convert("RGBA")
+    if im is None:
+        pass
+    else:
+        _place(im, out)
+    import tts
+    tts.speak_script({"lines": [{"who": who, "say": text, "caption": text, "expr": "smug"}]}, out / "audio")
+    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(out / "audio/00.wav"), "-ar", "16000", "-ac", "1",
+                    str(out / "talk.wav")], check=True)
+    print("तैयार:", out / "source.png", out / "talk.wav")
+
+
+def _place(im, out):
     bg = Image.new("RGB", (960, 1280), (176, 160, 140))           # गर्म भूरा-स्लेटी पर्दा
     d = ImageDraw.Draw(bg)
     for x in range(0, 960, 48):                                    # पर्दे की सिलवटें
@@ -36,11 +58,7 @@ def prep(img, text, who):
     im = im.resize((int(im.width * s), int(im.height * s)), Image.LANCZOS)
     bg.paste(im, ((960 - im.width) // 2, 70), im)
     bg.save(out / "source.png")
-    import tts
-    tts.speak_script({"lines": [{"who": who, "say": text, "caption": text, "expr": "smug"}]}, out / "audio")
-    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(out / "audio/00.wav"), "-ar", "16000", "-ac", "1",
-                    str(out / "talk.wav")], check=True)
-    print("तैयार:", out / "source.png", out / "talk.wav")
+
 
 
 def vhs(fr, k, rng):
