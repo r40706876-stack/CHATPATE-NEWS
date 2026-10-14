@@ -66,16 +66,38 @@ SPRITE_EXPR = {"hasi": "happy", "gussa": "angry", "udaas": "sad", "hairan": "sho
 def sprite_frames(folder, expr, env):
     """3D किरदार (assets/<x>/<भाव>_<closed|half|open>.webp): आवाज़ के हिसाब से मुँह खुलता-बंद होता है."""
     folder = ROOT / folder
-    e = SPRITE_EXPR.get(expr or "", "neutral")
-    bgp = folder / "home.jpg"
-    bg = Image.open(bgp).convert("RGB") if bgp.exists() else Image.new("RGB", (960, 1280), (200, 170, 140))
+    e = SPRITE_EXPR.get(expr or "", expr if expr and (folder / f"{expr}_closed.png").exists() else "neutral")
+    who = folder.name
+    bgp = next((p for p in (folder / "home.jpg", ROOT / f"assets/bg/{who}.jpg") if p.exists()), None)
+    bg = Image.open(bgp).convert("RGB") if bgp else Image.new("RGB", (960, 1280), (200, 170, 140))
     k = max(960 / bg.width, 1280 / bg.height)
-    bg = bg.resize((int(bg.width * k), int(bg.height * k))).crop((0, 0, 960, 1280))
+    bg = bg.resize((int(bg.width * k), int(bg.height * k)))
+    bg = bg.crop(((bg.width - 960) // 2, (bg.height - 1280) // 2, (bg.width - 960) // 2 + 960, (bg.height - 1280) // 2 + 1280))
+    if bgp and bgp.parent.name == "bg":                              # गाँव वाली पृष्ठभूमि थोड़ी धुंधली (किरदार उभरे)
+        from PIL import ImageFilter
+        bg = bg.filter(ImageFilter.GaussianBlur(4))
     cache = {}
+
+    def load(m):
+        p = folder / f"{e}_{m}.webp"
+        if p.exists():
+            return Image.open(p).convert("RGBA")
+        p = folder / f"{e}_{m}.png"
+        if not p.exists():
+            p = folder / f"{e}_closed.png"
+        cut = IN / f"cut_{who}_{p.stem}.png"                         # स्लेटी पृष्ठभूमि हटाओ (एक बार)
+        if not cut.exists():
+            from rembg import new_session, remove
+            global _SESS
+            if "_SESS" not in globals():
+                _SESS = new_session("isnet-general-use")
+            IN.mkdir(exist_ok=True)
+            remove(Image.open(p).convert("RGB"), session=_SESS).save(cut)
+        return Image.open(cut).convert("RGBA")
 
     def pose(m):
         if m not in cache:
-            sp = Image.open(folder / f"{e}_{m}.webp").convert("RGBA")
+            sp = load(m)
             sc = 1250 / sp.height
             sp = sp.resize((int(sp.width * sc), 1250), Image.LANCZOS)
             im = bg.copy()
