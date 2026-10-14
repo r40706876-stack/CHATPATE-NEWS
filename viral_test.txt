@@ -1,41 +1,9 @@
-RAW: [
-  {
-    "n": 1,
-    "A": 1,
-    "B": 1,
-    "C": 1,
-    "D": 1,
-    "E": 1,
-    "F": 1,
-    "total": 6,
-    "why": "तारीख़ जल्द ही लीक की जाएगी और 7 साल से तैयारी वाले दोस्त का ज़िक्र ज़मीनी हक़ीक़त पर सटीक चोट करता है।",
-    "weak": "हुक में परीक्षा शब्द न होने से मुद्दा तुरंत साफ़ नहीं होता, और दादी का व्हाट्सएप पर पेपर पाना दर्द को मज़ाक बना देता है।",
-    "fix": "हुक को 'UP पुलिस का पेपर फिर लीक!' जैसा सीधा बनाएँ और दादी वाले डायलॉग की जगह पिता के कर्ज़ या फ़ॉर्म की फ़ीस का दर्द जोड़ें।"
-  },
-  {
-    "n": 2,
-    "A": 3,
-    "B": 1,
-    "C": 2,
-    "D": 0,
-    "E": 1,
-    "F": 1,
-    "total": 8,
-    "why": "बिजली कटौती और मीटर बिल हर गाँव-कस्बे के परिवार की रोज़ की जेब और ज़िंदगी से सीधा जुड़ा मुद्दा है।",
-    "weak": "शेयर करने की वजह बहुत ढीली है ('जिसके गाँव में बिजली मेहमान हो') और पिंकी का स्टेटस वाला डायलॉग पुराना सोशल मीडिया जोक लगता है।",
-    "fix": "शेयर कॉल को ठोस बनाएँ, जैसे 'घर के उस सदस्य को भेजो जो पंखा बंद न होने पर बिल का रोना रोता है'।"
-  },
-  {
-    "n": 3,
-    "A": 2,
-    "B": 2,
-    "C": 1,
-    "D": 1,
-    "E": 1,
-    "F": 1,
-    "total": 8,
-    "why": "बैंक वालों का असली रूखापन बनाम ठग की मीठी बोली का फ़र्क़ और 1930 नंबर की जानकारी इसे बेहद काम की रील बनाती है।",
-    "weak": "हुक 11 शब्दों का है और पहले 3 सेकंड में यह साफ़ नहीं होता कि बात साइबर फ़्रॉड और ओटीपी ठगी की हो रही है।",
-    "fix": "हुक छोटा और सीधा करें, जैसे 'फ़ोन पे मीठी आवाज़ में बैंक वाला बोले, तो समझो कटने वाला है!'।"
-  }
-]
+CANDS power cut candle night [('candle, candlelight, burning, flames, light, night, christmas', 2), ('candle, night, moon, fire, darkness, evening', 2), ('woman, female, room, phone, candle, pose, modeling, bed, tired, relax, resting, night', 2), ('flame, candle, wax, burn, bright, heat, light, christmas, night, fire, candlelight, candle light, religion, warm, decoration, melted, glowing', 2)]
+CANDS solar panel village roof [('solar, panels, solar energy, photovoltaic, solar system, energy, electricity, energy transition, clouds, roof, alps, switzerland, solar cells, solar panel, solar power, heaven, power generation, environmental protection, renewable', 3), ('linear, es245, juparana lagoon, landscape, forest, tree, pub, heaven, nature, highway, road, plantation, place, field, country house, solar energy, roof, interior, solar panel', 3), ('linear, es245, juparana lagoon, landscape, forest, tree, pub, heaven, nature, highway, road, plantation, place, field, country house, solar energy, roof, interior, solar panel', 3), ('solar panels, energy, renewable, electric current, solar, panel, ecological, sustainability', 2)]
+CANDS students exam hall [('drone, aerial, mcewan hall, bristo square, edinburgh, university, college, city, teviot, castle, aerial cityscape, busy, view, 4k drone view, tracking, camera work, distance view, uk, student, buildings', 1), ('drone, aerial, mcewan hall, bristo square, edinburgh, university, college, city, teviot, castle, aerial cityscape, busy, view, 4k drone view, tracking, camera work, distance view, uk, student, buildings', 1), ('heart, arrhythmia, heart attack, health, exam, doctor, hospital, urgency, emergency, heart failure', 1), ('street, architecture, greenwich chapel, painted hall, london, england', 1)]
+  Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
+    Gemini gemini-3.6-flash: 11s
+  ✅ clip: power cut candle night → candle, candlelight, burning, flames, light, night, christmas
+  ❌ कोई मेल वाला clip नहीं: solar panel village roof (किरदार ही दिखेगा)
+  ❌ कोई मेल वाला clip नहीं: students exam hall (किरदार ही दिखेगा)
+PICK [PosixPath('/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/visuals_cache/v192011.mp4'), None, None]
