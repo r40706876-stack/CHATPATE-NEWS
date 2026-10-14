@@ -77,7 +77,7 @@ def post(video, name, role):
     meta = subprocess.run(["ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height",
                            "-of", "json", video], capture_output=True, text=True).stdout
     vw, vh = [json.loads(meta)["streams"][0][k] for k in ("width", "height")]
-    rd = subprocess.Popen(["ffmpeg", "-loglevel", "error", "-i", video, "-vf", f"fps={FPS},scale=960:1280",
+    rd = subprocess.Popen(["ffmpeg", "-loglevel", "error", "-i", video, "-vf", f"fps={FPS},scale=960:1280:force_original_aspect_ratio=increase,crop=960:1280",
                            "-f", "rawvideo", "-pix_fmt", "rgb24", "-"], stdout=subprocess.PIPE)
     out = ROOT / "talk_demo.mp4"
     wr = subprocess.Popen(["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}",
