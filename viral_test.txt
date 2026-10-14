@@ -1,9 +1,21 @@
-CANDS power cut candle night [('candle, candlelight, burning, flames, light, night, christmas', 2), ('candle, night, moon, fire, darkness, evening', 2), ('woman, female, room, phone, candle, pose, modeling, bed, tired, relax, resting, night', 2), ('flame, candle, wax, burn, bright, heat, light, christmas, night, fire, candlelight, candle light, religion, warm, decoration, melted, glowing', 2)]
-CANDS solar panel village roof [('solar, panels, solar energy, photovoltaic, solar system, energy, electricity, energy transition, clouds, roof, alps, switzerland, solar cells, solar panel, solar power, heaven, power generation, environmental protection, renewable', 3), ('linear, es245, juparana lagoon, landscape, forest, tree, pub, heaven, nature, highway, road, plantation, place, field, country house, solar energy, roof, interior, solar panel', 3), ('linear, es245, juparana lagoon, landscape, forest, tree, pub, heaven, nature, highway, road, plantation, place, field, country house, solar energy, roof, interior, solar panel', 3), ('solar panels, energy, renewable, electric current, solar, panel, ecological, sustainability', 2)]
-CANDS students exam hall [('drone, aerial, mcewan hall, bristo square, edinburgh, university, college, city, teviot, castle, aerial cityscape, busy, view, 4k drone view, tracking, camera work, distance view, uk, student, buildings', 1), ('drone, aerial, mcewan hall, bristo square, edinburgh, university, college, city, teviot, castle, aerial cityscape, busy, view, 4k drone view, tracking, camera work, distance view, uk, student, buildings', 1), ('heart, arrhythmia, heart attack, health, exam, doctor, hospital, urgency, emergency, heart failure', 1), ('street, architecture, greenwich chapel, painted hall, london, england', 1)]
-  Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
-    Gemini gemini-3.6-flash: 11s
-  ✅ clip: power cut candle night → candle, candlelight, burning, flames, light, night, christmas
-  ❌ कोई मेल वाला clip नहीं: solar panel village roof (किरदार ही दिखेगा)
-  ❌ कोई मेल वाला clip नहीं: students exam hall (किरदार ही दिखेगा)
-PICK [PosixPath('/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/visuals_cache/v192011.mp4'), None, None]
+ERR: is model is currently experiencing high demand. Spikes in demand are u
+  gemini-3.5-flash: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-3.6-flash: 503 {
+  "error": {
+    "code": 503,
+    "message": "This model is currently experiencing high demand. Spikes in demand are u
+  gemini-3.7-flash: 503 {
+  "error": {
+    "code": 503,
+    "message": "This model is currently experiencing high demand. Spikes in demand are u
+  gemini-pro-latest: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-flash-latest: 503 {
+  "error": {
+    "code": 503,
+    "message": "This model is currently experiencing high demand. Spikes in demand are u
