@@ -60,6 +60,36 @@ def expr_img(who, expr):
     return None
 
 
+SPRITE_EXPR = {"hasi": "happy", "gussa": "angry", "udaas": "sad", "hairan": "shock", "tanz": "smug"}
+
+
+def sprite_frames(folder, expr, env):
+    """3D किरदार (assets/<x>/<भाव>_<closed|half|open>.webp): आवाज़ के हिसाब से मुँह खुलता-बंद होता है."""
+    folder = ROOT / folder
+    e = SPRITE_EXPR.get(expr or "", "neutral")
+    bgp = folder / "home.jpg"
+    bg = Image.open(bgp).convert("RGB") if bgp.exists() else Image.new("RGB", (960, 1280), (200, 170, 140))
+    k = max(960 / bg.width, 1280 / bg.height)
+    bg = bg.resize((int(bg.width * k), int(bg.height * k))).crop((0, 0, 960, 1280))
+    cache = {}
+
+    def pose(m):
+        if m not in cache:
+            sp = Image.open(folder / f"{e}_{m}.webp").convert("RGBA")
+            sc = 1250 / sp.height
+            sp = sp.resize((int(sp.width * sc), 1250), Image.LANCZOS)
+            im = bg.copy()
+            im.paste(sp, ((960 - sp.width) // 2, 1280 - 1250 + 60), sp)
+            cache[m] = im
+        return cache[m]
+    for i, a in enumerate(env):
+        m = "open" if a > 0.55 else "half" if a > 0.2 else "closed"
+        z = 1 + 0.02 * a + 0.03 * i / max(1, len(env))
+        im = pose(m)
+        cw, ch = 960 / z, 1280 / z
+        yield im.crop((int((960 - cw) / 2), int((1280 - ch) * 0.2), int((960 + cw) / 2), int((1280 - ch) * 0.2 + ch))).resize((960, 1280))
+
+
 def main(script):
     ep = json.load(open(ROOT / script, encoding="utf-8"))
     import tts
@@ -70,8 +100,13 @@ def main(script):
         wav = IN / f"audio/{i:02d}.wav"
         te.tighten(wav)
         base = IN / f"base_{ln['who']}.png"
-        if not base.exists():
+        if not base.exists() and not (ep.get("sprite") or {}).get(ln["who"]):
             te.source_img(ln["who"], base)
+        sprite = (ep.get("sprite") or {}).get(ln["who"])
+        if sprite:
+            fr = list(sprite_frames(sprite, ln.get("expr"), amp_env(wav)))
+            lines.append(ln), audio.append(wav), stills.append(fr[0]), faces.append(iter(fr))
+            continue
         img = expr_img(ln["who"], ln.get("expr")) or Image.open(base).convert("RGB")
         lines.append(ln), audio.append(wav), stills.append(img), faces.append(talking_still(img, amp_env(wav)))
         if ln.get("punch"):                                     # punch के बाद किसी और का reaction (1.2 सेकंड)
