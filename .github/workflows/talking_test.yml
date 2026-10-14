@@ -1,0 +1,69 @@
+# B वाला test: एक तस्वीर + आवाज़ → SadTalker (free, Apache-2.0) से हिलता चेहरा → पुराना TV look → Telegram
+name: talking-head-test
+on:
+  workflow_dispatch:
+    inputs:
+      image: {description: "तस्वीर (repo में path)", default: "assets/dadi/neutral_closed.webp"}
+      who: {description: "आवाज़ किसकी (bablu/chacha/dadi)", default: "dadi"}
+      name: {description: "नाम-पट्टी", default: "दादी"}
+      role: {description: "पद", default: "तकनीकी सलाहकार • WhatsApp विभाग"}
+      text: {description: "क्या बोलें (~10 सेकंड)", default: "हाय राम! गलत यूपीआई पर पैसा चला जाए, तो घबराना नहीं बेटा। उन्नीस सौ तीस पर फ़ोन करो, और ये वीडियो उस लल्ला को भेजो, जो हर बार हड़बड़ी में पैसे भेज देता है!"}
+jobs:
+  talk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    permissions: {contents: write}
+    env:
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GEMINI_API_KEY2: ${{ secrets.GEMINI_API_KEY2 }}
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg libraqm0 libsndfile1
+      - name: आवाज़ + तस्वीर तैयार (system python)
+        run: |
+          /usr/bin/python3 -m pip install -q --break-system-packages numpy scipy pillow
+          /usr/bin/python3 talk_test.py prep "${{ inputs.image }}" "${{ inputs.text }}" "${{ inputs.who }}"
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.10"}
+      - name: SadTalker के models (cache)
+        uses: actions/cache@v4
+        with: {path: st_models, key: sadtalker-256-v1}
+      - name: SadTalker install
+        run: |
+          git clone -q --depth 1 https://github.com/OpenTalker/SadTalker st
+          mkdir -p st_models/checkpoints st_models/gfpgan/weights
+          cd st_models/checkpoints
+          for f in mapping_00109-model.pth.tar mapping_00229-model.pth.tar SadTalker_V0.0.2_256.safetensors; do
+            test -s $f || wget -q https://github.com/OpenTalker/SadTalker/releases/download/v0.0.2-rc/$f; done
+          cd ../gfpgan/weights
+          test -s alignment_WFLW_4HG.pth || wget -q https://github.com/xinntao/facexlib/releases/download/v0.1.0/alignment_WFLW_4HG.pth
+          test -s detection_Resnet50_Final.pth || wget -q https://github.com/xinntao/facexlib/releases/download/v0.1.0/detection_Resnet50_Final.pth
+          test -s GFPGANv1.4.pth || wget -q https://github.com/TencentARC/GFPGAN/releases/download/v1.3.0/GFPGANv1.4.pth
+          test -s parsing_parsenet.pth || wget -q https://github.com/xinntao/facexlib/releases/download/v0.2.2/parsing_parsenet.pth
+          cd $GITHUB_WORKSPACE
+          ln -s $GITHUB_WORKSPACE/st_models/checkpoints st/checkpoints
+          ln -s $GITHUB_WORKSPACE/st_models/gfpgan st/gfpgan
+          pip install -q torch==1.12.1+cpu torchvision==0.13.1+cpu torchaudio==0.12.1+cpu --extra-index-url https://download.pytorch.org/whl/cpu
+          grep -v gradio st/requirements.txt > st/req.txt
+          pip install -q -r st/req.txt
+      - name: चेहरा हिलाओ (CPU पर धीमा)
+        run: |
+          cd st
+          time python inference.py --driven_audio ../st_in/talk.wav --source_image ../st_in/source.png \
+            --result_dir ../st_out --still --preprocess full --enhancer gfpgan --cpu --batch_size 2
+          ls -R ../st_out | head
+      - name: पुराना TV look + Telegram
+        run: |
+          V=$(find st_out -name "*.mp4" | sort | tail -1)
+          echo "video: $V"
+          /usr/bin/python3 talk_test.py post "$V" "${{ inputs.name }}" "${{ inputs.role }}"
+      - name: झलक सेव
+        if: always()
+        run: |
+          git config user.name bot && git config user.email bot@users.noreply.github.com
+          git add -f preview_talk.jpg 2>/dev/null || true
+          git diff --cached --quiet && exit 0
+          git commit -m "talking-head test preview"
+          for i in 1 2 3; do git pull --rebase -X theirs && git push && break; sleep 5; done
