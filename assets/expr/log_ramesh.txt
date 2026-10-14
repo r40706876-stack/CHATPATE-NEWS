@@ -1,0 +1,44 @@
+Traceback (most recent call last):
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/lp/inference.py", line 66, in <module>
+    main()
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/lp/inference.py", line 56, in main
+    live_portrait_pipeline = LivePortraitPipeline(
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/lp/src/live_portrait_pipeline.py", line 38, in __init__
+    self.live_portrait_wrapper: LivePortraitWrapper = LivePortraitWrapper(inference_cfg=inference_cfg)
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/lp/src/live_portrait_wrapper.py", line 45, in __init__
+    self.appearance_feature_extractor = load_model(inference_cfg.checkpoint_F, model_config, self.device, 'appearance_feature_extractor')
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/lp/src/utils/helper.py", line 170, in load_model
+    model.load_state_dict(torch.load(ckpt_path, map_location=lambda storage, loc: storage))
+  File "/opt/hostedtoolcache/Python/3.10.22/x64/lib/python3.10/site-packages/torch/serialization.py", line 997, in load
+    with _open_file_like(f, 'rb') as opened_file:
+  File "/opt/hostedtoolcache/Python/3.10.22/x64/lib/python3.10/site-packages/torch/serialization.py", line 444, in _open_file_like
+    return _open_file(name_or_buffer, mode)
+  File "/opt/hostedtoolcache/Python/3.10.22/x64/lib/python3.10/site-packages/torch/serialization.py", line 425, in __init__
+    super().__init__(open(name, mode))
+FileNotFoundError: [Errno 2] No such file or directory: '/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/lp/src/config/../../pretrained_weights/liveportrait/base_models/appearance_feature_extractor.pth'
+
+real	0m3.762s
+user	0m1.719s
+sys	0m0.457s
+Traceback (most recent call last):
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/lp/inference.py", line 66, in <module>
+    main()
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/lp/inference.py", line 56, in main
+    live_portrait_pipeline = LivePortraitPipeline(
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/lp/src/live_portrait_pipeline.py", line 38, in __init__
+    self.live_portrait_wrapper: LivePortraitWrapper = LivePortraitWrapper(inference_cfg=inference_cfg)
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/lp/src/live_portrait_wrapper.py", line 45, in __init__
+    self.appearance_feature_extractor = load_model(inference_cfg.checkpoint_F, model_config, self.device, 'appearance_feature_extractor')
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/lp/src/utils/helper.py", line 170, in load_model
+    model.load_state_dict(torch.load(ckpt_path, map_location=lambda storage, loc: storage))
+  File "/opt/hostedtoolcache/Python/3.10.22/x64/lib/python3.10/site-packages/torch/serialization.py", line 997, in load
+    with _open_file_like(f, 'rb') as opened_file:
+  File "/opt/hostedtoolcache/Python/3.10.22/x64/lib/python3.10/site-packages/torch/serialization.py", line 444, in _open_file_like
+    return _open_file(name_or_buffer, mode)
+  File "/opt/hostedtoolcache/Python/3.10.22/x64/lib/python3.10/site-packages/torch/serialization.py", line 425, in __init__
+    super().__init__(open(name, mode))
+FileNotFoundError: [Errno 2] No such file or directory: '/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/lp/src/config/../../pretrained_weights/liveportrait/base_models/appearance_feature_extractor.pth'
+
+real	0m1.446s
+user	0m1.623s
+sys	0m0.443s
