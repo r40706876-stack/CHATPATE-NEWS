@@ -173,7 +173,8 @@ def do_render(script_path):
     cap = script.get("caption_post", script.get("breaking", ""))
     (job / "caption.txt").write_text(cap, encoding="utf-8")
     log_done(script)
-    telegram.send_video(job / "reel.mp4", cap)
+    if not script.get("preview_only"):
+        telegram.send_video(job / "reel.mp4", cap)
     print(f"तैयार: {job / 'reel.mp4'}")
 
 

@@ -228,6 +228,7 @@ def main(path, outname):
             sp = spans[si]
             bg = make_bg(sp["q"], sp["end"] - sp["start"])
             sp["f0"] = fi
+            sp["kind"] = type(bg).__name__
             print(f"  visual {si + 1}/{len(spans)}: {sp['q']} ({type(bg).__name__})")
         frame = bg.frame(fi - spans[si]["f0"])
         age_span = t - spans[si]["start"]
@@ -291,3 +292,9 @@ def main(path, outname):
     proc.stdin.close()
     proc.wait()
     print(f"बन गया: {outname} ({total:.1f}s, {nframes} frames, {len(spans)} visuals)")
+    try:                                                  # repo में छोटी झलक: जाँचने के लिए
+        subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", str(ROOT / outname), "-vf",
+                        "fps=1/3,scale=270:-1,tile=4x4", "-frames:v", "1", str(ROOT / "preview_last.jpg")], check=True)
+        (ROOT / "preview_last.txt").write_text("\n".join(f"{sp['q']} → {sp.get('kind', '?')}" for sp in spans), encoding="utf-8")
+    except Exception as e:                                # noqa: BLE001
+        print("  झलक नहीं बनी:", e)
