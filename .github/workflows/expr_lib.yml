@@ -1,0 +1,61 @@
+# भाव वाली library: Pixabay के असली भाव → LivePortrait (free, CPU) → assets/expr/<who>_<expr>.mp4
+name: expr-library
+on:
+  workflow_dispatch:
+    inputs:
+      who: {description: "किरदार (bablu/chacha/dadi/pinky/ramesh)", default: "ramesh"}
+      exprs: {description: "भाव (hasi,udaas,hairan,gussa,tanz,haan)", default: "hasi"}
+      mult: {description: "भाव की ताकत", default: "1.0"}
+jobs:
+  make:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    permissions: {contents: write}
+    env:
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GEMINI_API_KEY2: ${{ secrets.GEMINI_API_KEY2 }}
+      PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg libraqm0
+      - name: भाव वाले असली videos चुनो + किरदार की फ़ोटो
+        run: |
+          /usr/bin/python3 -m pip install -q --break-system-packages numpy scipy pillow rembg onnxruntime
+          mkdir -p drv
+          /usr/bin/python3 expr_lib.py drivers "${{ inputs.who }}" "${{ inputs.exprs }}"
+          /usr/bin/python3 expr_lib.py source "${{ inputs.who }}"
+          ls -la drv
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.10"}
+      - uses: actions/cache@v4
+        with: {path: lp_weights, key: liveportrait-w1}
+      - uses: actions/cache@v4
+        with: {path: ~/.cache/pip, key: liveportrait-pip-v1}
+      - name: LivePortrait install
+        run: |
+          git clone -q --depth 1 https://github.com/KwaiVGI/LivePortrait lp
+          pip install -q torch==2.3.0 torchvision==0.18.0 --extra-index-url https://download.pytorch.org/whl/cpu
+          pip install -q -r lp/requirements_base.txt onnxruntime==1.18.0 "huggingface_hub[cli]<0.26"
+          test -d lp_weights/liveportrait || huggingface-cli download KlingTeam/LivePortrait --local-dir lp_weights --exclude "*.git*" "README.md" "docs"
+          ln -s $GITHUB_WORKSPACE/lp_weights lp/pretrained_weights
+      - name: भाव लगाओ (CPU)
+        run: |
+          mkdir -p assets/expr
+          for d in drv/${{ inputs.who }}_*.mp4; do
+            e=$(basename $d .mp4)
+            (cd lp && time python inference.py -s ../drv/${{ inputs.who }}_src.png -d ../$d -o ../lp_out \
+               --flag_force_cpu --no_flag_use_half_precision --flag_crop_driving_video \
+               --driving_multiplier ${{ inputs.mult }}) || continue
+            f=$(ls lp_out/*${e}.mp4 2>/dev/null | grep -v concat | head -1)
+            [ -n "$f" ] && cp "$f" assets/expr/$e.mp4 && echo "बना: assets/expr/$e.mp4"
+          done
+          ls -la lp_out assets/expr || true
+      - name: झलक + सेव
+        if: always()
+        run: |
+          /usr/bin/python3 expr_lib.py sheet || true
+          git config user.name bot && git config user.email bot@users.noreply.github.com
+          git add -f assets/expr preview_expr.jpg 2>/dev/null || true
+          git diff --cached --quiet && exit 0
+          git commit -m "भाव library: ${{ inputs.who }} ${{ inputs.exprs }}"
+          for i in 1 2 3; do git pull --rebase -X theirs && git push && break; sleep 5; done
