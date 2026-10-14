@@ -78,14 +78,18 @@ def prep(script_path):
         source_img(ln["who"], d / "source.png")
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(IN / f"audio/{i:02d}.wav"), "-ar", "16000",
                         "-ac", "1", str(d / "talk.wav")], check=True)
-    want = [(i, ln) for i, ln in enumerate(ep["lines"]) if ln.get("visual")]
-    if want:                                                   # b-roll: सिर्फ़ जाँचा हुआ, मेल वाला clip
+    pairs = []                                                 # हर line के 1-2 visual (खोज), सब एक साथ जाँचे जाएँ
+    for i, ln in enumerate(ep["lines"]):
+        qs = ln.get("visuals") or ([ln["visual"]] if ln.get("visual") else [])
+        pairs += [(i, j, q) for j, q in enumerate(qs[:2]) if not ln.get("punch")]
+    if pairs:
         import shutil
         import visuals
         (IN / "broll").mkdir(exist_ok=True)
-        for (i, ln), path in zip(want, visuals.pick_checked([(ln["say"], ln["visual"]) for _, ln in want])):
+        got = visuals.pick_checked([(ep["lines"][i]["say"], q) for i, _, q in pairs])
+        for (i, j, _), path in zip(pairs, got):
             if path:
-                shutil.copy(path, IN / f"broll/{i}{Path(path).suffix}")
+                shutil.copy(path, IN / f"broll/{i}_{j}{Path(path).suffix}")
     json.dump(ep, open(IN / "episode.json", "w", encoding="utf-8"), ensure_ascii=False)
     print(json.dumps(list(range(len(ep["lines"])))))
 
@@ -180,55 +184,22 @@ def chrome(ep, ln, k, total, broll):
 
 
 def post():
+    import reel_v3
     ep = json.load(open(IN / "episode.json", encoding="utf-8"))
     n = len(ep["lines"])
-    lens = [_secs(IN / f"audio/{i:02d}.wav") for i in range(n)]
-    counts = [max(1, round(s * FPS)) for s in lens]
-    total = sum(counts)
-    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", *sum([["-i", str(IN / f"audio/{i:02d}.wav")] for i in range(n)], []),
-                    "-filter_complex", "".join(f"[{i}:a]" for i in range(n)) + f"concat=n={n}:v=0:a=1[a]",
-                    "-map", "[a]", str(IN / "all.wav")], check=True)
-    out = ROOT / "episode.mp4"
-    wr = subprocess.Popen(["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}",
-                           "-r", str(FPS), "-i", "-", "-i", str(IN / "all.wav"), "-c:v", "libx264", "-crf", "20",
-                           "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "160k", "-shortest", str(out)],
-                          stdin=subprocess.PIPE)
-    mask = Image.new("L", (300, 300), 0)
-    ImageDraw.Draw(mask).ellipse((0, 0, 299, 299), fill=255)
-    k = 0
-    for i, ln in enumerate(ep["lines"]):
+    audio = [IN / f"audio/{i:02d}.wav" for i in range(n)]
+    lens = [_secs(a) for a in audio]
+    faces, stills, vis = [], [], []
+    for i in range(n):
         clips = sorted((OUT / str(i)).rglob("*.mp4"))
-        face = _frames(clips[-1]) if clips else iter(())
-        still = Image.open(IN / f"{i}/source.png").convert("RGB")
-        br = next(iter(sorted((IN / "broll").glob(f"{i}.*"))), None) if (IN / "broll").exists() else None
-        bg = (_kenburns(br, W, VH, counts[i]) if br.suffix == ".jpg" else _cover(br, W, VH)) if br else None
-        last = None
-        for _ in range(counts[i]):
-            fr = next(face, None) or last or still
-            last = fr
-            f = Image.new("RGB", (W, H), (12, 12, 16))
-            if bg is not None:
-                f.paste(next(bg, None) or Image.new("RGB", (W, VH), (0, 0, 0)), (0, 0))
-                pip = fr.resize((300, 400)).crop((0, 30, 300, 330))
-                f.paste((255, 255, 255), (W - 346, VH - 456, W - 34, VH - 144), _ring())
-                f.paste(pip, (W - 340, VH - 450), mask)
-            else:                                                # editor वाली हरकत: हर line पर wide/close बदलो + धीमा zoom
-                z = (1.0 if i % 2 == 0 else 1.14) + 0.04 * (_ / max(1, counts[i]))
-                cw, ch = 960 / z, 1280 / z
-                x0, y0 = (960 - cw) / 2, (1280 - ch) * 0.3
-                f.paste(fr.crop((int(x0), int(y0), int(x0 + cw), int(y0 + ch))).resize((W, VH), Image.LANCZOS), (0, 0))
-            c = chrome_cache(ep, ln, k, total, bg is not None)
-            f.paste(c, (0, 0), c)
-            wr.stdin.write(f.tobytes())
-            k += 1
-    wr.stdin.close()
-    wr.wait()
-    subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", str(out), "-vf",
-                    f"fps={10 / max(1, total / FPS)},scale=270:-1,tile=5x2", "-frames:v", "1",
-                    str(ROOT / "preview_episode.jpg")])
-    print(f"बन गया: {out} ({total / FPS:.1f}s)")
+        faces.append(_frames(clips[-1]) if clips else None)
+        stills.append(Image.open(IN / f"{i}/source.png").convert("RGB"))
+        vis.append(sorted((IN / "broll").glob(f"{i}_*")) if (IN / "broll").exists() else [])
+    out = ROOT / "episode.mp4"
+    secs = reel_v3.render(ep, lens, faces, stills, vis, CHARS, out, ROOT / "preview_episode.jpg", audio)
+    print(f"बन गया: {out} ({secs:.1f}s)")
     import telegram
-    telegram.send_video(out, f"🎬 नया (आज का) look test: {ep.get('title', '')} — {n} lines")
+    telegram.send_video(out, f"🎬 v3 test: {ep.get('title', '')} — हर 2-3 सेकंड नया नज़ारा, poll के साथ")
 
 
 _cc = {}
