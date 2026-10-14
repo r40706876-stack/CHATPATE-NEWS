@@ -226,7 +226,7 @@ def stamp(im, text, t):
     d.rounded_rectangle((10, 30, 690, 230), 30, fill=YEL + (255,), outline=(0, 0, 0, 255), width=8)
     d.text((350, 130), text, font=f, fill=(0, 0, 0), anchor="mm")
     lay = lay.rotate(-8, expand=True, resample=Image.BICUBIC)
-    im.paste(lay, ((W - lay.width) // 2 + 120, 860), lay)
+    im.paste(lay, ((W - lay.width) // 2 + 140, 210), lay)
 
 
 def poll(d, p, t):
@@ -286,29 +286,29 @@ def render(ep, lens, faces, stills, visuals, chars, out, preview, audio_paths):
             im = Image.new("RGB", (W, H), (10, 10, 14))
             if punch:                                              # पूरा screen, तेज़ zoom, हल्का झटका
                 z = 1.0 + 0.25 * min(1, t / 8)
-                f = face_frame(fr, W, H, z, 0.2)
+                f = face_frame(fr, W, H, z, 0.1)
                 if t < 6:
                     f = f.transform(f.size, Image.AFFINE, (1, 0, (6 - t) * 6 * (-1) ** t, 0, 1, 0))
                 im.paste(f, (0, 0))
             else:
                 im.paste(next(vgen, None) or Image.new("RGB", (W, TOP)), (0, 0))
-                im.paste(face_frame(fr, W, BOT, 1.05 + 0.05 * t / n), (0, TOP))
+                im.paste(face_frame(fr, W, BOT, 1.0 + 0.04 * t / n, 0.04), (0, TOP))
             d = ImageDraw.Draw(im)
             chrome(d, k)
             if punch:
-                name_strap(d, 1330, name, role)
+                name_strap(d, 1560, name, role)
                 if t >= 4:
                     stamp(im, STAMPS[stamp_i % len(STAMPS)], t - 4)
                     d = ImageDraw.Draw(im)
             else:
                 d.rectangle((0, TOP - 6, W, TOP + 6), fill=YEL)
-                name_strap(d, TOP + 24, name, role)
+                name_strap(d, H - 150, name, role)
             if k < FPS * 2.5 and ep.get("hook"):                   # hook: पहले 2.5 सेकंड
                 rows = _wrap(ep["hook"], tt.font(72), 980)[:3]
                 d.rounded_rectangle((24, 130, W - 24, 150 + 92 * len(rows)), 26, fill=YEL)
                 for r, row in enumerate(rows):
                     d.text((W / 2, 186 + r * 92), row, font=tt.font(72), fill=(0, 0, 0), anchor="mm")
-            karaoke(d, ln.get("caption") or ln["say"], t / n, 1700 if punch else TOP + 330 + 300)
+            karaoke(d, ln.get("caption") or ln["say"], t / n, 1780 if punch else TOP - 80)   # मुँह पर कभी नहीं
             d.rectangle((0, H - 12, int(W * k / total), H), fill=YEL)
             wr.stdin.write(im.tobytes())
             k += 1
