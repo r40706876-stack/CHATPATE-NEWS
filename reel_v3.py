@@ -252,7 +252,7 @@ def render(ep, lens, faces, stills, visuals, chars, out, preview, audio_paths):
     events, t0 = [(0.0, "boom")], 0.0
     for i, ln in enumerate(ep["lines"]):
         if i:
-            events.append((t0, "boom" if ln.get("punch") else "whoosh"))
+            events.append((t0, "boom" if ln.get("punch") else "pop" if ln.get("react") else "whoosh"))
         nv = max(1, len(visuals[i]))
         for j in range(1, nv):
             events.append((t0 + lens[i] * j / nv, "pop"))
@@ -267,7 +267,8 @@ def render(ep, lens, faces, stills, visuals, chars, out, preview, audio_paths):
     k, stamp_i, last_face = 0, 0, None
     for i, ln in enumerate(ep["lines"]):
         n = counts[i]
-        punch = bool(ln.get("punch"))
+        react = bool(ln.get("react"))
+        punch = bool(ln.get("punch")) or react
         card = {"big": ln.get("big") or "", "sub": ln.get("sub", "")}
         vis = list(visuals[i])
         if card["big"] and len(vis) < 2:                           # clip + खबर कार्ड बारी-बारी
@@ -285,9 +286,9 @@ def render(ep, lens, faces, stills, visuals, chars, out, preview, audio_paths):
             last_face = fr
             im = Image.new("RGB", (W, H), (10, 10, 14))
             if punch:                                              # पूरा screen, तेज़ zoom, हल्का झटका
-                z = 1.0 + 0.25 * min(1, t / 8)
+                z = 1.0 + (0.08 if react else 0.25) * min(1, t / 8)
                 f = face_frame(fr, W, H, z, 0.1)
-                if t < 6:
+                if t < 6 and not react:
                     f = f.transform(f.size, Image.AFFINE, (1, 0, (6 - t) * 6 * (-1) ** t, 0, 1, 0))
                 im.paste(f, (0, 0))
             else:
@@ -295,7 +296,10 @@ def render(ep, lens, faces, stills, visuals, chars, out, preview, audio_paths):
                 im.paste(face_frame(fr, W, BOT, 1.0 + 0.04 * t / n, 0.04), (0, TOP))
             d = ImageDraw.Draw(im)
             chrome(d, k)
-            if punch:
+            if react:
+                d.rounded_rectangle((40, 1560, 600, 1640), 20, fill=RED)
+                d.text((70, 1600), f"{name} का रिएक्शन", font=tt.font(46), fill=WHITE, anchor="lm")
+            elif punch:
                 name_strap(d, 1560, name, role)
                 if t >= 4:
                     stamp(im, STAMPS[stamp_i % len(STAMPS)], t - 4)
@@ -312,7 +316,7 @@ def render(ep, lens, faces, stills, visuals, chars, out, preview, audio_paths):
             d.rectangle((0, H - 12, int(W * k / total), H), fill=YEL)
             wr.stdin.write(im.tobytes())
             k += 1
-        if punch:
+        if punch and not react:
             stamp_i += 1
     for t in range(tailn):                                         # आख़िर: poll + follow
         im = Image.new("RGB", (W, H), (10, 10, 14))

@@ -168,9 +168,9 @@ def pick_checked(items):
                 parts.append({"text": f"तस्वीर {j}: (नहीं खुली)"})
     try:
         picks = gemini.json_from(gemini.ask(parts, json_mode=True, temperature=0.1)).get("picks", [])
-    except Exception as e:                                # noqa: BLE001
-        print("  clip जाँच नहीं हुई, कोई clip नहीं लगेगा:", repr(e)[:120])
-        picks = []
+    except Exception as e:                                # noqa: BLE001  Gemini न चले: सिर्फ़ पक्के tag-मेल वाले
+        print("  AI जाँच नहीं हुई, tags से चुन रहे (कम से कम 2 मेल):", repr(e)[:120])
+        picks = [next((j for j, c in enumerate(cs) if c["match"] >= 2), -1) for cs in cands]
     out = []
     CACHE.mkdir(exist_ok=True)
     for i, cs in enumerate(cands):

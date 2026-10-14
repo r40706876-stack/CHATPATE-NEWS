@@ -1,0 +1,27 @@
+# तेज़ reel (भाव वाली फ़ोटो + reaction, बिना होंठ हिलाए) — एक job, ~5 मिनट
+name: make-reel
+on:
+  workflow_dispatch:
+    inputs:
+      script: {description: "episode JSON", default: "episodes/bijli.json"}
+jobs:
+  reel:
+    runs-on: ubuntu-latest
+    permissions: {contents: write}
+    env:
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GEMINI_API_KEY2: ${{ secrets.GEMINI_API_KEY2 }}
+      PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg libraqm0
+      - run: pip install -q --break-system-packages numpy scipy pillow edge-tts rembg onnxruntime || pip install -q numpy scipy pillow edge-tts rembg onnxruntime
+      - run: timeout 25m python make_reel.py "${{ inputs.script }}"
+      - if: always()
+        run: |
+          git config user.name bot && git config user.email bot@users.noreply.github.com
+          git add -f preview_episode.jpg 2>/dev/null || true
+          git diff --cached --quiet && exit 0
+          git commit -m "reel preview" && for i in 1 2 3; do git pull --rebase -X theirs && git push && break; sleep 5; done
