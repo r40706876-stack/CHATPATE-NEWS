@@ -80,7 +80,8 @@ def ask(prompt, search=False, json_mode=False, temperature=0.9, prefer=None):
 
 
 def _ask(key, prompt, search, json_mode, temperature, prefer):
-    body = {"contents": [{"parts": [{"text": prompt}]}], "generationConfig": {"temperature": temperature}}
+    parts = prompt if isinstance(prompt, list) else [{"text": prompt}]     # list = text + तस्वीरें (inline_data)
+    body = {"contents": [{"parts": parts}], "generationConfig": {"temperature": temperature}}
     if search:
         body["tools"] = [{"google_search": {}}]
     elif json_mode:

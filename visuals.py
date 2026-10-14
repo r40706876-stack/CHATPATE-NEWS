@@ -96,3 +96,76 @@ def plan(lines, topic=""):
         out.append(q)
         last = q
     return out
+
+
+# ---------------------------------------------------------------- सावधानी से चुनना (बिना मेल वाला clip नहीं)
+STOP = {"the", "a", "of", "in", "and", "with", "on", "indian", "india"}
+
+
+def candidates(query, k=4):
+    """Pixabay के पहले 15 video में से tags सबसे ज़्यादा मेल खाने वाले k (thumbnail के साथ)."""
+    import urllib.parse as up
+    key = os.getenv("PIXABAY_API_KEY")
+    if not key or not query:
+        return []
+    q = up.quote(re.sub(r"\s+", " ", query).strip()[:90])
+    try:
+        hits = _get_json(f"https://pixabay.com/api/videos/?key={key}&q={q}&per_page=20&safesearch=true").get("hits", [])
+    except Exception as e:                                # noqa: BLE001
+        print("  Pixabay नहीं मिला:", query, e)
+        return []
+    want = {w for w in query.lower().split() if w not in STOP}
+    out = []
+    for h in hits:
+        if h.get("duration", 0) < 4 or f"v{h['id']}" in _used:
+            continue
+        v = h.get("videos", {})
+        size = next((s for s in ("medium", "small", "large") if v.get(s, {}).get("url")), None)
+        if not size:
+            continue
+        tags = {t.strip() for t in h.get("tags", "").lower().replace(",", " ").split()}
+        out.append({"id": f"v{h['id']}", "url": v[size]["url"], "thumb": v[size].get("thumbnail") or "",
+                    "tags": h.get("tags", ""), "match": len(want & tags)})
+    out.sort(key=lambda c: -c["match"])
+    return [c for c in out if c["match"] >= 1][:k]
+
+
+def _thumb_part(url):
+    import base64
+    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    with urllib.request.urlopen(req, timeout=30) as r:
+        return {"inline_data": {"mime_type": "image/jpeg", "data": base64.b64encode(r.read()).decode()}}
+
+
+def pick_checked(items):
+    """items: [(line_text, query)] → हर एक के लिए (path या None). Gemini तस्वीरें देखकर तय करता है कि clip सच में
+    line से मेल खाता है; मेल न हो तो None (तब उस line पर किरदार ही दिखेगा, बेमेल clip नहीं)."""
+    import gemini
+    cands = [candidates(q) for _, q in items]
+    parts = [{"text": "तुम video editor हो. हर line के लिए कुछ stock video की तस्वीरें हैं. वही चुनो जो line की बात को सीधे "
+                      "दिखाए (भारत/गाँव जैसा माहौल हो तो और अच्छा). थोड़ा भी बेमेल, विदेशी पहचान वाला, या अजीब हो तो -1. "
+                      "सिर्फ़ JSON: {\"picks\": [line क्रम में चुनी तस्वीर का नंबर या -1]}"}]
+    for i, ((text, q), cs) in enumerate(zip(items, cands)):
+        parts.append({"text": f"\nLine {i + 1}: \"{text}\" (खोज: {q}) — {len(cs)} तस्वीरें:"})
+        for j, c in enumerate(cs):
+            try:
+                parts += [{"text": f"तस्वीर {j}:"}, _thumb_part(c["thumb"])]
+            except Exception:                             # noqa: BLE001
+                parts.append({"text": f"तस्वीर {j}: (नहीं खुली)"})
+    try:
+        picks = gemini.json_from(gemini.ask(parts, json_mode=True, temperature=0.1)).get("picks", [])
+    except Exception as e:                                # noqa: BLE001
+        print("  clip जाँच नहीं हुई, कोई clip नहीं लगेगा:", repr(e)[:120])
+        picks = []
+    out = []
+    CACHE.mkdir(exist_ok=True)
+    for i, cs in enumerate(cands):
+        j = picks[i] if i < len(picks) and isinstance(picks[i], int) else -1
+        if 0 <= j < len(cs):
+            _used.add(cs[j]["id"])
+            out.append(_download(cs[j]["url"], CACHE / f"{cs[j]['id']}.mp4"))
+            print(f"  ✅ clip: {items[i][1]} → {cs[j]['tags']}")
+        else:
+            out.append(None)
+            print(f"  ❌ कोई मेल वाला clip नहीं: {items[i][1]} (किरदार ही दिखेगा)")
+    return out
