@@ -1,15 +1,78 @@
 {
  "title": "बबलू की खबर: बिजली",
  "hook": "बिजली का पता नहीं… बिल टाइम पे आता है!",
- "sprite": {"bablu": "assets/toon/bablu"},
- "poll": {"q": "आपके गाँव में बिजली कितने घंटे आती है?", "a": "24 घंटे", "b": "भगवान भरोसे"},
+ "sprite": {
+  "bablu": "assets/toon/bablu"
+ },
+ "poll": {
+  "q": "आपके गाँव में बिजली कितने घंटे आती है?",
+  "a": "24 घंटे",
+  "b": "भगवान भरोसे"
+ },
  "lines": [
-  {"who": "bablu", "expr": "hairan", "say": "भइया, गाँव में बिजली कब आती है? किसी को नहीं पता।", "visuals": ["light bulb off", "power outage dark house"], "big": "बिजली कब आती है?"},
-  {"who": "bablu", "expr": "gussa", "say": "पर बिल? हर महीने टाइम पे आ जाता है!", "punch": true},
-  {"who": "bablu", "expr": "tanz", "say": "विभाग कहता है, चौबीस घंटे बिजली देते हैं… हफ़्ते भर में मिलाकर!", "visuals": ["electricity pole wires", "power cut candle night"], "big": "24 घंटे बिजली*", "sub": "*हफ़्ते भर में मिलाकर"},
-  {"who": "bablu", "expr": "udaas", "say": "पहले लालटेन थी, बिल नहीं था।", "visuals": ["kerosene lantern"], "big": "पहले: लालटेन, बिल नहीं"},
-  {"who": "bablu", "expr": "tanz", "say": "अब तरक्की हुई है… लालटेन भी है, और बिल भी!", "punch": true},
-  {"who": "bablu", "expr": "hasi", "say": "इसलिए गाँव ने सोलर लगवा लिया। अब सूरज से उम्मीद है, विभाग से नहीं।", "visuals": ["solar panel roof", "sun sky bright"], "big": "सूरज > विभाग"},
-  {"who": "bablu", "expr": "hasi", "say": "ये वीडियो उसको भेजो, जिसका बिल बिजली से ज़्यादा आता है!", "visuals": ["electric meter"], "big": "भेजो उसको जिसका बिल बिजली से ज़्यादा आता है"}
+  {
+   "who": "bablu",
+   "expr": "hairan",
+   "say": "भइया, गाँव में बिजली कब आती है? किसी को नहीं पता।",
+   "visuals": [
+    "light bulb off",
+    "power outage dark house"
+   ],
+   "big": "बिजली कब आती है?"
+  },
+  {
+   "who": "bablu",
+   "expr": "gussa",
+   "say": "पर बिल? हर महीने टाइम पे आ जाता है!",
+   "punch": true,
+   "react_pose": "facepalm"
+  },
+  {
+   "who": "bablu",
+   "expr": "tanz",
+   "say": "विभाग कहता है, चौबीस घंटे बिजली देते हैं… हफ़्ते भर में मिलाकर!",
+   "visuals": [
+    "electricity pole wires",
+    "power cut candle night"
+   ],
+   "big": "24 घंटे बिजली*",
+   "sub": "*हफ़्ते भर में मिलाकर",
+   "react_pose": "eyeroll"
+  },
+  {
+   "who": "bablu",
+   "expr": "udaas",
+   "say": "पहले लालटेन थी, बिल नहीं था।",
+   "visuals": [
+    "kerosene lantern"
+   ],
+   "big": "पहले: लालटेन, बिल नहीं"
+  },
+  {
+   "who": "bablu",
+   "expr": "tanz",
+   "say": "अब तरक्की हुई है… लालटेन भी है, और बिल भी!",
+   "punch": true,
+   "react_pose": "laugh"
+  },
+  {
+   "who": "bablu",
+   "expr": "hasi",
+   "say": "इसलिए गाँव ने सोलर लगवा लिया। अब सूरज से उम्मीद है, विभाग से नहीं।",
+   "visuals": [
+    "solar panel roof",
+    "sun sky bright"
+   ],
+   "big": "सूरज > विभाग"
+  },
+  {
+   "who": "bablu",
+   "expr": "hasi",
+   "say": "ये वीडियो उसको भेजो, जिसका बिल बिजली से ज़्यादा आता है!",
+   "visuals": [
+    "electric meter"
+   ],
+   "big": "भेजो उसको जिसका बिल बिजली से ज़्यादा आता है"
+  }
  ]
 }

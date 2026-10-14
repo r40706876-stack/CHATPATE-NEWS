@@ -66,7 +66,7 @@ SPRITE_EXPR = {"hasi": "happy", "gussa": "angry", "udaas": "sad", "hairan": "sho
 def sprite_frames(folder, expr, env):
     """3D किरदार (assets/<x>/<भाव>_<closed|half|open>.webp): आवाज़ के हिसाब से मुँह खुलता-बंद होता है."""
     folder = ROOT / folder
-    e = SPRITE_EXPR.get(expr or "", expr if expr and (folder / f"{expr}_closed.png").exists() else "neutral")
+    e = SPRITE_EXPR.get(expr or "", expr if expr and ((folder / f"{expr}_closed.png").exists() or (folder / f"{expr}.png").exists()) else "neutral")
     who = folder.name
     bgp = next((p for p in (folder / "home.jpg", ROOT / f"assets/bg/{who}.jpg") if p.exists()), None)
     bg = Image.open(bgp).convert("RGB") if bgp else Image.new("RGB", (960, 1280), (200, 170, 140))
@@ -85,6 +85,8 @@ def sprite_frames(folder, expr, env):
         p = folder / f"{e}_{m}.png"
         if not p.exists():
             p = folder / f"{e}_closed.png"
+        if not p.exists():
+            p = folder / f"{e}.png"                                  # reaction pose (एक ही फ़ोटो)
         cut = IN / f"cut_{who}_{p.stem}.png"                         # स्लेटी पृष्ठभूमि हटाओ (एक बार)
         if not cut.exists():
             from rembg import new_session, remove
@@ -131,6 +133,16 @@ def main(script):
             continue
         img = expr_img(ln["who"], ln.get("expr")) or Image.open(base).convert("RGB")
         lines.append(ln), audio.append(wav), stills.append(img), faces.append(talking_still(img, amp_env(wav)))
+        rp = ln.get("react_pose")                                # 3D किरदार का reaction pose (ठहाका/माथा पकड़ना…)
+        sp_dir = (ep.get("sprite") or {}).get(ln.get("react_who", ln["who"]))
+        if rp and sp_dir and (ROOT / sp_dir / f"{rp}.png").exists():
+            rw = IN / f"audio/{i:02d}_r.wav"
+            subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "lavfi", "-i", "anullsrc=r=24000:cl=mono",
+                            "-t", "1.3", str(rw)], check=True)
+            fr = list(sprite_frames(sp_dir, rp, np.zeros(int(1.3 * FPS))))
+            lines.append({"who": ln.get("react_who", ln["who"]), "say": "", "caption": " ", "react": True})
+            audio.append(rw), stills.append(fr[0]), faces.append(iter(fr))
+            continue
         if ln.get("punch"):                                     # punch के बाद किसी और का reaction (1.2 सेकंड)
             who = next((r for r in REACTORS if r in used and r != ln["who"] and
                         (ROOT / f"assets/expr/{r}_{ln.get('react', 'tanz')}.mp4").exists()), None)
