@@ -4,15 +4,7 @@
   Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
     सब models busy — 40s रुककर दोबारा
   छोटी खोजें नहीं बनीं: RuntimeError('Gemini nahi chala:\n  gemini-flash-latest: 429 {\n  "error": {\n    "code": 429,\n    
-  खबर के लेखों से 4 फ़ोटो
-  Openverse नहीं मिला: traffic police holding india TimeoutError('The read operation timed out')
-  Openverse नहीं मिला: bihar police traffic TimeoutError('The read operation timed out')
-  Openverse नहीं मिला: indian rupee currency TimeoutError('The read operation timed out')
-  Openverse नहीं मिला: cctv traffic camera india TimeoutError('The read operation timed out')
-  Openverse नहीं मिला: elderly indian man TimeoutError('The read operation timed out')
-  Openverse नहीं मिला: spine x ray india TimeoutError('The read operation timed out')
-  Openverse नहीं मिला: traffic surveillance camera india TimeoutError('The read operation timed out')
-  Openverse नहीं मिला: two wheeler driver india TimeoutError('The read operation timed out')
+  खबर के लेखों से 17 फ़ोटो
     सब models busy — 40s रुककर दोबारा
     key 1 नहीं चली → key 2
     सब models busy — 40s रुककर दोबारा
@@ -25,13 +17,11 @@
   AI जाँच नहीं हुई — खबर/search वाली असली फ़ोटो (search engine का मेल), वरना भारत वाली पक्की photo
     सब models busy — 40s रुककर दोबारा
     key 1 नहीं चली → key 2
-    सब models busy — 40s रुककर दोबारा
-  AI जाँच में गड़बड़, दोबारा: RuntimeError('Gemini nahi chala:\n  gemini-flash-latest: 429 {\n  "error": {\n    "code": 429,\n    
-  AI जाँच नहीं हुई — खबर/search वाली असली फ़ोटो (search engine का मेल), वरना भारत वाली पक्की photo
+    Gemini gemini-3.5-flash: 13s
   line 1: 2 तस्वीर (traffic police holding, bihar police traffic, pothole on indian)
   line 2: 2 तस्वीर (indian rupee currency, cctv traffic camera, motorcyclist dodging road)
-  line 3: 0 तस्वीर (scooter falling into, elderly indian man, broken village road)  ❌
-  line 4: 0 तस्वीर (calendar page 20, police barricade checkpoint, vehicles queued at)  ❌
-  line 5: 0 तस्वीर (parivahan sewa portal, spine x ray, auto rickshaw tilted)  ❌
-  line 6: 0 तस्वीर (traffic surveillance camera, two wheeler driver, challan receipt printed)  ❌
-2/6 lines को तस्वीर मिली
+  line 3: 2 तस्वीर (scooter falling into, elderly indian man, broken village road)
+  line 4: 2 तस्वीर (calendar page 20, police barricade checkpoint, vehicles queued at)
+  line 5: 2 तस्वीर (parivahan sewa portal, spine x ray, auto rickshaw tilted)
+  line 6: 2 तस्वीर (traffic surveillance camera, two wheeler driver, challan receipt printed)
+6/6 lines को तस्वीर मिली
