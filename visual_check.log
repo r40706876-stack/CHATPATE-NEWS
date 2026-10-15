@@ -1,21 +1,16 @@
   Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
-    Gemini gemini-3.7-flash: 66s
-  ✅ clip: smartphone caller id display screen → smartphone, technology, mobile, mobile phone, instagram, media, communication, marketing, business, shiva, office, street, city, town, urban, young, swipe, device, tablet, digital, india, kerala
-  ❌ कोई मेल वाला clip नहीं: telecom tower dusk india (किरदार ही दिखेगा)
-  ❌ कोई मेल वाला clip नहीं: sim card insertion phone (किरदार ही दिखेगा)
-  ❌ कोई मेल वाला clip नहीं: kyc document verification india (किरदार ही दिखेगा)
-  ❌ कोई मेल वाला clip नहीं: person holding smartphone call (किरदार ही दिखेगा)
-  ❌ कोई मेल वाला clip नहीं: telecom store customer line (किरदार ही दिखेगा)
-  ❌ कोई मेल वाला clip नहीं: girl looking at smartphone screen surprised (किरदार ही दिखेगा)
-  ❌ कोई मेल वाला clip नहीं: mobile towers rural area (किरदार ही दिखेगा)
-  ❌ कोई मेल वाला clip नहीं: telecom logos shop banner (किरदार ही दिखेगा)
-  ❌ कोई मेल वाला clip नहीं: elderly woman holding smartphone smart look (किरदार ही दिखेगा)
-  ✅ clip: cyber fraud warning poster → hacker, smartphone, fraud, personality, human, mask, danger, information, safety, antivirus, attack, organization, technology, design, attention, note, notebook, knavery, draw, deceive, misleading, fraud, fraud, fraud, fraud, fraud, antivirus, antivirus
-  ❌ कोई मेल वाला clip नहीं: police taking statement (किरदार ही दिखेगा)
-  ✅ clip: sim card registration desk shop → sim card, card, telephone, technology, mobile, communication, cellular, phones, telecommunication, cards, gsm, sms, connection, adapter, nano, micro, sim card, sim card, sim card, sim card, sim card
-  ❌ कोई मेल वाला clip नहीं: fingerprint scanner mobile store (किरदार ही दिखेगा)
-  ❌ कोई मेल वाला clip नहीं: customer talking to shopkeeper (किरदार ही दिखेगा)
-  ❌ कोई मेल वाला clip नहीं: young boy showing off smartphone (किरदार ही दिखेगा)
-  ❌ कोई मेल वाला clip नहीं: funny profile photo mobile phone (किरदार ही दिखेगा)
-  ❌ कोई मेल वाला clip नहीं: girl laughing looking at phone (किरदार ही दिखेगा)
-3/18 तस्वीरें चुनी गईं
+    सब models busy — 40s रुककर दोबारा
+    Gemini gemini-flash-latest: 7s
+    सब models busy — 40s रुककर दोबारा
+    सब models busy — 40s रुककर दोबारा
+    key 1 नहीं चली → key 2
+  Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
+    सब models busy — 40s रुककर दोबारा
+    Gemini gemini-3.5-flash: 15s
+  line 1: 2 तस्वीर (calendar date, incoming call screen, mobile phone ringing, indian holding smartphone)
+  line 2: 2 तस्वीर (aadhaar card, identity card verification, kyc document, biometric scanner)
+  line 3: 1 तस्वीर (telecom tower, sim card, mobile network antenna, telecom store india)
+  line 4: 2 तस्वीर (phone scam, cyber crime, handcuffs, indian police officer)
+  line 5: 0 तस्वीर (indian mobile shop, sim card registration, fingerprint scanner, biometric device)  ❌
+  line 6: 1 तस्वीर (young indian friends, laughing indian youth, texting mobile phone, indian boys smartphone)
+5/6 lines को तस्वीर मिली
