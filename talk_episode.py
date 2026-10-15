@@ -97,7 +97,8 @@ def prep(script_path):
     import visuals                                             # हर line के लिए 2 तक पक्की तस्वीरें (भारत की, बात से जुड़ी)
     (IN / "broll").mkdir(exist_ok=True)
     for ln in ep["lines"]:
-        ln["_need_vis"] = ln.get("shot") != "close"
+        ln["_need_vis"] = ln.get("shot") != "close" and bool(ln.get("visuals") or ln.get("photo_hi") or ln.get("topic"))
+        # intro/outro जैसी lines (न खोज, न खबर) पर नई तस्वीर नहीं — पिछली चलती रहती है (वरना बेमेल फ़ोटो आती थी)
     got = visuals.pick_for_lines(ep["lines"], topic=ep.get("breaking") or ep.get("topic", ""))
     for i, paths in got.items():
         for j, path in enumerate(paths):
