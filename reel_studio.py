@@ -197,15 +197,35 @@ def shot_for(i, ln):
     return "full" if i % 2 else "split"
 
 
+_cbg = {}
+
+
 def compose_close(sprite, setname, w=SW, h=SH):
     """close-up: पीछे धुंधला set (गहराई), आगे बड़ा किरदार — punch पर पूरी screen."""
-    bg = set_img(setname, w, h) if setname in SETS else studio_bg(w, h)
-    bg = bg.filter(ImageFilter.GaussianBlur(7 * w / W))
-    bg = Image.blend(bg, Image.new("RGB", bg.size), 0.25)
+    if (setname, w, h) not in _cbg:
+        bg = set_img(setname, w, h) if setname in SETS else studio_bg(w, h)
+        bg = bg.filter(ImageFilter.GaussianBlur(7 * w / W))
+        _cbg[(setname, w, h)] = Image.blend(bg, Image.new("RGB", bg.size), 0.25)
+    bg = _cbg[(setname, w, h)].copy()
     s = h * 0.80 / sprite.height
     sp = sprite.resize((int(sprite.width * s), int(sprite.height * s)), Image.LANCZOS)
     bg.paste(sp, ((w - sp.width) // 2, h - sp.height + int(h * 0.02)), sp)
     return bg
+
+
+def _cut_cached(p):
+    p = Path(p)
+    if p not in _cuts:
+        _cuts[p] = cutout(p)
+    return _cuts[p]
+
+
+def talk_frames(talk, shot, n, seed):
+    """talk = {"folder", "expr", "wav", "set"} → बोलते किरदार के frames (close = 1080x1920, बाकी = 1080x888)."""
+    import sprite_talk
+    ex = EXPR.get(talk.get("expr", ""), talk.get("expr", "")) or "neutral"
+    for sp in sprite_talk.frames(talk["folder"], ex, talk["wav"], n, _cut_cached, seed):
+        yield compose_close(sp, talk["set"], W, H) if shot == "close" else compose_band(sp, talk["set"])
 
 
 def _bases():
@@ -441,7 +461,9 @@ def render(ep, segs, chars, out, preview):
         if vis and len(vis) * chunk < n:                        # कम तस्वीरें हों तो बारी-बारी, हर 2 सेकंड नया cut
             chunk = max(1, n // max(1, math.ceil(n / chunk)))
         face = None
-        if s.get("face"):
+        if s.get("talk"):                                       # हमारी 3 मुँह वाली फ़ोटो से बोलना (साफ़ 3D चेहरा)
+            face = talk_frames(s["talk"], shot, n, si)
+        elif s.get("face"):
             face = _vid_frames(s["face"], W, H) if shot == "close" else _vid_frames(s["face"], W, BAND_H)
         still = s["still"].resize((W, H)) if shot == "close" else s["still"]
         if not react:

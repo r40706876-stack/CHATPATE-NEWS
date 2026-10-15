@@ -32,6 +32,7 @@ jobs:
 
   face:
     needs: prep
+    if: needs.prep.outputs.lines != '[]'
     runs-on: ubuntu-latest
     timeout-minutes: 90
     strategy:
@@ -87,10 +88,11 @@ jobs:
       - uses: actions/download-artifact@v4
         with: {name: st_in, path: st_in}
       - uses: actions/download-artifact@v4
+        continue-on-error: true
         with: {pattern: "clip-*", path: st_out, merge-multiple: true}
       - run: |
-          ls -R st_out | head -40
-          /usr/bin/python3 -m pip install -q --break-system-packages numpy scipy pillow
+          ls -R st_out 2>/dev/null | head -40
+          /usr/bin/python3 -m pip install -q --break-system-packages numpy scipy pillow rembg onnxruntime
           /usr/bin/python3 talk_episode.py post
       - name: झलक सेव
         if: always()

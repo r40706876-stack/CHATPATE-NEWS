@@ -109,7 +109,8 @@ def prep(script_path):
                 if Path(path).with_suffix(".txt").exists():          # photo वाले का नाम (CC license)
                     shutil.copy(Path(path).with_suffix(".txt"), IN / f"broll/{i}_{j}.txt")
     json.dump(ep, open(IN / "episode.json", "w", encoding="utf-8"), ensure_ascii=False)
-    print(json.dumps(list(range(len(ep["lines"])))))
+    sprite_lips = ep.get("sprite") and ep.get("lips", "sprite") == "sprite"
+    print(json.dumps([] if sprite_lips else list(range(len(ep["lines"])))))   # sprite वाले होंठ = SadTalker की ज़रूरत नहीं
 
 
 def _secs(p):
@@ -209,8 +210,13 @@ def post_studio(ep):
         still = Image.open(IN / f"{i}/still.png").convert("RGB")
         vis = sorted(p for p in (IN / "broll").glob(f"{i}_*") if p.suffix != ".txt") if (IN / "broll").exists() else []
         shot = ln.get("shot") or reel_studio.shot_for(i, ln)
-        segs.append({"ln": ln, "wav": IN / f"audio/{i:02d}.wav", "face": clips[-1] if clips else None,
-                     "still": still, "vis": vis, "shot": shot})
+        talk = None
+        sprite = (ep.get("sprite") or {}).get(ln["who"])
+        if sprite and ep.get("lips", "sprite") == "sprite":
+            talk = {"folder": sprite, "expr": ln.get("expr", ""), "wav": IN / f"audio/{i:02d}.wav",
+                    "set": ln.get("set") or ("studio" if ln["who"] == "bablu" else "village")}
+        segs.append({"ln": ln, "wav": IN / f"audio/{i:02d}.wav", "face": None if talk else (clips[-1] if clips else None),
+                     "talk": talk, "still": still, "vis": vis, "shot": shot})
         if (IN / f"react_{i}.png").exists():
             rw = IN / f"audio/{i:02d}_r.wav"
             last_r = max(j for j, l in enumerate(ep["lines"]) if (IN / f"react_{j}.png").exists())
