@@ -1,1 +1,34 @@
-  कोई script इंतज़ार में नहीं
+  विषय: ['अस्पताल/सेहत', 'किसान/गाँव', 'ठगी से बचाव', 'नियम/बैंक', 'नौकरी/परीक्षा', 'पढ़ाई/स्कूल', 'फ़ोन/इंटरनेट', 'महँगाई', 'योजना', 'शहर-कस्बा', 'सफ़र'] | हाल के विषय (अभी नहीं): ['नियम/बैंक', 'नौकरी/परीक्षा', 'महँगाई', 'योजना', 'सफ़र']
+  topics: 33 काम की, 8 वायरल, 1 Trends, 5 त्योहार
+  Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
+    Gemini gemini-3.7-flash: 19s
+  ❌ trend 2/10: बुवाई के ऐन वक्त पर डीएपी खाद का टोटा, पैक्स केंद्रों पर लटके ताले | 1 अख़बार/चैनल 2 दिन में, 3 खबरें 7 दिन में
+  ✅ trend 4/10: सरकारी अस्पतालों में वेंटिलेटर बीमार, स्वास्थ्य व्यवस्था खुद आईसीयू में पहुंची | 5 अख़बार/चैनल 2 दिन में, 11 खबरें 7 दिन में
+  ❌ trend 3/10: प्रैक्टिकल के लिए आएंगे बाहरी परीक्षक, पर स्कूलों की लैब्स में धूल खा रहे उपकरण | 5 अख़बार/चैनल 2 दिन में, 18 खबरें 7 दिन में
+  ✅ trend 5/10: डिजिटल अरेस्ट का नया खौफ, फर्जी वर्दी पहनकर ठग रहे साइबर अपराधी | 14 अख़बार/चैनल 2 दिन में, 100 खबरें 7 दिन में
+  ✅ trend 6/10: सड़क पर गड्ढे बरकरार, मगर दस दिनों में काट दिए 16 हजार ट्रैफिक चालान | 12 अख़बार/चैनल 2 दिन में, 59 खबरें 7 दिन में
+  ✅ trend 5/10: डिजिटल इंडिया के दौर में इंटरनेट शटडाउन, मामूली बात पर भी ब्लैकआउट | 12 अख़बार/चैनल 2 दिन में, 40 खबरें 7 दिन में
+  चुने विषय: ['शहर-कस्बा', 'ठगी से बचाव', 'फ़ोन/इंटरनेट']
+    सब models busy — 40s रुककर दोबारा
+    Gemini gemini-3.7-flash: 14s
+  तथ्य: बिहार में ट्रैफिक पुलिस का विशेष चेकिंग अभियान और भारी जुर्माना वसूली | Jagran, Dainik Bhaskar, Amar Ujala | high
+  तथ्य: डिजिटल अरेस्ट और फर्जीवाड़े के जरिए बुजुर्गों से साइबर ठगी | Jagran, ETV Bharat, Amar Ujala, Dainik Bhaskar | high
+  तथ्य: भारत में इंटरनेट शटडाउन और मोबाइल इंटरनेट पाबंदी | Navbharat Times, Livemint, Amar Ujala, ABP News | high
+    सब models busy — 40s रुककर दोबारा
+    सब models busy — 40s रुककर दोबारा
+    key 1 नहीं चली → key 2
+  Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
+    Gemini gemini-flash-latest: 24s
+    सब models busy — 40s रुककर दोबारा
+    सब models busy — 40s रुककर दोबारा
+    key 1 नहीं चली → key 2
+    Gemini gemini-3.7-flash: 32s
+    सब models busy — 40s रुककर दोबारा
+    सब models busy — 40s रुककर दोबारा
+    key 1 नहीं चली → key 2
+    सब models busy — 40s रुककर दोबारा
+    सब models busy — 40s रुककर दोबारा
+  तीखा करने वाला कदम छोड़ा: RuntimeError('Gemini nahi chala:\n  gemini-flash-latest: 503 {\n  "error": {\n    "code": 503,\n    "message": "This model is currently experiencing h
+  ❌ connect 6/10: बिहार में ट्रैफिक पुलिस का विशेष चेकिंग अभियान और भारी जुर्माना वसूली
+  ❌ connect 6/10: डिजिटल अरेस्ट और फर्जीवाड़े के जरिए बुजुर्गों से साइबर ठगी
+  ❌ connect 5/10: भारत में इंटरनेट शटडाउन और मोबाइल इंटरनेट पाबंदी
