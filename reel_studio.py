@@ -49,6 +49,47 @@ def pose_file(folder, expr):
     raise FileNotFoundError(folder)
 
 
+SETS = {"studio": ROOT / "assets/sets/studio.png", "village": ROOT / "assets/sets/village.png"}
+DESK_Y = 0.555                                      # studio में desk का ऊपरी किनारा (ऊँचाई का हिस्सा)
+SCREEN = (0.005, 0.222, 0.43, 0.245)                 # पीछे वाली बड़ी screen (x, y, w, h — हिस्से में)
+_sets = {}
+
+
+def set_img(name, w, h):
+    key = (name, w, h)
+    if key not in _sets:
+        im = Image.open(SETS[name]).convert("RGB")
+        x0, y0 = int(im.width * 0.79), int(im.height * 0.88)   # Gemini ✦ ढको (पास का हिस्सा धुंधला करके)
+        box = (x0, y0, x0 + int(im.width * 0.12), y0 + int(im.height * 0.07))
+        sh = int(im.width * 0.13)
+        im.paste(im.crop((box[0] - sh, box[1], box[2] - sh, box[3])).filter(ImageFilter.GaussianBlur(5)), box)
+        _sets[key] = im.resize((w, h), Image.LANCZOS)
+    return _sets[key].copy()
+
+
+def compose_set(sprite, setname, w, h):
+    """किरदार को 3D set में: studio = desk के पीछे anchor (desk आगे), village = गली में खड़ा. (image, screen-mask|None)"""
+    bg = set_img(setname, w, h)
+    if setname == "studio":
+        s = h * 0.755 / sprite.height
+        sp = sprite.resize((int(sprite.width * s), int(sprite.height * s)), Image.LANCZOS)
+        x, y = w - sp.width - int(w * 0.02), int(h * DESK_Y) - int(sp.height * 0.62)
+        bg.paste(sp, (x, y), sp)
+        dy = int(h * DESK_Y)
+        bg.paste(set_img(setname, w, h).crop((0, dy, w, h)), (0, dy))          # desk किरदार के आगे
+        m = Image.new("L", (w, h), 0)
+        sx, sy, sw, shh = [int(v * d) for v, d in zip(SCREEN, (w, h, w, h))]
+        ImageDraw.Draw(m).rectangle((sx, sy, sx + sw, sy + shh), fill=255)
+        alpha = Image.new("L", (w, h), 0)
+        alpha.paste(sp.getchannel("A"), (x, y))
+        m = Image.composite(Image.new("L", (w, h), 0), m, alpha.point(lambda v: 255 if v > 40 else 0))
+        return bg, m
+    s = h * 0.78 / sprite.height
+    sp = sprite.resize((int(sprite.width * s), int(sprite.height * s)), Image.LANCZOS)
+    bg.paste(sp, ((w - sp.width) // 2, h - sp.height + int(h * 0.03)), sp)
+    return bg, None
+
+
 def compose(sprite, w=SW, h=SH, scale=1.0):
     """किरदार (RGBA) को studio में बड़ा रखो, नीचे से कटा, हल्की छाया."""
     bg = studio_bg(w, h)
@@ -66,11 +107,19 @@ def compose(sprite, w=SW, h=SH, scale=1.0):
 _cuts = {}
 
 
-def source_for(folder, expr, out, full=None):
-    """SadTalker के लिए 720x1280 source; full दिया तो 1080x1920 वाली still भी."""
+def source_for(folder, expr, out, full=None, setname=None):
+    """SadTalker के लिए 720x1280 source; full दिया तो 1080x1920 वाली still (और set हो तो screen-mask भी)."""
     p = pose_file(folder, expr)
     if p not in _cuts:
         _cuts[p] = cutout(p)
+    if setname and setname in SETS and SETS[setname].exists():
+        compose_set(_cuts[p], setname, SW, SH)[0].save(out)
+        if full:
+            im, m = compose_set(_cuts[p], setname, W, H)
+            im.save(full)
+            if m is not None:
+                m.save(Path(full).with_name(Path(full).stem + "_mask.png"))
+        return
     compose(_cuts[p]).save(out)
     if full:
         compose(_cuts[p], W, H).save(full)
@@ -103,6 +152,23 @@ def inset(im, src_frame, label):
     while label and f.getlength(label) > w - 20 and f.size > 18:
         f = tt.font(f.size - 2)
     d.text((x + 14, y + h + 23), label, font=f, fill="white", anchor="lm")
+
+
+def ticker(d, ep, k):
+    """नीचे चलती खबरों की पट्टी (छोटे जोक)."""
+    items = ep.get("ticker") or []
+    if not items:
+        return
+    y0, y1 = 1828, 1896
+    d.rectangle((0, y0, W, y1), fill=(255, 214, 0))
+    txt = "   •   ".join(items) + "   •   "
+    f = tt.font(34)
+    L = f.getlength(txt)
+    x = 200 - (k * 6) % max(1, L)
+    for rep in range(3):
+        d.text((x + rep * L, (y0 + y1) / 2), txt, font=f, fill=(0, 0, 0), anchor="lm")
+    d.rectangle((0, y0, 190, y1), fill=(225, 30, 45))
+    d.text((95, (y0 + y1) / 2), "ताज़ा", font=tt.font(36), fill="white", anchor="mm")
 
 
 def render(ep, segs, chars, out, preview):
@@ -157,7 +223,14 @@ def render(ep, segs, chars, out, preview):
                 if t % per == 0 and t // per < len(vis):
                     vgen = rv.visual_frames(vis[j], per if j < len(vis) - 1 else n - t, si * 3 + j)
                 vf = next(vgen, None) if vgen else None
-                if vf is not None:
+                if vf is not None and s.get("mask") is not None:       # studio: पीछे वाली screen पर (किरदार के पीछे)
+                    sx, sy, sw, shh = [int(v * dd) for v, dd in zip(SCREEN, (W, H, W, H))]
+                    big = Image.new("RGB", (W, H))
+                    big.paste(rv._cover_img(vf, sw, shh), (sx, sy))
+                    mz = _zoom(s["mask"].convert("RGB"), z).convert("L")
+                    im = Image.composite(big, im, mz)
+                    d = ImageDraw.Draw(im)
+                elif vf is not None:
                     inset(im, vf, ln.get("big") or ln.get("caption") or "")
                     d = ImageDraw.Draw(im)
             if hook:
@@ -169,11 +242,12 @@ def render(ep, segs, chars, out, preview):
                 d.rounded_rectangle((40, 1440, 620, 1520), 20, fill=(225, 30, 45))
                 d.text((70, 1480), f"{name} का रिएक्शन", font=tt.font(46), fill="white", anchor="lm")
             else:
-                rv.name_strap(d, 1430, name, role)
-                rv.karaoke(d, ln.get("caption") or ln["say"], t / n, 1720)
+                rv.name_strap(d, 1470, name, role)
+                rv.karaoke(d, ln.get("caption") or ln["say"], t / n, 1700)
             if punch and t >= 4:
                 rv.stamp(im, rv.STAMPS[stamp_i % len(rv.STAMPS)], t - 4)
                 d = ImageDraw.Draw(im)
+            ticker(d, ep, k)
             d.rectangle((0, H - 12, int(W * k / total), H), fill=(255, 214, 0))
             wr.stdin.write(im.tobytes())
             k += 1

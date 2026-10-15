@@ -18,14 +18,16 @@
     "light bulb off",
     "power outage dark house"
    ],
-   "big": "बिजली कब आती है?"
+   "big": "बिजली कब आती है?",
+   "set": "village"
   },
   {
    "who": "bablu",
    "expr": "gussa",
    "say": "पर बिल? हर महीने टाइम पे आ जाता है!",
    "punch": true,
-   "react_pose": "facepalm"
+   "react_pose": "facepalm",
+   "set": "village"
   },
   {
    "who": "bablu",
@@ -37,7 +39,8 @@
    ],
    "big": "24 घंटे बिजली*",
    "sub": "*हफ़्ते भर में मिलाकर",
-   "react_pose": "eyeroll"
+   "react_pose": "eyeroll",
+   "set": "studio"
   },
   {
    "who": "bablu",
@@ -46,14 +49,16 @@
    "visuals": [
     "kerosene lantern"
    ],
-   "big": "पहले: लालटेन, बिल नहीं"
+   "big": "पहले: लालटेन, बिल नहीं",
+   "set": "studio"
   },
   {
    "who": "bablu",
    "expr": "tanz",
    "say": "अब तरक्की हुई है… लालटेन भी है, और बिल भी!",
    "punch": true,
-   "react_pose": "laugh"
+   "react_pose": "laugh",
+   "set": "studio"
   },
   {
    "who": "bablu",
@@ -63,7 +68,8 @@
     "solar panel roof",
     "sun sky bright"
    ],
-   "big": "सूरज > विभाग"
+   "big": "सूरज > विभाग",
+   "set": "village"
   },
   {
    "who": "bablu",
@@ -72,7 +78,14 @@
    "visuals": [
     "electric meter"
    ],
-   "big": "भेजो उसको जिसका बिल बिजली से ज़्यादा आता है"
+   "big": "भेजो उसको जिसका बिल बिजली से ज़्यादा आता है",
+   "set": "studio"
   }
+ ],
+ "ticker": [
+  "विभाग ने कहा, धैर्य ही असली योजना है",
+  "बिल समय पर, बिजली भगवान भरोसे",
+  "गाँव में मोमबत्ती की बिक्री रिकॉर्ड स्तर पर",
+  "इन्वर्टर बेचने वाले ने बिजली विभाग को धन्यवाद दिया"
  ]
 }

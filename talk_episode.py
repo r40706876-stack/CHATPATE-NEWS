@@ -82,10 +82,11 @@ def prep(script_path):
         sprite = (ep.get("sprite") or {}).get(ln["who"])
         if sprite:                                             # 3D किरदार: नीले studio में, line के भाव वाली फ़ोटो
             import reel_studio
-            reel_studio.source_for(sprite, ln.get("expr", ""), d / "source.png", d / "still.png")
+            st = ln.get("set") or ("studio" if ln["who"] == "bablu" else "village")
+            reel_studio.source_for(sprite, ln.get("expr", ""), d / "source.png", d / "still.png", st)
             rp = ln.get("react_pose")
             if rp:
-                reel_studio.source_for(sprite, rp, IN / f"react_{i}_small.png", IN / f"react_{i}.png")
+                reel_studio.source_for(sprite, rp, IN / f"react_{i}_small.png", IN / f"react_{i}.png", st)
         else:
             source_img(ln["who"], d / "source.png", ln.get("expr", ""))
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(IN / f"audio/{i:02d}.wav"), "-ar", "16000",
@@ -202,8 +203,9 @@ def post_studio(ep):
         clips = sorted((OUT / str(i)).rglob("*.mp4"))
         still = Image.open(IN / f"{i}/still.png").convert("RGB")
         vis = sorted((IN / "broll").glob(f"{i}_*")) if (IN / "broll").exists() else []
+        mp = IN / f"{i}/still_mask.png"
         segs.append({"ln": ln, "wav": IN / f"audio/{i:02d}.wav", "face": clips[-1] if clips else None,
-                     "still": still, "vis": vis})
+                     "still": still, "vis": vis, "mask": Image.open(mp).convert("L") if mp.exists() else None})
         if (IN / f"react_{i}.png").exists():
             rw = IN / f"audio/{i:02d}_r.wav"
             subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "lavfi", "-i", "anullsrc=r=24000:cl=mono",
