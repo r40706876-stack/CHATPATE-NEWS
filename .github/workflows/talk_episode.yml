@@ -8,7 +8,7 @@ on:
       pose: {description: "सिर हिलने का अंदाज़ 0-45", default: "0"}
       still: {description: "सिर स्थिर (yes = सिर्फ़ होंठ/आँख/चेहरा, शांत anchor जैसा)", default: "yes"}
       expr: {description: "चेहरे/होंठ के हिलने की ताकत (3D किरदार पर 1.5 अच्छा)", default: "1.5"}
-      size: {description: "SadTalker model: 512 = साफ़ चेहरा (धीमा), 256 = तेज़", default: "512"}
+      size: {description: "SadTalker model: 512 = साफ़ चेहरा (धीमा), 256 = तेज़", default: "256"}
 env:
   GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
   GEMINI_API_KEY2: ${{ secrets.GEMINI_API_KEY2 }}
