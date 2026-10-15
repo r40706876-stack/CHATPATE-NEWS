@@ -1,13 +1,1 @@
   चुना: 2
-/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/run_daily.py:31: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
-  return dt.datetime.utcnow() + dt.timedelta(hours=5, minutes=30)
-Traceback (most recent call last):
-  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/run_daily.py", line 288, in <module>
-    main()
-  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/run_daily.py", line 281, in main
-    do_render(CHOICE)
-  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/run_daily.py", line 182, in do_render
-    import tts
-  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/tts.py", line 21, in <module>
-    import numpy as np
-ModuleNotFoundError: No module named 'numpy'
