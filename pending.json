@@ -1,0 +1,355 @@
+{
+  "sent_at": 1792034524,
+  "eps": [
+    {
+      "topic": "ट्रेन टिकट पर इंश्योरेंस अनिवार्य, काउंटर टिकटों पर भी लागू",
+      "category": "travel",
+      "breaking": "रेलवे काउंटर टिकटों पर भी बीमा अनिवार्य, नियम लागू",
+      "hook_text": "काउंटर टिकट पर भी जबरन बीमा",
+      "source": "Jansatta, Dainik Bhaskar, Jagran, NDTV India, Live Law Hindi, Navbharat Times, ABP News",
+      "poll": [
+        "बीमा सही?",
+        "किराया बढ़ा?"
+      ],
+      "ticker": [
+        "रेलवे में एक रुपए से कम में दस लाख का कवर",
+        "सुप्रीम कोर्ट के आदेश पर पीआरएस सिस्टम में बदलाव",
+        "विभाग ने कहा यात्रा की सुरक्षा कागज़ों में पक्की"
+      ],
+      "cast_why": "रेलवे की अव्यवस्था और नियम पर आम यात्री का दर्द दिखाने के लिए bablu, ramesh और chacha",
+      "lines": [
+        {
+          "who": "bablu",
+          "say": "काउंटर से टिकट लिया? अब सरकार सुरक्षा भी अनिवार्य रूप से बेचेगी।",
+          "caption": "काउंटर से टिकट लिया? अब सरकार सुरक्षा भी अनिवार्य रूप से बेचेगी।",
+          "expr": "tanz",
+          "set": "studio",
+          "visuals": [
+            "indian railway ticket counter",
+            "train station crowd passengers"
+          ],
+          "visual": "indian railway ticket counter",
+          "scene": "studio",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "ramesh",
+          "say": "पहले सिर्फ़ सीट की मारामारी थी, अब दस लाख का बीमा भी जबरन मिलेगा।",
+          "caption": "पहले सिर्फ़ सीट की मारामारी थी, अब 10 लाख का बीमा भी जबरन मिलेगा।",
+          "expr": "udaas",
+          "set": "village",
+          "visuals": [
+            "crowded train platform india",
+            "frustrated passenger ticket"
+          ],
+          "punch": true,
+          "react_pose": "eyeroll",
+          "visual": "crowded train platform india",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "सत्ताईस अक्टूबर से काउंटर टिकटों पर भी यात्रा बीमा अनिवार्य होगा, जो एक रुपए से भी कम में मिलेगा।",
+          "caption": "27 अक्टूबर से काउंटर टिकटों पर भी यात्रा बीमा अनिवार्य होगा, जो ₹1 से कम में मिलेगा।",
+          "expr": "tanz",
+          "set": "studio",
+          "visuals": [
+            "indian train moving track",
+            "railway ticket booking counter"
+          ],
+          "card": {
+            "tag": "नया नियम",
+            "big": "10 लाख कवर",
+            "sub": "27 अक्टूबर से काउंटर पर अनिवार्य",
+            "icon": "train"
+          },
+          "visual": "indian train moving track",
+          "scene": "card",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "chacha",
+          "say": "हमारे ज़माने में यात्रा भगवान भरोसे थी, अब एक रुपए के प्रीमियम भरोसे चलेगी।",
+          "caption": "हमारे ज़माने में यात्रा भगवान भरोसे थी, अब ₹1 के प्रीमियम भरोसे चलेगी।",
+          "expr": "hasi",
+          "set": "village",
+          "visuals": [
+            "old indian man sitting village",
+            "rural train station india"
+          ],
+          "punch": true,
+          "react_pose": "thinking",
+          "visual": "old indian man sitting village",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "सुप्रीम कोर्ट के निर्देश पर रेलवे अपने पीआरएस सिस्टम में ज़रूरी तकनीकी बदलाव करने जा रहा है।",
+          "caption": "सुप्रीम कोर्ट के निर्देश पर रेलवे PRS सिस्टम में तकनीकी बदलाव करने जा रहा है।",
+          "expr": "tanz",
+          "set": "studio",
+          "visuals": [
+            "railway computer reservation system",
+            "train reservation office counter"
+          ],
+          "visual": "railway computer reservation system",
+          "scene": "chacha",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "ramesh",
+          "say": "सिस्टम तो बदल देंगे, पर क्या वेटिंग टिकट अपने आप कन्फ़र्म हो पाएगा?",
+          "caption": "सिस्टम तो बदल देंगे, पर क्या वेटिंग टिकट अपने आप कन्फ़र्म हो पाएगा?",
+          "expr": "gussa",
+          "set": "village",
+          "visuals": [
+            "indian passenger holding ticket",
+            "sleeper coach train crowd"
+          ],
+          "punch": true,
+          "react_pose": "facepalm",
+          "visual": "indian passenger holding ticket",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "काम की बात, सत्ताईस अक्टूबर के बाद काउंटर टिकट पर इंश्योरेंस और प्रीमियम विवरण ज़रूर जाँच लें।",
+          "caption": "27 अक्टूबर से काउंटर टिकट खरीदते समय इंश्योरेंस और प्रीमियम विवरण की जाँच करें।",
+          "expr": "hairan",
+          "set": "studio",
+          "visuals": [
+            "person inspecting paper ticket",
+            "railway passenger alert"
+          ],
+          "visual": "person inspecting paper ticket",
+          "scene": "chacha",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "chacha",
+          "say": "ये वीडियो उसको भेजो, जो जनरल डिब्बे के पायदान पर लटककर भी चैन से सोता है।",
+          "caption": "ये वीडियो उसको भेजो, जो जनरल डिब्बे के पायदान पर लटककर भी चैन से सोता है।",
+          "expr": "tanz",
+          "set": "village",
+          "visuals": [
+            "indian village street laughing",
+            "crowded train running india"
+          ],
+          "visual": "indian village street laughing",
+          "scene": "studio_end",
+          "punch": false,
+          "insta": ""
+        }
+      ],
+      "caption_post": "काउंटर टिकट पर भी 10 लाख का बीमा अनिवार्य, पर सीट का क्या? क्या इससे यात्रियों को राहत मिलेगी? Family group में भेजो। स्रोत: Dainik Bhaskar, Jansatta, NDTV India #IndianRailways #TrainTicket #BakriNews #RailwayInsurance #TravelNews (AI से बने किरदार)",
+      "format": "explain",
+      "label": "काम की खबर",
+      "key_word": "",
+      "icons": [
+        "₹",
+        "NEWS",
+        "%"
+      ],
+      "trend": {
+        "score": 6,
+        "why": "11 अख़बार/चैनल 2 दिन में, 16 खबरें 7 दिन में"
+      },
+      "connect": {
+        "score": 7,
+        "why": "आखिरी शेयर हुक (पायदान पर लटकने वाला) और वेटिंग टिकट का तंज एकदम ज़मीनी और सटीक है।",
+        "weak": "एक रुपये से भी कम के प्रीमियम को 'जबरन वसूली' दिखाना थोड़ा बनावटी ड्रामा लगता है।",
+        "fix": "हुक को सवालिया बनाओ: 'काउंटर टिकट पर भी अब कटेगा बीमा का पैसा?' ताकि सीधे यात्री चौंकें।",
+        "parts": {
+          "A": 2,
+          "B": 1,
+          "C": 1,
+          "D": 1,
+          "E": 1,
+          "F": 1
+        }
+      }
+    },
+    {
+      "topic": "विभिन्न शहरों में एलपीजी (घरेलू व कमर्शियल) सिलेंडर के दाम",
+      "category": "money",
+      "breaking": "दिल्ली में घरेलू सिलेंडर नौ सौ बयालीस रुपये",
+      "hook_text": "घरेलू और कमर्शियल सिलेंडर के दाम",
+      "source": "ABP News, Hindustan, Business Standard",
+      "poll": [
+        "दाम ज़्यादा?",
+        "दाम सामान्य?"
+      ],
+      "ticker": [
+        "दिल्ली में घरेलू एलपीजी सिलेंडर 942 रुपये दर्ज",
+        "कमर्शियल सिलेंडर की कीमत दिल्ली में 2810 रुपये",
+        "हर शहर में सिलेंडर के रेट अलग-अलग निर्धारित"
+      ],
+      "cast_why": "रसोई गैस के खर्च और ढाबे-बाज़ार के असर को दर्शाने के लिए bablu, chacha और pinky",
+      "lines": [
+        {
+          "who": "bablu",
+          "say": "रसोई में आग जलाने से पहले दाम सुनिए, दिल्ली में घरेलू गैस नौ सौ बयालीस रुपये दर्ज हुई।",
+          "caption": "रसोई में गैस जलाने से पहले दाम सुनिए, दिल्ली में घरेलू LPG ₹942 दर्ज हुई।",
+          "expr": "tanz",
+          "set": "studio",
+          "visuals": [
+            "lpg gas cylinder kitchen",
+            "gas stove flame cooking"
+          ],
+          "visual": "lpg gas cylinder kitchen",
+          "scene": "studio",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "chacha",
+          "say": "पहले चूल्हा फूँकते हुए धुआँ निकलता था, अब गैस की पर्ची देखकर होश उड़ते हैं।",
+          "caption": "पहले चूल्हा फूँकते हुए धुआँ निकलता था, अब गैस की पर्ची देखकर होश उड़ते हैं।",
+          "expr": "udaas",
+          "set": "village",
+          "visuals": [
+            "traditional mud stove smoke",
+            "worried old man holding wallet"
+          ],
+          "punch": true,
+          "react_pose": "facepalm",
+          "visual": "traditional mud stove smoke",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "कमर्शियल उन्नीस किलो वाला सिलेंडर दो हज़ार आठ सौ दस रुपये में बिक रहा है, घरेलू चौदह किलो वाला नौ सौ बयालीस।",
+          "caption": "कमर्शियल 19 किलो सिलेंडर ₹2810 और घरेलू 14 किलो सिलेंडर ₹942 पर दर्ज।",
+          "expr": "tanz",
+          "set": "studio",
+          "visuals": [
+            "blue commercial gas cylinders india",
+            "red domestic lpg cylinder"
+          ],
+          "card": {
+            "tag": "ताज़ा रेट",
+            "big": "₹942 घरेलू",
+            "sub": "कमर्शियल सिलेंडर ₹2810",
+            "icon": "cylinder"
+          },
+          "visual": "blue commercial gas cylinders india",
+          "scene": "card",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "pinky",
+          "say": "चाय वाले भइया ने रेट बढ़ा दिया, बोले कमर्शियल सिलेंडर ख़रीदने में दुकान बिक जाएगी।",
+          "caption": "चाय वाले भइया ने रेट बढ़ा दिया, बोले कमर्शियल सिलेंडर खरीदने में दुकान बिक जाएगी।",
+          "expr": "hairan",
+          "set": "village",
+          "visuals": [
+            "roadside tea stall boiling milk",
+            "young girl drinking chai"
+          ],
+          "punch": true,
+          "react_pose": "eyeroll",
+          "visual": "roadside tea stall boiling milk",
+          "scene": "pinky",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "विभाग ने साफ़ किया है कि चौदह और उन्नीस किलो सिलेंडर की कीमतें हर शहर में अलग-अलग लागू हैं।",
+          "caption": "विभाग के अनुसार घरेलू और कमर्शियल सिलेंडर के दाम शहरवार अलग-अलग लागू हैं।",
+          "expr": "tanz",
+          "set": "studio",
+          "visuals": [
+            "lpg delivery truck street india",
+            "gas agency godown cylinders"
+          ],
+          "visual": "lpg delivery truck street india",
+          "scene": "chacha",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "chacha",
+          "say": "रेट शहरवार अलग हैं, पर आम आदमी की जेब कटने का दर्द पूरे देश में एक जैसा है।",
+          "caption": "रेट शहरवार अलग हैं, पर जेब कटने का दर्द पूरे देश में एक जैसा है।",
+          "expr": "hasi",
+          "set": "village",
+          "visuals": [
+            "rural market crowd shopping",
+            "elderly indian man sarcastic smile"
+          ],
+          "punch": true,
+          "react_pose": "laugh",
+          "visual": "rural market crowd shopping",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "काम की बात, डिलीवरी लेते समय अपने शहर का ताज़ा रेट गैस एजेंसी या पोर्टल पर ज़रूर जाँचें।",
+          "caption": "डिलीवरी से पहले गैस एजेंसी या आधिकारिक पोर्टल पर अपने शहर का सही रेट चेक करें।",
+          "expr": "tanz",
+          "set": "studio",
+          "visuals": [
+            "delivery man delivering gas cylinder",
+            "checking official website on mobile phone"
+          ],
+          "visual": "delivery man delivering gas cylinder",
+          "scene": "pinky",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "pinky",
+          "say": "ये वीडियो उसको भेजो, जो आधा ख़ाली सिलेंडर उठाकर अंदाज़ा लगाता है कि गैस कितनी बची।",
+          "caption": "ये वीडियो उसको भेजो, जो खाली सिलेंडर उठाकर अंदाज़ा लगाता है कि गैस कितनी बची।",
+          "expr": "tanz",
+          "set": "village",
+          "visuals": [
+            "person shaking domestic gas cylinder",
+            "indian kitchen cooking evening"
+          ],
+          "visual": "person shaking domestic gas cylinder",
+          "scene": "studio_end",
+          "punch": false,
+          "insta": ""
+        }
+      ],
+      "caption_post": "दिल्ली में घरेलू सिलेंडर ₹942 और कमर्शियल ₹2810 पर! आपके शहर में आज क्या भाव है? Family group में भेजो। स्रोत: ABP News, Hindustan, Business Standard #LPGCylinder #GasPrice #BakriNews #Inflation #KitchenBudget (AI से बने किरदार)",
+      "format": "explain",
+      "label": "काम की खबर",
+      "key_word": "",
+      "icons": [
+        "₹",
+        "NEWS",
+        "%"
+      ],
+      "trend": {
+        "score": 4,
+        "why": "8 अख़बार/चैनल 2 दिन में, 29 खबरें 7 दिन में"
+      },
+      "connect": {
+        "score": 7,
+        "why": "सिलेंडर हिलाकर गैस नापने वाली लाइन बेहद रिलेटेबल है, जो तुरंत शेयर करवाएगी।",
+        "weak": "हुक में शून्य आकर्षण है—अख़बार की सुस्त हेडिंग की तरह लिखा गया है।",
+        "fix": "हुक ऐसा रखो: 'गैस सिलेंडर फिर महंगा? नया रेट सुनकर चूल्हा जलाना!' जिससे तुरंत कौतूहल जगे।",
+        "parts": {
+          "A": 3,
+          "B": 1,
+          "C": 0,
+          "D": 1,
+          "E": 1,
+          "F": 1
+        }
+      }
+    }
+  ]
+}
