@@ -1,11 +1,13 @@
-import re, urllib.parse
+import re, urllib.parse, json
 import news_images as n
-p = n._get("https://duckduckgo.com/?" + urllib.parse.urlencode({"q": "bihar traffic challan", "iax": "images", "ia": "images"}))
-print(len(p)); print(re.findall(r"vqd.{0,40}", p)[:3])
-r = n.ddg_images("bihar traffic challan"); print("ddg", len(r), r[:1])
-a = n.article_images("बिहार ट्रैफिक चालान"); print("art", len(a), a[:2])
-try:
-    rss = n._get("https://www.bing.com/news/search?q=%E0%A4%9A%E0%A4%BE%E0%A4%B2%E0%A4%BE%E0%A4%A8&format=rss&mkt=hi-IN")
-    print("bing rss", len(rss), rss[:300])
-except Exception as e:
-    print("bing err", e)
+q = "pothole road india"
+p = n._get("https://duckduckgo.com/?" + urllib.parse.urlencode({"q": q, "iax": "images", "ia": "images"}))
+v = re.search(r"vqd=['\"]?([\d-]+)", p).group(1)
+for url in ["https://duckduckgo.com/i.js?" + urllib.parse.urlencode({"l": "in-en", "o": "json", "q": q, "vqd": v, "f": ",,,,,", "p": "1"}),
+            "https://duckduckgo.com/i.js?" + urllib.parse.urlencode({"l": "wt-wt", "o": "json", "q": q, "vqd": v, "p": "1"})]:
+    try:
+        t = n._get(url, ref="https://duckduckgo.com/")
+        print("len", len(t), t[:400])
+        d = json.loads(t); print("results", len(d.get("results", [])), [(r.get("width"), r.get("image")[:80]) for r in d["results"][:3]])
+    except Exception as e:
+        print("err", repr(e)[:300])
