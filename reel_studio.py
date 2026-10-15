@@ -1,7 +1,8 @@
 """
-Studio reel (3D किरदार, बिना retro): पूरा screen बड़ा किरदार नीले news studio में — होंठ SadTalker से आवाज़ के साथ,
-हर line पर भाव वाली फ़ोटो, खबर का clip कंधे के पास छोटी TV-खिड़की में, punch पर zoom+ठप्पा, फिर reaction pose,
-बड़े captions, आवाज़ें, आख़िर में poll.
+Studio reel (3D किरदार, बिना retro) — news channel वाला split layout:
+  ऊपर ~आधा: बड़ी news screen (खबर से जुड़ा असली clip/photo, "ब्रेकिंग", नीचे लाल headline पट्टी, ठप्पा कोने में)
+  नीचे: 3D studio desk (या गाँव की गली) में छोटा किरदार — होंठ SadTalker से, सीधा कैमरे में.
+punch पर किरदार पर हल्का zoom, line के बाद 1 सेकंड reaction pose, बड़े captions, ticker, आख़िर में poll.
 """
 import math
 import subprocess
@@ -16,7 +17,10 @@ import talk_test as tt
 ROOT = Path(__file__).parent
 W, H, FPS = 1080, 1920, 25
 SW, SH = 720, 1280                     # SadTalker के लिए source (9:16)
-EXPR = {"hasi": "happy", "gussa": "angry", "udaas": "sad", "hairan": "shock", "tanz": "smug", "": "neutral"}
+# "tanz" पर भी सीधा देखने वाला गंभीर चेहरा: smug वाली photos में आँखें बग़ल में हैं (बोलते वक़्त अजीब लगता था) —
+# वो सिर्फ़ reaction pose "smug" में.
+EXPR = {"hasi": "happy", "gussa": "angry", "udaas": "sad", "hairan": "shock", "tanz": "neutral", "gambhir": "neutral",
+        "": "neutral"}
 _bg = None
 _sess = None
 
@@ -67,27 +71,30 @@ def set_img(name, w, h):
     return _sets[key].copy()
 
 
-def compose_set(sprite, setname, w, h):
-    """किरदार को 3D set में: studio = desk के पीछे anchor (desk आगे), village = गली में खड़ा. (image, screen-mask|None)"""
-    bg = set_img(setname, w, h)
+SCR = (24, 150, 1056, 860)                          # बड़ी news screen (x0, y0, x1, y1)
+STRAP = 66                                          # screen के नीचे लाल headline पट्टी
+BAND_Y, BAND_H = 940, 888                           # नीचे किरदार वाला हिस्सा (1080 x 888)
+
+
+def compose_band(sprite, setname, w=W, h=BAND_H):
+    """नीचे वाला हिस्सा: studio = desk के पीछे anchor (desk आगे), village = गली में कमर तक."""
+    full = set_img(setname, w, int(w * 1376 / 768))
     if setname == "studio":
-        s = h * 0.755 / sprite.height
+        dy = int(full.height * DESK_Y)
+        top = dy - int(h * 0.63)
+        band = full.crop((0, top, w, top + h))
+        s = h * 0.98 / sprite.height
         sp = sprite.resize((int(sprite.width * s), int(sprite.height * s)), Image.LANCZOS)
-        x, y = w - sp.width - int(w * 0.02), int(h * DESK_Y) - int(sp.height * 0.62)
-        bg.paste(sp, (x, y), sp)
-        dy = int(h * DESK_Y)
-        bg.paste(set_img(setname, w, h).crop((0, dy, w, h)), (0, dy))          # desk किरदार के आगे
-        m = Image.new("L", (w, h), 0)
-        sx, sy, sw, shh = [int(v * d) for v, d in zip(SCREEN, (w, h, w, h))]
-        ImageDraw.Draw(m).rectangle((sx, sy, sx + sw, sy + shh), fill=255)
-        alpha = Image.new("L", (w, h), 0)
-        alpha.paste(sp.getchannel("A"), (x, y))
-        m = Image.composite(Image.new("L", (w, h), 0), m, alpha.point(lambda v: 255 if v > 40 else 0))
-        return bg, m
-    s = h * 0.78 / sprite.height
+        band.paste(sp, ((w - sp.width) // 2 + int(w * 0.04), int(h * 0.07)), sp)
+        cut = int(h * 0.63)
+        band.paste(full.crop((0, dy, w, dy + h - cut)), (0, cut))           # desk किरदार के आगे
+        return band
+    top = int(full.height * 0.30)
+    band = full.crop((0, top, w, top + h)).filter(ImageFilter.GaussianBlur(1.5))
+    s = h * 1.02 / sprite.height
     sp = sprite.resize((int(sprite.width * s), int(sprite.height * s)), Image.LANCZOS)
-    bg.paste(sp, ((w - sp.width) // 2, h - sp.height + int(h * 0.03)), sp)
-    return bg, None
+    band.paste(sp, ((w - sp.width) // 2, int(h * 0.06)), sp)
+    return band
 
 
 def compose(sprite, w=SW, h=SH, scale=1.0):
@@ -108,21 +115,17 @@ _cuts = {}
 
 
 def source_for(folder, expr, out, full=None, setname=None):
-    """SadTalker के लिए 720x1280 source; full दिया तो 1080x1920 वाली still (और set हो तो screen-mask भी)."""
+    """SadTalker के लिए source = नीचे वाला हिस्सा (1080x888, चेहरा ~200px); full = वही still."""
     p = pose_file(folder, expr)
     if p not in _cuts:
         _cuts[p] = cutout(p)
-    if setname and setname in SETS and SETS[setname].exists():
-        compose_set(_cuts[p], setname, SW, SH)[0].save(out)
-        if full:
-            im, m = compose_set(_cuts[p], setname, W, H)
-            im.save(full)
-            if m is not None:
-                m.save(Path(full).with_name(Path(full).stem + "_mask.png"))
-        return
-    compose(_cuts[p]).save(out)
+    if setname in SETS and SETS[setname].exists():
+        im = compose_band(_cuts[p], setname)
+    else:
+        im = compose(_cuts[p], W, BAND_H, 0.9)
+    im.save(out)
     if full:
-        compose(_cuts[p], W, H).save(full)
+        im.save(full)
 
 
 def _frames(video):
@@ -171,8 +174,103 @@ def ticker(d, ep, k):
     d.text((95, (y0 + y1) / 2), "ताज़ा", font=tt.font(36), fill="white", anchor="mm")
 
 
+STAMP_OF = {"eyeroll": "वाह रे दावा!", "facepalm": "हद है!", "laugh": "सच्ची बात!", "thinking": "सोचो ज़रा!",
+            "smug": "समझ गए न?"}
+SW_, SH_ = SCR[2] - SCR[0], SCR[3] - SCR[1]
+
+
+def _base():
+    y = np.linspace(0, 1, H)[:, None, None]
+    g = np.array((10, 16, 40))[None, None] * (1 - y) + np.array((24, 34, 80))[None, None] * y
+    im = Image.fromarray(np.repeat(g, W, axis=1).astype(np.uint8))
+    d = ImageDraw.Draw(im)
+    d.rounded_rectangle((SCR[0] - 9, SCR[1] - 9, SCR[2] + 9, SCR[3] + STRAP + 9), 22, fill=(255, 214, 0))
+    return im
+
+
+def _num_card(card, t, seed):
+    """कार्ड (कोई clip न मिले तब): अंक हो तो 0 से गिनती चढ़ती दिखे."""
+    import re
+    c = dict(card)
+    m = re.search(r"\d[\d,]*", c.get("big", ""))
+    if m and t < 20:
+        n = int(m.group().replace(",", ""))
+        e = 1 - (1 - t / 20) ** 3
+        c["big"] = c["big"].replace(m.group(), f"{int(n * e):,}")
+    return rv._cover_img(rv.card_frame(c, t, seed), SW_, SH_)
+
+
+def _screen_gen(src, seed):
+    """बड़ी screen के frames (कभी ख़त्म नहीं होते — अगली line तक चलते रहते हैं)."""
+    if isinstance(src, Path) and src.suffix == ".mp4":
+        got = False
+        for f in rv._video_frames(src, SW_, SH_):
+            got = True
+            yield f
+        if got:
+            return
+        src = {"big": ""}
+    if isinstance(src, Path):
+        im = Image.open(src).convert("RGB")
+        t = 0
+        while True:
+            p = (t % 300) / 300
+            z = 1.16 - 0.14 * p if seed % 2 else 1.02 + 0.14 * p
+            yield rv._cover_img(im, SW_, SH_, z, 0.4)
+            t += 1
+    t = 0
+    while True:
+        yield _num_card(src or {}, t, seed)
+        t += 1
+
+
+def _credit(src):
+    if isinstance(src, Path) and src.with_suffix(".txt").exists():
+        return src.with_suffix(".txt").read_text(encoding="utf-8")[:70]
+    return ""
+
+
+def _band_frames(video):
+    rd = subprocess.Popen(["ffmpeg", "-loglevel", "quiet", "-i", str(video), "-vf",
+                           f"fps={FPS},scale={W}:{BAND_H}:force_original_aspect_ratio=increase,crop={W}:{BAND_H}",
+                           "-f", "rawvideo", "-pix_fmt", "rgb24", "-"], stdout=subprocess.PIPE)
+    while True:
+        raw = rd.stdout.read(W * BAND_H * 3)
+        if len(raw) < W * BAND_H * 3:
+            return
+        yield Image.frombuffer("RGB", (W, BAND_H), raw)
+
+
+def _zoomb(im, z, fy=0.25):
+    if z <= 1.001:
+        return im
+    cw, ch = W / z, BAND_H / z
+    x0, y0 = (W - cw) / 2, (BAND_H - ch) * fy
+    return im.crop((int(x0), int(y0), int(x0 + cw), int(y0 + ch))).resize((W, BAND_H), Image.BILINEAR)
+
+
+def _stamp(im, text, t):
+    s = 1.5 - 0.5 * min(1, t / 5)
+    f = tt.font(int(64 * s))
+    tw = int(f.getlength(text)) + 70
+    lay = Image.new("RGBA", (tw + 20, int(130 * s)), (0, 0, 0, 0))
+    d = ImageDraw.Draw(lay)
+    d.rounded_rectangle((6, 6, tw + 14, lay.height - 6), 24, fill=(255, 214, 0, 255), outline=(0, 0, 0, 255), width=6)
+    d.text(((tw + 20) / 2, lay.height / 2), text, font=f, fill=(0, 0, 0), anchor="mm")
+    lay = lay.rotate(6, expand=True, resample=Image.BICUBIC)
+    im.paste(lay, (min(W - lay.width - 10, SCR[2] - lay.width + 20), SCR[1] + 70), lay)
+
+
+def _headline(d, text):
+    d.rectangle((SCR[0], SCR[3], SCR[2], SCR[3] + STRAP), fill=(225, 30, 45))
+    f = tt.font(40)
+    while f.getlength(text) > SW_ - 40 and f.size > 24:
+        f = tt.font(f.size - 2)
+    d.text((SCR[0] + 20, SCR[3] + STRAP / 2), text, font=f, fill="white", anchor="lm")
+
+
 def render(ep, segs, chars, out, preview):
-    """segs: [{"ln", "wav", "face" (video path या None), "still" (PIL 1080x1920), "vis" [Path|card], "react"}]"""
+    """segs: [{"ln", "wav", "face" (video या None), "still" (PIL 1080x888), "vis" [Path], "react"}]"""
     lens = [rv._read(s["wav"]).shape[0] / rv.SR for s in segs]
     counts = [max(1, round(x * FPS)) for x in lens]
     tail = 2.6 if ep.get("poll") else 0.8
@@ -189,71 +287,85 @@ def render(ep, segs, chars, out, preview):
                            "-r", str(FPS), "-i", "-", "-i", str(out.with_suffix(".wav")), "-c:v", "libx264", "-crf", "20",
                            "-preset", "veryfast", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "160k", "-shortest", str(out)],
                           stdin=subprocess.PIPE)
-    k, stamp_i, last = 0, 0, None
+    base = _base()
+    headline = ep.get("breaking") or ep.get("title") or ""
+    k, last, cur, credit, seed = 0, None, None, "", 0
+    st_text, st_t = "", 0
+    im = base
     for si, (s, n) in enumerate(zip(segs, counts)):
         ln, react = s["ln"], s.get("react")
         punch = bool(ln.get("punch"))
         _, name, role = chars[ln["who"]]
-        face = _frames(s["face"]) if s.get("face") else None
+        face = _band_frames(s["face"]) if s.get("face") else None
         vis = list(s.get("vis") or [])
-        if ln.get("big") and len(vis) < 2 and not punch and not react:
-            vis.append({"big": ln["big"], "sub": ln.get("sub", "")})
+        if not vis and ln.get("big") and not react:
+            vis = [{"big": ln["big"], "sub": ln.get("sub", "")}]
+        if cur is None and not vis:
+            vis = [{"big": headline}]
         per = max(1, n // max(1, len(vis)))
-        vgen = None
+        if not react:
+            st_text = ""
         for t in range(n):
+            if vis and t % per == 0 and t // per < len(vis):
+                j = t // per
+                if cur is not None:
+                    cur.close()
+                seed += 1
+                cur, credit = _screen_gen(vis[j], seed), _credit(vis[j])
+            sf = next(cur, None)
+            if sf is None:
+                cur = _screen_gen({"big": headline}, seed)
+                sf = next(cur)
             if face:
                 fr = next(face, None) or last or s["still"]
                 last = fr
             else:
                 fr = s["still"]
             if punch:
-                z = 1.0 + 0.14 * min(1, t / 6)
+                z = 1.0 + 0.12 * min(1, t / 6)
             elif react:
-                z = 1.04 + 0.04 * t / n
+                z = 1.06
             else:
-                z = (1.0 if si % 2 == 0 else 1.07) + 0.03 * t / n
-            im = _zoom(fr, z)
-            if punch and t < 6:
-                im = im.transform(im.size, Image.AFFINE, (1, 0, (6 - t) * 5 * (-1) ** t, 0, 1, 0))
+                z = 1.0 + 0.03 * t / n
+            band = _zoomb(fr, z)
+            im = base.copy()
+            hook = k < FPS * 2.5 and ep.get("hook")
+            im.paste(Image.blend(sf, Image.new("RGB", sf.size), 0.55) if hook else sf, (SCR[0], SCR[1]))
+            im.paste(band, (0, BAND_Y))
             d = ImageDraw.Draw(im)
             rv.chrome(d, k)
-            hook = k < FPS * 2.5 and ep.get("hook")
-            if vis and not hook:
-                j = min(len(vis) - 1, t // per)
-                if t % per == 0 and t // per < len(vis):
-                    vgen = rv.visual_frames(vis[j], per if j < len(vis) - 1 else n - t, si * 3 + j)
-                vf = next(vgen, None) if vgen else None
-                if vf is not None and s.get("mask") is not None:       # studio: पीछे वाली screen पर (किरदार के पीछे)
-                    sx, sy, sw, shh = [int(v * dd) for v, dd in zip(SCREEN, (W, H, W, H))]
-                    big = Image.new("RGB", (W, H))
-                    big.paste(rv._cover_img(vf, sw, shh), (sx, sy))
-                    mz = _zoom(s["mask"].convert("RGB"), z).convert("L")
-                    im = Image.composite(big, im, mz)
-                    d = ImageDraw.Draw(im)
-                elif vf is not None:
-                    inset(im, vf, ln.get("big") or ln.get("caption") or "")
-                    d = ImageDraw.Draw(im)
+            d.rounded_rectangle((SCR[0] + 16, SCR[1] + 16, SCR[0] + 196, SCR[1] + 66), 10, fill=(225, 30, 45))
+            d.text((SCR[0] + 106, SCR[1] + 41), "ब्रेकिंग", font=tt.font(34), fill="white", anchor="mm")
+            if credit:
+                f = tt.font(22)
+                cw = f.getlength(credit)
+                d.rectangle((SCR[2] - cw - 24, SCR[3] - 38, SCR[2], SCR[3]), fill=(0, 0, 0))
+                d.text((SCR[2] - 12, SCR[3] - 19), credit, font=f, fill=(220, 220, 220), anchor="rm")
+            _headline(d, headline)
             if hook:
-                rows = rv._wrap(ep["hook"], tt.font(72), 980)[:3]
-                d.rounded_rectangle((24, 130, W - 24, 150 + 92 * len(rows)), 26, fill=(255, 214, 0))
+                rows = rv._wrap(ep["hook"], tt.font(70), 940)[:3]
+                y0 = (SCR[1] + SCR[3]) // 2 - 15 - 44 * len(rows)
+                d.rounded_rectangle((SCR[0] + 20, y0, SCR[2] - 20, y0 + 30 + 88 * len(rows)), 24, fill=(255, 214, 0))
                 for r, row in enumerate(rows):
-                    d.text((W / 2, 186 + r * 92), row, font=tt.font(72), fill=(0, 0, 0), anchor="mm")
+                    d.text((W / 2, y0 + 60 + r * 88), row, font=tt.font(70), fill=(0, 0, 0), anchor="mm")
             if react:
-                d.rounded_rectangle((40, 1440, 620, 1520), 20, fill=(225, 30, 45))
-                d.text((70, 1480), f"{name} का रिएक्शन", font=tt.font(46), fill="white", anchor="lm")
+                d.rounded_rectangle((30, BAND_Y + 500, 560, BAND_Y + 576), 20, fill=(225, 30, 45))
+                d.text((58, BAND_Y + 538), f"{name} का रिएक्शन", font=tt.font(44), fill="white", anchor="lm")
             else:
-                rv.name_strap(d, 1470, name, role)
-                rv.karaoke(d, ln.get("caption") or ln["say"], t / n, 1700)
-            if punch and t >= 4:
-                rv.stamp(im, rv.STAMPS[stamp_i % len(rv.STAMPS)], t - 4)
+                rv.name_strap(d, BAND_Y + 490, name, role)
+                rv.karaoke(d, ln.get("caption") or ln["say"], t / n, 1716)
+            if punch and not st_text and t >= n * 0.55:
+                st_text = ln.get("stamp") or STAMP_OF.get(ln.get("react_pose"), "")
+                st_t = 0
+            if st_text:
+                _stamp(im, st_text, st_t)
+                st_t += 1
                 d = ImageDraw.Draw(im)
             ticker(d, ep, k)
             d.rectangle((0, H - 12, int(W * k / total), H), fill=(255, 214, 0))
             wr.stdin.write(im.tobytes())
             k += 1
-        if punch:
-            stamp_i += 1
-    end = (last or segs[-1]["still"]).filter(ImageFilter.GaussianBlur(8))
+    end = im.filter(ImageFilter.GaussianBlur(8))
     for t in range(tailn):
         im = end.copy()
         d = ImageDraw.Draw(im)
@@ -265,6 +377,8 @@ def render(ep, segs, chars, out, preview):
         d.rectangle((0, H - 12, int(W * k / total), H), fill=(255, 214, 0))
         wr.stdin.write(im.tobytes())
         k += 1
+    if cur is not None:
+        cur.close()
     wr.stdin.close()
     wr.wait()
     subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", str(out), "-vf",

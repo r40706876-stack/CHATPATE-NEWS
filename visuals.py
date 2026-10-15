@@ -44,7 +44,7 @@ def _get_json(url):
 def _download(url, path):
     if path.exists() and path.stat().st_size > 10000:
         return path
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    req = urllib.request.Request(url, headers={"User-Agent": UA if "pixabay" not in url else "Mozilla/5.0"})
     with urllib.request.urlopen(req, timeout=120) as r:
         path.write_bytes(r.read())
     return path
@@ -102,7 +102,58 @@ def plan(lines, topic=""):
 STOP = {"the", "a", "of", "in", "and", "with", "on", "indian", "india"}
 
 
-def candidates(query, k=5):
+UA = "BakraNewsBot/1.0 (https://github.com/r40706876-stack/CHATPATE-NEWS)"   # Wikimedia की शर्त: पहचान वाला UA
+
+
+def _get(url):
+    req = urllib.request.Request(url, headers={"User-Agent": UA})
+    with urllib.request.urlopen(req, timeout=30) as r:
+        return json.load(r)
+
+
+def _clean(html):
+    return re.sub(r"<[^>]+>", "", html or "").strip()[:40]
+
+
+def free_photos(query, want):
+    """असली photos, जिनको इस्तेमाल करने की खुली इजाज़त है: Wikimedia Commons (भारत की असली जगहें/चीज़ें) + Openverse
+    (Flickr वगैरह की CC photos). सिर्फ़ CC0 / Public Domain / CC BY / CC BY-SA — screen पर फ़ोटो वाले का नाम दिखेगा."""
+    out = []
+    q = urllib.parse.quote(query)
+    try:
+        pages = _get("https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=search"
+                     f"&gsrsearch={q}%20filetype:bitmap&gsrnamespace=6&gsrlimit=12&prop=imageinfo"
+                     "&iiprop=url|extmetadata|size&iiurlwidth=1280").get("query", {}).get("pages", {})
+        for pg in pages.values():
+            ii = (pg.get("imageinfo") or [{}])[0]
+            meta = ii.get("extmetadata", {})
+            lic = (meta.get("LicenseShortName", {}).get("value") or "").lower()
+            if not any(k in lic for k in ("cc0", "public domain", "cc by", "pd")) or "nc" in lic or "nd" in lic:
+                continue
+            if ii.get("width", 0) < 800 or not ii.get("thumburl"):
+                continue
+            title = pg.get("title", "").replace("File:", "").rsplit(".", 1)[0]
+            words = set(re.findall(r"[a-z]+", (title + " " + _clean(meta.get("ImageDescription", {}).get("value"))).lower()))
+            out.append({"id": f"w{pg.get('pageid')}", "url": ii["thumburl"], "thumb": ii["thumburl"].replace("1280px", "330px"),
+                        "tags": title, "match": len(want & words) - 0.6,
+                        "credit": f"फ़ोटो: {_clean(meta.get('Artist', {}).get('value')) or 'Wikimedia'} / Wikimedia ({lic.upper()})"})
+    except Exception as e:                                # noqa: BLE001
+        print("  Wikimedia नहीं मिला:", query, repr(e)[:80])
+    try:
+        res = _get(f"https://api.openverse.org/v1/images/?q={q}&license=cc0,pdm,by,by-sa&page_size=12&mature=false").get("results", [])
+        for r in res:
+            if (r.get("width") or 0) < 800:
+                continue
+            words = set(re.findall(r"[a-z]+", (r.get("title", "") + " " + " ".join(t.get("name", "") for t in r.get("tags") or [])).lower()))
+            out.append({"id": f"o{r['id']}", "url": r["url"], "thumb": r.get("thumbnail") or r["url"],
+                        "tags": r.get("title", "")[:60], "match": len(want & words) - 0.7,
+                        "credit": f"फ़ोटो: {(r.get('creator') or '')[:30]} / {r.get('source', 'Openverse')} (CC {r.get('license', '').upper()})"})
+    except Exception as e:                                # noqa: BLE001
+        print("  Openverse नहीं मिला:", query, repr(e)[:80])
+    return out
+
+
+def candidates(query, k=7):
     """Pixabay के पहले 15 video में से tags सबसे ज़्यादा मेल खाने वाले k (thumbnail के साथ)."""
     import urllib.parse as up
     key = os.getenv("PIXABAY_API_KEY")
@@ -136,6 +187,7 @@ def candidates(query, k=5):
         tags = {t.strip() for t in h.get("tags", "").lower().replace(",", " ").split()}
         out.append({"id": f"i{h['id']}", "url": h["largeImageURL"], "thumb": h.get("webformatURL", ""),
                     "tags": h.get("tags", ""), "match": len(want & tags) - 0.5})   # बराबरी पर video पहले
+    out += free_photos(query, want)
     seen, uniq = set(), []
     for c in sorted(out, key=lambda c: -c["match"]):
         if c["tags"] not in seen and c["match"] >= 0.5:
@@ -146,7 +198,7 @@ def candidates(query, k=5):
 
 def _thumb_part(url):
     import base64
-    req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    req = urllib.request.Request(url, headers={"User-Agent": UA})
     with urllib.request.urlopen(req, timeout=30) as r:
         return {"inline_data": {"mime_type": "image/jpeg", "data": base64.b64encode(r.read()).decode()}}
 
@@ -158,12 +210,13 @@ def pick_checked(items):
     cands = [candidates(q) for _, q in items]
     parts = [{"text": "तुम video editor हो. हर line के लिए कुछ stock video की तस्वीरें हैं. वही चुनो जो line की बात को सीधे "
                       "दिखाए (भारत/गाँव जैसा माहौल हो तो और अच्छा). थोड़ा भी बेमेल, विदेशी पहचान वाला, या अजीब हो तो -1. "
+                      "असली भारत की photo (Wikimedia/Openverse) मिले और बात से मेल खाए तो उसे पहले चुनो. "
                       "सिर्फ़ JSON: {\"picks\": [line क्रम में चुनी तस्वीर का नंबर या -1]}"}]
     for i, ((text, q), cs) in enumerate(zip(items, cands)):
         parts.append({"text": f"\nLine {i + 1}: \"{text}\" (खोज: {q}) — {len(cs)} तस्वीरें:"})
         for j, c in enumerate(cs):
             try:
-                parts += [{"text": f"तस्वीर {j}:"}, _thumb_part(c["thumb"])]
+                parts += [{"text": f"तस्वीर {j} [{c['tags'][:50]}]:"}, _thumb_part(c["thumb"])]
             except Exception:                             # noqa: BLE001
                 parts.append({"text": f"तस्वीर {j}: (नहीं खुली)"})
     try:
@@ -178,7 +231,15 @@ def pick_checked(items):
         if 0 <= j < len(cs):
             _used.add(cs[j]["id"])
             ext = ".mp4" if cs[j]["id"].startswith("v") else ".jpg"
-            out.append(_download(cs[j]["url"], CACHE / f"{cs[j]['id']}{ext}"))
+            try:
+                path = _download(cs[j]["url"], CACHE / f"{cs[j]['id']}{ext}")
+            except Exception as e:                        # noqa: BLE001
+                print("  download नहीं हुआ:", repr(e)[:80])
+                out.append(None)
+                continue
+            if cs[j].get("credit"):
+                path.with_suffix(".txt").write_text(cs[j]["credit"], encoding="utf-8")
+            out.append(path)
             print(f"  ✅ clip: {items[i][1]} → {cs[j]['tags']}")
         else:
             out.append(None)

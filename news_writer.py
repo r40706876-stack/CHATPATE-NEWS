@@ -189,9 +189,17 @@ def prompt_write(packs):
    पर लटका है।"). हर line "punch": true; आँख घुमाने/ठहाके वाला "react_pose" सिर्फ़ 2-3 सबसे तेज़ lines पर.
 4. आख़िर से पहले एक काम की बात (सिर्फ़ तथ्यों में हो तो) — वो भी मुहर ढाँचे में अच्छा.
 5. आख़िरी line: "ये वीडियो उसको भेजो, जो…" — किसी पहचाने जाने वाले इंसान का चुटीला चित्रण.
-हर line में: "expr" (भाव: hasi / tanz / gussa / hairan / udaas), "set" (bablu के तथ्य/anchor वाले = "studio";
-सवाल-जवाब, भड़ास, गाँव की बात = "village"), "visuals" = 2 English खोज (Pixabay पर उस बात को ठोस दिखाने वाली, जैसे
-["gas cylinder kitchen", "lpg delivery india"]).
+हर line में: "expr" (भाव: gambhir / hasi / tanz / gussa / hairan / udaas — मुहर वाली line पर ज़्यादातर "gambhir":
+बिल्कुल गंभीर anchor चेहरा, सीधा कैमरे में; मज़ा बात में हो, चेहरे में नहीं), "set" (bablu के तथ्य/anchor वाले = "studio";
+सवाल-जवाब, भड़ास, गाँव की बात = "village"), "visuals" = 3 अलग English खोज जो उस line की बात को screen पर ठोस, असली
+तस्वीर में दिखाएँ (बड़ी screen पर चलेंगी, सबसे ज़रूरी हिस्सा): चीज़/जगह/काम का नाम लो, भाव नहीं — जैसे
+["lpg gas cylinder", "woman cooking gas stove india", "gas cylinder delivery truck"]; परीक्षा = ["students writing exam hall",
+"exam result notice board", "calendar pages"]. "sad", "problem", "system" जैसे खोखले शब्द नहीं.
+"react_pose" (line के ठीक बाद 1 सेकंड का reaction) line के मतलब से ही चुनो:
+  eyeroll = सरकारी दावा और सच्चाई उलटी ("कोई कमी नहीं है" वाली lines); facepalm = हद दर्जे की बेवकूफ़ी/बार-बार वही गलती;
+  laugh = सच इतना बेतुका कि हँसी छूट जाए; thinking = सवाल छोड़ने वाली line; smug = "समझ गए न?" वाला तंज़.
+  जिस line पर react_pose हो, उसी पर "stamp" = 2-4 शब्द का ठप्पा जो उसी line की बात पकड़े (जैसे "धैर्य… उम्र भर!",
+  "दिखती ही नहीं!", "OTP छोड़ के सब!"). "गज़ब!", "बवाल!" जैसे हर जगह चलने वाले शब्द नहीं.
 "ticker" = नीचे चलने वाली पट्टी के 3 छोटे जोक (हर एक ≤ 10 शब्द, इसी खबर पर, सरकारी-खबर वाली भाषा में:
 "विभाग ने कहा, धैर्य ही असली योजना है").
 "say" में अंक शब्दों में ("एक अक्टूबर") और English short form देवनागरी में ("यूपीआई"); "caption" में अंक अंकों में.
@@ -203,10 +211,10 @@ def prompt_write(packs):
 [{{"topic": "...", "category": "money/rules/bank/jobs/scheme/tech/travel/civic/other", "breaking": "6-9 शब्द, सच्ची headline",
   "hook_text": "...", "source": "प्रकाशकों के नाम", "poll": ["2-4 शब्द", "2-4 शब्द"], "ticker": ["...", "...", "..."],
   "cast_why": "इन किरदारों को क्यों चुना, एक लाइन",
-  "lines": [{{"who": "bablu", "say": "...", "caption": "...", "expr": "tanz", "set": "studio", "visuals": ["...", "..."],
+  "lines": [{{"who": "bablu", "say": "...", "caption": "...", "expr": "gambhir", "set": "studio", "visuals": ["...", "...", "..."],
               "card": {{"tag": "...", "big": "...", "sub": "...", "icon": "rupee"}}}},
-            {{"who": "ramesh", "say": "...", "caption": "...", "expr": "udaas", "set": "village", "visuals": ["...", "..."],
-              "punch": true, "react_pose": "facepalm"}}],
+            {{"who": "ramesh", "say": "...", "caption": "...", "expr": "udaas", "set": "village", "visuals": ["...", "...", "..."],
+              "punch": true, "react_pose": "facepalm", "stamp": "2-4 शब्द"}}],
   "caption_post": "एक तीखी लाइन + poll वाला सवाल + 'Family group में भेजो' + स्रोत: ... + 4-5 hashtags + (AI से बने किरदार)"}}]
 icon इनमें से: {", ".join(sorted(ICONS))}."""
 
@@ -226,7 +234,7 @@ def prompt_sharpen(eps):
 सिर्फ़ JSON list लौटाओ — उतने ही episodes, उसी क्रम में."""
 
 
-EXPRS, POSES, SETS_OK = {"hasi", "tanz", "gussa", "hairan", "udaas"}, {"laugh", "facepalm", "eyeroll", "thinking"}, {"studio", "village"}
+EXPRS, POSES, SETS_OK = {"gambhir", "hasi", "tanz", "gussa", "hairan", "udaas"}, {"laugh", "facepalm", "eyeroll", "thinking", "smug"}, {"studio", "village"}
 
 
 def finish(ep, strict=True):
@@ -241,14 +249,17 @@ def finish(ep, strict=True):
         cap = str(ln.get("caption") or "")
         if len(re.findall(r"[\u0900-\u097F]", cap)) < len(re.findall(r"[A-Za-z]", cap)) or len(cap) < 4:
             ln["caption"] = ln["say"]
-        vis = [str(v) for v in (ln.get("visuals") or []) if str(v).strip()][:2]
+        vis = [str(v) for v in (ln.get("visuals") or []) if str(v).strip()][:3]
         ln["visuals"] = vis
         if vis and not ln.get("visual"):
             ln["visual"] = vis[0]                           # पुराने renderer के लिए
-        ln["expr"] = ln.get("expr") if ln.get("expr") in EXPRS else "tanz"
+        ln["expr"] = ln.get("expr") if ln.get("expr") in EXPRS else "gambhir"
         ln["set"] = ln.get("set") if ln.get("set") in SETS_OK else ("studio" if ln["who"] == "bablu" else "village")
         if ln.get("react_pose") not in POSES:
             ln.pop("react_pose", None)
+            ln.pop("stamp", None)
+        elif ln.get("stamp"):
+            ln["stamp"] = str(ln["stamp"])[:22]
         c = ln.get("card")
         if c:
             if not c.get("big"):

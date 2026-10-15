@@ -278,7 +278,7 @@ def clean(ep, strict=True):
             ln["who"], ln["scene"] = "pinky", "pinky"
         if ln["who"] in ("bunty",):                        # मेहमान अभी सिर्फ़ दादी
             ln["who"], ln["scene"] = "dadi", "dadi_call"
-        if ln["who"] in ("dadi", "riya", "bunty") and ln.get("expr") not in {"neutral", "happy", "shock", "angry", "smug", "sad", "hasi", "tanz", "gussa", "hairan", "udaas"}:
+        if ln["who"] in ("dadi", "riya", "bunty") and ln.get("expr") not in {"neutral", "happy", "shock", "angry", "smug", "sad", "hasi", "tanz", "gussa", "hairan", "udaas", "gambhir"}:
             ln["expr"] = "happy"
         ln["punch"] = bool(ln.get("punch"))
         ln["insta"] = str(ln.get("insta") or "")[:24]

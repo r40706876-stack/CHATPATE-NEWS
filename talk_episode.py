@@ -91,10 +91,10 @@ def prep(script_path):
             source_img(ln["who"], d / "source.png", ln.get("expr", ""))
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(IN / f"audio/{i:02d}.wav"), "-ar", "16000",
                         "-ac", "1", str(d / "talk.wav")], check=True)
-    pairs = []                                                 # हर line के 1-2 visual (खोज), सब एक साथ जाँचे जाएँ
-    for i, ln in enumerate(ep["lines"]):
+    pairs = []                                                 # हर line के 3 तक visual (खोज), सब एक साथ जाँचे जाएँ
+    for i, ln in enumerate(ep["lines"]):                       # punch वाली lines पर भी — बड़ी screen कभी ख़ाली न रहे
         qs = ln.get("visuals") or ([ln["visual"]] if ln.get("visual") else [])
-        pairs += [(i, j, q) for j, q in enumerate(qs[:2]) if not ln.get("punch")]
+        pairs += [(i, j, q) for j, q in enumerate(qs[:3])]
     if pairs:
         import shutil
         import visuals
@@ -103,6 +103,8 @@ def prep(script_path):
         for (i, j, _), path in zip(pairs, got):
             if path:
                 shutil.copy(path, IN / f"broll/{i}_{j}{Path(path).suffix}")
+                if Path(path).with_suffix(".txt").exists():          # photo वाले का नाम (CC license)
+                    shutil.copy(Path(path).with_suffix(".txt"), IN / f"broll/{i}_{j}.txt")
     json.dump(ep, open(IN / "episode.json", "w", encoding="utf-8"), ensure_ascii=False)
     print(json.dumps(list(range(len(ep["lines"])))))
 
@@ -202,10 +204,9 @@ def post_studio(ep):
     for i, ln in enumerate(ep["lines"]):
         clips = sorted((OUT / str(i)).rglob("*.mp4"))
         still = Image.open(IN / f"{i}/still.png").convert("RGB")
-        vis = sorted((IN / "broll").glob(f"{i}_*")) if (IN / "broll").exists() else []
-        mp = IN / f"{i}/still_mask.png"
+        vis = sorted(p for p in (IN / "broll").glob(f"{i}_*") if p.suffix != ".txt") if (IN / "broll").exists() else []
         segs.append({"ln": ln, "wav": IN / f"audio/{i:02d}.wav", "face": clips[-1] if clips else None,
-                     "still": still, "vis": vis, "mask": Image.open(mp).convert("L") if mp.exists() else None})
+                     "still": still, "vis": vis})
         if (IN / f"react_{i}.png").exists():
             rw = IN / f"audio/{i:02d}_r.wav"
             subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "lavfi", "-i", "anullsrc=r=24000:cl=mono",
@@ -216,7 +217,7 @@ def post_studio(ep):
     secs = reel_studio.render(ep, segs, CHARS, out, ROOT / "preview_episode.jpg")
     print(f"बन गया: {out} ({secs:.1f}s)")
     import telegram
-    telegram.send_video(out, f"🎬 3D demo (बिना retro): {ep.get('title', '')} — होंठ आवाज़ के साथ, हर line पर भाव")
+    telegram.send_video(out, f"🎬 3D demo (नया layout: बड़ी news screen): {ep.get('title', '')}")
 
 
 def post():
