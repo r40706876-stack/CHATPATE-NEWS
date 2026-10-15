@@ -279,9 +279,29 @@ def finish(ep, strict=True):
     return ep
 
 
+RISKY = re.compile(r"हत्या|मर्डर|रेप|दुष्कर्म|बलात्कार|यौन|आत्महत्या|सुसाइड|लाश|शव|मौत|मारे गए|हमला|आतंक|गोली|"
+                   r"murder|rape|suicide|killed|dead|terror|sex", re.I)
+
+
+def _safe(c):
+    """Gemini का safety filter पूरा prompt रोक दे तो: अपराध/मौत वाली खबरें हटाकर (वैसे भी हम उन पर व्यंग्य नहीं करते)."""
+    c2 = dict(c)
+    for k in ("kaam", "viral", "news", "moments", "insta"):
+        c2[k] = [it for it in c.get(k, []) if not RISKY.search(json.dumps(it, ensure_ascii=False))]
+    return c2
+
+
 def write_options(c, n=3):
     import viral_check as vc
-    picks = gemini.json_from(gemini.ask(prompt_pick(c, n * 2), json_mode=True, temperature=0.4)).get("picks", [])
+    try:
+        raw = gemini.ask(prompt_pick(c, n * 2), json_mode=True, temperature=0.4)
+    except gemini.QuotaOver:
+        raise
+    except RuntimeError as e:
+        print("  खबरों की list Gemini ने नहीं ली, अपराध/मौत वाली हटाकर दोबारा:", repr(e)[:150])
+        c = _safe(c)
+        raw = gemini.ask(prompt_pick(c, n * 2), json_mode=True, temperature=0.4)
+    picks = gemini.json_from(raw).get("picks", [])
     for p in picks:                                         # पहली जाँच: खबर सच में आज उठी हुई है? (free, Gemini नहीं)
         sc, why, heads = vc.trend(p.get("query") or p["topic"])
         p["trend"], p["_heads"] = {"score": sc, "why": why}, heads

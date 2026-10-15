@@ -79,9 +79,15 @@ def ask(prompt, search=False, json_mode=False, temperature=0.9, prefer=None):
     raise QuotaOver("सारी Gemini keys का आज का कोटा ख़त्म")
 
 
+class Blocked(RuntimeError):
+    """Gemini ने prompt ही रोक दिया (कोई खबर safety filter में अटकी)."""
+
+
 def _ask(key, prompt, search, json_mode, temperature, prefer):
     parts = prompt if isinstance(prompt, list) else [{"text": prompt}]     # list = text + तस्वीरें (inline_data)
-    body = {"contents": [{"parts": parts}], "generationConfig": {"temperature": temperature}}
+    body = {"contents": [{"parts": parts}], "generationConfig": {"temperature": temperature},
+            "safetySettings": [{"category": f"HARM_CATEGORY_{c}", "threshold": "BLOCK_ONLY_HIGH"}     # खबरों में अपराध/हादसे
+                               for c in ("HARASSMENT", "HATE_SPEECH", "SEXUALLY_EXPLICIT", "DANGEROUS_CONTENT")]}
     if search:
         body["tools"] = [{"google_search": {}}]
     elif json_mode:
@@ -97,6 +103,8 @@ def _ask(key, prompt, search, json_mode, temperature, prefer):
                 t0 = time.time()
                 data = _get(f"{BASE}/models/{model}:generateContent", key, body)
                 print(f"    Gemini {model}: {time.time() - t0:.0f}s")
+                if not data.get("candidates"):
+                    raise Blocked(str(data.get("promptFeedback") or data)[:300])
                 return "".join(p.get("text", "") for p in data["candidates"][0]["content"]["parts"])
             except urllib.error.HTTPError as e:
                 msg = e.read().decode("utf-8", "ignore")[:3000]
@@ -106,6 +114,9 @@ def _ask(key, prompt, search, json_mode, temperature, prefer):
                 daily = e.code == 429 and "PerMinute" not in msg       # मिनट वाली नहीं = दिन का कोटा ख़त्म
                 daily_hits += daily
                 busy |= e.code in (429, 503) and not daily
+            except Blocked as e:                      # दूसरे model पर भी यही होगा — सीधे बताओ
+                print("    Gemini ने prompt रोका:", e)
+                raise
             except Exception as e:                    # noqa: BLE001
                 errors.append(f"{model}: {e!r}")
         if daily_hits and not busy:                   # हर model पर दिन वाली सीमा — रुको मत, साफ़ बताओ
