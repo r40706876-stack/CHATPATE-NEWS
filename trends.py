@@ -26,8 +26,7 @@ BLOCK = [
     "मौत", "मृत", "हादसा", "हादसे", "दुर्घटना", "accident", "died", "death", "dead", "बाढ़", "flood",
     "भूकंप", "earthquake", "आग", "fire", "हत्या", "murder", "आत्महत्या", "suicide", "शहीद",
     # अपराध
-    "रेप", "rape", "गिरफ्तार", "arrest", "हनीट्रैप", "honeytrap", "ब्लैकमेल", "blackmail", "ठगी",
-    "scam", "fraud", "पुलिस", "police", "court", "कोर्ट", "हाईकोर्ट", "जेल", "आतंक", "terror",
+    "रेप", "rape", "गिरफ्तार", "arrest", "हनीट्रैप", "honeytrap", "ब्लैकमेल", "blackmail", "पुलिस", "police", "court", "कोर्ट", "हाईकोर्ट", "जेल", "आतंक", "terror",
     # राजनीति / धर्म
     "bjp", "भाजपा", "कांग्रेस", "congress", "aap", "चुनाव", "election", "मोदी", "राहुल", "मंत्री",
     "minister", "सांसद", "विधायक", "party", "पार्टी", "rnc", "democrat", "republican", "protest",

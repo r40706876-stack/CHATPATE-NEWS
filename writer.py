@@ -17,8 +17,8 @@ import gemini
 import joke_bank
 
 ROOT = Path(__file__).parent
-WHO = {"bablu", "chacha", "pinky", "dadi", "riya", "bunty"}
-SCENE_OF = {"chacha": "chacha", "pinky": "pinky", "riya": "riya", "dadi": "dadi_call", "bunty": "bunty_call"}
+WHO = {"bablu", "chacha", "pinky", "dadi", "riya", "bunty", "ramesh"}
+SCENE_OF = {"chacha": "chacha", "pinky": "pinky", "ramesh": "chacha", "riya": "riya", "dadi": "dadi_call", "bunty": "bunty_call"}
 SCENES = {"studio", "studio_end", "chacha", "pinky", "dadi_call", "card"}
 
 CAST = """किरदार (हर एक की हँसी का अपना पक्का अंदाज़):
@@ -278,7 +278,7 @@ def clean(ep, strict=True):
             ln["who"], ln["scene"] = "pinky", "pinky"
         if ln["who"] in ("bunty",):                        # मेहमान अभी सिर्फ़ दादी
             ln["who"], ln["scene"] = "dadi", "dadi_call"
-        if ln["who"] in ("dadi", "riya", "bunty") and ln.get("expr") not in {"neutral", "happy", "shock", "angry", "smug", "sad"}:
+        if ln["who"] in ("dadi", "riya", "bunty") and ln.get("expr") not in {"neutral", "happy", "shock", "angry", "smug", "sad", "hasi", "tanz", "gussa", "hairan", "udaas"}:
             ln["expr"] = "happy"
         ln["punch"] = bool(ln.get("punch"))
         ln["insta"] = str(ln.get("insta") or "")[:24]
