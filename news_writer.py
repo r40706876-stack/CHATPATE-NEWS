@@ -27,7 +27,7 @@ def _cands(c):
     for k, label in (("kaam", "काम की"), ("viral", "वायरल"), ("news", "Trends"), ("moments", "त्योहार"), ("insta", "मेरी feed")):
         for it in c.get(k, []):
             extra = it.get("what") or " | ".join(it.get("headlines", [])[:1]) or it.get("source", "")
-            out.append(f"- [{label}] {it['trend']}" + (f" ({extra})" if extra else ""))
+            out.append(f"- [{it.get('cat') or label}] {it['trend']}" + (f" ({extra})" if extra else ""))
     return "\n".join(out) or "(कोई नहीं — त्योहार/नियम वाली ताज़ा खबर ख़ुद Search से ढूँढो)"
 
 
@@ -85,8 +85,11 @@ def prompt_pick(c, n=3):
 
 इनमें से {n} अलग-अलग खबरें चुनो (अलग विषय: जैसे एक पैसा, एक नियम/योजना, एक सिस्टम की परेशानी). वही लो जिसमें
 व्यंग्य का साफ़ मौका हो — दावा बनाम हकीकत, बेतुका नियम, लंबा इंतज़ार, महँगाई. हर एक के लिए Google News पर
-खोजने लायक छोटी query लिखो (2-5 शब्द, हिंदी में, जैसे "रेपो रेट बढ़ा" या "LPG आधार नियम"). सिर्फ़ JSON:
-{{"picks": [{{"topic": "खबर 8-12 शब्द", "why": "आम आदमी पर असर, एक लाइन", "query": "search query"}}]}}"""
+खोजने लायक छोटी query लिखो (2-5 शब्द, हिंदी में, जैसे "रेपो रेट बढ़ा" या "LPG आधार नियम").
+विविधता ज़रूरी: हर खबर अलग विषय ([...] में लिखा विषय) से हो — एक ही विषय से दो कभी नहीं. पिछले 2 दिन में ये विषय हो चुके,
+इन्हें तभी लो जब कोई बहुत बड़ी नई बात हो: {", ".join(c.get("recent_cats", [])) or "(कोई नहीं)"}.
+गैस/रेल किराया जैसी हर हफ़्ते वाली खबरें तभी, जब सच में नई और बड़ी हों. सिर्फ़ JSON:
+{{"picks": [{{"topic": "खबर 8-12 शब्द", "cat": "विषय (जैसे [..] में)", "why": "आम आदमी पर असर, एक लाइन", "query": "search query"}}]}}"""
 
 
 def prompt_facts(picks, evidence):
@@ -243,9 +246,17 @@ def write_options(c, n=3):
         sc, why, heads = vc.trend(p.get("query") or p["topic"])
         p["trend"], p["_heads"] = {"score": sc, "why": why}, heads
         print(f"  {'✅' if sc >= vc.TREND_MIN else '❌'} trend {sc}/10: {p.get('topic')} | {why}")
-    picks.sort(key=lambda p: -p["trend"]["score"])
+    recent = set(c.get("recent_cats", []))
+    picks.sort(key=lambda p: (str(p.get("cat", "")) in recent, -p["trend"]["score"]))   # नए विषय पहले
     c["rejected"] = [p for p in picks if p["trend"]["score"] < vc.TREND_MIN]
-    picks = [p for p in picks if p["trend"]["score"] >= vc.TREND_MIN][:n]
+    ok, cats = [], set()
+    for p in picks:                                         # एक विषय से एक ही खबर
+        cat = str(p.get("cat") or p.get("topic"))
+        if p["trend"]["score"] >= vc.TREND_MIN and cat not in cats:
+            ok.append(p)
+            cats.add(cat)
+    picks = ok[:n]
+    print("  चुने विषय:", [p.get("cat") for p in picks])
     if not picks:
         raise NoViral(c["rejected"])
     evidence = {i: p.pop("_heads") for i, p in enumerate(picks)}
@@ -271,6 +282,7 @@ def write_options(c, n=3):
         w = set(str(ep.get("topic", "")).split())
         best = max(picks, key=lambda p: len(w & set(str(p.get("topic", "")).split())))
         ep["trend"] = best["trend"]
+        ep["category"] = best.get("cat") or ep.get("category", "other")
     vc.connect(eps)                                         # दूसरी जाँच: लोग जुड़ेंगे? (Gemini 1 call)
     weak = [e for e in eps if (e.get("connect") or {}).get("score", 10) < vc.CONNECT_MIN]
     if weak:                                                # कमज़ोर scripts एक बार और तीखी करो, फिर दोबारा जाँचो

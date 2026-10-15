@@ -104,6 +104,9 @@ def do_write(feed=None):
               ensure_ascii=False, indent=2)
     CHOICE.unlink(missing_ok=True)
     telegram.send_text(preview(eps))
+    with open(ROOT / "shown.txt", "a", encoding="utf-8") as f:     # भेजी गई खबरें याद (अगली बार वही विषय दोबारा न आए)
+        for e in eps:
+            f.write(f"{ist().date().isoformat()}|{e.get('category', 'other')}|{str(e.get('topic', '')).replace('|', ' ')}\n")
     print(f"  {len(eps)} scripts Telegram पर भेजीं — जवाब का इंतज़ार")
 
 

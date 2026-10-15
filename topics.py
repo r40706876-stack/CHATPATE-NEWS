@@ -27,12 +27,10 @@ WEATHER = re.compile(r"मौसम|बारिश|आंधी|weather|rain|�
 
 def history(days=7):
     """[(date, category, topic)] पिछले कुछ दिनों के episodes."""
-    f = ROOT / "done.txt"
     out = []
-    if not f.exists():
-        return out
     cut = (dt.date.today() - dt.timedelta(days=days)).isoformat()
-    for line in f.read_text(encoding="utf-8").splitlines():
+    text = "".join((ROOT / n).read_text(encoding="utf-8") + "\n" for n in ("done.txt", "shown.txt") if (ROOT / n).exists())
+    for line in text.splitlines():
         p = line.split("|")
         if len(p) >= 3 and p[0] >= cut:
             out.append((p[0], p[1], "|".join(p[2:])))
@@ -103,37 +101,57 @@ def viral_news(n=8):
     return out[:n]
 
 
-KAAM_QUERIES = ("नया नियम लागू", "LPG सिलेंडर", "बैंक नियम बदलाव", "UPI नया नियम", "सरकारी योजना आवेदन",
-                "रेलवे नया नियम टिकट", "छुट्टी घोषित स्कूल बैंक", "पेट्रोल डीजल दाम", "महंगाई भत्ता", "मोबाइल रिचार्ज महंगा",
-                "पेपर लीक परीक्षा", "भर्ती परीक्षा तारीख", "बिजली कटौती गांव", "साइबर ठगी से बचाव", "राशन कार्ड नियम",
-                "सब्जी के दाम", "सड़क गड्ढे शिकायत")
+CATS = {   # हर विषय की अपनी खोजें — ताकि हर बार अलग-अलग तरह की ज़रूरी खबरें आएँ (पहले सिर्फ़ गैस/रेल भर जाती थीं)
+    "महँगाई": ("सब्जी के दाम बढ़े", "LPG सिलेंडर दाम", "मोबाइल रिचार्ज महंगा", "दूध के दाम"),
+    "नियम/बैंक": ("नया नियम लागू", "UPI नया नियम", "बैंक नियम बदलाव", "आधार पैन नियम"),
+    "नौकरी/परीक्षा": ("पेपर लीक परीक्षा", "भर्ती परीक्षा तारीख", "सरकारी नौकरी वैकेंसी", "परीक्षा रद्द"),
+    "योजना": ("सरकारी योजना आवेदन", "पीएम किसान किस्त", "आयुष्मान कार्ड", "पेंशन योजना"),
+    "किसान/गाँव": ("किसान खाद संकट", "मंडी भाव फसल", "गांव बिजली कटौती", "गांव सड़क पानी समस्या"),
+    "पढ़ाई/स्कूल": ("स्कूल फीस नियम", "बोर्ड परीक्षा", "स्कूल छुट्टी घोषित", "छात्र छात्रवृत्ति"),
+    "सफ़र": ("ट्रेन टिकट नियम", "टोल टैक्स", "बस किराया", "स्पेशल ट्रेन भीड़"),
+    "ठगी से बचाव": ("साइबर ठगी से बचाव", "ऑनलाइन फ्रॉड अलर्ट", "फर्जी कॉल चेतावनी"),
+    "अस्पताल/सेहत": ("सरकारी अस्पताल व्यवस्था", "दवा दाम", "एंबुलेंस समय पर नहीं"),
+    "शहर-कस्बा": ("ट्रैफिक चालान नियम", "बिजली बिल बढ़ा", "पानी सप्लाई ठप", "सड़क गड्ढे"),
+    "फ़ोन/इंटरनेट": ("इंटरनेट बंद", "नया मोबाइल नियम", "सोशल मीडिया नया नियम"),
+}
+KAAM_QUERIES = tuple(q for qs in CATS.values() for q in qs)
 
 
-def kaam_news(per_query=4, n=24):
-    """काम की खबरें: जेब, नियम, बैंक, गैस, ट्रेन, योजना, छुट्टी (पिछले 3 दिन)."""
+def recent_cats(days=2):
+    """पिछले कुछ दिनों में Telegram पर भेजी/बनी खबरों के विषय (इन्हें दोबारा जल्दी नहीं)."""
+    return {c for _, c, _ in history(days) if c in CATS}
+
+
+def kaam_news(per_query=2, per_cat=3):
+    """ज़रूरी खबरें, हर विषय से बराबर (पिछले 3 दिन) — हर item में "cat"."""
     out, seen = [], set()
-    for q in KAAM_QUERIES:
-        url = ("https://news.google.com/rss/search?q=" + urllib.parse.quote(q + " when:3d") + "&hl=hi&gl=IN&ceid=IN:hi")
-        try:
-            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-            with urllib.request.urlopen(req, timeout=20) as r:
-                root = ET.fromstring(r.read())
-        except Exception as e:                        # noqa: BLE001
-            print("  काम की खबर नहीं मिली:", q, e)
-            continue
-        k = 0
-        for it in root.iter("item"):
-            title = (it.findtext("title") or "").strip()
-            key = title[:40]
-            if not title or key in seen or BAD.search(title) or CELEB.search(title) or recently_used(title):
-                continue
-            seen.add(key)
-            out.append({"kind": "kaam", "trend": title.rsplit(" - ", 1)[0], "source": title.rsplit(" - ", 1)[-1],
-                        "date": (it.findtext("pubDate") or "")[:16]})
-            k += 1
-            if k >= per_query:
+    for cat, queries in CATS.items():
+        got = 0
+        for q in queries:
+            if got >= per_cat:
                 break
-    return out[:n]
+            url = ("https://news.google.com/rss/search?q=" + urllib.parse.quote(q + " when:3d") + "&hl=hi&gl=IN&ceid=IN:hi")
+            try:
+                req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+                with urllib.request.urlopen(req, timeout=20) as r:
+                    root = ET.fromstring(r.read())
+            except Exception as e:                    # noqa: BLE001
+                print("  खबर नहीं मिली:", q, e)
+                continue
+            k = 0
+            for it in root.iter("item"):
+                title = (it.findtext("title") or "").strip()
+                key = title[:40]
+                if not title or key in seen or BAD.search(title) or CELEB.search(title) or recently_used(title):
+                    continue
+                seen.add(key)
+                out.append({"kind": "kaam", "cat": cat, "trend": title.rsplit(" - ", 1)[0],
+                            "source": title.rsplit(" - ", 1)[-1], "date": (it.findtext("pubDate") or "")[:16]})
+                k += 1
+                got += 1
+                if k >= per_query or got >= per_cat:
+                    break
+    return out
 
 
 def rss_search(query, n=8, days=7):
@@ -228,8 +246,10 @@ def collect_news(feed_file=None):
     c = {"kaam": kaam_news(), "viral": viral_news(), "news": news(feed_file), "insta": manual(),
          "moments": [m for m in moments() if m["kind"] == "moment"],
          "recent": [f"{d} {cat}: {t}" for d, cat, t in history(10)]
-         + [f"(अभी रिजेक्ट हुआ, ये बिल्कुल नहीं) {t}" for t in EXTRA_RECENT]}
+         + [f"(अभी रिजेक्ट हुआ, ये बिल्कुल नहीं) {t}" for t in EXTRA_RECENT],
+         "recent_cats": sorted(recent_cats(2))}
     json.dump(c, open(ROOT / "candidates_today.json", "w", encoding="utf-8"), ensure_ascii=False, indent=2)
+    print(f"  विषय: {sorted({k['cat'] for k in c['kaam']})} | हाल के विषय (अभी नहीं): {c['recent_cats']}")
     print(f"  topics: {len(c['kaam'])} काम की, {len(c['viral'])} वायरल, {len(c['news'])} Trends, {len(c['moments'])} त्योहार")
     return c
 
