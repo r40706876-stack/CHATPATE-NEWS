@@ -441,7 +441,7 @@ def render(ep, segs, chars, out, preview):
     bases = _bases()
     headline = ep.get("breaking") or ep.get("title") or ""
     last_react = max([i for i, s in enumerate(segs) if s.get("react")], default=-1)
-    k, seed, last_screen, prev_im = 0, 0, None, None
+    k, seed, last_screen, prev_im, last_vis = 0, 0, None, None, []
     st_text, st_t, seen = "", 0, set()
     im = bases[True]
     for si, (s, n) in enumerate(zip(segs, counts)):
@@ -450,8 +450,13 @@ def render(ep, segs, chars, out, preview):
         _, name, role = chars[ln["who"]]
         size = (W, H) if shot == "full" else (SW_, SH_)
         vis = list(s.get("vis") or [])
-        if shot in ("split", "full") and not vis:
-            vis = [{"big": ln.get("big") or headline, "sub": ln.get("sub", "")}] if not react else []
+        if shot in ("split", "full") and not vis and not react:
+            if last_vis:                                         # इस line की तस्वीर नहीं मिली: पिछली ही चलती रहे
+                vis = last_vis[::-1]
+            else:
+                vis = [{"big": ln.get("big") or headline, "sub": ln.get("sub", "")}]
+        if vis and isinstance(vis[0], Path):
+            last_vis = vis
         if shot == "full" and not vis:
             shot, size = "split", (SW_, SH_)
         chunk = max(1, int(CUT * FPS))

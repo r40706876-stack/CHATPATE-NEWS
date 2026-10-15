@@ -165,7 +165,7 @@ def _pixabay(q, key, want, india_q):
     return out
 
 
-def candidates(query, k=8):
+def candidates(query, k=8, free=True):
     """एक खोज के लिए उम्मीदवार: पहले "<खोज> india" (भारत वाली), फिर सादी खोज — Pixabay video/photo + Wikimedia +
     Openverse. भारत की पहचान वाली (tags/title में India, राज्य, शहर…) सबसे ऊपर; विदेशी माहौल AI जाँच में कटेगा."""
     if not query:
@@ -178,7 +178,7 @@ def candidates(query, k=8):
     for i, v in enumerate(variants):
         if key:
             out += _pixabay(v, key, want, i == 0)
-        for c in free_photos(v, want):
+        for c in (free_photos(v, want) if free and i == 0 else []):
             c["india"] = bool(INDIA.search(c["tags"] + " " + c.get("credit", "")))
             out.append(c)
     for c in out:
@@ -244,4 +244,92 @@ def pick_checked(items):
         else:
             out.append(None)
             print(f"  ❌ कोई मेल वाला clip नहीं: {items[i][1]} (किरदार ही दिखेगा)")
+    return out
+
+
+# ---------------------------------------------------------------- हर line के लिए 1-2 पक्की तस्वीरें (बड़ा pool)
+def short_queries(lines):
+    """लंबी खोजें ("telecom store customer line") Pixabay पर कम मिलती हैं — हर line के लिए 4 छोटी, ठोस खोजें."""
+    import gemini
+    rows = "\n".join(f"{i + 1}. {ln.get('say', '')}" for i, ln in enumerate(lines))
+    try:
+        res = gemini.json_from(gemini.ask(
+            "भारत की Hindi news reel की हर line के लिए Pixabay/Wikimedia पर खोजने लायक 4 छोटी English खोजें दो "
+            "(हर एक 1-3 शब्द, ठोस चीज़/जगह/लोग जो line की बात सीधे दिखाएँ; लोग/जगह हों तो 'indian' जोड़ो — जैसे "
+            "'indian students exam', 'mobile phone call', 'sim card', 'aadhaar card', 'indian wedding', 'calendar', "
+            "'indian police', 'rupee notes'). भाव/खोखले शब्द नहीं.\n" + rows +
+            '\nसिर्फ़ JSON: {"q": [["..", "..", "..", ".."], ...]}', json_mode=True, temperature=0.3)).get("q", [])
+    except Exception as e:                                # noqa: BLE001
+        print("  छोटी खोजें नहीं बनीं:", repr(e)[:100])
+        res = []
+    out = []
+    for i, ln in enumerate(lines):
+        qs = [str(q) for q in (res[i] if i < len(res) and isinstance(res[i], list) else [])][:4]
+        for q in ln.get("visuals") or []:
+            qs.append(" ".join(str(q).split()[:3]))
+        seen, uniq = set(), []
+        for q in qs:
+            if q.lower() not in seen:
+                seen.add(q.lower())
+                uniq.append(q)
+        out.append(uniq[:6])
+    return out
+
+
+def pick_for_lines(lines, per_line=2, pool=10):
+    """{line_index: [path, ...]} — हर line की सारी खोजों का एक pool, AI एक बार में देखकर हर line के लिए 2 तक चुनता है
+    (भारत की / बात से सीधी जुड़ी; विदेशी पहचान वाली कभी नहीं)."""
+    import gemini
+    want_lines = [i for i, ln in enumerate(lines) if ln.get("_need_vis", True)]
+    queries = short_queries([lines[i] for i in want_lines])
+    pools = []
+    for i, qs in zip(want_lines, queries):
+        cs, seen = [], set()
+        for qi, q in enumerate(qs):
+            for c in candidates(q, k=6, free=qi < 3):
+                if c["id"] not in seen:
+                    seen.add(c["id"])
+                    cs.append(c)
+        cs.sort(key=lambda c: -c["score"])
+        pools.append((i, qs, cs[:pool]))
+    parts = [{"text": "तुम भारत के Hindi news channel के सख़्त photo editor हो. हर line के लिए कुछ तस्वीरें हैं — हर line के "
+                      f"लिए {per_line} तक सबसे अच्छी चुनो (सबसे अच्छी पहले). नियम:\n"
+                      "1. तस्वीर line की बात को सीधे दिखाए. 2. भारत दिखे (भारतीय लोग/कपड़े/सड़क/दफ़्तर/गाँव, Hindi बोर्ड, ₹) "
+                      "या ऐसा close-up जिसमें देश पता न चले (फ़ोन, सिम, कैलेंडर, फ़ाइलें, नोट, हाथ). 3. विदेशी पहचान "
+                      "(गोरे विदेशी लोग, यूरोप-अमेरिका की गलियाँ/इमारतें, बर्फ़ीले पहाड़, डॉलर/यूरो, विदेशी पुलिस) कभी नहीं. "
+                      "4. सुंदर पर बेमेल = नहीं. कोई ठीक न हो तो उस line के लिए [] दो.\n"
+                      'सिर्फ़ JSON: {"picks": [[line 1 के नंबर], [line 2 के नंबर], ...]}'}]
+    for n, (i, qs, cs) in enumerate(pools):
+        parts.append({"text": f"\nLine {n + 1}: \"{lines[i].get('say', '')}\" — {len(cs)} तस्वीरें:"})
+        for j, c in enumerate(cs):
+            try:
+                parts += [{"text": f"तस्वीर {j} [{c['tags'][:50]}]:"}, _thumb_part(c["thumb"])]
+            except Exception:                             # noqa: BLE001
+                parts.append({"text": f"तस्वीर {j}: (नहीं खुली)"})
+    try:
+        picks = gemini.json_from(gemini.ask(parts, json_mode=True, temperature=0.1)).get("picks", [])
+    except Exception as e:                                # noqa: BLE001
+        print("  AI जाँच नहीं हुई, सिर्फ़ भारत वाली + पक्के मेल वाली:", repr(e)[:120])
+        picks = [[j for j, c in enumerate(cs) if c.get("india") and c["match"] >= 1][:per_line] for _, _, cs in pools]
+    CACHE.mkdir(exist_ok=True)
+    out = {}
+    for n, (i, qs, cs) in enumerate(pools):
+        got = []
+        sel = picks[n] if n < len(picks) and isinstance(picks[n], list) else []
+        for j in sel[:per_line]:
+            if not isinstance(j, int) or not 0 <= j < len(cs) or cs[j]["id"] in _used:
+                continue
+            c = cs[j]
+            ext = ".mp4" if c["id"].startswith("v") else ".jpg"
+            try:
+                path = _download(c["url"], CACHE / f"{c['id']}{ext}")
+            except Exception as e:                        # noqa: BLE001
+                print("  download नहीं हुआ:", repr(e)[:80])
+                continue
+            _used.add(c["id"])
+            if c.get("credit"):
+                path.with_suffix(".txt").write_text(c["credit"], encoding="utf-8")
+            got.append(path)
+        out[i] = got
+        print(f"  line {i + 1}: {len(got)} तस्वीर ({', '.join(qs[:4])})" + ("" if got else "  ❌"))
     return out

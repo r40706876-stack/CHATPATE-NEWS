@@ -93,21 +93,17 @@ def prep(script_path):
             source_img(ln["who"], d / "source.png", ln.get("expr", ""))
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(IN / f"audio/{i:02d}.wav"), "-ar", "16000",
                         "-ac", "1", str(d / "talk.wav")], check=True)
-    pairs = []                                                 # हर line के 3 तक visual (खोज), सब एक साथ जाँचे जाएँ
-    for i, ln in enumerate(ep["lines"]):                       # punch वाली lines पर भी — बड़ी screen कभी ख़ाली न रहे
-        qs = ln.get("visuals") or ([ln["visual"]] if ln.get("visual") else [])
-        if ln.get("shot") != "close":                         # close-up पर तस्वीर नहीं दिखती
-            pairs += [(i, j, q) for j, q in enumerate(qs[:3])]
-    if pairs:
-        import shutil
-        import visuals
-        (IN / "broll").mkdir(exist_ok=True)
-        got = visuals.pick_checked([(ep["lines"][i]["say"], q) for i, _, q in pairs])
-        for (i, j, _), path in zip(pairs, got):
-            if path:
-                shutil.copy(path, IN / f"broll/{i}_{j}{Path(path).suffix}")
-                if Path(path).with_suffix(".txt").exists():          # photo वाले का नाम (CC license)
-                    shutil.copy(Path(path).with_suffix(".txt"), IN / f"broll/{i}_{j}.txt")
+    import shutil
+    import visuals                                             # हर line के लिए 2 तक पक्की तस्वीरें (भारत की, बात से जुड़ी)
+    (IN / "broll").mkdir(exist_ok=True)
+    for ln in ep["lines"]:
+        ln["_need_vis"] = ln.get("shot") != "close"
+    got = visuals.pick_for_lines(ep["lines"])
+    for i, paths in got.items():
+        for j, path in enumerate(paths):
+            shutil.copy(path, IN / f"broll/{i}_{j}{Path(path).suffix}")
+            if Path(path).with_suffix(".txt").exists():          # photo वाले का नाम (CC license)
+                shutil.copy(Path(path).with_suffix(".txt"), IN / f"broll/{i}_{j}.txt")
     json.dump(ep, open(IN / "episode.json", "w", encoding="utf-8"), ensure_ascii=False)
     sprite_lips = ep.get("sprite") and ep.get("lips", "sadtalker") == "sprite"
     print(json.dumps([] if sprite_lips else list(range(len(ep["lines"])))))   # sprite वाले होंठ = SadTalker की ज़रूरत नहीं
@@ -119,37 +115,37 @@ def vischeck(script_path):
     import visuals
     from PIL import ImageDraw
     ep = json.load(open(ROOT / script_path, encoding="utf-8"))
-    items = [(ln["say"], q) for ln in ep["lines"] for q in (ln.get("visuals") or [])[:3]]
-    got = visuals.pick_checked(items)
+    got = visuals.pick_for_lines(ep["lines"])
     tiles = []
-    for (say, q), p in zip(items, got):
-        t = Image.new("RGB", (360, 330), (30, 30, 30))
-        if p:
-            if p.suffix == ".mp4":
-                subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", "1", "-i", str(p), "-frames:v", "1",
-                                str(p.with_suffix(".thumb.jpg"))])
-                src = p.with_suffix(".thumb.jpg")
-            else:
+    for i, ln in enumerate(ep["lines"]):
+        paths = got.get(i) or [None]
+        for p in paths:
+            t = Image.new("RGB", (360, 330), (30, 30, 30))
+            if p:
                 src = p
-            try:
-                im = Image.open(src).convert("RGB")
-                im.thumbnail((360, 240))
-                t.paste(im, ((360 - im.width) // 2, 0))
-            except Exception:                         # noqa: BLE001
-                pass
-        d = ImageDraw.Draw(t)
-        f = tt.font(18)
-        d.text((6, 246), say[:34], font=f, fill="white")
-        d.text((6, 272), "खोज: " + q[:30], font=f, fill=(255, 214, 0))
-        cred = p.with_suffix(".txt").read_text(encoding="utf-8")[:36] if p and p.with_suffix(".txt").exists() else (p.name if p else "❌ कोई नहीं (कार्ड लगेगा)")
-        d.text((6, 298), cred, font=f, fill=(180, 220, 255))
-        tiles.append(t)
+                if p.suffix == ".mp4":
+                    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", "1", "-i", str(p), "-frames:v", "1",
+                                    str(p.with_suffix(".thumb.jpg"))])
+                    src = p.with_suffix(".thumb.jpg")
+                try:
+                    im = Image.open(src).convert("RGB")
+                    im.thumbnail((360, 240))
+                    t.paste(im, ((360 - im.width) // 2, 0))
+                except Exception:                     # noqa: BLE001
+                    pass
+            d = ImageDraw.Draw(t)
+            f = tt.font(18)
+            d.text((6, 250), f"{i + 1}. " + ln["say"][:32], font=f, fill="white")
+            d.text((6, 276), ln["say"][32:64], font=f, fill="white")
+            cred = (p.with_suffix(".txt").read_text(encoding="utf-8")[:36] if p.with_suffix(".txt").exists() else p.name) if p else "कोई नहीं — पिछली तस्वीर चलेगी"
+            d.text((6, 302), cred, font=f, fill=(180, 220, 255) if p else (255, 120, 120))
+            tiles.append(t)
     cols = 6
     sheet = Image.new("RGB", (360 * cols, 330 * ((len(tiles) + cols - 1) // cols)), (0, 0, 0))
     for i, t in enumerate(tiles):
         sheet.paste(t, ((i % cols) * 360, (i // cols) * 330))
     sheet.save(ROOT / "visual_check.jpg", quality=85)
-    print(f"{sum(1 for p in got if p)}/{len(got)} तस्वीरें चुनी गईं")
+    print(f"{sum(1 for v in got.values() if v)}/{len(got)} lines को तस्वीर मिली")
 
 
 def _secs(p):
