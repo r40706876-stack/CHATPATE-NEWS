@@ -353,7 +353,15 @@ def write_options(c, n=3):
     weak = [e for e in eps if (e.get("connect") or {}).get("score", 10) < vc.CONNECT_MIN]
     if weak:                                                # कमज़ोर scripts एक बार और तीखी करो, फिर दोबारा जाँचो
         try:
-            again = gemini.json_from(gemini.ask(prompt_sharpen(weak), json_mode=True, temperature=0.85))
+            try:
+                again = gemini.json_from(gemini.ask(prompt_sharpen(weak), json_mode=True, temperature=0.85))
+            except gemini.QuotaOver:
+                raise
+            except Exception as e:                          # noqa: BLE001  Gemini busy (503) — 1 मिनट रुककर एक बार और
+                print("  तीखा करने में Gemini busy, 60s बाद दोबारा:", repr(e)[:80])
+                import time
+                time.sleep(60)
+                again = gemini.json_from(gemini.ask(prompt_sharpen(weak), json_mode=True, temperature=0.85))
             fixed = []
             for old_ep, new_ep in zip(weak, again if isinstance(again, list) else []):
                 try:
@@ -377,6 +385,9 @@ def write_options(c, n=3):
     for e in eps:
         print(f"  {'✅' if e in good else '❌'} connect {(e.get('connect') or {}).get('score', '?')}/10: {e.get('topic')}")
     c["rejected"] += [e for e in eps if e not in good]
+    if not good and eps:                                    # कुछ न भेजने से अच्छा: सबसे अच्छी scripts, नंबर के साथ
+        good = sorted(eps, key=lambda e: -(e.get("connect") or {}).get("score", 0))[:3]
+        print("  कोई 7+ नहीं — फिर भी सबसे अच्छी", len(good), "भेज रहे (नंबर साफ़ दिखेंगे)")
     if not good:
         raise NoViral(c["rejected"])
     return good
