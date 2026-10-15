@@ -15,7 +15,7 @@ on:
         options: [auto, write, check]
         default: auto
 concurrency:
-  group: bakra-${{ (github.event.schedule == '55 2 * * *' || github.event.schedule == '44 13 * * *' || inputs.mode == 'write') && 'write' || 'check' }}
+  group: bakra          # एक समय में एक ही run (वरना दो run एक ही जवाब पर दो video बना देते)
   cancel-in-progress: false
 env:
   MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || ((github.event.schedule == '55 2 * * *' || github.event.schedule == '44 13 * * *') && 'write' || 'check') }}
@@ -44,6 +44,16 @@ jobs:
         run: |
           set -o pipefail
           python run_daily.py "$MODE" 2>&1 | tee last_run.log
+          # GitHub का 15 मिनट वाला schedule अक्सर 1-3 घंटे देर से चलता है — इसलिए scripts भेजने के बाद 40 मिनट तक
+          # यहीं हर मिनट तुम्हारा जवाब देखो; नंबर मिलते ही इसी run में video शुरू
+          if [ "$MODE" = "write" ] && [ -f pending.json ] && grep -q '"topic"' pending.json; then
+            for i in $(seq 1 40); do
+              sleep 60
+              python run_daily.py check 2>&1 | tee -a last_run.log | grep -v "^$" | tail -2
+              [ -f choice.json ] && break
+              grep -q '"topic"' pending.json 2>/dev/null || break
+            done
+          fi
 
       # ---- नीचे वाले कदम सिर्फ़ तब चलते हैं जब तुमने नंबर चुना हो (choice.json) ----
       - if: hashFiles('choice.json') != ''
