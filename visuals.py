@@ -267,6 +267,18 @@ def pick_checked(items):
 
 
 # ---------------------------------------------------------------- हर line के लिए 1-2 पक्की तस्वीरें (बड़ा pool)
+HSTOP = set("है हैं था थे की का के को में से पर और भी तो ही कि जो वो ये यह वह अब कर करें करना किया गया गई रहे रहा रही "
+             "होता होती होगा होगी नहीं सब कुछ एक दो साफ़ कहना कहा कहते लिए साथ बाद पहले उसको उसे इस उस हमारे ज़माने "
+             "वीडियो भेजो जिसका जिसकी".split())
+
+
+def _hindi_keys(text):
+    """Gemini न चले तो: line के 2-3 भारी शब्द (अख़बारों में खोजने के लिए)."""
+    words = [w.strip("।,!?…\"'") for w in text.split()]
+    keys = [w for w in words if len(w) > 3 and w not in HSTOP and re.search(r"[\u0900-\u097F]", w)]
+    return " ".join(keys[:3])
+
+
 def short_queries(lines, topic=""):
     """हर line के लिए: 4 छोटी English खोजें (Pixabay/Wikimedia) + 2 Hindi खबर-खोजें (अख़बारों की असली फ़ोटो के लिए)."""
     import gemini
@@ -294,7 +306,7 @@ def short_queries(lines, topic=""):
             if q.lower() not in seen:
                 seen.add(q.lower())
                 uniq.append(q)
-        hi = [str(q) for q in r.get("hi", [])][:2] or ([topic] if topic else [])
+        hi = [str(q) for q in r.get("hi", [])][:2] or [_hindi_keys(ln.get("say", ""))]
         out.append((uniq[:6], hi))
     return out
 
@@ -306,12 +318,19 @@ def pick_for_lines(lines, per_line=2, pool=12, topic=""):
     want_lines = [i for i, ln in enumerate(lines) if ln.get("_need_vis", True)]
     queries = short_queries([lines[i] for i in want_lines], topic)
     import news_images
-    topic_imgs = news_images.article_images(topic) if topic else []        # इसी खबर के लेखों की असली फ़ोटो
+    topic_imgs, seen_u = [], set()                                         # इसी खबर के लेखों की असली फ़ोटो
+    for tq in dict.fromkeys([topic, " ".join(str(topic).split()[:5])]):
+        if tq:
+            for c in news_images.article_images(tq, n=8):
+                if c["url"] not in seen_u:
+                    seen_u.add(c["url"])
+                    topic_imgs.append(c)
     print(f"  खबर के लेखों से {len(topic_imgs)} फ़ोटो")
     pools = []
     for n, (i, (qs, hi)) in enumerate(zip(want_lines, queries)):
         cs, seen = [], set()
-        news = list(topic_imgs[n::2] + topic_imgs[(n + 1)::2])[:3]        # हर line को लेखों की अलग-अलग फ़ोटो पहले
+        L = len(topic_imgs)                                                # हर line को लेखों की अलग-अलग फ़ोटो पहले
+        news = [topic_imgs[(2 * n + k) % L] for k in range(min(3, L))] if L else []
         for h in hi:                                                       # line की चीज़ वाली अख़बार-फ़ोटो
             if h and h != topic:
                 news += news_images.article_images(h, n=4)
