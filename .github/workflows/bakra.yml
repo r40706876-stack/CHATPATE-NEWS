@@ -41,7 +41,9 @@ jobs:
             git add -A && git commit -m "files unpack" && git push
           fi
       - name: scripts लिखो / जवाब देखो
-        run: python run_daily.py "$MODE"
+        run: |
+          set -o pipefail
+          python run_daily.py "$MODE" 2>&1 | tee last_run.log
 
       # ---- नीचे वाले कदम सिर्फ़ तब चलते हैं जब तुमने नंबर चुना हो (choice.json) ----
       - if: hashFiles('choice.json') != ''
@@ -73,6 +75,7 @@ jobs:
         if: always()
         run: |
           git add -A
+          git add -f last_run.log 2>/dev/null || true
           git diff --cached --quiet && exit 0
           git commit -m "bakra state ($MODE)"
           for i in 1 2 3; do git pull --rebase -X theirs && git push && break; sleep 5; done
