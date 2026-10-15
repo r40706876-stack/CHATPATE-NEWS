@@ -172,11 +172,43 @@ def log_done(script):
                     f.write(line.strip() + "\n")
 
 
+TOON = {c: f"assets/toon/{c}" for c in ("bablu", "chacha", "pinky", "dadi", "ramesh")}
+
+
+def to_studio(script):
+    """चुनी script → 3D studio वाला episode (ऊपर खबर की screen, नीचे studio में किरदार). जिनकी 3D फ़ोटो नहीं, वो None."""
+    who = {l["who"] for l in script.get("lines", [])}
+    have = {c for c in who if (ROOT / TOON.get(c, "x") / "neutral_closed.png").exists()}
+    if who - have:
+        print("  3D फ़ोटो नहीं:", who - have, "— पुराना renderer")
+        return None
+    ep = json.loads(json.dumps(script))
+    ep["sprite"] = {c: TOON[c] for c in have}
+    ep["hook"] = ep.get("hook") or ep.get("hook_text") or ""
+    p = ep.get("poll")
+    if isinstance(p, list) and len(p) >= 2:
+        ep["poll"] = {"q": ep.get("ask") or "आप क्या कहते हो?", "a": str(p[0]), "b": str(p[1])}
+    for ln in ep["lines"]:
+        ln.setdefault("set", "studio" if ln["who"] == "bablu" else "village")
+    ep["production"] = True
+    return ep
+
+
 def do_render(script_path):
     import telegram
+    script = json.load(open(script_path, encoding="utf-8"))
+    if os.getenv("STUDIO", "1") == "1":                    # नया format: talk_episode workflow बनाएगा (~25 मिनट)
+        ep = to_studio(script)
+        if ep:
+            name = f"episodes/daily_{ist().strftime('%Y%m%d_%H%M')}.json"
+            json.dump(ep, open(ROOT / name, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+            (ROOT / "studio_job.txt").write_text(name, encoding="utf-8")
+            log_done(script)
+            telegram.send_text("🎬 3D studio वाला video बन रहा है (ऊपर खबर, नीचे बबलू) — 25-30 मिनट में यहीं आएगा.")
+            print("  studio job:", name)
+            return
     job = ROOT / "out" / ist().strftime("%Y%m%d_%H%M")
     job.mkdir(parents=True, exist_ok=True)
-    script = json.load(open(script_path, encoding="utf-8"))
     shutil.copy(script_path, job / "script.json")
     try:
         import tts

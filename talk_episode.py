@@ -264,7 +264,8 @@ def post_studio(ep):
     secs = reel_studio.render(ep, segs, CHARS, out, ROOT / "preview_episode.jpg")
     print(f"बन गया: {out} ({secs:.1f}s)")
     import telegram
-    telegram.send_video(out, f"🎬 3D demo (नया layout: बड़ी news screen): {ep.get('title', '')}")
+    cap = ep.get("caption_post") if ep.get("production") else f"🎬 3D demo: {ep.get('title', '')}"
+    telegram.send_video(out, cap or ep.get("breaking", ""))
 
 
 def post():

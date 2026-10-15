@@ -28,7 +28,7 @@ env:
 jobs:
   reel:
     runs-on: ubuntu-latest
-    permissions: {contents: write}
+    permissions: {contents: write, actions: write}
     steps:
       - uses: actions/checkout@v4
       - name: zip kholo (sirf pehli baar)
@@ -79,3 +79,12 @@ jobs:
           git diff --cached --quiet && exit 0
           git commit -m "bakra state ($MODE)"
           for i in 1 2 3; do git pull --rebase -X theirs && git push && break; sleep 5; done
+      - name: 3D studio video शुरू करो
+        if: hashFiles('studio_job.txt') != ''
+        env: {GH_TOKEN: "${{ github.token }}"}
+        run: |
+          job=$(cat studio_job.txt)
+          git rm -q --cached studio_job.txt 2>/dev/null || true
+          rm -f studio_job.txt
+          git commit -qm "studio job शुरू" 2>/dev/null && git push -q || true
+          gh workflow run talk_episode.yml -f script="$job"
