@@ -50,39 +50,14 @@ def _download(url, path):
     return path
 
 
-def fetch(query):
-    """('video'|'image', path) या None. एक ही video में एक clip दोबारा नहीं."""
-    key = os.getenv("PIXABAY_API_KEY")
-    if not key or not query:
+def fetch(query, line=""):
+    """('video'|'image', path) या None — पुराने renderer के लिए भी अब वही सख़्त जाँच (भारत + मेल)."""
+    if not query:
         return None
-    CACHE.mkdir(exist_ok=True)
-    q = urllib.parse.quote(re.sub(r"\s+", " ", query).strip()[:90])
-    try:
-        data = _get_json(f"https://pixabay.com/api/videos/?key={key}&q={q}&per_page=15&safesearch=true")
-        for hit in data.get("hits", []):
-            vid = f"v{hit['id']}"
-            if vid in _used or hit.get("duration", 0) < 4:
-                continue
-            v = hit.get("videos", {})
-            pick = next((v[s] for s in ("medium", "small", "large") if v.get(s, {}).get("url")), None)
-            if not pick:
-                continue
-            _used.add(vid)
-            return "video", _download(pick["url"], CACHE / f"{vid}.mp4")
-    except Exception as e:                                # noqa: BLE001
-        print("  Pixabay video नहीं मिला:", query, e)
-    try:
-        data = _get_json(f"https://pixabay.com/api/?key={key}&q={q}&image_type=photo&orientation=vertical"
-                         f"&per_page=15&safesearch=true")
-        for hit in data.get("hits", []):
-            iid = f"i{hit['id']}"
-            if iid in _used:
-                continue
-            _used.add(iid)
-            return "image", _download(hit["largeImageURL"], CACHE / f"{iid}.jpg")
-    except Exception as e:                                # noqa: BLE001
-        print("  Pixabay photo नहीं मिली:", query, e)
-    return None
+    p = pick_checked([(line or query, query)])[0]
+    if not p:
+        return None
+    return ("video" if p.suffix == ".mp4" else "image"), p
 
 
 def plan(lines, topic=""):
@@ -153,20 +128,19 @@ def free_photos(query, want):
     return out
 
 
-def candidates(query, k=7):
-    """Pixabay के पहले 15 video में से tags सबसे ज़्यादा मेल खाने वाले k (thumbnail के साथ)."""
-    import urllib.parse as up
-    key = os.getenv("PIXABAY_API_KEY")
-    if not key or not query:
-        return []
-    q = up.quote(re.sub(r"\s+", " ", query).strip()[:90])
-    try:
-        hits = _get_json(f"https://pixabay.com/api/videos/?key={key}&q={q}&per_page=20&safesearch=true").get("hits", [])
-    except Exception as e:                                # noqa: BLE001
-        print("  Pixabay नहीं मिला:", query, e)
-        return []
-    want = {w for w in query.lower().split() if w not in STOP}
+INDIA = re.compile(r"india|indian|hindu|hindi|bharat|delhi|mumbai|kolkata|chennai|bengal|bihar|uttar|pradesh|rajasthan|"
+                   r"gujarat|punjab|kerala|tamil|karnataka|maharashtra|chhattisgarh|odisha|jharkhand|assam|haryana|"
+                   r"telangana|andhra|varanasi|lucknow|jaipur|patna|bhopal|raipur|sari|saree|rupee|rickshaw|desi", re.I)
+
+
+def _pixabay(q, key, want, india_q):
     out = []
+    qq = urllib.parse.quote(q)
+    try:
+        hits = _get_json(f"https://pixabay.com/api/videos/?key={key}&q={qq}&per_page=20&safesearch=true").get("hits", [])
+    except Exception as e:                                # noqa: BLE001
+        print("  Pixabay video नहीं मिला:", q, repr(e)[:80])
+        hits = []
     for h in hits:
         if h.get("duration", 0) < 4 or f"v{h['id']}" in _used:
             continue
@@ -176,9 +150,9 @@ def candidates(query, k=7):
             continue
         tags = {t.strip() for t in h.get("tags", "").lower().replace(",", " ").split()}
         out.append({"id": f"v{h['id']}", "url": v[size]["url"], "thumb": v[size].get("thumbnail") or "",
-                    "tags": h.get("tags", ""), "match": len(want & tags)})
-    try:                                                  # photos भी (भारत की photos videos से कहीं ज़्यादा हैं)
-        ph = _get_json(f"https://pixabay.com/api/?key={key}&q={q}&image_type=photo&per_page=20&safesearch=true").get("hits", [])
+                    "tags": h.get("tags", ""), "match": len(want & tags), "india": bool(INDIA.search(h.get("tags", "")))})
+    try:
+        ph = _get_json(f"https://pixabay.com/api/?key={key}&q={qq}&image_type=photo&per_page=20&safesearch=true").get("hits", [])
     except Exception:                                     # noqa: BLE001
         ph = []
     for h in ph:
@@ -186,12 +160,33 @@ def candidates(query, k=7):
             continue
         tags = {t.strip() for t in h.get("tags", "").lower().replace(",", " ").split()}
         out.append({"id": f"i{h['id']}", "url": h["largeImageURL"], "thumb": h.get("webformatURL", ""),
-                    "tags": h.get("tags", ""), "match": len(want & tags) - 0.5})   # बराबरी पर video पहले
-    out += free_photos(query, want)
+                    "tags": h.get("tags", ""), "match": len(want & tags) - 0.3,
+                    "india": bool(INDIA.search(h.get("tags", "")))})
+    return out
+
+
+def candidates(query, k=8):
+    """एक खोज के लिए उम्मीदवार: पहले "<खोज> india" (भारत वाली), फिर सादी खोज — Pixabay video/photo + Wikimedia +
+    Openverse. भारत की पहचान वाली (tags/title में India, राज्य, शहर…) सबसे ऊपर; विदेशी माहौल AI जाँच में कटेगा."""
+    if not query:
+        return []
+    key = os.getenv("PIXABAY_API_KEY")
+    q = re.sub(r"\s+", " ", query).strip()[:90]
+    want = {w for w in q.lower().split() if w not in STOP}
+    variants = [q] if INDIA.search(q) else [f"{q} india", q]
+    out = []
+    for i, v in enumerate(variants):
+        if key:
+            out += _pixabay(v, key, want, i == 0)
+        for c in free_photos(v, want):
+            c["india"] = bool(INDIA.search(c["tags"] + " " + c.get("credit", "")))
+            out.append(c)
+    for c in out:
+        c["score"] = c["match"] + (2.5 if c.get("india") else 0)
     seen, uniq = set(), []
-    for c in sorted(out, key=lambda c: -c["match"]):
-        if c["tags"] not in seen and c["match"] >= 0.5:
-            seen.add(c["tags"])
+    for c in sorted(out, key=lambda c: -c["score"]):
+        if c["id"] not in seen and c["tags"] not in seen and (c["match"] >= 0.5 or c.get("india")):
+            seen.update((c["id"], c["tags"]))
             uniq.append(c)
     return uniq[:k]
 
@@ -208,9 +203,14 @@ def pick_checked(items):
     line से मेल खाता है; मेल न हो तो None (तब उस line पर किरदार ही दिखेगा, बेमेल clip नहीं)."""
     import gemini
     cands = [candidates(q) for _, q in items]
-    parts = [{"text": "तुम video editor हो. हर line के लिए कुछ stock video की तस्वीरें हैं. वही चुनो जो line की बात को सीधे "
-                      "दिखाए (भारत/गाँव जैसा माहौल हो तो और अच्छा). थोड़ा भी बेमेल, विदेशी पहचान वाला, या अजीब हो तो -1. "
-                      "असली भारत की photo (Wikimedia/Openverse) मिले और बात से मेल खाए तो उसे पहले चुनो. "
+    parts = [{"text": "तुम भारत के Hindi news channel के सख़्त photo editor हो. हर line के लिए कुछ तस्वीरें हैं. नियम:\n"
+                      "1. खबर भारत की है — तस्वीर में भारत दिखे (भारतीय लोग/कपड़े, Hindi/भारतीय बोर्ड, भारतीय सड़क/गाँव/दफ़्तर, ₹), "
+                      "या सिर्फ़ कोई चीज़ का close-up हो जिसमें देश पता न चले (फ़ोन की screen, कैलेंडर, घड़ी, फ़ाइलें, नोट).\n"
+                      "2. विदेशी पहचान = तुरंत -1: गोरे विदेशी लोग, यूरोप/अमेरिका की गलियाँ-इमारतें, बर्फ़ीले पहाड़, विदेशी पुलिस/वर्दी, "
+                      "अंग्रेज़ी दुकानों वाली सड़कें, डॉलर/यूरो.\n"
+                      "3. तस्वीर line की बात को सीधे दिखाए (परीक्षा = परीक्षा/छात्र/कॉपी; फ़ोन नियम = फ़ोन/कॉल; शादी योजना = भारतीय शादी). "
+                      "सिर्फ़ 'ठीक-ठाक' या खूबसूरत पर बेमेल = -1.\n"
+                      "शक हो तो -1 (तब वहाँ बड़े अक्षरों वाला कार्ड लगेगा, जो बेमेल तस्वीर से बेहतर है).\n"
                       "सिर्फ़ JSON: {\"picks\": [line क्रम में चुनी तस्वीर का नंबर या -1]}"}]
     for i, ((text, q), cs) in enumerate(zip(items, cands)):
         parts.append({"text": f"\nLine {i + 1}: \"{text}\" (खोज: {q}) — {len(cs)} तस्वीरें:"})
@@ -222,8 +222,8 @@ def pick_checked(items):
     try:
         picks = gemini.json_from(gemini.ask(parts, json_mode=True, temperature=0.1)).get("picks", [])
     except Exception as e:                                # noqa: BLE001  Gemini न चले: सिर्फ़ पक्के tag-मेल वाले
-        print("  AI जाँच नहीं हुई, tags से चुन रहे (कम से कम 2 मेल):", repr(e)[:120])
-        picks = [next((j for j, c in enumerate(cs) if c["match"] >= 2), -1) for cs in cands]
+        print("  AI जाँच नहीं हुई, सिर्फ़ भारत वाली + पक्के मेल वाली ले रहे:", repr(e)[:120])
+        picks = [next((j for j, c in enumerate(cs) if c.get("india") and c["match"] >= 1), -1) for cs in cands]
     out = []
     CACHE.mkdir(exist_ok=True)
     for i, cs in enumerate(cands):

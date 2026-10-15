@@ -190,11 +190,8 @@ YEL, RED = (255, 214, 0), (225, 30, 45)
 def shot_for(i, ln):
     """हर line का दृश्य: hook और सबसे तेज़ punch (react वाली) = पूरा close-up; बाकी में बारी-बारी
     split (ऊपर खबर, नीचे किरदार) और full (पूरी screen तस्वीर, कोने में किरदार) — ताकि हर कुछ सेकंड में नज़ारा बदले."""
-    if ln.get("shot") in ("close", "split", "full"):
-        return ln["shot"]
-    if i == 0 or ln.get("react_pose"):
-        return "close"
-    return "full" if i % 2 else "split"
+    # मालिक का फ़ैसला: हमेशा split — ऊपर खबर की screen, नीचे studio में बबलू (close/full बंद)
+    return "split"
 
 
 _cbg = {}
@@ -356,10 +353,10 @@ def _hook(d, text, cy):
         d.text((W / 2, y0 + 66 + r * 92), row, font=f, fill=(0, 0, 0), anchor="mm")
 
 
-def _ask(d, text, t):
+def _ask(d, text, t, y0=1040):
     """बीच में comment वाला सवाल (Instagram पर comments = video आगे बढ़ता है)."""
     a = min(1, t / 5)
-    y = int(1040 + (1 - a) * 120)
+    y = int(y0 + (1 - a) * 120)
     f = tt.font(56)
     rows = rv._wrap(text, f, 900)[:2]
     h = 60 + 70 * len(rows) + 70
@@ -503,7 +500,8 @@ def render(ep, segs, chars, out, preview):
                 strap = k < FPS * 5
                 im = bases[strap].copy()
                 im.paste(sf, (SCR[0], SCR[1]))
-                im.paste(_zoomr(fr, 1.0 + 0.03 * t / n), (0, BAND_Y))
+                zb = (1.0 + 0.10 * min(1, t / 8)) if (ln.get("punch") and not react) else (1.05 if react else 1.0 + 0.03 * t / n)
+                im.paste(_zoomr(fr, zb), (0, BAND_Y))
             d = ImageDraw.Draw(im)
             rv.chrome(d, k)
             if shot == "split":
@@ -537,7 +535,7 @@ def render(ep, segs, chars, out, preview):
                 st_t += 1
                 d = ImageDraw.Draw(im)
             if si == last_react and ep.get("ask"):
-                _ask(d, ep["ask"], t)
+                _ask(d, ep["ask"], t, 300 if shot == "split" else 1040)
             if shot == "split" and not react:
                 ticker(d, ep, k)
             d.rectangle((0, H - 12, int(W * k / total), H), fill=YEL)

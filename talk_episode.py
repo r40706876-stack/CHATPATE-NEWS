@@ -109,8 +109,47 @@ def prep(script_path):
                 if Path(path).with_suffix(".txt").exists():          # photo वाले का नाम (CC license)
                     shutil.copy(Path(path).with_suffix(".txt"), IN / f"broll/{i}_{j}.txt")
     json.dump(ep, open(IN / "episode.json", "w", encoding="utf-8"), ensure_ascii=False)
-    sprite_lips = ep.get("sprite") and ep.get("lips", "sprite") == "sprite"
+    sprite_lips = ep.get("sprite") and ep.get("lips", "sadtalker") == "sprite"
     print(json.dumps([] if sprite_lips else list(range(len(ep["lines"])))))   # sprite वाले होंठ = SadTalker की ज़रूरत नहीं
+
+
+def vischeck(script_path):
+    """सिर्फ़ तस्वीरें चुनकर एक contact sheet (visual_check.jpg) — Telegram पर कुछ नहीं जाता. हर तस्वीर के नीचे
+    line, खोज और स्रोत, ताकि जाँच सकें कि भारत की और बात से जुड़ी है."""
+    import visuals
+    from PIL import ImageDraw
+    ep = json.load(open(ROOT / script_path, encoding="utf-8"))
+    items = [(ln["say"], q) for ln in ep["lines"] for q in (ln.get("visuals") or [])[:3]]
+    got = visuals.pick_checked(items)
+    tiles = []
+    for (say, q), p in zip(items, got):
+        t = Image.new("RGB", (360, 330), (30, 30, 30))
+        if p:
+            if p.suffix == ".mp4":
+                subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", "1", "-i", str(p), "-frames:v", "1",
+                                str(p.with_suffix(".thumb.jpg"))])
+                src = p.with_suffix(".thumb.jpg")
+            else:
+                src = p
+            try:
+                im = Image.open(src).convert("RGB")
+                im.thumbnail((360, 240))
+                t.paste(im, ((360 - im.width) // 2, 0))
+            except Exception:                         # noqa: BLE001
+                pass
+        d = ImageDraw.Draw(t)
+        f = tt.font(18)
+        d.text((6, 246), say[:34], font=f, fill="white")
+        d.text((6, 272), "खोज: " + q[:30], font=f, fill=(255, 214, 0))
+        cred = p.with_suffix(".txt").read_text(encoding="utf-8")[:36] if p and p.with_suffix(".txt").exists() else (p.name if p else "❌ कोई नहीं (कार्ड लगेगा)")
+        d.text((6, 298), cred, font=f, fill=(180, 220, 255))
+        tiles.append(t)
+    cols = 6
+    sheet = Image.new("RGB", (360 * cols, 330 * ((len(tiles) + cols - 1) // cols)), (0, 0, 0))
+    for i, t in enumerate(tiles):
+        sheet.paste(t, ((i % cols) * 360, (i // cols) * 330))
+    sheet.save(ROOT / "visual_check.jpg", quality=85)
+    print(f"{sum(1 for p in got if p)}/{len(got)} तस्वीरें चुनी गईं")
 
 
 def _secs(p):
@@ -212,7 +251,7 @@ def post_studio(ep):
         shot = ln.get("shot") or reel_studio.shot_for(i, ln)
         talk = None
         sprite = (ep.get("sprite") or {}).get(ln["who"])
-        if sprite and ep.get("lips", "sprite") == "sprite":
+        if sprite and ep.get("lips", "sadtalker") == "sprite":
             talk = {"folder": sprite, "expr": ln.get("expr", ""), "wav": IN / f"audio/{i:02d}.wav",
                     "set": ln.get("set") or ("studio" if ln["who"] == "bablu" else "village")}
         segs.append({"ln": ln, "wav": IN / f"audio/{i:02d}.wav", "face": None if talk else (clips[-1] if clips else None),
@@ -271,4 +310,9 @@ def _ring():
 
 
 if __name__ == "__main__":
-    prep(sys.argv[2]) if sys.argv[1] == "prep" else post()
+    if sys.argv[1] == "prep":
+        prep(sys.argv[2])
+    elif sys.argv[1] == "vischeck":
+        vischeck(sys.argv[2])
+    else:
+        post()

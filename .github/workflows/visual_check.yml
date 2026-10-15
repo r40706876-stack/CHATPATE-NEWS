@@ -1,0 +1,28 @@
+# सिर्फ़ तस्वीरों की जाँच: episode की हर line के लिए चुनी तस्वीरें एक sheet में (visual_check.jpg) — Telegram पर कुछ नहीं
+name: visual-check
+on:
+  workflow_dispatch:
+    inputs:
+      script: {description: "episode JSON", default: "episodes/si_v2.json"}
+env:
+  GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+  GEMINI_API_KEY2: ${{ secrets.GEMINI_API_KEY2 }}
+  PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions: {contents: write}
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg libraqm0
+      - run: |
+          /usr/bin/python3 -m pip install -q --break-system-packages numpy scipy pillow
+          set -o pipefail
+          /usr/bin/python3 talk_episode.py vischeck "${{ inputs.script }}" 2>&1 | tee visual_check.log
+      - if: always()
+        run: |
+          git config user.name bot && git config user.email bot@users.noreply.github.com
+          git add -f visual_check.jpg visual_check.log 2>/dev/null || true
+          git diff --cached --quiet && exit 0
+          git commit -m "visual check"
+          for i in 1 2 3; do git pull --rebase -X theirs && git push && break; sleep 5; done
