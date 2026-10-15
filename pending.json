@@ -1,154 +1,149 @@
 {
-  "sent_at": 1792034524,
+  "sent_at": 1792051171,
   "eps": [
     {
-      "topic": "ट्रेन टिकट पर इंश्योरेंस अनिवार्य, काउंटर टिकटों पर भी लागू",
-      "category": "travel",
-      "breaking": "रेलवे काउंटर टिकटों पर भी बीमा अनिवार्य, नियम लागू",
-      "hook_text": "काउंटर टिकट पर भी जबरन बीमा",
-      "source": "Jansatta, Dainik Bhaskar, Jagran, NDTV India, Live Law Hindi, Navbharat Times, ABP News",
+      "topic": "छत्तीसगढ़ में SI-सूबेदार मुख्य परीक्षा फिर टली",
+      "category": "नौकरी/परीक्षा",
+      "breaking": "CGPSC SI मुख्य परीक्षा फिर स्थगित, 7301 अभ्यर्थी परेशान",
+      "hook_text": "SI मुख्य परीक्षा फिर टली",
+      "source": "Amar Ujala, Dainik Bhaskar, News18 Hindi",
       "poll": [
-        "बीमा सही?",
-        "किराया बढ़ा?"
+        "नई तारीख जल्द आएगी?",
+        "कब होगी परीक्षा?"
       ],
       "ticker": [
-        "रेलवे में एक रुपए से कम में दस लाख का कवर",
-        "सुप्रीम कोर्ट के आदेश पर पीआरएस सिस्टम में बदलाव",
-        "विभाग ने कहा यात्रा की सुरक्षा कागज़ों में पक्की"
+        "CGPSC SI मुख्य परीक्षा स्थगित",
+        "7,301 अभ्यर्थी नई तारीख के इंतजार में",
+        "आयोग के पोर्टल पर रखें नजर"
       ],
-      "cast_why": "रेलवे की अव्यवस्था और नियम पर आम यात्री का दर्द दिखाने के लिए bablu, ramesh और chacha",
+      "cast_why": "परीक्षा टलने और छात्रों के लंबे इंतजार की परेशानी दिखाने के लिए बबलू और परेशान छात्र रमेश को चुना गया।",
       "lines": [
         {
           "who": "bablu",
-          "say": "काउंटर से टिकट लिया? अब सरकार सुरक्षा भी अनिवार्य रूप से बेचेगी।",
-          "caption": "काउंटर से टिकट लिया? अब सरकार सुरक्षा भी अनिवार्य रूप से बेचेगी।",
-          "expr": "tanz",
+          "say": "छत्तीसगढ़ में एसआई मुख्य परीक्षा फिर से टाल दी गई है। परीक्षा की तैयारी पूरी है, बस तारीख की तैयारी अधूरी है।",
+          "caption": "छत्तीसगढ़ में SI मुख्य परीक्षा फिर से स्थगित। परीक्षा की तैयारी पूरी, बस तारीख की अधूरी।",
+          "expr": "gambhir",
           "set": "studio",
           "visuals": [
-            "indian railway ticket counter",
-            "train station crowd passengers"
+            "police station entrance india",
+            "students studying library india",
+            "calendar dates red mark"
           ],
-          "visual": "indian railway ticket counter",
+          "card": {
+            "tag": "परीक्षा टली",
+            "big": "7,301 अभ्यर्थी प्रभावित",
+            "sub": "2-4 नवंबर की परीक्षा स्थगित",
+            "icon": "calendar"
+          },
+          "visual": "police station entrance india",
           "scene": "studio",
           "punch": false,
           "insta": ""
         },
         {
+          "who": "bablu",
+          "say": "दो से चार नवंबर तक होने वाली परीक्षा स्थगित होने से सात हजार तीन सौ एक अभ्यर्थी प्रभावित हुए हैं।",
+          "caption": "2 से 4 नवंबर की परीक्षा टली। 7,301 अभ्यर्थी नई तारीख की प्रतीक्षा में।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "exam hall empty chairs",
+            "student reading book stress",
+            "government office notice board"
+          ],
+          "visual": "exam hall empty chairs",
+          "scene": "chacha",
+          "punch": false,
+          "insta": ""
+        },
+        {
           "who": "ramesh",
-          "say": "पहले सिर्फ़ सीट की मारामारी थी, अब दस लाख का बीमा भी जबरन मिलेगा।",
-          "caption": "पहले सिर्फ़ सीट की मारामारी थी, अब 10 लाख का बीमा भी जबरन मिलेगा।",
+          "say": "अभ्यर्थियों से धैर्य बनाए रखने को कहा गया है। धैर्य की कोई अधिकतम आयु सीमा नहीं है।",
+          "caption": "अभ्यर्थियों से धैर्य बनाए रखने को कहा गया है। धैर्य की कोई आयु सीमा नहीं है।",
           "expr": "udaas",
           "set": "village",
           "visuals": [
-            "crowded train platform india",
-            "frustrated passenger ticket"
+            "young candidate sitting depressed",
+            "clock ticking fast on wall",
+            "official exam notification paper"
           ],
           "punch": true,
           "react_pose": "eyeroll",
-          "visual": "crowded train platform india",
+          "stamp": "धैर्य की आयु सीमा!",
+          "visual": "young candidate sitting depressed",
           "scene": "chacha",
           "insta": ""
         },
         {
           "who": "bablu",
-          "say": "सत्ताईस अक्टूबर से काउंटर टिकटों पर भी यात्रा बीमा अनिवार्य होगा, जो एक रुपए से भी कम में मिलेगा।",
-          "caption": "27 अक्टूबर से काउंटर टिकटों पर भी यात्रा बीमा अनिवार्य होगा, जो ₹1 से कम में मिलेगा।",
-          "expr": "tanz",
+          "say": "विभाग ने कहा है, परीक्षा पूरी पारदर्शिता से होगी। फिलहाल पारदर्शी सिर्फ नई तारीख है, जो दिख ही नहीं रही।",
+          "caption": "विभाग का दावा: परीक्षा पूरी पारदर्शिता से होगी। पारदर्शी सिर्फ तारीख है, दिखती नहीं!",
+          "expr": "gambhir",
           "set": "studio",
           "visuals": [
-            "indian train moving track",
-            "railway ticket booking counter"
-          ],
-          "card": {
-            "tag": "नया नियम",
-            "big": "10 लाख कवर",
-            "sub": "27 अक्टूबर से काउंटर पर अनिवार्य",
-            "icon": "train"
-          },
-          "visual": "indian train moving track",
-          "scene": "card",
-          "punch": false,
-          "insta": ""
-        },
-        {
-          "who": "chacha",
-          "say": "हमारे ज़माने में यात्रा भगवान भरोसे थी, अब एक रुपए के प्रीमियम भरोसे चलेगी।",
-          "caption": "हमारे ज़माने में यात्रा भगवान भरोसे थी, अब ₹1 के प्रीमियम भरोसे चलेगी।",
-          "expr": "hasi",
-          "set": "village",
-          "visuals": [
-            "old indian man sitting village",
-            "rural train station india"
+            "magnifying glass over calendar",
+            "empty examination hall india",
+            "cgpsc office building"
           ],
           "punch": true,
-          "react_pose": "thinking",
-          "visual": "old indian man sitting village",
+          "react_pose": "smug",
+          "stamp": "दिखती ही नहीं!",
+          "visual": "magnifying glass over calendar",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "ramesh",
+          "say": "कहते हैं मेहनत का फल मीठा होता है। हमारा फल आयोग के नोटिस बोर्ड पर लटका है।",
+          "caption": "मेहनत का फल मीठा होता है। हमारा फल आयोग के नोटिस बोर्ड पर लटका है।",
+          "expr": "tanz",
+          "set": "village",
+          "visuals": [
+            "laptop loading screen frustrated student",
+            "government website error page",
+            "candidate checking mobile phone"
+          ],
+          "punch": true,
+          "react_pose": "facepalm",
+          "stamp": "नोटिस बोर्ड पर लटका!",
+          "visual": "laptop loading screen frustrated student",
           "scene": "chacha",
           "insta": ""
         },
         {
           "who": "bablu",
-          "say": "सुप्रीम कोर्ट के निर्देश पर रेलवे अपने पीआरएस सिस्टम में ज़रूरी तकनीकी बदलाव करने जा रहा है।",
-          "caption": "सुप्रीम कोर्ट के निर्देश पर रेलवे PRS सिस्टम में तकनीकी बदलाव करने जा रहा है।",
-          "expr": "tanz",
+          "say": "आयोग के आधिकारिक पोर्टल पर नए शेड्यूल की सूचना के लिए नजर रखें या परीक्षा केंद्र से पता करें।",
+          "caption": "CGPSC के आधिकारिक पोर्टल पर नए शेड्यूल की सूचना देखते रहें।",
+          "expr": "gambhir",
           "set": "studio",
           "visuals": [
-            "railway computer reservation system",
-            "train reservation office counter"
+            "person typing laptop government website",
+            "official portal screen",
+            "candidate talking at enquiry window"
           ],
-          "visual": "railway computer reservation system",
+          "visual": "person typing laptop government website",
           "scene": "chacha",
           "punch": false,
           "insta": ""
         },
         {
           "who": "ramesh",
-          "say": "सिस्टम तो बदल देंगे, पर क्या वेटिंग टिकट अपने आप कन्फ़र्म हो पाएगा?",
-          "caption": "सिस्टम तो बदल देंगे, पर क्या वेटिंग टिकट अपने आप कन्फ़र्म हो पाएगा?",
-          "expr": "gussa",
-          "set": "village",
-          "visuals": [
-            "indian passenger holding ticket",
-            "sleeper coach train crowd"
-          ],
-          "punch": true,
-          "react_pose": "facepalm",
-          "visual": "indian passenger holding ticket",
-          "scene": "chacha",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "say": "काम की बात, सत्ताईस अक्टूबर के बाद काउंटर टिकट पर इंश्योरेंस और प्रीमियम विवरण ज़रूर जाँच लें।",
-          "caption": "27 अक्टूबर से काउंटर टिकट खरीदते समय इंश्योरेंस और प्रीमियम विवरण की जाँच करें।",
-          "expr": "hairan",
-          "set": "studio",
-          "visuals": [
-            "person inspecting paper ticket",
-            "railway passenger alert"
-          ],
-          "visual": "person inspecting paper ticket",
-          "scene": "chacha",
-          "punch": false,
-          "insta": ""
-        },
-        {
-          "who": "chacha",
-          "say": "ये वीडियो उसको भेजो, जो जनरल डिब्बे के पायदान पर लटककर भी चैन से सोता है।",
-          "caption": "ये वीडियो उसको भेजो, जो जनरल डिब्बे के पायदान पर लटककर भी चैन से सोता है।",
+          "say": "यह वीडियो उस दोस्त को भेजो, जो चार साल से कह रहा है बस इस बार परीक्षा पक्की है।",
+          "caption": "यह वीडियो उस दोस्त को भेजो, जो 4 साल से कह रहा है- बस इस बार!",
           "expr": "tanz",
           "set": "village",
           "visuals": [
-            "indian village street laughing",
-            "crowded train running india"
+            "police uniform hanging on wall",
+            "two male friends talking casual",
+            "candidate packing exam bag"
           ],
-          "visual": "indian village street laughing",
+          "visual": "police uniform hanging on wall",
           "scene": "studio_end",
           "punch": false,
           "insta": ""
         }
       ],
-      "caption_post": "काउंटर टिकट पर भी 10 लाख का बीमा अनिवार्य, पर सीट का क्या? क्या इससे यात्रियों को राहत मिलेगी? Family group में भेजो। स्रोत: Dainik Bhaskar, Jansatta, NDTV India #IndianRailways #TrainTicket #BakriNews #RailwayInsurance #TravelNews (AI से बने किरदार)",
+      "caption_post": "छत्तीसगढ़ SI परीक्षा फिर टली, अभ्यर्थी परेशान! क्या आयोग को नई तारीख जल्द घोषित करनी चाहिए? Family group में भेजो। स्रोत: Amar Ujala, Dainik Bhaskar #CGPSC #SIExam #ChhattisgarhNews #BakraNews (AI से बने किरदार)",
       "format": "explain",
       "label": "काम की खबर",
       "key_word": "",
@@ -159,17 +154,17 @@
       ],
       "trend": {
         "score": 6,
-        "why": "11 अख़बार/चैनल 2 दिन में, 16 खबरें 7 दिन में"
+        "why": "11 अख़बार/चैनल 2 दिन में, 24 खबरें 7 दिन में"
       },
       "connect": {
-        "score": 7,
-        "why": "आखिरी शेयर हुक (पायदान पर लटकने वाला) और वेटिंग टिकट का तंज एकदम ज़मीनी और सटीक है।",
-        "weak": "एक रुपये से भी कम के प्रीमियम को 'जबरन वसूली' दिखाना थोड़ा बनावटी ड्रामा लगता है।",
-        "fix": "हुक को सवालिया बनाओ: 'काउंटर टिकट पर भी अब कटेगा बीमा का पैसा?' ताकि सीधे यात्री चौंकें।",
+        "score": 8,
+        "why": "परीक्षा टलने के दर्द और सिस्टम की सुस्ती पर बहुत तीखा और सटीक कटाक्ष है।",
+        "weak": "यह मुद्दा सिर्फ़ छत्तीसगढ़ के प्रतियोगी परीक्षा देने वाले युवाओं तक सीमित है।",
+        "fix": "शुरुआत में चार साल से कमरा किराया और राशन भर रहे माँ-बाप के पैसों के बोझ का ज़िक्र जोड़ें।",
         "parts": {
-          "A": 2,
-          "B": 1,
-          "C": 1,
+          "A": 1,
+          "B": 2,
+          "C": 2,
           "D": 1,
           "E": 1,
           "F": 1
@@ -177,153 +172,300 @@
       }
     },
     {
-      "topic": "विभिन्न शहरों में एलपीजी (घरेलू व कमर्शियल) सिलेंडर के दाम",
-      "category": "money",
-      "breaking": "दिल्ली में घरेलू सिलेंडर नौ सौ बयालीस रुपये",
-      "hook_text": "घरेलू और कमर्शियल सिलेंडर के दाम",
-      "source": "ABP News, Hindustan, Business Standard",
+      "topic": "1 नवंबर से अनजान कॉलर का असली नाम दिखाने का नया नियम (CNAP)",
+      "category": "नियम/बैंक",
+      "breaking": "1 नवंबर से अनजान कॉलर का दिखेगा असली KYC नाम",
+      "hook_text": "अनजान कॉलर का असली नाम दिखेगा",
+      "source": "AajTak, ABP News, NDTV India",
       "poll": [
-        "दाम ज़्यादा?",
-        "दाम सामान्य?"
+        "क्या फर्जी कॉल रुकेंगे?",
+        "नया नियम सही है?"
       ],
       "ticker": [
-        "दिल्ली में घरेलू एलपीजी सिलेंडर 942 रुपये दर्ज",
-        "कमर्शियल सिलेंडर की कीमत दिल्ली में 2810 रुपये",
-        "हर शहर में सिलेंडर के रेट अलग-अलग निर्धारित"
+        "1 नवंबर से CNAP नियम होगा लागू",
+        "स्क्रीन पर दिखेगा KYC रजिस्टर्ड असली नाम",
+        "Jio, Airtel, Vi, BSNL यूजर्स पर लागू"
       ],
-      "cast_why": "रसोई गैस के खर्च और ढाबे-बाज़ार के असर को दर्शाने के लिए bablu, chacha और pinky",
+      "cast_why": "तकनीकी नियम को समझाने के लिए बबलू, स्मार्टफोन यूजर पिंकी और सतर्क दादी को लिया गया।",
       "lines": [
         {
           "who": "bablu",
-          "say": "रसोई में आग जलाने से पहले दाम सुनिए, दिल्ली में घरेलू गैस नौ सौ बयालीस रुपये दर्ज हुई।",
-          "caption": "रसोई में गैस जलाने से पहले दाम सुनिए, दिल्ली में घरेलू LPG ₹942 दर्ज हुई।",
-          "expr": "tanz",
+          "say": "एक नवंबर दो हजार छब्बीस से नया नियम लागू होगा। अब अनजान कॉल आने पर स्क्रीन पर कॉलर का असली नाम दिखेगा।",
+          "caption": "1 नवंबर 2026 से नया नियम: अनजान कॉल पर दिखेगा कॉलर का असली KYC नाम।",
+          "expr": "gambhir",
           "set": "studio",
           "visuals": [
-            "lpg gas cylinder kitchen",
-            "gas stove flame cooking"
+            "smartphone caller id display screen",
+            "telecom tower dusk india",
+            "sim card insertion phone"
           ],
-          "visual": "lpg gas cylinder kitchen",
+          "card": {
+            "tag": "नया नियम",
+            "big": "1 नवंबर से CNAP लागू",
+            "sub": "स्क्रीन पर दिखेगा असली नाम",
+            "icon": "phone"
+          },
+          "visual": "smartphone caller id display screen",
+          "scene": "studio",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "कंपनी ने साफ किया है, कॉलर का वही नाम दिखेगा जो केवाईसी में दर्ज है। बाकी फर्जी पहचान अब नहीं दिखेगी।",
+          "caption": "कंपनियों का दावा: वही नाम दिखेगा जो KYC में दर्ज है। बाकी फर्जी पहचान नहीं!",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "kyc document verification india",
+            "person holding smartphone call",
+            "telecom store customer line"
+          ],
+          "punch": true,
+          "react_pose": "smug",
+          "stamp": "असली पहचान!",
+          "visual": "kyc document verification india",
+          "scene": "pinky",
+          "insta": ""
+        },
+        {
+          "who": "pinky",
+          "say": "जिओ, एयरटेल, वीआई और बीएसएनएल के सभी यूजर्स पर यह लागू होगा। अब नाम छुपाने का जमाना गया।",
+          "caption": "Jio, Airtel, Vi और BSNL के सभी ग्राहकों पर लागू होगा नियम।",
+          "expr": "hasi",
+          "set": "village",
+          "visuals": [
+            "girl looking at smartphone screen surprised",
+            "mobile towers rural area",
+            "telecom logos shop banner"
+          ],
+          "visual": "girl looking at smartphone screen surprised",
+          "scene": "pinky",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "dadi",
+          "say": "विशेषज्ञों का कहना है, इस नियम से धोखाधड़ी रुकेगी। धोखाधड़ी करने वालों की अकल नहीं।",
+          "caption": "विशेषज्ञों का कहना है, इस नियम से धोखाधड़ी रुकेगी। धोखाधड़ी करने वालों की अकल नहीं।",
+          "expr": "tanz",
+          "set": "village",
+          "visuals": [
+            "elderly woman holding smartphone smart look",
+            "cyber fraud warning poster",
+            "police taking statement"
+          ],
+          "punch": true,
+          "react_pose": "thinking",
+          "stamp": "अकल नहीं!",
+          "visual": "elderly woman holding smartphone smart look",
+          "scene": "dadi_call",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "अपने सिम कार्ड का केवाईसी सही है या नहीं, यह जानने के लिए ऑपरेटर या नजदीकी दुकान से संपर्क करें।",
+          "caption": "अपने SIM का KYC सही है या नहीं, टेलीकॉम ऑपरेटर से संपर्क कर जांचें।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "sim card registration desk shop",
+            "fingerprint scanner mobile store",
+            "customer talking to shopkeeper"
+          ],
+          "visual": "sim card registration desk shop",
+          "scene": "pinky",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "pinky",
+          "say": "यह वीडियो उस दोस्त को भेजो, जो कॉल ऐप पर अपना नाम 'प्रिंस' लिखकर घूमता है।",
+          "caption": "यह वीडियो उस दोस्त को भेजो, जो ट्रूकॉलर पर अपना नाम 'राजा' लिखता है!",
+          "expr": "hasi",
+          "set": "village",
+          "visuals": [
+            "young boy showing off smartphone",
+            "funny profile photo mobile phone",
+            "girl laughing looking at phone"
+          ],
+          "visual": "young boy showing off smartphone",
+          "scene": "studio_end",
+          "punch": false,
+          "insta": ""
+        }
+      ],
+      "caption_post": "1 नवंबर से फोन पर दिखेगा कॉलर का असली नाम! क्या इससे स्पैम कॉल बंद होंगे? Family group में भेजो। स्रोत: AajTak, NDTV #CNAP #TelecomRules #SIMKYC #BakraNews (AI से बने किरदार)",
+      "format": "explain",
+      "label": "काम की खबर",
+      "key_word": "",
+      "icons": [
+        "₹",
+        "NEWS",
+        "%"
+      ],
+      "trend": {
+        "score": 6,
+        "why": "12 अख़बार/चैनल 2 दिन में, 14 खबरें 7 दिन में"
+      },
+      "connect": {
+        "score": 8,
+        "why": "नियम हर फ़ोन यूज़र की रोज़मर्रा की ज़िंदगी और सुरक्षा से सीधे जुड़ा है।",
+        "weak": "शर्त के मुताबिक मुहर वाली 3 उलटने वाली लाइनें नहीं हैं, हँसी का पंच कमज़ोर है।",
+        "fix": "कंपनी और विशेषज्ञों के दावों पर 'दावा बनाम ज़मीनी सच' वाली कम से कम 3 तीखी लाइनें शामिल करें।",
+        "parts": {
+          "A": 3,
+          "B": 1,
+          "C": 2,
+          "D": 1,
+          "E": 0,
+          "F": 1
+        }
+      }
+    },
+    {
+      "topic": "यूपी में बेटी की शादी हेतु सहायता और शादी अनुदान योजना",
+      "category": "योजना",
+      "breaking": "यूपी में सामूहिक विवाह पर 1 लाख और अनुदान में 20 हजार",
+      "hook_text": "यूपी में बेटी की शादी पर सरकारी मदद",
+      "source": "Dainik Bhaskar, News18 Hindi, ABP News",
+      "poll": [
+        "योजना का लाभ मिला?",
+        "आवेदन की जानकारी है?"
+      ],
+      "ticker": [
+        "सामूहिक विवाह: प्रति जोड़ा 1 लाख का प्रावधान",
+        "दुल्हन के खाते में 64,000 रुपये सीधे",
+        "शादी अनुदान: 20,000 रुपये की वित्तीय मदद"
+      ],
+      "cast_why": "सरकारी योजना और जमीनी प्रक्रिया बताने के लिए बबलू, चाचा और पिंकी का संवाद रखा गया।",
+      "lines": [
+        {
+          "who": "bablu",
+          "say": "उत्तर प्रदेश मुख्यमंत्री सामूहिक विवाह योजना में प्रति जोड़े एक लाख रुपये का प्रावधान है। दुल्हन के खाते में सीधे चौंसठ हजार रुपये आते हैं।",
+          "caption": "UP सामूहिक विवाह योजना: प्रति जोड़े ₹1 लाख प्रावधान, दुल्हन के खाते में ₹64,000।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "indian wedding mandap bride",
+            "passbook entries bank money credit",
+            "mass wedding ceremony india"
+          ],
+          "card": {
+            "tag": "शादी योजना",
+            "big": "₹1 लाख कुल प्रावधान",
+            "sub": "₹64,000 सीधे बैंक खाते में",
+            "icon": "rupee"
+          },
+          "visual": "indian wedding mandap bride",
           "scene": "studio",
           "punch": false,
           "insta": ""
         },
         {
           "who": "chacha",
-          "say": "पहले चूल्हा फूँकते हुए धुआँ निकलता था, अब गैस की पर्ची देखकर होश उड़ते हैं।",
-          "caption": "पहले चूल्हा फूँकते हुए धुआँ निकलता था, अब गैस की पर्ची देखकर होश उड़ते हैं।",
-          "expr": "udaas",
+          "say": "शादी अनुदान योजना के तहत बीस हजार रुपये की सहायता मिलती है। तिरपन हजार से अधिक परिवारों को फायदा मिला है।",
+          "caption": "शादी अनुदान योजना: ₹20,000 की वित्तीय मदद, 53,000+ OBC परिवार लाभान्वित।",
+          "expr": "gambhir",
           "set": "village",
           "visuals": [
-            "traditional mud stove smoke",
-            "worried old man holding wallet"
+            "father giving blessing to daughter",
+            "bank cheque handing over ceremony",
+            "rural wedding decorations"
           ],
-          "punch": true,
-          "react_pose": "facepalm",
-          "visual": "traditional mud stove smoke",
+          "visual": "father giving blessing to daughter",
           "scene": "chacha",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "say": "कमर्शियल उन्नीस किलो वाला सिलेंडर दो हज़ार आठ सौ दस रुपये में बिक रहा है, घरेलू चौदह किलो वाला नौ सौ बयालीस।",
-          "caption": "कमर्शियल 19 किलो सिलेंडर ₹2810 और घरेलू 14 किलो सिलेंडर ₹942 पर दर्ज।",
-          "expr": "tanz",
-          "set": "studio",
-          "visuals": [
-            "blue commercial gas cylinders india",
-            "red domestic lpg cylinder"
-          ],
-          "card": {
-            "tag": "ताज़ा रेट",
-            "big": "₹942 घरेलू",
-            "sub": "कमर्शियल सिलेंडर ₹2810",
-            "icon": "cylinder"
-          },
-          "visual": "blue commercial gas cylinders india",
-          "scene": "card",
           "punch": false,
           "insta": ""
         },
         {
-          "who": "pinky",
-          "say": "चाय वाले भइया ने रेट बढ़ा दिया, बोले कमर्शियल सिलेंडर ख़रीदने में दुकान बिक जाएगी।",
-          "caption": "चाय वाले भइया ने रेट बढ़ा दिया, बोले कमर्शियल सिलेंडर खरीदने में दुकान बिक जाएगी।",
-          "expr": "hairan",
-          "set": "village",
+          "who": "bablu",
+          "say": "सरकार का कहना है, योजना का लाभ तुरंत मिलेगा। तुरंत का मतलब फॉर्म भरने के महीनों बाद है।",
+          "caption": "सरकार का दावा: योजना का लाभ तुरंत मिलेगा। तुरंत का मतलब महीनों बाद है!",
+          "expr": "gambhir",
+          "set": "studio",
           "visuals": [
-            "roadside tea stall boiling milk",
-            "young girl drinking chai"
+            "official stamp on application form",
+            "government clerk typing computer",
+            "queue outside social welfare office"
           ],
           "punch": true,
           "react_pose": "eyeroll",
-          "visual": "roadside tea stall boiling milk",
+          "stamp": "महीनों बाद!",
+          "visual": "official stamp on application form",
+          "scene": "pinky",
+          "insta": ""
+        },
+        {
+          "who": "pinky",
+          "say": "विवाह के नब्बे दिन पहले आवेदन करना जरूरी है। शादी की तारीख तय है, बस सरकारी फाइल की तारीख तय नहीं।",
+          "caption": "विवाह के 90 दिन पहले आवेदन जरूरी। शादी तय है, बस फाइल की तारीख तय नहीं!",
+          "expr": "tanz",
+          "set": "village",
+          "visuals": [
+            "wedding invitation card india",
+            "calendar 90 days count",
+            "young girl writing form"
+          ],
+          "punch": true,
+          "react_pose": "thinking",
+          "stamp": "फाइल की तारीख!",
+          "visual": "wedding invitation card india",
           "scene": "pinky",
           "insta": ""
         },
         {
           "who": "bablu",
-          "say": "विभाग ने साफ़ किया है कि चौदह और उन्नीस किलो सिलेंडर की कीमतें हर शहर में अलग-अलग लागू हैं।",
-          "caption": "विभाग के अनुसार घरेलू और कमर्शियल सिलेंडर के दाम शहरवार अलग-अलग लागू हैं।",
-          "expr": "tanz",
+          "say": "विभाग ने साफ किया है, दलालों से दूर रहें। दलाल दूर हैं, पर बाबू के दस्तखत अभी भी दूर हैं।",
+          "caption": "विभाग की सलाह: दलालों से दूर रहें। दलाल दूर हैं, बाबू के दस्तखत भी दूर हैं!",
+          "expr": "gambhir",
           "set": "studio",
           "visuals": [
-            "lpg delivery truck street india",
-            "gas agency godown cylinders"
+            "warning board outside government office",
+            "official document signature pending",
+            "man waiting outside officer room"
           ],
-          "visual": "lpg delivery truck street india",
+          "punch": true,
+          "react_pose": "smug",
+          "stamp": "दस्तखत दूर!",
+          "visual": "warning board outside government office",
           "scene": "chacha",
-          "punch": false,
           "insta": ""
         },
         {
           "who": "chacha",
-          "say": "रेट शहरवार अलग हैं, पर आम आदमी की जेब कटने का दर्द पूरे देश में एक जैसा है।",
-          "caption": "रेट शहरवार अलग हैं, पर जेब कटने का दर्द पूरे देश में एक जैसा है।",
-          "expr": "hasi",
+          "say": "विवाह के नब्बे दिन पहले आधिकारिक पोर्टल पर ऑनलाइन आवेदन करें या समाज कल्याण विभाग से पता करें।",
+          "caption": "विवाह के 90 दिन पहले आधिकारिक पोर्टल पर ऑनलाइन आवेदन करें।",
+          "expr": "gambhir",
           "set": "village",
           "visuals": [
-            "rural market crowd shopping",
-            "elderly indian man sarcastic smile"
+            "laptop screen showing up government portal",
+            "csc center common service center india",
+            "family discussion village home"
           ],
-          "punch": true,
-          "react_pose": "laugh",
-          "visual": "rural market crowd shopping",
+          "visual": "laptop screen showing up government portal",
           "scene": "chacha",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "say": "काम की बात, डिलीवरी लेते समय अपने शहर का ताज़ा रेट गैस एजेंसी या पोर्टल पर ज़रूर जाँचें।",
-          "caption": "डिलीवरी से पहले गैस एजेंसी या आधिकारिक पोर्टल पर अपने शहर का सही रेट चेक करें।",
-          "expr": "tanz",
-          "set": "studio",
-          "visuals": [
-            "delivery man delivering gas cylinder",
-            "checking official website on mobile phone"
-          ],
-          "visual": "delivery man delivering gas cylinder",
-          "scene": "pinky",
           "punch": false,
           "insta": ""
         },
         {
           "who": "pinky",
-          "say": "ये वीडियो उसको भेजो, जो आधा ख़ाली सिलेंडर उठाकर अंदाज़ा लगाता है कि गैस कितनी बची।",
-          "caption": "ये वीडियो उसको भेजो, जो खाली सिलेंडर उठाकर अंदाज़ा लगाता है कि गैस कितनी बची।",
-          "expr": "tanz",
+          "say": "यह वीडियो उस रिश्तेदार को भेजो, जो हर शादी में सिर्फ खाने की बुराई करने आता है।",
+          "caption": "यह वीडियो उस रिश्तेदार को भेजो, जो शादी में सिर्फ खाना परखने आता है!",
+          "expr": "hasi",
           "set": "village",
           "visuals": [
-            "person shaking domestic gas cylinder",
-            "indian kitchen cooking evening"
+            "wedding buffet food eating people",
+            "annoyed uncle looking at plate",
+            "wedding venue catering counter"
           ],
-          "visual": "person shaking domestic gas cylinder",
+          "visual": "wedding buffet food eating people",
           "scene": "studio_end",
           "punch": false,
           "insta": ""
         }
       ],
-      "caption_post": "दिल्ली में घरेलू सिलेंडर ₹942 और कमर्शियल ₹2810 पर! आपके शहर में आज क्या भाव है? Family group में भेजो। स्रोत: ABP News, Hindustan, Business Standard #LPGCylinder #GasPrice #BakriNews #Inflation #KitchenBudget (AI से बने किरदार)",
+      "caption_post": "यूपी में बेटी की शादी पर मिलेगी ₹1 लाख तक की मदद! क्या आपको इस योजना की जानकारी थी? Family group में भेजो। स्रोत: Dainik Bhaskar, News18 #UPGovernment #ShaadiAnudan #MassWedding #BakraNews (AI से बने किरदार)",
       "format": "explain",
       "label": "काम की खबर",
       "key_word": "",
@@ -334,17 +476,17 @@
       ],
       "trend": {
         "score": 4,
-        "why": "8 अख़बार/चैनल 2 दिन में, 29 खबरें 7 दिन में"
+        "why": "5 अख़बार/चैनल 2 दिन में, 19 खबरें 7 दिन में"
       },
       "connect": {
-        "score": 7,
-        "why": "सिलेंडर हिलाकर गैस नापने वाली लाइन बेहद रिलेटेबल है, जो तुरंत शेयर करवाएगी।",
-        "weak": "हुक में शून्य आकर्षण है—अख़बार की सुस्त हेडिंग की तरह लिखा गया है।",
-        "fix": "हुक ऐसा रखो: 'गैस सिलेंडर फिर महंगा? नया रेट सुनकर चूल्हा जलाना!' जिससे तुरंत कौतूहल जगे।",
+        "score": 8,
+        "why": "सरकारी योजनाओं की लालफीताशाही और 'बाबू' के चक्कर वाली सच्चाई पर ज़बरदस्त मुहर लाइनें हैं।",
+        "weak": "भेजने की वजह (CTA) शादी के खाने से जुड़ी है जो योजना के मुख्य विषय से भटकती है।",
+        "fix": "शेयर करने वाली आख़िरी लाइन को खाने की बुराई के बजाय 'सरकारी दफ़्तर के चक्कर काट रहे' रिश्तेदार पर केंद्रित करें।",
         "parts": {
-          "A": 3,
-          "B": 1,
-          "C": 0,
+          "A": 1,
+          "B": 2,
+          "C": 2,
           "D": 1,
           "E": 1,
           "F": 1
