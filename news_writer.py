@@ -204,6 +204,8 @@ line इसी खबर के अपने शब्द (जैसे इस �
 तस्वीर में दिखाएँ (बड़ी screen पर चलेंगी, सबसे ज़रूरी हिस्सा): चीज़/जगह/काम का नाम लो, भाव नहीं — जैसे
 ["lpg gas cylinder", "woman cooking gas stove india", "gas cylinder delivery truck"]; परीक्षा = ["students writing exam hall",
 "exam result notice board", "calendar pages"]. "sad", "problem", "system" जैसे खोखले शब्द नहीं.
+"photo_hi" = 2 Hindi खबर-खोजें (2-4 शब्द) जिनसे अख़बारों में उसी बात की असली फ़ोटो मिले — जगह/चीज़ का नाम ("बिहार सड़क गड्ढा",
+"ट्रैफिक पुलिस चालान मशीन", "छत्तीसगढ़ परीक्षा केंद्र").
 "react_pose" (line के ठीक बाद 1 सेकंड का reaction) line के मतलब से ही चुनो:
   eyeroll = सरकारी दावा और सच्चाई उलटी ("कोई कमी नहीं है" वाली lines); facepalm = हद दर्जे की बेवकूफ़ी/बार-बार वही गलती;
   laugh = सच इतना बेतुका कि हँसी छूट जाए; thinking = सवाल छोड़ने वाली line; smug = "समझ गए न?" वाला तंज़.
@@ -220,7 +222,7 @@ line इसी खबर के अपने शब्द (जैसे इस �
 [{{"topic": "...", "category": "money/rules/bank/jobs/scheme/tech/travel/civic/other", "breaking": "6-9 शब्द, सच्ची headline",
   "hook_text": "...", "ask": "...", "source": "प्रकाशकों के नाम", "poll": ["2-4 शब्द", "2-4 शब्द"], "ticker": ["...", "...", "..."],
   "cast_why": "इन किरदारों को क्यों चुना, एक लाइन",
-  "lines": [{{"who": "bablu", "say": "...", "caption": "...", "expr": "gambhir", "set": "studio", "visuals": ["...", "...", "..."],
+  "lines": [{{"who": "bablu", "say": "...", "caption": "...", "expr": "gambhir", "set": "studio", "visuals": ["...", "...", "..."], "photo_hi": ["...", "..."],
               "card": {{"tag": "...", "big": "...", "sub": "...", "icon": "rupee"}}}},
             {{"who": "ramesh", "say": "...", "caption": "...", "expr": "udaas", "set": "village", "visuals": ["...", "...", "..."],
               "punch": true, "react_pose": "facepalm", "stamp": "2-4 शब्द"}}],

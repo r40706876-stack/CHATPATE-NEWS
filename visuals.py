@@ -306,7 +306,7 @@ def short_queries(lines, topic=""):
             if q.lower() not in seen:
                 seen.add(q.lower())
                 uniq.append(q)
-        hi = [str(q) for q in r.get("hi", [])][:2] or [_hindi_keys(ln.get("say", ""))]
+        hi = ([str(q) for q in ln.get("photo_hi") or []] + [str(q) for q in r.get("hi", [])])[:2] or [_hindi_keys(ln.get("say", ""))]
         out.append((uniq[:6], hi))
     return out
 
@@ -319,12 +319,19 @@ def pick_for_lines(lines, per_line=2, pool=12, topic=""):
     queries = short_queries([lines[i] for i in want_lines], topic)
     import news_images
     topic_imgs, seen_u = [], set()                                         # इसी खबर के लेखों की असली फ़ोटो
-    for tq in dict.fromkeys([topic, " ".join(str(topic).split()[:5])]):
-        if tq:
-            for c in news_images.article_images(tq, n=8):
-                if c["url"] not in seen_u:
-                    seen_u.add(c["url"])
-                    topic_imgs.append(c)
+    tqs = [topic, " ".join(str(topic).split()[:5])]
+    try:                                                                   # Google News की headlines = और अख़बार, और फ़ोटो
+        import topics
+        tqs += [h for h, _, _ in topics.rss_search(" ".join(str(topic).split()[:6]), n=5)]
+    except Exception:                                                      # noqa: BLE001
+        pass
+    for tq in dict.fromkeys(q for q in tqs if q):
+        for c in news_images.article_images(tq, n=8):
+            if c["url"] not in seen_u:
+                seen_u.add(c["url"])
+                topic_imgs.append(c)
+        if len(topic_imgs) >= 16:
+            break
     print(f"  खबर के लेखों से {len(topic_imgs)} फ़ोटो")
     pools = []
     for n, (i, (qs, hi)) in enumerate(zip(want_lines, queries)):
