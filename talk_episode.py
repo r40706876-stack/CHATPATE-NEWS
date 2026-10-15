@@ -98,7 +98,7 @@ def prep(script_path):
     (IN / "broll").mkdir(exist_ok=True)
     for ln in ep["lines"]:
         ln["_need_vis"] = ln.get("shot") != "close"
-    got = visuals.pick_for_lines(ep["lines"])
+    got = visuals.pick_for_lines(ep["lines"], topic=ep.get("breaking") or ep.get("topic", ""))
     for i, paths in got.items():
         for j, path in enumerate(paths):
             shutil.copy(path, IN / f"broll/{i}_{j}{Path(path).suffix}")
@@ -115,7 +115,7 @@ def vischeck(script_path):
     import visuals
     from PIL import ImageDraw
     ep = json.load(open(ROOT / script_path, encoding="utf-8"))
-    got = visuals.pick_for_lines(ep["lines"])
+    got = visuals.pick_for_lines(ep["lines"], topic=ep.get("breaking") or ep.get("topic", ""))
     tiles = []
     for i, ln in enumerate(ep["lines"]):
         paths = got.get(i) or [None]

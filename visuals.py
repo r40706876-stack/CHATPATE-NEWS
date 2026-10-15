@@ -44,7 +44,9 @@ def _get_json(url):
 def _download(url, path):
     if path.exists() and path.stat().st_size > 10000:
         return path
-    req = urllib.request.Request(url, headers={"User-Agent": UA if "pixabay" not in url else "Mozilla/5.0"})
+    ua = UA if ("wikimedia" in url or "openverse" in url) else \
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Safari/537.36"
+    req = urllib.request.Request(url, headers={"User-Agent": ua, "Referer": "https://www.google.com/"})
     with urllib.request.urlopen(req, timeout=120) as r:
         path.write_bytes(r.read())
     return path
@@ -201,10 +203,18 @@ def candidates(query, k=8, free=True):
 
 
 def _thumb_part(url):
+    """AI को दिखाने के लिए छोटी (320px) JPEG."""
     import base64
-    req = urllib.request.Request(url, headers={"User-Agent": UA})
-    with urllib.request.urlopen(req, timeout=30) as r:
-        return {"inline_data": {"mime_type": "image/jpeg", "data": base64.b64encode(r.read()).decode()}}
+    import io
+    from PIL import Image
+    ua = UA if "wikimedia" in url else "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/124.0 Safari/537.36"
+    req = urllib.request.Request(url, headers={"User-Agent": ua, "Referer": "https://www.google.com/"})
+    with urllib.request.urlopen(req, timeout=25) as r:
+        im = Image.open(io.BytesIO(r.read())).convert("RGB")
+    im.thumbnail((320, 320))
+    buf = io.BytesIO()
+    im.save(buf, "JPEG", quality=80)
+    return {"inline_data": {"mime_type": "image/jpeg", "data": base64.b64encode(buf.getvalue()).decode()}}
 
 
 def pick_checked(items):
@@ -285,26 +295,36 @@ def short_queries(lines):
     return out
 
 
-def pick_for_lines(lines, per_line=2, pool=10):
+def pick_for_lines(lines, per_line=2, pool=12, topic=""):
     """{line_index: [path, ...]} — हर line की सारी खोजों का एक pool, AI एक बार में देखकर हर line के लिए 2 तक चुनता है
     (भारत की / बात से सीधी जुड़ी; विदेशी पहचान वाली कभी नहीं)."""
     import gemini
     want_lines = [i for i, ln in enumerate(lines) if ln.get("_need_vis", True)]
     queries = short_queries([lines[i] for i in want_lines])
+    import news_images
+    topic_imgs = news_images.article_images(topic) if topic else []        # इसी खबर के लेखों की असली फ़ोटो
+    print(f"  खबर के लेखों से {len(topic_imgs)} फ़ोटो")
     pools = []
-    for i, qs in zip(want_lines, queries):
+    for n, (i, qs) in enumerate(zip(want_lines, queries)):
         cs, seen = [], set()
+        news = list(topic_imgs[n::2] + topic_imgs[(n + 1)::2])[:4]        # हर line को लेखों की अलग-अलग फ़ोटो पहले
+        for q in qs[:2]:                                                   # image search: line की ठोस चीज़
+            news += news_images.ddg_images(q if INDIA.search(q) else q + " india", n=4)
+        for c in news:
+            c["score"] = c["match"] + 2.5
         for qi, q in enumerate(qs):
-            for c in candidates(q, k=6, free=qi < 3):
-                if c["id"] not in seen:
-                    seen.add(c["id"])
-                    cs.append(c)
-        cs.sort(key=lambda c: -c["score"])
+            for c in candidates(q, k=4, free=qi < 2):
+                news.append(c)
+        for c in sorted(news, key=lambda c: -c["score"]):
+            if c["id"] not in seen and c["id"] not in _used:
+                seen.add(c["id"])
+                cs.append(c)
         pools.append((i, qs, cs[:pool]))
     head = ("तुम भारत के Hindi news channel के सख़्त photo editor हो. हर line के लिए कुछ तस्वीरें हैं — हर line के "
             f"लिए {per_line} तक सबसे अच्छी चुनो (सबसे अच्छी पहले). नियम:\n"
             "1. तस्वीर line की बात को सीधे दिखाए. 2. भारत दिखे (भारतीय लोग/कपड़े/सड़क/दफ़्तर/गाँव, Hindi बोर्ड, ₹) "
-            "या ऐसा असली close-up जिसमें देश पता न चले (फ़ोन, सिम, कैलेंडर, फ़ाइलें, नोट, हाथ). 3. विदेशी पहचान "
+            "या ऐसा असली close-up जिसमें देश पता न चले (फ़ोन, सिम, कैलेंडर, फ़ाइलें, नोट, हाथ). इसी खबर के अख़बार/"
+            "न्यूज़ site वाली असली फ़ोटो सबसे अच्छी. 3. विदेशी पहचान "
             "(गोरे विदेशी लोग, यूरोप-अमेरिका की गलियाँ/इमारतें, बर्फ़ीले पहाड़, डॉलर/यूरो, विदेशी पुलिस) कभी नहीं. "
             "4. animation, 3D, कार्टून, फूल-पत्ती, सजावटी background, watermark वाली, पुरानी black-and-white/ऐतिहासिक "
             "(अंग्रेज़ों के ज़माने की) तस्वीर = कभी नहीं. "
@@ -331,8 +351,9 @@ def pick_for_lines(lines, per_line=2, pool=10):
             except Exception as e:                        # noqa: BLE001
                 print("  AI जाँच में गड़बड़, दोबारा:", repr(e)[:100])
         if got is None:                                   # AI नहीं चला: बिना देखे कुछ नहीं लगाते — सिर्फ़ भारत वाली पक्की photo
-            print("  AI जाँच नहीं हुई — सिर्फ़ भारत वाली, पक्के मेल वाली photo (video नहीं)")
-            got = [[j for j, c in enumerate(cs) if c.get("india") and c["match"] >= 2 and not c["id"].startswith("v")][:1]
+            print("  AI जाँच नहीं हुई — खबर/search वाली असली फ़ोटो (search engine का मेल), वरना भारत वाली पक्की photo")
+            got = [[j for j, c in enumerate(cs) if c.get("news")][:per_line] or
+                   [j for j, c in enumerate(cs) if c.get("india") and c["match"] >= 2 and not c["id"].startswith("v")][:1]
                    for _, _, cs in batch]
         picks += [got[n] if n < len(got) else [] for n in range(len(batch))]
     CACHE.mkdir(exist_ok=True)
