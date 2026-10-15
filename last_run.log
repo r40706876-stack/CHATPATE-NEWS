@@ -1,1 +1,141 @@
-  चुना: 1
+  विषय: ['अस्पताल/सेहत', 'किसान/गाँव', 'ठगी से बचाव', 'नियम/बैंक', 'नौकरी/परीक्षा', 'पढ़ाई/स्कूल', 'फ़ोन/इंटरनेट', 'महँगाई', 'योजना', 'शहर-कस्बा', 'सफ़र'] | हाल के विषय (अभी नहीं): ['नियम/बैंक', 'नौकरी/परीक्षा', 'महँगाई', 'योजना', 'शहर-कस्बा', 'सफ़र']
+  topics: 33 काम की, 8 वायरल, 5 Trends, 5 त्योहार
+  Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
+    सब models busy — 40s रुककर दोबारा
+    सब models busy — 40s रुककर दोबारा
+    key 1 नहीं चली → key 2
+  Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
+    सब models busy — 40s रुककर दोबारा
+    सब models busy — 40s रुककर दोबारा
+  खबरों की list Gemini ने नहीं ली, अपराध/मौत वाली हटाकर दोबारा: RuntimeError('Gemini nahi chala:\n  gemini-flash-latest: 429 {\n  "error": {\n    "code": 429,\n    "message": "You exceeded your current quota, pleas
+    सब models busy — 40s रुककर दोबारा
+    सब models busy — 40s रुककर दोबारा
+    key 1 नहीं चली → key 2
+    सब models busy — 40s रुककर दोबारा
+    सब models busy — 40s रुककर दोबारा
+Traceback (most recent call last):
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/news_writer.py", line 310, in write_options
+    raw = gemini.ask(prompt_pick(c, n * 2), json_mode=True, temperature=0.4)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/gemini.py", line 68, in ask
+    return _ask(key, prompt, search, json_mode, temperature, prefer, patient)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/gemini.py", line 128, in _ask
+    raise RuntimeError("Gemini nahi chala:\n  " + "\n  ".join(errors))
+RuntimeError: Gemini nahi chala:
+  gemini-flash-latest: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-3.5-flash: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-3.6-flash: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-3.7-flash: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-pro-latest: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-flash-latest: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-flash-latest: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-3.5-flash: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-3.6-flash: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-3.7-flash: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-pro-latest: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-flash-latest: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/run_daily.py", line 347, in <module>
+    main()
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/run_daily.py", line 334, in main
+    do_write(a.feed)
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/run_daily.py", line 88, in do_write
+    eps = news_writer.write_options(topics.collect_news(feed), 3)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/news_writer.py", line 316, in write_options
+    raw = gemini.ask(prompt_pick(c, n * 2), json_mode=True, temperature=0.4)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/gemini.py", line 68, in ask
+    return _ask(key, prompt, search, json_mode, temperature, prefer, patient)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/gemini.py", line 128, in _ask
+    raise RuntimeError("Gemini nahi chala:\n  " + "\n  ".join(errors))
+RuntimeError: Gemini nahi chala:
+  gemini-flash-latest: 503 {
+  "error": {
+    "code": 503,
+    "message": "This model is currently experiencing high demand. Spikes in demand are u
+  gemini-3.5-flash: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-3.6-flash: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-3.7-flash: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-pro-latest: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-flash-latest: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-flash-latest: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-3.5-flash: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-3.6-flash: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-3.7-flash: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-pro-latest: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-flash-latest: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
