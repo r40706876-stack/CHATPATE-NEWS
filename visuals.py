@@ -272,6 +272,15 @@ HSTOP = set("है हैं था थे की का के को मे�
              "वीडियो भेजो जिसका जिसकी".split())
 
 
+def _stems(text):
+    """मोटे शब्दों के 4-अक्षर वाले सिरे (गड्ढे/गड्ढा → गड्ढ), तस्वीर के title से मिलाने के लिए."""
+    out = set()
+    for w in re.findall(r"[\u0900-\u097F]+|[A-Za-z]+", str(text).lower()):
+        if len(w) >= 3 and w not in HSTOP and w not in STOP:
+            out.add(w[:4])
+    return out
+
+
 def _hindi_keys(text):
     """Gemini न चले तो: line के 2-3 भारी शब्द (अख़बारों में खोजने के लिए)."""
     words = [w.strip("।,!?…\"'") for w in text.split()]
@@ -309,6 +318,23 @@ def short_queries(lines, topic=""):
         hi = ([str(q) for q in ln.get("photo_hi") or []] + [str(q) for q in r.get("hi", [])])[:2] or [_hindi_keys(ln.get("say", ""))]
         out.append((uniq[:6], hi))
     return out
+
+
+_hashes = []
+
+
+def _ahash(path):
+    """8x8 average hash (photo के लिए; video पर None)."""
+    try:
+        from PIL import Image
+        if path.suffix == ".mp4":
+            return None
+        im = Image.open(path).convert("L").resize((8, 8))
+        px = list(im.getdata())
+        avg = sum(px) / 64
+        return sum(1 << i for i, v in enumerate(px) if v > avg)
+    except Exception:                                     # noqa: BLE001
+        return None
 
 
 def pick_for_lines(lines, per_line=2, pool=12, topic=""):
@@ -352,8 +378,17 @@ def pick_for_lines(lines, per_line=2, pool=12, topic=""):
         for h in hi:                                                       # line की चीज़ वाली अख़बार-फ़ोटो
             if h and h != ltopic:
                 news += news_images.article_images(h, n=4)
-        for c in news:
-            c["score"] = c["match"] + 2.5
+        lw = _stems(lines[i].get("say", "") + " " + " ".join(hi))           # line की बात
+        tw = _stems(ltopic)                                                # खबर की बात
+        kept = []
+        for c in news:                                                     # title में न line की बात, न खबर की = बेमेल (बैंक छुट्टी, बिजली…)
+            tt_ = _stems(c.get("tags", ""))
+            ml, mt = len(lw & tt_), len(tw & tt_)
+            if ml + mt == 0:
+                continue
+            c["score"] = c["match"] + 2.5 + 1.5 * ml + 0.5 * mt
+            kept.append(c)
+        news = kept
         for qi, q in enumerate(qs):
             for c in candidates(q, k=4, free=qi < 2):
                 news.append(c)
@@ -413,6 +448,12 @@ def pick_for_lines(lines, per_line=2, pool=12, topic=""):
             except Exception as e:                        # noqa: BLE001
                 print("  download नहीं हुआ:", repr(e)[:80])
                 continue
+            h = _ahash(path)
+            if h is not None and any(bin(h ^ x).count("1") <= 6 for x in _hashes):   # वही फ़ोटो दूसरी site से = दोबारा नहीं
+                print("  एक जैसी फ़ोटो छोड़ी:", c.get("credit", ""))
+                continue
+            if h is not None:
+                _hashes.append(h)
             _used.add(c["id"])
             if c.get("credit"):
                 path.with_suffix(".txt").write_text(c["credit"], encoding="utf-8")

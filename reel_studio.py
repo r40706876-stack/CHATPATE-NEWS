@@ -452,8 +452,9 @@ def render(ep, segs, chars, out, preview):
         size = (W, H) if shot == "full" else (SW_, SH_)
         vis = list(s.get("vis") or [])
         if shot in ("split", "full") and not vis and not react:
-            if last_vis:                                         # इस line की तस्वीर नहीं मिली: पिछली ही चलती रहे
-                vis = last_vis[::-1]
+            if cur is not None and not ln.get("big"):           # intro/outro या तस्वीर नहीं मिली: वही दोहराने के बजाय
+                cap = " ".join(str(ln.get("caption") or ln["say"]).split()[:5])     # line के शब्द, पिछली फ़ोटो धुंधली पीछे
+                vis = [{"big": cap}]
             else:
                 vis = [{"big": ln.get("big") or headline, "sub": ln.get("sub", "")}]
         if vis and isinstance(vis[0], Path):
@@ -461,8 +462,8 @@ def render(ep, segs, chars, out, preview):
         if shot == "full" and not vis:
             shot, size = "split", (SW_, SH_)
         chunk = max(1, int(CUT * FPS))
-        if vis and len(vis) * chunk < n:                        # कम तस्वीरें हों तो बारी-बारी, हर 2 सेकंड नया cut
-            chunk = max(1, n // max(1, math.ceil(n / chunk)))
+        if vis and len(vis) * chunk < n:                        # कम तस्वीरें: हर तस्वीर एक ही बार, बराबर समय (A-B-A-B नहीं)
+            chunk = max(1, math.ceil(n / len(vis)))
         face = None
         if s.get("talk"):                                       # हमारी 3 मुँह वाली फ़ोटो से बोलना (साफ़ 3D चेहरा)
             face = talk_frames(s["talk"], shot, n, si)
