@@ -198,6 +198,27 @@ def to_studio(script):
     return ep
 
 
+def do_bulletin(feed=None):
+    """दूसरा format: "दिन भर की खबरें" — 4 खबरें, सिर्फ़ बबलू, हर खबर की असली फ़ोटो. बिना चुनाव के सीधे बनता है."""
+    import gemini
+    import news_writer
+    import telegram
+    import topics
+    try:
+        ep = news_writer.write_bulletin(topics.collect_news(feed), 4)
+    except gemini.QuotaOver:
+        telegram.send_text("⏳ आज 'दिन भर की खबरें' नहीं बनीं — Gemini का free कोटा ख़त्म है (दोपहर ~12:30 पर नया होता है).")
+        return
+    ep["sprite"] = {"bablu": TOON["bablu"]}
+    ep["production"] = True
+    name = f"episodes/bulletin_{ist().strftime('%Y%m%d_%H%M')}.json"
+    json.dump(ep, open(ROOT / name, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    (ROOT / "studio_job.txt").write_text(name, encoding="utf-8")
+    heads = "\n".join(f"{l['item']}. {l.get('headline', '')}" for l in ep["lines"] if l.get("item"))
+    telegram.send_text("📰 आज की 'दिन भर की खबरें' बन रही हैं (25-30 मिनट):\n" + heads)
+    print("  bulletin job:", name)
+
+
 def do_render(script_path):
     import telegram
     script = json.load(open(script_path, encoding="utf-8"))
@@ -295,7 +316,7 @@ def take_user_script():
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("mode", nargs="?", default="auto", choices=["write", "check", "render", "auto"])
+    ap.add_argument("mode", nargs="?", default="auto", choices=["write", "check", "render", "auto", "bulletin"])
     ap.add_argument("--script")
     ap.add_argument("--feed")
     a = ap.parse_args()
@@ -307,6 +328,8 @@ def main():
         return                                          # तुम्हारी script पहले — बाक़ी काम अगली बार
     if mode == "auto":
         mode = "check" if PENDING.exists() else "write"
+    if mode == "bulletin":
+        return do_bulletin(a.feed)
     if mode == "write":
         do_write(a.feed)
     elif mode == "check":

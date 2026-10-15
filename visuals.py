@@ -318,28 +318,39 @@ def pick_for_lines(lines, per_line=2, pool=12, topic=""):
     want_lines = [i for i, ln in enumerate(lines) if ln.get("_need_vis", True)]
     queries = short_queries([lines[i] for i in want_lines], topic)
     import news_images
-    topic_imgs, seen_u = [], set()                                         # इसी खबर के लेखों की असली फ़ोटो
-    tqs = [topic, " ".join(str(topic).split()[:5])]
-    try:                                                                   # Google News की headlines = और अख़बार, और फ़ोटो
-        import topics
-        tqs += [h for h, _, _ in topics.rss_search(" ".join(str(topic).split()[:6]), n=5)]
-    except Exception:                                                      # noqa: BLE001
-        pass
-    for tq in dict.fromkeys(q for q in tqs if q):
-        for c in news_images.article_images(tq, n=8):
-            if c["url"] not in seen_u:
-                seen_u.add(c["url"])
-                topic_imgs.append(c)
-        if len(topic_imgs) >= 16:
-            break
-    print(f"  खबर के लेखों से {len(topic_imgs)} फ़ोटो")
+    _tp = {}
+
+    def topic_pool(tp):
+        """इसी खबर के लेखों की असली फ़ोटो (Google News headlines से और अख़बार)."""
+        if tp in _tp:
+            return _tp[tp]
+        imgs, seen_u = [], set()
+        tqs = [tp, " ".join(str(tp).split()[:5])]
+        try:
+            import topics
+            tqs += [h for h, _, _ in topics.rss_search(" ".join(str(tp).split()[:6]), n=5)]
+        except Exception:                                                  # noqa: BLE001
+            pass
+        for tq in dict.fromkeys(q for q in tqs if q):
+            for c in news_images.article_images(tq, n=8):
+                if c["url"] not in seen_u:
+                    seen_u.add(c["url"])
+                    imgs.append(c)
+            if len(imgs) >= 16:
+                break
+        print(f"  '{str(tp)[:40]}' के लेखों से {len(imgs)} फ़ोटो")
+        _tp[tp] = imgs
+        return imgs
+
     pools = []
     for n, (i, (qs, hi)) in enumerate(zip(want_lines, queries)):
         cs, seen = [], set()
+        ltopic = lines[i].get("topic") or topic                           # bulletin: हर line की अपनी खबर
+        topic_imgs = topic_pool(ltopic) if ltopic else []
         L = len(topic_imgs)                                                # हर line को लेखों की अलग-अलग फ़ोटो पहले
         news = [topic_imgs[(2 * n + k) % L] for k in range(min(3, L))] if L else []
         for h in hi:                                                       # line की चीज़ वाली अख़बार-फ़ोटो
-            if h and h != topic:
+            if h and h != ltopic:
                 news += news_images.article_images(h, n=4)
         for c in news:
             c["score"] = c["match"] + 2.5

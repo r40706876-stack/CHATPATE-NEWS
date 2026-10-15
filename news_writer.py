@@ -433,3 +433,95 @@ class NoViral(RuntimeError):
     def __init__(self, rejected):
         super().__init__("कोई पास नहीं")
         self.rejected = rejected
+
+
+# ================================================================ दूसरा format: "दिन भर की खबरें" (bulletin)
+def prompt_bulletin_pick(c, n=4):
+    return f"""तुम "बकरा न्यूज़" के news editor हो. आज का "दिन भर की खबरें" bulletin बनना है — आज की {n} सबसे बड़ी/चर्चित
+खबरें, जो आम भारतीय परिवार के लिए मायने रखें. मिलाजुला रखो: 1-2 ज़रूरी खबरें (नियम, दाम, मौसम, परीक्षा, योजना —
+इनमें व्यंग्य कम हो तो भी चलेगा) + 2-3 चर्चित/viral खबरें जिन पर व्यंग्य बने. हर खबर अलग विषय से.
+
+आज की खबरें:
+{_cands(c)}
+
+{ALLOWED}
+
+सिर्फ़ JSON: {{"picks": [{{"topic": "खबर 8-12 शब्द", "cat": "विषय", "query": "Google News पर खोज (2-5 शब्द, हिंदी)",
+  "kind": "zaruri या charcha"}}]}}"""
+
+
+def prompt_bulletin(items):
+    blocks = []
+    for i, p in enumerate(items):
+        rows = "\n".join(f"   - {h} ({s}, {d})" for h, s, d in p.get("_heads", [])[:8]) or "   (headline नहीं)"
+        blocks.append(f"{i + 1}. [{p.get('kind', '')}] {p['topic']}\n{rows}")
+    return f"""तुम "बकरा न्यूज़" के anchor बबलू के writer हो — "दिन भर की खबरें" bulletin (30-45 सेकंड, सिर्फ़ बबलू बोलेगा, 3D news
+studio से). हर खबर के नीचे Google News की असली headlines हैं — तथ्य सिर्फ़ इन्हीं से, अंक/तारीख़ हूबहू, अपनी तरफ़ से कुछ नहीं:
+{chr(10).join(blocks)}
+
+{MUHAR}
+
+हर खबर पर बबलू की 1 line (ज़्यादा से ज़्यादा 18 शब्द): पहला वाक्य तथ्य, दूसरा छोटा व्यंग्य वाला वार (मुहर वाली line जैसा).
+"zaruri" खबर में व्यंग्य हल्का रखो (तथ्य साफ़ रहे); "charcha" वाली में तीखा. नेता/पार्टी/धर्म/जाति पर वार नहीं.
+सबसे पहले एक intro line (≤ 10 शब्द, जैसे "आज की चार बड़ी खबरें, बकरा अंदाज़ में!") और आख़िर में एक outro line
+("कौन-सी खबर सबसे बेतुकी लगी? कमेंट में नंबर लिखो!" जैसी).
+हर खबर line में: "headline" (screen पर दिखने वाली 4-8 शब्द की headline, अंक अंकों में), "topic" (ऊपर वाला topic हूबहू),
+"visuals" (3 छोटी English खोजें, जैसे "indian traffic police"), "photo_hi" (2 Hindi खबर-खोजें जिनसे अख़बारों में उसी बात की
+असली फ़ोटो मिले), "expr" (gambhir/hairan/udaas/hasi), "stamp" (2-3 शब्द का ठप्पा, सिर्फ़ charcha वाली पर).
+"say" में अंक शब्दों में, English short form देवनागरी में; "caption" में अंक अंकों में.
+सिर्फ़ JSON:
+{{"title": "दिन भर की खबरें", "hook": "≤ 6 शब्द", "ask": "कौन-सी खबर सबसे बेतुकी लगी?",
+  "intro": {{"say": "...", "caption": "..."}},
+  "items": [{{"headline": "...", "topic": "...", "say": "...", "caption": "...", "expr": "gambhir", "visuals": ["..", "..", ".."],
+             "photo_hi": ["..", ".."], "stamp": ""}}],
+  "outro": {{"say": "...", "caption": "..."}},
+  "caption_post": "एक तीखी लाइन + 'आज की खबरें' + स्रोत + 4-5 hashtags + (AI से बने किरदार)"}}"""
+
+
+def write_bulletin(c, n=4):
+    """दिन की 4 खबरें → talk_episode वाला episode (सिर्फ़ बबलू, studio, हर खबर की अपनी headline और फ़ोटो)."""
+    import viral_check as vc
+    picks = gemini.json_from(gemini.ask(prompt_bulletin_pick(_safe(c), n + 2), json_mode=True, temperature=0.4)).get("picks", [])
+    for p in picks:
+        sc, why, heads = vc.trend(p.get("query") or p["topic"])
+        p["trend"], p["_heads"] = sc, heads
+        print(f"  trend {sc}/10: {p['topic']}")
+    picks = [p for p in picks if p["_heads"]]
+    picks.sort(key=lambda p: -p["trend"])
+    items, cats = [], set()
+    for p in picks:
+        if p.get("cat") not in cats:
+            cats.add(p.get("cat"))
+            items.append(p)
+        if len(items) >= n:
+            break
+    if not items:
+        raise SystemExit("bulletin के लिए खबर नहीं मिली")
+    raw = gemini.json_from(gemini.ask(prompt_bulletin(items), json_mode=True, temperature=0.7))
+    lines = []
+    intro = raw.get("intro") or {}
+    if intro.get("say"):
+        lines.append({"who": "bablu", "set": "studio", "expr": "hasi", "say": intro["say"],
+                      "caption": intro.get("caption") or intro["say"], "headline": "आज की बड़ी खबरें"})
+    its = raw.get("items") or []
+    for k, it in enumerate(its):
+        if not str(it.get("say", "")).strip():
+            continue
+        ln = {"who": "bablu", "set": "studio", "say": it["say"], "caption": it.get("caption") or it["say"],
+              "expr": it.get("expr") if it.get("expr") in EXPRS else "gambhir",
+              "headline": str(it.get("headline") or "")[:60], "topic": it.get("topic") or items[min(k, len(items) - 1)]["topic"],
+              "visuals": [str(v) for v in it.get("visuals") or []][:3], "photo_hi": [str(v) for v in it.get("photo_hi") or []][:2],
+              "item": k + 1, "items_total": len(its)}
+        if it.get("stamp"):
+            ln["stamp"], ln["punch"] = str(it["stamp"])[:22], True
+        lines.append(ln)
+    outro = raw.get("outro") or {}
+    if outro.get("say"):
+        lines.append({"who": "bablu", "set": "studio", "expr": "hasi", "say": outro["say"],
+                      "caption": outro.get("caption") or outro["say"]})
+    ep = {"title": raw.get("title") or "दिन भर की खबरें", "breaking": "दिन भर की खबरें • बकरा अंदाज़ में",
+          "hook": raw.get("hook") or "आज की बड़ी खबरें!", "ask": str(raw.get("ask") or "")[:60],
+          "bulletin": True, "lines": lines, "caption_post": raw.get("caption_post", ""),
+          "ticker": [i.get("headline", "") for i in its if i.get("headline")][:4],
+          "poll": None, "category": "bulletin", "topic": "दिन भर की खबरें: " + " | ".join(p["topic"] for p in items)}
+    return ep

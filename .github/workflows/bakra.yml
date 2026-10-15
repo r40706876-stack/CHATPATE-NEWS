@@ -6,19 +6,20 @@ on:
   schedule:
     - cron: "55 2 * * *"     # scripts लिखो (सुबह ~8:30 IST)
     - cron: "44 13 * * *"    # scripts लिखो (शाम ~7:15 IST)
+    - cron: "4 15 * * *"     # दिन भर की खबरें (रात ~8:35 IST, सीधे video)
     - cron: "*/15 * * * *"   # तुम्हारा जवाब देखो
   workflow_dispatch:
     inputs:
       mode:
         description: "auto = जवाब देखो / नहीं तो नई scripts | write = अभी 3 नई scripts"
         type: choice
-        options: [auto, write, check]
+        options: [auto, write, check, bulletin]
         default: auto
 concurrency:
   group: bakra          # एक समय में एक ही run (वरना दो run एक ही जवाब पर दो video बना देते)
   cancel-in-progress: false
 env:
-  MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || ((github.event.schedule == '55 2 * * *' || github.event.schedule == '44 13 * * *') && 'write' || 'check') }}
+  MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || (github.event.schedule == '4 15 * * *' && 'bulletin' || ((github.event.schedule == '55 2 * * *' || github.event.schedule == '44 13 * * *') && 'write' || 'check')) }}
   MODELS_DIR: models_cache
   GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
   GEMINI_API_KEY2: ${{ secrets.GEMINI_API_KEY2 }}

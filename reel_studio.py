@@ -503,7 +503,7 @@ def render(ep, segs, chars, out, preview):
             else:
                 sf = next(cur) if cur is not None else Image.new("RGB", size)
                 last_screen = sf
-                strap = k < FPS * 5
+                strap = k < FPS * 5 or bool(ep.get("bulletin") and ln.get("headline"))
                 im = bases[strap].copy()
                 im.paste(sf, (SCR[0], SCR[1]))
                 zb = (1.0 + 0.10 * min(1, t / 8)) if (ln.get("punch") and not react) else (1.05 if react else 1.0 + 0.03 * t / n)
@@ -511,9 +511,13 @@ def render(ep, segs, chars, out, preview):
             d = ImageDraw.Draw(im)
             rv.chrome(d, k)
             if shot == "split":
-                d.rounded_rectangle((SCR[0] + 16, SCR[1] + 16, SCR[0] + 196, SCR[1] + 66), 10, fill=RED)
-                d.text((SCR[0] + 106, SCR[1] + 41), "ब्रेकिंग", font=tt.font(34), fill="white", anchor="mm")
-                if k < FPS * 5:
+                badge = f"खबर {ln['item']}/{ln['items_total']}" if ln.get("item") else "ब्रेकिंग"
+                bw = max(180, int(tt.font(34).getlength(badge)) + 40)
+                d.rounded_rectangle((SCR[0] + 16, SCR[1] + 16, SCR[0] + 16 + bw, SCR[1] + 66), 10, fill=RED)
+                d.text((SCR[0] + 16 + bw / 2, SCR[1] + 41), badge, font=tt.font(34), fill="white", anchor="mm")
+                if ep.get("bulletin") and ln.get("headline"):                # bulletin: हर खबर की अपनी headline हमेशा
+                    _headline(d, ln["headline"])
+                elif k < FPS * 5:
                     _headline(d, headline)
             if credit and shot != "close":
                 f = tt.font(22)
@@ -530,7 +534,7 @@ def render(ep, segs, chars, out, preview):
                 if first_seen and t < FPS * 2.5 and shot != "close":
                     rv.name_strap(d, (BAND_Y + 490) if shot == "split" else 1130, name, role)
                 rv.karaoke(d, ln.get("caption") or ln["say"], t / n, 1716 if shot != "close" else 1560)
-            if punchy and not st_text and t >= n * 0.6:
+            if bool(ln.get("punch")) and not react and not st_text and t >= n * 0.6:
                 st_text = ln.get("stamp") or STAMP_OF.get(ln.get("react_pose"), "")
                 st_t = 0
             if st_text:
@@ -540,7 +544,7 @@ def render(ep, segs, chars, out, preview):
                     _stamp(im, st_text, st_t, SCR[2] - 200, SCR[1] + 120)
                 st_t += 1
                 d = ImageDraw.Draw(im)
-            if si == last_react and ep.get("ask"):
+            if ep.get("ask") and (si == last_react or (last_react < 0 and si == len(segs) - 1)):
                 _ask(d, ep["ask"], t, 300 if shot == "split" else 1040)
             if shot == "split" and not react:
                 ticker(d, ep, k)
