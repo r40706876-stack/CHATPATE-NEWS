@@ -246,7 +246,7 @@ def _kinetic(card, bg, t, size):
     d = ImageDraw.Draw(im)
     big, sub = str(card.get("big", "")), str(card.get("sub", ""))
     m = re.search(r"\d[\d,]*", big)
-    if m and t < 20:
+    if m and t < 20 and int(m.group().replace(",", "")) >= 10:     # "1 नवंबर" जैसी तारीख़ नहीं गिनते
         n = int(m.group().replace(",", ""))
         big = big.replace(m.group(), f"{int(n * (1 - (1 - t / 20) ** 3)):,}")
     words = big.split()
@@ -442,6 +442,7 @@ def render(ep, segs, chars, out, preview):
     headline = ep.get("breaking") or ep.get("title") or ""
     last_react = max([i for i, s in enumerate(segs) if s.get("react")], default=-1)
     k, seed, last_screen, prev_im, last_vis = 0, 0, None, None, []
+    cur, credit = None, ""
     st_text, st_t, seen = "", 0, set()
     im = bases[True]
     for si, (s, n) in enumerate(zip(segs, counts)):
@@ -470,8 +471,8 @@ def render(ep, segs, chars, out, preview):
         still = s["still"].resize((W, H)) if shot == "close" else s["still"]
         if not react:
             st_text = ""
-        cur, credit, last = None, "", None
-        if shot != "close" and not vis and last_screen is not None:
+        last = None                                              # cur/credit पिछली line से चलते रहते हैं (reaction पर भी)
+        if shot != "close" and not vis and cur is None:
             cur = _screen_gen({"big": headline}, seed, size, last_screen)
         first_seen = ln["who"] not in seen and not react
         seen.add(ln["who"])
@@ -549,8 +550,6 @@ def render(ep, segs, chars, out, preview):
             wr.stdin.write(im.tobytes())
             k += 1
         prev_im = im
-        if cur is not None:
-            cur.close()
     end = im.filter(ImageFilter.GaussianBlur(8))
     for t in range(tailn):
         im = end.copy()
@@ -563,6 +562,8 @@ def render(ep, segs, chars, out, preview):
         d.rectangle((0, H - 12, int(W * k / total), H), fill=YEL)
         wr.stdin.write(im.tobytes())
         k += 1
+    if cur is not None:
+        cur.close()
     wr.stdin.close()
     wr.wait()
     subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", str(out), "-vf",

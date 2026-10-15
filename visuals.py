@@ -108,6 +108,8 @@ def free_photos(query, want):
             if ii.get("width", 0) < 800 or not ii.get("thumburl"):
                 continue
             title = pg.get("title", "").replace("File:", "").rsplit(".", 1)[0]
+            if re.search(r"\b1[89]\d\d\b", title) and not re.search(r"\b(199|20)\d", title):   # पुरानी ऐतिहासिक फ़ोटो
+                continue
             words = set(re.findall(r"[a-z]+", (title + " " + _clean(meta.get("ImageDescription", {}).get("value"))).lower()))
             out.append({"id": f"w{pg.get('pageid')}", "url": ii["thumburl"], "thumb": ii["thumburl"].replace("1280px", "330px"),
                         "tags": title, "match": len(want & words) - 0.6,
@@ -304,7 +306,8 @@ def pick_for_lines(lines, per_line=2, pool=10):
             "1. तस्वीर line की बात को सीधे दिखाए. 2. भारत दिखे (भारतीय लोग/कपड़े/सड़क/दफ़्तर/गाँव, Hindi बोर्ड, ₹) "
             "या ऐसा असली close-up जिसमें देश पता न चले (फ़ोन, सिम, कैलेंडर, फ़ाइलें, नोट, हाथ). 3. विदेशी पहचान "
             "(गोरे विदेशी लोग, यूरोप-अमेरिका की गलियाँ/इमारतें, बर्फ़ीले पहाड़, डॉलर/यूरो, विदेशी पुलिस) कभी नहीं. "
-            "4. animation, 3D, कार्टून, फूल-पत्ती, सजावटी background, watermark वाली = कभी नहीं. "
+            "4. animation, 3D, कार्टून, फूल-पत्ती, सजावटी background, watermark वाली, पुरानी black-and-white/ऐतिहासिक "
+            "(अंग्रेज़ों के ज़माने की) तस्वीर = कभी नहीं. "
             "5. सुंदर पर बेमेल = नहीं. कोई ठीक न हो तो उस line के लिए [] दो.\n"
             'सिर्फ़ JSON: {"picks": [[पहली line के नंबर], [दूसरी line के नंबर], ...]}')
     picks = []

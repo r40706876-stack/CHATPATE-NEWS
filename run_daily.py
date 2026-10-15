@@ -177,12 +177,16 @@ TOON = {c: f"assets/toon/{c}" for c in ("bablu", "chacha", "pinky", "dadi", "ram
 
 def to_studio(script):
     """चुनी script → 3D studio वाला episode (ऊपर खबर की screen, नीचे studio में किरदार). जिनकी 3D फ़ोटो नहीं, वो None."""
-    who = {l["who"] for l in script.get("lines", [])}
+    ep = json.loads(json.dumps(script))
+    swap = {"dadi": "pinky", "ramesh": "chacha"}              # जिनकी 3D फ़ोटो अभी नहीं, उनकी line नज़दीकी किरदार बोले
+    for ln in ep.get("lines", []):
+        if not (ROOT / TOON.get(ln["who"], "x") / "neutral_closed.png").exists():
+            ln["who"] = swap.get(ln["who"], "bablu")
+    who = {l["who"] for l in ep.get("lines", [])}
     have = {c for c in who if (ROOT / TOON.get(c, "x") / "neutral_closed.png").exists()}
     if who - have:
         print("  3D फ़ोटो नहीं:", who - have, "— पुराना renderer")
         return None
-    ep = json.loads(json.dumps(script))
     ep["sprite"] = {c: TOON[c] for c in have}
     ep["hook"] = ep.get("hook") or ep.get("hook_text") or ""
     p = ep.get("poll")
