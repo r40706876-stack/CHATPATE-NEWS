@@ -277,7 +277,7 @@ def short_queries(lines):
             "(हर एक 1-3 शब्द, ठोस चीज़/जगह/लोग जो line की बात सीधे दिखाएँ; लोग/जगह हों तो 'indian' जोड़ो — जैसे "
             "'indian students exam', 'mobile phone call', 'sim card', 'aadhaar card', 'indian wedding', 'calendar', "
             "'indian police', 'rupee notes'). भाव/खोखले शब्द नहीं.\n" + rows +
-            '\nसिर्फ़ JSON: {"q": [["..", "..", "..", ".."], ...]}', json_mode=True, temperature=0.3)).get("q", [])
+            '\nसिर्फ़ JSON: {"q": [["..", "..", "..", ".."], ...]}', json_mode=True, temperature=0.3, patient=False)).get("q", [])
     except Exception as e:                                # noqa: BLE001
         print("  छोटी खोजें नहीं बनीं:", repr(e)[:100])
         res = []
@@ -342,9 +342,9 @@ def pick_for_lines(lines, per_line=2, pool=12, topic=""):
                 except Exception:                         # noqa: BLE001
                     parts.append({"text": f"तस्वीर {j}: (नहीं खुली)"})
         got = None
-        for attempt in range(2):
+        for attempt in range(1):
             try:
-                got = gemini.json_from(gemini.ask(parts, json_mode=True, temperature=0.1)).get("picks", [])
+                got = gemini.json_from(gemini.ask(parts, json_mode=True, temperature=0.1, patient=False)).get("picks", [])
                 break
             except gemini.QuotaOver:
                 break

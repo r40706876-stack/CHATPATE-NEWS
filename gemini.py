@@ -56,7 +56,7 @@ class QuotaOver(RuntimeError):
     """आज का free कोटा ख़त्म — दोबारा कोशिश बेकार."""
 
 
-def ask(prompt, search=False, json_mode=False, temperature=0.9, prefer=None):
+def ask(prompt, search=False, json_mode=False, temperature=0.9, prefer=None, patient=True):
     """पहली key से; उसका आज का कोटा ख़त्म हो तो अगली key से."""
     ks = keys()
     if not ks:
@@ -65,7 +65,7 @@ def ask(prompt, search=False, json_mode=False, temperature=0.9, prefer=None):
         if key in _dead:                              # इस run में पहले ही ख़त्म मिली — सीधे अगली
             continue
         try:
-            return _ask(key, prompt, search, json_mode, temperature, prefer)
+            return _ask(key, prompt, search, json_mode, temperature, prefer, patient)
         except QuotaOver:
             _dead.add(key)
             if n < len(ks):
@@ -83,7 +83,7 @@ class Blocked(RuntimeError):
     """Gemini ने prompt ही रोक दिया (कोई खबर safety filter में अटकी)."""
 
 
-def _ask(key, prompt, search, json_mode, temperature, prefer):
+def _ask(key, prompt, search, json_mode, temperature, prefer, patient=True):
     parts = prompt if isinstance(prompt, list) else [{"text": prompt}]     # list = text + तस्वीरें (inline_data)
     body = {"contents": [{"parts": parts}], "generationConfig": {"temperature": temperature},
             "safetySettings": [{"category": f"HARM_CATEGORY_{c}", "threshold": "BLOCK_ONLY_HIGH"}     # खबरों में अपराध/हादसे
@@ -96,7 +96,7 @@ def _ask(key, prompt, search, json_mode, temperature, prefer):
     order = [m for m in models(key) if m not in _gone]
     if prefer:                                        # जैसे "pro": पहले वो, फिर बाक़ी
         order = [m for m in order if prefer in m] + [m for m in order if prefer not in m]
-    for rnd in range(2):                              # सीमा लगे तो रुको नहीं, अगला model; सब पर लगे तभी एक बार रुको
+    for rnd in range(2 if patient else 1):            # सीमा लगे तो रुको नहीं, अगला model; सब पर लगे तभी एक बार रुको
         busy, daily_hits = False, 0
         for model in order:
             try:
