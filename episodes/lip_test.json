@@ -1,0 +1,12 @@
+{
+ "title": "lip-sync test",
+ "breaking": "छत्तीसगढ़: SI भर्ती मुख्य परीक्षा फिर टली",
+ "hook": "SI की परीक्षा कब?",
+ "sprite": {"bablu": "assets/toon/bablu"},
+ "lines": [
+  {"who": "bablu", "set": "village", "expr": "hairan", "shot": "close",
+   "say": "एसआई की परीक्षा फिर टल गई! तैयारी पक्की है… तारीख़ कच्ची है।", "caption": "SI परीक्षा फिर टली! तैयारी पक्की… तारीख़ कच्ची!"},
+  {"who": "bablu", "set": "studio", "expr": "gambhir", "punch": true, "react_pose": "eyeroll", "stamp": "धैर्य… उम्र भर!",
+   "say": "अभ्यर्थियों से धैर्य रखने को कहा गया है। धैर्य की कोई आयु सीमा नहीं होती।"}
+ ]
+}

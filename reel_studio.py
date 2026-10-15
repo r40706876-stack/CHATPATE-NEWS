@@ -120,8 +120,8 @@ def source_for(folder, expr, out, full=None, setname=None, shot="band"):
     p = pose_file(folder, expr)
     if p not in _cuts:
         _cuts[p] = cutout(p)
-    if shot == "close":
-        compose_close(_cuts[p], setname).save(out)
+    if shot == "close":                                   # पूरा 1080x1920: चेहरा ~450px, 512 model से साफ़
+        compose_close(_cuts[p], setname, W, H).save(out)
         if full:
             compose_close(_cuts[p], setname, W, H).save(full)
         return
@@ -424,7 +424,7 @@ def render(ep, segs, chars, out, preview):
     bases = _bases()
     headline = ep.get("breaking") or ep.get("title") or ""
     last_react = max([i for i, s in enumerate(segs) if s.get("react")], default=-1)
-    k, seed, last_screen = 0, 0, None
+    k, seed, last_screen, prev_im = 0, 0, None, None
     st_text, st_t, seen = "", 0, set()
     im = bases[True]
     for si, (s, n) in enumerate(zip(segs, counts)):
@@ -465,7 +465,10 @@ def render(ep, segs, chars, out, preview):
                 fr = still
             punchy = shot == "close" and not react
             if shot == "close":
-                z = (1.0 + 0.10 * min(1, t / 6)) if punchy else 1.08
+                if punchy:
+                    z = 1.0 + 0.08 * min(1, t / 8)
+                else:                                     # reaction: ज़िंदा लगे — धीरे-धीरे पास आना + हल्की साँस
+                    z = 1.04 + 0.05 * t / n + 0.006 * math.sin(t / 3)
                 im = _zoomr(fr, z, 0.3).copy()
             elif shot == "full":
                 sf = next(cur)
@@ -516,8 +519,11 @@ def render(ep, segs, chars, out, preview):
             if shot == "split" and not react:
                 ticker(d, ep, k)
             d.rectangle((0, H - 12, int(W * k / total), H), fill=YEL)
+            if react and t < 5 and prev_im is not None:        # बोलने से reaction में झटके से नहीं, घुलकर
+                im = Image.blend(prev_im, im, (t + 1) / 6)
             wr.stdin.write(im.tobytes())
             k += 1
+        prev_im = im
         if cur is not None:
             cur.close()
     end = im.filter(ImageFilter.GaussianBlur(8))

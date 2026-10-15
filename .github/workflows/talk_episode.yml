@@ -7,7 +7,8 @@ on:
       prep: {description: "full / extcrop", default: "full"}
       pose: {description: "सिर हिलने का अंदाज़ 0-45", default: "0"}
       still: {description: "सिर स्थिर (yes = सिर्फ़ होंठ/आँख/चेहरा, शांत anchor जैसा)", default: "yes"}
-      expr: {description: "चेहरे के भाव की ताकत", default: "1.0"}
+      expr: {description: "चेहरे/होंठ के हिलने की ताकत (3D किरदार पर 1.5 अच्छा)", default: "1.5"}
+      size: {description: "SadTalker model: 512 = साफ़ चेहरा (धीमा), 256 = तेज़", default: "512"}
 env:
   GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
   GEMINI_API_KEY2: ${{ secrets.GEMINI_API_KEY2 }}
@@ -43,7 +44,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: "3.10"}
       - uses: actions/cache@v4
-        with: {path: st_models, key: sadtalker-256-v1}
+        with: {path: st_models, key: sadtalker-${{ inputs.size }}-v1}
       - uses: actions/cache@v4
         with: {path: ~/.cache/pip, key: sadtalker-pip-v1}
       - name: SadTalker install
@@ -52,7 +53,7 @@ jobs:
           git clone -q --depth 1 https://github.com/OpenTalker/SadTalker st
           mkdir -p st_models/checkpoints st_models/gfpgan/weights
           cd st_models/checkpoints
-          for f in mapping_00109-model.pth.tar mapping_00229-model.pth.tar SadTalker_V0.0.2_256.safetensors; do
+          for f in mapping_00109-model.pth.tar mapping_00229-model.pth.tar SadTalker_V0.0.2_${{ inputs.size }}.safetensors; do
             test -s $f || wget -q https://github.com/OpenTalker/SadTalker/releases/download/v0.0.2-rc/$f; done
           cd ../gfpgan/weights
           test -s alignment_WFLW_4HG.pth || wget -q https://github.com/xinntao/facexlib/releases/download/v0.1.0/alignment_WFLW_4HG.pth
@@ -70,7 +71,7 @@ jobs:
           cd st
           time python inference.py --driven_audio ../st_in/${{ matrix.line }}/talk.wav \
             --source_image ../st_in/${{ matrix.line }}/source.png --result_dir ../st_out/${{ matrix.line }} \
-            --preprocess ${{ inputs.prep }} --pose_style ${{ inputs.pose }} --expression_scale ${{ inputs.expr }} --cpu --batch_size 4 \
+            --preprocess ${{ inputs.prep }} --pose_style ${{ inputs.pose }} --expression_scale ${{ inputs.expr }} --size ${{ inputs.size }} --cpu --batch_size 4 \
             $( [ "${{ inputs.still }}" = "yes" ] && echo --still )
       - uses: actions/upload-artifact@v4
         with: {name: "clip-${{ matrix.line }}", path: st_out}
