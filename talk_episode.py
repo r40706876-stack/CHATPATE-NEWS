@@ -79,7 +79,15 @@ def prep(script_path):
     for i, ln in enumerate(ep["lines"]):
         d = IN / str(i)
         d.mkdir(parents=True, exist_ok=True)
-        source_img(ln["who"], d / "source.png", ln.get("expr", ""))
+        sprite = (ep.get("sprite") or {}).get(ln["who"])
+        if sprite:                                             # 3D किरदार: नीले studio में, line के भाव वाली फ़ोटो
+            import reel_studio
+            reel_studio.source_for(sprite, ln.get("expr", ""), d / "source.png", d / "still.png")
+            rp = ln.get("react_pose")
+            if rp:
+                reel_studio.source_for(sprite, rp, IN / f"react_{i}_small.png", IN / f"react_{i}.png")
+        else:
+            source_img(ln["who"], d / "source.png", ln.get("expr", ""))
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(IN / f"audio/{i:02d}.wav"), "-ar", "16000",
                         "-ac", "1", str(d / "talk.wav")], check=True)
     pairs = []                                                 # हर line के 1-2 visual (खोज), सब एक साथ जाँचे जाएँ
@@ -187,9 +195,33 @@ def chrome(ep, ln, k, total, broll):
     return o
 
 
+def post_studio(ep):
+    import reel_studio
+    segs = []
+    for i, ln in enumerate(ep["lines"]):
+        clips = sorted((OUT / str(i)).rglob("*.mp4"))
+        still = Image.open(IN / f"{i}/still.png").convert("RGB")
+        vis = sorted((IN / "broll").glob(f"{i}_*")) if (IN / "broll").exists() else []
+        segs.append({"ln": ln, "wav": IN / f"audio/{i:02d}.wav", "face": clips[-1] if clips else None,
+                     "still": still, "vis": vis})
+        if (IN / f"react_{i}.png").exists():
+            rw = IN / f"audio/{i:02d}_r.wav"
+            subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "lavfi", "-i", "anullsrc=r=24000:cl=mono",
+                            "-t", "1.3", "-c:a", "pcm_s16le", str(rw)], check=True)
+            segs.append({"ln": {"who": ln["who"], "say": ""}, "wav": rw, "face": None, "react": True,
+                         "still": Image.open(IN / f"react_{i}.png").convert("RGB"), "vis": []})
+    out = ROOT / "episode.mp4"
+    secs = reel_studio.render(ep, segs, CHARS, out, ROOT / "preview_episode.jpg")
+    print(f"बन गया: {out} ({secs:.1f}s)")
+    import telegram
+    telegram.send_video(out, f"🎬 3D demo (बिना retro): {ep.get('title', '')} — होंठ आवाज़ के साथ, हर line पर भाव")
+
+
 def post():
     import reel_v3
     ep = json.load(open(IN / "episode.json", encoding="utf-8"))
+    if ep.get("sprite"):
+        return post_studio(ep)
     n = len(ep["lines"])
     audio = [IN / f"audio/{i:02d}.wav" for i in range(n)]
     lens = [_secs(a) for a in audio]
