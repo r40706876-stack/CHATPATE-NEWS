@@ -179,8 +179,10 @@ def prompt_write(packs):
 
 {CASTING}
 
-हर खबर का ढाँचा — **पूरी script "मुहर वाली lines" से बनी** (मालिक का हुक्म: पूरी script ऐसी ही हो). 30-40 सेकंड,
-6-9 lines, कुल 70-120 शब्द:
+हर खबर का ढाँचा — **पूरी script "मुहर वाली lines" से बनी** (मालिक का हुक्म: पूरी script ऐसी ही हो). Reels पर लोग
+तेज़ी से आगे बढ़ते हैं, इसलिए छोटी और कसी हुई: 20-28 सेकंड, सिर्फ़ 5-6 lines, कुल 55-85 शब्द; bablu के साथ कम से कम
+1 और किरदार (एक ही आवाज़ लगातार उबाऊ लगती है). नमूनों वाली lines हूबहू या थोड़ा बदलकर लिखीं तो script रद्द — हर मुहर
+line इसी खबर के अपने शब्द (जैसे इस खबर का "पोर्टल", "अनुदान", "KYC") को पकड़कर नई बनाओ.
 1. पहली line = hook: सबसे तीखी मुहर वाली line (≤ 16 शब्द), "नमस्कार" नहीं. उसका छोटा रूप "hook_text" (3-7 शब्द).
 2. असली तथ्य भी मुहर के पहले वाक्य में ही आएँ: "[तथ्य, अंक/तारीख़ हूबहू]। [उसी का उलटा]" — जैसे
    "गोरखपुर में गोभी सौ रुपये किलो पहुँच गई है। अब गोभी सब्ज़ी नहीं, संपत्ति है।" ज़रूरत हो तो उसी line पर "card".
@@ -188,7 +190,10 @@ def prompt_write(packs):
    1-2 lines दूसरे किरदार अपनी नज़र से उसी ढाँचे में ("कहते हैं मेहनत का फल मीठा होता है। हमारा फल अभी… परीक्षा की तारीख़
    पर लटका है।"). हर line "punch": true; आँख घुमाने/ठहाके वाला "react_pose" सिर्फ़ 2-3 सबसे तेज़ lines पर.
 4. आख़िर से पहले एक काम की बात (सिर्फ़ तथ्यों में हो तो) — वो भी मुहर ढाँचे में अच्छा.
-5. आख़िरी line: "ये वीडियो उसको भेजो, जो…" — किसी पहचाने जाने वाले इंसान का चुटीला चित्रण.
+5. आख़िरी line: "ये वीडियो उसको भेजो, जो…" — इसी खबर से जुड़ा, पहचाने जाने वाला इंसान (विषय से भटको मत), और हो
+   सके तो पहली line के शब्द पर लौटो ताकि video घूमकर शुरुआत से जुड़े (लोग दोबारा देखें).
+"ask" = बीच में comment बटोरने वाला छोटा सवाल (≤ 9 शब्द), जिसका जवाब हर कोई अपने अनुभव से दे सके — जैसे
+"आपकी कौन-सी परीक्षा सबसे ज़्यादा बार टली?", "आपके गाँव में बिजली कितने घंटे आती है?".
 हर line में: "expr" (भाव: gambhir / hasi / tanz / gussa / hairan / udaas — मुहर वाली line पर ज़्यादातर "gambhir":
 बिल्कुल गंभीर anchor चेहरा, सीधा कैमरे में; मज़ा बात में हो, चेहरे में नहीं), "set" (bablu के तथ्य/anchor वाले = "studio";
 सवाल-जवाब, भड़ास, गाँव की बात = "village"), "visuals" = 3 अलग English खोज जो उस line की बात को screen पर ठोस, असली
@@ -209,7 +214,7 @@ def prompt_write(packs):
 
 सिर्फ़ JSON — हर खबर का एक episode:
 [{{"topic": "...", "category": "money/rules/bank/jobs/scheme/tech/travel/civic/other", "breaking": "6-9 शब्द, सच्ची headline",
-  "hook_text": "...", "source": "प्रकाशकों के नाम", "poll": ["2-4 शब्द", "2-4 शब्द"], "ticker": ["...", "...", "..."],
+  "hook_text": "...", "ask": "...", "source": "प्रकाशकों के नाम", "poll": ["2-4 शब्द", "2-4 शब्द"], "ticker": ["...", "...", "..."],
   "cast_why": "इन किरदारों को क्यों चुना, एक लाइन",
   "lines": [{{"who": "bablu", "say": "...", "caption": "...", "expr": "gambhir", "set": "studio", "visuals": ["...", "...", "..."],
               "card": {{"tag": "...", "big": "...", "sub": "...", "icon": "rupee"}}}},
@@ -244,6 +249,8 @@ def finish(ep, strict=True):
     ep.setdefault("icons", ["₹", "NEWS", "%"])
     ep["source"] = ep.get("source") or "Google News"
     ep["ticker"] = [str(t)[:80] for t in (ep.get("ticker") or [])][:4]
+    ep["ask"] = str(ep.get("ask") or "")[:60]
+    ep["hook"] = ep.get("hook") or ep.get("hook_text") or ""
     ep["lines"] = [l for l in ep["lines"] if l.get("who") in writer.WHO and str(l.get("say", "")).strip()]
     for ln in ep["lines"]:
         cap = str(ln.get("caption") or "")
@@ -344,6 +351,7 @@ def write_options(c, n=3):
         ep["trend"] = best["trend"]
         ep["category"] = best.get("cat") or ep.get("category", "other")
     vc.connect(eps)                                         # दूसरी जाँच: लोग जुड़ेंगे? (Gemini 1 call)
+    penalize(eps)
     weak = [e for e in eps if (e.get("connect") or {}).get("score", 10) < vc.CONNECT_MIN]
     if weak:                                                # कमज़ोर scripts एक बार और तीखी करो, फिर दोबारा जाँचो
         try:
@@ -358,6 +366,7 @@ def write_options(c, n=3):
                     print("  तीखी script नहीं बनी:", e)
             if fixed:
                 vc.connect([ne for _, ne in fixed])
+                penalize([ne for _, ne in fixed])
                 for old_ep, ne in fixed:
                     if (ne.get("connect") or {}).get("score", 0) > (old_ep.get("connect") or {}).get("score", 0):
                         eps[eps.index(old_ep)] = ne
@@ -373,6 +382,33 @@ def write_options(c, n=3):
     if not good:
         raise NoViral(c["rejected"])
     return good
+
+
+def copied(ep):
+    """नमूनों (GOLD_LINES) से हूबहू/थोड़ा बदलकर उठाई lines."""
+    import difflib
+    out = []
+    for ln in ep.get("lines", []):
+        for g in GOLD_LINES:
+            if difflib.SequenceMatcher(None, ln.get("say", ""), g).ratio() > 0.7:
+                out.append(ln["say"])
+                break
+    return out
+
+
+def penalize(eps):
+    """जज नरम न रहे: मुहर वाली नई lines कम (E=0) हों तो ज़्यादा से ज़्यादा 6; नमूना उठाया तो 5 — फिर ये दोबारा लिखी जाती हैं."""
+    for ep in eps:
+        c = ep.get("connect")
+        if not c:
+            continue
+        cp = copied(ep)
+        if cp:
+            c["score"] = min(c["score"], 5)
+            c["weak"] = "नमूने की line उठाई: " + cp[0][:50]
+            c["fix"] = "इस खबर के अपने शब्द को पकड़कर बिल्कुल नई मुहर वाली line लिखो, नमूने मत दोहराओ"
+        elif c.get("parts", {}).get("E", 1) == 0:
+            c["score"] = min(c["score"], 6)
 
 
 class NoViral(RuntimeError):

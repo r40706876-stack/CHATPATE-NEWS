@@ -1,0 +1,26 @@
+{
+ "title": "SI भर्ती फिर टली",
+ "breaking": "छत्तीसगढ़: SI भर्ती मुख्य परीक्षा फिर टली",
+ "hook": "SI की परीक्षा कब?",
+ "ask": "आपकी कौन-सी परीक्षा सबसे ज़्यादा बार टली?",
+ "sprite": {"bablu": "assets/toon/bablu", "chacha": "assets/toon/chacha"},
+ "poll": {"q": "आपका कोई फ़ॉर्म अटका है?", "a": "हाँ, सालों से", "b": "अभी तो भरा है"},
+ "ticker": ["नई तारीख़ की घोषणा की तारीख़ भी जल्द", "अभ्यर्थियों के लिए 'इंतज़ार कोचिंग' शुरू", "कैलेंडर कंपनियों ने भर्ती विभाग का आभार जताया"],
+ "lines": [
+  {"who": "bablu", "set": "village", "expr": "hairan", "shot": "close",
+   "say": "एसआई की परीक्षा फिर टल गई! तैयारी पक्की है… तारीख़ कच्ची है।", "caption": "SI परीक्षा फिर टली! तैयारी पक्की… तारीख़ कच्ची!"},
+  {"who": "bablu", "set": "studio", "expr": "gambhir", "shot": "split",
+   "say": "छत्तीसगढ़ में सात हज़ार तीन सौ एक अभ्यर्थी, फिर से नई तारीख़ के इंतज़ार में हैं।", "caption": "छत्तीसगढ़: 7,301 अभ्यर्थी फिर नई तारीख़ के इंतज़ार में",
+   "visuals": ["police recruitment india", "exam hall students writing", "students studying books india"], "big": "7,301 अभ्यर्थी इंतज़ार में"},
+  {"who": "bablu", "set": "studio", "expr": "gambhir", "punch": true, "react_pose": "eyeroll", "stamp": "धैर्य… उम्र भर!",
+   "say": "अभ्यर्थियों से धैर्य रखने को कहा गया है। धैर्य की कोई आयु सीमा नहीं होती।"},
+  {"who": "chacha", "set": "village", "expr": "tanz", "shot": "full",
+   "say": "हमारे ज़माने में परीक्षा साल में एक बार होती थी। अब साल में एक बार टलती है।",
+   "visuals": ["old calendar pages", "calendar pages turning", "empty exam hall chairs"]},
+  {"who": "chacha", "set": "village", "expr": "gambhir", "punch": true, "react_pose": "laugh", "stamp": "दिखती ही नहीं!",
+   "say": "विभाग कहता है, सब पारदर्शी है। इतना पारदर्शी… कि तारीख़ किसी को दिखती ही नहीं।"},
+  {"who": "bablu", "set": "studio", "expr": "hasi", "shot": "split",
+   "say": "ये वीडियो उसे भेजो, जिसकी तैयारी पक्की है… और तारीख़ अब भी कच्ची।", "caption": "भेजो उसे जिसकी तैयारी पक्की… तारीख़ कच्ची!",
+   "visuals": ["young man smartphone india", "friends smartphone india", "student reading at night lamp"], "big": "भेजो उस दोस्त को"}
+ ]
+}

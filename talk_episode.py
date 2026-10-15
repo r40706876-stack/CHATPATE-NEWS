@@ -83,10 +83,12 @@ def prep(script_path):
         if sprite:                                             # 3D किरदार: नीले studio में, line के भाव वाली फ़ोटो
             import reel_studio
             st = ln.get("set") or ("studio" if ln["who"] == "bablu" else "village")
-            reel_studio.source_for(sprite, ln.get("expr", ""), d / "source.png", d / "still.png", st)
+            ln["shot"] = reel_studio.shot_for(i, ln)
+            src_shot = "close" if ln["shot"] == "close" else "band"
+            reel_studio.source_for(sprite, ln.get("expr", ""), d / "source.png", d / "still.png", st, src_shot)
             rp = ln.get("react_pose")
             if rp:
-                reel_studio.source_for(sprite, rp, IN / f"react_{i}_small.png", IN / f"react_{i}.png", st)
+                reel_studio.source_for(sprite, rp, IN / f"react_{i}_small.png", IN / f"react_{i}.png", st, src_shot)
         else:
             source_img(ln["who"], d / "source.png", ln.get("expr", ""))
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(IN / f"audio/{i:02d}.wav"), "-ar", "16000",
@@ -94,7 +96,8 @@ def prep(script_path):
     pairs = []                                                 # हर line के 3 तक visual (खोज), सब एक साथ जाँचे जाएँ
     for i, ln in enumerate(ep["lines"]):                       # punch वाली lines पर भी — बड़ी screen कभी ख़ाली न रहे
         qs = ln.get("visuals") or ([ln["visual"]] if ln.get("visual") else [])
-        pairs += [(i, j, q) for j, q in enumerate(qs[:3])]
+        if ln.get("shot") != "close":                         # close-up पर तस्वीर नहीं दिखती
+            pairs += [(i, j, q) for j, q in enumerate(qs[:3])]
     if pairs:
         import shutil
         import visuals
@@ -205,13 +208,16 @@ def post_studio(ep):
         clips = sorted((OUT / str(i)).rglob("*.mp4"))
         still = Image.open(IN / f"{i}/still.png").convert("RGB")
         vis = sorted(p for p in (IN / "broll").glob(f"{i}_*") if p.suffix != ".txt") if (IN / "broll").exists() else []
+        shot = ln.get("shot") or reel_studio.shot_for(i, ln)
         segs.append({"ln": ln, "wav": IN / f"audio/{i:02d}.wav", "face": clips[-1] if clips else None,
-                     "still": still, "vis": vis})
+                     "still": still, "vis": vis, "shot": shot})
         if (IN / f"react_{i}.png").exists():
             rw = IN / f"audio/{i:02d}_r.wav"
+            last_r = max(j for j, l in enumerate(ep["lines"]) if (IN / f"react_{j}.png").exists())
+            dur = "2.4" if ep.get("ask") and i == last_r else "0.9"        # comment वाला सवाल पढ़ने का वक़्त
             subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "lavfi", "-i", "anullsrc=r=24000:cl=mono",
-                            "-t", "1.3", "-c:a", "pcm_s16le", str(rw)], check=True)
-            segs.append({"ln": {"who": ln["who"], "say": ""}, "wav": rw, "face": None, "react": True,
+                            "-t", dur, "-c:a", "pcm_s16le", str(rw)], check=True)
+            segs.append({"ln": {"who": ln["who"], "say": ""}, "wav": rw, "face": None, "react": True, "shot": shot,
                          "still": Image.open(IN / f"react_{i}.png").convert("RGB"), "vis": []})
     out = ROOT / "episode.mp4"
     secs = reel_studio.render(ep, segs, CHARS, out, ROOT / "preview_episode.jpg")
