@@ -1,0 +1,20 @@
+# जाँच के लिए: कोई python command चलाओ, output repo में (probe.log)
+name: probe
+on:
+  workflow_dispatch:
+    inputs:
+      cmd: {description: "python -c वाला code", default: "print(1)"}
+env:
+  GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+  PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    permissions: {contents: write}
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          /usr/bin/python3 -m pip install -q --break-system-packages numpy scipy pillow
+          /usr/bin/python3 -c "${{ inputs.cmd }}" > probe.log 2>&1 || true
+          git config user.name bot && git config user.email bot@users.noreply.github.com
+          git add -f probe.log && git commit -m probe && for i in 1 2 3; do git pull --rebase -X theirs && git push && break; sleep 3; done
