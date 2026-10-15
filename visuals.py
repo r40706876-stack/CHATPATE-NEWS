@@ -133,6 +133,11 @@ INDIA = re.compile(r"india|indian|hindu|hindi|bharat|delhi|mumbai|kolkata|chenna
                    r"telangana|andhra|varanasi|lucknow|jaipur|patna|bhopal|raipur|sari|saree|rupee|rickshaw|desi", re.I)
 
 
+JUNK = re.compile(r"animation|animated|abstract|3d|render|illustration|cartoon|vector|graphic|motion|loop|background|"
+                  r"backdrop|wallpaper|particles|ai generated|artificial intelligence|fantasy|flower|bokeh|texture|"
+                  r"pattern|gradient|intro|logo|seamless|digital art|cgi", re.I)
+
+
 def _pixabay(q, key, want, india_q):
     out = []
     qq = urllib.parse.quote(q)
@@ -148,6 +153,8 @@ def _pixabay(q, key, want, india_q):
         size = next((s for s in ("medium", "small", "large") if v.get(s, {}).get("url")), None)
         if not size:
             continue
+        if JUNK.search(h.get("tags", "")):                    # animation/3D/abstract = खबर नहीं
+            continue
         tags = {t.strip() for t in h.get("tags", "").lower().replace(",", " ").split()}
         out.append({"id": f"v{h['id']}", "url": v[size]["url"], "thumb": v[size].get("thumbnail") or "",
                     "tags": h.get("tags", ""), "match": len(want & tags), "india": bool(INDIA.search(h.get("tags", "")))})
@@ -156,7 +163,7 @@ def _pixabay(q, key, want, india_q):
     except Exception:                                     # noqa: BLE001
         ph = []
     for h in ph:
-        if f"i{h['id']}" in _used:
+        if f"i{h['id']}" in _used or JUNK.search(h.get("tags", "")):
             continue
         tags = {t.strip() for t in h.get("tags", "").lower().replace(",", " ").split()}
         out.append({"id": f"i{h['id']}", "url": h["largeImageURL"], "thumb": h.get("webformatURL", ""),
@@ -292,25 +299,39 @@ def pick_for_lines(lines, per_line=2, pool=10):
                     cs.append(c)
         cs.sort(key=lambda c: -c["score"])
         pools.append((i, qs, cs[:pool]))
-    parts = [{"text": "तुम भारत के Hindi news channel के सख़्त photo editor हो. हर line के लिए कुछ तस्वीरें हैं — हर line के "
-                      f"लिए {per_line} तक सबसे अच्छी चुनो (सबसे अच्छी पहले). नियम:\n"
-                      "1. तस्वीर line की बात को सीधे दिखाए. 2. भारत दिखे (भारतीय लोग/कपड़े/सड़क/दफ़्तर/गाँव, Hindi बोर्ड, ₹) "
-                      "या ऐसा close-up जिसमें देश पता न चले (फ़ोन, सिम, कैलेंडर, फ़ाइलें, नोट, हाथ). 3. विदेशी पहचान "
-                      "(गोरे विदेशी लोग, यूरोप-अमेरिका की गलियाँ/इमारतें, बर्फ़ीले पहाड़, डॉलर/यूरो, विदेशी पुलिस) कभी नहीं. "
-                      "4. सुंदर पर बेमेल = नहीं. कोई ठीक न हो तो उस line के लिए [] दो.\n"
-                      'सिर्फ़ JSON: {"picks": [[line 1 के नंबर], [line 2 के नंबर], ...]}'}]
-    for n, (i, qs, cs) in enumerate(pools):
-        parts.append({"text": f"\nLine {n + 1}: \"{lines[i].get('say', '')}\" — {len(cs)} तस्वीरें:"})
-        for j, c in enumerate(cs):
+    head = ("तुम भारत के Hindi news channel के सख़्त photo editor हो. हर line के लिए कुछ तस्वीरें हैं — हर line के "
+            f"लिए {per_line} तक सबसे अच्छी चुनो (सबसे अच्छी पहले). नियम:\n"
+            "1. तस्वीर line की बात को सीधे दिखाए. 2. भारत दिखे (भारतीय लोग/कपड़े/सड़क/दफ़्तर/गाँव, Hindi बोर्ड, ₹) "
+            "या ऐसा असली close-up जिसमें देश पता न चले (फ़ोन, सिम, कैलेंडर, फ़ाइलें, नोट, हाथ). 3. विदेशी पहचान "
+            "(गोरे विदेशी लोग, यूरोप-अमेरिका की गलियाँ/इमारतें, बर्फ़ीले पहाड़, डॉलर/यूरो, विदेशी पुलिस) कभी नहीं. "
+            "4. animation, 3D, कार्टून, फूल-पत्ती, सजावटी background, watermark वाली = कभी नहीं. "
+            "5. सुंदर पर बेमेल = नहीं. कोई ठीक न हो तो उस line के लिए [] दो.\n"
+            'सिर्फ़ JSON: {"picks": [[पहली line के नंबर], [दूसरी line के नंबर], ...]}')
+    picks = []
+    for b0 in range(0, len(pools), 2):                     # 2-2 lines एक बार में (बड़ी request timeout हो जाती है)
+        batch = pools[b0:b0 + 2]
+        parts = [{"text": head}]
+        for n, (i, qs, cs) in enumerate(batch):
+            parts.append({"text": f"\nLine {n + 1}: \"{lines[i].get('say', '')}\" — {len(cs)} तस्वीरें:"})
+            for j, c in enumerate(cs):
+                try:
+                    parts += [{"text": f"तस्वीर {j} [{c['tags'][:50]}]:"}, _thumb_part(c["thumb"])]
+                except Exception:                         # noqa: BLE001
+                    parts.append({"text": f"तस्वीर {j}: (नहीं खुली)"})
+        got = None
+        for attempt in range(2):
             try:
-                parts += [{"text": f"तस्वीर {j} [{c['tags'][:50]}]:"}, _thumb_part(c["thumb"])]
-            except Exception:                             # noqa: BLE001
-                parts.append({"text": f"तस्वीर {j}: (नहीं खुली)"})
-    try:
-        picks = gemini.json_from(gemini.ask(parts, json_mode=True, temperature=0.1)).get("picks", [])
-    except Exception as e:                                # noqa: BLE001
-        print("  AI जाँच नहीं हुई, सिर्फ़ भारत वाली + पक्के मेल वाली:", repr(e)[:120])
-        picks = [[j for j, c in enumerate(cs) if c.get("india") and c["match"] >= 1][:per_line] for _, _, cs in pools]
+                got = gemini.json_from(gemini.ask(parts, json_mode=True, temperature=0.1)).get("picks", [])
+                break
+            except gemini.QuotaOver:
+                break
+            except Exception as e:                        # noqa: BLE001
+                print("  AI जाँच में गड़बड़, दोबारा:", repr(e)[:100])
+        if got is None:                                   # AI नहीं चला: बिना देखे कुछ नहीं लगाते — सिर्फ़ भारत वाली पक्की photo
+            print("  AI जाँच नहीं हुई — सिर्फ़ भारत वाली, पक्के मेल वाली photo (video नहीं)")
+            got = [[j for j, c in enumerate(cs) if c.get("india") and c["match"] >= 2 and not c["id"].startswith("v")][:1]
+                   for _, _, cs in batch]
+        picks += [got[n] if n < len(got) else [] for n in range(len(batch))]
     CACHE.mkdir(exist_ok=True)
     out = {}
     for n, (i, qs, cs) in enumerate(pools):
