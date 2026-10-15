@@ -1,17 +1,41 @@
   Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
-    Gemini gemini-3.5-flash: 7s
     सब models busy — 40s रुककर दोबारा
     सब models busy — 40s रुककर दोबारा
     key 1 नहीं चली → key 2
   Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
     सब models busy — 40s रुककर दोबारा
+    Gemini gemini-3.6-flash: 7s
     सब models busy — 40s रुककर दोबारा
-  AI जाँच नहीं हुई, सिर्फ़ भारत वाली + पक्के मेल वाली: RuntimeError('Gemini nahi chala:\n  gemini-flash-latest: TimeoutError(\'The read operation timed out\')\n  gemini-3.5-fl
-  line 1: 2 तस्वीर (indian bride, rupee notes, bank passbook, mass wedding indian)
-  line 2: 0 तस्वीर (rupee cash, indian family home, indian wedding couple, counting money)  ❌
-  line 3: 2 तस्वीर (application form, wall clock, calendar pages, indian office clerk)
-  line 4: 2 तस्वीर (calendar date, office file folder, indian wedding card, pen writing document)
-  line 5: 2 तस्वीर (signature document, rubber stamp paper, indian office desk, document stack)
-  line 6: 2 तस्वीर (laptop screen form, indian man computer, typing laptop keyboard, government building desk)
-  line 7: 2 तस्वीर (indian wedding buffet, smartphone screen share, indian man eating, wedding food plate)
+    सब models busy — 40s रुककर दोबारा
+    key 1 नहीं चली → key 2
+    सब models busy — 40s रुककर दोबारा
+    सब models busy — 40s रुककर दोबारा
+  AI जाँच में गड़बड़, दोबारा: RuntimeError('Gemini nahi chala:\n  gemini-flash-latest: 429 {\n  "error": {\n    "code": 429,\n    
+    सब models busy — 40s रुककर दोबारा
+    सब models busy — 40s रुककर दोबारा
+    key 1 नहीं चली → key 2
+    Gemini gemini-3.6-flash: 11s
+    सब models busy — 40s रुककर दोबारा
+    सब models busy — 40s रुककर दोबारा
+    key 1 नहीं चली → key 2
+    Gemini gemini-flash-latest: 89s
+    सब models busy — 40s रुककर दोबारा
+    सब models busy — 40s रुककर दोबारा
+    key 1 नहीं चली → key 2
+    Gemini gemini-3.6-flash: 19s
+    सब models busy — 40s रुककर दोबारा
+    सब models busy — 40s रुककर दोबारा
+    key 1 नहीं चली → key 2
+    सब models busy — 40s रुककर दोबारा
+    सब models busy — 40s रुककर दोबारा
+  AI जाँच में गड़बड़, दोबारा: RuntimeError('Gemini nahi chala:\n  gemini-flash-latest: 429 {\n  "error": {\n    "code": 429,\n    
+    सब models busy — 40s रुककर दोबारा
+    Gemini gemini-3.5-flash: 5s
+  line 1: 2 तस्वीर (indian mass wedding, indian bride, rupee notes, indian bank passbook)
+  line 2: 0 तस्वीर (indian wedding, rupee notes, indian family, marriage certificate)  ❌
+  line 3: 2 तस्वीर (indian government office, filling form, wall clock, calendar)
+  line 4: 1 तस्वीर (calendar date, government file, indian wedding card, office paperwork)
+  line 5: 1 तस्वीर (indian clerk, signing paper, official stamp, pen signing document)
+  line 6: 2 तस्वीर (laptop online form, indian government office, typing on laptop, indian official building)
+  line 7: 2 तस्वीर (indian wedding food, indian buffet, mobile phone video, indian man eating)
 6/7 lines को तस्वीर मिली
