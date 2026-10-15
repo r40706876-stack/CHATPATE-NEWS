@@ -79,23 +79,31 @@ def article_images(query, n=6):
         q = urllib.parse.parse_qs(urllib.parse.urlparse(u).query)
         u = q.get("url", [u])[0]
         links.append((u, html.unescape(title.group(1)) if title else ""))
-    out = []
-    for u, title in links[:12]:
+    from concurrent.futures import ThreadPoolExecutor
+
+    def og(item):
+        u, title = item
         try:
-            page = _get(u, timeout=15)
+            page = _get(u, timeout=12)
         except Exception:                                 # noqa: BLE001
-            continue
+            return None
         m = (re.search(r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)', page) or
              re.search(r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image', page))
         if not m:
-            continue
+            return None
         img = html.unescape(m.group(1))
         if img.startswith("//"):
             img = "https:" + img
         if BAD.search(img) or not img.startswith("http"):
-            continue
-        out.append({"id": _id(img), "url": img, "thumb": img, "tags": title[:80],
-                    "credit": f"फ़ोटो: {_domain(u)}", "match": 2.5, "india": True, "news": True})
-        if len(out) >= n:
-            break
-    return out
+            return None
+        return {"id": _id(img), "url": img, "thumb": img, "tags": title[:80],
+                "credit": f"फ़ोटो: {_domain(u)}", "match": 2.5, "india": True, "news": True}
+
+    with ThreadPoolExecutor(8) as ex:
+        got = [g for g in ex.map(og, links[:10]) if g]
+    seen, out = set(), []
+    for g in got:
+        if g["url"] not in seen:
+            seen.add(g["url"])
+            out.append(g)
+    return out[:n]

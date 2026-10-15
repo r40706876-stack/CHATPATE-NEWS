@@ -267,23 +267,26 @@ def pick_checked(items):
 
 
 # ---------------------------------------------------------------- हर line के लिए 1-2 पक्की तस्वीरें (बड़ा pool)
-def short_queries(lines):
-    """लंबी खोजें ("telecom store customer line") Pixabay पर कम मिलती हैं — हर line के लिए 4 छोटी, ठोस खोजें."""
+def short_queries(lines, topic=""):
+    """हर line के लिए: 4 छोटी English खोजें (Pixabay/Wikimedia) + 2 Hindi खबर-खोजें (अख़बारों की असली फ़ोटो के लिए)."""
     import gemini
     rows = "\n".join(f"{i + 1}. {ln.get('say', '')}" for i, ln in enumerate(lines))
     try:
         res = gemini.json_from(gemini.ask(
-            "भारत की Hindi news reel की हर line के लिए Pixabay/Wikimedia पर खोजने लायक 4 छोटी English खोजें दो "
-            "(हर एक 1-3 शब्द, ठोस चीज़/जगह/लोग जो line की बात सीधे दिखाएँ; लोग/जगह हों तो 'indian' जोड़ो — जैसे "
-            "'indian students exam', 'mobile phone call', 'sim card', 'aadhaar card', 'indian wedding', 'calendar', "
-            "'indian police', 'rupee notes'). भाव/खोखले शब्द नहीं.\n" + rows +
-            '\nसिर्फ़ JSON: {"q": [["..", "..", "..", ".."], ...]}', json_mode=True, temperature=0.3, patient=False)).get("q", [])
+            f"खबर: {topic}\nभारत की Hindi news reel की हर line के लिए खोजें दो:\n"
+            "en = 4 छोटी English stock-photo खोजें (1-3 शब्द, ठोस चीज़/जगह/लोग; लोग/जगह हों तो 'indian' जोड़ो, जैसे "
+            "'indian traffic police', 'road pothole', 'sim card', 'indian wedding');\n"
+            "hi = 2 Hindi खबर-खोजें (2-4 शब्द) जिनसे अख़बारों में उसी चीज़ की असली फ़ोटो मिले, जैसे 'सड़क गड्ढा बिहार', "
+            "'ट्रैफिक चालान मशीन'.\n" + rows +
+            '\nसिर्फ़ JSON: {"q": [{"en": ["..", "..", "..", ".."], "hi": ["..", ".."]}, ...]}',
+            json_mode=True, temperature=0.3, patient=False)).get("q", [])
     except Exception as e:                                # noqa: BLE001
         print("  छोटी खोजें नहीं बनीं:", repr(e)[:100])
         res = []
     out = []
     for i, ln in enumerate(lines):
-        qs = [str(q) for q in (res[i] if i < len(res) and isinstance(res[i], list) else [])][:4]
+        r = res[i] if i < len(res) and isinstance(res[i], dict) else {}
+        qs = [str(q) for q in r.get("en", [])][:4]
         for q in ln.get("visuals") or []:
             qs.append(" ".join(str(q).split()[:3]))
         seen, uniq = set(), []
@@ -291,7 +294,8 @@ def short_queries(lines):
             if q.lower() not in seen:
                 seen.add(q.lower())
                 uniq.append(q)
-        out.append(uniq[:6])
+        hi = [str(q) for q in r.get("hi", [])][:2] or ([topic] if topic else [])
+        out.append((uniq[:6], hi))
     return out
 
 
@@ -300,16 +304,17 @@ def pick_for_lines(lines, per_line=2, pool=12, topic=""):
     (भारत की / बात से सीधी जुड़ी; विदेशी पहचान वाली कभी नहीं)."""
     import gemini
     want_lines = [i for i, ln in enumerate(lines) if ln.get("_need_vis", True)]
-    queries = short_queries([lines[i] for i in want_lines])
+    queries = short_queries([lines[i] for i in want_lines], topic)
     import news_images
     topic_imgs = news_images.article_images(topic) if topic else []        # इसी खबर के लेखों की असली फ़ोटो
     print(f"  खबर के लेखों से {len(topic_imgs)} फ़ोटो")
     pools = []
-    for n, (i, qs) in enumerate(zip(want_lines, queries)):
+    for n, (i, (qs, hi)) in enumerate(zip(want_lines, queries)):
         cs, seen = [], set()
-        news = list(topic_imgs[n::2] + topic_imgs[(n + 1)::2])[:4]        # हर line को लेखों की अलग-अलग फ़ोटो पहले
-        for q in qs[:2]:                                                   # image search: line की ठोस चीज़
-            news += news_images.ddg_images(q if INDIA.search(q) else q + " india", n=4)
+        news = list(topic_imgs[n::2] + topic_imgs[(n + 1)::2])[:3]        # हर line को लेखों की अलग-अलग फ़ोटो पहले
+        for h in hi:                                                       # line की चीज़ वाली अख़बार-फ़ोटो
+            if h and h != topic:
+                news += news_images.article_images(h, n=4)
         for c in news:
             c["score"] = c["match"] + 2.5
         for qi, q in enumerate(qs):
