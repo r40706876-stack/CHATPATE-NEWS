@@ -1,0 +1,186 @@
+{
+ "topic": "दीपावली से पहले सफाई अभियान और तैयारियां",
+ "category": "त्योहार",
+ "breaking": "दीपावली से पहले शहरों में महासफ़ाई अभियान शुरू",
+ "hook_text": "सफ़ाई की सिर्फ़ तारीख़ तय",
+ "ask": "आपके मोहल्ले में झाड़ू कब लगी थी?",
+ "source": "Dainik Bhaskar, ABP News, ETV Bharat, News18 Hindi, Amar Ujala",
+ "poll": {
+  "q": "आपके मोहल्ले में झाड़ू कब लगी थी?",
+  "a": "आज ही लगी",
+  "b": "त्योहार पर ही"
+ },
+ "ticker": [
+  "नगर निगम ने कहा, कचरा उठ रहा है… कागज़ों पर",
+  "सड़कों की जाँच शुरू, गड्ढे सुरक्षित पाए गए",
+  "घाटों से सिल्ट हटेगी, पानी अपनी ज़िम्मेदारी पर बहे"
+ ],
+ "cast_why": "त्योहारी सफ़ाई के सरकारी फरमानों पर बब्लू का चुटीला वार और रमेश की ज़मीनी बदहाली की भड़ास।",
+ "lines": [
+  {
+   "who": "bablu",
+   "say": "त्योहारों से पहले शहर चमकाने के सख्त निर्देश हैं। चमक फ़िलहाल सिर्फ़ फ़ाइलों में है।",
+   "caption": "त्योहारों से पहले शहर चमकाने के सख्त निर्देश हैं। चमक फ़िलहाल सिर्फ़ फ़ाइलों में है।",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "government official signing orders office",
+    "street cleaning broom worker dust india",
+    "diwali decorative lights city market"
+   ],
+   "photo_hi": [
+    "नगर निगम सफाई अभियान",
+    "सरकारी आदेश बैठक"
+   ],
+   "card": {
+    "tag": "महासफ़ाई अभियान",
+    "big": "3,000 सड़कें",
+    "sub": "200 पंपों से सिल्ट सफाई",
+    "icon": "check"
+   },
+   "punch": true,
+   "react_pose": "eyeroll",
+   "stamp": "फ़ाइलों में चमक!",
+   "visual": "government official signing orders office",
+   "scene": "studio",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "say": "वाराणसी में पचासी घाटों पर दो सौ पंपों से सिल्ट हट रही है। नदी बाकी कचरे का इंतज़ार कर रही है।",
+   "caption": "वाराणसी में 85 घाटों पर 200 पंपों से सिल्ट हट रही है। नदी बाकी कचरे का इंतज़ार कर रही है।",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "varanasi ghats river ganga mud cleaning",
+    "water pump removing silt riverbank",
+    "ancient stone steps river ghat india"
+   ],
+   "photo_hi": [
+    "वाराणसी घाट सफाई पंप",
+    "देव दीपावली तैयारी गंगा"
+   ],
+   "punch": true,
+   "visual": "varanasi ghats river ganga mud cleaning",
+   "scene": "chacha",
+   "insta": ""
+  },
+  {
+   "who": "ramesh",
+   "say": "कानपुर में तीन हज़ार सड़कों की जाँच का मेगा प्लान है। चलने लायक सड़क का कोई प्लान नहीं।",
+   "caption": "कानपुर में 3,000 सड़कों की जाँच का मेगा प्लान है। चलने लायक सड़क का कोई प्लान नहीं।",
+   "expr": "gussa",
+   "set": "road",
+   "visuals": [
+    "broken city road pothole puddle water",
+    "municipal inspector writing clipboard street",
+    "scooter riding bumpy broken street india"
+   ],
+   "photo_hi": [
+    "कानपुर सड़क गड्ढे",
+    "नगर निगम सड़क जांच"
+   ],
+   "punch": true,
+   "react_pose": "smug",
+   "stamp": "चलने लायक नहीं!",
+   "visual": "broken city road pothole puddle water",
+   "scene": "chacha",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "say": "मुख्य सचिव ने बिजली और सफ़ाई पर कड़े आदेश दिए हैं। कड़ाई सिर्फ़ आदेश की भाषा में है।",
+   "caption": "मुख्य सचिव ने बिजली और सफ़ाई पर कड़े आदेश दिए हैं। कड़ाई सिर्फ़ आदेश की भाषा में है।",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "high level government secretariat meeting",
+    "overhead tangled electric wires city street",
+    "street garbage bin overflowing rubbish"
+   ],
+   "photo_hi": [
+    "मुख्य सचिव समीक्षा बैठक",
+    "शहर बिजली खंभा तार"
+   ],
+   "punch": true,
+   "visual": "high level government secretariat meeting",
+   "scene": "studio",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "say": "प्रशासन ने जल टैंकों की सफ़ाई तेज़ कर दी है। नलों में पानी आना अब भी चमत्कार है।",
+   "caption": "प्रशासन ने जल टैंकों की सफ़ाई तेज़ कर दी है। नलों में पानी आना अब भी चमत्कार है।",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "overhead water tank municipality india",
+    "dry municipal water tap village street",
+    "worker cleaning water reservoir inside"
+   ],
+   "photo_hi": [
+    "पानी की टंकी सफाई",
+    "सूखा नल जल निगम"
+   ],
+   "punch": true,
+   "react_pose": "facepalm",
+   "stamp": "पानी चमत्कार है!",
+   "visual": "overhead water tank municipality india",
+   "scene": "chacha",
+   "insta": ""
+  },
+  {
+   "who": "ramesh",
+   "say": "ये वीडियो उसको भेजो, जो हर साल दीपावली पर घर के बाहर की सड़क चमकने की उम्मीद पाले है।",
+   "caption": "ये वीडियो उसको भेजो, जो हर साल दीपावली पर घर के बाहर की सड़क चमकने की उम्मीद पाले है।",
+   "expr": "udaas",
+   "set": "road",
+   "visuals": [
+    "man standing near muddy broken street",
+    "street decorated diwali lights contrasting mud",
+    "person holding phone recording street condition"
+   ],
+   "photo_hi": [
+    "सड़क पर खड़ा नागरिक",
+    "त्योहार बाजार रोशनी सड़क"
+   ],
+   "punch": true,
+   "visual": "man standing near muddy broken street",
+   "scene": "studio_end",
+   "insta": ""
+  }
+ ],
+ "caption_post": "त्योहारों से पहले आदेश कड़क हैं, पर सड़कें अब भी नरम हैं। महासफ़ाई का काग़ज़ी प्लान तैयार है! आपके मोहल्ले में झाड़ू कब लगी थी? Family group में भेजो। स्रोत: Dainik Bhaskar, ABP News, Amar Ujala #DiwaliSafai #NagarNigam #KanpurRoads #VaranasiGhats #Bakranews (AI से बने किरदार)",
+ "format": "explain",
+ "label": "काम की खबर",
+ "key_word": "",
+ "icons": [
+  "₹",
+  "NEWS",
+  "%"
+ ],
+ "hook": "सफ़ाई की सिर्फ़ तारीख़ तय",
+ "trend": {
+  "score": 4,
+  "why": "7 अख़बार/चैनल 2 दिन में, 35 खबरें 7 दिन में"
+ },
+ "connect": {
+  "score": 10,
+  "why": "सड़क, पानी, बिजली जैसे हर घर के रोज़ के दर्द पर तीखा व्यंग्य है और 4 बेहतरीन 'मुहर वाली' lines मौजूद हैं।",
+  "weak": "रील्स के हिसाब से संवाद थोड़े लंबे हैं, जिन्हें बोलते समय तेज़ी रखनी होगी।",
+  "fix": "बोलते समय बैकग्राउंड में टूटी सड़क और सूखे नल की असली क्लिप्स लगाएँ ताकि विजुअल असर और गहरा हो।",
+  "parts": {
+   "A": 3,
+   "B": 2,
+   "C": 2,
+   "D": 1,
+   "E": 1,
+   "F": 1
+  }
+ },
+ "sprite": {
+  "ramesh": "assets/toon/ramesh",
+  "bablu": "assets/toon/bablu"
+ },
+ "production": true
+}

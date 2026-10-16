@@ -1,1 +1,29 @@
-  कोई script इंतज़ार में नहीं
+  विषय: ['अस्पताल/सेहत', 'किसान/गाँव', 'ठगी से बचाव', 'नियम/बैंक', 'नौकरी/परीक्षा', 'पढ़ाई/स्कूल', 'फ़ोन/इंटरनेट', 'महँगाई', 'योजना', 'शहर-कस्बा', 'सफ़र'] | हाल के विषय (अभी नहीं): ['नियम/बैंक', 'नौकरी/परीक्षा', 'महँगाई', 'योजना', 'शहर-कस्बा', 'सफ़र']
+  topics: 33 काम की, 8 वायरल, 3 Trends, 5 त्योहार
+  Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
+    Gemini gemini-flash-latest: 17s
+  ✅ trend 5/10: ट्रेन के AC कोच में खुली पान की दुकान, चूना-कत्था तैयार | 8 अख़बार/चैनल 2 दिन में, 16 खबरें 7 दिन में
+  ❌ trend 3/10: पटना CGL पेपर लीक, 3 घंटे रटवाकर राख कर दिए पेपर | 3 अख़बार/चैनल 2 दिन में, 3 खबरें 7 दिन में
+  ❌ trend 2/10: सब्जी मंडी में फूलगोभी ₹100 किलो, आम आदमी की थाली खाली | 1 अख़बार/चैनल 2 दिन में, 1 खबरें 7 दिन में
+  ❌ trend 2/10: कागज़ पर जीएसटी घटा पर मेडिकल स्टोर पर महंगी ही मिलीं दवाएं | 1 अख़बार/चैनल 2 दिन में, 6 खबरें 7 दिन में
+  ✅ trend 4/10: दिवाली आते ही घरों में शुरू हुआ मम्मी का जबरन सफ़ाई अभियान | 7 अख़बार/चैनल 2 दिन में, 35 खबरें 7 दिन में
+  ❌ trend 2/10: फेस्टिव सेल में 90 परसेंट डिस्काउंट का लालच देकर उड़ा रहे बैंक बैलेंस | 2 अख़बार/चैनल 2 दिन में, 4 खबरें 7 दिन में
+  चुने विषय: ['वायरल', 'त्योहार']
+    Gemini gemini-flash-latest: 11s
+  तथ्य: ट्रेन के AC कोच में खुली पान की दुकान | AajTak, Jansatta, ABP News | high
+  तथ्य: दीपावली से पहले सफाई अभियान और तैयारियां | Dainik Bhaskar, ABP News, ETV Bharat, News18 Hindi, Amar Ujala | high
+    Gemini gemini-3.7-flash: 22s
+    सब models busy — 40s रुककर दोबारा
+    Gemini gemini-3.5-flash: 13s
+    Gemini gemini-3.7-flash: 77s
+  तीखी script नहीं बनी: 'lines'
+  ❌ connect 6/10: ट्रेन के AC कोच में खुली पान की दुकान
+  ✅ connect 10/10: दीपावली से पहले सफाई अभियान और तैयारियां
+/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/run_daily.py:31: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  return dt.datetime.utcnow() + dt.timedelta(hours=5, minutes=30)
+  1 scripts Telegram पर भेजीं — जवाब का इंतज़ार
+  अभी जवाब नहीं आया
+  अभी जवाब नहीं आया
+  अभी जवाब नहीं आया
+  अभी जवाब नहीं आया
+  चुना: 1
