@@ -605,7 +605,8 @@ def render(ep, segs, chars, out, preview):
             if bool(ln.get("punch")) and not react and not st_text and t >= n * 0.6:
                 st_text = ln.get("stamp") or STAMP_OF.get(ln.get("react_pose"), "")
                 st_t = 0
-            if st_text:
+            asking = ep.get("ask") and (si == last_react or (last_react < 0 and si == len(segs) - 1))
+            if st_text and not asking:                          # सवाल वाले पल ठप्पा नहीं (ऊपर एक-दूसरे पर चढ़ते थे)
                 if shot == "close":
                     _stamp(im, st_text, st_t, W / 2 + 60, 330, 78)
                 else:
