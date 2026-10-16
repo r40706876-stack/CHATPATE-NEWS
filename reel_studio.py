@@ -227,6 +227,43 @@ def talk_frames(talk, shot, n, seed):
         yield compose_close(sp, talk["set"], W, H) if shot == "close" else compose_band(sp, talk["set"])
 
 
+def chrome_safe(d, k):
+    """Logo/LIVE/AI पट्टी Instagram-YouTube के ऊपरी buttons से हटकर — नीचे वाले हिस्से के ऊपर बाएँ."""
+    y = BAND_Y + 14
+    d.rounded_rectangle((20, y, 250, y + 52), 12, fill=RED)
+    d.text((135, y + 26), "बकरा न्यूज़", font=tt.font(34), fill="white", anchor="mm")
+    on = (k // 12) % 2 == 0
+    d.rounded_rectangle((262, y + 6, 360, y + 46), 10, fill=(0, 0, 0))
+    d.ellipse((274, y + 18, 288, y + 32), fill=RED if on else (90, 0, 0))
+    d.text((324, y + 26), "LIVE", font=tt.font(24), fill="white", anchor="mm")
+    d.rounded_rectangle((372, y + 6, 520, y + 46), 10, fill=(0, 0, 0))
+    d.text((446, y + 26), "AI किरदार", font=tt.font(22), fill=(230, 230, 230), anchor="mm")
+
+
+def karaoke_safe(d, text, frac, cy):
+    """बड़े, साफ़ captions (3 शब्द एक बार में): काला डिब्बा + पीली किनारी, बोला जा रहा शब्द पीला, मोटी outline.
+    Instagram/YouTube के नीचे वाले caption/buttons से ऊपर — news screen के निचले हिस्से पर."""
+    words = str(text).split()
+    if not words:
+        return
+    cur = min(len(words) - 1, int(frac * len(words)))
+    start = (cur // 3) * 3
+    chunk = words[start:start + 3]
+    f = tt.font(84)
+    widths = [f.getlength(w + " ") for w in chunk]
+    total = sum(widths)
+    if total > 900:
+        f = tt.font(int(84 * 900 / total))
+        widths = [f.getlength(w + " ") for w in chunk]
+        total = sum(widths)
+    x = (W - total) / 2
+    d.rounded_rectangle((x - 34, cy - 66, x + total + 14, cy + 66), 30, fill=(0, 0, 0), outline=YEL, width=5)
+    for i, (w, wd) in enumerate(zip(chunk, widths)):
+        on = start + i == cur
+        d.text((x, cy), w, font=f, fill=YEL if on else (255, 255, 255), anchor="lm", stroke_width=4, stroke_fill=(0, 0, 0))
+        x += wd
+
+
 def _bases():
     out = {}
     for strap in (True, False):
@@ -579,7 +616,7 @@ def render(ep, segs, chars, out, preview):
                 im.paste(_zoomr(fr, zb), (0, BAND_Y))
                 clean = im.copy()                                # बिना लिखाई वाला frame (आख़िरी poll के पीछे)
             d = ImageDraw.Draw(im)
-            rv.chrome(d, k)
+            chrome_safe(d, k)
             if shot == "split":
                 badge = f"खबर {ln['item']}/{ln['items_total']}" if ln.get("item") else "ब्रेकिंग"
                 bw = max(180, int(tt.font(34).getlength(badge)) + 40)
@@ -598,12 +635,12 @@ def render(ep, segs, chars, out, preview):
             if k < FPS * 1.8 and ep.get("hook"):
                 _hook(d, ep["hook"], 330)
             if react:
-                d.rounded_rectangle((30, 1500, 560, 1576), 20, fill=RED)
-                d.text((58, 1538), f"{name} का रिएक्शन", font=tt.font(44), fill="white", anchor="lm")
+                d.rounded_rectangle((30, BAND_Y + 380, 560, BAND_Y + 456), 20, fill=RED)
+                d.text((58, BAND_Y + 418), f"{name} का रिएक्शन", font=tt.font(44), fill="white", anchor="lm")
             else:
                 if first_seen and t < FPS * 2.5 and shot != "close":
-                    rv.name_strap(d, (BAND_Y + 490) if shot == "split" else 1130, name, role)
-                rv.karaoke(d, ln.get("caption") or ln["say"], t / n, 1716 if shot != "close" else 1560)
+                    rv.name_strap(d, (BAND_Y + 400) if shot == "split" else 1130, name, role)
+                karaoke_safe(d, ln.get("caption") or ln["say"], t / n, SCR[3] - 90)
             if bool(ln.get("punch")) and not react and not st_text and t >= n * 0.6:
                 st_text = ln.get("stamp") or STAMP_OF.get(ln.get("react_pose"), "")
                 st_t = 0
@@ -618,7 +655,7 @@ def render(ep, segs, chars, out, preview):
             if ep.get("ask") and (si == last_react or (last_react < 0 and si == len(segs) - 1)):
                 _ask(d, ep["ask"], t, 300 if shot == "split" else 1040)
             if shot == "split" and not react:
-                ticker(d, ep, k)
+                pass                                             # नीचे की पट्टी Instagram caption के नीचे छिपती थी — हटाई
             d.rectangle((0, H - 12, int(W * k / total), H), fill=YEL)
             if react and t < 5 and prev_im is not None:        # बोलने से reaction में झटके से नहीं, घुलकर
                 im = Image.blend(prev_im, im, (t + 1) / 6)
@@ -630,7 +667,7 @@ def render(ep, segs, chars, out, preview):
     for t in range(tailn):
         im = end.copy()
         d = ImageDraw.Draw(im)
-        rv.chrome(d, k)
+        pass
         if ep.get("poll"):
             rv.poll(d, ep["poll"], t)
         d.rounded_rectangle((260, 1420, W - 260, 1520), 50, fill=RED)
