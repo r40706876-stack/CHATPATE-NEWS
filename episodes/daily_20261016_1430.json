@@ -1,0 +1,150 @@
+{
+ "topic": "गोरखपुर में सब्जियों की कीमतें बढ़ीं",
+ "category": "[महँगाई]",
+ "breaking": "गोरखपुर में गोभी एक सौ बीस रुपये किलो पहुंची",
+ "hook_text": "गोभी अब सब्ज़ी नहीं, संपत्ति है",
+ "ask": "आपके शहर में फूलगोभी का क्या भाव चल रहा है?",
+ "source": "Dainik Bhaskar",
+ "poll": {
+  "q": "आपके शहर में फूलगोभी का क्या भाव चल रहा है?",
+  "a": "100 के पार",
+  "b": "100 से कम"
+ },
+ "ticker": [
+  "गोभी ने कहा, आलू के साथ बैठना अब मेरी हैसियत के बाहर है",
+  "दुकानदार ने कहा, परवल छूने का अलग चार्ज लगेगा",
+  "नवंबर तक राहत की उम्मीद रखें, तब तक थाली में पानी पिएं"
+ ],
+ "cast_why": "मंडी के आसमान छूते भाव और आम परिवार की रसोई के बजट पर चाचा का तजुर्बा और बबलू का विश्लेषण बिल्कुल फिट बैठता है।",
+ "lines": [
+  {
+   "who": "bablu",
+   "say": "विशेषज्ञों का कहना है हरी सब्जी खाने से सेहत सुधरती है। मंडी में भाव सुनकर दिल बैठ जाता है।",
+   "caption": "विशेषज्ञों का कहना है हरी सब्जी से सेहत बनती है। भाव सुनकर दिल बैठ जाता है।",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "vegetable market crates display",
+    "cauliflower fresh heap mandi",
+    "weighing scale vegetable seller"
+   ],
+   "photo_hi": [
+    "गोरखपुर सब्जी मंडी भाव",
+    "लोहिया नगर मंडी रेट"
+   ],
+   "punch": true,
+   "react_pose": "eyeroll",
+   "stamp": "दिल बैठ जाता है!",
+   "visual": "vegetable market crates display",
+   "scene": "studio",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "say": "गोरखपुर की झुंगिया चुंगी और लोहिया नगर मंडी में फूलगोभी एक सौ बीस रुपये किलो तक पहुंच गई है। गोभी अब थाली में नहीं, तिजोरी में रखने की चीज है।",
+   "caption": "गोरखपुर मंडी में फूलगोभी ₹100 से ₹120 प्रति किलो। गोभी अब थाली में नहीं, तिजोरी में रखने लायक।",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "fresh cauliflower on table close up",
+    "gorakhpur local mandi scene",
+    "price tag on vegetables"
+   ],
+   "card": {
+    "tag": "फूलगोभी",
+    "big": "₹120/किलो",
+    "sub": "लोहिया नगर मंडी",
+    "icon": "rupee"
+   },
+   "visual": "fresh cauliflower on table close up",
+   "scene": "card",
+   "punch": false,
+   "insta": ""
+  },
+  {
+   "who": "chacha",
+   "say": "मूली पचास, नेनुआ अस्सी और परवल अस्सी रुपये किलो बिक रहा है। परवल बनाने से पहले अब खानदान से सलाह लेनी पड़ती है।",
+   "caption": "मूली ₹50, नेनुआ ₹80 और परवल ₹80 प्रति किलो। परवल पकाने से पहले खानदान से सलाह लें।",
+   "expr": "tanz",
+   "set": "mandi",
+   "visuals": [
+    "radish and pointed gourd parwal market",
+    "old man bargaining mandi seller",
+    "empty vegetable basket market"
+   ],
+   "punch": true,
+   "react_pose": "facepalm",
+   "stamp": "खानदान से सलाह!",
+   "visual": "radish and pointed gourd parwal market",
+   "scene": "chacha",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "say": "दुकानदारों का कहना है पंद्रह नवंबर के बाद दाम गिरेंगे। तब तक जनता बिना खाए जीने का अभ्यास कर ले।",
+   "caption": "दुकानदारों का दावा है 15 नवंबर के बाद दाम गिरेंगे। तब तक बिना खाए जीने का अभ्यास करें।",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "calendar sheet showing november",
+    "cooking oil and empty frying pan",
+    "disappointed customer vegetable stall"
+   ],
+   "punch": true,
+   "react_pose": "smug",
+   "stamp": "अभ्यास जारी रखें!",
+   "visual": "calendar sheet showing november",
+   "scene": "chacha",
+   "insta": ""
+  },
+  {
+   "who": "chacha",
+   "say": "ये वीडियो उसको भेजो, जो आज भी सब्जी वाले से मुफ़्त का धनिया मांगने का सपना देख रहा है।",
+   "caption": "ये वीडियो उसको भेजो, जो आज भी सब्जी वाले से फ्री का धनिया मांगने का सपना देख रहा है।",
+   "expr": "gambhir",
+   "set": "mandi",
+   "visuals": [
+    "green coriander bunch seller hand",
+    "vegetable seller refusing customer",
+    "indian vegetable bazaar crowd"
+   ],
+   "visual": "green coriander bunch seller hand",
+   "scene": "studio_end",
+   "punch": false,
+   "insta": ""
+  }
+ ],
+ "caption_post": "गोरखपुर मंडी का नया नियम: गोभी को दूर से प्रणाम करें, परवल देखने की फीस लग सकती है। गोभी ₹120 किलो!\n\nआपके शहर में फूलगोभी का क्या भाव चल रहा है?\n\nFamily group में भेजो ताकि राशन का बजट संभल सके!\n\nस्रोत: Dainik Bhaskar\n#Gorakhpur #Inflation #MandiBhav #VegetablePrices #BakaraNews #Satire (AI से बने किरदार)",
+ "format": "explain",
+ "label": "काम की खबर",
+ "key_word": "",
+ "icons": [
+  "₹",
+  "NEWS",
+  "%"
+ ],
+ "hook": "गोभी अब सब्ज़ी नहीं, संपत्ति है",
+ "trend": {
+  "score": 3,
+  "why": "1 अख़बार/चैनल 2 दिन में, 6 खबरें 7 दिन में"
+ },
+ "connect": {
+  "score": 10,
+  "why": "सब्जी की महंगाई हर घर के बजट पर आज ही असर डालती है, हुक और तंज बेहद करारे हैं।",
+  "weak": "'गोरखपुर' का नाम इसे एक शहर तक सीमित करता दिखता है।",
+  "fix": "गोरखपुर हटाकर 'आज आपकी मंडी में' कहें ताकि पूरे उत्तर भारत में यह तुरंत वायरल हो।",
+  "parts": {
+   "A": 3,
+   "B": 2,
+   "C": 2,
+   "D": 1,
+   "E": 1,
+   "F": 1
+  }
+ },
+ "sprite": {
+  "chacha": "assets/toon/chacha",
+  "bablu": "assets/toon/bablu"
+ },
+ "production": true
+}
