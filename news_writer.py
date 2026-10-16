@@ -203,7 +203,9 @@ line इसी खबर के अपने शब्द (जैसे इस �
 हर line में: "expr" (भाव: gambhir / hasi / tanz / gussa / hairan / udaas — मुहर वाली line पर ज़्यादातर "gambhir":
 बिल्कुल गंभीर anchor चेहरा, सीधा कैमरे में; मज़ा बात में हो, चेहरे में नहीं), "set" (पीछे की जगह, बात के हिसाब से: bablu के तथ्य/anchor वाले = "studio"; दफ़्तर/फ़ॉर्म/भर्ती/परीक्षा/बैंक के चक्कर =
 "office"; चालान/गड्ढे/ट्रैफिक/पेट्रोल/सड़क = "road"; महँगाई/सब्ज़ी/दाम/बाज़ार = "mandi"; घर/ठगी से बचाव/योजना/बिजली-पानी/
-रसोई = "aangan"; फ़ोन/online/पढ़ाई/सोशल मीडिया (ज़्यादातर पिंकी) = "room"; गाँव/खेत/बाकी आम बात = "village"), "visuals" = 3 अलग English खोज जो उस line की बात को screen पर ठोस, असली
+रसोई = "aangan"; फ़ोन/online/पढ़ाई/सोशल मीडिया (ज़्यादातर पिंकी) = "room"; LPG/गैस/पेट्रोल के दाम = "gas"; रसोई का बजट/खाना = "kitchen";
+ट्रेन/किराया/भीड़/सफ़र = "station"; अस्पताल/दवा/इलाज = "hospital"; किसान/खाद/फ़सल/मौसम = "khet";
+स्कूल/परीक्षा केंद्र/पेपर लीक/रिज़ल्ट = "school"; गाँव/बाकी आम बात = "village"), "visuals" = 3 अलग English खोज जो उस line की बात को screen पर ठोस, असली
 तस्वीर में दिखाएँ (बड़ी screen पर चलेंगी, सबसे ज़रूरी हिस्सा): चीज़/जगह/काम का नाम लो, भाव नहीं — जैसे
 ["lpg gas cylinder", "woman cooking gas stove india", "gas cylinder delivery truck"]; परीक्षा = ["students writing exam hall",
 "exam result notice board", "calendar pages"]. "sad", "problem", "system" जैसे खोखले शब्द नहीं.
@@ -248,7 +250,7 @@ def prompt_sharpen(eps):
 सिर्फ़ JSON list लौटाओ — उतने ही episodes, उसी क्रम में."""
 
 
-EXPRS, POSES, SETS_OK = {"gambhir", "hasi", "tanz", "gussa", "hairan", "udaas"}, {"laugh", "facepalm", "eyeroll", "thinking", "smug"}, {"studio", "village", "office", "road", "mandi", "aangan", "room"}
+EXPRS, POSES, SETS_OK = {"gambhir", "hasi", "tanz", "gussa", "hairan", "udaas"}, {"laugh", "facepalm", "eyeroll", "thinking", "smug"}, {"studio", "village", "office", "road", "mandi", "aangan", "room", "gas", "kitchen", "station", "hospital", "khet", "school"}
 
 
 def finish(ep, strict=True):

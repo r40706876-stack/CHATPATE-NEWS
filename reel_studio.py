@@ -53,7 +53,8 @@ def pose_file(folder, expr):
     raise FileNotFoundError(folder)
 
 
-SETS = {k: ROOT / f"assets/sets/{k}.png" for k in ("studio", "village", "office", "road", "mandi", "aangan", "room")}
+SETS = {k: ROOT / f"assets/sets/{k}.png" for k in ("studio", "village", "office", "road", "mandi", "aangan", "room",
+                                                   "gas", "kitchen", "station", "hospital", "khet", "school")}
 DESK_Y = 0.555                                      # studio में desk का ऊपरी किनारा (ऊँचाई का हिस्सा)
 SCREEN = (0.005, 0.222, 0.43, 0.245)                 # पीछे वाली बड़ी screen (x, y, w, h — हिस्से में)
 _sets = {}
