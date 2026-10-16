@@ -85,7 +85,21 @@ def do_write(feed=None):
     import telegram
     import topics
     try:                                               # काम की खबर, देसी अंदाज़ (Gemini के सिर्फ़ 3 call)
-        eps = news_writer.write_options(topics.collect_news(feed), 6)
+        news = topics.collect_news(feed)
+        try:
+            eps = news_writer.write_options(news, 6)
+        except (gemini.QuotaOver, news_writer.NoViral):
+            raise
+        except RuntimeError as e:                      # Gemini busy (503) — 4 मिनट रुककर एक बार और
+            print("  Gemini busy, 4 मिनट बाद दोबारा:", str(e)[:120])
+            time.sleep(240)
+            try:
+                eps = news_writer.write_options(news, 6)
+            except (gemini.QuotaOver, news_writer.NoViral):
+                raise
+            except RuntimeError:
+                telegram.send_text("⚠️ Gemini अभी बहुत busy है, scripts नहीं बन पाईं। 0 भेजो तो थोड़ी देर में फिर कोशिश होगी।")
+                return
     except gemini.QuotaOver:
         telegram.send_text("⏳ Gemini का free कोटा अभी ख़त्म है। ये रोज़ दोपहर ~12:30 पर नया होता है, उसके बाद वाली बारी अपने-आप चलेगी।")
         print("  आज का Gemini कोटा ख़त्म — रुक गया")
