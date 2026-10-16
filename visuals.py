@@ -275,7 +275,7 @@ HSTOP = set("है हैं था थे की का के को मे�
 def _stems(text):
     """मोटे शब्दों के 4-अक्षर वाले सिरे (गड्ढे/गड्ढा → गड्ढ), तस्वीर के title से मिलाने के लिए."""
     out = set()
-    for w in re.findall(r"[\u0900-\u097F]+|[A-Za-z]+", str(text).lower()):
+    for w in re.findall(r"[\u0900-\u0963\u0966-\u097F]+|[A-Za-z]+", str(text).lower()):
         if len(w) >= 3 and w not in HSTOP and w not in STOP:
             out.add(w[:4])
     return out
