@@ -1,0 +1,189 @@
+{
+  "sent_at": 1792136165,
+  "eps": [
+    {
+      "topic": "JSSC CGL पेपर लीक: पटना के सीक्रेट सेंटर पर 370 सवाल रटवाकर जलाए गए प्रश्नपत्र",
+      "category": "नौकरी/परीक्षा",
+      "breaking": "पटना के सीक्रेट सेंटर पर 370 सवाल रटवाए",
+      "hook_text": "3 घंटे में 370 सवाल रटवाए",
+      "ask": "आपने किसी परीक्षा के लिए कितने साल तैयारी की?",
+      "source": "Jagran, Amar Ujala, Navbharat Times, Hindustan",
+      "poll": [
+        "3 साल",
+        "5 साल पार"
+      ],
+      "ticker": [
+        "सीक्रेट सेंटर पर सवाल रटे गए, ईमानदार छात्र सालों से नियम रट रहे हैं",
+        "प्रश्नपत्र जला दिए गए, पर छात्रों का भविष्य पहले ही धुआँ हो चुका था",
+        "सीआईडी जाँच कर रही है, अगली परीक्षा की तारीख़ का इंतज़ार जारी"
+      ],
+      "cast_why": "प्रतियोगी परीक्षा के दर्द और पेपर लीक की सच्चाई को बयां करने के लिए बबलू और परेशान छात्र रमेश बिल्कुल सटीक हैं।",
+      "lines": [
+        {
+          "who": "bablu",
+          "say": "आयोग का कहना है परीक्षा निष्पक्ष हुई। निष्पक्षता पटना के गुप्त सेंटर पर तीन घंटे में रटा दी गई।",
+          "caption": "आयोग बोला परीक्षा निष्पक्ष हुई। निष्पक्षता पटना सेंटर पर रटा दी गई।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "students cramming exam papers secretly",
+            "burnt paper ash investigation scene",
+            "government exam question booklet"
+          ],
+          "photo_hi": [
+            "पेपर लीक सेंटर पटना",
+            "जेएसएससी परीक्षा पर्चा"
+          ],
+          "card": {
+            "tag": "सीक्रेट सेंटर",
+            "big": "370 सवाल",
+            "sub": "3 घंटे में रटवाए",
+            "icon": "alert"
+          },
+          "punch": true,
+          "react_pose": "eyeroll",
+          "stamp": "रटंत निष्पक्षता!",
+          "visual": "students cramming exam papers secretly",
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "ramesh",
+          "say": "हमने तीन साल में तीन सौ सवाल याद किए। वहाँ तीन घंटे में तीन सौ सत्तर रटवा दिए।",
+          "caption": "हमने 3 साल में 300 सवाल पढ़े। वहाँ 3 घंटे में 370 रटवा दिए।",
+          "expr": "udaas",
+          "set": "school",
+          "visuals": [
+            "exhausted student surrounded by thick books",
+            "library table competitive exam books",
+            "frustrated youth holding admit card"
+          ],
+          "photo_hi": [
+            "प्रतियोगी छात्र विरोध",
+            "झारखंड छात्र आंदोलन"
+          ],
+          "punch": true,
+          "react_pose": "facepalm",
+          "stamp": "स्पीड देखिए!",
+          "visual": "exhausted student surrounded by thick books",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "सबूत मिटाने के लिए प्रश्नपत्र जला दिए गए। प्रश्नपत्र राख हुए, पर छात्रों की उम्मीदें पहले ही स्वाहा थीं।",
+          "caption": "सबूत मिटाने पेपर जला दिए। पेपर राख हुए, उम्मीदें पहले ही स्वाहा थीं।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "burning question paper flames",
+            "police forensics inspecting paper ash",
+            "crying aspirant outside exam center"
+          ],
+          "photo_hi": [
+            "जले प्रश्नपत्र सबूत",
+            "सीआईडी पेपर लीक जांच"
+          ],
+          "punch": true,
+          "visual": "burning question paper flames",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "ramesh",
+          "say": "विभाग ने कहा है सीआईडी जाँच कर रही है। जाँच गहराई में जा रही है, उम्र कट-ऑफ पार कर रही है।",
+          "caption": "कहा CID जाँच कर रही है। जाँच गहराई में है, उम्र कट-ऑफ पार है।",
+          "expr": "tanz",
+          "set": "office",
+          "visuals": [
+            "cid detectives inspecting files",
+            "official inquiry commission office",
+            "calendar flipping years passing"
+          ],
+          "photo_hi": [
+            "सीआईडी जांच टीम",
+            "सरकारी भर्ती दफ्तर"
+          ],
+          "punch": true,
+          "react_pose": "smug",
+          "stamp": "उम्र पार!",
+          "visual": "cid detectives inspecting files",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "अधिकारियों ने आधिकारिक वेबसाइट देखने की सलाह दी है। वेबसाइट पर नोटिस दिखता है, नौकरी नहीं।",
+          "caption": "वेबसाइट देखने की सलाह दी। वेबसाइट पर नोटिस दिखता है, नौकरी नहीं।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "government recruitment website screen",
+            "server error page exam portal",
+            "job aspirant refreshing laptop page"
+          ],
+          "photo_hi": [
+            "परीक्षा आयोग वेबसाइट",
+            "नौकरी पोर्टल नोटिस"
+          ],
+          "punch": true,
+          "react_pose": "eyeroll",
+          "stamp": "सिर्फ़ नोटिस!",
+          "visual": "government recruitment website screen",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "ramesh",
+          "say": "ये वीडियो उस तैयारी वाले दोस्त को भेजो, जो हर लीक के बाद कहता है, कट-ऑफ बहुत हाई जाएगी।",
+          "caption": "ये वीडियो उस दोस्त को भेजो, जो बोलता है कट-ऑफ बहुत हाई जाएगी।",
+          "expr": "udaas",
+          "set": "school",
+          "visuals": [
+            "two students discussing exam paper",
+            "hostel room study desk mess",
+            "disappointed candidate walking away"
+          ],
+          "photo_hi": [
+            "छात्र हॉस्टल पढ़ाई",
+            "परीक्षा कट ऑफ लिस्ट"
+          ],
+          "punch": true,
+          "react_pose": "laugh",
+          "stamp": "हाई कट-ऑफ!",
+          "visual": "two students discussing exam paper",
+          "scene": "studio_end",
+          "insta": ""
+        }
+      ],
+      "caption_post": "3 घंटे में 370 सवाल रटवाकर पेपर जला दिए, यहाँ सालों की मेहनत जल गई। आपकी तैयारी को कितने साल हुए? Family group में भेजो। स्रोत: Jagran, Amar Ujala #JSSCCGL #PaperLeak #PatnaSecretCenter #Bakranews #StudentProtest (AI से बने किरदार)",
+      "format": "explain",
+      "label": "काम की खबर",
+      "key_word": "",
+      "icons": [
+        "₹",
+        "NEWS",
+        "%"
+      ],
+      "hook": "3 घंटे में 370 सवाल रटवाए",
+      "trend": {
+        "score": 5,
+        "why": "10 अख़बार/चैनल 2 दिन में, 36 खबरें 7 दिन में"
+      },
+      "connect": {
+        "score": 10,
+        "why": "पेपर लीक का मुद्दा, ठोस मुहर वाली पंक्तियाँ और छात्रों का कड़वा सच एकदम सटीक बैठा है।",
+        "weak": "कोई ख़ास कमी नहीं है, संवाद का प्रवाह और तंज का स्तर बहुत तीखा है।",
+        "fix": "इसी धार और 3-मुहर स्ट्रक्चर को आगे की सभी स्क्रिप्ट्स में बनाए रखें।",
+        "parts": {
+          "A": 3,
+          "B": 2,
+          "C": 2,
+          "D": 1,
+          "E": 1,
+          "F": 1
+        }
+      }
+    }
+  ]
+}
