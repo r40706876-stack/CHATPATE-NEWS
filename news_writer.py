@@ -205,7 +205,8 @@ line इसी खबर के अपने शब्द (जैसे इस �
 "office"; चालान/गड्ढे/ट्रैफिक/पेट्रोल/सड़क = "road"; महँगाई/सब्ज़ी/दाम/बाज़ार = "mandi"; घर/ठगी से बचाव/योजना/बिजली-पानी/
 रसोई = "aangan"; फ़ोन/online/पढ़ाई/सोशल मीडिया (ज़्यादातर पिंकी) = "room"; LPG/गैस/पेट्रोल के दाम = "gas"; रसोई का बजट/खाना = "kitchen";
 ट्रेन/किराया/भीड़/सफ़र = "station"; अस्पताल/दवा/इलाज = "hospital"; किसान/खाद/फ़सल/मौसम = "khet";
-स्कूल/परीक्षा केंद्र/पेपर लीक/रिज़ल्ट = "school"; गाँव/बाकी आम बात = "village"), "visuals" = 3 अलग English खोज जो उस line की बात को screen पर ठोस, असली
+स्कूल/परीक्षा केंद्र/पेपर लीक/रिज़ल्ट = "school"; थाना/शिकायत/साइबर ठगी की रिपोर्ट = "thana"; बैंक/ATM/UPI/लोन = "bank";
+बिजली कटौती/बिल/ट्रांसफ़ॉर्मर = "bijli"; राशन/गेहूँ-चावल/राशन कार्ड = "ration"; गाँव/बाकी आम बात = "village"), "visuals" = 3 अलग English खोज जो उस line की बात को screen पर ठोस, असली
 तस्वीर में दिखाएँ (बड़ी screen पर चलेंगी, सबसे ज़रूरी हिस्सा): चीज़/जगह/काम का नाम लो, भाव नहीं — जैसे
 ["lpg gas cylinder", "woman cooking gas stove india", "gas cylinder delivery truck"]; परीक्षा = ["students writing exam hall",
 "exam result notice board", "calendar pages"]. "sad", "problem", "system" जैसे खोखले शब्द नहीं.
@@ -250,7 +251,7 @@ def prompt_sharpen(eps):
 सिर्फ़ JSON list लौटाओ — उतने ही episodes, उसी क्रम में."""
 
 
-EXPRS, POSES, SETS_OK = {"gambhir", "hasi", "tanz", "gussa", "hairan", "udaas"}, {"laugh", "facepalm", "eyeroll", "thinking", "smug"}, {"studio", "village", "office", "road", "mandi", "aangan", "room", "gas", "kitchen", "station", "hospital", "khet", "school"}
+EXPRS, POSES, SETS_OK = {"gambhir", "hasi", "tanz", "gussa", "hairan", "udaas"}, {"laugh", "facepalm", "eyeroll", "thinking", "smug"}, {"studio", "village", "office", "road", "mandi", "aangan", "room", "gas", "kitchen", "station", "hospital", "khet", "school", "thana", "bank", "bijli", "ration"}
 
 
 def finish(ep, strict=True):

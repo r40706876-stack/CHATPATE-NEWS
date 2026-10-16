@@ -54,7 +54,8 @@ def pose_file(folder, expr):
 
 
 SETS = {k: ROOT / f"assets/sets/{k}.png" for k in ("studio", "village", "office", "road", "mandi", "aangan", "room",
-                                                   "gas", "kitchen", "station", "hospital", "khet", "school")}
+                                                   "gas", "kitchen", "station", "hospital", "khet", "school",
+                                                   "thana", "bank", "bijli", "ration")}
 DESK_Y = 0.555                                      # studio में desk का ऊपरी किनारा (ऊँचाई का हिस्सा)
 SCREEN = (0.005, 0.222, 0.43, 0.245)                 # पीछे वाली बड़ी screen (x, y, w, h — हिस्से में)
 _sets = {}
@@ -396,16 +397,77 @@ def _bed(n):
     return 0.07 * (kick + hat + bass)
 
 
-def mix_studio(voices, events, tail, out):
+MOOD_OF = {"hasi": "masti", "gussa": "tension", "hairan": "tension", "udaas": "udaas", "tanz": "news", "gambhir": "news"}
+
+
+def _note(f, t, decay):
+    return np.sin(2 * math.pi * f * t) * np.exp(-t * decay)
+
+
+def mood_bed(mood, n, seed=0):
+    """बिना copyright का, यहीं बना background music (हर मूड अलग), 4 bar का loop."""
+    sr = rv.SR
+    t = np.arange(n) / sr
+    out = np.zeros(n, np.float32)
+    bpm = {"news": 96, "masti": 116, "tension": 84, "udaas": 70}[mood]
+    beat = 60 / bpm
+    rng = np.random.default_rng(seed)
+    if mood == "news":                                    # हल्का kick + hat + bass (अभी जैसा)
+        return _bed(n).astype(np.float32)
+    root = {"masti": 196.0, "tension": 110.0, "udaas": 146.8}[mood]
+    scale = {"masti": [0, 4, 7, 9, 12, 9, 7, 4], "tension": [0, 1, 0, 3, 0, 1, 6, 3], "udaas": [0, 3, 7, 10, 7, 3, 2, 0]}[mood]
+    step = beat / 2
+    k = 0
+    while k * step < n / sr:                              # plucked melody (सितार/पिज़्ज़िकाटो जैसा)
+        i0 = int(k * step * sr)
+        L = min(n - i0, int(sr * (0.5 if mood != "udaas" else 1.2)))
+        tt = np.arange(L) / sr
+        f = root * 2 ** (scale[k % len(scale)] / 12)
+        amp = 0.5 if mood != "tension" or k % 2 == 0 else 0.25
+        out[i0:i0 + L] += amp * (_note(f, tt, 7) + 0.4 * _note(2 * f, tt, 11))
+        k += 1
+    if mood == "masti":                                   # ढोलक जैसा थाप
+        for j in range(int(n / sr / beat) + 1):
+            i0 = int(j * beat * sr)
+            L = min(n - i0, int(sr * 0.25))
+            tt = np.arange(L) / sr
+            f = 90 if j % 2 == 0 else 160
+            out[i0:i0 + L] += 0.8 * np.sin(2 * math.pi * f * tt * (1 - 0.5 * tt)) * np.exp(-tt * 18)
+    if mood == "tension":                                 # नीची drone + घड़ी की टिक-टिक
+        out += 0.25 * np.sin(2 * math.pi * 55 * t) * (0.6 + 0.4 * np.sin(2 * math.pi * 0.25 * t))
+        for j in range(int(n / sr / (beat / 2)) + 1):
+            i0 = int(j * beat / 2 * sr)
+            L = min(n - i0, int(sr * 0.02))
+            out[i0:i0 + L] += 0.35 * rng.normal(0, 1, L) * np.exp(-np.arange(L) / (sr * 0.004))
+    if mood == "udaas":                                   # धीमा pad
+        out += 0.18 * (np.sin(2 * math.pi * root / 2 * t) + 0.6 * np.sin(2 * math.pi * root / 2 * 1.189 * t))
+    return (0.06 * out / max(1e-6, np.abs(out).max()) * 1.6).astype(np.float32)
+
+
+def mix_studio(voices, events, tail, out, moods=None):
     total = sum(len(v) for v in voices) + int(tail * rv.SR)
     voice = np.zeros(total + rv.SR, np.float32)
+    bed = np.zeros(total + rv.SR, np.float32)
     pos = 0
-    for v in voices:
+    moods = moods or ["news"] * len(voices)
+    cache = {}
+    fade = int(0.35 * rv.SR)
+    for i, v in enumerate(voices):                        # हर हिस्से का अपना मूड, जोड़ पर धीरे से घुलता हुआ
         voice[pos:pos + len(v)] += v
+        m = moods[i]
+        if m not in cache:
+            cache[m] = mood_bed(m, total + rv.SR, len(cache))
+        seg_end = len(bed) if i == len(voices) - 1 else pos + len(v) + fade
+        w = np.ones(seg_end - pos, np.float32)
+        if i:
+            w[:fade] = np.linspace(0, 1, fade)
+        if i < len(voices) - 1:
+            w[-fade:] = np.minimum(w[-fade:], np.linspace(1, 0, fade))
+        bed[pos:seg_end] += cache[m][pos:seg_end] * w
         pos += len(v)
     env = np.convolve(np.abs(voice), np.ones(2400) / 2400, "same")
-    duck = 1 - 0.6 * np.clip(env / 0.05, 0, 1)                    # आवाज़ हो तो beat धीमा
-    mix = voice + _bed(len(voice)) * duck
+    duck = 1 - 0.6 * np.clip(env / 0.05, 0, 1)                    # आवाज़ हो तो music धीमा
+    mix = voice + bed * duck
     for t, kind in events:
         s = rv.sfx(kind)
         i = int(t * rv.SR)
@@ -434,7 +496,11 @@ def render(ep, segs, chars, out, preview):
                            "pop" if s.get("react") else "whoosh"))
         t0 += L
     events.append((t0, "ding"))
-    mix_studio([rv._read(s["wav"]) for s in segs], events, tail, out.with_suffix(".wav"))
+    moods, last_m = [], "news"
+    for s_ in segs:                                       # reaction वाला हिस्सा पिछली line का मूड रखता है
+        last_m = last_m if s_.get("react") else (s_["ln"].get("mood") or MOOD_OF.get(s_["ln"].get("expr", ""), "news"))
+        moods.append(last_m)
+    mix_studio([rv._read(s["wav"]) for s in segs], events, tail, out.with_suffix(".wav"), moods)
     wr = subprocess.Popen(["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}",
                            "-r", str(FPS), "-i", "-", "-i", str(out.with_suffix(".wav")), "-c:v", "libx264", "-crf", "20",
                            "-preset", "veryfast", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "160k", "-shortest", str(out)],
