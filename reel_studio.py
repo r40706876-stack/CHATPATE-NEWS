@@ -519,11 +519,12 @@ def render(ep, segs, chars, out, preview):
         size = (W, H) if shot == "full" else (SW_, SH_)
         vis = list(s.get("vis") or [])
         if shot in ("split", "full") and not vis and not react:
-            if cur is not None and not ln.get("big"):           # intro/outro या तस्वीर नहीं मिली: वही दोहराने के बजाय
-                cap = " ".join(str(ln.get("caption") or ln["say"]).split()[:5])     # line के शब्द, पिछली फ़ोटो धुंधली पीछे
-                vis = [{"big": cap}]
-            else:
-                vis = [{"big": ln.get("big") or headline, "sub": ln.get("sub", "")}]
+            if ln.get("big"):
+                vis = [{"big": ln["big"], "sub": ln.get("sub", "")}]
+            elif cur is None and not (si == 0 and ep.get("hook")):
+                vis = [{"big": headline}]
+            else:                                               # intro/outro: नीचे caption + ऊपर hook/सवाल पहले से हैं —
+                vis = [{"big": ""}]                             # ऊपर दोबारा वही अक्षर नहीं, सिर्फ़ धुंधली तस्वीर
         if vis and isinstance(vis[0], Path):
             last_vis = vis
         if shot == "full" and not vis:

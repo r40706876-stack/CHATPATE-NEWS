@@ -476,6 +476,11 @@ studio से). हर खबर के नीचे Google News की अस�
 {MUHAR}
 
 हर खबर पर बबलू की 1 line (ज़्यादा से ज़्यादा 18 शब्द): पहला वाक्य तथ्य, दूसरा छोटा व्यंग्य वाला वार (मुहर वाली line जैसा).
+दूसरा वाक्य पहले वाक्य के किसी एक शब्द को पकड़कर उलटे और एक बार सुनते ही साफ़ समझ आए — उलझा, आधा या बेतुका नहीं.
+सही: "दिवाली सफ़ाई के लिए नहर बंद की गई है। सफ़ाई चालू है, नल बंद।" गलत (मतलब नहीं बनता): "फ़ैसला टला है, नियम नहीं।"
+लिखने के बाद हर line ख़ुद से पूछो: "क्या गाँव का आदमी पहली बार सुनकर हँसेगा/समझेगा?" नहीं तो दोबारा लिखो.
+"stamp" उसी line के दूसरे वाक्य के शब्दों से बने (जैसे "नल बंद!", "रटने में अव्वल!"); "अनोखा कांड", "कबाड़ पुराण" जैसे
+खबर से न जुड़े शब्द नहीं.
 "zaruri" खबर में व्यंग्य हल्का रखो (तथ्य साफ़ रहे); "charcha" वाली में तीखा. नेता/पार्टी/धर्म/जाति पर वार नहीं.
 सबसे पहले एक intro line (≤ 10 शब्द, जैसे "आज की चार बड़ी खबरें, बकरा अंदाज़ में!") और आख़िर में एक outro line
 ("कौन-सी खबर सबसे बेतुकी लगी? कमेंट में नंबर लिखो!" जैसी).
@@ -526,8 +531,10 @@ def write_bulletin(c, n=4):
               "headline": str(it.get("headline") or "")[:60], "topic": it.get("topic") or items[min(k, len(items) - 1)]["topic"],
               "visuals": [str(v) for v in it.get("visuals") or []][:3], "photo_hi": [str(v) for v in it.get("photo_hi") or []][:2],
               "item": k + 1, "items_total": len(its)}
-        if it.get("stamp"):
-            ln["stamp"], ln["punch"] = str(it["stamp"])[:22], True
+        st = str(it.get("stamp") or "")[:22]
+        import visuals as _v
+        if st and _v._stems(st) & _v._stems(it["say"]):        # ठप्पा उसी line की बात से — वरना नहीं
+            ln["stamp"], ln["punch"] = st, True
         lines.append(ln)
     outro = raw.get("outro") or {}
     if outro.get("say"):
