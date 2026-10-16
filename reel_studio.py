@@ -53,7 +53,7 @@ def pose_file(folder, expr):
     raise FileNotFoundError(folder)
 
 
-SETS = {"studio": ROOT / "assets/sets/studio.png", "village": ROOT / "assets/sets/village.png"}
+SETS = {k: ROOT / f"assets/sets/{k}.png" for k in ("studio", "village", "office", "road", "mandi", "aangan", "room")}
 DESK_Y = 0.555                                      # studio में desk का ऊपरी किनारा (ऊँचाई का हिस्सा)
 SCREEN = (0.005, 0.222, 0.43, 0.245)                 # पीछे वाली बड़ी screen (x, y, w, h — हिस्से में)
 _sets = {}
@@ -89,7 +89,7 @@ def compose_band(sprite, setname, w=W, h=BAND_H):
         cut = int(h * 0.63)
         band.paste(full.crop((0, dy, w, dy + h - cut)), (0, cut))           # desk किरदार के आगे
         return band
-    top = int(full.height * 0.30)
+    top = int(full.height * (0.30 if setname == "village" else 0.38))     # नए sets: ज़मीन/बीच का हिस्सा
     band = full.crop((0, top, w, top + h)).filter(ImageFilter.GaussianBlur(1.5))
     s = h * 1.02 / sprite.height
     sp = sprite.resize((int(sprite.width * s), int(sprite.height * s)), Image.LANCZOS)

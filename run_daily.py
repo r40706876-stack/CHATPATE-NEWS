@@ -194,6 +194,8 @@ def to_studio(script):
         ep["poll"] = {"q": ep.get("ask") or "आप क्या कहते हो?", "a": str(p[0]), "b": str(p[1])}
     for ln in ep["lines"]:
         ln.setdefault("set", "studio" if ln["who"] == "bablu" else "village")
+        if not (ROOT / f"assets/sets/{ln['set']}.png").exists():
+            ln["set"] = "studio" if ln["who"] == "bablu" else "village"
     ep["production"] = True
     return ep
 
