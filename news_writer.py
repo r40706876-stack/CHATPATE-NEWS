@@ -313,13 +313,13 @@ def _safe(c):
 def write_options(c, n=3):
     import viral_check as vc
     try:
-        raw = gemini.ask(prompt_pick(c, n * 2), json_mode=True, temperature=0.4)
+        raw = gemini.ask(prompt_pick(c, n * 3), json_mode=True, temperature=0.4)
     except gemini.QuotaOver:
         raise
     except RuntimeError as e:
         print("  खबरों की list Gemini ने नहीं ली, अपराध/मौत वाली हटाकर दोबारा:", repr(e)[:150])
         c = _safe(c)
-        raw = gemini.ask(prompt_pick(c, n * 2), json_mode=True, temperature=0.4)
+        raw = gemini.ask(prompt_pick(c, n * 3), json_mode=True, temperature=0.4)
     picks = gemini.json_from(raw).get("picks", [])
     for p in picks:                                         # पहली जाँच: खबर सच में आज उठी हुई है? (free, Gemini नहीं)
         sc, why, heads = vc.trend(p.get("query") or p["topic"])
@@ -334,7 +334,14 @@ def write_options(c, n=3):
         if p["trend"]["score"] >= vc.TREND_MIN and cat not in cats:
             ok.append(p)
             cats.add(cat)
-    picks = ok[:n]
+    for p in picks:                                         # कम पड़ें तो: थोड़ी कम चर्चित पर असली खबरें (2+ अख़बार) से 3 पूरे
+        cat = str(p.get("cat") or p.get("topic"))
+        if len(ok) >= n + 1:
+            break
+        if p not in ok and p["trend"]["score"] >= 2 and p.get("_heads") and cat not in cats:
+            ok.append(p)
+            cats.add(cat)
+    picks = ok[:n + 1]                                      # 1 ज़्यादा, ताकि आगे कोई कटे तो भी 3 बचें
     print("  चुने विषय:", [p.get("cat") for p in picks])
     if not picks:
         raise NoViral(c["rejected"])
@@ -399,8 +406,9 @@ def write_options(c, n=3):
     for e in eps:
         print(f"  {'✅' if e in good else '❌'} connect {(e.get('connect') or {}).get('score', '?')}/10: {e.get('topic')}")
     c["rejected"] += [e for e in eps if e not in good]
-    if not good and eps:                                    # कुछ न भेजने से अच्छा: सबसे अच्छी scripts, नंबर के साथ
-        good = sorted(eps, key=lambda e: -(e.get("connect") or {}).get("score", 0))[:3]
+    if len(good) < n and eps:                               # हमेशा 3 विकल्प: कम पड़ें तो बाकी में से सबसे अच्छी (नंबर साफ़ दिखते हैं)
+        rest = sorted([e for e in eps if e not in good], key=lambda e: -(e.get("connect") or {}).get("score", 0))
+        good = good + rest[:n - len(good)]
         print("  कोई 7+ नहीं — फिर भी सबसे अच्छी", len(good), "भेज रहे (नंबर साफ़ दिखेंगे)")
     if not good:
         raise NoViral(c["rejected"])
