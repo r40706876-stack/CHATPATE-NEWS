@@ -266,6 +266,9 @@ def post_studio(ep):
     print(f"बन गया: {out} ({secs:.1f}s)")
     import telegram
     cap = ep.get("caption_post") if ep.get("production") else f"🎬 3D demo: {ep.get('title', '')}"
+    if ep.get("no_send"):                                 # जाँच वाला video: Telegram पर नहीं, सिर्फ़ repo में
+        print("  (no_send) Telegram पर नहीं भेजा")
+        return
     telegram.send_video(out, cap or ep.get("breaking", ""))
 
 
