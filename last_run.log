@@ -1,63 +1,86 @@
   विषय: ['अस्पताल/सेहत', 'किसान/गाँव', 'ठगी से बचाव', 'नियम/बैंक', 'नौकरी/परीक्षा', 'पढ़ाई/स्कूल', 'फ़ोन/इंटरनेट', 'महँगाई', 'योजना', 'शहर-कस्बा', 'सफ़र'] | हाल के विषय (अभी नहीं): ['नियम/बैंक', 'नौकरी/परीक्षा', 'महँगाई', 'योजना', 'शहर-कस्बा', 'सफ़र']
-  topics: 33 काम की, 8 वायरल, 5 Trends, 5 त्योहार
+  topics: 33 काम की, 8 वायरल, 6 Trends, 5 त्योहार
   Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
     सब models busy — 40s रुककर दोबारा
     सब models busy — 40s रुककर दोबारा
     key 1 नहीं चली → key 2
   Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
     सब models busy — 40s रुककर दोबारा
-    Gemini gemini-3.7-flash: 63s
-  ✅ trend 5/10: नोएडा में पार्किंग की 7वीं मंजिल की छत पर चढ़ा दी थार | 9 अख़बार/चैनल 2 दिन में, 19 खबरें 7 दिन में
-  ❌ trend 2/10: रेलवे ट्रैक और वंदे भारत के पास रील या ड्रोन उड़ाने पर जेल | 1 अख़बार/चैनल 2 दिन में, 1 खबरें 7 दिन में
-  ✅ trend 5/10: गूगल खुद काटेगा स्पैम कॉल, फ्रॉड होने से पहले बचाएगा एआई | 9 अख़बार/चैनल 2 दिन में, 12 खबरें 7 दिन में
-  ❌ trend 1/10: फास्टैग का 3075 रुपये में एनुअल पास, 200 टोल क्रॉस करने की छूट | 2 अख़बार/चैनल 2 दिन में, 10 खबरें 7 दिन में
-  ❌ trend 2/10: दवा कंपनियों पर 10 हजार करोड़ का जुर्माना, सरकार वसूल पाई सिर्फ 16 फीसदी | 1 अख़बार/चैनल 2 दिन में, 1 खबरें 7 दिन में
-  ✅ trend 6/10: बिना आधार कार्ड भी नहीं रुकेगा सरकारी योजनाओं का लाभ, केंद्र के नए नियम | 11 अख़बार/चैनल 2 दिन में, 19 खबरें 7 दिन में
-  ✅ trend 4/10: एसआई पेपर लीक में पूरा खानदान शामिल, जीजा-साला और पिता-पुत्र की मिलीभगत | 5 अख़बार/चैनल 2 दिन में, 7 खबरें 7 दिन में
-  ✅ trend 5/10: सरकारी पोर्टल से गायब हुआ पूरा गांव, प्रमाण पत्र न बनने से अटकी पढ़ाई | 10 अख़बार/चैनल 2 दिन में, 53 खबरें 7 दिन में
-  ✅ trend 4/10: प्राइवेट मेडिकल कॉलेजों पर भारी जुर्माना, छात्रों से वसूली एक्स्ट्रा फीस लौटानी होगी | 5 अख़बार/चैनल 2 दिन में, 16 खबरें 7 दिन में
-  ✅ trend 5/10: सब्जियों के बढ़े भाव, अब घर की बालकनी में गोभी उगाने की मिल रही सलाह | 7 अख़बार/चैनल 2 दिन में, 21 खबरें 7 दिन में
-  ✅ trend 5/10: ओलावृष्टि से धान की पकी फसल बर्बाद, अब गिरदावरी और मुआवजे का लंबा इंतजार | 6 अख़बार/चैनल 2 दिन में, 23 खबरें 7 दिन में
-  ❌ trend 3/10: बिजली विभाग का 417 करोड़ का बिल बकाया, आम जनता पर तुरंत कटता है कनेक्शन | 5 अख़बार/चैनल 2 दिन में, 17 खबरें 7 दिन में
-  ✅ trend 4/10: फाइव स्टार होटल की रसोई में मिले कॉकरोच और सड़ी मशीनें, फूड सेफ्टी टीम दंग | 4 अख़बार/चैनल 2 दिन में, 8 खबरें 7 दिन में
-  ✅ trend 7/10: दिवाली से पहले घरों में कबाड़ खोजो अभियान, मम्मी के हुक्म पर सफाई शुरू | 19 अख़बार/चैनल 2 दिन में, 52 खबरें 7 दिन में
-  ❌ trend 0/10: गुलाबी ठंड की दस्तक के साथ ही रजाई-गीजर और बिना नहाए रहने के बहाने शुरू | 0 अख़बार/चैनल 2 दिन में, 0 खबरें 7 दिन में
-  चुने विषय: ['त्योहार', 'वायरल', 'ठगी से बचाव', 'किसान/गाँव', 'पढ़ाई/स्कूल', 'Trends', 'नियम/बैंक']
+    Gemini gemini-3.7-flash: 52s
+  trend 3/10: दो हजार से ज्यादा के यूपीआई पेमेंट पर फीस का नया नियम
+  trend 6/10: बिना आधार कार्ड के भी नहीं रुकेगा सरकारी योजनाओं का लाभ
+  trend 5/10: ट्रेन में तत्काल न मिलने पर करंट टिकट से कन्फर्म सीट
+  trend 5/10: सरकारी भर्ती परीक्षा में पेपर लीक का अनोखा पारिवारिक सिंडिकेट बेनकाब
+  trend 6/10: फर्जीवाड़े और स्पैम कॉल पर लगाम लगाने गूगल लाएगा नया फीचर
+  trend 4/10: लंच बॉक्स भूलकर स्कूल में सीधे भोजन की थाली लेकर पहुंचा बच्चा
     सब models busy — 40s रुककर दोबारा
     सब models busy — 40s रुककर दोबारा
     key 1 नहीं चली → key 2
     सब models busy — 40s रुककर दोबारा
     सब models busy — 40s रुककर दोबारा
-  Gemini busy, 4 मिनट बाद दोबारा: Gemini nahi chala:
+Traceback (most recent call last):
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/run_daily.py", line 363, in <module>
+    main()
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/run_daily.py", line 348, in main
+    return do_bulletin(a.feed)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/run_daily.py", line 224, in do_bulletin
+    ep = news_writer.write_bulletin(topics.collect_news(feed), 4)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/news_writer.py", line 523, in write_bulletin
+    raw = gemini.json_from(gemini.ask(prompt_bulletin(items), json_mode=True, temperature=0.7))
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/gemini.py", line 68, in ask
+    return _ask(key, prompt, search, json_mode, temperature, prefer, patient)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/gemini.py", line 128, in _ask
+    raise RuntimeError("Gemini nahi chala:\n  " + "\n  ".join(errors))
+RuntimeError: Gemini nahi chala:
   gemini-flash-latest: 429 {
   "error": {
     "code": 429,
-    "message": "You exceeded your current 
-    सब models busy — 40s रुककर दोबारा
-    सब models busy — 40s रुककर दोबारा
-    key 1 नहीं चली → key 2
-    सब models busy — 40s रुककर दोबारा
-    सब models busy — 40s रुककर दोबारा
-  खबरों की list Gemini ने नहीं ली, अपराध/मौत वाली हटाकर दोबारा: RuntimeError('Gemini nahi chala:\n  gemini-flash-latest: 429 {\n  "error": {\n    "code": 429,\n    "message": "You exceeded your current quota, pleas
-    Gemini gemini-3.7-flash: 37s
-  ✅ trend 5/10: सरकारी पोर्टल से पूरा गांव ही गायब, बेटियों के प्रमाण पत्र अटके | 11 अख़बार/चैनल 2 दिन में, 54 खबरें 7 दिन में
-  ✅ trend 7/10: गूगल अब खुद रोकेगा स्कैम, ठगी होने से पहले कटेगा फ्रॉड कॉल | 18 अख़बार/चैनल 2 दिन में, 29 खबरें 7 दिन में
-  ❌ trend 2/10: वंदे भारत और रेलवे ट्रैक के पास वीडियो या रील बनाने पर पाबंदी | 2 अख़बार/चैनल 2 दिन में, 2 खबरें 7 दिन में
-  ❌ trend 1/10: एसआई पेपर लीक में पिता-पुत्र और जीजा-साला सिंडिकेट की 10 लाख वाली डील | 1 अख़बार/चैनल 2 दिन में, 4 खबरें 7 दिन में
-  ❌ trend 2/10: दवा कंपनियों पर 10 हजार करोड़ का जुर्माना, सरकार सिर्फ 16% वसूल पाई | 1 अख़बार/चैनल 2 दिन में, 1 खबरें 7 दिन में
-  ✅ trend 6/10: पहचान सत्यापन का नया नियम, आधार न होने पर भी नहीं रुकेगा सरकारी लाभ | 24 अख़बार/चैनल 2 दिन में, 69 खबरें 7 दिन में
-  ❌ trend 1/10: फास्टैग एनुअल पास 2 घंटे में एक्टिवेट, 3075 रुपये में 200 टोल फ्री | 2 अख़बार/चैनल 2 दिन में, 9 खबरें 7 दिन में
-  ✅ trend 4/10: तीन प्राइवेट मेडिकल कॉलेजों पर जुर्माना, छात्रों से वसूली गई फीस लौटानी होगी | 3 अख़बार/चैनल 2 दिन में, 6 खबरें 7 दिन में
-  ❌ trend 3/10: बिजली बिलों का 417 करोड़ बकाया, आम जनता पर सख्ती पर बड़े बकाएदारों पर सुस्ती | 5 अख़बार/चैनल 2 दिन में, 17 खबरें 7 दिन में
-  ❌ trend 3/10: लंच बॉक्स की जगह स्कूल में पूरी थाली लेकर पहुंचा मासूम छात्र | 3 अख़बार/चैनल 2 दिन में, 3 खबरें 7 दिन में
-  ✅ trend 4/10: महंगी सब्जियों से बचने के लिए छत पर विंटर वेजीटेबल उगाने की सरकारी सलाह | 7 अख़बार/चैनल 2 दिन में, 36 खबरें 7 दिन में
-  ✅ trend 4/10: जम्मू के परगवाल में ओलावृष्टि से धान बर्बाद, मुआवजे की गुहार लगाते किसान | 7 अख़बार/चैनल 2 दिन में, 44 खबरें 7 दिन में
-  ❌ trend 0/10: फाइव स्टार होटल के किचन में कॉकरोच और जंग, एफएसएसएआई जांच में खुली पोल | 0 अख़बार/चैनल 2 दिन में, 0 खबरें 7 दिन में
-  ❌ trend 3/10: दिवाली बोनस का इंतजार, ऑनलाइन सेल की कार्ट और सोनपापड़ी का खौफ | 3 अख़बार/चैनल 2 दिन में, 10 खबरें 7 दिन में
-  ❌ trend 0/10: गुलाबी ठंड की दस्तक के साथ बक्से से रजाई निकालने और धूप दिखाने का घरेलू अभियान | 0 अख़बार/चैनल 2 दिन में, 0 खबरें 7 दिन में
-  चुने विषय: ['ठगी से बचाव', 'पढ़ाई/स्कूल', 'किसान/गाँव', 'नियम/बैंक', 'योजना', 'महँगाई', 'वायरल']
-    सब models busy — 40s रुककर दोबारा
-    सब models busy — 40s रुककर दोबारा
-    key 1 नहीं चली → key 2
-    सब models busy — 40s रुककर दोबारा
-    सब models busy — 40s रुककर दोबारा
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-3.5-flash: 503 {
+  "error": {
+    "code": 503,
+    "message": "This model is currently experiencing high demand. Spikes in demand are u
+  gemini-3.6-flash: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-3.7-flash: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-pro-latest: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-flash-latest: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-flash-latest: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-3.5-flash: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-3.6-flash: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-3.7-flash: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-pro-latest: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-flash-latest: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
