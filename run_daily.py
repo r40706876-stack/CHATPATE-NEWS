@@ -73,8 +73,8 @@ def preview(eps):
         poll = ep.get("poll") or []
         if len(poll) >= 2:
             out.append(f"🗳 Poll: 1) {poll[0]}  2) {poll[1]}")
-    out.append("\n👉 जो पसंद हो उसका नंबर भेजो: 1, 2 या 3"
-               "\n👉 कोई पसंद नहीं? 0 भेजो — 3 नई scripts आएँगी"
+    out.append(f"\n👉 जो पसंद हो उसका नंबर भेजो: 1 से {len(eps)}"
+               "\n👉 कोई पसंद नहीं? 0 भेजो — नई scripts आएँगी"
                "\n(जवाब के 15-20 मिनट में video आ जाएगा)")
     return "\n".join(out)
 
@@ -85,7 +85,7 @@ def do_write(feed=None):
     import telegram
     import topics
     try:                                               # काम की खबर, देसी अंदाज़ (Gemini के सिर्फ़ 3 call)
-        eps = news_writer.write_options(topics.collect_news(feed), 3)
+        eps = news_writer.write_options(topics.collect_news(feed), 6)
     except gemini.QuotaOver:
         telegram.send_text("⏳ Gemini का free कोटा अभी ख़त्म है। ये रोज़ दोपहर ~12:30 पर नया होता है, उसके बाद वाली बारी अपने-आप चलेगी।")
         print("  आज का Gemini कोटा ख़त्म — रुक गया")

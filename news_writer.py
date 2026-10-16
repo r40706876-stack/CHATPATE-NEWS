@@ -313,13 +313,13 @@ def _safe(c):
 def write_options(c, n=3):
     import viral_check as vc
     try:
-        raw = gemini.ask(prompt_pick(c, n * 3), json_mode=True, temperature=0.4)
+        raw = gemini.ask(prompt_pick(c, min(n * 2 + 3, 15)), json_mode=True, temperature=0.4)
     except gemini.QuotaOver:
         raise
     except RuntimeError as e:
         print("  खबरों की list Gemini ने नहीं ली, अपराध/मौत वाली हटाकर दोबारा:", repr(e)[:150])
         c = _safe(c)
-        raw = gemini.ask(prompt_pick(c, n * 3), json_mode=True, temperature=0.4)
+        raw = gemini.ask(prompt_pick(c, min(n * 2 + 3, 15)), json_mode=True, temperature=0.4)
     picks = gemini.json_from(raw).get("picks", [])
     for p in picks:                                         # पहली जाँच: खबर सच में आज उठी हुई है? (free, Gemini नहीं)
         sc, why, heads = vc.trend(p.get("query") or p["topic"])

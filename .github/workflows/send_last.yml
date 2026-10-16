@@ -1,0 +1,15 @@
+# repo में रखा आख़िरी video (last_episode.mp4) Telegram पर भेजो
+name: send-last
+on:
+  workflow_dispatch:
+    inputs:
+      caption: {description: "caption", default: "📰 दिन भर की खबरें • बकरा अंदाज़ में"}
+env:
+  TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+  TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: /usr/bin/python3 -c "import telegram, pathlib, sys; telegram.send_video(pathlib.Path('last_episode.mp4'), sys.argv[1])" "${{ inputs.caption }}"

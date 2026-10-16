@@ -509,7 +509,7 @@ def render(ep, segs, chars, out, preview):
     headline = ep.get("breaking") or ep.get("title") or ""
     last_react = max([i for i, s in enumerate(segs) if s.get("react")], default=-1)
     k, seed, last_screen, prev_im, last_vis = 0, 0, None, None, []
-    cur, credit = None, ""
+    cur, credit, clean = None, "", None
     st_text, st_t, seen = "", 0, set()
     im = bases[True]
     for si, (s, n) in enumerate(zip(segs, counts)):
@@ -576,6 +576,7 @@ def render(ep, segs, chars, out, preview):
                 im.paste(sf, (SCR[0], SCR[1]))
                 zb = (1.0 + 0.10 * min(1, t / 8)) if (ln.get("punch") and not react) else (1.05 if react else 1.0 + 0.03 * t / n)
                 im.paste(_zoomr(fr, zb), (0, BAND_Y))
+                clean = im.copy()                                # बिना लिखाई वाला frame (आख़िरी poll के पीछे)
             d = ImageDraw.Draw(im)
             rv.chrome(d, k)
             if shot == "split":
@@ -623,7 +624,8 @@ def render(ep, segs, chars, out, preview):
             wr.stdin.write(im.tobytes())
             k += 1
         prev_im = im
-    end = im.filter(ImageFilter.GaussianBlur(8))
+    end = (clean if clean is not None else im).filter(ImageFilter.GaussianBlur(10))
+    end = Image.blend(end, Image.new("RGB", end.size), 0.35)
     for t in range(tailn):
         im = end.copy()
         d = ImageDraw.Draw(im)
