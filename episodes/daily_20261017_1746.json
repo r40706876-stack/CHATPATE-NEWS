@@ -1,0 +1,164 @@
+{
+ "topic": "रामलीला में शूर्पणखा का फिल्मी गाने पर डांस का वीडियो वायरल",
+ "category": "वायरल",
+ "breaking": "रामलीला में शूर्पणखा का फिल्मी गाने पर डांस वीडियो वायरल",
+ "hook_text": "मर्यादा मंच पर, दर्शक स्क्रीन पर",
+ "ask": "क्या आपने भी रामलीला का वायरल वीडियो देखा?",
+ "source": "AajTak, News18 Hindi, Lokmat News Hindi",
+ "poll": {
+  "q": "क्या आपने भी रामलीला का वायरल वीडियो देखा?",
+  "a": "देखा है",
+  "b": "नहीं देखा"
+ },
+ "ticker": [
+  "आयोजकों का दावा, परंपरा बरकरार है",
+  "वीडियो को मिले तीस लाख से ज्यादा व्यूज",
+  "सोशल मीडिया पर रामलीला का नया रंग"
+ ],
+ "cast_why": "बबलू एंकर के रूप में तथ्य बताएगा और पिंकी सोशल मीडिया के एंगल से तंज कसेगी।",
+ "lines": [
+  {
+   "who": "bablu",
+   "say": "रामलीला में शूर्पणखा का फ़िल्मी गाने पर डांस का वीडियो वायरल हुआ है। मर्यादा मंच पर थी, दर्शक स्क्रीन पर हैं।",
+   "caption": "रामलीला में शूर्पणखा का फ़िल्मी गाने पर डांस का वीडियो वायरल हुआ है। मर्यादा मंच पर थी, दर्शक स्क्रीन पर हैं।",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "ramlila stage performance india",
+    "viral dance video on smartphone",
+    "crowd watching stage show"
+   ],
+   "photo_hi": [
+    "रामलीला मंचन कलाकार",
+    "सोशल मीडिया वायरल वीडियो"
+   ],
+   "card": {
+    "tag": "वायरल वीडियो",
+    "big": "30 लाख+ व्यूज",
+    "sub": "रामलीला मंच पर फिल्मी डांस",
+    "icon": "phone"
+   },
+   "visual": "ramlila stage performance india",
+   "scene": "studio",
+   "punch": false,
+   "insta": ""
+  },
+  {
+   "who": "pinky",
+   "say": "वीडियो को तीस लाख से ज़्यादा लोगों ने देख लिया। भक्ति कोई नहीं देख रहा, डांस सब देख रहे हैं।",
+   "caption": "वीडियो को 30 लाख से ज़्यादा लोगों ने देख लिया। भक्ति कोई नहीं देख रहा, डांस सब देख रहे हैं।",
+   "expr": "hasi",
+   "set": "room",
+   "visuals": [
+    "girl holding smartphone reels",
+    "social media view count interface",
+    "stage lighting festive event"
+   ],
+   "photo_hi": [
+    "मोबाइल स्क्रीन वीडियो",
+    "रामलीला दर्शक भीड़"
+   ],
+   "punch": true,
+   "react_pose": "eyeroll",
+   "stamp": "व्यूज ही भक्ति है!",
+   "visual": "girl holding smartphone reels",
+   "scene": "pinky",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "say": "आयोजकों का कहना है, मंच पर परंपरा का ध्यान रखा गया है। ध्यान सिर्फ़ व्यूज़ का रखा गया है।",
+   "caption": "आयोजकों का कहना है, मंच पर परंपरा का ध्यान रखा गया है। ध्यान सिर्फ़ व्यूज़ का रखा गया है।",
+   "expr": "tanz",
+   "set": "studio",
+   "visuals": [
+    "stage coordinator microphone",
+    "dramatic stage artist costumed",
+    "trending topic graph screen"
+   ],
+   "photo_hi": [
+    "रामलीला समिति आयोजक",
+    "स्टेज डांस परफॉर्मेंस"
+   ],
+   "visual": "stage coordinator microphone",
+   "scene": "pinky",
+   "punch": false,
+   "insta": ""
+  },
+  {
+   "who": "pinky",
+   "say": "लक्ष्मण जी का प्रस्ताव तो ख़ारिज हो गया। पर रील्स पर ट्रेंड पास हो गया।",
+   "caption": "लक्ष्मण जी का प्रस्ताव तो ख़ारिज हो गया। पर रील्स पर ट्रेंड पास हो गया।",
+   "expr": "hasi",
+   "set": "room",
+   "visuals": [
+    "instagram reels trend symbol",
+    "mythological actor costume stage",
+    "mobile viral notifications"
+   ],
+   "photo_hi": [
+    "लक्ष्मण शूर्पणखा रामलीला",
+    "सोशल मीडिया ट्रेंड"
+   ],
+   "punch": true,
+   "react_pose": "laugh",
+   "stamp": "ट्रेंड पास हो गया!",
+   "visual": "instagram reels trend symbol",
+   "scene": "pinky",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "say": "यह वीडियो उसको भेजो, जो रामलीला देखने भी सिर्फ़ रील्स बनाने जाता है।",
+   "caption": "यह वीडियो उसको भेजो, जो रामलीला देखने भी सिर्फ़ रील्स बनाने जाता है।",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "person recording stage video phone",
+    "festive night lighting india",
+    "viral clip sharing screen"
+   ],
+   "photo_hi": [
+    "रामलीला मोबाइल रिकॉर्डिंग",
+    "सोशल मीडिया शेयर"
+   ],
+   "visual": "person recording stage video phone",
+   "scene": "studio_end",
+   "punch": false,
+   "insta": ""
+  }
+ ],
+ "caption_post": "रामलीला में डांस का वीडियो वायरल हुआ तो ध्यान भक्ति पर या व्यूज़ पर? अपनी राय बताएँ। Family group में भेजो। स्रोत: AajTak, News18 Hindi #Ramlila #ViralVideo #BakraNews #Satire #Reels",
+ "format": "explain",
+ "label": "काम की खबर",
+ "key_word": "",
+ "icons": [
+  "₹",
+  "NEWS",
+  "%"
+ ],
+ "hook": "मर्यादा मंच पर, दर्शक स्क्रीन पर",
+ "trend": {
+  "score": 5,
+  "why": "7 अख़बार/चैनल 2 दिन में, 35 खबरें 7 दिन में"
+ },
+ "connect": {
+  "score": 4,
+  "why": "रील्स के चक्कर में धार्मिक मंचों के बिगड़ने पर समकालीन कटाक्ष है।",
+  "weak": "गाँव-कस्बे के आम परिवार के पैसे, रोटी या रोज़मर्रा की ज़िंदगी से कोई वास्ता नहीं है।",
+  "fix": "इसे स्थानीय रामलीला चंदे की रसीद और लाउडस्पीकर के शोर की रोज़मर्रा की परेशानी से जोड़ें।",
+  "parts": {
+   "A": 0,
+   "B": 1,
+   "C": 1,
+   "D": 1,
+   "E": 0,
+   "F": 1
+  }
+ },
+ "sprite": {
+  "pinky": "assets/toon/pinky",
+  "bablu": "assets/toon/bablu"
+ },
+ "production": true
+}
