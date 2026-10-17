@@ -1,0 +1,965 @@
+{
+  "sent_at": 1792254424,
+  "eps": [
+    {
+      "topic": "फेस्टिव सीजन में ऑनलाइन शॉपिंग साइबर ठगी",
+      "category": "ठगी से बचाव",
+      "breaking": "फेस्टिव सीजन में भारी छूट के नाम पर ऑनलाइन साइबर ठगी",
+      "hook_text": "छूट नब्बे परसेंट, बैलेंस शून्य",
+      "ask": "क्या कभी लॉटरी या फर्जी डिस्काउंट का लिंक आया?",
+      "source": "Amar Ujala, Dainik Bhaskar, ABP News, Jagran",
+      "poll": [
+        "आया है लिंक",
+        "नहीं आया"
+      ],
+      "ticker": [
+        "साइबर ठगों का बंपर ऑफर, क्लिक करो और खाता साफ़ करवाओ",
+        "डीग पुलिस ने 21 साइबर ठग दबोचे, लैपटॉप और फोन जब्त",
+        "त्योहारी सेल में नकली वेबसाइटों की भरमार, सतर्कता जरूरी"
+      ],
+      "cast_why": "ऑनलाइन शॉपिंग ऑफर में फंसने वाली पिंकी और दादी की काम की चेतावनी के साथ बबलू का पंच।",
+      "lines": [
+        {
+          "who": "bablu",
+          "say": "त्योहारों पर भारी डिस्काउंट वाली वेबसाइटें निकली हैं। भारी डिस्काउंट नहीं, जेब पर भारी चूना है।",
+          "caption": "त्योहारों पर भारी डिस्काउंट वाली वेबसाइटें निकली हैं। भारी डिस्काउंट नहीं, जेब पर भारी चूना है।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "online shopping flash sale banner 90 percent off",
+            "hacker typing glowing laptop dark room",
+            "credit card on keyboard online shopping"
+          ],
+          "photo_hi": [
+            "ऑनलाइन शॉपिंग फर्जी वेबसाइट",
+            "साइबर ठगी डिस्काउंट ऑफर"
+          ],
+          "punch": true,
+          "react_pose": "eyeroll",
+          "stamp": "भारी चूना!",
+          "visual": "online shopping flash sale banner 90 percent off",
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "pinky",
+          "say": "मुझे लगा नब्बे परसेंट छूट में साड़ी मिलेगी। साड़ी का पता नहीं, बैंक का मैसेज ज़रूर आ गया।",
+          "caption": "मुझे लगा 90% छूट में साड़ी मिलेगी। साड़ी का पता नहीं, बैंक का मैसेज आ गया।",
+          "expr": "udaas",
+          "set": "room",
+          "visuals": [
+            "girl shocked looking smartphone screen empty bank",
+            "fake mobile shopping app advertisement",
+            "delivery box empty cardboard"
+          ],
+          "photo_hi": [
+            "मोबाइल बैंक मैसेज खाली खाता",
+            "ऑनलाइन फ्रॉड शिकायत"
+          ],
+          "punch": true,
+          "react_pose": "facepalm",
+          "stamp": "खाता साफ़!",
+          "visual": "girl shocked looking smartphone screen empty bank",
+          "scene": "pinky",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "डीग पुलिस ने चार थानों के तहत इक्कीस साइबर ठगों को गिरफ्तार किया है। ठग इक्कीस पकड़े गए, बाकी लिंक भेज रहे हैं।",
+          "caption": "डीग पुलिस ने 4 थानों से 21 साइबर ठग पकड़े। ठग 21 पकड़े गए, बाकी लिंक भेज रहे हैं।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "police station press conference arrested cyber criminals",
+            "handcuffs on table with seized smartphones laptops",
+            "police escorting arrested cyber frauds"
+          ],
+          "photo_hi": [
+            "डीग पुलिस साइबर ठग गिरफ्तार",
+            "पुलिस प्रेस कॉन्फ्रेंस साइबर अपराधी"
+          ],
+          "card": {
+            "tag": "पुलिस कार्रवाई",
+            "big": "21 गिरफ्तार",
+            "sub": "4 थानों में धरपकड़",
+            "icon": "alert"
+          },
+          "visual": "police station press conference arrested cyber criminals",
+          "scene": "card",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "dadi",
+          "say": "सुनो, मुफ़्त के लालच में अनजान लिंक दबाने से बचो। बैंक बैलेंस दोबारा डाउनलोड नहीं होता।",
+          "caption": "मुफ़्त के लालच में अनजान लिंक दबाने से बचो। बैंक बैलेंस दोबारा डाउनलोड नहीं होता।",
+          "expr": "gambhir",
+          "set": "aangan",
+          "visuals": [
+            "close up finger pressing suspicious blue link smartphone",
+            "bank account balance zero red alert screen",
+            "elderly indian woman advising camera"
+          ],
+          "photo_hi": [
+            "साइबर हेल्पलाइन जागरूकता",
+            "फर्जी लिंक बैंक फ्रॉड चेतावनी"
+          ],
+          "punch": true,
+          "react_pose": "smug",
+          "stamp": "सोच समझकर!",
+          "visual": "close up finger pressing suspicious blue link smartphone",
+          "scene": "dadi_call",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "ये वीडियो उस रिश्तेदार को भेजो, जो हर मुफ़्त वाले लिंक को पूरे परिवार में फ़ॉरवर्ड करता है।",
+          "caption": "ये वीडियो उसको भेजो, जो हर मुफ़्त लिंक परिवार में फ़ॉरवर्ड करता है।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "whatsapp family chat group forward message screen",
+            "smartphone notification alert fraud warning",
+            "worried user holding smartphone head in hand"
+          ],
+          "photo_hi": [
+            "व्हाट्सऐप फॉरवर्ड मैसेज फ्रॉड",
+            "साइबर ठगी जागरूकता"
+          ],
+          "visual": "whatsapp family chat group forward message screen",
+          "scene": "studio_end",
+          "punch": false,
+          "insta": ""
+        }
+      ],
+      "caption_post": "90% छूट के लालच में बैंक खाता 100% खाली मत करवा लेना! ⚠️ अनजान लिंक दबाया या नहीं? Family group में भेजो। स्रोत: Amar Ujala, Dainik Bhaskar, ABP News #CyberFraud #OnlineShoppingScam #BakraNews #DeegPolice #CyberCrime (AI से बने किरदार)",
+      "format": "explain",
+      "label": "काम की खबर",
+      "key_word": "",
+      "icons": [
+        "₹",
+        "NEWS",
+        "%"
+      ],
+      "hook": "छूट नब्बे परसेंट, बैलेंस शून्य",
+      "trend": {
+        "score": 5,
+        "why": "10 अख़बार/चैनल 2 दिन में, 31 खबरें 7 दिन में"
+      },
+      "connect": {
+        "score": 10,
+        "why": "हर मोबाइल यूजर की जेब, असली फ्रॉड का डर और फ्री लिंक वाले रिश्तेदार पर अचूक निशाना।",
+        "weak": "पिंकी और दादी के किरदारों के बीच टोन का हल्का बिखराव है।",
+        "fix": "पिंकी के साड़ी वाले लालच और दादी की डांट को आमने-सामने थोड़ा और तीखा टकराव दें।",
+        "parts": {
+          "A": 3,
+          "B": 2,
+          "C": 2,
+          "D": 1,
+          "E": 1,
+          "F": 1
+        }
+      }
+    },
+    {
+      "topic": "टेलीकॉम और ट्राई के नए नियम",
+      "category": "नियम/बैंक",
+      "breaking": "1 नवंबर से टेलीकॉम नियमों में बड़ा बदलाव, कॉलर का नाम दिखेगा",
+      "hook_text": "घंटी बजते ही कॉलर बेनकाब",
+      "ask": "दिन में कितनी फर्जी कॉल्स आती हैं आपको?",
+      "source": "AajTak, News18 Hindi, Business Standard",
+      "poll": [
+        "1 से 5 कॉल्स",
+        "अनगिनत कॉल्स"
+      ],
+      "ticker": [
+        "ट्राई का नया फरमान, 1 नवंबर से फोन बजते ही दिखेगा नाम",
+        "क्रेडिट कार्ड और लोन वाले एजेंटों में नए नियमों से खलबली",
+        "विज्ञापनों की फर्जी कॉल्स पर लगाम लगाने की नई तैयारी"
+      ],
+      "cast_why": "स्पैम कॉल्स से परेशान आम आदमी की आवाज़ चाचा और टेलीकॉम नियमों के विशेषज्ञ बने बबलू की जुगलबंदी।",
+      "lines": [
+        {
+          "who": "bablu",
+          "say": "ट्राई ने साफ़ किया है, एक नवंबर से घंटी बजते ही कॉलर का नाम दिखेगा। पहचान तो दिखेगी, कर्ज़ देने वाले की नीयत नहीं।",
+          "caption": "ट्राई ने कहा, 1 नवंबर से घंटी बजते ही कॉलर दिखेगा। पहचान दिखेगी, कर्ज़ देने वाले की नीयत नहीं।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "smartphone ringing incoming call caller id displayed",
+            "trai official regulatory logo document",
+            "frustrated mobile user looking at incoming unknown call"
+          ],
+          "photo_hi": [
+            "ट्राई टेलीकॉम नए नियम",
+            "मोबाइल इनकमिंग कॉल स्क्रीन"
+          ],
+          "punch": true,
+          "react_pose": "eyeroll",
+          "stamp": "दिखेगी पहचान!",
+          "visual": "smartphone ringing incoming call caller id displayed",
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "chacha",
+          "say": "पहले अनजान लोग घर आते थे, चाय पीते थे। अब अनजान नंबर से सिर्फ़ पर्सनल लोन वाले आते हैं।",
+          "caption": "पहले मेहमान घर आते थे, चाय पीते थे। अब अनजान नंबर से सिर्फ़ लोन वाले आते हैं।",
+          "expr": "tanz",
+          "set": "aangan",
+          "visuals": [
+            "old landline black telephone vintage table",
+            "telecaller woman wearing headset speaking sales script",
+            "village elder picking mobile phone annoyed expression"
+          ],
+          "photo_hi": [
+            "टेलीकॉलर कॉल सेंटर भारत",
+            "बुजुर्ग मोबाइल फोन बात"
+          ],
+          "punch": true,
+          "react_pose": "facepalm",
+          "stamp": "लोन वाले!",
+          "visual": "old landline black telephone vintage table",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "विज्ञापनों और अनचाही कॉल्स को रोकने के लिए नए नियम बने हैं। नियम कड़े बने हैं, कॉलर का हौसला और कड़ा है।",
+          "caption": "अनचाही कॉल्स रोकने को नए नियम बने हैं। नियम कड़े बने हैं, कॉलर का हौसला और कड़ा है।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "call center bank of telemarketers headsets headsets",
+            "spam call blocked notification on smartphone screen",
+            "telecom tower against sunset sky"
+          ],
+          "photo_hi": [
+            "स्पैम कॉल कॉल सेंटर",
+            "ट्राई अनचाही कॉल्स नियम"
+          ],
+          "card": {
+            "tag": "नया नियम",
+            "big": "1 नवंबर",
+            "sub": "कॉलर पहचान लागू",
+            "icon": "phone"
+          },
+          "visual": "call center bank of telemarketers headsets headsets",
+          "scene": "card",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "chacha",
+          "say": "विभाग ने कहा है फर्जी कॉल्स बंद होंगी। बंद फोन होना चाहिए, बंद नेटवर्क का सिग्नल होता है।",
+          "caption": "विभाग ने कहा फर्जी कॉल्स रुकेंगी। बंद फोन होना था, बंद नेटवर्क सिग्नल होता है।",
+          "expr": "tanz",
+          "set": "aangan",
+          "visuals": [
+            "no signal tower bars mobile screen notification",
+            "man checking network lifting phone in air outdoors",
+            "telecom fiber optical cable wires tangled pole"
+          ],
+          "photo_hi": [
+            "मोबाइल नेटवर्क समस्या गांव",
+            "ट्राई दिशा निर्देश नियम"
+          ],
+          "punch": true,
+          "react_pose": "smug",
+          "stamp": "सिग्नल गायब!",
+          "visual": "no signal tower bars mobile screen notification",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "ये वीडियो उसको भेजो, जो क्रेडिट कार्ड वालों से आधे घंटे तक मौज में गप्पें मारता है।",
+          "caption": "ये वीडियो उसको भेजो, जो क्रेडिट कार्ड वालों से आधे घंटे गप्पें मारता है।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "man smiling laughing talking on phone on couch",
+            "credit card plastic shining light promo",
+            "mobile screen call timer forty minutes"
+          ],
+          "photo_hi": [
+            "क्रेडिट कार्ड फोन ऑफर",
+            "मोबाइल कॉल हंसी मजाक"
+          ],
+          "visual": "man smiling laughing talking on phone on couch",
+          "scene": "studio_end",
+          "punch": false,
+          "insta": ""
+        }
+      ],
+      "caption_post": "1 नवंबर से फोन बजते ही कॉलर की कुंडली सामने होगी! 📞 दिन में कितने लोन वाले फोन आते हैं? Family group में भेजो। स्रोत: AajTak, News18 Hindi, Business Standard #TRAI #TelecomRules #SpamCalls #BakraNews #MobileRecharge (AI से बने किरदार)",
+      "format": "explain",
+      "label": "काम की खबर",
+      "key_word": "",
+      "icons": [
+        "₹",
+        "NEWS",
+        "%"
+      ],
+      "hook": "घंटी बजते ही कॉलर बेनकाब",
+      "trend": {
+        "score": 4,
+        "why": "8 अख़बार/चैनल 2 दिन में, 36 खबरें 7 दिन में"
+      },
+      "connect": {
+        "score": 8,
+        "why": "पर्सनल लोन और फर्जी कॉल्स से त्रस्त आम जनता की रोज की झुंझलाहट को बखूबी पकड़ा है।",
+        "weak": "हुक 'कॉलर बेनकाब' किसी न्यूज चैनल की साधारण हेडलाइन जैसा है, आम बातचीत का झटका नहीं।",
+        "fix": "हुक को बदलकर 'लोन वाले का फोन, अब नाम के साथ' जैसा सीधा और मारक बनाएं।",
+        "parts": {
+          "A": 2,
+          "B": 2,
+          "C": 1,
+          "D": 1,
+          "E": 1,
+          "F": 1
+        }
+      }
+    },
+    {
+      "topic": "फास्टैग लोकल/एनुअल पास नियम",
+      "category": "पढ़ाई/स्कूल",
+      "breaking": "टोल प्लाजा पर 20 किमी दायरे के लिए लोकल फास्टैग पास नियम",
+      "hook_text": "पास लोकल, टोल का दर्द नेशनल",
+      "ask": "क्या टोल प्लाजा पर लोकल छूट मिलती है?",
+      "source": "NDTV India, inextlive, Study Govt Help, Navbharat Live",
+      "poll": [
+        "छूट मिलती है",
+        "पूरा टोल कटता है"
+      ],
+      "ticker": [
+        "टोल प्लाजा के 20 किमी दायरे में रहने वालों को एनुअल पास सुविधा",
+        "लगभग 3000 से 3075 रुपये में साल भर में 200 बार का पास",
+        "टोल बैरियर पर लाइन लंबी, लोकल पास के कागजात जुटाने की होड़"
+      ],
+      "cast_why": "रोजाना टोल देने वाले परेशान वाहन चालक रमेश और टोल नियमों पर बबलू का जमीनी व्यंग्य।",
+      "lines": [
+        {
+          "who": "bablu",
+          "say": "टोल प्लाज़ा के बीस किलोमीटर दायरे में स्थानीय पास का नियम है। पास स्थानीय है, टोल का दर्द राष्ट्रीय है।",
+          "caption": "टोल प्लाज़ा के 20 किमी दायरे में लोकल पास का नियम है। पास लोकल है, टोल का दर्द राष्ट्रीय है।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "toll plaza plaza lanes barrier boom car moving",
+            "fastag sticker on car windshield close up barcode",
+            "highway distance milestone board 20 km"
+          ],
+          "photo_hi": [
+            "टोल प्लाजा फास्टैग लेन",
+            "हाईवे टोल टैक्स बैरियर"
+          ],
+          "punch": true,
+          "react_pose": "eyeroll",
+          "stamp": "दर्द राष्ट्रीय!",
+          "visual": "toll plaza plaza lanes barrier boom car moving",
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "लगभग तीन हज़ार से तीन हज़ार पचहत्तर रुपये में दो सौ बार टोल पार करने की सुविधा है। सुविधा दो सौ बार है, जाम अनगिनत बार।",
+          "caption": "लगभग ₹3000 से ₹3075 में 200 बार टोल पार की सुविधा। सुविधा 200 बार है, जाम अनगिनत बार।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "long line of cars waiting at toll plaza traffic jam",
+            "toll tax receipt receipt slip counter machine",
+            "fastag scanner green light toll barrier"
+          ],
+          "photo_hi": [
+            "फास्टैग एनुअल पास रसीद",
+            "टोल प्लाजा लंबा जाम"
+          ],
+          "card": {
+            "tag": "फास्टैग पास",
+            "big": "₹3,000-3,075",
+            "sub": "200 बार / 1 साल",
+            "icon": "rupee"
+          },
+          "visual": "long line of cars waiting at toll plaza traffic jam",
+          "scene": "card",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "ramesh",
+          "say": "सरकार का कहना है पास से स्थानीय लोगों का समय बचेगा। समय तो बचता है, पर टोल का बैरियर उठने में नहीं।",
+          "caption": "सरकार का कहना है पास से समय बचेगा। समय बचता है, पर बैरियर उठने में नहीं।",
+          "expr": "udaas",
+          "set": "road",
+          "visuals": [
+            "car driver honking horn waiting toll booth barrier",
+            "toll booth operator checking computer screen",
+            "car dashboard showing fastag low balance alert"
+          ],
+          "photo_hi": [
+            "टोल बूथ कर्मचारी कंप्यूटर",
+            "फास्टैग बैरियर समस्या"
+          ],
+          "punch": true,
+          "react_pose": "facepalm",
+          "stamp": "बैरियर अटका!",
+          "visual": "car driver honking horn waiting toll booth barrier",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "अधिकारियों के मुताबिक फास्टैग व्यवस्था पूरी पारदर्शी है। पारदर्शी सिर्फ़ बैलेंस है, कटते ही साफ़ दिखता है।",
+          "caption": "दावा है फास्टैग व्यवस्था पारदर्शी है। पारदर्शी सिर्फ़ बैलेंस है, कटते ही साफ़ दिखता है।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "mobile banking sms toll charge deducted alert",
+            "car windshield with multiple stickers on highway",
+            "toll plaza cctv surveillance camera mast"
+          ],
+          "photo_hi": [
+            "फास्टैग पैसा कटने का मैसेज",
+            "टोल प्लाजा फास्टैग स्कैनर"
+          ],
+          "punch": true,
+          "react_pose": "smug",
+          "stamp": "बैलेंस साफ़!",
+          "visual": "mobile banking sms toll charge deducted alert",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "ramesh",
+          "say": "ये वीडियो उस पड़ोसी को भेजो, जो टोल के पचास रुपये बचाने के लिए खेत की पगडंडी से गाड़ी निकालता है।",
+          "caption": "ये वीडियो उसको भेजो, जो टोल बचाने को खेत के रास्ते से गाड़ी निकालता है।",
+          "expr": "tanz",
+          "set": "road",
+          "visuals": [
+            "car driving on dusty rough village dirt path through fields",
+            "car dodging deep mud potholes rural shortcut",
+            "highway toll plaza bypass route sign"
+          ],
+          "photo_hi": [
+            "खेत की कच्ची सड़क पर कार",
+            "टोल बचाने का शॉर्टकट रास्ता"
+          ],
+          "visual": "car driving on dusty rough village dirt path through fields",
+          "scene": "studio_end",
+          "punch": false,
+          "insta": ""
+        }
+      ],
+      "caption_post": "20 किमी दायरे वालों के लिए साल भर का पास ₹3000 में, बस जाम से मुक्ति का कोई पास नहीं! 🚗 आप टोल देते हैं या शॉर्टकट? Family group में भेजो। स्रोत: NDTV India, inextlive #FastagRules #TollPlaza #HighwayTravel #BakraNews #LocalPass (AI से बने किरदार)",
+      "format": "explain",
+      "label": "काम की खबर",
+      "key_word": "",
+      "icons": [
+        "₹",
+        "NEWS",
+        "%"
+      ],
+      "hook": "पास लोकल, टोल का दर्द नेशनल",
+      "trend": {
+        "score": 5,
+        "why": "11 अख़बार/चैनल 2 दिन में, 58 खबरें 7 दिन में"
+      },
+      "connect": {
+        "score": 8,
+        "why": "टोल का दर्द, फास्टैग से कटता बैलेंस और पगडंडी से गाड़ी निकालने वाले पड़ोसी का सटीक चित्रण।",
+        "weak": "गाँव-कस्बे के केवल निजी वाहन मालिकों से जुड़ा है, पैदल और बस वाले बहुसंख्यक वर्ग पर असर नहीं।",
+        "fix": "टोल बढ़ने से लोकल ऑटो और डग्गामार बसों के बढ़ते किराए को जोड़ें ताकि हर यात्री कनेक्ट हो सके।",
+        "parts": {
+          "A": 1,
+          "B": 2,
+          "C": 2,
+          "D": 1,
+          "E": 1,
+          "F": 1
+        }
+      }
+    },
+    {
+      "topic": "दिवाली से पहले सफाई अभियान",
+      "category": "त्योहार",
+      "breaking": "त्योहारों से पहले शहरों में सफाई अभियान तेज",
+      "hook_text": "सफाई चौबीस घंटे, कचरा लगातार",
+      "ask": "आपके मोहल्ले में सफाई कर्मचारी कब आते हैं?",
+      "source": "दैनिक भास्कर, अमर उजाला, ABP News, News18 Hindi",
+      "poll": [
+        "सफाई दिखी",
+        "सिर्फ़ कागज़ों में"
+      ],
+      "ticker": [
+        "प्रशासन ने कहा, कचरा उठाना हमारी नैतिक योजना है",
+        "सफाई अभियान तेज, धूल उड़ने की गति दुगनी",
+        "त्योहारी सीजन में केवल निर्देशों की चमक बरकरार"
+      ],
+      "cast_why": "नगर निकाय के सफाई दावों और ज़मीनी गंदगी पर बबलू और चाचा का तीखा संवाद।",
+      "lines": [
+        {
+          "who": "bablu",
+          "say": "प्रशासन ने त्योहारों पर चौबीस घंटे सफाई का दावा किया है। कचरा बिना बताए चौबीस घंटे गिरता है।",
+          "caption": "प्रशासन ने त्योहारों पर 24 घंटे सफाई का दावा किया है। कचरा बिना बताए 24 घंटे गिरता है।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "garbage piled on indian street",
+            "municipal street sweeper cleaning road",
+            "diwali festival street market crowd"
+          ],
+          "photo_hi": [
+            "वाराणसी घाट सफाई",
+            "नगर निगम कचरा गाड़ी"
+          ],
+          "punch": true,
+          "react_pose": "eyeroll",
+          "stamp": "कचरा लगातार!",
+          "visual": "garbage piled on indian street",
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "वाराणसी में पचासी घाटों से गाद हटाने के लिए दो सौ से ज्यादा पंप लगाए गए हैं। गाद हटने का इंतज़ार कर रही है।",
+          "caption": "वाराणसी में 85 घाटों से गाद हटाने को 200+ पंप लगे हैं। गाद हटने का इंतज़ार कर रही है।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "varanasi ghats river ganga silt mud",
+            "water pump machine pumping mud river bank",
+            "ganga ghat cleaning drive workers"
+          ],
+          "photo_hi": [
+            "वाराणसी गंगा घाट पंप",
+            "देव दीपावली घाट सफाई"
+          ],
+          "card": {
+            "tag": "सफाई अभियान",
+            "big": "200+ पंप",
+            "sub": "85 घाटों पर काम",
+            "icon": "alert"
+          },
+          "visual": "varanasi ghats river ganga silt mud",
+          "scene": "card",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "chacha",
+          "say": "उत्तर प्रदेश सरकार ने सफाई और बिजली पर कड़े निर्देश जारी किए हैं। कड़े सिर्फ़ निर्देश हैं, बाकी सब ढीला है।",
+          "caption": "UP सरकार ने सफाई-बिजली पर कड़े निर्देश जारी किए हैं। कड़े सिर्फ़ निर्देश हैं, बाकी सब ढीला है।",
+          "expr": "tanz",
+          "set": "road",
+          "visuals": [
+            "official government meeting orders file",
+            "garbage overflowing dumpster india",
+            "broken street light pole evening"
+          ],
+          "photo_hi": [
+            "सरकारी आदेश पत्र नगर निकाय",
+            "सड़क किनारे कूड़े का ढेर"
+          ],
+          "punch": true,
+          "react_pose": "smug",
+          "stamp": "ढीला सिस्टम!",
+          "visual": "official government meeting orders file",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "विभाग का कहना है, शहर पूरी तरह चकाचक होगा। चकाचक सिर्फ़ उनका दफ़्तर दिखता है।",
+          "caption": "विभाग का कहना है, शहर पूरी तरह चकाचक होगा। चकाचक सिर्फ़ उनका दफ़्तर दिखता है।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "neat modern government office desk",
+            "dusty road traffic pothole india",
+            "broom cleaning dust fly air"
+          ],
+          "photo_hi": [
+            "नगर निगम कार्यालय",
+            "सड़क पर झाड़ू लगाते सफाईकर्मी"
+          ],
+          "punch": true,
+          "react_pose": "eyeroll",
+          "stamp": "दिखता ही नहीं!",
+          "visual": "neat modern government office desk",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "chacha",
+          "say": "ये वीडियो उसको भेजो, जो घर की सफाई का कचरा सीधा सड़क पर फेंकता है।",
+          "caption": "ये वीडियो उसको भेजो, जो घर की सफाई का कचरा सीधा सड़क पर फेंकता है।",
+          "expr": "tanz",
+          "set": "road",
+          "visuals": [
+            "person throwing plastic trash road",
+            "indian mohalla street dirty drain",
+            "neighborhood street cleanup diwali"
+          ],
+          "photo_hi": [
+            "गली में कचरा फेंकना",
+            "दीपावली घर की सफाई कचरा"
+          ],
+          "visual": "person throwing plastic trash road",
+          "scene": "studio_end",
+          "punch": false,
+          "insta": ""
+        }
+      ],
+      "caption_post": "सरकारी निर्देश कड़े हैं, बस ज़मीन पर झाड़ू ढीली है! 🧹 आपके यहाँ सफाई हुई क्या? Family group में भेजो। स्रोत: दैनिक भास्कर, अमर उजाला #DiwaliCleaning #BakraNews #CivicSense #UPNews #CleanIndia (AI से बने किरदार)",
+      "format": "explain",
+      "label": "काम की खबर",
+      "key_word": "",
+      "icons": [
+        "₹",
+        "NEWS",
+        "%"
+      ],
+      "hook": "सफाई चौबीस घंटे, कचरा लगातार",
+      "trend": {
+        "score": 6,
+        "why": "13 अख़बार/चैनल 2 दिन में, 33 खबरें 7 दिन में"
+      },
+      "connect": {
+        "score": 6,
+        "why": "सरकारी दफ्तरों के ढोंग और कड़े निर्देशों पर मुहर वाली व्यंग्यात्मक लाइन्स सटीक हैं।",
+        "weak": "वाराणसी के पंप और नगर पालिका सफाई से गाँव-कस्बे के आम दर्शक की जेब पर सीधा असर नहीं दिखता।",
+        "fix": "कचरे की जगह नाली-सड़क न बनने से घर में घुसते गंदे पानी और बीमारी के खर्चे को जोड़ें।",
+        "parts": {
+          "A": 1,
+          "B": 1,
+          "C": 1,
+          "D": 1,
+          "E": 1,
+          "F": 1
+        }
+      }
+    },
+    {
+      "topic": "गुलाबी ठंड और मौसम में बदलाव",
+      "category": "मौसम",
+      "breaking": "मैदानी राज्यों में तापमान गिरा, गुलाबी ठंड की दस्तक",
+      "hook_text": "दस्तक ठंड की, जेब खाली",
+      "ask": "आपके शहर में पंखा बंद हुआ या चालू?",
+      "source": "Dainik Bhaskar, Hindustan, Jagran, News18 Hindi",
+      "poll": [
+        "पंखा बंद",
+        "अभी चालू"
+      ],
+      "ticker": [
+        "मौसम विभाग ने कहा, पारा गिरा है, ठंडक संभलकर लें",
+        "पहाड़ों पर बर्फबारी, मैदानों में चादर की तलाश तेज",
+        "गुलाबी ठंड का असर, गर्म कपड़ों के बक्से खुले"
+      ],
+      "cast_why": "मौसम बदलने और अचानक ठंड बढ़ने पर चाचा का पुराने ज़माने वाला अनुभव और बबलू की एंकरिंग।",
+      "lines": [
+        {
+          "who": "bablu",
+          "say": "मौसम विभाग के मुताबिक गुलाबी ठंड ने दस्तक दे दी है। दस्तक ठंड की है, पर असर जेब पर है।",
+          "caption": "मौसम विभाग के मुताबिक गुलाबी ठंड ने दस्तक दी है। दस्तक ठंड की है, पर असर जेब पर है।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "early morning mist fog road delhi",
+            "thermometer showing low temperature drop",
+            "people wearing light shawls morning"
+          ],
+          "photo_hi": [
+            "दिल्ली सुबह का कोहरा",
+            "गुलाबी ठंड उत्तर भारत"
+          ],
+          "punch": true,
+          "react_pose": "eyeroll",
+          "stamp": "जेब पर वार!",
+          "visual": "early morning mist fog road delhi",
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "मुरादाबाद में रात का पारा बीस डिग्री से नीचे दर्ज किया गया है। पारा गिरा है, पर पंखे की आदत नहीं।",
+          "caption": "मुरादाबाद में रात का पारा 20 डिग्री से नीचे दर्ज। पारा गिरा है, पर पंखे की आदत नहीं।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "digital weather display 19 degrees",
+            "ceiling fan spinning slowly night room",
+            "moradabad city street night cold"
+          ],
+          "photo_hi": [
+            "मुरादाबाद रात का तापमान",
+            "मौसम तापमान मीटर"
+          ],
+          "card": {
+            "tag": "तापमान गिरावट",
+            "big": "< 20°C",
+            "sub": "मुरादाबाद रात का पारा",
+            "icon": "alert"
+          },
+          "visual": "digital weather display 19 degrees",
+          "scene": "card",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "chacha",
+          "say": "पहाड़ों पर बर्फबारी और बारिश से मैदानों में ठंड आई है। हमारे ज़माने में मौसम आता था, अब खांसी-जुकाम आता है।",
+          "caption": "पहाड़ों पर बर्फबारी से मैदानों में ठंड आई है। हमारे ज़माने में मौसम आता था, अब जुकाम आता है।",
+          "expr": "tanz",
+          "set": "aangan",
+          "visuals": [
+            "snowfall on mountain pine trees kashmir",
+            "rain clouds over north indian plains",
+            "elderly man drinking hot tea cup"
+          ],
+          "photo_hi": [
+            "हिमाचल बर्फबारी पहाड़",
+            "उत्तर प्रदेश बारिश ठंड"
+          ],
+          "punch": true,
+          "react_pose": "facepalm",
+          "stamp": "सिर्फ जुकाम!",
+          "visual": "snowfall on mountain pine trees kashmir",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "विशेषज्ञों का कहना है, बदलते मौसम में सावधानी बरतें। सावधानी मुफ्त है, डॉक्टर की पर्ची नहीं।",
+          "caption": "विशेषज्ञों का कहना है, सावधानी बरतें। सावधानी मुफ्त है, डॉक्टर की पर्ची नहीं।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "doctor writing medical prescription pad",
+            "cough syrup bottle medicine strips",
+            "steaming cup herbal tea kadha"
+          ],
+          "photo_hi": [
+            "अस्पताल ओपीडी पर्ची",
+            "मौसम बदलाव सर्दी जुकाम"
+          ],
+          "punch": true,
+          "react_pose": "smug",
+          "stamp": "पर्ची भारी!",
+          "visual": "doctor writing medical prescription pad",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "chacha",
+          "say": "ये वीडियो उसको भेजो, जो बीस डिग्री तापमान में भी रात भर पंखा चलाकर सोता है।",
+          "caption": "ये वीडियो उसको भेजो, जो 20 डिग्री में भी पंखा चलाकर सोता है।",
+          "expr": "tanz",
+          "set": "aangan",
+          "visuals": [
+            "person sleeping wrapped heavy blanket fan on",
+            "morning cold breeze moving curtains",
+            "warm blanket unpacked bed"
+          ],
+          "photo_hi": [
+            "कंबल ओढ़कर सोना",
+            "सर्दियों की सुबह ठंड"
+          ],
+          "visual": "person sleeping wrapped heavy blanket fan on",
+          "scene": "studio_end",
+          "punch": false,
+          "insta": ""
+        }
+      ],
+      "caption_post": "गुलाबी ठंड आ गई है, पंखा बंद करने का संघर्ष शुरू! 🥶 रात में पंखा बंद हुआ या नहीं? Family group में भेजो। स्रोत: Dainik Bhaskar, Hindustan, Jagran #WeatherUpdate #GulabiThand #BakraNews #WinterIsComing #NorthIndia (AI से बने किरदार)",
+      "format": "explain",
+      "label": "काम की खबर",
+      "key_word": "",
+      "icons": [
+        "₹",
+        "NEWS",
+        "%"
+      ],
+      "hook": "दस्तक ठंड की, जेब खाली",
+      "trend": {
+        "score": 4,
+        "why": "7 अख़बार/चैनल 2 दिन में, 17 खबरें 7 दिन में"
+      },
+      "connect": {
+        "score": 6,
+        "why": "पंखे की आदत और बदलते मौसम की पारिवारिक नोकझोंक तुरंत चेहरे पर मुस्कान लाती है।",
+        "weak": "मौसम बदलने से 'जेब खाली' का दावा हुक में जबरदस्ती ठूँसा हुआ लगता है।",
+        "fix": "पंखे के बजाय बदलते मौसम में सरकारी अस्पताल की लाइन और प्राइवेट मेडिकल स्टोर की लूट पर जोर दें।",
+        "parts": {
+          "A": 1,
+          "B": 1,
+          "C": 1,
+          "D": 1,
+          "E": 1,
+          "F": 1
+        }
+      }
+    },
+    {
+      "topic": "यूपी सैनिक स्कूल एडमिशन 2027",
+      "category": "पढ़ाई/स्कूल",
+      "breaking": "यूपी सैनिक स्कूल में कक्षा 6 और 9 के लिए एडमिशन शुरू",
+      "hook_text": "दाखिला बाद में, लेट फ़ीस पहले",
+      "ask": "क्या आपने सैनिक स्कूल का कभी फ़ॉर्म भरा?",
+      "source": "Jansatta, Hindustan, Navbharat Times, Jagran",
+      "poll": [
+        "फ़ॉर्म भर दिया",
+        "तारीख़ छूट गई"
+      ],
+      "ticker": [
+        "सैनिक स्कूल रजिस्ट्रेशन जारी, अंतिम तिथि 25 अक्टूबर",
+        "25 अक्टूबर के बाद 2000 रुपये लेट फ़ीस का कड़ा नियम",
+        "वेबसाइट पर सर्वर धीमा, अभिभावकों की धड़कनें तेज"
+      ],
+      "cast_why": "छात्रों के फॉर्म भरने के तनाव पर रमेश और बबलू का सरकारी प्रक्रिया पर तंज़।",
+      "lines": [
+        {
+          "who": "bablu",
+          "say": "यूपी सैनिक स्कूल में कक्षा छह और नौ के दाखिले शुरू हो गए हैं। दाखिले की उम्मीद आई है, सीटें सीमित हैं।",
+          "caption": "UP सैनिक स्कूल में कक्षा 6 और 9 के दाखिले शुरू। दाखिले की उम्मीद आई है, सीटें सीमित हैं।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "sainik school building campus gate entrance",
+            "students in military school uniform marching ground",
+            "online admission registration form portal screen"
+          ],
+          "photo_hi": [
+            "यूपी सैनिक स्कूल लखनऊ",
+            "सैनिक स्कूल प्रवेश परीक्षा"
+          ],
+          "punch": true,
+          "react_pose": "eyeroll",
+          "stamp": "सीटें सीमित!",
+          "visual": "sainik school building campus gate entrance",
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "फॉर्म भरने की आखिरी तारीख़ पच्चीस अक्टूबर तय की गई है। तारीख़ तय है, अभिभावकों की धड़कनें बेहिसाब हैं।",
+          "caption": "फ़ॉर्म भरने की आखिरी तारीख़ 25 अक्टूबर तय है। तारीख़ तय है, अभिभावकों की धड़कनें बेहिसाब हैं।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "calendar page showing 25 october circled red",
+            "father and student filling form cyber cafe computer",
+            "clock ticking fast admission deadline countdown"
+          ],
+          "photo_hi": [
+            "ऑनलाइन फॉर्म साइबर कैफे",
+            "सैनिक स्कूल एडमिशन पोर्टल"
+          ],
+          "card": {
+            "tag": "अंतिम तिथि",
+            "big": "25 अक्टूबर",
+            "sub": "बिना लेट फ़ीस आवेदन",
+            "icon": "calendar"
+          },
+          "visual": "calendar page showing 25 october circled red",
+          "scene": "card",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "ramesh",
+          "say": "पच्चीस अक्टूबर के बाद फ़ॉर्म भरोगे तो दो हज़ार रुपये लेट फ़ीस लगेगी। लेट फ़ीस पक्की है, दाखिला नहीं।",
+          "caption": "25 अक्टूबर के बाद 2000 रुपये लेट फ़ीस लगेगी। लेट फ़ीस पक्की है, दाखिला नहीं।",
+          "expr": "udaas",
+          "set": "office",
+          "visuals": [
+            "indian currency notes two thousand rupees fee receipt",
+            "stressed young parent looking at laptop screen receipt",
+            "empty wallet cyber cafe desk"
+          ],
+          "photo_hi": [
+            "परीक्षा फीस रसीद चालान",
+            "साइबर कैफे ऑनलाइन आवेदन"
+          ],
+          "punch": true,
+          "react_pose": "facepalm",
+          "stamp": "दो हज़ार फ़ीस!",
+          "visual": "indian currency notes two thousand rupees fee receipt",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "विभाग ने कहा है, आवेदन वेबसाइट पर करें। फ़िलहाल वेबसाइट पर लोडिंग का चक्कर सबसे तेज़ है।",
+          "caption": "विभाग ने कहा, आवेदन वेबसाइट पर करें। फ़िलहाल वेबसाइट पर लोडिंग सबसे तेज़ है।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "web browser buffering loading icon error",
+            "stressed boy holding passport photos documents folder",
+            "computer mouse clicking submit button error"
+          ],
+          "photo_hi": [
+            "सरकारी वेबसाइट सर्वर डाउन",
+            "प्रवेश परीक्षा फॉर्म ऑनलाइन"
+          ],
+          "punch": true,
+          "react_pose": "smug",
+          "stamp": "लोडिंग चालू!",
+          "visual": "web browser buffering loading icon error",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "ramesh",
+          "say": "ये वीडियो उस अभिभावक को भेजो, जो छब्बीस अक्टूबर को साइबर कैफ़े में पूछेगा कि फ़ॉर्म भर दूँ?",
+          "caption": "ये वीडियो उसको भेजो, जो 26 अक्टूबर को पूछेगा कि फ़ॉर्म भर दूँ?",
+          "expr": "tanz",
+          "set": "office",
+          "visuals": [
+            "man running towards closed cyber cafe shop shutters",
+            "school bag books on table student studying",
+            "father scolding son holding exam syllabus"
+          ],
+          "photo_hi": [
+            "साइबर कैफे भीड़ छात्र",
+            "परीक्षा फॉर्म की अंतिम तिथि"
+          ],
+          "visual": "man running towards closed cyber cafe shop shutters",
+          "scene": "studio_end",
+          "punch": false,
+          "insta": ""
+        }
+      ],
+      "caption_post": "25 अक्टूबर तक फ़ॉर्म भर लो, वरना 2000 रुपये की लेट फ़ीस तैयार रखो! ⏱️ फ़ॉर्म भर दिया क्या? Family group में भेजो। स्रोत: Jansatta, Hindustan, Navbharat Times #UPSainikSchool #Admission2027 #LateFee #BakraNews #StudentLife (AI से बने किरदार)",
+      "format": "explain",
+      "label": "काम की खबर",
+      "key_word": "",
+      "icons": [
+        "₹",
+        "NEWS",
+        "%"
+      ],
+      "hook": "दाखिला बाद में, लेट फ़ीस पहले",
+      "trend": {
+        "score": 5,
+        "why": "11 अख़बार/चैनल 2 दिन में, 58 खबरें 7 दिन में"
+      },
+      "connect": {
+        "score": 6,
+        "why": "लेट फीस और साइबर कैफे के लोडिंग चक्कर वाली पंचलाइन एकदम जमीनी हकीकत है।",
+        "weak": "सैनिक स्कूल का दाखिला केवल 10-14 साल के बच्चों वाले गिने-चुने परिवारों का ही मुद्दा है।",
+        "fix": "इसे सिर्फ सैनिक स्कूल तक न रखकर सभी सरकारी फॉर्मों की लेट फीस की वसूली से जोड़ें।",
+        "parts": {
+          "A": 1,
+          "B": 1,
+          "C": 1,
+          "D": 1,
+          "E": 1,
+          "F": 1
+        }
+      }
+    }
+  ]
+}
