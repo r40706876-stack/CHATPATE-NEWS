@@ -1,0 +1,953 @@
+{
+  "sent_at": 1792202007,
+  "eps": [
+    {
+      "topic": "दशहरे से पहले पीएम किसान की 24वीं किस्त का इंतजार, बैंक खातों पर टकटकी",
+      "category": "Trends",
+      "breaking": "दशहरे से पहले पीएम किसान की चौबीसवीं किस्त का इंतजार",
+      "hook_text": "दशहरे पर दो हज़ार की किस्त!",
+      "ask": "क्या आपकी पीएम किसान की किस्त टाइम पर आती है?",
+      "source": "Jagran, NDTV India, Amar Ujala, ABP News, Prabhat Khabar, Aaj Tak, News18 Hindi",
+      "poll": [
+        "e-KYC हो गया",
+        "अभी अटका है"
+      ],
+      "ticker": [
+        "कृषि मंत्रालय की सलाह: बैंक खाते का स्टेटस तुरंत जांच लें।",
+        "विभाग ने कहा: ई-केवाईसी पूरी रखें, किस्त अपने समय पर आएगी।",
+        "किसानों की टकटकी: दशहरे का त्योहार और दो हज़ार रुपये का इंतज़ार।"
+      ],
+      "cast_why": "किसानों की आर्थिक योजना और पीएम किसान पोर्टल के चक्कर पर बबलू और रमेश का संवाद सटीक बैठता है।",
+      "lines": [
+        {
+          "who": "bablu",
+          "say": "कृषि विभाग ने साफ़ किया है, चौबीसवीं किस्त दशहरे से पहले आएगी। इंतज़ार दशहरे के बाद भी रहेगा।",
+          "caption": "कृषि विभाग ने साफ़ किया है, 24वीं किस्त दशहरे से पहले आएगी। इंतज़ार दशहरे के बाद भी रहेगा।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "farmer looking at smartphone screen",
+            "bank passbook printing machine",
+            "indian currency notes 2000 rupees"
+          ],
+          "photo_hi": [
+            "पीएम किसान बैंक खाता",
+            "किसान मोबाइल स्टेटस"
+          ],
+          "card": {
+            "tag": "पीएम किसान",
+            "big": "₹2,000 किस्त",
+            "sub": "24वीं किस्त का इंतज़ार",
+            "icon": "rupee"
+          },
+          "visual": "farmer looking at smartphone screen",
+          "scene": "studio",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "ramesh",
+          "say": "किसानों को ई-केवाईसी तुरंत पूरा करने की सलाह दी गई है। सर्वर चलने पर।",
+          "caption": "किसानों को ई-केवाईसी तुरंत पूरा करने की सलाह दी गई है। सर्वर चलने पर।",
+          "expr": "udaas",
+          "set": "office",
+          "visuals": [
+            "computer screen showing error page",
+            "csc center common service center india",
+            "farmer standing in csc queue"
+          ],
+          "photo_hi": [
+            "ई केवाईसी पोर्टल एरर",
+            "जन सेवा केंद्र लाइन"
+          ],
+          "punch": true,
+          "react_pose": "facepalm",
+          "stamp": "सर्वर डाउन!",
+          "visual": "computer screen showing error page",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "सरकार के मुताबिक, पात्र किसानों को दो हज़ार रुपये मिलेंगे। पोर्टल पर स्टेटस अटकने के बाद।",
+          "caption": "सरकार के मुताबिक, पात्र किसानों को ₹2,000 रुपये मिलेंगे। पोर्टल पर स्टेटस अटकने के बाद।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "pm kisan portal website home page",
+            "farmer holding aadhar card and passbook",
+            "atm counter queue rural india"
+          ],
+          "photo_hi": [
+            "पीएम किसान 24वीं किस्त",
+            "किसान बैंक पासबुक"
+          ],
+          "visual": "pm kisan portal website home page",
+          "scene": "chacha",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "ramesh",
+          "say": "विशेषज्ञों का कहना है, बैंक खाते पर टकटकी बनाए रखें। पैसे देखने से नहीं बढ़ते।",
+          "caption": "विशेषज्ञों का कहना है, बैंक खाते पर टकटकी बनाए रखें। पैसे देखने से नहीं बढ़ते।",
+          "expr": "tanz",
+          "set": "village",
+          "visuals": [
+            "man checking phone banking app",
+            "empty wallet close up",
+            "dussehra festival market"
+          ],
+          "photo_hi": [
+            "बैंक अकाउंट मैसेज",
+            "किसान त्योहार तैयारी"
+          ],
+          "punch": true,
+          "react_pose": "eyeroll",
+          "stamp": "टकटकी जारी!",
+          "visual": "man checking phone banking app",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "ये वीडियो उस किसान भाई को भेजो, जो रोज़ ई-केवाईसी का पोर्टल खोलकर बैठता है।",
+          "caption": "ये वीडियो उस किसान भाई को भेजो, जो रोज़ ई-केवाईसी का पोर्टल खोलकर बैठता है।",
+          "expr": "hasi",
+          "set": "studio",
+          "visuals": [
+            "farmer sitting near green farm with phone",
+            "laptop screen showing pm kisan website",
+            "bank passbook entry stamp"
+          ],
+          "photo_hi": [
+            "किसान पोर्टल स्टेटस",
+            "ई केवाईसी पीएम किसान"
+          ],
+          "visual": "farmer sitting near green farm with phone",
+          "scene": "studio_end",
+          "punch": false,
+          "insta": ""
+        }
+      ],
+      "caption_post": "दशहरे से पहले ₹2,000 का इंतज़ार और ई-केवाईसी का चक्कर जारी है। + क्या आपका ई-केवाईसी स्टेटस ओके दिखा रहा है? + Family group में भेजो + स्रोत: Jagran, NDTV India #PMKisan #24thInstallment #FarmerNews #BakraNews #eKYC (AI से बने किरदार)",
+      "format": "explain",
+      "label": "काम की खबर",
+      "key_word": "",
+      "icons": [
+        "₹",
+        "NEWS",
+        "%"
+      ],
+      "hook": "दशहरे पर दो हज़ार की किस्त!",
+      "trend": {
+        "score": 6,
+        "why": "18 अख़बार/चैनल 2 दिन में, 72 खबरें 7 दिन में"
+      },
+      "connect": {
+        "score": 9,
+        "why": "सरकारी ऐलान और सर्वर डाउन के बीच किसान की बेबसी पर मुहर वाली लाइन्स एकदम सटीक बैठी हैं।",
+        "weak": "24वीं किस्त का तथ्य भ्रामक है, वर्तमान में 18वीं/19वीं किस्त का दौर चल रहा है।",
+        "fix": "किस्त का नंबर ठीक करें और बैंक खाते में मैसेज न आने पर पासबुक प्रिंट कराने वाली लाइन जोड़ें।",
+        "parts": {
+          "A": 2,
+          "B": 2,
+          "C": 2,
+          "D": 1,
+          "E": 1,
+          "F": 1
+        }
+      }
+    },
+    {
+      "topic": "बिना आधार कार्ड भी नहीं रुकेगा सरकारी लाभ, केंद्र का नया नियम जारी",
+      "category": "नियम/बैंक",
+      "breaking": "बिना आधार कार्ड के भी नहीं रुकेगा सरकारी लाभ",
+      "hook_text": "बिना आधार नहीं रुकेगा सरकारी लाभ!",
+      "ask": "क्या आपका बायोमेट्रिक कभी राशन दुकान पर फेल हुआ है?",
+      "source": "News18 Hindi, Haribhoomi",
+      "poll": [
+        "नया नियम राहत देगा",
+        "राशन दुकान पर बहस होगी"
+      ],
+      "ticker": [
+        "केंद्र सरकार की सख्त हिदायत: आधार न होने पर योजना का लाभ खारिज न करें।",
+        "वैकल्पिक कागजात: वोटर कार्ड, राशन कार्ड या अन्य पहचान पत्र से मिलेगी सहायता।",
+        "बायोमेट्रिक फेल होने पर: मैन्युअल सत्यापन और दूसरे वैध प्रमाण पत्र मान्य होंगे।"
+      ],
+      "cast_why": "सरकारी योजनाओं में आधार की अनिवार्यता और ज़मीनी राशन राशन दुकान के अनुभव पर बबलू और दादी का तंज़।",
+      "lines": [
+        {
+          "who": "bablu",
+          "say": "केंद्र सरकार ने साफ़ किया है, आधार न होने पर लाभ नहीं रुकेगा। बायोमेट्रिक फेल होना तय है।",
+          "caption": "केंद्र सरकार ने साफ़ किया है, आधार न होने पर लाभ नहीं रुकेगा। बायोमेट्रिक फेल होना तय है।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "aadhaar card official document held in hand",
+            "fingerprint scanner machine glowing red error",
+            "ration shop counter line in village"
+          ],
+          "photo_hi": [
+            "आधार बायोमेट्रिक मशीन",
+            "राशन दुकान आधार"
+          ],
+          "card": {
+            "tag": "केंद्र का नियम",
+            "big": "लाभ नहीं रुकेगा",
+            "sub": "बिना आधार भी सहायता मान्य",
+            "icon": "check"
+          },
+          "visual": "aadhaar card official document held in hand",
+          "scene": "studio",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "dadi",
+          "say": "विभाग का कहना है, अन्य पहचान पत्र भी मान्य होंगे। राशन दुकान वाला फिर भी फिंगरप्रिंट मांगेगा।",
+          "caption": "विभाग का कहना है, अन्य पहचान पत्र भी मान्य होंगे। राशन दुकान वाला फिर भी फिंगरप्रिंट मांगेगा।",
+          "expr": "tanz",
+          "set": "aangan",
+          "visuals": [
+            "elderly woman pointing finger at ration shop dealer",
+            "voter identity card and driving license on table",
+            "biometric thumb scanner machine"
+          ],
+          "photo_hi": [
+            "राशन डीलर बायोमेट्रिक",
+            "वैकल्पिक पहचान पत्र आधार"
+          ],
+          "punch": true,
+          "react_pose": "eyeroll",
+          "stamp": "अंगूठा ही मांगेंगे!",
+          "visual": "elderly woman pointing finger at ration shop dealer",
+          "scene": "dadi_call",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "सत्यापन के लिए वैकल्पिक दस्तावेजों की अनुमति दी गई है। कागज़ बढ़ाने की पूरी अनुमति है।",
+          "caption": "सत्यापन के लिए वैकल्पिक दस्तावेजों की अनुमति दी गई है। कागज़ बढ़ाने की पूरी अनुमति है।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "stack of government identity papers documents",
+            "official stamping paper file desk",
+            "beneficiary standing near welfare counter"
+          ],
+          "photo_hi": [
+            "सरकारी योजना दस्तावेज",
+            "आधार कार्ड नियम नया"
+          ],
+          "visual": "stack of government identity papers documents",
+          "scene": "dadi_call",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "dadi",
+          "say": "मैंने कहा भैया आधार में अंगूठा नहीं आ रहा। वो बोले दादी जी थोड़ा और घिस लो।",
+          "caption": "मैंने कहा भैया आधार में अंगूठा नहीं आ रहा। वो बोले दादी जी थोड़ा और घिस लो।",
+          "expr": "hasi",
+          "set": "aangan",
+          "visuals": [
+            "elderly woman pressing thumb on digital scanner",
+            "ration dealer looking at terminal screen",
+            "sacks of grain inside ration shop"
+          ],
+          "photo_hi": [
+            "दादी फिंगरप्रिंट राशन",
+            "अंगूठा सत्यापन आधार"
+          ],
+          "punch": true,
+          "react_pose": "laugh",
+          "stamp": "थोड़ा और घिस लो!",
+          "visual": "elderly woman pressing thumb on digital scanner",
+          "scene": "dadi_call",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "ये वीडियो उस रिश्तेदार को भेजो, जिसका बायोमेट्रिक बार-बार अंगूठा लगाने पर भी फेल होता है।",
+          "caption": "ये वीडियो उस रिश्तेदार को भेजो, जिसका बायोमेट्रिक बार-बार अंगूठा लगाने पर भी फेल होता है।",
+          "expr": "hasi",
+          "set": "studio",
+          "visuals": [
+            "person trying fingerprint sensor on device multiple times",
+            "aadhaar card laminated close up view",
+            "welfare scheme distribution counter"
+          ],
+          "photo_hi": [
+            "बायोमेट्रिक फेल आधार",
+            "सरकारी योजना लाभ"
+          ],
+          "visual": "person trying fingerprint sensor on device multiple times",
+          "scene": "studio_end",
+          "punch": false,
+          "insta": ""
+        }
+      ],
+      "caption_post": "सरकार कह रही है बिना आधार के भी काम चलेगा, पर डीलर बिना अंगूठे के राशन नहीं देगा! + क्या बायोमेट्रिक के चक्कर में आपका कोई काम अटका है? + Family group में भेजो + स्रोत: News18 Hindi, Haribhoomi #AadhaarRules #BiometricFail #GovtSchemes #BakraNews #RationCard (AI से बने किरदार)",
+      "format": "explain",
+      "label": "काम की खबर",
+      "key_word": "",
+      "icons": [
+        "₹",
+        "NEWS",
+        "%"
+      ],
+      "hook": "बिना आधार नहीं रुकेगा सरकारी लाभ!",
+      "trend": {
+        "score": 5,
+        "why": "7 अख़बार/चैनल 2 दिन में, 14 खबरें 7 दिन में"
+      },
+      "connect": {
+        "score": 10,
+        "why": "'दादी जी थोड़ा अंगूठा और घिस लो' राशन की दुकान की सबसे कड़वी, सच्ची और हंसाने वाली ज़मीनी हकीकत है।",
+        "weak": "कोटेदार की अपनी मनमानी और सर्वर एरर के बीच का फर्क और ज्यादा धारदार हो सकता था।",
+        "fix": "दादी के पंच के बाद कोटेदार द्वारा अगले महीने आने की धमकी वाली एक छोटी प्रतिक्रिया जोड़ें।",
+        "parts": {
+          "A": 3,
+          "B": 2,
+          "C": 2,
+          "D": 1,
+          "E": 1,
+          "F": 1
+        }
+      }
+    },
+    {
+      "topic": "गूगल खुद काटेगा स्पैम कॉल, ठगी से पहले मोबाइल पर मिलेगी चेतावनी",
+      "category": "ठगी से बचाव",
+      "breaking": "गूगल एंड्रॉयड यूजर्स के लिए स्पैम कॉल खुद काटेगा",
+      "hook_text": "गूगल खुद काटेगा स्पैम कॉल!",
+      "ask": "दिन में आपको कितनी फर्जी कॉल आती हैं?",
+      "source": "ABP News, Jagran, Sanjeevni Today, Dynamite News Hindi, Lalluram",
+      "poll": [
+        "गूगल पर भरोसा",
+        "ठग नए तरीके लाएंगे"
+      ],
+      "ticker": [
+        "गूगल का नया अपडेट: एंड्रॉयड फोन अब खुद ही स्पैम कॉल ब्लॉक करेगा।",
+        "साइबर विशेषज्ञ: अनजान लिंक और ओटीपी शेयर करने से अब भी बचें।",
+        "एंड्रॉयड यूज़र्स को सलाह: गूगल फ़ोन ऐप और सिस्टम सेटिंग्स अपडेट रखें।"
+      ],
+      "cast_why": "साइबर फ्रॉड से बचाव और टेक अपडेट्स पर बबलू और पिंकी की बातचीत सबसे प्रासंगिक है।",
+      "lines": [
+        {
+          "who": "bablu",
+          "say": "गूगल का दावा है, नया एंटी-स्कैम फीचर स्पैम कॉल खुद काटेगा। आपके फोन उठाने से पहले।",
+          "caption": "गूगल का दावा है, नया एंटी-स्कैम फीचर स्पैम कॉल खुद काटेगा। आपके फोन उठाने से पहले।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "android phone screen showing incoming scam call red warning",
+            "google tech office building",
+            "cyber fraud hacker graphic screen"
+          ],
+          "photo_hi": [
+            "गूगल स्पैम कॉल ब्लॉक",
+            "एंटी स्कैम एंड्रॉयड फीचर"
+          ],
+          "card": {
+            "tag": "गूगल अपडेट",
+            "big": "स्पैम कॉल ब्लॉक",
+            "sub": "एंड्रॉयड एंटी-स्कैम फीचर",
+            "icon": "phone"
+          },
+          "visual": "android phone screen showing incoming scam call red warning",
+          "scene": "studio",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "pinky",
+          "say": "कंपनी ने कहा है, नया सिस्टम फ्रॉड से अलर्ट करेगा। लोग फिर भी ओटीपी बता देते हैं।",
+          "caption": "कंपनी ने कहा है, नया सिस्टम फ्रॉड से अलर्ट करेगा। लोग फिर भी ओटीपी बता देते हैं।",
+          "expr": "tanz",
+          "set": "room",
+          "visuals": [
+            "young girl typing on smartphone",
+            "otp text message on mobile phone screen",
+            "cyber security lock shield icon"
+          ],
+          "photo_hi": [
+            "मोबाइल फ्रॉड ओटीपी",
+            "गूगल फोन ऐप स्पैम"
+          ],
+          "punch": true,
+          "react_pose": "facepalm",
+          "stamp": "फिर भी OTP!",
+          "visual": "young girl typing on smartphone",
+          "scene": "pinky",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "एंड्रॉयड में फर्जी कॉल ब्लॉक करने का नया अपडेट आया है। रिश्तेदारों की कॉल पर यह लागू नहीं है।",
+          "caption": "एंड्रॉयड में फर्जी कॉल ब्लॉक करने का नया अपडेट आया है। रिश्तेदारों की कॉल पर यह लागू नहीं है।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "google play store update screen",
+            "incoming call notification on smartphone",
+            "person holding mobile phone near ear"
+          ],
+          "photo_hi": [
+            "एंड्रॉयड अपडेट गूगल",
+            "फर्जी कॉल वार्निंग"
+          ],
+          "visual": "google play store update screen",
+          "scene": "pinky",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "pinky",
+          "say": "विशेषज्ञों ने एंड्रॉयड ऐप अपडेट रखने की सलाह दी है। समझदारी ऐप से नहीं आती।",
+          "caption": "विशेषज्ञों ने एंड्रॉयड ऐप अपडेट रखने की सलाह दी है। समझदारी ऐप से नहीं आती।",
+          "expr": "hasi",
+          "set": "room",
+          "visuals": [
+            "app store update buttons screen",
+            "digital security warning pop up screen",
+            "scammed person looking at empty bank statement"
+          ],
+          "photo_hi": [
+            "गूगल ऐप अपडेट",
+            "साइबर अलर्ट फोन"
+          ],
+          "punch": true,
+          "react_pose": "smug",
+          "stamp": "ऐप नहीं, अक्ल!",
+          "visual": "app store update buttons screen",
+          "scene": "pinky",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "ये वीडियो उस दोस्त को भेजो, जो हर अनजान कॉल पर सर-सर करने लगता है।",
+          "caption": "ये वीडियो उस दोस्त को भेजो, जो हर अनजान कॉल पर सर-सर करने लगता है।",
+          "expr": "hasi",
+          "set": "studio",
+          "visuals": [
+            "man answering smartphone call attentively",
+            "google dialer red screen warning",
+            "mobile network towers"
+          ],
+          "photo_hi": [
+            "अनजान नंबर कॉल",
+            "गूगल स्पैम वार्निंग"
+          ],
+          "visual": "man answering smartphone call attentively",
+          "scene": "studio_end",
+          "punch": false,
+          "insta": ""
+        }
+      ],
+      "caption_post": "गूगल अब फर्जी कॉल खुद काटेगा, पर आप अपने हाथ से ओटीपी देना बंद कब करेंगे? + क्या आपको आज कोई फर्जी कॉल आई? + Family group में भेजो + स्रोत: ABP News, Jagran #GoogleScamBlock #AndroidUpdate #SpamCall #BakraNews #TechNews (AI से बने किरदार)",
+      "format": "explain",
+      "label": "काम की खबर",
+      "key_word": "",
+      "icons": [
+        "₹",
+        "NEWS",
+        "%"
+      ],
+      "hook": "गूगल खुद काटेगा स्पैम कॉल!",
+      "trend": {
+        "score": 5,
+        "why": "6 अख़बार/चैनल 2 दिन में, 6 खबरें 7 दिन में"
+      },
+      "connect": {
+        "score": 6,
+        "why": "अनजान कॉल पर ओटीपी लुटाने वाले सीधे-सादे लोगों की समस्या बहुत प्रासंगिक है।",
+        "weak": "रिश्तेदारों वाली लाइन घिसा-पिटा चुटकुला है, सरकारी/विशेषज्ञ तर्क को उलटने वाली 3 लाइन्स पूरी नहीं हुईं।",
+        "fix": "बैंक मैनेजर बनकर कॉल करने वाले ठग और Truecaller के झूठे भरोसे पर मुहर वाली लाइन बनाएं।",
+        "parts": {
+          "A": 2,
+          "B": 1,
+          "C": 2,
+          "D": 1,
+          "E": 0,
+          "F": 1
+        }
+      }
+    },
+    {
+      "topic": "इंटरनेट शटडाउन में भारत टॉप पर, डिजिटल इंडिया में नेट बंद का रिकॉर्ड",
+      "category": "फ़ोन/इंटरनेट",
+      "breaking": "इंटरनेट शटडाउन में भारत दुनिया में सबसे आगे",
+      "hook_text": "डिजिटल इंडिया में इंटरनेट बंद रिकॉर्ड!",
+      "ask": "आपके शहर में आखिरी बार इंटरनेट कब बंद हुआ था?",
+      "source": "ABP News, Navbharat Times, Livemint",
+      "poll": [
+        "नेट बंद सही",
+        "अधिकारों का हनन"
+      ],
+      "ticker": [
+        "ग्लोबल रिपोर्ट: दुनिया में सबसे ज्यादा इंटरनेट शटडाउन भारत में दर्ज।",
+        "दिल्ली जंतर-मंतर: प्रदर्शन के दौरान 4 किलोमीटर दायरे में 24 घंटे नेट बंद।",
+        "नागरिकों को सलाह: ब्रॉडबैंड और स्थानीय प्रशासन की सूचनाओं पर नज़र रखें।"
+      ],
+      "cast_why": "इंटरनेट शटडाउन और पुरानी-नयी सोच के अंतर पर बबलू और चाचा का संवाद सबसे मज़ेदार और कड़वा सच लाता है।",
+      "lines": [
+        {
+          "who": "bablu",
+          "say": "रिपोर्ट्स के मुताबिक, भारत दुनिया में इंटरनेट शटडाउन में टॉप पर है। डिजिटल होना ही बंद होना है।",
+          "caption": "रिपोर्ट्स के मुताबिक, भारत दुनिया में इंटरनेट शटडाउन में टॉप पर है। डिजिटल होना ही बंद होना है।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "smartphone displaying no internet connection error",
+            "world map highlight india",
+            "mobile cell tower with red light blinking"
+          ],
+          "photo_hi": [
+            "इंटरनेट शटडाउन भारत",
+            "नो इंटरनेट मोबाइल स्क्रीन"
+          ],
+          "card": {
+            "tag": "ग्लोबल रिपोर्ट",
+            "big": "नेट बंद में नंबर 1",
+            "sub": "दुनिया में सबसे ज्यादा शटडाउन",
+            "icon": "alert"
+          },
+          "visual": "smartphone displaying no internet connection error",
+          "scene": "studio",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "chacha",
+          "say": "दिल्ली जंतर-मंतर पर प्रदर्शन में चार किलोमीटर तक इंटरनेट बंद किया गया। शांति चौबीस घंटे बाद आई।",
+          "caption": "दिल्ली जंतर-मंतर पर प्रदर्शन में 4 किमी तक इंटरनेट बंद किया गया। शांति 24 घंटे बाद आई।",
+          "expr": "tanz",
+          "set": "village",
+          "visuals": [
+            "jantar mantar delhi protest site police barricade",
+            "police officers standing with riot shields",
+            "man looking at offline smartphone"
+          ],
+          "photo_hi": [
+            "जंतर मंतर दिल्ली प्रदर्शन",
+            "मोबाइल इंटरनेट बंद"
+          ],
+          "punch": true,
+          "react_pose": "eyeroll",
+          "stamp": "शान्ति ही शान्ति!",
+          "visual": "jantar mantar delhi protest site police barricade",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "प्रशासन ने साफ़ किया है, नेटवर्क सुरक्षा के लिए बंद है। वाई-फाई भी सुरक्षा के साथ बंद है।",
+          "caption": "प्रशासन ने साफ़ किया है, नेटवर्क सुरक्षा के लिए बंद है। वाई-फाई भी सुरक्षा के साथ बंद है।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "wi fi router with red light error",
+            "government notice document on board",
+            "people standing outside telecom shop"
+          ],
+          "photo_hi": [
+            "वाईफाई राउटर बंद",
+            "इंटरनेट शटडाउन ऑर्डर"
+          ],
+          "visual": "wi fi router with red light error",
+          "scene": "chacha",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "chacha",
+          "say": "हमारे ज़माने में चिट्ठी रुकती थी। अब बिना बताए पूरी दुनिया रुक जाती है।",
+          "caption": "हमारे ज़माने में चिट्ठी रुकती थी। अब बिना बताए पूरी दुनिया रुक जाती है।",
+          "expr": "udaas",
+          "set": "village",
+          "visuals": [
+            "old inland letter post office india",
+            "blank smartphone screen held in hand",
+            "empty streets during restriction"
+          ],
+          "photo_hi": [
+            "डाकघर चिट्ठी पुराना",
+            "स्मार्टफोन नो सिग्नल"
+          ],
+          "punch": true,
+          "react_pose": "thinking",
+          "stamp": "दुनिया ठप!",
+          "visual": "old inland letter post office india",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "ये वीडियो उस दोस्त को भेजो, जो नेट बंद होते ही फोन रीस्टार्ट करने लगता है।",
+          "caption": "ये वीडियो उस दोस्त को भेजो, जो नेट बंद होते ही फोन रीस्टार्ट करने लगता है।",
+          "expr": "hasi",
+          "set": "studio",
+          "visuals": [
+            "man repeatedly pressing power button on phone",
+            "rebooting phone screen logo",
+            "4g signal bar zero status bar"
+          ],
+          "photo_hi": [
+            "फोन रीस्टार्ट स्क्रीन",
+            "नो सर्विस सिग्नल"
+          ],
+          "visual": "man repeatedly pressing power button on phone",
+          "scene": "studio_end",
+          "punch": false,
+          "insta": ""
+        }
+      ],
+      "caption_post": "दुनिया में सबसे ज्यादा इंटरनेट शटडाउन का रिकॉर्ड अपने पास है, और हम फोन रीस्टार्ट कर रहे हैं! + क्या आपके इलाके में कभी 24 घंटे नेट बंद रहा? + Family group में भेजो + स्रोत: ABP News, Livemint #InternetShutdown #DigitalIndia #JantarMantar #BakraNews #TechStatus (AI से बने किरदार)",
+      "format": "explain",
+      "label": "काम की खबर",
+      "key_word": "",
+      "icons": [
+        "₹",
+        "NEWS",
+        "%"
+      ],
+      "hook": "डिजिटल इंडिया में इंटरनेट बंद रिकॉर्ड!",
+      "trend": {
+        "score": 4,
+        "why": "7 अख़बार/चैनल 2 दिन में, 21 खबरें 7 दिन में"
+      },
+      "connect": {
+        "score": 6,
+        "why": "नेट बंद होते ही फोन बार-बार रीस्टार्ट करने वाली हरकत बेहद स्वाभाविक और रिलेटेबल है।",
+        "weak": "जंतर-मंतर का उदाहरण गाँव-कस्बे के दर्शक को अपनी निजी ज़िंदगी से दूर का मामला लगता है।",
+        "fix": "भर्ती परीक्षा के नाम पर पूरे जिले का इंटरनेट बंद होने और UPI ठप पड़ने का ज़मीनी दर्द लाएं।",
+        "parts": {
+          "A": 1,
+          "B": 1,
+          "C": 2,
+          "D": 1,
+          "E": 0,
+          "F": 1
+        }
+      }
+    },
+    {
+      "topic": "बेमौसम बारिश और ओलावृष्टि से धान की फसल चौपट, मुआवजे की आस में किसान",
+      "category": "किसान/गाँव",
+      "breaking": "बेमौसम बारिश से धान की फसल चौपट, मुआवजे की आस",
+      "hook_text": "ओलावृष्टि से धान तबाह, मुआवजा कब?",
+      "ask": "क्या आपकी तरफ बेमौसम बारिश से नुकसान हुआ?",
+      "source": "Jagran, Amar Ujala, Dainik Bhaskar, Hindustan",
+      "poll": [
+        "मुआवजा तुरंत मिले",
+        "सर्वे में देर होगी"
+      ],
+      "ticker": [
+        "बरेली, रामपुर, जम्मू में ओलावृष्टि: सैकड़ों एकड़ धान की फसल जलमग्न।",
+        "प्रभावित किसानों की मांग: ₹50,000 प्रति एकड़ मुआवजा तुरंत दिया जाए।",
+        "कृषि विभाग का बयान: नुकसान के आकलन के लिए राजस्व टीमें भेजी जा रही हैं।"
+      ],
+      "cast_why": "बारिश से फसल बर्बादी और सरकारी मुआवजे की जमीनी हकीकत दिखाने के लिए बबलू और रमेश की जोड़ी।",
+      "lines": [
+        {
+          "who": "bablu",
+          "say": "मौसम विभाग ने बताया है, ओलावृष्टि से धान की फसल बर्बाद हो गई। विभाग का काम सिर्फ बताना है।",
+          "caption": "मौसम विभाग ने बताया है, ओलावृष्टि से धान की फसल बर्बाद हो गई। विभाग का काम सिर्फ बताना है।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "hailstones falling on paddy crop field",
+            "damaged paddy crops in flooded farm water",
+            "weather forecast satellite map screen"
+          ],
+          "photo_hi": [
+            "धान ओलावृष्टि नुकसान",
+            "बेमौसम बारिश फसल"
+          ],
+          "card": {
+            "tag": "फसल नुकसान",
+            "big": "₹50,000/एकड़",
+            "sub": "मुआवजे की मांग",
+            "icon": "rupee"
+          },
+          "visual": "hailstones falling on paddy crop field",
+          "scene": "studio",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "ramesh",
+          "say": "किसानों ने पचास हजार प्रति एकड़ मुआवजे की मांग की है। फाइल अभी तहसील में अटकी है।",
+          "caption": "किसानों ने ₹50,000 प्रति एकड़ मुआवजे की मांग की है। फाइल अभी तहसील में अटकी है।",
+          "expr": "udaas",
+          "set": "khet",
+          "visuals": [
+            "sad farmer standing in damaged flooded farm",
+            "tehsildar administrative office desk files",
+            "ruined rice crops close up"
+          ],
+          "photo_hi": [
+            "किसान मुआवजा मांग",
+            "तहसील दफ्तर फाइल"
+          ],
+          "punch": true,
+          "react_pose": "facepalm",
+          "stamp": "फाइल अटकी!",
+          "visual": "sad farmer standing in damaged flooded farm",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "बरेली और रामपुर में बारिश से सैकड़ों एकड़ फसल चौपट हो गई। आसमान को कोई चालान नहीं थमा सकता।",
+          "caption": "बरेली और रामपुर में बारिश से सैकड़ों एकड़ फसल चौपट हो गई। आसमान को कोई चालान नहीं थमा सकता।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "heavy rain over agricultural fields bareilly",
+            "hailstones lying on ground green crops ruined",
+            "farmer holding destroyed paddy plant"
+          ],
+          "photo_hi": [
+            "बरेली बारिश धान",
+            "रामपुर फसल नुकसान"
+          ],
+          "visual": "heavy rain over agricultural fields bareilly",
+          "scene": "chacha",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "ramesh",
+          "say": "अधिकारियों का कहना है, नुकसान का आकलन जारी है। फसल का समय खत्म होने तक।",
+          "caption": "अधिकारियों का कहना है, नुकसान का आकलन जारी है। फसल का समय खत्म होने तक।",
+          "expr": "tanz",
+          "set": "khet",
+          "visuals": [
+            "government official taking notes in field",
+            "flooded agricultural land ruined rice stalks",
+            "farmer bowing head in despair"
+          ],
+          "photo_hi": [
+            "फसल नुकसान सर्वे",
+            "कृषि अधिकारी खेत"
+          ],
+          "punch": true,
+          "react_pose": "eyeroll",
+          "stamp": "आकलन जारी!",
+          "visual": "government official taking notes in field",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "ये वीडियो उस किसान भाई को भेजो, जो हर बारिश में आसमां की तरफ देखता है।",
+          "caption": "ये वीडियो उस किसान भाई को भेजो, जो हर बारिश में आसमां की तरफ देखता है।",
+          "expr": "hasi",
+          "set": "studio",
+          "visuals": [
+            "farmer looking up at dark rain clouds in field",
+            "paddy field flooded with rainwater",
+            "panoramic view of damaged agricultural village"
+          ],
+          "photo_hi": [
+            "किसान बेमौसम बारिश",
+            "ओलावृष्टि धान नुकसान"
+          ],
+          "visual": "farmer looking up at dark rain clouds in field",
+          "scene": "studio_end",
+          "punch": false,
+          "insta": ""
+        }
+      ],
+      "caption_post": "बेमौसम बारिश से ओले गिरे और धान तबाह हो गया, अब मुआवाज़ा कागज़ों के सफर पर है। + क्या आपके क्षेत्र में ओलावृष्टि से फसलें प्रभावित हुई हैं? + Family group में भेजो + स्रोत: Dainik Bhaskar, Amar Ujala #PaddyCropDamage #UnseasonalRain #CompensationDemand #BakraNews #FarmerRelief (AI से बने किरदार)",
+      "format": "explain",
+      "label": "काम की खबर",
+      "key_word": "",
+      "icons": [
+        "₹",
+        "NEWS",
+        "%"
+      ],
+      "hook": "ओलावृष्टि से धान तबाह, मुआवजा कब?",
+      "trend": {
+        "score": 4,
+        "why": "9 अख़बार/चैनल 2 दिन में, 50 खबरें 7 दिन में"
+      },
+      "connect": {
+        "score": 6,
+        "why": "'आसमान को चालान नहीं थमा सकते' जैसी लाइन कुदरत और सिस्टम के आगे लाचारी को गहराई से छूती है।",
+        "weak": "सीटीए बहुत काव्यात्मक है, कमेंट में किसी को टैग करने या शेयर करने का ठोस उकसावा नहीं है।",
+        "fix": "पटवारी के सर्वे के इंतज़ार पर तीसरी मुहर लाइन बनाएं और सीटीए में लेखपाल को टैग करने का ताना दें।",
+        "parts": {
+          "A": 2,
+          "B": 2,
+          "C": 2,
+          "D": 0,
+          "E": 0,
+          "F": 1
+        }
+      }
+    },
+    {
+      "topic": "सरकारी पोर्टल से पूरा गांव ही गायब, प्रमाण पत्र के लिए भटक रहीं छात्राएं",
+      "category": "योजना",
+      "breaking": "सरकारी पोर्टल से गायब हुआ पूरा गांव, छात्राएं परेशान",
+      "hook_text": "सरकारी पोर्टल से पूरा गांव ही गायब!",
+      "ask": "क्या आपके गांव का नाम पोर्टल पर कभी गायब मिला?",
+      "source": "ETV Bharat, Amar Ujala",
+      "poll": [
+        "पोर्टल में गलती",
+        "लापरवाही का नतीजा"
+      ],
+      "ticker": [
+        "तकनीकी खामी: छात्रवृत्ति पोर्टल पर ड्रॉप-डाउन मेनू से गांव का नाम ही उड़ गया।",
+        "छात्र-छात्राएं परेशान: आय, जाति और निवास प्रमाण पत्र न बनने से वज़ीफ़ा अटका।",
+        "प्रशासन का आश्वासन: पोर्टल हेल्पडेस्क को सुधार के लिए पत्र भेजा गया है।"
+      ],
+      "cast_why": "पोर्टल की तकनीकी गड़बड़ी और छात्राओं की पढ़ाई-वज़ीफ़े की परेशानी पर बबलू और पिंकी का संवाद।",
+      "lines": [
+        {
+          "who": "bablu",
+          "say": "तकनीकी टीम के मुताबिक, छात्रवृत्ति पोर्टल से गांव का नाम गायब है। छात्राएं प्रमाण पत्र ढूँढ रही हैं।",
+          "caption": "तकनीकी टीम के मुताबिक, छात्रवृत्ति पोर्टल से गांव का नाम गायब है। छात्राएं प्रमाण पत्र ढूँढ रही हैं।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "scholarship portal computer screen drop down menu empty",
+            "school girls sitting with application forms in cyber cafe",
+            "village entrance sign board"
+          ],
+          "photo_hi": [
+            "सरकारी पोर्टल गांव गायब",
+            "छात्रवृत्ति फॉर्म कंप्यूटर"
+          ],
+          "card": {
+            "tag": "तकनीकी खामी",
+            "big": "गांव ही गायब",
+            "sub": "स्कॉलरशिप पोर्टल में गड़बड़ी",
+            "icon": "alert"
+          },
+          "visual": "scholarship portal computer screen drop down menu empty",
+          "scene": "studio",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "pinky",
+          "say": "अधिकारियों का कहना है, खामी जल्द ठीक की जाएगी। तब तक कागजों में गांव अस्तित्व में नहीं है।",
+          "caption": "अधिकारियों का कहना है, खामी जल्द ठीक की जाएगी। तब तक कागजों में गांव अस्तित्व में नहीं है।",
+          "expr": "udaas",
+          "set": "room",
+          "visuals": [
+            "girl holding college admission form with worried expression",
+            "tehsildar office counter line",
+            "error message popup on government portal"
+          ],
+          "photo_hi": [
+            "प्रमाण पत्र छात्रवृत्ति",
+            "तहसील दफ्तर छात्राएं"
+          ],
+          "punch": true,
+          "react_pose": "facepalm",
+          "stamp": "अस्तित्व ही गायब!",
+          "visual": "girl holding college admission form with worried expression",
+          "scene": "pinky",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "प्रशासन ने माना है, पोर्टल में तकनीकी गड़बड़ी हुई है। छात्राएं कई दिनों से भटक रही हैं।",
+          "caption": "प्रशासन ने माना है, पोर्टल में तकनीकी गड़बड़ी हुई है। छात्राएं कई दिनों से भटक रही हैं।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "students standing outside jan seva kendra",
+            "cyber cafe computer monitor showing portal error",
+            "official seal document close up"
+          ],
+          "photo_hi": [
+            "जन सेवा केंद्र पोर्टल",
+            "छात्रा छात्रवृत्ति फॉर्म"
+          ],
+          "visual": "students standing outside jan seva kendra",
+          "scene": "pinky",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "pinky",
+          "say": "हमारे यहां पढ़ाई ऑनलाइन हो गई है। और गांव ऑफलाइन होकर गायब हो गया है।",
+          "caption": "हमारे यहां पढ़ाई ऑनलाइन हो गई है। और गांव ऑफलाइन होकर गायब हो गया है।",
+          "expr": "tanz",
+          "set": "room",
+          "visuals": [
+            "girl studying on phone with text books around",
+            "empty village road dust",
+            "loading bar stuck on computer screen"
+          ],
+          "photo_hi": [
+            "ऑनलाइन छात्रवृत्ति",
+            "गांव पोर्टल समस्या"
+          ],
+          "punch": true,
+          "react_pose": "smug",
+          "stamp": "गांव ही ऑफलाइन!",
+          "visual": "girl studying on phone with text books around",
+          "scene": "pinky",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "ये वीडियो उस दोस्त को भेजो, जो छात्रवृत्ति का फॉर्म भरने साइबर कैफे में बैठा है।",
+          "caption": "ये वीडियो उस दोस्त को भेजो, जो छात्रवृत्ति का फॉर्म भरने साइबर कैफे में बैठा है।",
+          "expr": "hasi",
+          "set": "studio",
+          "visuals": [
+            "student sitting inside cyber cafe in front of monitor",
+            "online portal application confirmation printout",
+            "village landscape aerial view"
+          ],
+          "photo_hi": [
+            "साइबर कैफे छात्र",
+            "स्कॉलरशिप ऑनलाइन पोर्टल"
+          ],
+          "visual": "student sitting inside cyber cafe in front of monitor",
+          "scene": "studio_end",
+          "punch": false,
+          "insta": ""
+        }
+      ],
+      "caption_post": "सरकारी पोर्टल की एक क्लिक से पूरा गांव ही गायब हो गया, अब छात्राएं दफ़्तरों के चक्कर काट रही हैं। + क्या आपके पोर्टल फॉर्म में कभी ऐसी तकनीकी गलती आई है? + Family group में भेजो + स्रोत: ETV Bharat, Amar Ujala #ScholarshipPortal #Glitch #StudentsIssue #BakraNews #VillageMissing (AI से बने किरदार)",
+      "format": "explain",
+      "label": "काम की खबर",
+      "key_word": "",
+      "icons": [
+        "₹",
+        "NEWS",
+        "%"
+      ],
+      "hook": "सरकारी पोर्टल से पूरा गांव ही गायब!",
+      "trend": {
+        "score": 5,
+        "why": "6 अख़बार/चैनल 2 दिन में, 15 खबरें 7 दिन में"
+      },
+      "connect": {
+        "score": 6,
+        "why": "हुक में गज़ब का अचरज है कि सरकारी कागज़ों में जीता-जागता गाँव ही गायब हो गया।",
+        "weak": "संवादों में सरकारी दावों को उसी के शब्दों से काटने वाले 3 स्पष्ट उलटफेर नहीं बन पाए।",
+        "fix": "पोर्टल के ड्रॉपडाउन मेन्यू में गाँव न मिलने और साइबर कैफ़े वाले के कमीशन पर तीखा पंच रखें।",
+        "parts": {
+          "A": 1,
+          "B": 1,
+          "C": 2,
+          "D": 1,
+          "E": 0,
+          "F": 1
+        }
+      }
+    }
+  ]
+}
