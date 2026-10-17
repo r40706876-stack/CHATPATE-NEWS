@@ -271,15 +271,32 @@ def do_render(script_path):
     print(f"तैयार: {job / 'reel.mp4'}")
 
 
-SPEAKER = {"बबलू": "bablu", "चाचा": "chacha", "पिंकी": "pinky", "दादी": "dadi"}
-SCENE = {"chacha": "chacha", "pinky": "pinky", "dadi": "dadi_call"}
-TOPICS_HEAD = ("# यहाँ अपनी पूरी script लिखो — हर line ऐसे: \"बबलू: ...\", \"चाचा: ...\", \"पिंकी: ...\", \"दादी: ...\"\n"
-               "# सबसे पहले इसी पर video बनेगा (15 मिनट के अंदर), फिर ये अपने-आप ख़ाली हो जाएगी.\n"
+SPEAKER = {"बबलू": "bablu", "बबलु": "bablu", "चाचा": "chacha", "पिंकी": "pinky", "पिंकि": "pinky", "दादी": "dadi",
+           "दादि": "dadi", "रमेश": "ramesh"}
+FEEL = {"गुस्सा": "gussa", "गुस्से": "gussa", "हँसी": "hasi", "हंसी": "hasi", "ख़ुश": "hasi", "खुश": "hasi",
+        "दुखी": "udaas", "उदास": "udaas", "हैरान": "hairan", "तंज़": "tanz", "तंज": "tanz", "गंभीर": "gambhir"}
+SET_WORDS = [("road", "चालान|गड्ढ|सड़क|ट्रैफिक|पेट्रोल|हेलमेट"), ("mandi", "सब्ज़ी|सब्जी|टमाटर|प्याज़|प्याज|महँगाई|महंगाई|दाम"),
+             ("office", "दफ़्तर|दफ्तर|फ़ॉर्म|फॉर्म|भर्ती|बाबू|फ़ाइल|फाइल"), ("school", "परीक्षा|पेपर|रिज़ल्ट|रिजल्ट|स्कूल"),
+             ("bank", "बैंक|UPI|यूपीआई|लोन|ATM|एटीएम"), ("thana", "ठगी|थाना|पुलिस|फ़्रॉड|फ्रॉड|साइबर"),
+             ("bijli", "बिजली|बिल|कटौती|ट्रांसफ़ॉर्मर"), ("station", "ट्रेन|रेल|स्टेशन|टिकट|किराया"),
+             ("hospital", "अस्पताल|डॉक्टर|दवा|इलाज"), ("khet", "किसान|खाद|फ़सल|फसल|खेत"), ("gas", "गैस|सिलेंडर|LPG"),
+             ("ration", "राशन"), ("kitchen", "रसोई|खाना"), ("room", "फ़ोन|फोन|मोबाइल|ऑनलाइन|इंस्टा|रील")]
+TOPICS_HEAD = ("# यहाँ अपनी script लिखो — हर line ऐसे: \"बबलू: ...\"  (किरदार: बबलू, चाचा, पिंकी, दादी, रमेश)\n"
+               "# जितने किरदार चाहिए उतने ही लिखो — कोई भी छोड़ सकते हो. भाव चाहिए तो: \"चाचा (गुस्सा): ...\"\n"
+               "# (भाव: गंभीर, तंज़, गुस्सा, हैरान, दुखी, ख़ुश). कम से कम 2 lines. सबसे पहले इसी पर video बनेगा.\n"
                "# या बस एक लाइन का topic/viral बात लिखो — Gemini उस पर script बनाएगा.\n")
 
 
+def _set_for(who, text, topic):
+    for name, pat in SET_WORDS:
+        if re.search(pat, text) or (who != "bablu" and re.search(pat, topic)):
+            return "studio" if who == "bablu" and name not in ("road", "mandi") else name
+    return "studio" if who == "bablu" else "village"
+
+
 def user_script():
-    """topics.txt में तुम्हारी लिखी पूरी script (बबलू:/चाचा:/पिंकी:/दादी: वाली lines) हो तो उसका episode."""
+    """topics.txt में तुम्हारी script: कोई भी किरदार, कितनी भी बार, किसी भी क्रम में (बबलू ज़रूरी नहीं).
+    "चाचा (गुस्सा): ..." से भाव; set (दफ़्तर/सड़क/मंडी…) बात के शब्दों से अपने-आप."""
     tf = ROOT / "topics.txt"
     if not tf.exists():
         return None
@@ -289,28 +306,32 @@ def user_script():
             continue
         head, say = raw.split(":", 1)
         who = next((v for k, v in SPEAKER.items() if k in head), None)
-        say = say.strip().strip('"“”')
-        if who and len(head) < 40 and say:
-            lines.append({"who": who, "say": say, "caption": say})
-    if len(lines) < 3:
+        say = say.strip().strip('"“” ')
+        if not (who and len(head) < 40 and say):
+            continue
+        expr = next((v for k, v in FEEL.items() if k in head), "gambhir")
+        ln = {"who": who, "say": say, "caption": say, "expr": expr}
+        if say.endswith(("!", "?")) or "।" in say[:-1]:
+            ln["punch"] = True
+        lines.append(ln)
+    if len(lines) < 2:
         return None
-    for i, ln in enumerate(lines):                      # बबलू उसी के पास जिससे बात कर रहा है
-        if ln["who"] != "bablu":
-            ln["scene"] = SCENE[ln["who"]]
-            ln["punch"] = ln["say"].endswith(("!", "?"))
-            if ln["who"] == "dadi":
-                ln["expr"] = "smug"
-        else:
-            nxt = next((l["who"] for l in lines[i + 1:i + 2] if l["who"] != "bablu"), None)
-            prv = lines[i - 1]["who"] if i and lines[i - 1]["who"] != "bablu" else None
-            ln["scene"] = SCENE.get(nxt or prv, "studio") if i else "studio"
     first = re.sub(r"^ब्रेकिंग न्यूज़[!।]?\s*", "", lines[0]["say"])
     head = re.split(r"[!?।]", first)[0].strip()
     words = head.split()
+    topic = " ".join(l["say"] for l in lines)
+    poses = ["eyeroll", "facepalm", "laugh"]
+    k = 0
+    for ln in lines:
+        ln["set"] = _set_for(ln["who"], ln["say"], topic)
+        if ln.get("punch") and k < 3:                    # सबसे तेज़ 3 lines पर reaction
+            ln["react_pose"] = poses[k]
+            k += 1
     return {"format": "explain", "label": "BREAKING", "user_script": True, "category": "user",
-            "topic": head, "breaking": " ".join(words[:12]), "hook_text": " ".join(words[:5]),
+            "topic": head, "breaking": " ".join(words[:10]), "hook_text": " ".join(words[:5]),
+            "hook": " ".join(words[:6]), "ask": "आपके साथ भी ऐसा हुआ है? कमेंट करो",
             "source": "", "lines": lines,
-            "caption_post": first[:180] + "\n\nआपके घर में भी ऐसा होता है? कमेंट में बताओ 👇\n\n#बकरान्यूज़ #desicomedy #funnyreels\n(AI से बने किरदार)"}
+            "caption_post": first[:180] + "\n\nआपके साथ भी ऐसा होता है? कमेंट में बताओ 👇\n\n#बकरान्यूज़ #desicomedy #funnyreels\n(AI से बने किरदार)"}
 
 
 def take_user_script():
@@ -325,7 +346,8 @@ def take_user_script():
         f.write(f"\n===== {ist():%Y-%m-%d %H:%M} =====\n" + tf.read_text(encoding="utf-8"))
     tf.write_text(TOPICS_HEAD, encoding="utf-8")
     json.dump(ep, open(CHOICE, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
-    telegram.send_text(f"✅ आपकी script मिल गई ({len(ep['lines'])} lines): {ep['topic']}\n🎬 उसी पर video बन रहा है, 10-15 मिनट…")
+    cast = ", ".join(dict.fromkeys(NAME.get(l["who"], l["who"]) for l in ep["lines"]))
+    telegram.send_text(f"✅ आपकी script मिल गई ({len(ep['lines'])} lines, किरदार: {cast}): {ep['topic']}\n🎬 उसी पर video बन रहा है, 25-30 मिनट…")
     print("  तुम्हारी script मिली —", len(ep["lines"]), "lines → सीधे video")
     return True
 
