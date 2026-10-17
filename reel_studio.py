@@ -73,9 +73,9 @@ def set_img(name, w, h):
     return _sets[key].copy()
 
 
-SCR = (24, 150, 1056, 860)                          # बड़ी news screen (x0, y0, x1, y1)
+SCR = (12, 130, 1068, 940)                          # बड़ी news screen (x0, y0, x1, y1)
 STRAP = 66                                          # screen के नीचे लाल headline पट्टी
-BAND_Y, BAND_H = 940, 888                           # नीचे किरदार वाला हिस्सा (1080 x 888)
+BAND_Y, BAND_H = 1010, 888                          # नीचे किरदार वाला हिस्सा (1080 x 888)
 
 
 def compose_band(sprite, setname, w=W, h=BAND_H):
@@ -240,27 +240,45 @@ def chrome_safe(d, k):
     d.text((446, y + 26), "AI किरदार", font=tt.font(22), fill=(230, 230, 230), anchor="mm")
 
 
-def karaoke_safe(d, text, frac, cy):
-    """बड़े, साफ़ captions (3 शब्द एक बार में): काला डिब्बा + पीली किनारी, बोला जा रहा शब्द पीला, मोटी outline.
-    Instagram/YouTube के नीचे वाले caption/buttons से ऊपर — news screen के निचले हिस्से पर."""
+def speech_span(wav):
+    """आवाज़ असल में कहाँ से कहाँ तक है (0-1, segment के हिस्से में) — शुरू/आख़िर की चुप्पी पर caption न भागे."""
+    try:
+        a = rv._read(wav)
+        hop = max(1, len(a) // 400)
+        e = np.array([np.abs(a[i:i + hop]).mean() for i in range(0, len(a), hop)])
+        on = np.nonzero(e > max(0.01, e.max() * 0.12))[0]
+        if len(on):
+            return on[0] / len(e), (on[-1] + 1) / len(e)
+    except Exception:                                     # noqa: BLE001
+        pass
+    return 0.0, 1.0
+
+
+def karaoke_safe(d, text, frac, cy, span=(0.0, 1.0)):
+    """बोले जा रहे शब्द के साथ चलते captions (4 शब्द एक बार में): समय शब्दों की लंबाई के हिसाब से बँटता है
+    (लंबा शब्द = ज़्यादा देर), और सिर्फ़ आवाज़ वाले हिस्से में — ताकि caption आगे-पीछे न हो."""
     words = str(text).split()
     if not words:
         return
-    cur = min(len(words) - 1, int(frac * len(words)))
-    start = (cur // 3) * 3
-    chunk = words[start:start + 3]
-    f = tt.font(84)
+    a, b = span
+    p = min(1.0, max(0.0, (frac - a) / max(0.05, b - a)))
+    wts = np.array([len(w) + 2 for w in words], float)
+    cum = np.cumsum(wts) / wts.sum()
+    cur = int(min(len(words) - 1, np.searchsorted(cum, p, side="right")))
+    start = (cur // 4) * 4
+    chunk = words[start:start + 4]
+    f = tt.font(62)
     widths = [f.getlength(w + " ") for w in chunk]
     total = sum(widths)
-    if total > 900:
-        f = tt.font(int(84 * 900 / total))
+    if total > 940:
+        f = tt.font(int(62 * 940 / total))
         widths = [f.getlength(w + " ") for w in chunk]
         total = sum(widths)
     x = (W - total) / 2
-    d.rounded_rectangle((x - 34, cy - 66, x + total + 14, cy + 66), 30, fill=(0, 0, 0), outline=YEL, width=5)
+    d.rounded_rectangle((x - 26, cy - 50, x + total + 8, cy + 50), 24, fill=(0, 0, 0), outline=YEL, width=4)
     for i, (w, wd) in enumerate(zip(chunk, widths)):
         on = start + i == cur
-        d.text((x, cy), w, font=f, fill=YEL if on else (255, 255, 255), anchor="lm", stroke_width=4, stroke_fill=(0, 0, 0))
+        d.text((x, cy), w, font=f, fill=YEL if on else (255, 255, 255), anchor="lm", stroke_width=3, stroke_fill=(0, 0, 0))
         x += wd
 
 
@@ -577,6 +595,7 @@ def render(ep, segs, chars, out, preview):
         still = s["still"].resize((W, H)) if shot == "close" else s["still"]
         if not react:
             st_text = ""
+        span = speech_span(s["wav"]) if not react else (0.0, 1.0)
         last = None                                              # cur/credit पिछली line से चलते रहते हैं (reaction पर भी)
         if shot != "close" and not vis and cur is None:
             cur = _screen_gen({"big": headline}, seed, size, last_screen)
@@ -639,8 +658,8 @@ def render(ep, segs, chars, out, preview):
                 d.text((58, BAND_Y + 418), f"{name} का रिएक्शन", font=tt.font(44), fill="white", anchor="lm")
             else:
                 if first_seen and t < FPS * 2.5 and shot != "close":
-                    rv.name_strap(d, (BAND_Y + 400) if shot == "split" else 1130, name, role)
-                karaoke_safe(d, ln.get("caption") or ln["say"], t / n, SCR[3] - 90)
+                    rv.name_strap(d, (BAND_Y + 84) if shot == "split" else 1130, name, role)
+                karaoke_safe(d, ln.get("caption") or ln["say"], t / n, BAND_Y + 460, span)
             if bool(ln.get("punch")) and not react and not st_text and t >= n * 0.6:
                 st_text = ln.get("stamp") or STAMP_OF.get(ln.get("react_pose"), "")
                 st_t = 0
