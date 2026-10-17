@@ -1,0 +1,164 @@
+{
+ "topic": "दशहरे से पहले पीएम किसान की 24वीं किस्त का इंतजार, बैंक खातों पर टकटकी",
+ "category": "Trends",
+ "breaking": "दशहरे से पहले पीएम किसान की चौबीसवीं किस्त का इंतजार",
+ "hook_text": "दशहरे पर दो हज़ार की किस्त!",
+ "ask": "क्या आपकी पीएम किसान की किस्त टाइम पर आती है?",
+ "source": "Jagran, NDTV India, Amar Ujala, ABP News, Prabhat Khabar, Aaj Tak, News18 Hindi",
+ "poll": {
+  "q": "क्या आपकी पीएम किसान की किस्त टाइम पर आती है?",
+  "a": "e-KYC हो गया",
+  "b": "अभी अटका है"
+ },
+ "ticker": [
+  "कृषि मंत्रालय की सलाह: बैंक खाते का स्टेटस तुरंत जांच लें।",
+  "विभाग ने कहा: ई-केवाईसी पूरी रखें, किस्त अपने समय पर आएगी।",
+  "किसानों की टकटकी: दशहरे का त्योहार और दो हज़ार रुपये का इंतज़ार।"
+ ],
+ "cast_why": "किसानों की आर्थिक योजना और पीएम किसान पोर्टल के चक्कर पर बबलू और रमेश का संवाद सटीक बैठता है।",
+ "lines": [
+  {
+   "who": "bablu",
+   "say": "कृषि विभाग ने साफ़ किया है, चौबीसवीं किस्त दशहरे से पहले आएगी। इंतज़ार दशहरे के बाद भी रहेगा।",
+   "caption": "कृषि विभाग ने साफ़ किया है, 24वीं किस्त दशहरे से पहले आएगी। इंतज़ार दशहरे के बाद भी रहेगा।",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "farmer looking at smartphone screen",
+    "bank passbook printing machine",
+    "indian currency notes 2000 rupees"
+   ],
+   "photo_hi": [
+    "पीएम किसान बैंक खाता",
+    "किसान मोबाइल स्टेटस"
+   ],
+   "card": {
+    "tag": "पीएम किसान",
+    "big": "₹2,000 किस्त",
+    "sub": "24वीं किस्त का इंतज़ार",
+    "icon": "rupee"
+   },
+   "visual": "farmer looking at smartphone screen",
+   "scene": "studio",
+   "punch": false,
+   "insta": ""
+  },
+  {
+   "who": "ramesh",
+   "say": "किसानों को ई-केवाईसी तुरंत पूरा करने की सलाह दी गई है। सर्वर चलने पर।",
+   "caption": "किसानों को ई-केवाईसी तुरंत पूरा करने की सलाह दी गई है। सर्वर चलने पर।",
+   "expr": "udaas",
+   "set": "office",
+   "visuals": [
+    "computer screen showing error page",
+    "csc center common service center india",
+    "farmer standing in csc queue"
+   ],
+   "photo_hi": [
+    "ई केवाईसी पोर्टल एरर",
+    "जन सेवा केंद्र लाइन"
+   ],
+   "punch": true,
+   "react_pose": "facepalm",
+   "stamp": "सर्वर डाउन!",
+   "visual": "computer screen showing error page",
+   "scene": "chacha",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "say": "सरकार के मुताबिक, पात्र किसानों को दो हज़ार रुपये मिलेंगे। पोर्टल पर स्टेटस अटकने के बाद।",
+   "caption": "सरकार के मुताबिक, पात्र किसानों को ₹2,000 रुपये मिलेंगे। पोर्टल पर स्टेटस अटकने के बाद।",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "pm kisan portal website home page",
+    "farmer holding aadhar card and passbook",
+    "atm counter queue rural india"
+   ],
+   "photo_hi": [
+    "पीएम किसान 24वीं किस्त",
+    "किसान बैंक पासबुक"
+   ],
+   "visual": "pm kisan portal website home page",
+   "scene": "chacha",
+   "punch": false,
+   "insta": ""
+  },
+  {
+   "who": "ramesh",
+   "say": "विशेषज्ञों का कहना है, बैंक खाते पर टकटकी बनाए रखें। पैसे देखने से नहीं बढ़ते।",
+   "caption": "विशेषज्ञों का कहना है, बैंक खाते पर टकटकी बनाए रखें। पैसे देखने से नहीं बढ़ते।",
+   "expr": "tanz",
+   "set": "village",
+   "visuals": [
+    "man checking phone banking app",
+    "empty wallet close up",
+    "dussehra festival market"
+   ],
+   "photo_hi": [
+    "बैंक अकाउंट मैसेज",
+    "किसान त्योहार तैयारी"
+   ],
+   "punch": true,
+   "react_pose": "eyeroll",
+   "stamp": "टकटकी जारी!",
+   "visual": "man checking phone banking app",
+   "scene": "chacha",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "say": "ये वीडियो उस किसान भाई को भेजो, जो रोज़ ई-केवाईसी का पोर्टल खोलकर बैठता है।",
+   "caption": "ये वीडियो उस किसान भाई को भेजो, जो रोज़ ई-केवाईसी का पोर्टल खोलकर बैठता है।",
+   "expr": "hasi",
+   "set": "studio",
+   "visuals": [
+    "farmer sitting near green farm with phone",
+    "laptop screen showing pm kisan website",
+    "bank passbook entry stamp"
+   ],
+   "photo_hi": [
+    "किसान पोर्टल स्टेटस",
+    "ई केवाईसी पीएम किसान"
+   ],
+   "visual": "farmer sitting near green farm with phone",
+   "scene": "studio_end",
+   "punch": false,
+   "insta": ""
+  }
+ ],
+ "caption_post": "दशहरे से पहले ₹2,000 का इंतज़ार और ई-केवाईसी का चक्कर जारी है। + क्या आपका ई-केवाईसी स्टेटस ओके दिखा रहा है? + Family group में भेजो + स्रोत: Jagran, NDTV India #PMKisan #24thInstallment #FarmerNews #BakraNews #eKYC (AI से बने किरदार)",
+ "format": "explain",
+ "label": "काम की खबर",
+ "key_word": "",
+ "icons": [
+  "₹",
+  "NEWS",
+  "%"
+ ],
+ "hook": "दशहरे पर दो हज़ार की किस्त!",
+ "trend": {
+  "score": 6,
+  "why": "18 अख़बार/चैनल 2 दिन में, 72 खबरें 7 दिन में"
+ },
+ "connect": {
+  "score": 9,
+  "why": "सरकारी ऐलान और सर्वर डाउन के बीच किसान की बेबसी पर मुहर वाली लाइन्स एकदम सटीक बैठी हैं।",
+  "weak": "24वीं किस्त का तथ्य भ्रामक है, वर्तमान में 18वीं/19वीं किस्त का दौर चल रहा है।",
+  "fix": "किस्त का नंबर ठीक करें और बैंक खाते में मैसेज न आने पर पासबुक प्रिंट कराने वाली लाइन जोड़ें।",
+  "parts": {
+   "A": 2,
+   "B": 2,
+   "C": 2,
+   "D": 1,
+   "E": 1,
+   "F": 1
+  }
+ },
+ "sprite": {
+  "ramesh": "assets/toon/ramesh",
+  "bablu": "assets/toon/bablu"
+ },
+ "production": true
+}
