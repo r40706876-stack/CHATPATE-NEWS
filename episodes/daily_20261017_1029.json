@@ -1,0 +1,166 @@
+{
+ "topic": "सरकारी अस्पतालों में मशीनें बंद और स्वास्थ्य सेवाएं प्रभावित",
+ "category": "अस्पताल/सेहत",
+ "breaking": "सरकारी अस्पतालों में जांच मशीनें बंद, मरीज इलाज को परेशान",
+ "hook_text": "मशीनें अस्पताल में, चालू कागज़ों में",
+ "ask": "सरकारी अस्पताल में आखिरी बार कौन-सी जांच मुफ्त मिली?",
+ "source": "ETV Bharat, Prabhat Khabar, Amar Ujala, Dainik Bhaskar",
+ "poll": {
+  "q": "सरकारी अस्पताल में आखिरी बार कौन-सी जांच मुफ्त मिली?",
+  "a": "जांच बाहर कराई",
+  "b": "मशीन चालू मिली"
+ },
+ "ticker": [
+  "अस्पताल खुला है, जांच मशीनें छुट्टी पर हैं",
+  "पाँच करोड़ की मशीन, पाँच पैसे की जांच नहीं",
+  "इलाज कराने से पहले मशीन की सेहत पूछें"
+ ],
+ "cast_why": "अस्पतालों में बंद पड़ी महंगी मशीनों और मरीजों की बेबसी पर बब्लू और दादी का संवाद",
+ "lines": [
+  {
+   "who": "bablu",
+   "say": "अस्पतालों का दावा है, हर आधुनिक तकनीक उपलब्ध है। तकनीक उपलब्ध है, चालू हालत नहीं।",
+   "caption": "अस्पतालों का दावा है, हर आधुनिक तकनीक उपलब्ध है। तकनीक उपलब्ध है, चालू हालत नहीं।",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "mri machine hospital room",
+    "patients waiting in hospital hallway",
+    "medical equipment cover dust"
+   ],
+   "photo_hi": [
+    "सरकारी अस्पताल एमआरआई",
+    "अस्पताल मरीज कतार"
+   ],
+   "card": {
+    "tag": "मशीनें ठप",
+    "big": "₹5 करोड़",
+    "sub": "एमआरआई सेंटर बंद",
+    "icon": "alert"
+   },
+   "punch": true,
+   "react_pose": "eyeroll",
+   "stamp": "चालू हालत नहीं!",
+   "visual": "mri machine hospital room",
+   "scene": "studio",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "say": "भागलपुर में पाँच करोड़ का एमआरआई सेंटर बंद पड़ा है। पाँच करोड़ की सिर्फ़ धूल जम रही है।",
+   "caption": "भागलपुर में 5 करोड़ का एमआरआई सेंटर बंद पड़ा है। 5 करोड़ की सिर्फ़ धूल जम रही है।",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "closed hospital diagnostics room",
+    "ventilator machine in icu dark",
+    "hospital building corridor empty"
+   ],
+   "photo_hi": [
+    "भागलपुर अस्पताल एमआरआई",
+    "बंद वेंटिलेटर वार्ड"
+   ],
+   "punch": true,
+   "visual": "closed hospital diagnostics room",
+   "scene": "dadi_call",
+   "insta": ""
+  },
+  {
+   "who": "dadi",
+   "say": "जिले के अस्पतालों में एक्सरे और अल्ट्रासाउंड मशीनें आराम फरमा रही हैं। बीमार सिर्फ़ मरीज़ पड़ रहे हैं।",
+   "caption": "जिले के अस्पतालों में एक्सरे और अल्ट्रासाउंड मशीनें आराम फरमा रही हैं। बीमार सिर्फ़ मरीज़ पड़ रहे हैं।",
+   "expr": "udaas",
+   "set": "hospital",
+   "visuals": [
+    "patient holding xray film envelope",
+    "ultrasound scanner monitor dark",
+    "elderly woman outside clinic queue"
+   ],
+   "photo_hi": [
+    "एक्सरे जांच काउंटर",
+    "जिला अस्पताल अल्ट्रासाउंड"
+   ],
+   "punch": true,
+   "react_pose": "facepalm",
+   "stamp": "मशीनें आराम पे!",
+   "visual": "patient holding xray film envelope",
+   "scene": "dadi_call",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "say": "प्रशासन ने हेल्पलाइन से पता करने की सलाह दी है। हेल्पलाइन पर बस रिंग सुनाई देती है, इलाज नहीं।",
+   "caption": "प्रशासन ने हेल्पलाइन से पता करने की सलाह दी है। हेल्पलाइन पर बस रिंग सुनाई देती है, इलाज नहीं।",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "landline phone ringing desk",
+    "hospital reception helpdesk empty",
+    "crowd outside pathology lab"
+   ],
+   "photo_hi": [
+    "अस्पताल पूछताछ काउंटर",
+    "कैथ लैब मशीन"
+   ],
+   "punch": true,
+   "visual": "landline phone ringing desk",
+   "scene": "dadi_call",
+   "insta": ""
+  },
+  {
+   "who": "dadi",
+   "say": "ये वीडियो उसको भेजो, जो सोचता है सरकारी पर्ची बनते ही सारे टेस्ट हो जाते हैं।",
+   "caption": "ये वीडियो उसको भेजो, जो सोचता है सरकारी पर्ची बनते ही सारे टेस्ट हो जाते हैं।",
+   "expr": "tanz",
+   "set": "hospital",
+   "visuals": [
+    "doctor prescription slip hand",
+    "crowded government hospital lobby",
+    "pharmacy counter line"
+   ],
+   "photo_hi": [
+    "सरकारी अस्पताल पर्ची",
+    "मरीज जांच केंद्र"
+   ],
+   "punch": true,
+   "react_pose": "smug",
+   "stamp": "टेस्ट नहीं!",
+   "visual": "doctor prescription slip hand",
+   "scene": "studio_end",
+   "insta": ""
+  }
+ ],
+ "caption_post": "करोड़ों की मशीनें सरकारी कमरों में सो रही हैं और गरीब प्राइवेट लैब के चक्कर काट रहे हैं। जांच बाहर कराई या चालू मिली? Family group में भेजो। स्रोत: ETV Bharat, Prabhat Khabar, Amar Ujala #HospitalReality #HealthCare #BakaraNews (AI से बने किरदार)",
+ "format": "explain",
+ "label": "काम की खबर",
+ "key_word": "",
+ "icons": [
+  "₹",
+  "NEWS",
+  "%"
+ ],
+ "hook": "मशीनें अस्पताल में, चालू कागज़ों में",
+ "trend": {
+  "score": 6,
+  "why": "13 अख़बार/चैनल 2 दिन में, 35 खबरें 7 दिन में"
+ },
+ "connect": {
+  "score": 9,
+  "why": "सरकारी अस्पताल की बंद मशीनों और प्राइवेट लूट का दर्द हर आम परिवार से सीधा जुड़ा है।",
+  "weak": "हुक एक सीधा बयान है, चौंकाने वाला सवाल या झटका नहीं देता।",
+  "fix": "हुक को तीखा सवाल बनाएं: 'सरकारी अस्पताल में टेस्ट के नाम पर सिर्फ़ पर्ची क्यों मिलती है?'",
+  "parts": {
+   "A": 3,
+   "B": 2,
+   "C": 1,
+   "D": 1,
+   "E": 1,
+   "F": 1
+  }
+ },
+ "sprite": {
+  "dadi": "assets/toon/dadi",
+  "bablu": "assets/toon/bablu"
+ },
+ "production": true
+}
