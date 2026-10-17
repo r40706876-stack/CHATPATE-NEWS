@@ -306,7 +306,7 @@ def user_script():
             continue
         head, say = raw.split(":", 1)
         who = next((v for k, v in SPEAKER.items() if k in head), None)
-        say = say.strip().strip('"“” ')
+        say = re.sub(r"[💥🔥]+", "", say).strip().strip('"“” ')   # Telegram वाली script चिपकाई हो तो निशान हटाओ
         if not (who and len(head) < 40 and say):
             continue
         expr = next((v for k, v in FEEL.items() if k in head), "gambhir")
@@ -324,6 +324,7 @@ def user_script():
     k = 0
     for ln in lines:
         ln["set"] = _set_for(ln["who"], ln["say"], topic)
+        ln["topic"] = head                              # तस्वीरें: इसी खबर के अख़बारों से
         if ln.get("punch") and k < 3:                    # सबसे तेज़ 3 lines पर reaction
             ln["react_pose"] = poses[k]
             k += 1

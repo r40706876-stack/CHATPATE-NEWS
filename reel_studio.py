@@ -578,6 +578,8 @@ def render(ep, segs, chars, out, preview):
                 vis = [{"big": ln["big"], "sub": ln.get("sub", "")}]
             elif cur is None and not (si == 0 and ep.get("hook")):
                 vis = [{"big": headline}]
+            elif last_screen is None or not last_vis:           # एक भी तस्वीर नहीं मिली: काली screen नहीं, headline के अक्षर
+                vis = [{"big": headline if si else ""}]
             else:                                               # intro/outro: नीचे caption + ऊपर hook/सवाल पहले से हैं —
                 vis = [{"big": ""}]                             # ऊपर दोबारा वही अक्षर नहीं, सिर्फ़ धुंधली तस्वीर
         if vis and isinstance(vis[0], Path):
