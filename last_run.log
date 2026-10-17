@@ -1,3 +1,21 @@
+  विषय: ['अस्पताल/सेहत', 'किसान/गाँव', 'ठगी से बचाव', 'नियम/बैंक', 'नौकरी/परीक्षा', 'पढ़ाई/स्कूल', 'फ़ोन/इंटरनेट', 'महँगाई', 'योजना', 'शहर-कस्बा', 'सफ़र'] | हाल के विषय (अभी नहीं): ['अस्पताल/सेहत', 'किसान/गाँव', 'ठगी से बचाव', 'नियम/बैंक', 'नौकरी/परीक्षा', 'पढ़ाई/स्कूल', 'फ़ोन/इंटरनेट', 'महँगाई', 'योजना', 'शहर-कस्बा', 'सफ़र']
+  topics: 33 काम की, 8 वायरल, 6 Trends, 5 त्योहार
+  Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
+    सब models busy — 40s रुककर दोबारा
+    सब models busy — 40s रुककर दोबारा
+    key 1 नहीं चली → key 2
+  Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
+    Gemini gemini-3.5-flash: 70s
+  trend 6/10: कैंसर की 137 दवाओं के दाम 70% तक घटे, सरकार ने तय की मुनाफे की सीमा
+  trend 5/10: कमर्शियल गैस सिलेंडर के दाम बढ़े, रेस्टोरेंट में बाहर खाना होगा महंगा
+  trend 0/10: डेढ़ साल से चल रहा फर्जी टोल प्लाजा पकड़ा गया, रोज होती रही अवैध उगाही
+  trend 6/10: व्हाट्सएप पर अंजान मैसेज का जवाब देने से खाली हो सकता है बैंक खाता
+  trend 4/10: सरकारी भर्ती परीक्षा में पेपर लीक का नया तरीका, सवाल रटवाकर जलाए गए पेपर
+  trend 7/10: दिवाली की सफाई का हुक्म जारी, कबाड़ हटाने और टांड़ खाली करने की मची होड़
+    सब models busy — 40s रुककर दोबारा
+    सब models busy — 40s रुककर दोबारा
+    key 1 नहीं चली → key 2
+    Gemini gemini-flash-latest: 80s
 /home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/run_daily.py:31: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
   return dt.datetime.utcnow() + dt.timedelta(hours=5, minutes=30)
-  तुम्हारी script मिली — 5 lines → सीधे video
+  bulletin job: episodes/bulletin_20261017_2333.json
