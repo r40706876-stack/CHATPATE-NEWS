@@ -1,0 +1,167 @@
+{
+ "topic": "डांडिया/गरबा के बाद ड्रेस रिटर्न का वायरल ट्रेंड",
+ "category": "वायरल",
+ "breaking": "गरबा खत्म होते ही महंगे लहंगे रिटर्न का वायरल ट्रेंड",
+ "hook_text": "नाचना दो दिन, फ़्री ट्रायल सात दिन",
+ "ask": "क्या आपने कभी पहनकर कपड़ा लौटाया है?",
+ "source": "Navbharat Times, News18 Hindi, Amar Ujala, NDTV India, ABP News",
+ "poll": {
+  "q": "क्या आपने कभी पहनकर कपड़ा लौटाया है?",
+  "a": "शौक़ीन ग्राहक",
+  "b": "परेशान डिलीवरी बॉय"
+ },
+ "ticker": [
+  "डांडिया समाप्त, रिटर्न पार्सल का उत्सव शुरू",
+  "डिलीवरी एजेंट बोले, अब कमर हमारी टूटेगी",
+  "रिफंड ही सच्चा गरबा आनंद है"
+ ],
+ "cast_why": "ऑनलाइन शॉपिंग और फ़ोटोबाज़ी के चक्कर पर पिंकी और रमेश का तंज़",
+ "lines": [
+  {
+   "who": "bablu",
+   "say": "गरबा ख़त्म होते ही महंगे लहंगे वापस लौटने लगे हैं। नाचना दो दिन था, फ़्री ट्रायल सात दिन का।",
+   "caption": "गरबा ख़त्म होते ही महंगे लहंगे वापस लौटने लगे हैं। नाचना 2 दिन था, फ़्री ट्रायल 7 दिन का।",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "garba dance crowd colorful",
+    "traditional lehenga choli dress",
+    "courier return packages pile"
+   ],
+   "photo_hi": [
+    "डांडिया गरबा लहंगा",
+    "ऑनलाइन पार्सल ढेर"
+   ],
+   "card": {
+    "tag": "वायरल ट्रेंड",
+    "big": "रिटर्न पार्सल",
+    "sub": "सैकड़ों ड्रेस वापस",
+    "icon": "gift"
+   },
+   "punch": true,
+   "react_pose": "eyeroll",
+   "stamp": "सात दिन का ट्रायल!",
+   "visual": "garba dance crowd colorful",
+   "scene": "studio",
+   "insta": ""
+  },
+  {
+   "who": "pinky",
+   "say": "त्योहार पर महंगे कपड़े ख़रीदना परंपरा है। फ़ोटो खिंचवाकर तुरंत लौटा देना आधुनिक परंपरा है।",
+   "caption": "त्योहार पर महंगे कपड़े ख़रीदना परंपरा है। फ़ोटो खिंचवाकर तुरंत लौटा देना आधुनिक परंपरा है।",
+   "expr": "tanz",
+   "set": "room",
+   "visuals": [
+    "girl taking selfie ethnic dress",
+    "packing cardboard delivery box",
+    "smartphone showing ecommerce app"
+   ],
+   "photo_hi": [
+    "लहंगा सेल्फ़ी लड़की",
+    "ऑनलाइन रिटर्न पार्सल"
+   ],
+   "punch": true,
+   "react_pose": "smug",
+   "stamp": "आधुनिक परंपरा!",
+   "visual": "girl taking selfie ethnic dress",
+   "scene": "pinky",
+   "insta": ""
+  },
+  {
+   "who": "ramesh",
+   "say": "डिलीवरी एजेंट सैकड़ों पार्सल का अंबार दिखा रहे हैं। डांडिया पंडाल में नहीं, पार्सल में हो रहा है।",
+   "caption": "डिलीवरी एजेंट सैकड़ों पार्सल का अंबार दिखा रहे हैं। डांडिया पंडाल में नहीं, पार्सल में हो रहा है।",
+   "expr": "udaas",
+   "set": "road",
+   "visuals": [
+    "delivery courier agent warehouse",
+    "stacked delivery parcels india",
+    "delivery van loaded boxes"
+   ],
+   "photo_hi": [
+    "डिलीवरी बॉय पार्सल",
+    "कोरियर गोदाम पैकेट"
+   ],
+   "punch": true,
+   "react_pose": "facepalm",
+   "stamp": "पार्सल का डांडिया!",
+   "visual": "delivery courier agent warehouse",
+   "scene": "chacha",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "say": "कंपनियों ने कहा रिटर्न पॉलिसी सुविधा के लिए है। ग्राहकों ने सुविधा को ही मुफ़्त की अलमारी बना दिया।",
+   "caption": "कंपनियों ने कहा रिटर्न पॉलिसी सुविधा के लिए है। ग्राहकों ने सुविधा को ही मुफ़्त की अलमारी बना दिया।",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "ecommerce return warehouse clothes",
+    "hanger full of ethnic dresses",
+    "cardboard boxes dispatch area"
+   ],
+   "photo_hi": [
+    "कपड़ा रिटर्न वेयरहाउस",
+    "शॉपिंग ऐप बॉक्स"
+   ],
+   "punch": true,
+   "visual": "ecommerce return warehouse clothes",
+   "scene": "pinky",
+   "insta": ""
+  },
+  {
+   "who": "pinky",
+   "say": "ये वीडियो उस सहेली को भेजो, जो टैग छुपाकर पार्टी में कपड़े पहनती है।",
+   "caption": "ये वीडियो उस सहेली को भेजो, जो टैग छुपाकर पार्टी में कपड़े पहनती है।",
+   "expr": "hasi",
+   "set": "room",
+   "visuals": [
+    "clothing price tag inside dress",
+    "girl looking mirror dress",
+    "friends smiling garba dress"
+   ],
+   "photo_hi": [
+    "कपड़े का टैग",
+    "पार्टी लहंगा ड्रेस"
+   ],
+   "punch": true,
+   "visual": "clothing price tag inside dress",
+   "scene": "studio_end",
+   "insta": ""
+  }
+ ],
+ "caption_post": "डांडिया पंडाल में हुआ और हिसाब कोरियर वाले ने चुकाया! क्या कपड़े पहनकर लौटाना सही है? Family group में भेजो। स्रोत: Navbharat Times, ABP News #GarbaReturn #OnlineShopping #Bakranews #DeliveryScam (AI से बने किरदार)",
+ "format": "explain",
+ "label": "काम की खबर",
+ "key_word": "",
+ "icons": [
+  "₹",
+  "NEWS",
+  "%"
+ ],
+ "hook": "नाचना दो दिन, फ़्री ट्रायल सात दिन",
+ "trend": {
+  "score": 5,
+  "why": "6 अख़बार/चैनल 2 दिन में, 6 खबरें 7 दिन में"
+ },
+ "connect": {
+  "score": 8,
+  "why": "टैग छुपाकर कपड़े पहनने और फ़ोटो खिंचाकर लौटाने वाली सच्चाई को बिल्कुल नंगा किया गया है।",
+  "weak": "ऑनलाइन महंगे लहंगे मँगवाकर लौटाना कस्बों के आम परिवार के रोज़ी-रोटी के संकट से दूर, सिर्फ़ शौक़ीन तबके का विषय है।",
+  "fix": "रिटर्न पर डिलीवरी चार्ज कटने या रिफंड फँसने से सीधे जेब पर लगने वाली चोट का पहलू जोड़ें।",
+  "parts": {
+   "A": 1,
+   "B": 2,
+   "C": 2,
+   "D": 1,
+   "E": 1,
+   "F": 1
+  }
+ },
+ "sprite": {
+  "bablu": "assets/toon/bablu",
+  "ramesh": "assets/toon/ramesh",
+  "pinky": "assets/toon/pinky"
+ },
+ "production": true
+}
