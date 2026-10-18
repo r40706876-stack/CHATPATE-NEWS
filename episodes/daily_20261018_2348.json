@@ -1,0 +1,169 @@
+{
+ "topic": "बच्चों के इंटरनेट इस्तेमाल और मौलिक अधिकार पर सुप्रीम कोर्ट की टिप्पणी",
+ "category": "फ़ोन/इंटरनेट",
+ "breaking": "बच्चों का इंटरनेट अधिकार, सुप्रीम कोर्ट ने याचिका खारिज की",
+ "hook_text": "अधिकार पूरा, डेटा पैक आधा",
+ "ask": "क्या बच्चों के फ़ोन पर पाबंदी होनी चाहिए?",
+ "source": "AajTak, Jagran, India TV Hindi, Navbharat Live, ABP News, Dainik Bhaskar",
+ "poll": {
+  "q": "क्या बच्चों के फ़ोन पर पाबंदी होनी चाहिए?",
+  "a": "पाबंदी ज़रूरी",
+  "b": "इंटरनेट हक़ है"
+ },
+ "ticker": [
+  "सुप्रीम कोर्ट ने कहा इंटरनेट हक़ है, माता-पिता बोले सिरदर्द भी हक़ है",
+  "याचिका खारिज हुई, बच्चों का स्क्रीन टाइम बहाल रहा",
+  "कोर्ट ने कहा उम्र देखकर बैन बेतुका है, होमवर्क देखना वाजिब है"
+ ],
+ "cast_why": "सुप्रीम कोर्ट के बड़े फैसले पर पिंकी की डिजिटल खुशी, दादी की ज़मीनी चिंता और बबलू का एंकर व्यंग्य।",
+ "lines": [
+  {
+   "who": "bablu",
+   "say": "सुप्रीम कोर्ट ने कहा है इंटरनेट बच्चों का मौलिक अधिकार है। अधिकार पूरा मिल गया, बस डेटा पैक आधा बचा है।",
+   "caption": "सुप्रीम कोर्ट ने कहा इंटरनेट बच्चों का मौलिक अधिकार है। अधिकार पूरा मिल गया, बस डेटा पैक आधा बचा है।",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "supreme court building new delhi pillars",
+    "child using smartphone home living room",
+    "mobile data limit exhausted screen message"
+   ],
+   "photo_hi": [
+    "सुप्रीम कोर्ट फैसला इंटरनेट",
+    "बच्चा स्मार्टफोन इंटरनेट"
+   ],
+   "card": {
+    "tag": "फैसला",
+    "big": "मौलिक अधिकार",
+    "sub": "सुप्रीम कोर्ट की टिप्पणी",
+    "icon": "check"
+   },
+   "punch": true,
+   "react_pose": "eyeroll",
+   "stamp": "डेटा आधा बचा!",
+   "visual": "supreme court building new delhi pillars",
+   "scene": "studio",
+   "insta": ""
+  },
+  {
+   "who": "pinky",
+   "say": "अदालत ने उम्र देखकर इंटरनेट पर पूर्ण प्रतिबंध को बेतुका बताया। बेतुका बैन है, पर बच्चों की रीलें महा-बेतुकी हैं।",
+   "caption": "अदालत ने उम्र देखकर इंटरनेट पर पूर्ण प्रतिबंध को बेतुका बताया। बेतुका बैन है, पर बच्चों की रीलें महा-बेतुकी हैं।",
+   "expr": "tanz",
+   "set": "room",
+   "visuals": [
+    "lawyer holding law documents court complex",
+    "teenager scrolling mobile short videos",
+    "kids making dance video mobile tripod"
+   ],
+   "photo_hi": [
+    "कोर्ट याचिका खारिज",
+    "मोबाइल स्क्रीन रील स्क्रॉल"
+   ],
+   "punch": true,
+   "react_pose": "smug",
+   "stamp": "रीलें महा-बेतुकी!",
+   "visual": "lawyer holding law documents court complex",
+   "scene": "pinky",
+   "insta": ""
+  },
+  {
+   "who": "dadi",
+   "say": "इंटरनेट तक पहुंच सबकी मानी गई है। पहुंच वाई-फ़ाई तक है, असली किताबों तक नहीं।",
+   "caption": "इंटरनेट तक पहुंच सबकी मानी गई है। पहुंच वाई-फ़ाई तक है, असली किताबों तक नहीं।",
+   "expr": "gambhir",
+   "set": "aangan",
+   "visuals": [
+    "wi-fi router blinking light living room",
+    "dusty school books lying desk study",
+    "elderly woman looking glasses kitchen courtyard"
+   ],
+   "photo_hi": [
+    "किताबें मेज स्कूल",
+    "वाई-फ़ाई राउटर घर"
+   ],
+   "punch": true,
+   "react_pose": "facepalm",
+   "stamp": "किताबों तक नहीं!",
+   "visual": "wi-fi router blinking light living room",
+   "scene": "dadi_call",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "say": "पाबंदी लगाने की मांग कोर्ट ने खारिज कर दी है। मांग खारिज हुई, अब माता-पिता का सुकून खारिज होगा।",
+   "caption": "पाबंदी लगाने की मांग कोर्ट ने खारिज की। मांग खारिज हुई, अब माता-पिता का सुकून खारिज होगा।",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "judge hammer gavel justice scale table",
+    "worried mother looking at child phone",
+    "family sitting sofa eyes glued screens"
+   ],
+   "photo_hi": [
+    "सुप्रीम कोर्ट सुनवाई फैसला",
+    "माता पिता मोबाइल चिंता"
+   ],
+   "punch": true,
+   "react_pose": "eyeroll",
+   "stamp": "सुकून खारिज!",
+   "visual": "judge hammer gavel justice scale table",
+   "scene": "pinky",
+   "insta": ""
+  },
+  {
+   "who": "pinky",
+   "say": "ये वीडियो उस मम्मी को भेजो, जो फ़ोन छीनने के लिए सुप्रीम कोर्ट से बड़ी अदालत बनी बैठी हैं।",
+   "caption": "ये वीडियो उस मम्मी को भेजो, जो फ़ोन छीनने के लिए सुप्रीम कोर्ट से बड़ी अदालत बनी बैठी हैं।",
+   "expr": "hasi",
+   "set": "room",
+   "visuals": [
+    "mother snatching phone from teenager hands",
+    "daughter arguing smiling smartphone room",
+    "messaging chat screen sending reel family"
+   ],
+   "photo_hi": [
+    "मां बच्चा मोबाइल छीनना",
+    "स्मार्टफोन स्क्रीन चैट"
+   ],
+   "visual": "mother snatching phone from teenager hands",
+   "scene": "studio_end",
+   "punch": false,
+   "insta": ""
+  }
+ ],
+ "caption_post": "सुप्रीम कोर्ट ने बच्चों के इंटरनेट को मौलिक अधिकार बताया, याचिका खारिज। आपके घर में किसका स्क्रीन टाइम सबसे ज़्यादा है? Family group में भेजो! स्रोत: AajTak, Jagran, ABP News #SupremeCourt #ChildRights #InternetAccess #BakraNews (AI से बने किरदार)",
+ "format": "explain",
+ "label": "काम की खबर",
+ "key_word": "",
+ "icons": [
+  "₹",
+  "NEWS",
+  "%"
+ ],
+ "hook": "अधिकार पूरा, डेटा पैक आधा",
+ "trend": {
+  "score": 8,
+  "why": "84 अख़बार/चैनल 2 दिन में, 100 खबरें 7 दिन में"
+ },
+ "connect": {
+  "score": 9,
+  "why": "सुप्रीम कोर्ट के भारी आदेश को घर में बच्चों के स्क्रीन-टाइम और माता-पिता के क्लेश से बखूबी जोड़ा।",
+  "weak": "अदालती टिप्पणी कानूनी भाषा में होने से गाँव के बुजुर्गों को समझने में एक सेकंड की देरी हो सकती है।",
+  "fix": "पहली लाइन में 'सुप्रीम कोर्ट' के साथ सीधे 'मोबाइल का रिचार्ज' शब्द जोड़कर बात और जमीनी करें।",
+  "parts": {
+   "A": 2,
+   "B": 2,
+   "C": 2,
+   "D": 1,
+   "E": 1,
+   "F": 1
+  }
+ },
+ "sprite": {
+  "dadi": "assets/toon/dadi",
+  "pinky": "assets/toon/pinky",
+  "bablu": "assets/toon/bablu"
+ },
+ "production": true
+}

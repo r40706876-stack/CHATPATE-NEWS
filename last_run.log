@@ -1,14 +1,4 @@
-  विषय: ['अस्पताल/सेहत', 'किसान/गाँव', 'ठगी से बचाव', 'नियम/बैंक', 'नौकरी/परीक्षा', 'पढ़ाई/स्कूल', 'फ़ोन/इंटरनेट', 'महँगाई', 'योजना', 'शहर-कस्बा', 'सफ़र'] | हाल के विषय (अभी नहीं): ['अस्पताल/सेहत', 'किसान/गाँव', 'ठगी से बचाव', 'नियम/बैंक', 'नौकरी/परीक्षा', 'पढ़ाई/स्कूल', 'फ़ोन/इंटरनेट', 'महँगाई', 'योजना', 'शहर-कस्बा', 'सफ़र']
-  topics: 33 काम की, 8 वायरल, 6 Trends, 5 त्योहार
-  Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
-    Gemini gemini-flash-latest: 13s
-  trend 2/10: दो हजार रुपये से अधिक के यूपीआई भुगतान नियमों को लेकर छिड़ी नई बहस
-  trend 2/10: डेढ़ साल से सीना तानकर चल रहा था फर्जी टोल प्लाजा, लाखों की वसूली
-  trend 0/10: अभ्यर्थियों को रटाने के बाद जला दिए जाते थे पेपर, सॉल्वर गिरोह का भंडाफोड़
-  trend 1/10: सीबीएसई बोर्ड दसवीं और बारहवीं परीक्षा के लिए पंजीकरण की आखिरी तारीख तय
-  trend 3/10: त्योहारी सीजन में चीनी और रसोई के सामान में तेजी से बिगड़ा घरेलू बजट
-  trend 3/10: इलाज कराने आए मरीजों के बीच अस्पताल में निकला छह फीट लंबा अजगर
-    Gemini gemini-flash-latest: 33s
+  चुना: 2
 /home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/run_daily.py:31: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
   return dt.datetime.utcnow() + dt.timedelta(hours=5, minutes=30)
-  bulletin job: episodes/bulletin_20261018_2330.json
+  studio job: episodes/daily_20261018_2348.json
