@@ -1,138 +1,138 @@
 {
-  "sent_at": 1792255424,
+  "sent_at": 1792308618,
   "eps": [
     {
-      "topic": "व्हाट्सएप 'NO' रिप्लाई बैंकिंग स्कैम",
-      "category": "ठगी से बचाव",
-      "breaking": "व्हाट्सएप मैसेज पर 'NO' लिखने से खाली हो सकता है बैंक खाता, साइबर चेतावनी जारी",
-      "hook_text": "व्हाट्सएप पर 'NO' लिखा, तो बैंक बैलेंस शून्य!",
-      "ask": "क्या आपके व्हाट्सएप पर 'पैसे कट गए' वाला मैसेज आया?",
-      "source": "दैनिक जागरण, ABP News, अमर उजाला, ndtv.in, आज तक, इंडिया टीवी हिंदी, न्यूज18 हिंदी, बिजनेस स्टैंडर्ड",
+      "topic": "बिजली बिलों का 417 करोड़ बकाया होने के बावजूद सुस्त वसूली",
+      "category": "[शहर-कस्बा]",
+      "breaking": "जम्मू-कश्मीर में बिजली बिल का 417 करोड़ बकाया, वसूली सुस्त",
+      "hook_text": "बिल का बकाया भारी, वसूली बेचारी",
+      "ask": "आपके घर का बिजली बिल समय पर आता है?",
+      "source": "Jagran",
       "poll": [
-        "सावधान रहेंगे",
-        "1930 पर कॉल करेंगे"
+        "बिल समय पर",
+        "कटौती ज़्यादा"
       ],
       "ticker": [
-        "साइबर सेल की चेतावनी: अनचाहे मैसेज का जवाब न दें",
-        "ठग भेज रहे हैं 'पैसे कट गए' जैसे भ्रामक संदेश",
-        "धोखाधड़ी पर तुरंत 1930 साइबर हेल्पलाइन पर कॉल करें"
+        "जेकेपीडीसीएल की रिपोर्ट में सुस्त वसूली का पर्दाफ़ाश",
+        "चार सौ सत्रह करोड़ रुपये का बिजली बिल बकाया",
+        "विभाग ने उपभोक्ताओं से भुगतान की अपील की"
       ],
-      "cast_why": "बैंकिंग स्कैम से बचाव की काम की बात दादी से कहलवाने और साइबर ठगी पर बबलू-रमेश के तंज़ के लिए।",
+      "cast_why": "बिजली विभाग की ढिलाई और बकाया बिल पर रमेश और बबलू का करारा व्यंग्य।",
       "lines": [
         {
           "who": "bablu",
-          "say": "साइबर सेल ने चेतावनी दी है, अनजान व्हाट्सएप मैसेज पर नौ मत लिखिए। नौ लिखते ही बैंक बैलेंस शून्य हो जाएगा।",
-          "caption": "व्हाट्सएप पर अनजान मैसेज में 'NO' लिखने से खाता खाली!",
+          "say": "जम्मू-कश्मीर में बिजली बिल का चार सौ सत्रह करोड़ बकाया है। उधारी का रिकॉर्ड बन गया है।",
+          "caption": "जम्मू-कश्मीर में बिजली बिल का 417 करोड़ बकाया है। उधारी का रिकॉर्ड बन गया है।",
           "expr": "gambhir",
           "set": "studio",
           "visuals": [
-            "whatsapp chat screen suspicious message india",
-            "empty bank account balance notification phone",
-            "cyber police alert banner india"
+            "electricity meter reading india house",
+            "power grid distribution station Jammu",
+            "official electricity bill paper document"
           ],
           "photo_hi": [
-            "व्हाट्सएप साइबर स्कैम बैंक",
-            "साइबर सेल अलर्ट पुलिस"
+            "बिजली मीटर चेकिंग",
+            "बिजली बिल बकाया"
           ],
           "card": {
-            "tag": "साइबर अलर्ट",
-            "big": "WhatsApp 'NO' स्कैम",
-            "sub": "संदेहास्पद मैसेज का जवाब न दें, साइबर पुलिस को बताएँ",
-            "icon": "phone"
+            "tag": "बकाया बिल",
+            "big": "₹417 करोड़",
+            "sub": "JKPDCL की रिपोर्ट",
+            "icon": "alert"
           },
-          "punch": true,
-          "react_pose": "eyeroll",
-          "stamp": "बैलेंस शून्य!",
-          "visual": "whatsapp chat screen suspicious message india",
+          "visual": "electricity meter reading india house",
           "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "ramesh",
-          "say": "ठग मैसेज भेजते हैं कि आपके पैसे कट गए हैं। पैसे बाद में कटते हैं, होश पहले उड़ते हैं।",
-          "caption": "'पैसे कट गए' वाले मैसेज भेजकर फँसा रहे ठग!",
-          "expr": "udaas",
-          "set": "bank",
-          "visuals": [
-            "shocked young man looking at mobile screen",
-            "fake transaction alert notification on phone",
-            "cyber criminal typing on laptop dark room"
-          ],
-          "photo_hi": [
-            "बैंक धोखाधड़ी मैसेज",
-            "व्हाट्सएप ठगी चेतावनी"
-          ],
-          "punch": true,
-          "react_pose": "facepalm",
-          "stamp": "होश उड़ गए!",
-          "visual": "shocked young man looking at mobile screen",
-          "scene": "chacha",
-          "insta": ""
-        },
-        {
-          "who": "dadi",
-          "say": "पुलिस का कहना है, संदेहास्पद मैसेज का जवाब कभी मत दो। जवाब देना ही है, तो एक नौ तीन शून्य पे दो।",
-          "caption": "संदेहास्पद मैसेज का जवाब न दें, 1930 पर तुरंत कॉल करें!",
-          "expr": "tanz",
-          "set": "aangan",
-          "visuals": [
-            "elderly woman pointing phone screen india",
-            "national cyber crime helpline number 1930 banner",
-            "bank account security lock concept"
-          ],
-          "photo_hi": [
-            "साइबर हेल्पलाइन 1930",
-            "साइबर अपराध बचाव"
-          ],
-          "visual": "elderly woman pointing phone screen india",
-          "scene": "dadi_call",
           "punch": false,
           "insta": ""
         },
         {
           "who": "bablu",
-          "say": "बैंकों ने फिर साफ़ किया है, अनजान मैसेज पर नौ लिखने से बचें। बचा हुआ पैसा ही आपका अपना है।",
-          "caption": "अज्ञात व्हाट्सएप संदेशों का रिप्लाई करने से बचें!",
+          "say": "विभाग की रिपोर्ट बताती है कि वसूली बहुत सुस्त चल रही है। तेज़ी सिर्फ़ कटौती में है।",
+          "caption": "विभाग की रिपोर्ट बताती है कि वसूली बहुत सुस्त चल रही है। तेजी सिर्फ कटौती में है।",
           "expr": "gambhir",
           "set": "studio",
           "visuals": [
-            "bank advisory notice on fraud awareness",
-            "man closing whatsapp chat on smartphone",
-            "cyber police warning poster"
+            "electric line repair pole worker",
+            "dark house load shedding night",
+            "pending bill file stack office"
           ],
           "photo_hi": [
-            "बैंक चेतावनी ठगी",
-            "साइबर सुरक्षा मैसेज"
+            "बिजली कटौती गांव",
+            "ट्रांसफॉर्मर खराबी"
           ],
           "punch": true,
-          "react_pose": "thinking",
-          "stamp": "बचा पैसा ही अपना!",
-          "visual": "bank advisory notice on fraud awareness",
-          "scene": "studio",
+          "react_pose": "eyeroll",
+          "stamp": "तेज़ी कटौती में!",
+          "visual": "electric line repair pole worker",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "ramesh",
+          "say": "अधिकारियों का कहना है कि बिजली का उपयोग जारी है। बस बिल का भुगतान नहीं।",
+          "caption": "अधिकारियों का कहना है कि बिजली का उपयोग जारी है। बस बिल का भुगतान नहीं।",
+          "expr": "tanz",
+          "set": "bijli",
+          "visuals": [
+            "man sitting near cooler reading bill",
+            "power supply wires overhead tangle",
+            "online electricity bill payment app"
+          ],
+          "photo_hi": [
+            "बिजली दफ्तर लाइन",
+            "बिजली मीटर रीडिंग"
+          ],
+          "punch": true,
+          "react_pose": "facepalm",
+          "stamp": "भुगतान नहीं!",
+          "visual": "man sitting near cooler reading bill",
+          "scene": "chacha",
           "insta": ""
         },
         {
           "who": "bablu",
-          "say": "ये वीडियो घर के उस सदस्य को भेजो, जो हर व्हाट्सएप मैसेज पर नौ लिखकर अपनी ईमानदारी दिखाता है।",
-          "caption": "वीडियो शेयर कर अपनों का बैंक खाता सुरक्षित करें!",
+          "say": "विभाग ने पोर्टल पर बकाया जांचने की सलाह दी है। सलाह से बिल जमा नहीं होता।",
+          "caption": "विभाग ने पोर्टल पर बकाया जांचने की सलाह दी है। सलाह से बिल जमा नहीं होता।",
           "expr": "gambhir",
           "set": "studio",
           "visuals": [
-            "family member checking phone worried india",
-            "cyber security protection illustration",
-            "whatsapp application icon on phone close up"
+            "checking portal on mobile phone",
+            "electricity department office desk",
+            "paying cash bill counter queue"
           ],
           "photo_hi": [
-            "साइबर ठगी जागरूकता",
-            "व्हाट्सएप सुरक्षा"
+            "बिजली बिल भुगतान",
+            "ऑनलाइन पोर्टल स्क्रीन"
           ],
-          "visual": "family member checking phone worried india",
+          "punch": true,
+          "react_pose": "laugh",
+          "stamp": "सलाह मुफ़्त!",
+          "visual": "checking portal on mobile phone",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "ramesh",
+          "say": "ये वीडियो उस पड़ोसी को भेजो, जिसका बिजली का बिल चार सौ सत्रह करोड़ जैसा दिखता है।",
+          "caption": "ये वीडियो उस पड़ोसी को भेजो, जिसका बिजली का बिल 417 करोड़ जैसा दिखता है।",
+          "expr": "gambhir",
+          "set": "village",
+          "visuals": [
+            "two men chatting near electricity pole",
+            "holding paper bill outside house",
+            "power transformer street view"
+          ],
+          "photo_hi": [
+            "बिजली बिल शिकायत",
+            "गांव बिजली सप्लाई"
+          ],
+          "visual": "two men chatting near electricity pole",
           "scene": "studio_end",
           "punch": false,
           "insta": ""
         }
       ],
-      "caption_post": "व्हाट्सएप पर आया 'पैसे कट गए' का मैसेज? 'NO' मत लिखना! + धोखाधड़ी हो तो सीधे 1930 डायल करें! + Family group में भेजो + स्रोत: दैनिक जागरण, ABP News, आज तक + #CyberScam #WhatsAppFraud #BankSafety #BakraNews #AICharacters",
+      "caption_post": "417 करोड़ का बिजली बिल बकाया, वसूली सुस्त! आपके इलाक़े में बिजली आती है या सिर्फ़ बिल? कमेंट करें। Family group में भेजो! स्रोत: Jagran #PowerBill #JKPDCL #ElectricityDues #BakraNews (AI से बने किरदार)",
       "format": "explain",
       "label": "काम की खबर",
       "key_word": "",
@@ -141,340 +141,20 @@
         "NEWS",
         "%"
       ],
-      "hook": "व्हाट्सएप पर 'NO' लिखा, तो बैंक बैलेंस शून्य!",
+      "hook": "बिल का बकाया भारी, वसूली बेचारी",
       "trend": {
         "score": 6,
-        "why": "16 अख़बार/चैनल 2 दिन में, 59 खबरें 7 दिन में"
-      },
-      "connect": {
-        "score": 10,
-        "why": "व्हाट्सएप फ्रॉड का विषय हर गाँव-कस्बे के परिवार की जेब और सुरक्षा से सीधा जुड़ा है।",
-        "weak": "दूसरी लाइन का तंज थोड़ा और तीखा किया जा सकता था।",
-        "fix": "साइबर हेल्पलाइन 1930 को बोलने में और उभारें ताकि दर्शक को नंबर याद रहे।",
-        "parts": {
-          "A": 3,
-          "B": 2,
-          "C": 2,
-          "D": 1,
-          "E": 1,
-          "F": 1
-        }
-      }
-    },
-    {
-      "topic": "कैंसर की दवाओं पर मार्जिन सीमित और कीमतें कम करने का फैसला",
-      "category": "अस्पताल/सेहत",
-      "breaking": "केंद्र का फैसला: कैंसर रोधी 137 दवाओं पर ट्रेड मार्जिन 30% सीमित, कीमतें होंगी 70% कम",
-      "hook_text": "कैंसर की दवाएँ होंगी सस्ती, मार्जिन तीस प्रतिशत सीमित!",
-      "ask": "क्या दवा दुकानों पर नए MRP लागू हो गए?",
-      "source": "News On AIR, दैनिक जागरण, न्यूज18 हिंदी, द प्रिंट हिंदी, दैनिक भास्कर, बिजनेस स्टैंडर्ड, अमर उजाला",
-      "poll": [
-        "राहत की बात",
-        "निगरानी ज़रूरी"
-      ],
-      "ticker": [
-        "कैंसर रोधी 137 दवाओं पर ट्रेड मार्जिन 30% तक सीमित",
-        "कैंसर की दवाओं में 70% तक गिरावट की उम्मीद",
-        "सुप्रीम कोर्ट ने भारी-भरकम MRP पर उठाए थे सवाल"
-      ],
-      "cast_why": "अस्पताल और दवाओं की महँगाई जैसे गंभीर और संवेदनशील मुद्दे पर बबलू, चाचा और रमेश के सटीक तंज़ के लिए।",
-      "lines": [
-        {
-          "who": "bablu",
-          "say": "सरकार ने कैंसर की एक सौ सैंतालीस दवाओं पर ट्रेड मार्जिन तीस प्रतिशत तक सीमित कर दिया है। मुनाफा सीमित हुआ है, बीमारी की मार नहीं।",
-          "caption": "कैंसर की 137/110 दवाओं पर ट्रेड मार्जिन 30% तक सीमित!",
-          "expr": "gambhir",
-          "set": "studio",
-          "visuals": [
-            "cancer medicines bottles packaging pharmacy",
-            "government order notification document health ministry",
-            "pharmacist holding medicine box india"
-          ],
-          "photo_hi": [
-            "कैंसर दवा दाम में कमी",
-            "केंद्र सरकार कैंसर दवा ट्रेड मार्जिन"
-          ],
-          "card": {
-            "tag": "दवा नीति",
-            "big": "कैंसर दवाएँ 70% सस्ती",
-            "sub": "ट्रेड मार्जिन 30% तक सीमित, संशोधित MRP जाँचें",
-            "icon": "rupee"
-          },
-          "punch": true,
-          "react_pose": "eyeroll",
-          "stamp": "मुनाफा सीमित, मार नहीं",
-          "visual": "cancer medicines bottles packaging pharmacy",
-          "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "ramesh",
-          "say": "उम्मीद है कैंसर की दवाओं के दाम सत्तर प्रतिशत तक कम होंगे। उम्मीद सरकारी है, रसीद अभी भी पुरानी है।",
-          "caption": "कैंसर दवाओं की कीमतों में 70% तक की कमी की उम्मीद!",
-          "expr": "udaas",
-          "set": "hospital",
-          "visuals": [
-            "medical pharmacy receipt bill counter india",
-            "patient family buying medicine at chemist shop",
-            "discount on medicines banner pharmacy"
-          ],
-          "photo_hi": [
-            "कैंसर दवा कीमतें घटीं",
-            "अस्पताल मेडिकल स्टोर रसीद"
-          ],
-          "punch": true,
-          "react_pose": "facepalm",
-          "stamp": "रसीद पुरानी ही है!",
-          "visual": "medical pharmacy receipt bill counter india",
-          "scene": "chacha",
-          "insta": ""
-        },
-        {
-          "who": "chacha",
-          "say": "सुप्रीम कोर्ट ने दवाओं के भारी-भरकम एमआरपी पर सवाल उठाए हैं। सवाल कोर्ट ने उठाए हैं, जवाब मेडिकल स्टोर देगा।",
-          "caption": "सुप्रीम कोर्ट ने दवाओं के भारी-भरकम MRP पर सवाल उठाए!",
-          "expr": "tanz",
-          "set": "hospital",
-          "visuals": [
-            "supreme court building new delhi facade",
-            "chemist store mrp tag inspection",
-            "medicine strip showing high mrp print"
-          ],
-          "photo_hi": [
-            "सुप्रीम कोर्ट दवा MRP सुनवाई",
-            "मेडिकल स्टोर MRP जाँच"
-          ],
-          "visual": "supreme court building new delhi facade",
-          "scene": "chacha",
-          "punch": false,
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "say": "स्वास्थ्य मंत्रालय के अनुसार दवा खरीदते समय संशोधित एमआरपी ज़रूर जाँचें। जाँच एमआरपी की करें, उम्मीदों की नहीं।",
-          "caption": "दवा खरीदते समय संशोधित MRP और सरकारी दरों की जाँच करें!",
-          "expr": "gambhir",
-          "set": "studio",
-          "visuals": [
-            "person checking mrp on medicine package",
-            "national pharmaceutical pricing authority chart",
-            "pharmacy store counter close up"
-          ],
-          "photo_hi": [
-            "संशोधित MRP कैंसर दवा",
-            "सरकारी दवा दरें"
-          ],
-          "punch": true,
-          "react_pose": "thinking",
-          "stamp": "उम्मीदों की जाँच नहीं!",
-          "visual": "person checking mrp on medicine package",
-          "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "say": "ये वीडियो उसको भेजो, जो दवा दुकान पर एमआरपी देखकर अस्पताल की आधी बीमारी भूल जाता है।",
-          "caption": "वीडियो शेयर करें और एमआरपी की जाँच ज़रूर करें!",
-          "expr": "gambhir",
-          "set": "studio",
-          "visuals": [
-            "man shocked seeing hospital bill chemist shop",
-            "cancer treatment support awareness banner",
-            "pharmacist giving bill to customer india"
-          ],
-          "photo_hi": [
-            "कैंसर मरीज राहत",
-            "दवा दुकान MRP जाँच"
-          ],
-          "visual": "man shocked seeing hospital bill chemist shop",
-          "scene": "studio_end",
-          "punch": false,
-          "insta": ""
-        }
-      ],
-      "caption_post": "कैंसर दवाओं की कीमतों पर नकेल, मार्जिन 30% पर सीमित! + दवा खरीदते समय संशोधित MRP ज़रूर देखें! + Family group में भेजो + स्रोत: News On AIR, दैनिक जागरण, द प्रिंट + #HealthNews #CancerMedicine #MRP #BakraNews #AICharacters",
-      "format": "explain",
-      "label": "काम की खबर",
-      "key_word": "",
-      "icons": [
-        "₹",
-        "NEWS",
-        "%"
-      ],
-      "hook": "कैंसर की दवाएँ होंगी सस्ती, मार्जिन तीस प्रतिशत सीमित!",
-      "trend": {
-        "score": 5,
-        "why": "10 अख़बार/चैनल 2 दिन में, 47 खबरें 7 दिन में"
-      },
-      "connect": {
-        "score": 8,
-        "why": "मेडिकल स्टोर की रसीद और सरकारी दावों की ज़मीनी सच्चाई पर करारा तंज है।",
-        "weak": "कैंसर का मुद्दा हर घर पर आज ही लागू नहीं होता, मरीज वाले परिवारों तक सीमित है।",
-        "fix": "बीपी-शुगर या आम घरेलू दवाओं की किल्लत का संदर्भ जोड़कर इसे हर घर से जोड़ें।",
-        "parts": {
-          "A": 1,
-          "B": 2,
-          "C": 2,
-          "D": 1,
-          "E": 1,
-          "F": 1
-        }
-      }
-    },
-    {
-      "topic": "नवोदय विद्यालय कक्षा 9वीं और 11वीं प्रवेश की अंतिम तिथि",
-      "category": "पढ़ाई/स्कूल",
-      "breaking": "नवोदय विद्यालय कक्षा 9वीं और 11वीं में प्रवेश की अंतिम तिथि 22 अक्टूबर तक बढ़ी",
-      "hook_text": "नवोदय की अंतिम तारीख़ बढ़ी, दबाव वही!",
-      "ask": "क्या आपने नवोदय विद्यालय का फॉर्म भर दिया?",
-      "source": "ABP News, दैनिक जागरण, प्रभात खबर, Careers360, TV9 हिंदी, हरिभूमि",
-      "poll": [
-        "फ़ॉर्म भर दिया",
-        "अभी भरना है"
-      ],
-      "ticker": [
-        "नवोदय विद्यालय 9वीं और 11वीं प्रवेश आवेदन तिथि 22 अक्टूबर तक बढ़ी",
-        "आवेदन पूरा होने के बाद फॉर्म सुधार का मौका मिलेगा",
-        "NVS की आधिकारिक वेबसाइट पर ऑनलाइन आवेदन करें"
-      ],
-      "cast_why": "छात्रों की पढ़ाई और आवेदन की तारीखों की भागदौड़ पर बबलू, पिंकी और रमेश के मज़ेदार व्यंग्य के लिए।",
-      "lines": [
-        {
-          "who": "bablu",
-          "say": "नवोदय विद्यालय में नौवीं और ग्यारहवीं में ऑनलाइन आवेदन की अंतिम तारीख़ बाईस अक्टूबर तक बढ़ा दी गई है। तारीख़ बढ़ गई है, पढ़ाई का दबाव वही है।",
-          "caption": "नवोदय विद्यालय कक्षा 9वीं व 11वीं प्रवेश आवेदन की अंतिम तिथि 22 अक्टूबर!",
-          "expr": "gambhir",
-          "set": "studio",
-          "visuals": [
-            "jawahar navodaya vidyalaya campus entrance gate",
-            "student filling online application form laptop",
-            "calendar page highlighting deadline 22 october"
-          ],
-          "photo_hi": [
-            "जवाहर नवोदय विद्यालय प्रवेश फॉर्म",
-            "नवोदय आवेदन अंतिम तिथि"
-          ],
-          "card": {
-            "tag": "शिक्षा समाचार",
-            "big": "NVS एडमिशन 2026",
-            "sub": "कक्षा 9वीं व 11वीं ऑनलाइन फॉर्म की तिथि 22 अक्टूबर तक",
-            "icon": "calendar"
-          },
-          "punch": true,
-          "react_pose": "eyeroll",
-          "stamp": "दबाव वही है!",
-          "visual": "jawahar navodaya vidyalaya campus entrance gate",
-          "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "pinky",
-          "say": "आवेदन के बाद फॉर्म में सुधार का मौका भी मिलेगा। सुधार फ़ॉर्म में होगा, किस्मत में नहीं।",
-          "caption": "आवेदन के बाद ऑनलाइन फॉर्म में सुधार का अवसर दिया जाएगा!",
-          "expr": "hasi",
-          "set": "room",
-          "visuals": [
-            "correction window screen on laptop NVS portal",
-            "female student editing online form documents",
-            "school student studying with books at desk"
-          ],
-          "photo_hi": [
-            "नवोदय विद्यालय फॉर्म सुधार",
-            "NVS ऑनलाइन करेक्शन विंडो"
-          ],
-          "punch": true,
-          "react_pose": "smug",
-          "stamp": "सुधार सिर्फ़ फ़ॉर्म मे",
-          "visual": "correction window screen on laptop NVS portal",
-          "scene": "pinky",
-          "insta": ""
-        },
-        {
-          "who": "ramesh",
-          "say": "प्रशासन ने कहा है, आधिकारिक वेबसाइट पर जाकर फ़ॉर्म भरें। वेबसाइट फ़ॉर्म जमा करेगी, रिज़ल्ट का भरोसा नहीं।",
-          "caption": "NVS की आधिकारिक वेबसाइट से 22 अक्टूबर तक फॉर्म भरें!",
-          "expr": "udaas",
-          "set": "school",
-          "visuals": [
-            "navodaya gov in official website homepage",
-            "student submitting online application button click",
-            "student holding exam admit card hopeful"
-          ],
-          "photo_hi": [
-            "नवोदय पोर्टल ऑनलाइन फॉर्म",
-            "NVS एडमिट कार्ड परीक्षा"
-          ],
-          "visual": "navodaya gov in official website homepage",
-          "scene": "chacha",
-          "punch": false,
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "say": "अधिकारियों के मुताबिक़ पूरी प्रक्रिया पारदर्शी रखी गई है। पारदर्शी सिर्फ़ सर्वर डाउन की स्क्रीन है।",
-          "caption": "समय रहते नवोदय विद्यालय पोर्टल पर आवेदन जमा करें!",
-          "expr": "gambhir",
-          "set": "studio",
-          "visuals": [
-            "website server error loading screen computer",
-            "students sitting in classroom navodaya school",
-            "official notification document NVS portal"
-          ],
-          "photo_hi": [
-            "नवोदय विद्यालय प्रवेश परीक्षा",
-            "NVS सर्वर आवेदन समस्या"
-          ],
-          "punch": true,
-          "react_pose": "thinking",
-          "stamp": "सर्वर ही पारदर्शी!",
-          "visual": "website server error loading screen computer",
-          "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "say": "ये वीडियो उस छात्र को भेजो, जो अंतिम तारीख़ का इंतज़ार परीक्षा की तरह करता है।",
-          "caption": "22 अक्टूबर से पहले फॉर्म भरने के लिए दोस्तों को शेयर करें!",
-          "expr": "gambhir",
-          "set": "studio",
-          "visuals": [
-            "student studying late night table lamp",
-            "navodaya vidyalaya school buildings campus view",
-            "online application confirmation receipt printout"
-          ],
-          "photo_hi": [
-            "नवोदय विद्यालय कक्षा 9 11",
-            "नवोदय छात्र आवेदन"
-          ],
-          "visual": "student studying late night table lamp",
-          "scene": "studio_end",
-          "punch": false,
-          "insta": ""
-        }
-      ],
-      "caption_post": "नवोदय विद्यालय कक्षा 9वीं और 11वीं में प्रवेश की तारीख़ बढ़कर 22 अक्टूबर हुई! + क्या आपने फॉर्म भरा या डेट का इंतज़ार है? + Family group में भेजो + स्रोत: ABP News, दैनिक जागरण, TV9 हिंदी + #NavodayaAdmission #NVS2026 #SchoolAdmission #BakraNews #AICharacters",
-      "format": "explain",
-      "label": "काम की खबर",
-      "key_word": "",
-      "icons": [
-        "₹",
-        "NEWS",
-        "%"
-      ],
-      "hook": "नवोदय की अंतिम तारीख़ बढ़ी, दबाव वही!",
-      "trend": {
-        "score": 4,
-        "why": "5 अख़बार/चैनल 2 दिन में, 9 खबरें 7 दिन में"
+        "why": "13 अख़बार/चैनल 2 दिन में, 29 खबरें 7 दिन में"
       },
       "connect": {
         "score": 7,
-        "why": "मुहर वाली 3 लाइनों का ढांचा (तारीख़, सुधार, पारदर्शी) नियमों के मुताबिक़ बिल्कुल सही है।",
-        "weak": "विषय केवल नवोदय परीक्षा देने वाले छात्रों तक सीमित है, पूरे परिवार की जेब पर असर नहीं।",
-        "fix": "फ़ॉर्म फीस या साइबर कैफ़े के चक्कर से जुड़ा आम जेब का मुद्दा शामिल करें।",
+        "why": "मुहर वाली तीनों पंक्तियाँ (तेज़ी सिर्फ़ कटौती में, सलाह से बिल जमा नहीं) बहुत सधी हुई हैं.",
+        "weak": "जम्मू-कश्मीर का 417 करोड़ का आँकड़ा यूपी-बिहार-एमपी के दर्शक को दूर की ख़बर लगता है.",
+        "fix": "आँकड़े को स्थानीय रखने के बजाय सीधे आम मीटर, पेनल्टी और लाइनमैन की वसूली पर केंद्रित करें.",
         "parts": {
-          "A": 1,
+          "A": 2,
           "B": 1,
-          "C": 2,
+          "C": 1,
           "D": 1,
           "E": 1,
           "F": 1
@@ -482,297 +162,137 @@
       }
     },
     {
-      "topic": "मौसम का मिजाज और गुलाबी ठंड का अहसास",
-      "category": "मौसम",
-      "breaking": "उत्तर भारत में गुलाबी ठंड की दस्तक, हरियाणा में तापमान 5 डिग्री गिरा",
-      "hook_text": "गुलाबी ठंड ने दी दस्तक, पंखे का बिल भी गुलाबी!",
-      "ask": "आपके शहर में आज सुबह कितनी ठंड थी?",
-      "source": "प्रभात खबर, हिंदुस्तान, ETV Bharat, दैनिक जागरण, अमर उजाला, ABP News",
+      "topic": "दिवाली से पहले सफाई और स्वच्छता अभियान",
+      "category": "[त्योहार]",
+      "breaking": "दिवाली से पहले जयपुर समेत कई शहरों में स्वच्छता उत्सव शुरू",
+      "hook_text": "दिवाली पे नगर निगम जागा, कचरा भागा या नहीं?",
+      "ask": "क्या आपके वार्ड में दिवाली की सफ़ाई शुरू हुई?",
+      "source": "ETV Bharat, Amar Ujala, Dainik Bhaskar, Hindustan",
       "poll": [
-        "गुलाबी ठंड",
-        "बारिश का अलर्ट"
+        "सफ़ाई चालू",
+        "सफ़ाई काग़ज़ों पे"
       ],
       "ticker": [
-        "मौसम विभाग ने कहा, ठंड से बचाव करें",
-        "हरियाणा के पाँच जिलों में छाया घना कोहरा",
-        "बिहार के पाँच जिलों में बारिश की चेतावनी"
+        "जयपुर के 150 वार्डों में स्वच्छता उत्सव की शुरुआत",
+        "तीन हज़ार अतिरिक्त सफाईकर्मी और छः हज़ार स्ट्रीट लाइटें",
+        "कानपुर और समालखा में भी विशेष स्वच्छता अभियान"
       ],
-      "cast_why": "मौसम के बदलाव और ठंड के असर पर गाँव के माहौल में तंज़ कसने के लिए बबलू, चाचा और पिंकी का चुनाव।",
+      "cast_why": "दिवाली स्वच्छता अभियान के बड़े-बड़े दावों और जमीनी गंदगी पर दादी व बबलू का तंज़।",
       "lines": [
         {
           "who": "bablu",
-          "say": "उत्तर प्रदेश, बिहार और दिल्ली में गुलाबी ठंड ने दस्तक दे दी है। गुलाबी सिर्फ़ ठंड नहीं, पंखे का बिल भी होगा।",
-          "caption": "UP, बिहार और दिल्ली में गुलाबी ठंड की दस्तक!",
+          "say": "जयपुर के एक सौ पचास वार्डों में स्वच्छता उत्सव शुरू हुआ है। सफ़ाई का उत्सव घोषित है।",
+          "caption": "जयपुर के 150 वार्डों में स्वच्छता उत्सव शुरू हुआ है। सफाई का उत्सव घोषित है।",
           "expr": "gambhir",
           "set": "studio",
           "visuals": [
-            "winter morning fog india street",
-            "people drinking tea winter morning india",
-            "delhi cold morning fog street"
+            "sanitation worker sweeping city road",
+            "Jaipur municipal corporation banner",
+            "garbage collector vehicle morning"
           ],
           "photo_hi": [
-            "उत्तर प्रदेश कोहरा ठंड",
-            "दिल्ली गुलाबी ठंड मौसम"
+            "जयपुर नगर निगम सफाई",
+            "सफाई कर्मचारी झाड़ू"
           ],
           "card": {
-            "tag": "मौसम अपडेट",
-            "big": "गुलाबी ठंड की दस्तक",
-            "sub": "UP, बिहार, हरियाणा और दिल्ली में तापमान गिरा",
-            "icon": "alert"
+            "tag": "स्वच्छता उत्सव",
+            "big": "3000 कर्मचारी",
+            "sub": "6000 स्ट्रीट लाइटें (जयपुर)",
+            "icon": "check"
           },
-          "punch": true,
-          "react_pose": "eyeroll",
-          "stamp": "पंखे का बिल भी गुलाबी!",
-          "visual": "winter morning fog india street",
+          "visual": "sanitation worker sweeping city road",
           "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "chacha",
-          "say": "हरियाणा में तापमान पाँच डिग्री तक गिर गया है। धुंध इतनी है कि सरकार का काम भी साफ़ नहीं दिख रहा।",
-          "caption": "हरियाणा में तापमान 5°C गिरा, 5 जिलों में धुंध!",
-          "expr": "tanz",
-          "set": "khet",
-          "visuals": [
-            "haryana fog heavy winter road",
-            "rural winter fog early morning india",
-            "farmers in heavy fog field india"
-          ],
-          "photo_hi": [
-            "हरियाणा धुंध कोहरा",
-            "हरियाणा तापमान गिरावट"
-          ],
-          "punch": true,
-          "react_pose": "smug",
-          "stamp": "काम दिखता ही नहीं!",
-          "visual": "haryana fog heavy winter road",
-          "scene": "chacha",
-          "insta": ""
-        },
-        {
-          "who": "pinky",
-          "say": "बिहार के पाँच जिलों में मानसून के बाद बारिश का अलर्ट है। मानसून गया भी और विदाई का लिफ़ाफ़ा भी ले गया।",
-          "caption": "मानसून विदाई के बाद बिहार के 5 जिलों में बारिश का अलर्ट!",
-          "expr": "hasi",
-          "set": "room",
-          "visuals": [
-            "monsoon departure heavy rain bihar",
-            "rainy weather bihar rural road",
-            "cloudy sky over bihar village"
-          ],
-          "photo_hi": [
-            "बिहार मानसून बारिश अलर्ट",
-            "बिहार मौसम बारिश"
-          ],
-          "visual": "monsoon departure heavy rain bihar",
-          "scene": "pinky",
           "punch": false,
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "say": "मौसम विभाग ने कहा है, बदलते मौसम में कपड़ों की व्यवस्था करें। व्यवस्था कपड़ों की करनी है, मौसम की नहीं हो पाएगी।",
-          "caption": "बदलते मौसम के अनुसार गर्म कपड़ों की व्यवस्था करें!",
-          "expr": "gambhir",
-          "set": "studio",
-          "visuals": [
-            "people buying winter clothes india market",
-            "woolen clothes shop india street",
-            "weather forecast mobile app view"
-          ],
-          "photo_hi": [
-            "मौसम विभाग चेतावनी ठंड",
-            "गर्म कपड़े बाज़ार उत्तर भारत"
-          ],
-          "punch": true,
-          "react_pose": "thinking",
-          "stamp": "मौसम की व्यवस्था नहीं!",
-          "visual": "people buying winter clothes india market",
-          "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "say": "ये वीडियो उसको भेजो, जो पाँच डिग्री तापमान गिरते ही पूरे साल की रज़ाई निकाल लेता है।",
-          "caption": "वीडियो शेयर करें और मौसम अलर्ट पर ध्यान दें!",
-          "expr": "gambhir",
-          "set": "studio",
-          "visuals": [
-            "person wrapped in heavy blanket winter india",
-            "winter morning sunlight rural house",
-            "cold wave forecast india map"
-          ],
-          "photo_hi": [
-            "उत्तर भारत ठंड असर",
-            "गुलाबी ठंड रज़ाई"
-          ],
-          "visual": "person wrapped in heavy blanket winter india",
-          "scene": "studio_end",
-          "punch": false,
-          "insta": ""
-        }
-      ],
-      "caption_post": "गुलाबी ठंड आ गई है, पर कपड़ों की व्यवस्था आपको ही करनी पड़ेगी! + आपके यहाँ ठंड शुरू हुई क्या? + Family group में भेजो + स्रोत: प्रभात खबर, हिंदुस्तान, ETV Bharat, दैनिक जागरण + #WeatherUpdate #GulabiThand #NorthIndia #BakraNews #AICharacters",
-      "format": "explain",
-      "label": "काम की खबर",
-      "key_word": "",
-      "icons": [
-        "₹",
-        "NEWS",
-        "%"
-      ],
-      "hook": "गुलाबी ठंड ने दी दस्तक, पंखे का बिल भी गुलाबी!",
-      "trend": {
-        "score": 5,
-        "why": "12 अख़बार/चैनल 2 दिन में, 58 खबरें 7 दिन में"
-      },
-      "connect": {
-        "score": 6,
-        "why": "हुक छोटा और सीधा है, जो मौसम के बदलाव को तुरंत पकड़ता है।",
-        "weak": "मुहर वाली 3 पलटवार लाइनों की कमी है और जेब पर तुरंत बड़ा असर नहीं दिखता।",
-        "fix": "बिजली बिल के बढ़ते खर्च का सटीक आंकड़ा जोड़ें और कम से कम 3 लाइनों में शब्द-पलटवार लाएं।",
-        "parts": {
-          "A": 1,
-          "B": 1,
-          "C": 2,
-          "D": 1,
-          "E": 0,
-          "F": 1
-        }
-      }
-    },
-    {
-      "topic": "ट्रेन में तत्काल न मिलने पर करंट टिकट और काउंटर टिकट नियम",
-      "category": "सफ़र",
-      "breaking": "तत्काल सीट न मिलने पर ट्रेन छूटने से पहले लें करंट टिकट, 26 अक्टूबर से बीमा नियम",
-      "hook_text": "तत्काल न मिले तो करंट टिकट, झटका पक्का!",
-      "ask": "क्या आपको कभी करंट टिकट पर कन्फर्म सीट मिली?",
-      "source": "Livemint, गुड न्यूज़ टुडे, न्यूज18 हिंदी, अमर उजाला, दैनिक जागरण, jaipurtimes.org",
-      "poll": [
-        "करंट टिकट",
-        "काउंटर टिकट"
-      ],
-      "ticker": [
-        "ट्रेन छूटने से पहले खाली सीटों के लिए करंट टिकट बुकिंग उपलब्ध",
-        "रेलवे काउंटर टिकटों का नया नियम 26/27 अक्टूबर से लागू",
-        "45 पैसे में 10 लाख का बीमा कवर मिलेगा काउंटर टिकट पर"
-      ],
-      "cast_why": "ट्रेन टिकट की किल्लत और नए नियमों पर आम रेल यात्रियों का दर्द बबलू, रमेश और दादी के माध्यम से दिखाने के लिए।",
-      "lines": [
-        {
-          "who": "bablu",
-          "say": "रेलवे ने कहा है, तत्काल न मिलने पर ट्रेन छूटने से पहले करंट टिकट लें। टिकट करंट मिलेगा, और दाम झटका।",
-          "caption": "तत्काल न मिलने पर ट्रेन छूटने से पहले लें करंट टिकट!",
-          "expr": "gambhir",
-          "set": "studio",
-          "visuals": [
-            "indian railways passenger ticket counter window",
-            "crowded railway station platform india",
-            "irctc mobile app current ticket booking screen"
-          ],
-          "photo_hi": [
-            "रेलवे करंट टिकट काउंटर",
-            "तत्काल टिकट ट्रेन बुकिंग"
-          ],
-          "card": {
-            "tag": "रेलवे अपडेट",
-            "big": "करंट टिकट नियम",
-            "sub": "45 पैसे में ₹10 लाख का बीमा कवर लागू",
-            "icon": "train"
-          },
-          "punch": true,
-          "react_pose": "eyeroll",
-          "stamp": "दाम भी झटका!",
-          "visual": "indian railways passenger ticket counter window",
-          "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "ramesh",
-          "say": "छब्बीस अक्टूबर से काउंटर टिकट पर पैंतालीस पैसे में दस लाख का बीमा कवर मिलेगा। बीमा सस्ता है, सीट अभी भी महँगी है।",
-          "caption": "26/27 अक्टूबर से काउंटर टिकट पर 45 पैसे में ₹10 लाख का बीमा!",
-          "expr": "udaas",
-          "set": "station",
-          "visuals": [
-            "railway counter printed paper ticket india",
-            "insurance cover advertisement railway ticket",
-            "train waiting room crowded passengers"
-          ],
-          "photo_hi": [
-            "रेलवे काउंटर टिकट नया नियम",
-            "ट्रेन टिकट बीमा कवर"
-          ],
-          "punch": true,
-          "react_pose": "facepalm",
-          "stamp": "सीट तो महँगी ही है!",
-          "visual": "railway counter printed paper ticket india",
-          "scene": "chacha",
           "insta": ""
         },
         {
           "who": "dadi",
-          "say": "चार्ट बनने के बाद खाली सीटों की जाँच स्टेशन काउंटर से करें। जाँच सीट की होगी, भीड़ की नहीं।",
-          "caption": "चार्ट बनने के बाद IRCTC या काउंटर से करंट टिकट जाँचें!",
+          "say": "तीन हज़ार नए सफ़ाईकर्मी और छः हज़ार लाइटें लगाने का लक्ष्य है। लक्ष्य हमेशा सुंदर होता है।",
+          "caption": "3000 नए सफाईकर्मी और 6000 लाइटें लगाने का लक्ष्य है। लक्ष्य हमेशा सुंदर होता है।",
           "expr": "tanz",
-          "set": "station",
+          "set": "aangan",
           "visuals": [
-            "railway chart display board at station platform",
-            "passengers checking train coach chart india",
-            "irctc chart vacancy screen view"
+            "street light repair electrician van",
+            "sanitation workers team photo",
+            "clean city street morning view"
           ],
           "photo_hi": [
-            "ट्रेन चार्ट खाली सीट",
-            "स्टेशन काउंटर टिकट भीड़"
-          ],
-          "visual": "railway chart display board at station platform",
-          "scene": "dadi_call",
-          "punch": false,
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "say": "प्रशासन का कहना है, करंट टिकट की सुविधा उपलब्ध है। सुविधा टिकट की है, ट्रेन के टाइम पर आने की नहीं।",
-          "caption": "चार्ट बनने के बाद करंट टिकट की सुविधा उपलब्ध है!",
-          "expr": "gambhir",
-          "set": "studio",
-          "visuals": [
-            "express train arriving at platform india station",
-            "railway digital clock showing train delay status",
-            "passenger waiting at station with heavy luggage"
-          ],
-          "photo_hi": [
-            "रेलवे तत्काल करंट बुकिंग",
-            "ट्रेन लेट स्थिति"
+            "स्ट्रीट लाइट मरम्मत",
+            "नगर निगम कर्मचारी"
           ],
           "punch": true,
-          "react_pose": "thinking",
-          "stamp": "टाइम का भरोसा नहीं!",
-          "visual": "express train arriving at platform india station",
-          "scene": "studio",
+          "react_pose": "smug",
+          "stamp": "लक्ष्य सुंदर!",
+          "visual": "street light repair electrician van",
+          "scene": "dadi_call",
           "insta": ""
         },
         {
           "who": "bablu",
-          "say": "ये वीडियो उस रेल यात्री को भेजो, जो तत्काल वेटिंग में भी अपना सामान पैक करके बैठा रहता है।",
-          "caption": "वीडियो शेयर करें और करंट टिकट सुविधा का फ़ायदा उठाएँ!",
+          "say": "समालखा और कानपुर में भी विशेष अभियान चलाया जा रहा है। अभियान दिवाली तक ही चलता है।",
+          "caption": "समालखा और कानपुर में भी विशेष अभियान चलाया जा रहा है। अभियान दिवाली तक ही चलता है।",
           "expr": "gambhir",
           "set": "studio",
           "visuals": [
-            "passenger sitting on luggage waiting train india",
-            "crowded train compartment interior india",
-            "railway station entrance sign board"
+            "garbage dump clearing excavator vehicle",
+            "Kanpur city road cleaning drive",
+            "festival lights decoration street"
           ],
           "photo_hi": [
-            "रेल यात्री तत्काल वेटिंग",
-            "भारतीय रेलवे सफ़र"
+            "कानपुर सफाई अभियान",
+            "कचरा गाड़ी नगर निगम"
           ],
-          "visual": "passenger sitting on luggage waiting train india",
+          "punch": true,
+          "react_pose": "eyeroll",
+          "stamp": "दिवाली तक!",
+          "visual": "garbage dump clearing excavator vehicle",
+          "scene": "dadi_call",
+          "insta": ""
+        },
+        {
+          "who": "dadi",
+          "say": "निगम ने नागरिकों से कचरा शेड्यूल में सहयोग मांगा है। सहयोग नागरिक ही देते हैं।",
+          "caption": "निगम ने नागरिकों से कचरा शेड्यूल में सहयोग मांगा है। सहयोग नागरिक ही देते हैं।",
+          "expr": "tanz",
+          "set": "aangan",
+          "visuals": [
+            "door to door garbage collection van",
+            "woman dumping dry wet waste bin",
+            "clean residential street india"
+          ],
+          "photo_hi": [
+            "कचरा गाड़ी डोर टू डोर",
+            "सफाई अभियान जन सहयोग"
+          ],
+          "punch": true,
+          "react_pose": "facepalm",
+          "stamp": "नागरिक सहयोग!",
+          "visual": "door to door garbage collection van",
+          "scene": "dadi_call",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "ये वीडियो उस दोस्त को भेजो, जो दिवाली की सफ़ाई के डर से घर से भाग गया है।",
+          "caption": "ये वीडियो उस दोस्त को भेजो, जो दिवाली की सफाई के डर से घर से भाग गया है।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "diwali home cleaning broom dust",
+            "man hiding under blanket bed",
+            "diwali festive cleaning house"
+          ],
+          "photo_hi": [
+            "दिवाली घर सफाई",
+            "सफाई का डर मीम"
+          ],
+          "visual": "diwali home cleaning broom dust",
           "scene": "studio_end",
           "punch": false,
           "insta": ""
         }
       ],
-      "caption_post": "तत्काल टिकट नहीं मिला? तो ट्रेन छूटने से पहले करंट टिकट और 45 पैसे का बीमा चेक करें! + क्या आपको कभी करंट टिकट मिला? + Family group में भेजो + स्रोत: Livemint, अमर उजाला, दैनिक जागरण + #IndianRailways #TrainTicket #CurrentTicket #BakraNews #AICharacters",
+      "caption_post": "जयपुर समेत कई शहरों में दिवाली स्वच्छता उत्सव! क्या आपके इलाक़े की स्ट्रीट लाइट जलती है? पोल में जवाब दें। Family group में भेजो! स्रोत: ETV Bharat, Dainik Bhaskar #SwachhataUtsav #DiwaliCleaning #CivicNews #BakraNews (AI से बने किरदार)",
       "format": "explain",
       "label": "काम की खबर",
       "key_word": "",
@@ -781,158 +301,158 @@
         "NEWS",
         "%"
       ],
-      "hook": "तत्काल न मिले तो करंट टिकट, झटका पक्का!",
+      "hook": "दिवाली पे नगर निगम जागा, कचरा भागा या नहीं?",
       "trend": {
-        "score": 4,
-        "why": "7 अख़बार/चैनल 2 दिन में, 17 खबरें 7 दिन में"
+        "score": 5,
+        "why": "8 अख़बार/चैनल 2 दिन में, 31 खबरें 7 दिन में"
       },
       "connect": {
-        "score": 6,
-        "why": "रेलवे वेटिंग और तत्काल टिकट की झुंझलाहट हर आम यात्री को तुरंत कनेक्ट करती है।",
-        "weak": "3 मुहर वाली लाइनों की शर्त पूरी नहीं हुई (केवल 2 ही सही पलटवार वाली हैं)।",
-        "fix": "बीमा और काउंटर वाले वाक्यों में सरकारी शब्दों का प्रयोग करके सीधा शब्द-पलटवार बनाएं।",
+        "score": 9,
+        "why": "त्योहार आते ही सरकारी तंत्र के अचानक जागने और फ़ोटो खिंचाने की नौटंकी को बहुत स्वाभाविक पकड़ा है.",
+        "weak": "जयपुर, समालखा, कानपुर जैसे कई शहरों के नाम गिनाने से लय हल्की सी बिखरती है.",
+        "fix": "विशिष्ट शहरों के नाम हटाकर सीधे 'वार्ड नंबर' और 'नाली की सफ़ाई' जैसे सार्वभौमिक कस्बाई शब्दों का उपयोग करें.",
         "parts": {
           "A": 2,
           "B": 2,
           "C": 2,
           "D": 1,
-          "E": 0,
+          "E": 1,
           "F": 1
         }
       }
     },
     {
-      "topic": "खाद (DAP/यूरिया) की आपूर्ति और दरों में कमी",
-      "category": "किसान/गाँव",
-      "breaking": "रबी सीज़न से पहले यूरिया के दाम में 10% की कटौती, UP और MP में DAP की किल्लत",
-      "hook_text": "यूरिया के दाम दस प्रतिशत घटे, लाइन सौ मीटर बढ़ी!",
-      "ask": "आपके क्षेत्र में DAP खाद आसानी से मिल रही है?",
-      "source": "न्यूज18 हिंदी, ETV Bharat, दैनिक भास्कर, बिजनेस स्टैंडर्ड, द सीएसआर जर्नल, नई दुनिया",
+      "topic": "कैंसर की 137 दवाओं के दाम में 70 प्रतिशत तक की कटौती",
+      "category": "[अस्पताल/सेहत]",
+      "breaking": "कैंसर की 137 दवाओं की कीमतें 70 प्रतिशत तक घटीं",
+      "hook_text": "दवा के दाम घटे, बीमारी के नहीं",
+      "ask": "क्या अस्पताल बिल में कटौती का फ़ायदा देते हैं?",
+      "source": "NDTV India, Dainik Bhaskar, ThePrint Hindi, News18 Hindi",
       "poll": [
-        "लाइन में खड़े हैं",
-        "खाद की किल्लत"
+        "दाम कम हुए",
+        "फ़ायदा नहीं मिलता"
       ],
       "ticker": [
-        "रबी सीज़न से पहले यूरिया के दामों में 10% की कमी घोषित",
-        "MP और UP में किसानों को DAP की किल्लत का सामना",
-        "खाद स्टॉक की ऑनलाइन निगरानी के लिए नया टूल शुरू"
+        "एनपीपीए ने ट्रेड मार्जिन तीस प्रतिशत तय किया",
+        "नौ नवंबर से लागू होंगी घटी हुई दरें",
+        "मरीज़ों को एमआरपी जांचने की सलाह"
       ],
-      "cast_why": "किसानों से जुड़े यूरिया और DAP खाद के मुद्दे पर ज़मीनी हकीकत दिखाने के लिए बबलू, चाचा और रमेश की बातचीत।",
+      "cast_why": "कैंसर की महंगी दवाओं पर दादी का तंज़ और नए नियमों पर बबलू की सटीक रिपोर्टिंग।",
       "lines": [
         {
           "who": "bablu",
-          "say": "रबी सीज़न से पहले यूरिया के दाम में दस प्रतिशत की कटौती की गई है। दाम दस प्रतिशत घटे हैं, लाइन सौ मीटर बढ़ी है।",
-          "caption": "रबी सीज़न से पहले यूरिया के दामों में 10% की कमी की घोषणा!",
+          "say": "नौ नवंबर से कैंसर की एक सौ सैंतीस दवाओं के दाम सत्तर प्रतिशत कम होंगे। राहत की तारीख़ घोषित है।",
+          "caption": "9 नवंबर से कैंसर की 137 दवाओं के दाम 70% कम होंगे। राहत की तारीख घोषित है।",
           "expr": "gambhir",
           "set": "studio",
           "visuals": [
-            "urea fertilizer bags stack in government godown",
-            "long queue of farmers outside fertilizer shop india",
-            "farmer holding fertilizer bag field"
+            "medicine strip blister pack india",
+            "pharmacy store shelf drugs",
+            "hospital bill receipt document"
           ],
           "photo_hi": [
-            "यूरिया खाद दाम कटौती",
-            "किसान खाद लाइन यूरिया"
+            "कैंसर दवा पर्ची",
+            "मेडिकल स्टोर दवा"
           ],
           "card": {
-            "tag": "कृषि अपडेट",
-            "big": "यूरिया 10% सस्ता",
-            "sub": "MP और UP में DAP की किल्लत, स्टॉक ऑनलाइन मॉनिटर",
+            "tag": "बड़ी राहत",
+            "big": "70% तक कटौती",
+            "sub": "137 कैंसर दवाएं",
             "icon": "percent"
           },
-          "punch": true,
-          "react_pose": "eyeroll",
-          "stamp": "लाइन सौ मीटर बढ़ी!",
-          "visual": "urea fertilizer bags stack in government godown",
+          "visual": "medicine strip blister pack india",
           "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "chacha",
-          "say": "यूपी और एमपी में किसानों को डीएपी की किल्लत झेलनी पड़ रही है। किल्लत खाद की है, वादों की कोई कमी नहीं।",
-          "caption": "MP और UP के कई जिलों में किसानों को DAP खाद की किल्लत!",
-          "expr": "tanz",
-          "set": "khet",
-          "visuals": [
-            "dap fertilizer sacks stack in rural mandi",
-            "worried farmer standing in dry agricultural field",
-            "agri cooperative society office banner india"
-          ],
-          "photo_hi": [
-            "यूपी एमपी DAP खाद किल्लत",
-            "किसान खाद संकट यूपी"
-          ],
-          "punch": true,
-          "react_pose": "smug",
-          "stamp": "वादों की कमी नहीं!",
-          "visual": "dap fertilizer sacks stack in rural mandi",
-          "scene": "chacha",
-          "insta": ""
-        },
-        {
-          "who": "ramesh",
-          "say": "सरकार खाद के स्टॉक की ऑनलाइन निगरानी नए टूल से कर रही है। टूल ऑनलाइन है, किसान अभी भी लाइन में खड़ा है।",
-          "caption": "खाद स्टॉक की ऑनलाइन निगरानी के लिए नया टूल लागू!",
-          "expr": "udaas",
-          "set": "khet",
-          "visuals": [
-            "fertilizer stock portal screen on tablet",
-            "farmers waiting outside fertilizer center in queue",
-            "wheat field rabi season sowing india"
-          ],
-          "photo_hi": [
-            "खाद ऑनलाइन स्टॉक ट्रैकिंग",
-            "किसान लाइन यूरिया सेंटर"
-          ],
-          "visual": "fertilizer stock portal screen on tablet",
-          "scene": "chacha",
           "punch": false,
           "insta": ""
         },
         {
           "who": "bablu",
-          "say": "कृषि विभाग का कहना है, खाद का स्टॉक अधिकृत केंद्रों से पता करें। पता केंद्र का चलेगा, खाद का नहीं।",
-          "caption": "नज़दीकी कृषि समिति या अधिकृत केंद्र से खाद का स्टॉक पता करें!",
+          "say": "प्राधिकरण ने दवा कंपनियों का मार्जिन तीस प्रतिशत तय कर दिया है। मुनाफ़े की सीमा तय है।",
+          "caption": "प्राधिकरण ने दवा कंपनियों का मार्जिन 30% तय कर दिया है। मुनाफे की सीमा तय है।",
           "expr": "gambhir",
           "set": "studio",
           "visuals": [
-            "agriculture cooperative office board india",
-            "farmer asking at fertilizer distribution counter",
-            "potato wheat sowing preparations in farm"
+            "pharmaceutical factory production line",
+            "doctor writing prescription paper",
+            "calculator showing discount numbers"
           ],
           "photo_hi": [
-            "कृषि समिति खाद स्टॉक",
-            "यूरिया सरकारी दरें"
+            "दवा मूल्य नियंत्रण",
+            "सरकारी आदेश प्रति"
           ],
           "punch": true,
-          "react_pose": "thinking",
-          "stamp": "पता सिर्फ़ केंद्र का!",
-          "visual": "agriculture cooperative office board india",
-          "scene": "studio",
+          "react_pose": "smug",
+          "stamp": "मुनाफ़ा तय है!",
+          "visual": "pharmaceutical factory production line",
+          "scene": "dadi_call",
+          "insta": ""
+        },
+        {
+          "who": "dadi",
+          "say": "सरकारी काग़ज़ों में दवाओं की दरें घटा दी गई हैं। बिल बनाने वाले की नियत नहीं घटी।",
+          "caption": "सरकारी कागजों में दवाओं की दरें घटा दी गई हैं। बिल बनाने वाले की नियत नहीं घटी।",
+          "expr": "tanz",
+          "set": "hospital",
+          "visuals": [
+            "elderly woman sitting hospital lobby",
+            "hospital counter billing desk",
+            "medicine bill receipt close up"
+          ],
+          "photo_hi": [
+            "अस्पताल बिल काउंटर",
+            "दवा दुकान खरीदार"
+          ],
+          "punch": true,
+          "react_pose": "eyeroll",
+          "stamp": "नियत नहीं घटी!",
+          "visual": "elderly woman sitting hospital lobby",
+          "scene": "dadi_call",
           "insta": ""
         },
         {
           "who": "bablu",
-          "say": "ये वीडियो उस किसान भाई को भेजो, जो खाद की बोरी मिलने पर शादी जैसी मिठाई बाँटता है।",
-          "caption": "वीडियो शेयर कर किसान भाइयों को खाद अपडेट दें!",
+          "say": "विभाग ने मरीज़ों को नया एमआरपी देखकर दवा ख़रीदने को कहा है। देखना मुफ़्त है।",
+          "caption": "विभाग ने मरीजों को नया MRP देखकर दवा खरीदने को कहा है। देखना मुफ्त है।",
           "expr": "gambhir",
           "set": "studio",
           "visuals": [
-            "happy farmer loading fertilizer bag on tractor",
-            "green wheat field growing rabi season",
-            "agricultural seeds and fertilizer store sign"
+            "checking price tag medicine box",
+            "pharmacist handing medicine pack",
+            "indian currency notes payment"
           ],
           "photo_hi": [
-            "किसान यूरिया DAP बोरी",
-            "रबी बोआई खाद आवश्यकता"
+            "मेडिकल स्टोर बिल",
+            "दवा का डब्बा एमआरपी"
           ],
-          "visual": "happy farmer loading fertilizer bag on tractor",
+          "punch": true,
+          "react_pose": "laugh",
+          "stamp": "देखना मुफ़्त!",
+          "visual": "checking price tag medicine box",
+          "scene": "dadi_call",
+          "insta": ""
+        },
+        {
+          "who": "dadi",
+          "say": "ये वीडियो उसको भेजो, जिसके घर में दवा की पर्ची बीमारी से ज़्यादा लंबी है।",
+          "caption": "ये वीडियो उसको भेजो, जिसके घर में दवा की पर्ची बीमारी से ज्यादा लंबी है।",
+          "expr": "gambhir",
+          "set": "aangan",
+          "visuals": [
+            "family discussion living room india",
+            "reading prescription paper elderly",
+            "holding medicine pack close up"
+          ],
+          "photo_hi": [
+            "अस्पताल पर्ची मरीज़",
+            "दवा दुकान भीड़"
+          ],
+          "visual": "family discussion living room india",
           "scene": "studio_end",
           "punch": false,
           "insta": ""
         }
       ],
-      "caption_post": "यूरिया 10% सस्ता हुआ पर DAP की किल्लत बरकरार! अधिकृत केंद्रों पर सरकारी दरें ज़रूर देखें! + आपके यहाँ खाद मिली क्या? + Family group में भेजो + स्रोत: न्यूज18 हिंदी, दैनिक भास्कर, ETV Bharat + #Farmers #UreaPrice #DAPShortage #BakraNews #AICharacters",
+      "caption_post": "कैंसर की 137 दवाओं के दाम 70% तक घटेंगे। क्या अस्पतालों में बिल सच में कम होगा? अपनी राय दें। Family group में भेजो! स्रोत: NDTV India, Dainik Bhaskar #CancerMeds #HealthNews #NPPARules #BakraNews (AI से बने किरदार)",
       "format": "explain",
       "label": "काम की खबर",
       "key_word": "",
@@ -941,20 +461,500 @@
         "NEWS",
         "%"
       ],
-      "hook": "यूरिया के दाम दस प्रतिशत घटे, लाइन सौ मीटर बढ़ी!",
+      "hook": "दवा के दाम घटे, बीमारी के नहीं",
       "trend": {
-        "score": 4,
-        "why": "8 अख़बार/चैनल 2 दिन में, 18 खबरें 7 दिन में"
+        "score": 8,
+        "why": "32 अख़बार/चैनल 2 दिन में, 45 खबरें 7 दिन में"
       },
       "connect": {
         "score": 6,
-        "why": "गाँव-देहात में रबी सीज़न के समय यूरिया और DAP की किल्लत की कड़वी सच्चाई को पकड़ा है।",
-        "weak": "मुहर वाली 3 लाइनों का ढाँचा अधूरा रह गया।",
-        "fix": "'स्टॉक' और 'निगरानी' जैसे शब्दों को अगली लाइन में दोहराकर पलटवार पूरा करें।",
+        "why": "दवा की पर्ची और मेडिकल लूट का दर्द गाँव-कस्बे के सीधे दिल पर लगता है.",
+        "weak": "कम से कम 3 असली मुहर वाली उलट-फेर लाइनें पूरी नहीं हुईं, पहली दो लाइनें सिर्फ़ सपाट सूचना हैं.",
+        "fix": "पहली दो पंक्तियों में भी सरकारी आदेश और दवा दुकान की ज़मीनी मनमानी का तीखा विरोधाभास जोड़ें.",
+        "parts": {
+          "A": 1,
+          "B": 2,
+          "C": 2,
+          "D": 1,
+          "E": 0,
+          "F": 1
+        }
+      }
+    },
+    {
+      "topic": "करोड़ों का टोल टैक्स वसूलने के बाद भी सड़कों पर बड़े-बड़े गड्ढे",
+      "category": "[सफ़र]",
+      "breaking": "करोड़ों का टोल टैक्स वसूलने के बावजूद नेशनल हाईवे पर गड्ढे",
+      "hook_text": "टोल भारी-भरकम, सड़कें खस्ताहाल",
+      "ask": "क्या आपने टोल रोड पर गड्ढे झेले हैं?",
+      "source": "Amar Ujala, Dainik Bhaskar",
+      "poll": [
+        "रोज़ गड्ढे मिलते हैं",
+        "टोल बहुत महंगा"
+      ],
+      "ticker": [
+        "करोड़ों का टोल टैक्स देने के बाद भी हाईवे पर जानलेवा गड्ढे",
+        "पलवल और लखीमपुर खीरी के टोल मार्गों की हालत ख़राब",
+        "एनएचएआई पोर्टल पर शिकायत दर्ज कराने की सलाह"
+      ],
+      "cast_why": "टोल टैक्स वसूली और हाईवे के गड्ढों पर चाचा और बबलू का तंज़।",
+      "lines": [
+        {
+          "who": "bablu",
+          "say": "करोड़ों रुपये टोल टैक्स वसूलने के बाद भी नेशनल हाईवे पर गड्ढे हैं। टैक्स पूरा, सड़क अधूरी।",
+          "caption": "करोड़ों रुपये टोल टैक्स वसूलने के बाद भी नेशनल हाईवे पर गड्ढे हैं। टैक्स पूरा, सड़क अधूरी।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "highway toll plaza plaza booth queue",
+            "fastag scanner scanning vehicle windshield",
+            "huge pothole on national highway road"
+          ],
+          "photo_hi": [
+            "टोल प्लाजा गाड़ियां",
+            "नेशनल हाईवे गड्ढे"
+          ],
+          "card": {
+            "tag": "खस्ताहाल सड़कें",
+            "big": "करोड़ों का टोल",
+            "sub": "पलवल व लखीमपुर खीरी",
+            "icon": "alert"
+          },
+          "visual": "highway toll plaza plaza booth queue",
+          "scene": "studio",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "chacha",
+          "say": "पलवल और लखीमपुर खीरी के टोल मार्गों पर गाड़ियां हिचकोले खा रही हैं। हिचकोला मुफ़्त है।",
+          "caption": "पलवल और लखीमपुर खीरी के टोल मार्गों पर गाड़ियां हिचकोले खा रही हैं। हिचकोला मुफ्त है।",
+          "expr": "tanz",
+          "set": "road",
+          "visuals": [
+            "car suspension bouncing pothole road",
+            "Palwal highway broken road patch",
+            "truck struggling through deep pothole"
+          ],
+          "photo_hi": [
+            "लखीमपुर खीरी सड़क",
+            "गड्ढे वाली सड़क गाड़ी"
+          ],
+          "punch": true,
+          "react_pose": "eyeroll",
+          "stamp": "हिचकोला मुफ़्त!",
+          "visual": "car suspension bouncing pothole road",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "पुलिस का कहना है चालान आपकी सुरक्षा के लिए है। सड़क के गड्ढे आपकी हिम्मत के लिए हैं।",
+          "caption": "पुलिस का कहना है चालान आपकी सुरक्षा के लिए है। सड़क के गड्ढे आपकी हिम्मत के लिए हैं।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "traffic police writing challan ticket",
+            "car wheel stuck in big pothole",
+            "damaged car tyre rim side road"
+          ],
+          "photo_hi": [
+            "ट्रैफिक चालान पुलिस",
+            "हाइवे गड्ढा हादसा"
+          ],
+          "punch": true,
+          "react_pose": "smug",
+          "stamp": "हिम्मत की परीक्षा!",
+          "visual": "traffic police writing challan ticket",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "chacha",
+          "say": "विभाग ने एनएचएआई पोर्टल पर शिकायत दर्ज करने को कहा है। शिकायत दर्ज होती है, गड्ढा नहीं भरता।",
+          "caption": "विभाग ने NHAI पोर्टल पर शिकायत दर्ज करने को कहा है। शिकायत दर्ज होती है, गड्ढा नहीं भरता।",
+          "expr": "tanz",
+          "set": "road",
+          "visuals": [
+            "NHAI complaint portal website phone",
+            "highway maintenance worker standing idle",
+            "fastag deduction sms on mobile"
+          ],
+          "photo_hi": [
+            "एनएचएआई शिकायत पोर्टल",
+            "सड़क मरम्मत काम"
+          ],
+          "punch": true,
+          "react_pose": "facepalm",
+          "stamp": "गड्ढा नहीं भरता!",
+          "visual": "NHAI complaint portal website phone",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "ये वीडियो उस ड्राइवर को भेजो, जो टोल देने के बाद गड्ढे गिनते हुए घर पहुँचता है।",
+          "caption": "ये वीडियो उस ड्राइवर को भेजो, जो टोल देने के बाद गड्ढे गिनते हुए घर पहुंचता है।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "driver holding steering wheel stressed",
+            "car driving past toll gate barrier",
+            "night highway driving headlights"
+          ],
+          "photo_hi": [
+            "ड्राइवर गाड़ी टोल",
+            "हाइवे सफर रात"
+          ],
+          "visual": "driver holding steering wheel stressed",
+          "scene": "studio_end",
+          "punch": false,
+          "insta": ""
+        }
+      ],
+      "caption_post": "करोड़ों का टोल टैक्स, फिर भी सड़कों पर गड्ढे! शिकायत दर्ज कराएं लेकिन क्या सड़क सुधरेगी? राय दें। Family group में भेजो! स्रोत: Amar Ujala, Dainik Bhaskar #TollTax #Potholes #NHAI #BakraNews (AI से बने किरदार)",
+      "format": "explain",
+      "label": "काम की खबर",
+      "key_word": "",
+      "icons": [
+        "₹",
+        "NEWS",
+        "%"
+      ],
+      "hook": "टोल भारी-भरकम, सड़कें खस्ताहाल",
+      "trend": {
+        "score": 4,
+        "why": "4 अख़बार/चैनल 2 दिन में, 12 खबरें 7 दिन में"
+      },
+      "connect": {
+        "score": 5,
+        "why": "टोल कटने के तुरंत बाद कमर तोड़ गड्ढे मिलना हर ड्राइवर और यात्री का सबसे ख़ून खौलाने वाला सच है.",
+        "weak": "नमूने की line उठाई: पुलिस का कहना है चालान आपकी सुरक्षा के लिए है। सड़",
+        "fix": "इस खबर के अपने शब्द को पकड़कर बिल्कुल नई मुहर वाली line लिखो, नमूने मत दोहराओ",
         "parts": {
           "A": 3,
           "B": 2,
           "C": 2,
+          "D": 1,
+          "E": 1,
+          "F": 1
+        }
+      }
+    },
+    {
+      "topic": "उड़ने वाली कार के इंटरनेट पर जमकर बन रहे फनी मीम्स",
+      "category": "[वायरल]",
+      "breaking": "एलन मस्क की उड़ने वाली कार पर भारतीय मीम्स की बाढ़",
+      "hook_text": "कार उड़ेगी हवा में, मीम्स बनेंगे मुफ़्त में",
+      "ask": "क्या भारत के गड्ढों में उड़ने वाली कार चलेगी?",
+      "source": "AajTak, India TV Hindi, Hindustan, Prabhat Khabar",
+      "poll": [
+        "कार उड़ेगी",
+        "मीम्स ही उड़ाएंगे"
+      ],
+      "ticker": [
+        "टेस्ला की फ्लाइंग कार पर सोशल मीडिया पर ज़बरदस्त प्रतिक्रिया",
+        "भारतीय यूज़र्स बना रहे हैं मज़ेदार मीम्स",
+        "इंटरनेट पर ट्रेंडिंग टॉपिक बना फ्लाइंग कार"
+      ],
+      "cast_why": "उड़ने वाली कार के बेतुके विचार और भारतीय सड़कों की हकीकत पर रमेश व बबलू का तंज़।",
+      "lines": [
+        {
+          "who": "bablu",
+          "say": "एलन मस्क की टेस्ला उड़ने वाली कार लेकर आ रही है। हवा में चलने का दावा है।",
+          "caption": "एलन मस्क की टेस्ला उड़ने वाली कार लेकर आ रही है। हवा में चलने का दावा है।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "futuristic flying car concept sky",
+            "Elon Musk presentation event screen",
+            "social media meme feed scrolling"
+          ],
+          "photo_hi": [
+            "एलन मस्क टेस्ला",
+            "उड़ने वाली कार टेस्ला"
+          ],
+          "card": {
+            "tag": "वायरल मीम्स",
+            "big": "उड़ने वाली कार",
+            "sub": "टेस्ला फ्लाइंग कार ट्रॉल",
+            "icon": "alert"
+          },
+          "visual": "futuristic flying car concept sky",
+          "scene": "studio",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "ramesh",
+          "say": "भारतीय सोशल मीडिया पर इसके मीम्स तेज़ी से वायरल हो रहे हैं। हँसी हवा में तैर रही है।",
+          "caption": "भारतीय सोशल मीडिया पर इसके मीम्स तेजी से वायरल हो रहे हैं। हंसी हवा में तैर रही है।",
+          "expr": "hasi",
+          "set": "village",
+          "visuals": [
+            "funny viral indian meme image screen",
+            "young man laughing staring at phone",
+            "traffic jam indian street view"
+          ],
+          "photo_hi": [
+            "भारतीय सोशल मीडिया मीम्स",
+            "ट्रैफिक जाम भारत"
+          ],
+          "punch": true,
+          "react_pose": "laugh",
+          "stamp": "हँसी हवा में!",
+          "visual": "funny viral indian meme image screen",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "कंपनी का दावा है कि कार जाम से बचाएगी। भारतीय ट्रैफिक हर दावे से बचा लेता है।",
+          "caption": "कंपनी का दावा है कि कार जाम से बचाएगी। भारतीय ट्रैफिक हर दावे से बचा लेता है।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "heavy city traffic bottleneck jam",
+            "flying car flying over traffic jam",
+            "people looking up at sky road"
+          ],
+          "photo_hi": [
+            "शहर ट्रैफिक जाम",
+            "फ्लाइंग कार कांसेप्ट"
+          ],
+          "punch": true,
+          "react_pose": "eyeroll",
+          "stamp": "ट्रैफिक ज़िंदाबाद!",
+          "visual": "heavy city traffic bottleneck jam",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "ramesh",
+          "say": "लोगों का कहना है कि हवा में बिजली के तार मिलेंगे। ज़मीन पे गड्ढे, हवा में तार।",
+          "caption": "लोगों का कहना है कि हवा में बिजली के तार मिलेंगे। जमीन पे गड्ढे, हवा में तार।",
+          "expr": "tanz",
+          "set": "road",
+          "visuals": [
+            "tangled electric wires over indian street",
+            "pothole filled muddy road street",
+            "car driving past electric pole"
+          ],
+          "photo_hi": [
+            "सड़क के गड्ढे",
+            "बिजली के तार जाल"
+          ],
+          "punch": true,
+          "react_pose": "facepalm",
+          "stamp": "तार तैयार!",
+          "visual": "tangled electric wires over indian street",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "ये वीडियो उस दोस्त को भेजो, जो ऑटो वाले से कहता है भइया थोड़ा उड़ा के ले चलो।",
+          "caption": "ये वीडियो उस दोस्त को भेजो, जो ऑटो वाले से कहता है भइया थोड़ा उड़ा के ले चलो।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "auto rickshaw driving fast street",
+            "passenger sitting in auto rickshaw",
+            "funny traffic moment photo"
+          ],
+          "photo_hi": [
+            "ऑटो रिक्शा सड़क",
+            "ट्रैफिक मज़ाकिया फ़ोटो"
+          ],
+          "visual": "auto rickshaw driving fast street",
+          "scene": "studio_end",
+          "punch": false,
+          "insta": ""
+        }
+      ],
+      "caption_post": "उड़ने वाली कार पर इंटरनेट पर बने मज़ेदार मीम्स! क्या भारत में उड़ने वाली कार चल पाएगी? कमेंट करें। Family group में भेजो! स्रोत: AajTak, India TV #FlyingCar #ElonMusk #TeslaMemes #BakraNews (AI से बने किरदार)",
+      "format": "explain",
+      "label": "काम की खबर",
+      "key_word": "",
+      "icons": [
+        "₹",
+        "NEWS",
+        "%"
+      ],
+      "hook": "कार उड़ेगी हवा में, मीम्स बनेंगे मुफ़्त में",
+      "trend": {
+        "score": 5,
+        "why": "6 अख़बार/चैनल 2 दिन में, 31 खबरें 7 दिन में"
+      },
+      "connect": {
+        "score": 4,
+        "why": "हवा में बिजली के तार और ज़मीन के गड्ढों वाला पंच ज़मीनी सच्चाई पर सटीक बैठता है.",
+        "weak": "एलन मस्क और उड़ने वाली कार का विषय कस्बाई दर्शक की जेब और दैनिक संघर्ष से मीलों दूर है.",
+        "fix": "उड़ने वाली कार के बजाय बस स्टैंड के ऑटो, खटारा सरकारी बसों और डग्गामार गाड़ियों के किराए पर तंज़ करें.",
+        "parts": {
+          "A": 0,
+          "B": 1,
+          "C": 1,
+          "D": 1,
+          "E": 0,
+          "F": 1
+        }
+      }
+    },
+    {
+      "topic": "आईफोन 18 की कीमत भारत में 1 लाख के पार जाने का अनुमान",
+      "category": "[Trends]",
+      "breaking": "मार्च 2027 में आईफ़ोन 18 की कीमत 1 लाख रुपये के पार संभव",
+      "hook_text": "फ़ोन एक लाख का, गुर्दा साफ़ का",
+      "ask": "क्या एक लाख का फ़ोन ख़रीदना समझदारी है?",
+      "source": "Amar Ujala, Hindustan, The CSR Journal",
+      "poll": [
+        "ख़रीदेंगे",
+        "किडनी बचाएंगे"
+      ],
+      "ticker": [
+        "मार्च दो हज़ार सत्ताईस में आ सकता है आईफ़ोन अठारह",
+        "भारत में शुरुआती कीमत एक लाख के पार होने का अनुमान",
+        "एप्पल के आधिकारिक पोर्टल पर नज़र रखने की सलाह"
+      ],
+      "cast_why": "महंगे स्मार्टफ़ोन के क्रेज़ पर पिंकी की उत्सुकता और बबलू का बेबाक तंज़।",
+      "lines": [
+        {
+          "who": "bablu",
+          "say": "मार्च दो हज़ार सत्ताईस में आईफ़ोन अठारह आने का अनुमान है। आने की आहट शुरू हो गई।",
+          "caption": "मार्च 2027 में iPhone 18 आने का अनुमान है। आने की आहट शुरू हो गई।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "smartphone concept glossy display",
+            "tech launch event stage presentation",
+            "calendar page march 2027"
+          ],
+          "photo_hi": [
+            "नया स्मार्टफोन लॉन्च",
+            "मोबाइल शो-रूम"
+          ],
+          "card": {
+            "tag": "अनुमानित दाम",
+            "big": "₹1 लाख के पार",
+            "sub": "iPhone 18 (मार्च 2027)",
+            "icon": "phone"
+          },
+          "visual": "smartphone concept glossy display",
+          "scene": "studio",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "pinky",
+          "say": "जानकारों का कहना है कि कीमत एक लाख के पार जाएगी। बजट की सीमा पार है।",
+          "caption": "जानकारों का कहना है कि कीमत 1 लाख के पार जाएगी। बजट की सीमा पार है।",
+          "expr": "hairan",
+          "set": "room",
+          "visuals": [
+            "girl holding expensive mobile phone",
+            "calculator showing high amount",
+            "credit card payment online shopping"
+          ],
+          "photo_hi": [
+            "आईफोन स्टोर भीड़",
+            "मोबाइल फाइनेंस पेपर"
+          ],
+          "punch": true,
+          "react_pose": "facepalm",
+          "stamp": "बजट पार!",
+          "visual": "girl holding expensive mobile phone",
+          "scene": "pinky",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "कंपनी ने पुष्टि के लिए पोर्टल देखने को कहा है। पोर्टल मुफ़्त है, फ़ोन नहीं।",
+          "caption": "कंपनी ने पुष्टि के लिए पोर्टल देखने को कहा है। पोर्टल मुफ्त है, फोन नहीं।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "browsing apple official website phone",
+            "price list tech article screen",
+            "shopping cart checkout screen"
+          ],
+          "photo_hi": [
+            "स्मार्टफोन वेबसाइट",
+            "एप्पल स्टोर भारत"
+          ],
+          "punch": true,
+          "react_pose": "laugh",
+          "stamp": "फ़ोन नहीं!",
+          "visual": "browsing apple official website phone",
+          "scene": "pinky",
+          "insta": ""
+        },
+        {
+          "who": "pinky",
+          "say": "कहते हैं नया फ़ोन जीवन आसान बनाता है। ईएमआई जीवन कड़ा बनाती है।",
+          "caption": "कहते हैं नया फोन जीवन आसान बनाता है। EMI जीवन कड़ा बनाती है।",
+          "expr": "tanz",
+          "set": "room",
+          "visuals": [
+            "girl looking at bank passbook EMI",
+            "mobile phone in hand glowing screen",
+            "stress face checking account balance"
+          ],
+          "photo_hi": [
+            "मोबाइल ईएमआई स्कीम",
+            "बैंक लोन किश्त"
+          ],
+          "punch": true,
+          "react_pose": "eyeroll",
+          "stamp": "ईएमआई कड़ी!",
+          "visual": "girl looking at bank passbook EMI",
+          "scene": "pinky",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "ये वीडियो उस दोस्त को भेजो, जो एक लाख के फ़ोन के लिए गुर्दा बेचने की सोच रहा है।",
+          "caption": "ये वीडियो उस दोस्त को भेजो, जो 1 लाख के फोन के लिए गुर्दा बेचने की सोच रहा है।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "friend showing smartphone to another",
+            "young boy holding phone smiling",
+            "mobile repair accessory shop"
+          ],
+          "photo_hi": [
+            "युवा स्मार्टफोन क्रैज",
+            "मोबाइल दुकान ग्राहक"
+          ],
+          "visual": "friend showing smartphone to another",
+          "scene": "studio_end",
+          "punch": false,
+          "insta": ""
+        }
+      ],
+      "caption_post": "iPhone 18 की कीमत 1 लाख के पार जाने का अनुमान! क्या आप इतना महंगा फ़ोन लेंगे? पोल में हिस्सा लें। Family group में भेजो! स्रोत: Amar Ujala, Hindustan #iPhone18 #TechNews #AppleIndia #BakraNews (AI से बने किरदार)",
+      "format": "explain",
+      "label": "काम की खबर",
+      "key_word": "",
+      "icons": [
+        "₹",
+        "NEWS",
+        "%"
+      ],
+      "hook": "फ़ोन एक लाख का, गुर्दा साफ़ का",
+      "trend": {
+        "score": 6,
+        "why": "17 अख़बार/चैनल 2 दिन में, 54 खबरें 7 दिन में"
+      },
+      "connect": {
+        "score": 3,
+        "why": "फ़ोन के बहाने ईएमआई के जंजाल को छूने की हल्की कोशिश की गई है.",
+        "weak": "2027 के आईफ़ोन और गुर्दा बेचने वाला मज़ाक दस साल पुराना, बासी और कस्बाई ज़िंदगी से कटा हुआ है.",
+        "fix": "आईफ़ोन छोड़कर 15 हज़ार के चीनी फ़ोन की किस्त और स्क्रीन टूटने के असली दर्द पर स्क्रिप्ट लिखें.",
+        "parts": {
+          "A": 0,
+          "B": 0,
+          "C": 1,
           "D": 1,
           "E": 0,
           "F": 1
