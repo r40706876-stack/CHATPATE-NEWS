@@ -1,0 +1,164 @@
+{
+ "topic": "दिवाली की सफाई का फरमान जारी, छत और टांड़ से कबाड़ गायब",
+ "category": "त्योहार",
+ "breaking": "दिवाली सफाई अभियान शुरू, मेरठ में गंगनहर बंदी से जलापूर्ति पर संकट",
+ "hook_text": "दिवाली सफाई में कबाड़ के साथ बजट भी साफ",
+ "ask": "क्या आपके घर में भी दिवाली सफाई का फरमान आ चुका है?",
+ "source": "Jagran, AajTak, Hindustan, Amar Ujala, Jansatta",
+ "poll": {
+  "q": "क्या आपके घर में भी दिवाली सफाई का फरमान आ चुका है?",
+  "a": "हाँ, सफाई चालू",
+  "b": "अभी बची है"
+ },
+ "ticker": [
+  "प्रशासन ने कहा, स्मार्ट क्लीनिंग अपनाएं",
+  "मेरठ में दशहरे से दिवाली तक पानी प्रभावित",
+  "कबाड़ का सुरक्षित निस्तारण करने की अपील"
+ ],
+ "cast_why": "दिवाली की पारिवारिक सफाई और पानी की समस्या पर चाची और चाचा सटीक तंज़ कस सकते हैं।",
+ "lines": [
+  {
+   "who": "bablu",
+   "say": "नगर निगम ने कहा है दिवाली पर घर का कबाड़ बाहर निकालें। घर वाले मेरी तरफ देखने लगे हैं।",
+   "caption": "नगर निगम ने कहा है दिवाली पर घर का कबाड़ बाहर निकालें। घर वाले मेरी तरफ देखने लगे हैं।",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "diwali home cleaning broom dustpan",
+    "old cardboard boxes dumped outside house",
+    "confused man standing near junk pile"
+   ],
+   "photo_hi": [
+    "दिवाली घर सफाई कबाड़",
+    "कबाड़ का सामान बाहर"
+   ],
+   "card": {
+    "tag": "दिवाली सफाई",
+    "big": "कबाड़ निस्तारण",
+    "sub": "गंगनहर सफाई से पानी प्रभावित",
+    "icon": "alert"
+   },
+   "punch": true,
+   "react_pose": "facepalm",
+   "stamp": "कबाड़ मैं ही हूँ!",
+   "visual": "diwali home cleaning broom dustpan",
+   "scene": "studio",
+   "insta": ""
+  },
+  {
+   "who": "chacha",
+   "say": "मेरठ में गंगनहर की सफाई से दिवाली तक पानी बंद रहेगा। सफाई घर की होगी, नहाएगा कोई नहीं।",
+   "caption": "मेरठ में गंगनहर की सफाई से दिवाली तक पानी बंद रहेगा। सफाई घर की होगी, नहाएगा कोई नहीं।",
+   "expr": "gussa",
+   "set": "aangan",
+   "visuals": [
+    "ganganahar canal cleaning work meerut",
+    "empty water buckets inside Indian house",
+    "dry water tap pipe close up"
+   ],
+   "photo_hi": [
+    "मेरठ गंगनहर सफाई",
+    "जलापूर्ति ठप नल"
+   ],
+   "visual": "ganganahar canal cleaning work meerut",
+   "scene": "chacha",
+   "punch": false,
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "say": "प्रशासन का कहना है स्मार्ट क्लीनिंग अपनाएं। स्मार्ट सिर्फ वो कबाड़ी है जो पुरानी साइकिल के पचास रुपये दे रहा है।",
+   "caption": "प्रशासन का कहना है स्मार्ट क्लीनिंग अपनाएं। स्मार्ट सिर्फ वो कबाड़ी है जो पुरानी साइकिल के ₹50 दे रहा है।",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "kabadiwala weighing scrap junk scale",
+    "old rusted bicycle in house storage",
+    "smart home cleaning tools bucket"
+   ],
+   "photo_hi": [
+    "कबाड़ी सामान तौलते हुए",
+    "स्मार्ट क्लीनिग घरेलू"
+   ],
+   "punch": true,
+   "react_pose": "eyeroll",
+   "stamp": "₹50 की साइकिल!",
+   "visual": "kabadiwala weighing scrap junk scale",
+   "scene": "chacha",
+   "insta": ""
+  },
+  {
+   "who": "chacha",
+   "say": "छत और टांड़ से कबाड़ हटा तो पता चला, छत खुद कबाड़ बनने की कगार पर है।",
+   "caption": "छत और टांड़ से कबाड़ हटा तो पता चला, छत खुद कबाड़ बनने की कगार पर है।",
+   "expr": "tanz",
+   "set": "aangan",
+   "visuals": [
+    "cluttered rooftop loft packed old items",
+    "cracked house ceiling plaster falling",
+    "sweeping dust on Indian terrace"
+   ],
+   "photo_hi": [
+    "छत पर जमा कबाड़",
+    "पुरानी छत जर्जर"
+   ],
+   "visual": "cluttered rooftop loft packed old items",
+   "scene": "chacha",
+   "punch": false,
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "say": "यह वीडियो उसको भेजो, जिसके घर में सफाई का फरमान सुनते ही अचानक बुखार आ जाता है।",
+   "caption": "यह वीडियो उसको भेजो, जिसके घर में सफाई का फरमान सुनते ही अचानक बुखार आ जाता है।",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "lazy young man lying under blanket with phone",
+    "mother holding broom angry expression",
+    "hand holding smartphone sharing video"
+   ],
+   "photo_hi": [
+    "दिवाली सफाई आलसी लड़का",
+    "झाड़ू लिए घर के लोग"
+   ],
+   "visual": "lazy young man lying under blanket with phone",
+   "scene": "studio_end",
+   "punch": false,
+   "insta": ""
+  }
+ ],
+ "caption_post": "कबाड़ निकालने के चक्कर में घर के पुराने सामान पर ताले लग गए! 🧹 मेरठ वाले पानी बचाकर सफाई करें। Family group में भेजो! स्रोत: Jagran, AajTak #DiwaliCleaning #MeerutWaterSupply #Diwali2026 #CivicSatire #BakraNews (AI से बने किरदार)",
+ "format": "explain",
+ "label": "काम की खबर",
+ "key_word": "",
+ "icons": [
+  "₹",
+  "NEWS",
+  "%"
+ ],
+ "hook": "दिवाली सफाई में कबाड़ के साथ बजट भी साफ",
+ "trend": {
+  "score": 5,
+  "why": "10 अख़बार/चैनल 2 दिन में, 50 खबरें 7 दिन में"
+ },
+ "connect": {
+  "score": 6,
+  "why": "दिवाली की सफाई के बहाने घर के कबाड़ और खर्चे की वास्तविकता को छुआ गया है।",
+  "weak": "हुक में चौंकाने वाला तत्व कम है और यह व्यवस्था की विफलता के बजाय हल्के पारिवारिक मज़ाक तक सीमित रह गई।",
+  "fix": "हुक को सवाल या कड़ा झटका बनाएं, जैसे 'सफाई घर की हो रही है या आपकी जेब की?' और सरकारी दावों को उलटने वाले 3 पंच रखें।",
+  "parts": {
+   "A": 2,
+   "B": 1,
+   "C": 1,
+   "D": 1,
+   "E": 0,
+   "F": 1
+  }
+ },
+ "sprite": {
+  "bablu": "assets/toon/bablu",
+  "chacha": "assets/toon/chacha"
+ },
+ "production": true
+}
