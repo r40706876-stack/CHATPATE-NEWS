@@ -1,0 +1,153 @@
+{
+ "topic": "रील बनाने के चक्कर में नदी में गिरे पति-पत्नी का वीडियो वायरल",
+ "category": "वायरल",
+ "breaking": "रील बनाते समय नदी में गिरे पति-पत्नी",
+ "hook_text": "रील का शौक और पानी में सीधी छलांग",
+ "ask": "क्या रील के लिए जान जोखिम में डालना सही है?",
+ "source": "Amar Ujala, ABP News, News18 Hindi",
+ "poll": {
+  "q": "क्या रील के लिए जान जोखिम में डालना सही है?",
+  "a": "सब वायरल का चक्कर",
+  "b": "सुरक्षा पहली शर्त"
+ },
+ "ticker": [
+  "रील बनाते समय बिगड़ा संतुलन, नदी में गिरे पति-पत्नी",
+  "पानी में गिरने का वीडियो सोशल मीडिया पर वायरल",
+  "खतरनाक जगहों पर वीडियो न बनाने की दी गई सलाह"
+ ],
+ "cast_why": "सोशल मीडिया सनक और सुरक्षा पर मज़ाकिया अंदाज़ में तंज़ कसने के लिए बबलू, पिंकी और चाचा को लिया।",
+ "lines": [
+  {
+   "who": "bablu",
+   "say": "रील बनाते समय संतुलन बिगड़ने से दंपत्ति सीधे नदी में जा गिरा। व्यूज़ मिलने से पहले गोता मिल गया।",
+   "caption": "रील बनाते समय नदी में गिरे पति-पत्नी",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "couple shooting video near river bank edge",
+    "water splash in river view",
+    "smartphone camera video recording screen"
+   ],
+   "photo_hi": [
+    "रील हादसा नदी",
+    "पति-पत्नी रील वीडियो"
+   ],
+   "card": {
+    "tag": "वायरल न्यूज़",
+    "big": "रील का चस्का",
+    "sub": "नदी में लगा गोता",
+    "icon": "phone"
+   },
+   "visual": "couple shooting video near river bank edge",
+   "scene": "studio",
+   "punch": false,
+   "insta": ""
+  },
+  {
+   "who": "pinky",
+   "say": "सोशल मीडिया पर इस घटना का वीडियो बहुत वायरल हो गया है। वायरल होने का तरीका थोड़ा गीला निकला।",
+   "caption": "सोशल मीडिया पर वीडियो हुआ वायरल",
+   "expr": "tanz",
+   "set": "room",
+   "visuals": [
+    "viral video playing on mobile feed likes counter",
+    "soaked clothes wet couple standing near water",
+    "social media notification icons popping"
+   ],
+   "photo_hi": [
+    "वायरल वीडियो सोशल मीडिया",
+    "मोबाइल फोन रील"
+   ],
+   "punch": true,
+   "react_pose": "laugh",
+   "stamp": "तरीका… गीला!",
+   "visual": "viral video playing on mobile feed likes counter",
+   "scene": "pinky",
+   "insta": ""
+  },
+  {
+   "who": "chacha",
+   "say": "हमारे ज़माने में लोग तैरने नदी में जाते थे। अब लोग कैमरे के सामने डूबने जाते हैं।",
+   "caption": "खतरनाक जगहों पर रील न बनाने की सलाह",
+   "expr": "gambhir",
+   "set": "mandi",
+   "visuals": [
+    "old man shaking head looking at smartphone",
+    "river ghat dangerous slippery steps",
+    "people standing close to dangerous river flow"
+   ],
+   "photo_hi": [
+    "नदी घाट खतरा",
+    "पुराने ज़माने की बात"
+   ],
+   "punch": true,
+   "react_pose": "eyeroll",
+   "stamp": "कैमरा… डूब गया!",
+   "visual": "old man shaking head looking at smartphone",
+   "scene": "chacha",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "say": "विशेषज्ञों की सलाह है कि खतरनाक जगहों पर सुरक्षा रखें। सुरक्षा रखने से रील पर लाइक कम आते हैं।",
+   "caption": "सुरक्षा नियमों का ध्यान रखें",
+   "expr": "tanz",
+   "set": "studio",
+   "visuals": [
+    "warning sign board near deep water body",
+    "mobile tripod setup on wet slippery rocks",
+    "hundreds of likes comments on reel video"
+   ],
+   "photo_hi": [
+    "सुरक्षा चेतावनी बोर्ड",
+    "रील लाइक कमेंट्स"
+   ],
+   "punch": true,
+   "react_pose": "smug",
+   "stamp": "लाइक… कम!",
+   "visual": "warning sign board near deep water body",
+   "scene": "studio",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "say": "यह वीडियो उस कपल को भेजो, जो नदी किनारे रील की शूटिंग कर रहा है।",
+   "caption": "नदी किनारे रील बनाने वालों को भेजो",
+   "expr": "hasi",
+   "set": "studio",
+   "visuals": [
+    "young couple holding phone stand scenic lake",
+    "friends recording funny reel dance move",
+    "splash of water close up shot"
+   ],
+   "photo_hi": [
+    "कपल रील शूटिंग",
+    "नदी किनारे वीडियो"
+   ],
+   "visual": "young couple holding phone stand scenic lake",
+   "scene": "studio_end",
+   "punch": false,
+   "insta": ""
+  }
+ ],
+ "caption_post": "रील के चक्कर में बिगड़ा संतुलन और नदी में जा गिरे पति-पत्नी, वीडियो वायरल! 🌊📹\n\nक्या रील के लिए जान जोखिम में डालना सही है?\n\nरील बनाने वाले दोस्तों को भेजो!\n\nस्रोत: Amar Ujala, ABP News\n\n#ViralVideo #ReelFail #SocialMedia #SafetyFirst #BakraNews",
+ "format": "explain",
+ "label": "काम की खबर",
+ "key_word": "",
+ "icons": [
+  "₹",
+  "NEWS",
+  "%"
+ ],
+ "hook": "रील का शौक और पानी में सीधी छलांग",
+ "trend": {
+  "score": 3,
+  "why": "3 अख़बार/चैनल 2 दिन में, 3 खबरें 7 दिन में"
+ },
+ "sprite": {
+  "pinky": "assets/toon/pinky",
+  "bablu": "assets/toon/bablu",
+  "chacha": "assets/toon/chacha"
+ },
+ "production": true
+}
