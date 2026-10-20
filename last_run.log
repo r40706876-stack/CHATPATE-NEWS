@@ -6,53 +6,70 @@
     key 1 नहीं चली → key 2
   Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
     सब models busy — 40s रुककर दोबारा
-    Gemini gemini-flash-latest: 66s
-  ❌ trend 1/10: खुदरा महंगाई में जोरदार उछाल और प्याज के दाम दोगुने | 2 अख़बार/चैनल 2 दिन में, 11 खबरें 7 दिन में
-  ✅ trend 4/10: सैटेलाइट टोलिंग सिस्टम से टोल नाके हटने का दावा पर ट्रैकिंग का डर | 3 अख़बार/चैनल 2 दिन में, 7 खबरें 7 दिन में
-  ❌ trend 2/10: ई-रिक्शा की बेलगाम भीड़ रोकने के लिए फ्लीट कैप का नया नियम | 2 अख़बार/चैनल 2 दिन में, 3 खबरें 7 दिन में
-  ❌ trend 2/10: ऑनलाइन परीक्षा केंद्र पर सर्वर डाउन और टूटे सिस्टम से परीक्षार्थी बेहाल | 1 अख़बार/चैनल 2 दिन में, 2 खबरें 7 दिन में
-  ❌ trend 2/10: अस्पताल का सर्वर ठप होने से ओपीडी पर्ची के लिए लगी लंबी कतारें | 1 अख़बार/चैनल 2 दिन में, 1 खबरें 7 दिन में
-  ✅ trend 4/10: सरकारी अस्पताल की बदहाली रोकने को दिल्ली से कैमरों की लाइव निगरानी | 5 अख़बार/चैनल 2 दिन में, 8 खबरें 7 दिन में
-  ❌ trend 2/10: दिवाली पर फैंसी झालर लगाने का शौक और बिजली बिल का भारी खर्च | 1 अख़बार/चैनल 2 दिन में, 3 खबरें 7 दिन में
-  ❌ trend 3/10: रील बनाने के चक्कर में नदी में गिरे पति-पत्नी का वीडियो वायरल | 3 अख़बार/चैनल 2 दिन में, 3 खबरें 7 दिन में
-  ✅ trend 5/10: कॉरपोरेट नौकरी छोड़कर सुकून खोजने निकली कर्मचारी को झेलना पड़ा आर्थिक संकट | 3 अख़बार/चैनल 2 दिन में, 4 खबरें 7 दिन में, Google Trends में: arpita sahu leaving corporate job
-  ✅ trend 4/10: सीबीएसई बोर्ड ने जारी किए सैंपल पेपर, डेटशीट के इंतजार में छात्र तनाव में | 7 अख़बार/चैनल 2 दिन में, 49 खबरें 7 दिन में
-  ✅ trend 7/10: एग्री वेलफेयर पोर्टल से सुविधाओं का दावा पर तकनीकी पेच में उलझे किसान | 20 अख़बार/चैनल 2 दिन में, 50 खबरें 7 दिन में
-  ❌ trend 3/10: डैम के गेट बंद रहने से नदी सूखी और फसलों की सिंचाई पर संकट | 3 अख़बार/चैनल 2 दिन में, 11 खबरें 7 दिन में
-  ❌ trend 3/10: त्योहारों में जागरूकता कैंप के बावजूद नए पैंतरों से बैंक खाते खाली | 7 अख़बार/चैनल 2 दिन में, 65 खबरें 7 दिन में
-  ❌ trend 0/10: दिवाली बोनस के इंतजार में ऑनलाइन सेल की विशलिस्ट सजाकर बैठी जनता | 0 अख़बार/चैनल 2 दिन में, 8 खबरें 7 दिन में
-  ✅ trend 5/10: गुलाबी ठंड की दस्तक के साथ रजाई-स्वेटर बाहर और नहाने से बहानेबाजी | 12 अख़बार/चैनल 2 दिन में, 54 खबरें 7 दिन में
-  चुने विषय: ['Trends', 'मौसम', 'योजना', 'सफ़र', 'अस्पताल/सेहत', 'पढ़ाई/स्कूल', 'वायरल']
     सब models busy — 40s रुककर दोबारा
-    सब models busy — 40s रुककर दोबारा
-    key 1 नहीं चली → key 2
-    Gemini gemini-3.5-flash: 17s
-  तथ्य: कॉरपोरेट नौकरी छोड़कर सुकून खोजने निकली कर्मचारी को झेलना पड़ा आर्थिक संकट | NDTV India, AajTak, News18 Hindi | high
-  तथ्य: गुलाबी ठंड की दस्तक के साथ रजाई-स्वेटर बाहर और नहाने से बहानेबाजी | Jagran, ETV Bharat, Hindustan, Amar Ujala, Prabhat Khabar | high
-  तथ्य: एग्री वेलफेयर पोर्टल से सुविधाओं का दावा पर तकनीकी पेच में उलझे किसान | Press Information Bureau, DD News, News On AIR, ETV Bharat, Navbharat Times | high
-  तथ्य: सैटेलाइट टोलिंग सिस्टम से टोल नाके हटने का दावा पर ट्रैकिंग का डर | Navbharat Times, Amar Ujala, Janta Se Rishta | high
-  तथ्य: सरकारी अस्पताल की बदहाली रोकने को दिल्ली से कैमरों की लाइव निगरानी | Amar Ujala, Lok Alok News, Prabhat Khabar, Jagran | high
-  तथ्य: सीबीएसई बोर्ड ने जारी किए सैंपल पेपर, डेटशीट के इंतजार में छात्र तनाव में | News18 Hindi, Careers360, Jagran, NDTV India | high
-  तथ्य: रील बनाने के चक्कर में नदी में गिरे पति-पत्नी का वीडियो वायरल | Amar Ujala, ABP News, News18 Hindi | high
-    सब models busy — 40s रुककर दोबारा
-    सब models busy — 40s रुककर दोबारा
-    key 1 नहीं चली → key 2
-    Gemini gemini-3.5-flash: 53s
-    सब models busy — 40s रुककर दोबारा
-    सब models busy — 40s रुककर दोबारा
-    key 1 नहीं चली → key 2
-    सब models busy — 40s रुककर दोबारा
-    सब models busy — 40s रुककर दोबारा
-  connect जाँच नहीं हुई: RuntimeError('Gemini nahi chala:\n  gemini-flash-latest: TimeoutError(\'The read operation timed out\')\n  gemini-3.5-flash: 503 {\n  "error": {\n    
-  ✅ connect ?/10: कॉरपोरेट नौकरी छोड़कर सुकून खोजने निकली कर्मचारी को झेलना पड़ा आर्थिक संकट
-  ✅ connect ?/10: गुलाबी ठंड की दस्तक के साथ रजाई-स्वेटर बाहर और नहाने से बहानेबाजी
-  ✅ connect ?/10: एग्री वेलफेयर पोर्टल से सुविधाओं का दावा पर तकनीकी पेच में उलझे किसान
-  ✅ connect ?/10: सैटेलाइट टोलिंग सिस्टम से टोल नाके हटने का दावा पर ट्रैकिंग का डर
-  ✅ connect ?/10: सरकारी अस्पताल की बदहाली रोकने को दिल्ली से कैमरों की लाइव निगरानी
-  ✅ connect ?/10: सीबीएसई बोर्ड ने जारी किए सैंपल पेपर, डेटशीट के इंतजार में छात्र तनाव में
-  ✅ connect ?/10: रील बनाने के चक्कर में नदी में गिरे पति-पत्नी का वीडियो वायरल
-/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/run_daily.py:31: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
-  return dt.datetime.utcnow() + dt.timedelta(hours=5, minutes=30)
-  7 scripts Telegram पर भेजीं — जवाब का इंतज़ार
-  अभी जवाब नहीं आया
-  चुना: 7
+Traceback (most recent call last):
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/run_daily.py", line 386, in <module>
+    main()
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/run_daily.py", line 371, in main
+    return do_bulletin(a.feed)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/run_daily.py", line 224, in do_bulletin
+    ep = news_writer.write_bulletin(topics.collect_news(feed), 4)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/news_writer.py", line 507, in write_bulletin
+    picks = gemini.json_from(gemini.ask(prompt_bulletin_pick(_safe(c), n + 2), json_mode=True, temperature=0.4)).get("picks", [])
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/gemini.py", line 68, in ask
+    return _ask(key, prompt, search, json_mode, temperature, prefer, patient)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/gemini.py", line 128, in _ask
+    raise RuntimeError("Gemini nahi chala:\n  " + "\n  ".join(errors))
+RuntimeError: Gemini nahi chala:
+  gemini-flash-latest: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-3.5-flash: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-3.6-flash: 503 {
+  "error": {
+    "code": 503,
+    "message": "This model is currently experiencing high demand. Spikes in demand are u
+  gemini-3.7-flash: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-pro-latest: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-flash-latest: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-flash-latest: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-3.5-flash: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-3.6-flash: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-3.7-flash: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-pro-latest: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
+  gemini-flash-latest: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current quota, please check your plan and billing deta
