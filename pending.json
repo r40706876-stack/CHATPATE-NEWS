@@ -1,136 +1,136 @@
 {
-  "sent_at": 1792438979,
+  "sent_at": 1792478701,
   "eps": [
     {
-      "topic": "इंस्टाग्राम एल्गोरिदम का खेल और मेटा को केंद्र की एडवाइजरी",
-      "category": "वायरल",
-      "breaking": "केंद्र सरकार ने मेटा को दिया इंस्टाग्राम एल्गोरिदम समीक्षा का आदेश",
-      "hook_text": "एल्गोरिदम बदलेगा, आपकी रील देखने की आदत नहीं!",
-      "ask": "आप दिन में कितने घंटे रील्स देखते हैं?",
-      "source": "Dainik Bhaskar, Jagran, NDTV India",
+      "topic": "यूपी में बीसी सखी योजना के तहत महिलाओं को ₹4000 प्रतिमाह",
+      "category": "[योजना]",
+      "breaking": "यूपी में बीसी सखी योजना: महिलाओं को मिलेंगे 4000 रुपये",
+      "hook_text": "चार हज़ार का सीधा सशक्तिकरण",
+      "ask": "आपके गाँव में बीसी सखी बैंक चलाती है?",
+      "source": "Jagran, NDTV India, Jagran Josh, Tez Tarrar News",
       "poll": [
-        "1 घंटा",
-        "3 घंटे से ज़्यादा"
+        "योजना अच्छी है",
+        "सिर्फ़ कागज़ पर"
       ],
       "ticker": [
-        "सरकार ने कहा, एल्गोरिदम की समीक्षा होगी",
-        "मेटा को भ्रामक सामग्री रोकने के निर्देश",
-        "यूज़र्स सेटिंग्स से कंटेंट कंट्रोल करें"
+        "विभाग ने कहा, स्मार्टफ़ोन ही असली आत्मनिर्भरता है",
+        "चार हज़ार में सशक्तिकरण की पहली किश्त जारी",
+        "सखी बनी बैंक, चक्कर अब भी ब्लॉक के"
       ],
-      "cast_why": "सोशल मीडिया और ऐप सेटिंग्स से जुड़ा मामला है, इसलिए बबलू और पिंकी की जोड़ी सटीक है।",
+      "cast_why": "ग्रामीण महिलाओं और योजना से जुड़े मुद्दों के लिए बब्लू और पिंकी की जोड़ी सटीक है।",
       "lines": [
         {
           "who": "bablu",
-          "say": "केंद्र सरकार ने मेटा को इंस्टाग्राम एल्गोरिदम की समीक्षा करने के निर्देश दिए हैं। समीक्षा एल्गोरिदम की होगी, आपकी आदत की नहीं।",
-          "caption": "केंद्र सरकार ने मेटा को इंस्टाग्राम एल्गोरिदम समीक्षा के निर्देश दिए।",
+          "say": "उत्तर प्रदेश में बीसी सखी योजना के तहत महिलाओं को हर महीने चार हज़ार रुपये दिए जाएंगे। सशक्तिकरण की फ़ीस तय हो गई है।",
+          "caption": "UP में BC सखी योजना के तहत महिलाओं को हर महीने ₹4,000 मिलेंगे।",
           "expr": "gambhir",
           "set": "studio",
           "visuals": [
-            "instagram app feed scrolling mobile phone",
-            "meta company logo sign board",
-            "government advisory document notice"
+            "rural woman smartphone up",
+            "village banking kiosk woman",
+            "currency counting notes"
           ],
           "photo_hi": [
-            "इंस्टाग्राम ऐप लोगो",
-            "मेटा दफ्तर"
+            "बीसी सखी यूपी",
+            "महिला बैंक सखी"
           ],
           "card": {
-            "tag": "सरकारी आदेश",
-            "big": "एल्गोरिदम ओवरहॉल",
-            "sub": "मेटा को सख्त निर्देश",
-            "icon": "alert"
+            "tag": "योजना",
+            "big": "₹4,000",
+            "sub": "प्रति माह मानदेय",
+            "icon": "rupee"
           },
-          "visual": "instagram app feed scrolling mobile phone",
+          "punch": true,
+          "react_pose": "eyeroll",
+          "stamp": "सशक्तिकरण की फ़ीस!",
+          "visual": "rural woman smartphone up",
           "scene": "studio",
-          "punch": false,
           "insta": ""
         },
         {
           "who": "pinky",
-          "say": "सरकार ने हिंसा और भ्रामक सामग्री रोकने के लिए एडवाइजरी जारी की है। भ्रामक सामग्री रुकेगी, आपकी स्क्रॉलिंग नहीं।",
-          "caption": "हिंसा और भ्रामक सामग्री पर रोक के लिए सख्त एडवाइजरी जारी।",
+          "say": "यह योजना स्मार्टफ़ोन चलाने वाली ग्रामीण महिलाओं के लिए है। फ़ोन का रिचार्ज सखी को खुद कराना है।",
+          "caption": "स्मार्टफोन चलाने वाली ग्रामीण महिलाओं को मिलेगा आर्थिक अवसर।",
           "expr": "tanz",
-          "set": "room",
+          "set": "village",
           "visuals": [
-            "girl holding smartphone late night",
-            "fake news warning phone screen",
-            "social media settings control menu"
+            "indian village girl smartphone",
+            "rural banking correspondent",
+            "village panchayat bhawan"
           ],
           "photo_hi": [
-            "सोशल मीडिया यूज़र",
-            "मोबाइल स्क्रीन रील्स"
+            "स्मार्टफोन ग्रामीण महिला",
+            "बीसी सखी केंद्र"
           ],
           "punch": true,
-          "react_pose": "eyeroll",
-          "stamp": "स्क्रॉलिंग जारी रहेगी!",
-          "visual": "girl holding smartphone late night",
+          "visual": "indian village girl smartphone",
           "scene": "pinky",
           "insta": ""
         },
         {
           "who": "bablu",
-          "say": "यूज़र्स को ऐप सेटिंग्स में जाकर कंटेंट कंट्रोल करने की सलाह दी गई है। सेटिंग्स कंट्रोल में हैं, मन नहीं।",
-          "caption": "यूज़र्स ऐप सेटिंग्स में कंटेंट प्रेफरेंस कंट्रोल करें।",
+          "say": "विभाग ने साफ़ किया है, महिलाओं को आर्थिक अवसर दिए जा रहे हैं। अवसर ब्लॉक के चक्कर काटने के हैं।",
+          "caption": "ग्रामीण महिलाओं को आर्थिक अवसर और सशक्त बनाने की योजना।",
           "expr": "gambhir",
           "set": "studio",
           "visuals": [
-            "hands adjusting privacy settings smartphone",
-            "instagram content preference menu screen",
-            "young boy looking at phone confused"
+            "block development office up",
+            "village woman paperwork form",
+            "bank counter rural india"
           ],
           "photo_hi": [
-            "इंस्टाग्राम सेटिंग्स स्क्रीन",
-            "स्मार्टफोन यूज़र"
-          ],
-          "visual": "hands adjusting privacy settings smartphone",
-          "scene": "pinky",
-          "punch": false,
-          "insta": ""
-        },
-        {
-          "who": "pinky",
-          "say": "एकतरफा नैरेटिव पर रोक लगाने के सख्त निर्देश दिए गए हैं। निर्देश सख्त हैं, रील्स अभी भी वही हैं।",
-          "caption": "एकतरफा नैरेटिव पर रोक के सख्त निर्देश।",
-          "expr": "hasi",
-          "set": "room",
-          "visuals": [
-            "viral short video clip playing phone",
-            "social media notification icons pop up",
-            "fingers swiping up smartphone screen"
-          ],
-          "photo_hi": [
-            "वायरल रील्स स्क्रीन",
-            "मोबाइल यूज़र लड़की"
+            "ब्लॉक कार्यालय लाइन",
+            "सरकारी योजना फॉर्म"
           ],
           "punch": true,
           "react_pose": "smug",
-          "stamp": "रील्स वही रहेंगी!",
-          "visual": "viral short video clip playing phone",
+          "stamp": "चक्कर काटने के अवसर!",
+          "visual": "block development office up",
+          "scene": "pinky",
+          "insta": ""
+        },
+        {
+          "who": "pinky",
+          "say": "आवेदन के लिए पात्रता जांचने को कहा गया है। पात्रता पूरी है, बस पोर्टल का सर्वर डाउन है।",
+          "caption": "आधिकारिक पोर्टल या ब्लॉक कार्यालय से आवेदन करें।",
+          "expr": "udaas",
+          "set": "village",
+          "visuals": [
+            "server error computer screen",
+            "government office queue",
+            "disappointed village girl"
+          ],
+          "photo_hi": [
+            "पोर्टल सर्वर डाउन",
+            "ब्लॉक ऑफिस कतार"
+          ],
+          "punch": true,
+          "visual": "server error computer screen",
           "scene": "pinky",
           "insta": ""
         },
         {
           "who": "bablu",
-          "say": "यह वीडियो उस दोस्त को भेजो, जो रील्स देखते-देखते सो जाता है।",
-          "caption": "यह वीडियो उस दोस्त को भेजो, जो रील्स देखते-देखते सो जाता है।",
+          "say": "ये वीडियो उसको भेजो, जो स्मार्टफ़ोन में सिर्फ़ रील नहीं, चार हज़ार ढूँढ रही है।",
+          "caption": "ये वीडियो उसको भेजो जो ₹4,000 वाली योजना खोज रही है।",
           "expr": "gambhir",
           "set": "studio",
           "visuals": [
-            "man sleeping with phone on face bed",
-            "glowing smartphone screen dark room",
-            "person falling asleep watching videos"
+            "woman holding phone up",
+            "rupee note in hand",
+            "rural bank branch"
           ],
           "photo_hi": [
-            "सोता हुआ युवक मोबाइल",
-            "रात में फोन चलाना"
+            "महिला मोबाइल फोन",
+            "रुपये हाथ में"
           ],
-          "visual": "man sleeping with phone on face bed",
+          "punch": true,
+          "visual": "woman holding phone up",
           "scene": "studio_end",
-          "punch": false,
           "insta": ""
         }
       ],
-      "caption_post": "एल्गोरिदम बदल जाएगा पर रील्स का नशा कब छूटेगा? बताओ रील्स में कितना टाइम जाता है? Family group में भेजो। स्रोत: Dainik Bhaskar, Jagran #InstagramAlgorithm #MetaAdvisory #SocialMedia #BakraNews #TechUpdates",
+      "caption_post": "चार हज़ार में सशक्तिकरण पक्का है, बशर्ते सर्वर साथ दे दे! क्या आपके गाँव में बीसी सखी काम कर रही है? Family group में भेजो। स्रोत: Jagran, NDTV India #BCSakhi #UPNews #SarkariYojana #SmartPhone #BakraNews (AI से बने किरदार)",
       "format": "explain",
       "label": "काम की खबर",
       "key_word": "",
@@ -139,142 +139,162 @@
         "NEWS",
         "%"
       ],
-      "hook": "एल्गोरिदम बदलेगा, आपकी रील देखने की आदत नहीं!",
+      "hook": "चार हज़ार का सीधा सशक्तिकरण",
       "trend": {
-        "score": 6,
-        "why": "10 अख़बार/चैनल 2 दिन में, 14 खबरें 7 दिन में"
+        "score": 5,
+        "why": "10 अख़बार/चैनल 2 दिन में, 34 खबरें 7 दिन में"
+      },
+      "connect": {
+        "score": 8,
+        "why": "गाँव के ब्लॉक और सर्वर डाउन के चक्करों पर सटीक और धारदार कटाक्ष किया गया है।",
+        "weak": "Hook बहुत शांत और अख़बारी है, झटका या उत्सुकता पैदा नहीं करता।",
+        "fix": "Hook को बदलें: 'हर महीने चार हज़ार, पर पहले पोर्टल चलाकर दिखाओ?'",
+        "parts": {
+          "A": 2,
+          "B": 2,
+          "C": 1,
+          "D": 1,
+          "E": 1,
+          "F": 1
+        }
       }
     },
     {
-      "topic": "TRAI के नए निर्देशों के बाद Airtel के नए वॉइस-ओनली प्लान्स",
-      "category": "फ़ोन/इंटरनेट",
-      "breaking": "TRAI के निर्देश के बाद Airtel ने ₹185 में उतारे 3 नए कॉलिंग प्लान्स",
-      "hook_text": "बिना इंटरनेट का प्लान आया, बातें चालू - डाटा बंद!",
-      "ask": "आपको महीने में कितना कॉलिंग बैलेंस चाहिए?",
-      "source": "The Lallantop, Amar Ujala, AajTak",
+      "topic": "कैंसर की दवाओं पर मुनाफे की सीमा तय, 137 दवाएं होंगी सस्ती",
+      "category": "[अस्पताल/सेहत]",
+      "breaking": "कैंसर की 137 दवाएं होंगी सस्ती, मुनाफ़े की सीमा तय",
+      "hook_text": "मुनाफ़ा तीस प्रतिशत पर सील",
+      "ask": "क्या अस्पतालों में सस्ती दवाएँ सचमुच मिलेंगी?",
+      "source": "News On AIR, Dainik Bhaskar, News18 Hindi, Amar Ujala, The CSR Journal",
       "poll": [
-        "सिर्फ कॉलिंग",
-        "डाटा भी चाहिए"
+        "दवा सस्ती होगी",
+        "अस्पताल खेल करेंगे"
       ],
       "ticker": [
-        "Airtel ने पेश किए ₹185 से नए प्लान्स",
-        "पूरे महीने अनलिमिटेड कॉलिंग का फायदा",
-        "बिना इंटरनेट वाले ग्राहकों को बड़ी राहत"
+        "दवाओं का मुनाफ़ा तय, बीमारी की फीस कब तय होगी",
+        "नौ नवंबर से सस्ती दवा, पर्ची अब भी महँगी",
+        "370 की दवा 9762 में बिकी, बिल आईसीयू में"
       ],
-      "cast_why": "मोबाइल रीचार्ज और महँगे प्लान्स की परेशानी पर बबलू, रमेश और चाचा का मज़ाक जमेगा।",
+      "cast_why": "इलाज के ख़र्च और सिस्टम की लूट पर बब्लू के साथ चाचा का गहरा तंज़ सबसे मारक बैठता है।",
       "lines": [
         {
           "who": "bablu",
-          "say": "ट्राइ के निर्देशों के बाद एयरटेल ने एक सौ पचासी रुपये में तीन नए वॉइस-ओनली प्लान पेश किए हैं। प्लान नए हैं, नेटवर्क पुराना है।",
-          "caption": "TRAI निर्देशों के बाद Airtel ने ₹185 में 3 नए वॉइस-ओनली प्लान उतारे।",
+          "say": "सरकार ने कैंसर की एक सौ सैंतीस दवाओं के मुनाफ़े की सीमा तीस प्रतिशत तय की है। बीमारी से पहले मुनाफ़ा लाइलाज था।",
+          "caption": "कैंसर की 137 दवाओं के मुनाफे की अधिकतम सीमा 30% तय।",
           "expr": "gambhir",
           "set": "studio",
           "visuals": [
-            "airtel sim card shop counter",
-            "mobile tower green fields india",
-            "trai official order document paper"
+            "cancer medicine pharmacy bottles",
+            "medical bill receipt counter",
+            "hospital pharmacy shelf"
           ],
           "photo_hi": [
-            "एयरटेल रिचार्ज कूपन",
-            "मोबाइल नेटवर्क टावर"
+            "कैंसर दवाएं सस्ती",
+            "दवा बिल मेडिकल"
           ],
           "card": {
-            "tag": "नया रीचार्ज",
-            "big": "₹185 वॉइस प्लान",
-            "sub": "बिना इंटरनेट कॉलिंग",
-            "icon": "phone"
+            "tag": "नियम",
+            "big": "30%",
+            "sub": "मुनाफ़े की सीमा",
+            "icon": "percent"
           },
-          "visual": "airtel sim card shop counter",
+          "punch": true,
+          "react_pose": "eyeroll",
+          "stamp": "मुनाफ़ा लाइलाज था!",
+          "visual": "cancer medicine pharmacy bottles",
           "scene": "studio",
-          "punch": false,
           "insta": ""
         },
         {
-          "who": "ramesh",
-          "say": "इन प्लान्स में महीने भर अनलिमिटेड कॉलिंग और तीन सौ एसएमएस मिलेंगे। एसएमएस मुफ़्त हैं, रिप्लाई नहीं।",
-          "caption": "महीने भर अनलिमिटेड कॉलिंग और 300 SMS का लाभ।",
-          "expr": "udaas",
-          "set": "village",
+          "who": "chacha",
+          "say": "राजस्थान में तीन सौ सत्तर की दवा नौ हज़ार सात सौ बासठ में बिकी। दवा ने असर बाद में किया, बिल ने पहले होश उड़ा दिए।",
+          "caption": "राजस्थान में ₹370 की दवा ₹9,762 में बिकने का मामला।",
+          "expr": "tanz",
+          "set": "hospital",
           "visuals": [
-            "keypad feature phone caller screen",
-            "young man holding basic mobile phone",
-            "sms text message inbox phone display"
+            "hospital cash counter billing",
+            "shocked senior citizen hospital",
+            "expensive medicine injection"
           ],
           "photo_hi": [
-            "कीपैड फोन भारत",
-            "मोबाइल ग्राहक"
+            "राजस्थान अस्पताल बिल",
+            "महंगी दवा पर्ची"
           ],
           "punch": true,
           "react_pose": "facepalm",
-          "stamp": "रिप्लाई नहीं मिलता!",
-          "visual": "keypad feature phone caller screen",
+          "stamp": "होश उड़ा दिए!",
+          "visual": "hospital cash counter billing",
           "scene": "chacha",
-          "insta": ""
-        },
-        {
-          "who": "chacha",
-          "say": "विशेषज्ञों का कहना है, सिर्फ़ बातें करने का प्लान सस्ता है। बातें सस्ती हैं, काम महँगा है।",
-          "caption": "सिर्फ वॉइस सर्विस चाहने वाले ग्राहकों के लिए नया प्लान।",
-          "expr": "tanz",
-          "set": "mandi",
-          "visuals": [
-            "old indian villager talking on keypad phone",
-            "telecom recharge retailer shop banner",
-            "man counting rupee notes market"
-          ],
-          "photo_hi": [
-            "दुकान पर रीचार्ज",
-            "गांव का बुजुर्ग फोन पर"
-          ],
-          "visual": "old indian villager talking on keypad phone",
-          "scene": "chacha",
-          "punch": false,
           "insta": ""
         },
         {
           "who": "bablu",
-          "say": "कंपनी ने साफ़ किया है, इसमें इंटरनेट डाटा नहीं मिलेगा। डाटा नहीं है, शांति भरपूर है।",
-          "caption": "इन प्लान्स में इंटरनेट डाटा शामिल नहीं है।",
+          "say": "नौ नवंबर से दाम सत्तर फ़ीसदी तक घटने की उम्मीद है। उम्मीद सस्ती हुई है, बीमारी नहीं।",
+          "caption": "9 नवंबर से रिटेल दाम 70% तक घटने की उम्मीद।",
           "expr": "gambhir",
           "set": "studio",
           "visuals": [
-            "no internet signal icon phone screen",
-            "person putting down smartphone peacefully",
-            "airtel store poster board india"
+            "calendar page 9 november",
+            "medicine box price tag",
+            "chemist shop shelf discount"
           ],
           "photo_hi": [
-            "नो इंटरनेट स्क्रीन",
-            "एयरटेल शोरूम"
+            "दवा एमआरपी टैग",
+            "केमिस्ट दुकान भारत"
+          ],
+          "card": {
+            "tag": "छूट",
+            "big": "70%",
+            "sub": "कीमतें घटेंगी",
+            "icon": "calendar"
+          },
+          "punch": true,
+          "visual": "calendar page 9 november",
+          "scene": "card",
+          "insta": ""
+        },
+        {
+          "who": "chacha",
+          "say": "विशेषज्ञों का कहना है, एमआरपी देखकर ही दवा खरीदें। एमआरपी तो सही है, देखने वाली आँखें नम हैं।",
+          "caption": "9 नवंबर के बाद संशोधित एमआरपी की जांच करें।",
+          "expr": "gambhir",
+          "set": "hospital",
+          "visuals": [
+            "reading medicine packet mrp",
+            "doctor consultation room india",
+            "elderly man looking prescription"
+          ],
+          "photo_hi": [
+            "दवा एमआरपी जांच",
+            "सरकारी अस्पताल पर्ची"
           ],
           "punch": true,
-          "react_pose": "laugh",
-          "stamp": "शांति भरपूर है!",
-          "visual": "no internet signal icon phone screen",
+          "visual": "reading medicine packet mrp",
           "scene": "chacha",
           "insta": ""
         },
         {
-          "who": "ramesh",
-          "say": "यह वीडियो उस रिश्तेदार को भेजो, जो बिना काम के दो घंटे मुफ़्त बात करता है।",
-          "caption": "यह वीडियो उस रिश्तेदार को भेजो, जो घंटों बातें करता है।",
+          "who": "bablu",
+          "say": "ये वीडियो उसको भेजो, जो मेडिकल स्टोर पर बिल देखकर दवा से ज़्यादा काँपता है।",
+          "caption": "ये वीडियो उसको भेजो जो अस्पताल के बिल से डरता है।",
           "expr": "gambhir",
-          "set": "village",
+          "set": "studio",
           "visuals": [
-            "elderly uncle sitting cot phone calling",
-            "man talking loudly on cell phone outdoor",
-            "family member calling on phone smiling"
+            "paying money medical counter",
+            "medicine pills packaging",
+            "hospital corridor india"
           ],
           "photo_hi": [
-            "फोन पर बात करता आदमी",
-            "गांव का चौक फोन"
+            "मेडिकल बिल काउंटर",
+            "कैंसर इलाज खर्च"
           ],
-          "visual": "elderly uncle sitting cot phone calling",
+          "punch": true,
+          "visual": "paying money medical counter",
           "scene": "studio_end",
-          "punch": false,
           "insta": ""
         }
       ],
-      "caption_post": "बिना डाटा वाला ₹185 का प्लान आ गया! क्या आप भी कॉलिंग वाला रीचार्ज कराएंगे? Family group में भेजो। स्रोत: The Lallantop, Amar Ujala #AirtelPlans #TRAIGuidelines #VoiceOnlyPlan #BakraNews #RechargeNews",
+      "caption_post": "तीन सौ सत्तर की दवा दस हज़ार में बिकेगी तो इलाज क्या खाक होगा! क्या 9 नवंबर के बाद दवाएं सच में सस्ती मिलेंगी? Family group में भेजो। स्रोत: Dainik Bhaskar, News On AIR #CancerMedicine #PriceCap #Healthcare #BakraNews (AI से बने किरदार)",
       "format": "explain",
       "label": "काम की खबर",
       "key_word": "",
@@ -283,142 +303,320 @@
         "NEWS",
         "%"
       ],
-      "hook": "बिना इंटरनेट का प्लान आया, बातें चालू - डाटा बंद!",
+      "hook": "मुनाफ़ा तीस प्रतिशत पर सील",
       "trend": {
-        "score": 8,
-        "why": "27 अख़बार/चैनल 2 दिन में, 56 खबरें 7 दिन में"
+        "score": 3,
+        "why": "7 अख़बार/चैनल 2 दिन में, 51 खबरें 7 दिन में"
+      },
+      "connect": {
+        "score": 7,
+        "why": "दवाइयों के बिल और बीमारी की बेबसी पर लिखी मुहर वाली पंक्तियाँ दिल को छूती हैं।",
+        "weak": "कैंसर की दवा हर घर का रोज़ का मुद्दा नहीं है और Hook बिल्कुल सरकारी आदेश जैसा है।",
+        "fix": "Hook में दाम का सीधा झटका दें: 'जो दवा 9700 की बिकी, उसकी असली लागत सिर्फ़ 370 थी!'",
+        "parts": {
+          "A": 1,
+          "B": 2,
+          "C": 1,
+          "D": 1,
+          "E": 1,
+          "F": 1
+        }
       }
     },
     {
-      "topic": "दुकानों में खुली मिठाइयों पर निर्माण और एक्सपायरी डेट लिखने का नियम",
-      "category": "नियम/बैंक",
-      "breaking": "UP और उत्तराखंड में खुली मिठाइयों पर मेकिंग और एक्सपायरी डेट लिखना अनिवार्य",
-      "hook_text": "मिठाई पर एक्सपायरी डेट होगी, ताज़गी का पता नहीं!",
-      "ask": "क्या आप मिठाई खरीदते समय डेट चेक करते हैं?",
-      "source": "Jagran, ETV Bharat, AajTak",
+      "topic": "बिजली चोरी रोकने के लिए आर्टिफिशियल इंटेलिजेंस (AI) का उपयोग",
+      "category": "[शहर-कस्बा]",
+      "breaking": "भोपाल में AI से पकड़ी जा रही बिजली चोरी",
+      "hook_text": "कटिया पर एआई की तीसरी आँख",
+      "ask": "आपके मोहल्ले में कटिया ज़्यादा है या मीटर?",
+      "source": "ABP News, Dainik Bhaskar",
       "poll": [
-        "हां, हमेशा",
-        "नहीं, कभी नहीं"
+        "AI पकड़ेगा",
+        "कटिया वाले जीतेंगे"
       ],
       "ticker": [
-        "UP में 15 अक्टूबर से खुली मिठाइयों पर एक्सपायरी डेट अनिवार्य",
-        "उत्तराखंड में 26 अक्टूबर से लागू होगा नियम",
-        "नियम तोड़ने पर ₹3 लाख जुर्माना और 6 महीने जेल"
+        "एआई तैयार है, ट्रांसफ़ॉर्मर अभी ठंडा पड़ा है",
+        "भोपाल में कटिया खोजने निकला सुपर कंप्यूटर",
+        "पुराने शहर के बारह इलाके रडार पर"
       ],
-      "cast_why": "मिठाई की दुकानों की धांधली और नए नियम पर बबलू, चाचा और दादी का तंज़ बेहतरीन लगेगा।",
+      "cast_why": "बिजली कटौती और मीटर की हेराफेरी पर बब्लू और रमेश का रोज़मर्रा का अनुभव सटीक बैठता है।",
       "lines": [
         {
           "who": "bablu",
-          "say": "यूपी में पंद्रह अक्टूबर से खुली मिठाई की ट्रे पर एक्सपायरी डेट लिखना अनिवार्य है। तारीख़ ट्रे पर होगी, ताज़गी का पता नहीं।",
-          "caption": "UP में 15 अक्टूबर से खुली मिठाई ट्रे पर एक्सपायरी डेट अनिवार्य।",
+          "say": "भोपाल में बिजली चोरी पकड़ने के लिए आर्टिफिशियल इंटेलिजेंस लगाया गया है। इंटेलिजेंस बिजली के पास है, विभाग के पास नहीं।",
+          "caption": "भोपाल में AI से बिजली चोरी पकड़ने में शहर अव्वल।",
           "expr": "gambhir",
           "set": "studio",
           "visuals": [
-            "indian sweet shop display counter sweets",
-            "expiry date price tag label on food tray",
-            "food inspector checking sweet shop india"
+            "electric pole wire mess",
+            "artificial intelligence server monitor",
+            "bhopal old city street aerial"
           ],
           "photo_hi": [
-            "हलवाई की दुकान मिठाई ट्रे",
-            "खाद्य सुरक्षा अधिकारी"
+            "भोपाल बिजली चोरी",
+            "बिजली पोल तार"
           ],
           "card": {
-            "tag": "मिठाई नियम",
-            "big": "एक्सपायरी डेट अनिवार्य",
-            "sub": "₹3 लाख तक जुर्माना",
-            "icon": "check"
+            "tag": "तकनीक",
+            "big": "AI",
+            "sub": "चोरी पकड़ने में अव्वल",
+            "icon": "alert"
           },
-          "visual": "indian sweet shop display counter sweets",
+          "punch": true,
+          "react_pose": "eyeroll",
+          "stamp": "विभाग के पास नहीं!",
+          "visual": "electric pole wire mess",
           "scene": "studio",
-          "punch": false,
           "insta": ""
         },
         {
-          "who": "chacha",
-          "say": "नियम तोड़ने पर तीन लाख का जुर्माना और छह महीने जेल का प्रावधान है। नियम सख्त है, छेना वही है।",
-          "caption": "नियम तोड़ने पर ₹3 लाख जुर्माना और 6 महीने की सजा का प्रावधान।",
-          "expr": "tanz",
-          "set": "mandi",
+          "who": "ramesh",
+          "say": "पुराने शहर के बारह इलाके रडार पर हैं। रडार चौबीस घंटे चालू है, ट्रांसफ़ॉर्मर दिन में बारह बार फ़्यूज़ है।",
+          "caption": "पुराने शहर के 12 इलाके बिजली रडार पर हैं।",
+          "expr": "udaas",
+          "set": "bijli",
           "visuals": [
-            "halwai making gulab jamun large kadhai",
-            "court gavel judge hammer table law",
-            "sweet shop owner counting currency notes"
+            "damaged electricity transformer",
+            "lineman fixing pole wires",
+            "crowded old city mohalla"
           ],
           "photo_hi": [
-            "हलवाई दुकान उत्तर प्रदेश",
-            "मिठाई चेकिंग दल"
+            "ट्रांसफार्मर खराब भोपाल",
+            "बिजली लाइनमैन तार"
           ],
           "punch": true,
-          "react_pose": "eyeroll",
-          "stamp": "छेना वही है!",
-          "visual": "halwai making gulab jamun large kadhai",
+          "react_pose": "facepalm",
+          "stamp": "ट्रांसफ़ॉर्मर फ़्यूज़!",
+          "visual": "damaged electricity transformer",
           "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "विभाग ने कहा है, सही बिलिंग सुनिश्चित की जा रही है। सही बिल सिर्फ़ उस घर का आता है जहाँ पंखा बंद है।",
+          "caption": "सही बिलिंग और बिजली चोरी रोकने की मुहिम।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "digital electricity meter reading",
+            "high electricity bill paper",
+            "hand holding meter test device"
+          ],
+          "photo_hi": [
+            "बिजली मीटर रीडिंग",
+            "बिजली बिल पर्चा"
+          ],
+          "punch": true,
+          "visual": "digital electricity meter reading",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "ramesh",
+          "say": "अधिकारियों ने कनेक्शन की पुष्टि करने को कहा है। कनेक्शन पक्का है, बस तार में बिजली कच्ची है।",
+          "caption": "बिजली बिल और कनेक्शन की पुष्टि कार्यालय से करें।",
+          "expr": "tanz",
+          "set": "bijli",
+          "visuals": [
+            "electricity bill payment counter",
+            "man arguing electricity office",
+            "dark room lantern night"
+          ],
+          "photo_hi": [
+            "बिजली दफ्तर शिकायत",
+            "बिजली गुल अंधेरा"
+          ],
+          "punch": true,
+          "visual": "electricity bill payment counter",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "ये वीडियो उसको भेजो, जिसके घर में एसी चलता है और मीटर आराम करता है।",
+          "caption": "ये वीडियो उसको भेजो जो कटिया के सहारे जी रहा है।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "air conditioner outdoor unit wire",
+            "smiling man watching meter",
+            "power line hooks wire"
+          ],
+          "photo_hi": [
+            "कटिया कनेक्शन तार",
+            "बिजली विभाग जांच"
+          ],
+          "punch": true,
+          "visual": "air conditioner outdoor unit wire",
+          "scene": "studio_end",
+          "insta": ""
+        }
+      ],
+      "caption_post": "सुपर कंप्यूटर भी आ गया, पर भोपाल के कटिया वाले अलग ही लेवल पर हैं! क्या AI बिजली चोरी रोक पाएगा? Family group में भेजो। स्रोत: Dainik Bhaskar, ABP News #ElectricityTheft #Bhopal #ArtificialIntelligence #BijliBill #BakraNews (AI से बने किरदार)",
+      "format": "explain",
+      "label": "काम की खबर",
+      "key_word": "",
+      "icons": [
+        "₹",
+        "NEWS",
+        "%"
+      ],
+      "hook": "कटिया पर एआई की तीसरी आँख",
+      "trend": {
+        "score": 3,
+        "why": "4 अख़बार/चैनल 2 दिन में, 8 खबरें 7 दिन में"
+      },
+      "connect": {
+        "score": 10,
+        "why": "गाँव-कस्बे की बिजली कटौती और AI के दिखावे का ऐसा यथार्थवादी व्यंग्य जो हर दर्शक को बाँध लेगा।",
+        "weak": "रमेश की दूसरी लाइन में 'बारह बार' शब्द दोहराव जैसा लगता है।",
+        "fix": "'दिन में बारह बार' की जगह 'दिन भर में बीस बार फ़्यूज़ है' कर दें ताकि प्रवाह और बेहतर हो।",
+        "parts": {
+          "A": 3,
+          "B": 2,
+          "C": 2,
+          "D": 1,
+          "E": 1,
+          "F": 1
+        }
+      }
+    },
+    {
+      "topic": "WhatsApp पर पैसे कटने के फर्जी मैसेज और 'NO' स्कैम",
+      "category": "[ठगी से बचाव]",
+      "breaking": "व्हाट्सऐप पर 'NO' लिखने से खाली हो रहे बैंक खाते",
+      "hook_text": "ना बोलने पर खाता साफ़",
+      "ask": "क्या आपको बैंक कटने का फर्जी मैसेज आया?",
+      "source": "Hindustan, Amar Ujala, ABP News, AajTak, Business Standard, News18 Hindi",
+      "poll": [
+        "मैसेज आया था",
+        "अभी तक बचे हैं"
+      ],
+      "ticker": [
+        "मैसेज में पैसे कटे नहीं थे, 'नो' लिखकर कटवा लिए",
+        "पुलिस ने कहा, नो कहना हर जगह सुरक्षित नहीं",
+        "व्हाट्सऐप पर अलर्ट: ठगों की हाँ आपकी ना में"
+      ],
+      "cast_why": "साइबर फ्रॉड और डिजिटल सुरक्षा पर दादी की कड़क चेतावनी और बब्लू की एंकरिंग सबसे असरदार है।",
+      "lines": [
+        {
+          "who": "bablu",
+          "say": "व्हाट्सऐप पर पैसे कटने का फ़र्ज़ी मैसेज भेजकर ठगी हो रही है। संदेश पर 'नो' लिखते ही, खाता 'यस' होकर ख़ाली हो जाता है।",
+          "caption": "WhatsApp पर 'पैसे कटने' के फर्जी मैसेज पर 'NO' लिखने का नया स्कैम।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "whatsapp chat fake bank sms",
+            "finger typing no on phone",
+            "bank account zero balance screen"
+          ],
+          "photo_hi": [
+            "व्हाट्सएप ठगी मैसेज",
+            "बैंक फ्रॉड एसएमएस"
+          ],
+          "card": {
+            "tag": "अलर्ट",
+            "big": "NO स्कैम",
+            "sub": "खाता खाली होने का खतरा",
+            "icon": "phone"
+          },
+          "punch": true,
+          "react_pose": "eyeroll",
+          "stamp": "खाता 'यस' होकर ख़ाली!",
+          "visual": "whatsapp chat fake bank sms",
+          "scene": "studio",
           "insta": ""
         },
         {
           "who": "dadi",
-          "say": "उत्तराखंड में छब्बीस अक्टूबर से मेकिंग और एक्सपायरी दोनों तारीख़ लिखनी होगी। तारीख़ दिखेगी, शुद्धता ढूँढनी पड़ेगी।",
-          "caption": "उत्तराखंड में 26 अक्टूबर से मेकिंग व एक्सपायरी दोनों अनिवार्य।",
+          "say": "पुलिस ने साफ़ अलर्ट जारी किया है। जब बैंक वाले सामने मुँह नहीं बोलते, तो व्हाट्सऐप पे हालचाल पूछेंगे?",
+          "caption": "पुलिस ने फर्जी मैसेज पर अलर्ट जारी किया।",
+          "expr": "gussa",
+          "set": "aangan",
+          "visuals": [
+            "elderly woman holding smartphone",
+            "cyber crime police warning",
+            "phone screen message alert"
+          ],
+          "photo_hi": [
+            "साइबर पुलिस अलर्ट",
+            "दादी मोबाइल फोन"
+          ],
+          "punch": true,
+          "react_pose": "facepalm",
+          "stamp": "मुँह नहीं बोलते!",
+          "visual": "elderly woman holding smartphone",
+          "scene": "dadi_call",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "बैंकों का कहना है, किसी भी लिंक पर क्लिक न करें। लिंक पर क्लिक करने वाले उँगली से नहीं, लालच से चलते हैं।",
+          "caption": "संदिग्ध मैसेज पर क्लिक न करें, हेल्पलाइन से पुष्टि करें।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "phishing link sms screen",
+            "cyber safety helpline poster",
+            "laptop cyber attack graphic"
+          ],
+          "photo_hi": [
+            "फर्जी लिंक मैसेज",
+            "साइबर हेल्पलाइन नंबर"
+          ],
+          "punch": true,
+          "visual": "phishing link sms screen",
+          "scene": "dadi_call",
+          "insta": ""
+        },
+        {
+          "who": "dadi",
+          "say": "सुनो लल्ला, ठगी होने पर रोना बाद में, सीधे एक नौ तीन शून्य पे फ़ोन। समझदारी सिर्फ़ मैसेज अनदेखा करने में है।",
+          "caption": "ठगी होने पर 1930 साइबर हेल्पलाइन पर शिकायत करें।",
           "expr": "gambhir",
           "set": "aangan",
           "visuals": [
-            "dehradun sweet shop display counter",
-            "expiry date tag on laddu tray sweet shop",
-            "old grandmother inspecting food item kitchen"
+            "dialing 1930 emergency phone",
+            "cyber fraud complaint portal",
+            "relieved elderly woman"
           ],
           "photo_hi": [
-            "उत्तराखंड मिठाई दुकान",
-            "खुली मिठाई ट्रे"
+            "1930 हेल्पलाइन साइबर",
+            "साइबर अपराध रिपोर्ट"
           ],
-          "visual": "dehradun sweet shop display counter",
+          "card": {
+            "tag": "हेल्पलाइन",
+            "big": "1930",
+            "sub": "साइबर फ्रॉड तुरंत कॉल करें",
+            "icon": "alert"
+          },
+          "punch": true,
+          "visual": "dialing 1930 emergency phone",
           "scene": "dadi_call",
-          "punch": false,
           "insta": ""
         },
         {
           "who": "bablu",
-          "say": "विभाग का कहना है, ग्राहकों के स्वास्थ्य के लिए यह फ़ैसला लिया गया है। फ़ैसला काग़ज़ पर है, मिठाई पेट में।",
-          "caption": "विभाग ने कहा, ग्राहकों की सेहत के लिए कड़ा नियम।",
+          "say": "ये वीडियो उसको भेजो, जो हर मैसेज का जवाब तमीज़ से 'नो थैंक्यू' लिखकर देता है।",
+          "caption": "ये वीडियो उसको भेजो जो हर मैसेज का जवाब देता है।",
           "expr": "gambhir",
           "set": "studio",
           "visuals": [
-            "customer buying sweets box counter shop",
-            "food safety department advisory order printout",
-            "plate full of colorful indian sweets"
+            "man typing fast on phone",
+            "atm card blocked alert",
+            "bank branch entrance board"
           ],
           "photo_hi": [
-            "खाद्य विभाग आदेश",
-            "दुकानदार मिठाई तौलता हुआ"
+            "मोबाइल टाइपिंग फ्रॉड",
+            "बैंक एटीएम फ्रॉड"
           ],
           "punch": true,
-          "react_pose": "smug",
-          "stamp": "फ़ैसला काग़ज़ पर!",
-          "visual": "customer buying sweets box counter shop",
-          "scene": "chacha",
-          "insta": ""
-        },
-        {
-          "who": "chacha",
-          "say": "यह वीडियो उस रिश्तेदार को भेजो, जो त्यौहार पर बची हुई पुरानी मिठाई मुफ़्त बाँटता है।",
-          "caption": "यह वीडियो उस रिश्तेदार को भेजो, जो पुरानी मिठाई बाँटता है।",
-          "expr": "gambhir",
-          "set": "mandi",
-          "visuals": [
-            "man gifting sweet box diwali festival india",
-            "sweet boxes stacked shelf shop store",
-            "family member giving sweet box smiling"
-          ],
-          "photo_hi": [
-            "मिठाई का डिब्बा उपहार",
-            "त्योहार मिठाई दुकान"
-          ],
-          "visual": "man gifting sweet box diwali festival india",
+          "visual": "man typing fast on phone",
           "scene": "studio_end",
-          "punch": false,
           "insta": ""
         }
       ],
-      "caption_post": "अब खुली मिठाई खरीदने से पहले ट्रे पर एक्सपायरी डेट ज़रूर देखना! क्या आपके शहर में ऐसा हो रहा है? Family group में भेजो। स्रोत: Jagran, ETV Bharat #SweetsRules #FoodSafety #ExpiryDate #BakraNews #UPNews",
+      "caption_post": "व्हाट्सऐप पर हर अनजान को जवाब देना भारी पड़ सकता है! क्या आपको कभी बैंक कटने का फर्जी SMS आया है? Family group में भेजो। स्रोत: Amar Ujala, Hindustan #WhatsAppScam #CyberCrime #OnlineFraud #1930Alert #BakraNews (AI से बने किरदार)",
       "format": "explain",
       "label": "काम की खबर",
       "key_word": "",
@@ -427,430 +625,156 @@
         "NEWS",
         "%"
       ],
-      "hook": "मिठाई पर एक्सपायरी डेट होगी, ताज़गी का पता नहीं!",
+      "hook": "ना बोलने पर खाता साफ़",
       "trend": {
+        "score": 3,
+        "why": "9 अख़बार/चैनल 2 दिन में, 55 खबरें 7 दिन में"
+      },
+      "connect": {
         "score": 6,
-        "why": "12 अख़बार/चैनल 2 दिन में, 28 खबरें 7 दिन में"
+        "why": "WhatsApp फ़्रॉड का डर और दादी का देसी संवाद दर्शक को तुरंत अपनी कहानी जैसा लगता है।",
+        "weak": "नियम E के तहत आधिकारिक बयान को उलटने वाली 3 'मुहर' पंक्तियाँ पूरी नहीं हैं।",
+        "fix": "पुलिस/बैंक के सुझावों को उन्हीं के शब्दों में उलटने वाली 2 और पंक्तियाँ जोड़ें (जैसे 'अलर्ट जारी हुआ है...').",
+        "parts": {
+          "A": 3,
+          "B": 2,
+          "C": 2,
+          "D": 1,
+          "E": 0,
+          "F": 1
+        }
       }
     },
     {
-      "topic": "MP बोर्ड परीक्षा पैटर्न में बदलाव, 2 अंक वाले सवालों से विकल्प खत्म",
-      "category": "पढ़ाई/स्कूल",
-      "breaking": "MP बोर्ड 9वीं से 12वीं के नए पैटर्न में 2 अंक वाले प्रश्नों से विकल्प समाप्त",
-      "hook_text": "सवालों में विकल्प ख़त्म हुआ है, पढ़ाई में नहीं!",
-      "ask": "क्या अथवा वाले सवाल से पास होने में मदद मिलती थी?",
-      "source": "Jagran, Jansatta, Navbharat Times",
+      "topic": "नीमच मंडी में प्याज ₹1 प्रति किलो के भाव बिका",
+      "category": "[महँगाई]",
+      "breaking": "नीमच मंडी: प्याज का भाव गिरा, ₹1 प्रति किलो बिका",
+      "hook_text": "एक रुपये किलो बिका पसीना",
+      "ask": "किसान को एक रुपया, ग्राहक को चालीस क्यों?",
+      "source": "Business Standard",
       "poll": [
-        "हां, बहुत",
-        "नहीं, कोई असर नहीं"
+        "किसान की बर्बादी",
+        "मंडी बिचौलियों का खेल"
       ],
       "ticker": [
-        "MP बोर्ड ने सत्र 2026-27 से बदला परीक्षा पैटर्न",
-        "कक्षा 9वीं से 12वीं में 2 अंक वाले सवालों में चॉइस खत्म",
-        "छात्रों को जारी मॉडल पेपर से तैयारी की सलाह"
+        "नीमच मंडी में प्याज़ बना माचिस की डिबिया से सस्ता",
+        "एक रुपया किलो प्याज़, बोरी की सिलाई महँगी पड़ी",
+        "थोक में एक रुपया, शहर में चालीस का खेल जारी"
       ],
-      "cast_why": "छात्रों की पढ़ाई और परीक्षा की टेंशन पर बबलू और रमेश की भड़ास सटीक बैठेगी।",
+      "cast_why": "मंडी के भाव और किसान की लाचारी पर बब्लू और चाचा का दर्द और व्यंग्य सबसे भारी पड़ता है।",
       "lines": [
         {
           "who": "bablu",
-          "say": "एमपी बोर्ड ने सत्र दो हजार छब्बीस सत्ताईस से प्रश्नपत्र का पैटर्न बदल दिया है। पैटर्न बदला है, किस्मत वही है।",
-          "caption": "MP बोर्ड ने सत्र 2026-27 से बदला प्रश्नपत्र का पैटर्न।",
+          "say": "मध्य प्रदेश की नीमच मंडी में प्याज़ का थोक भाव गिरकर एक रुपया प्रति किलो पहुँचा। प्याज़ ने रुलाया हमेशा है, इस बार भाव ने रुलाया है।",
+          "caption": "नीमच मंडी में प्याज का थोक भाव गिरकर ₹1 प्रति किलो तक पहुंचा।",
           "expr": "gambhir",
           "set": "studio",
           "visuals": [
-            "mp board official press release document",
-            "students writing exam answer sheet hall",
-            "school student holding question paper shocked"
+            "onion sacks loaded tractor trolley",
+            "neemuch mandi madhya pradesh",
+            "heaps of red onions auction"
           ],
           "photo_hi": [
-            "एमपी बोर्ड परीक्षा हॉल",
-            "छात्र प्रश्न पत्र पढ़ते हुए"
+            "नीमच मंडी प्याज",
+            "प्याज भाव एक रुपया"
           ],
           "card": {
-            "tag": "बोर्ड परीक्षा",
-            "big": "चॉइस ख़त्म",
-            "sub": "2 अंक वाले प्रश्न",
-            "icon": "calendar"
+            "tag": "थोक भाव",
+            "big": "₹1",
+            "sub": "प्रति किलो नीमच मंडी",
+            "icon": "rupee"
           },
-          "visual": "mp board official press release document",
-          "scene": "studio",
-          "punch": false,
-          "insta": ""
-        },
-        {
-          "who": "ramesh",
-          "say": "नए पैटर्न के तहत दो अंकों वाले प्रश्नों में मिलने वाली इंटरनल चॉइस समाप्त कर दी गई है। चॉइस ख़त्म हुई है, टेंशन बढ़ गई है।",
-          "caption": "2 अंक वाले प्रश्नों में मिलने वाली इंटरनल चॉइस समाप्त।",
-          "expr": "udaas",
-          "set": "school",
-          "visuals": [
-            "question paper OR option choice highlighted pencil",
-            "worried student sitting desk study room",
-            "school student holding head exam pressure"
-          ],
-          "photo_hi": [
-            "बोर्ड परीक्षा प्रश्नपत्र",
-            "परेशान छात्र स्कूल"
-          ],
-          "punch": true,
-          "react_pose": "facepalm",
-          "stamp": "टेंशन बढ़ गई!",
-          "visual": "question paper OR option choice highlighted pencil",
-          "scene": "chacha",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "say": "बोर्ड ने कक्षा नौवीं से बारहवीं तक के छात्रों को नए मॉडल पेपर से पढ़ने को कहा है। मॉडल पेपर नया है, सवाल पुराने।",
-          "caption": "कक्षा 9वीं से 12वीं के छात्र नए मॉडल पेपर से तैयारी करें।",
-          "expr": "gambhir",
-          "set": "studio",
-          "visuals": [
-            "model question paper booklet table study",
-            "high school student writing notebook pen",
-            "teacher writing on blackboard classroom"
-          ],
-          "photo_hi": [
-            "मॉडल पेपर एमपी बोर्ड",
-            "स्कूल कक्षा पढ़ाई"
-          ],
-          "visual": "model question paper booklet table study",
-          "scene": "chacha",
-          "punch": false,
-          "insta": ""
-        },
-        {
-          "who": "ramesh",
-          "say": "विशेषज्ञों का कहना है, इससे छात्रों की तैयारी मजबूत होगी। तैयारी मजबूत होगी, पास होने की गारंटी नहीं।",
-          "caption": "विशेषज्ञों के अनुसार नए पैटर्न से तैयारी मजबूत होगी।",
-          "expr": "tanz",
-          "set": "school",
-          "visuals": [
-            "student late night study table lamp books",
-            "exam result board sheet school wall",
-            "group of students discussing study outside school"
-          ],
-          "photo_hi": [
-            "परीक्षा परिणाम बोर्ड",
-            "छात्र बोर्ड परीक्षा"
-          ],
           "punch": true,
           "react_pose": "eyeroll",
-          "stamp": "गारंटी नहीं!",
-          "visual": "student late night study table lamp books",
-          "scene": "chacha",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "say": "यह वीडियो उस बैकबेंचर दोस्त को भेजो, जो सिर्फ़ अथवा वाले सवाल के भरोसे पास होता था।",
-          "caption": "यह वीडियो उस बैकबेंचर दोस्त को भेजो, जो चॉइस के भरोसे था।",
-          "expr": "gambhir",
-          "set": "studio",
-          "visuals": [
-            "backbencher student laughing classroom back row",
-            "school boys student group talking classroom",
-            "student walking out exam hall relaxed"
-          ],
-          "photo_hi": [
-            "बैकबेंचर छात्र क्लास",
-            "स्कूल के छात्र दोस्त"
-          ],
-          "visual": "backbencher student laughing classroom back row",
-          "scene": "studio_end",
-          "punch": false,
-          "insta": ""
-        }
-      ],
-      "caption_post": "MP बोर्ड में 2 नंबर वाले सवालों से अथवा का विकल्प हट गया! तैयारी कैसी चल रही है? Family group में भेजो। स्रोत: Jagran, Jansatta #MPBoard #ExamPattern #MPBoardResult #BakraNews #StudentLife",
-      "format": "explain",
-      "label": "काम की खबर",
-      "key_word": "",
-      "icons": [
-        "₹",
-        "NEWS",
-        "%"
-      ],
-      "hook": "सवालों में विकल्प ख़त्म हुआ है, पढ़ाई में नहीं!",
-      "trend": {
-        "score": 6,
-        "why": "17 अख़बार/चैनल 2 दिन में, 60 खबरें 7 दिन में"
-      }
-    },
-    {
-      "topic": "दिल्ली में ट्रैफिक चालान माफ कराने के लिए लोक अदालत",
-      "category": "शहर-कस्बा",
-      "breaking": "दिल्ली में 25 अक्टूबर को लगेगी लोक अदालत, निपटाए जाएंगे 2 लाख चालान",
-      "hook_text": "चालान माफ़ कराने की लाइन लगेगी, टोकन मिलेगा ऑनलाइन!",
-      "ask": "क्या आपकी गाड़ी का कोई चालान पेंडिंग है?",
-      "source": "NDTV India, Hindustan, AajTak",
-      "poll": [
-        "हां, पेंडिंग है",
-        "नहीं, सब साफ़ है"
-      ],
-      "ticker": [
-        "25 अक्टूबर को दिल्ली में लगेगी ट्रैफिक लोक अदालत",
-        "7 स्थानों पर निपटाए जाएंगे 2 लाख चालान",
-        "ऑनलाइन टोकन डाउनलोड करना अनिवार्य"
-      ],
-      "cast_why": "ट्रैफिक चालान और अदालत के चक्कर पर बबलू, रमेश और चाचा की तीखी चर्चा जमेगी।",
-      "lines": [
-        {
-          "who": "bablu",
-          "say": "दिल्ली में पच्चीस अक्टूबर को सात स्थानों पर लोक अदालत आयोजित की जाएगी। अदालत लगेगी, चालान वाले भी पहुँचेंगे।",
-          "caption": "दिल्ली में 25 अक्टूबर को 7 स्थानों पर लोक अदालत लगेगी।",
-          "expr": "gambhir",
-          "set": "studio",
-          "visuals": [
-            "delhi traffic police officer issuing challan road",
-            "lok adalat court premises banner board delhi",
-            "traffic fine notice slip close up"
-          ],
-          "photo_hi": [
-            "दिल्ली ट्रैफिक पुलिस चालान",
-            "लोक अदालत बोर्ड"
-          ],
-          "card": {
-            "tag": "ट्रैफिक राहत",
-            "big": "2 लाख चालान",
-            "sub": "25 अक्टूबर लोक अदालत",
-            "icon": "alert"
-          },
-          "visual": "delhi traffic police officer issuing challan road",
+          "stamp": "भाव ने रुलाया!",
+          "visual": "onion sacks loaded tractor trolley",
           "scene": "studio",
-          "punch": false,
-          "insta": ""
-        },
-        {
-          "who": "ramesh",
-          "say": "लगभग दो लाख चालान माफ और निपटाए जाएंगे। चालान माफ़ होंगे, ट्रैफिक का चालान काटने का सिलसिला नहीं।",
-          "caption": "लगभग 2 लाख ट्रैफिक चालान निपटाए/माफ किए जाएंगे।",
-          "expr": "udaas",
-          "set": "road",
-          "visuals": [
-            "heavy traffic jam delhi ITO road vehicles",
-            "delhi traffic police speed camera pole",
-            "bike rider showing documents traffic police"
-          ],
-          "photo_hi": [
-            "दिल्ली ट्रैफिक जाम",
-            "चालान मशीन पुलिस"
-          ],
-          "punch": true,
-          "react_pose": "eyeroll",
-          "stamp": "सिलसिला नहीं रुकता!",
-          "visual": "heavy traffic jam delhi ITO road vehicles",
-          "scene": "chacha",
           "insta": ""
         },
         {
           "who": "chacha",
-          "say": "लोक अदालत में जाने से पहले ऑनलाइन टोकन डाउनलोड करना अनिवार्य है। टोकन ऑनलाइन मिलेगा, खड़े लाइन में होना पड़ेगा।",
-          "caption": "लोक अदालत जाने से पहले ऑनलाइन टोकन अनिवार्य।",
-          "expr": "tanz",
-          "set": "road",
-          "visuals": [
-            "delhi traffic police portal website home page",
-            "man downloading token online cyber cafe",
-            "people standing long queue court campus"
-          ],
-          "photo_hi": [
-            "दिल्ली पुलिस पोर्टल ऑनलाइन",
-            "अदालत में लाइन"
-          ],
-          "visual": "delhi traffic police portal website home page",
-          "scene": "chacha",
-          "punch": false,
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "say": "पुलिस का कहना है, यह प्रक्रिया जनता की सुविधा के लिए है। सुविधा कंप्यूटर पर है, लाइन सड़क पर।",
-          "caption": "पुलिस ने कहा, जनता की सुविधा के लिए विशेष व्यवस्था।",
-          "expr": "gambhir",
-          "set": "studio",
-          "visuals": [
-            "traffic police officer waving hand stop car",
-            "crowd of people outside court counter delhi",
-            "man holding printout token paper outdoor"
-          ],
-          "photo_hi": [
-            "ट्रैफिक पुलिस अधिकारी",
-            "लोक अदालत भीड़"
-          ],
-          "punch": true,
-          "react_pose": "smug",
-          "stamp": "लाइन सड़क पर!",
-          "visual": "traffic police officer waving hand stop car",
-          "scene": "chacha",
-          "insta": ""
-        },
-        {
-          "who": "ramesh",
-          "say": "यह वीडियो उस दिल्ली वाले दोस्त को भेजो, जिसके तीन चालान लाल बत्ती पार करने पर कटे हैं।",
-          "caption": "यह वीडियो उस दिल्ली वाले दोस्त को भेजो, जिसके चालान कटे हैं।",
-          "expr": "gambhir",
-          "set": "road",
-          "visuals": [
-            "red traffic light signal intersection delhi",
-            "scooter rider breaking red signal light delhi",
-            "young boy looking at pending challan mobile screen"
-          ],
-          "photo_hi": [
-            "दिल्ली रेड लाइट सिग्नल",
-            "पेंडिंग चालान फोन"
-          ],
-          "visual": "red traffic light signal intersection delhi",
-          "scene": "studio_end",
-          "punch": false,
-          "insta": ""
-        }
-      ],
-      "caption_post": "दिल्ली में 25 अक्टूबर को चालान माफ कराने का मौका है, टोकन डाउनलोड कर लिया क्या? Family group में भेजो। स्रोत: NDTV India, AajTak #DelhiTraffic #LokAdalat #TrafficChallan #BakraNews #DelhiNews",
-      "format": "explain",
-      "label": "काम की खबर",
-      "key_word": "",
-      "icons": [
-        "₹",
-        "NEWS",
-        "%"
-      ],
-      "hook": "चालान माफ़ कराने की लाइन लगेगी, टोकन मिलेगा ऑनलाइन!",
-      "trend": {
-        "score": 5,
-        "why": "11 अख़बार/चैनल 2 दिन में, 25 खबरें 7 दिन में"
-      }
-    },
-    {
-      "topic": "खाद पर सरकारी सब्सिडी और राज्यों में योजनाएं",
-      "category": "किसान/गाँव",
-      "breaking": "केंद्र दे रहा प्रति बोरी ₹2700 सब्सिडी, हरियाणा में वर्मीकम्पोस्ट पर 80% छूट",
-      "hook_text": "सब्सिडी बोरी पर भारी है, लाइन दुकान पर लंबी!",
-      "ask": "क्या आपके गाँव में खाद समय पर मिल रही है?",
-      "source": "Business Standard, ETV Bharat, Jagmarg News",
-      "poll": [
-        "हां, मिल रही है",
-        "नहीं, बहुत लाइन है"
-      ],
-      "ticker": [
-        "केंद्र सरकार की खाद पर ₹2700 प्रति बोरी सब्सिडी",
-        "हरियाणा में वर्मीकम्पोस्ट पर 80% सब्सिडी",
-        "कृषि पोर्टल पर करें सब्सिडी का आवेदन"
-      ],
-      "cast_why": "किसान, खाद की किल्लत और सब्सिडी के कागजी दावों पर बबलू और चाचा का संवाद सबसे असरदार है।",
-      "lines": [
-        {
-          "who": "bablu",
-          "say": "केंद्र सरकार खाद की प्रति बोरी पर सत्ताईस सौ रुपये की सब्सिडी दे रही है। सब्सिडी बोरी पर है, दुकान की खिड़की पर नहीं।",
-          "caption": "केंद्र सरकार खाद की प्रति बोरी पर ₹2700 सब्सिडी दे रही है।",
-          "expr": "gambhir",
-          "set": "studio",
-          "visuals": [
-            "fertilizer bags stacked warehouse agriculture godown",
-            "farmer loading urea fertilizer bag tractor",
-            "government subsidy notification document paper"
-          ],
-          "photo_hi": [
-            "खाद की बोरी गोदाम",
-            "किसान खाद बोरी"
-          ],
-          "card": {
-            "tag": "किसान राहत",
-            "big": "₹2700 सब्सिडी",
-            "sub": "खाद प्रति बोरी",
-            "icon": "percent"
-          },
-          "visual": "fertilizer bags stacked warehouse agriculture godown",
-          "scene": "studio",
-          "punch": false,
-          "insta": ""
-        },
-        {
-          "who": "chacha",
-          "say": "हरियाणा सरकार वर्मीकम्पोस्ट खाद की खरीद पर अस्सी प्रतिशत सब्सिडी दे रही है। अस्सी परसेंट सब्सिडी है, बीस परसेंट का धक्का।",
-          "caption": "हरियाणा में वर्मीकम्पोस्ट खाद की खरीद पर 80% सब्सिडी।",
+          "say": "किसानों ने खून-पसीना बहाकर फ़सल तैयार की। पसीने की क़ीमत बाज़ार ने ठीक एक रुपया प्रति किलो लगाई।",
+          "caption": "प्याज उत्पादक किसानों को भारी नुकसान।",
           "expr": "tanz",
           "set": "khet",
           "visuals": [
-            "vermicompost organic fertilizer pit farm haryana",
-            "farmers standing in queue outside fertilizer shop",
-            "haryana agriculture portal website screen"
+            "farmer sitting sad onion heap",
+            "field of onion harvest india",
+            "weighing scale vegetable mandi"
           ],
           "photo_hi": [
-            "वर्मीकम्पोस्ट खाद प्लांट",
-            "हरियाणा किसान लाइन"
+            "परेशान किसान प्याज",
+            "खेत में प्याज फसल"
           ],
           "punch": true,
-          "react_pose": "eyeroll",
-          "stamp": "धक्का बीस परसेंट का!",
-          "visual": "vermicompost organic fertilizer pit farm haryana",
+          "react_pose": "facepalm",
+          "stamp": "पसीने की क़ीमत ₹1!",
+          "visual": "farmer sitting sad onion heap",
           "scene": "chacha",
           "insta": ""
         },
         {
           "who": "bablu",
-          "say": "खाद के आयात पर बीमा प्रीमियम का बोझ बढ़ गया है। बोझ कंपनी पर है, दाम किसान पर।",
-          "caption": "खाद आयात पर बीमा प्रीमियम का बोझ बढ़ा।",
+          "say": "मंडी व्यापारियों का कहना है, आवक बहुत ज़बरदस्त है। आवक बंपर है, किसान की कमाई पंक्चर है।",
+          "caption": "थोक मंडी में भारी आवक से कीमतों में भारी गिरावट।",
           "expr": "gambhir",
           "set": "studio",
           "visuals": [
-            "cargo ship unloading fertilizer containers port",
-            "rupee notes falling agriculture farm field",
-            "farmer holding empty wallet field background"
+            "trucks unloading onion sacks",
+            "mandi traders bidding auction",
+            "crowded wholesale vegetable market"
           ],
           "photo_hi": [
-            "खाद आयात पोत",
-            "परेशान किसान खेत"
+            "सब्जी मंडी नीलामी",
+            "थोक प्याज मंडी"
           ],
-          "visual": "cargo ship unloading fertilizer containers port",
+          "punch": true,
+          "visual": "trucks unloading onion sacks",
           "scene": "chacha",
-          "punch": false,
           "insta": ""
         },
         {
           "who": "chacha",
-          "say": "कृषि विभाग का कहना है, सब्सिडी का लाभ लेने के लिए ऑनलाइन आवेदन करें। आवेदन ऑनलाइन होगा, अंगूठा बायोमेट्रिक पर।",
-          "caption": "सब्सिडी के लिए कृषि पोर्टल या दफ़्तर से संपर्क करें।",
-          "expr": "tanz",
+          "say": "खेत से मंडी लाने का भाड़ा जेब से लगा। प्याज़ बिका नहीं, किसान घर से पैसे देकर आया है।",
+          "caption": "दैनिक थोक भाव की जानकारी स्थानीय APMC से लें।",
+          "expr": "udaas",
           "set": "khet",
           "visuals": [
-            "biometric thumb scanner machine fertilizer shop",
-            "farmer putting thumb impression machine india",
-            "agriculture office counter desk banner"
+            "tractor trolley driving rural road",
+            "farmer holding empty pockets",
+            "mandi gate apmc board"
           ],
           "photo_hi": [
-            "फिंगरप्रिंट मशीन दुकान",
-            "कृषि कार्यालय किसान"
+            "ट्रैक्टर ट्राली मंडी",
+            "किसान मंडी किराया"
           ],
           "punch": true,
-          "react_pose": "smug",
-          "stamp": "अंगूठा बायोमेट्रिक पर!",
-          "visual": "biometric thumb scanner machine fertilizer shop",
+          "visual": "tractor trolley driving rural road",
           "scene": "chacha",
           "insta": ""
         },
         {
           "who": "bablu",
-          "say": "यह वीडियो उस किसान भाई को भेजो, जो सुबह चार बजे खाद की लाइन में लगता है।",
-          "caption": "यह वीडियो उस किसान भाई को भेजो, जो लाइन में लगता है।",
+          "say": "ये वीडियो उसको भेजो, जो शहर में चालीस रुपये किलो प्याज़ ख़रीदकर किसान को कोसता है।",
+          "caption": "ये वीडियो उसको भेजो जो किसान और मंडी का फर्क नहीं समझता।",
           "expr": "gambhir",
           "set": "studio",
           "visuals": [
-            "farmers gathering early morning outside cooperative store",
-            "crowd of farmers with slips in hand fertilizer center",
-            "farmer sitting tired on fertilizer bag"
+            "retail vegetable vendor onion cart",
+            "city consumer buying onions india",
+            "onion fields sunset"
           ],
           "photo_hi": [
-            "खाद केंद्र तड़के लाइन",
-            "किसान समिति केंद्र"
+            "सब्जी ठेला शहर प्याज",
+            "थोक खुदरा भाव प्याज"
           ],
-          "visual": "farmers gathering early morning outside cooperative store",
+          "punch": true,
+          "visual": "retail vegetable vendor onion cart",
           "scene": "studio_end",
-          "punch": false,
           "insta": ""
         }
       ],
-      "caption_post": "खाद पर सब्सिडी तो भारी है, पर क्या समय पर मिल रही है? अपने गाँव का हाल बताओ। Family group में भेजो। स्रोत: Business Standard, ETV Bharat #FertilizerSubsidy #HaryanaFarmers #KisanNews #BakraNews #FarmerScheme",
+      "caption_post": "नीमच में किसान का प्याज़ ₹1 किलो बिका, और शहर में ठेले वाला ₹40 माँग रहा है! बीच का पैसा कहाँ गायब हो रहा है? Family group में भेजो। स्रोत: Business Standard #OnionPrice #NeemuchMandi #KisanBuraHaal #Agriculture #BakraNews (AI से बने किरदार)",
       "format": "explain",
       "label": "काम की खबर",
       "key_word": "",
@@ -859,142 +783,156 @@
         "NEWS",
         "%"
       ],
-      "hook": "सब्सिडी बोरी पर भारी है, लाइन दुकान पर लंबी!",
+      "hook": "एक रुपये किलो बिका पसीना",
       "trend": {
-        "score": 4,
-        "why": "5 अख़बार/चैनल 2 दिन में, 8 खबरें 7 दिन में"
+        "score": 2,
+        "why": "1 अख़बार/चैनल 2 दिन में, 2 खबरें 7 दिन में"
+      },
+      "connect": {
+        "score": 6,
+        "why": "मंडी में किसान की लागत और शहर के 40 रुपये किलो के अंतर का दर्द सीधा दिल पर वार करता है।",
+        "weak": "मंडी अधिकारियों या सरकार के बयानों को उलटने वाला 'मुहर' ढाँचा पूरी तरह लागू नहीं हुआ।",
+        "fix": "व्यापारियों/सरकार के बयानों को कोट करके उन्हीं के शब्दों को काटने वाली 3 स्पष्ट पंक्तियाँ बनाएं।",
+        "parts": {
+          "A": 3,
+          "B": 2,
+          "C": 2,
+          "D": 1,
+          "E": 0,
+          "F": 1
+        }
       }
     },
     {
-      "topic": "अमेरिका में अवैध प्रवासी मजदूरों की स्थिति और H-1B विवाद",
-      "category": "महँगाई",
-      "breaking": "अमेरिका में कार्रवाई के डर से 30,000 भारतीय मजदूरों ने छोड़ा काम",
-      "hook_text": "काम छूटा है अमेरिका में, सपना अभी भी ज़िंदा है!",
-      "ask": "क्या विदेश जाकर काम करना सुरक्षित है?",
-      "source": "Dainik Bhaskar, Jagran, Amar Ujala",
+      "topic": "हैदराबाद में बिजनेसमैन ने बच्चों को कराई लैम्बोर्गिनी की राइड",
+      "category": "[वायरल]",
+      "breaking": "हैदराबाद: लैम्बोर्गिनी निहार रहे स्कूली बच्चों को कराई सैर",
+      "hook_text": "सुपरकार में सरकारी स्कूल के सपने",
+      "ask": "क्या कभी किसी अमीर ने आपको सैर कराई?",
+      "source": "ABP News, News18 Hindi, Times Now Navbharat, TV9 Hindi",
       "poll": [
-        "हां, सुरक्षित है",
-        "नहीं, खतरा है"
+        "दिलदार अमीर",
+        "सिर्फ़ वीडियो पब्लिसिटी"
       ],
       "ticker": [
-        "अमेरिका में धरपकड़ के डर से 30,000 भारतीयों ने छोड़ा काम",
-        "H-1B वीजा पर जेडी वेंस ने दी अपनी टिप्पणी पर सफाई",
-        "वीजा दस्तावेजों की वैधता जांचने की सलाह"
+        "लैम्बोर्गिनी की सीट पर स्कूल बैग ने ली एंट्री",
+        "सड़क पर सपना देख रहे बच्चों को मिली सुपरकार",
+        "हैदराबाद में कार मालिक ने जीता सोशल मीडिया"
       ],
-      "cast_why": "विदेश में नौकरी के सपने और कड़वी हकीकत पर बबलू और रमेश की भड़ास सटीक बैठेगी।",
+      "cast_why": "अमीरी बनाम गरीबी के इस वायरल वाकये पर बब्लू और रमेश का नज़रिया दिलचस्प रहेगा।",
       "lines": [
         {
           "who": "bablu",
-          "say": "अमेरिका में धरपकड़ के डर से लगभग तीस हजार भारतीय मजदूरों ने काम छोड़ दिया है। काम छूटा है, सपना नहीं।",
-          "caption": "अमेरिका में कागजात न होने के डर से 30,000 भारतीय मजदूरों ने काम छोड़ा।",
+          "say": "हैदराबाद में एक कार मालिक ने लैम्बोर्गिनी निहार रहे दो स्कूली बच्चों को सैर कराई। अमीर दिल से अमीर निकला, सिर्फ़ बैलेंस से नहीं।",
+          "caption": "हैदराबाद में बिजनेसमैन ने 2 स्कूली बच्चों को लैम्बोर्गिनी की राइड कराई।",
           "expr": "gambhir",
           "set": "studio",
           "visuals": [
-            "us immigration enforcement officers patrolling",
-            "construction site america empty indian workers",
-            "passport and us visa document stacked table"
+            "yellow lamborghini supercar hyderabad",
+            "school kids looking at luxury car",
+            "businessman opening supercar door"
           ],
           "photo_hi": [
-            "अमेरिका इमिग्रेशन पुलिस",
-            "भारतीय मजदूर अमेरिका"
+            "हैदराबाद लैम्बोर्गिनी बच्चे",
+            "सुपरकार राइड वायरल"
           ],
           "card": {
-            "tag": "विदेश से खबर",
-            "big": "30,000 मजदूर",
-            "sub": "अमेरिका में छोड़ा काम",
-            "icon": "alert"
+            "tag": "वायरल",
+            "big": "राइड",
+            "sub": "लैम्बोर्गिनी की सैर",
+            "icon": "gift"
           },
-          "visual": "us immigration enforcement officers patrolling",
+          "punch": true,
+          "react_pose": "smug",
+          "stamp": "सिर्फ़ बैलेंस से नहीं!",
+          "visual": "yellow lamborghini supercar hyderabad",
           "scene": "studio",
-          "punch": false,
           "insta": ""
         },
         {
           "who": "ramesh",
-          "say": "एच वन बी वीजा धारकों पर दिए बयान पर विरोध के बाद अमेरिकी नेता जेडी वेंस ने सफाई दी है। सफाई नेता ने दी है, घबराहट मजदूरों को है।",
-          "caption": "H-1B वीजा पर बयान के विरोध के बाद जेडी वेंस ने दी सफाई।",
-          "expr": "udaas",
-          "set": "village",
+          "say": "बच्चे सड़क किनारे खड़े होकर गाड़ी देख रहे थे। उन्होंने सिर्फ़ सपना देखा था, मालिक ने सीधे स्पीडोमीटर दिखा दिया।",
+          "caption": "सड़क किनारे गाड़ी निहार रहे थे दोनों बच्चे।",
+          "expr": "hasi",
+          "set": "road",
           "visuals": [
-            "jd vance political speech press conference us",
-            "h1b visa approval paper document close up",
-            "worried indian tech worker looking laptop screen"
+            "two indian school kids smiling",
+            "interior of lamborghini dashboard",
+            "sports car driving city road"
           ],
           "photo_hi": [
-            "जेडी वेंस भाषण",
-            "एच 1 बी वीजा दस्तावेज"
+            "स्कूली बच्चे सुपरकार",
+            "हैदराबाद सड़क कार"
           ],
           "punch": true,
-          "react_pose": "facepalm",
-          "stamp": "घबराहट मजदूरों को!",
-          "visual": "jd vance political speech press conference us",
+          "visual": "two indian school kids smiling",
           "scene": "chacha",
           "insta": ""
         },
         {
           "who": "bablu",
-          "say": "विशेषज्ञों ने मजदूरों को अपने वीजा और लीगल कागजात तुरंत चेक करने को कहा है। काग़ज़ वैध हैं, नौकरी का भरोसा नहीं।",
-          "caption": "आव्रजन विशेषज्ञों से वीजा कागजात की वैधता जांचने की सलाह।",
+          "say": "घटना का वीडियो सोशल मीडिया पर वायरल हुआ है। लोग दिलदारी की तारीफ़ कर रहे हैं, अपनी क़िस्मत की नहीं।",
+          "caption": "घटना का वीडियो सोशल मीडिया पर वायरल हुआ।",
           "expr": "gambhir",
           "set": "studio",
           "visuals": [
-            "immigration lawyer consultant reviewing passport papers",
-            "us visa stamp close up passport page",
-            "man stressed holding head passport hand"
+            "viral video smartphone screen shares",
+            "social media comments likes reel",
+            "luxury sports car rear view"
           ],
           "photo_hi": [
-            "इमिग्रेशन वकील दफ्तर",
-            "पासपोर्ट वीजा चेक"
+            "वायरल वीडियो स्क्रीन",
+            "लग्जरी कार हैदराबाद"
           ],
-          "visual": "immigration lawyer consultant reviewing passport papers",
+          "punch": true,
+          "react_pose": "laugh",
+          "stamp": "क़िस्मत की नहीं!",
+          "visual": "viral video smartphone screen shares",
           "scene": "chacha",
-          "punch": false,
           "insta": ""
         },
         {
           "who": "ramesh",
-          "say": "बिना काग़ज़ वालों को देश वापस लौटने की सलाह दी जा रही है। सलाह मुफ़्त है, फ़्लाइट की टिकट महँगी।",
-          "caption": "अवैध रूप से रह रहे प्रवासियों पर अमेरिका में कड़ी कार्रवाई।",
+          "say": "हमारे मोहल्ले में कोई साइकिल भी छूने नहीं देता। वहाँ करोड़ों की गाड़ी में स्कूल बैग रखवा दिया।",
+          "caption": "सोशल मीडिया पर कार मालिक की जमकर तारीफ।",
           "expr": "tanz",
-          "set": "village",
+          "set": "road",
           "visuals": [
-            "international airport departure terminal passengers",
-            "flight ticket booking online mobile phone",
-            "airplane taking off runway airport"
+            "old bicycle street park india",
+            "school bag sitting on car seat",
+            "busy city traffic street"
           ],
           "photo_hi": [
-            "हवाई अड्डा डिपार्चर",
-            "विमान उड़ान"
+            "साइकिल मोहल्ला सड़क",
+            "सुपरकार वायरल वीडियो"
           ],
           "punch": true,
-          "react_pose": "eyeroll",
-          "stamp": "टिकट महँगी है!",
-          "visual": "international airport departure terminal passengers",
+          "visual": "old bicycle street park india",
           "scene": "chacha",
           "insta": ""
         },
         {
           "who": "bablu",
-          "say": "यह वीडियो उस दोस्त को भेजो, जो बिना काग़ज़ के अमेरिका जाने की जुगाड़ लगा रहा है।",
-          "caption": "यह वीडियो उस दोस्त को भेजो, जो अमेरिका जाने के चक्कर में है।",
+          "say": "ये वीडियो उसको भेजो, जो कार का शीशा गंदा होने पर बच्चों पर चिल्ला देता है।",
+          "caption": "ये वीडियो उसको भेजो जो अपनी छोटी गाड़ी का भी घमंड करता है।",
           "expr": "gambhir",
           "set": "studio",
           "visuals": [
-            "young boy looking at travel agency poster america",
-            "statue of liberty new york landmark distance",
-            "travel agent talking to client office india"
+            "luxury car driving sunset",
+            "smiling children waving hand",
+            "city street hyderabad evening"
           ],
           "photo_hi": [
-            "ट्रैवल एजेंट दफ्तर",
-            "अमेरिका वीजा सपना"
+            "कार शीशा सफाई बच्चे",
+            "अमीर दिलदार वायरल"
           ],
-          "visual": "young boy looking at travel agency poster america",
+          "punch": true,
+          "visual": "luxury car driving sunset",
           "scene": "studio_end",
-          "punch": false,
           "insta": ""
         }
       ],
-      "caption_post": "अमेरिका में 30 हजार भारतीय मजदूरों ने धरपकड़ के डर से काम छोड़ा। विदेश जाने का सपना कितना भारी? Family group में भेजो। स्रोत: Dainik Bhaskar, Jagran #USAJobs #H1BVisa #IndianMigrants #BakraNews #NRIUpdates",
+      "caption_post": "सड़क पर खड़े होकर सपना देखने वालों को जब सीट मिल जाए तो दिल खुश हो जाता है! क्या कभी किसी अमीर ने ऐसा बड़प्पन दिखाया? Family group में भेजो। स्रोत: Times Now Navbharat, ABP News #Hyderabad #Lamborghini #ViralVideo #Heartwarming #BakraNews (AI से बने किरदार)",
       "format": "explain",
       "label": "काम की खबर",
       "key_word": "",
@@ -1003,10 +941,24 @@
         "NEWS",
         "%"
       ],
-      "hook": "काम छूटा है अमेरिका में, सपना अभी भी ज़िंदा है!",
+      "hook": "सुपरकार में सरकारी स्कूल के सपने",
       "trend": {
+        "score": 3,
+        "why": "4 अख़बार/चैनल 2 दिन में, 4 खबरें 7 दिन में"
+      },
+      "connect": {
         "score": 4,
-        "why": "8 अख़बार/चैनल 2 दिन में, 35 खबरें 7 दिन में"
+        "why": "अमीर और गरीब बच्चों के बीच मानवीय संवेदना को अच्छी नीयत से छुआ गया है।",
+        "weak": "लैम्बोर्गिनी और अमीरों के वायरल वीडियो का कस्बे की रोज़ी-रोटी और जेब से कोई लेना-देना नहीं है।",
+        "fix": "इस तरह के विदेशी/अमीरी वायरल मुद्दों को छोड़ें और स्थानीय राशन, स्कूल फ़ीस या बस किराए पर बात करें।",
+        "parts": {
+          "A": 0,
+          "B": 1,
+          "C": 1,
+          "D": 1,
+          "E": 0,
+          "F": 1
+        }
       }
     }
   ]
