@@ -1,0 +1,166 @@
+{
+ "topic": "ट्रेन चौबीस घंटे लेट होने पर भड़की महिला ने लोको पायलट की लगाई क्लास",
+ "category": "वायरल",
+ "breaking": "ट्रेन चौबीस घंटे लेट, महिला ने इंजन खटखटाकर मांगा जवाब",
+ "hook_text": "ट्रेन पूरे चौबीस घंटे लेट",
+ "ask": "आपकी ट्रेन सबसे ज़्यादा कितनी लेट हुई?",
+ "source": "ABP News, News18 Hindi",
+ "poll": {
+  "q": "आपकी ट्रेन सबसे ज़्यादा कितनी लेट हुई?",
+  "a": "ट्रेन की लेट-लतीफ़ी",
+  "b": "रेलवे की टाइमिंग"
+ },
+ "ticker": [
+  "रेलवे का दावा, समय सारणी पूरी तरह सुरक्षित है",
+  "चौबीस घंटे की देरी पर इंजन का दरवाज़ा खटका",
+  "यात्रियों ने कहा, देरी ही अब टाइमटेबल है"
+ ],
+ "cast_why": "बबलू गंभीर एंकर की तरह तथ्य बताएगा और रमेश आम यात्री का दर्द बयां करेगा।",
+ "lines": [
+  {
+   "who": "bablu",
+   "say": "रेलवे के अनुसार ट्रेनें समय पर चलाई जा रही हैं। बस समय ट्रेन का इंतज़ार कर रहा है।",
+   "caption": "रेलवे के अनुसार ट्रेनें समय पर चलाई जा रही हैं। बस समय ट्रेन का इंतज़ार कर रहा है।",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "indian railway train engine",
+    "passengers waiting on railway platform",
+    "railway station clock"
+   ],
+   "photo_hi": [
+    "भारतीय रेलवे ट्रेन लेट",
+    "रेलवे स्टेशन प्लेटफॉर्म भीड़"
+   ],
+   "card": {
+    "tag": "ताज़ा खबर",
+    "big": "24 घंटे लेट",
+    "sub": "महिला ने लोको पायलट से मांगा जवाब",
+    "icon": "train"
+   },
+   "visual": "indian railway train engine",
+   "scene": "studio",
+   "punch": false,
+   "insta": ""
+  },
+  {
+   "who": "ramesh",
+   "say": "ट्रेन पूरे चौबीस घंटे लेट हुई तो महिला यात्री ने सीधे इंजन का दरवाज़ा खटखटा दिया।",
+   "caption": "ट्रेन पूरे 24 घंटे लेट हुई तो महिला यात्री ने सीधे इंजन का दरवाज़ा खटखटा दिया।",
+   "expr": "gussa",
+   "set": "station",
+   "visuals": [
+    "train driver cabin engine door",
+    "angry passenger complaining railway",
+    "train waiting on tracks"
+   ],
+   "photo_hi": [
+    "ट्रेन इंजन लोको पायलट",
+    "रेलवे यात्री हंगामा"
+   ],
+   "punch": true,
+   "react_pose": "eyeroll",
+   "stamp": "चौबीस घंटे की लेट!",
+   "visual": "train driver cabin engine door",
+   "scene": "chacha",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "say": "महिला ने लोको पायलट से सीधे जवाब माँगा। जवाब भी ट्रेन की तरह लेट आया।",
+   "caption": "महिला ने लोको पायलट से सीधे जवाब माँगा। जवाब भी ट्रेन की तरह लेट आया।",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "loco pilot inside train engine",
+    "passenger standing near train coach",
+    "railway track signals"
+   ],
+   "photo_hi": [
+    "लोको पायलट केबिन",
+    "ट्रेन लेट पैसेंजर"
+   ],
+   "visual": "loco pilot inside train engine",
+   "scene": "chacha",
+   "punch": false,
+   "insta": ""
+  },
+  {
+   "who": "ramesh",
+   "say": "विभाग ने कहा है, समस्या होने पर हेल्पलाइन पे संपर्क करें। फ़ोन टाइम पे लगेगा, ट्रेन नहीं।",
+   "caption": "विभाग ने कहा है, समस्या होने पर हेल्पलाइन पे संपर्क करें। फ़ोन टाइम पे लगेगा, ट्रेन नहीं।",
+   "expr": "tanz",
+   "set": "station",
+   "visuals": [
+    "railway enquiry desk phone",
+    "person calling customer care phone",
+    "waiting passengers railway station"
+   ],
+   "photo_hi": [
+    "रेलवे हेल्पलाइन पोस्टर",
+    "ट्रेन यात्री इंतज़ार"
+   ],
+   "punch": true,
+   "react_pose": "facepalm",
+   "stamp": "हेल्पलाइन ही सहारा!",
+   "visual": "railway enquiry desk phone",
+   "scene": "chacha",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "say": "ये वीडियो उसको भेजो, जो हर सफ़र से पहले कहता है, ट्रेन सही टाइम पे आएगी।",
+   "caption": "ये वीडियो उसको भेजो, जो हर सफ़र से पहले कहता है, ट्रेन सही टाइम पे आएगी।",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "person checking mobile train status",
+    "express train moving slow",
+    "railway station platform empty"
+   ],
+   "photo_hi": [
+    "ट्रेन स्टेटस मोबाइल",
+    "रेलवे प्लेटफॉर्म यात्री"
+   ],
+   "punch": true,
+   "react_pose": "thinking",
+   "stamp": "सही टाइम पे?",
+   "visual": "person checking mobile train status",
+   "scene": "studio_end",
+   "insta": ""
+  }
+ ],
+ "caption_post": "24 घंटे लेट ट्रेन पर जब महिला ने खटखटाया इंजन का दरवाज़ा! क्या आपकी ट्रेन भी कभी इतनी लेट हुई है? Family group में भेजो। स्रोत: ABP News, News18 Hindi #Railway #TrainDelay #IndianRailways #BakraNews (AI से बने किरदार)",
+ "format": "explain",
+ "label": "काम की खबर",
+ "key_word": "",
+ "icons": [
+  "₹",
+  "NEWS",
+  "%"
+ ],
+ "hook": "ट्रेन पूरे चौबीस घंटे लेट",
+ "trend": {
+  "score": 5,
+  "why": "7 अख़बार/चैनल 2 दिन में, 11 खबरें 7 दिन में"
+ },
+ "connect": {
+  "score": 9,
+  "why": "ट्रेन लेट होने की समस्या हर छोटे शहर के यात्री की दुखती रग है और पंचलाइन्स सरकारी बयानों पर सटीक मुहर लगाती हैं।",
+  "weak": "मुद्दे में सीधे पैसों के नुकसान का ज़िक्र नहीं है, सिर्फ़ समय की बर्बादी पर ज़ोर है।",
+  "fix": "लाइन में यह भी जोड़ें कि लेट ट्रेन से दिहाड़ी या नौकरी कटने का कितना आर्थिक नुकसान होता है।",
+  "parts": {
+   "A": 2,
+   "B": 2,
+   "C": 2,
+   "D": 1,
+   "E": 1,
+   "F": 1
+  }
+ },
+ "sprite": {
+  "bablu": "assets/toon/bablu",
+  "ramesh": "assets/toon/ramesh"
+ },
+ "production": true
+}
