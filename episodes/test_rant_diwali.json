@@ -288,6 +288,5 @@
   "bablu": "assets/toon/bablu"
  },
  "production": true,
- "format": "rant",
- "no_clips": true
+ "format": "rant"
 }

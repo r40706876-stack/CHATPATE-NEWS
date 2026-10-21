@@ -73,7 +73,8 @@ def tighten(wav):
 def prep(script_path):
     ep = json.load(open(ROOT / script_path, encoding="utf-8"))
     import tts
-    tts.speak_script(ep, IN / "audio")
+    ep["_voice"] = tts.speak_script(ep, IN / "audio")             # कौन-सी आवाज़ लगी (gemini / edge / kokoro)
+    ep["_voice_err"] = tts.LAST_ERR[:300]
     for i, ln in enumerate(ep["lines"]):
         tighten(IN / f"audio/{i:02d}.wav")
         pause = float(ln.get("pause_after") or 0)
@@ -109,7 +110,7 @@ def prep(script_path):
     if ep["lines"]:                                            # पहली line (hook) पर हमेशा तस्वीर — पहला सेकंड ही सब तय करता है
         ep["lines"][0]["_need_vis"] = ep["lines"][0].get("shot") != "close"
     got = visuals.pick_for_lines(ep["lines"], topic=ep.get("breaking") or ep.get("topic", ""),
-                                 strict=ep.get("format") == "rant")
+                                 strict=True)                    # बिना AI जाँच कोई तस्वीर नहीं (cartoon/model वाली ग़लती)
     for i, paths in got.items():
         for j, path in enumerate(paths):
             shutil.copy(path, IN / f"broll/{i}_{j}{Path(path).suffix}")
@@ -118,19 +119,66 @@ def prep(script_path):
     if not ep.get("no_clips"):                                 # असली खबर के छोटे video clips (पहले सेकंड में हरकत)
         try:
             import clips
-            qs = [q for ln in ep["lines"][:2] for q in (ln.get("photo_hi") or [])] + \
-                 [" ".join(str(q).split()[:4]) for ln in ep["lines"][:2] for q in (ln.get("visuals") or [])[:1]]
-            got_c = clips.for_topic(ep.get("topic") or ep.get("breaking", ""), qs, want=2)
-            empty = [i for i in range(1, len(ep["lines"])) if not list((IN / "broll").glob(f"{i}_*"))]
-            for k, (cp, _) in enumerate(got_c):
-                li = 0 if k == 0 else (empty[0] if empty else min(2, len(ep["lines"]) - 1))
+            qs = [q for ln in ep["lines"] for q in (ln.get("photo_hi") or [])][:6]
+            got_c = clips.for_topic(ep.get("topic") or ep.get("breaking", ""), qs, want=3)
+            for k, (cp, _, title) in enumerate(got_c):        # हर clip उसी line पर जिसकी बात उसके title से मिले
+                tw = visuals._stems(title)
+
+                def fit(i):
+                    ln = ep["lines"][i]
+                    return len(tw & visuals._stems(ln.get("say", "") + " " + " ".join(ln.get("photo_hi") or [])))
+                free = [i for i in range(len(ep["lines"])) if not list((IN / "broll").glob(f"{i}_clip*"))]
+                if not free:
+                    break
+                li = max(free, key=lambda i: (fit(i), -i))
+                if fit(li) == 0:
+                    if k:                                          # किसी line से मेल नहीं = बेमेल clip नहीं लगाते
+                        continue
+                    li = 0                                         # पहला clip: खबर का दृश्य, hook पर (पहला सेकंड)
                 shutil.copy(cp, IN / f"broll/{li}_clip{k}.mp4")
                 shutil.copy(cp.with_suffix(".txt"), IN / f"broll/{li}_clip{k}.txt")
+                print(f"  🎬 clip → line {li + 1}: {title[:50]}")
         except Exception as e:                                 # noqa: BLE001
             print("  clips वाला हिस्सा छोड़ा:", repr(e)[:150])
+    fill_sets(ep)
     json.dump(ep, open(IN / "episode.json", "w", encoding="utf-8"), ensure_ascii=False)
     sprite_lips = ep.get("sprite") and ep.get("lips", "sadtalker") == "sprite"
     print(json.dumps([] if sprite_lips else list(range(len(ep["lines"])))))   # sprite वाले होंठ = SadTalker की ज़रूरत नहीं
+
+
+def fill_sets(ep):
+    """जिस line को न जाँची हुई तस्वीर मिली न clip: उसकी बात वाली अपनी AI तस्वीर (आँगन, रसोई, स्टेशन, बैंक…).
+    बेमेल फ़ोटो कभी नहीं; ठीक न बैठे (गाँव/studio) तो कुछ नहीं — screen पर उस line का card चलेगा."""
+    import shutil
+    import news_writer as nw
+    topic = str(ep.get("topic") or ep.get("breaking") or "")
+    for i, ln in enumerate(ep["lines"]):
+        if list((IN / "broll").glob(f"{i}_*")):
+            continue
+        scene = nw.pick_set("x", ln.get("say", ""), topic)
+        src = ROOT / f"assets/sets/{scene}.png"
+        if scene not in ("village", "studio") and src.exists():
+            shutil.copy(src, IN / f"broll/{i}_set.png")
+
+
+def quality(ep):
+    """video के साथ Telegram पर: कौन-सी आवाज़ लगी, कितनी lines पर असली तस्वीर/clip — ताकि चुपचाप ख़राब video न जाए."""
+    n = len(ep["lines"])
+    files = [p for p in (IN / "broll").glob("*") if p.suffix != ".txt"] if (IN / "broll").exists() else []
+    real = {p.name.split("_")[0] for p in files if "_set" not in p.name}
+    sets = {p.name.split("_")[0] for p in files if "_set" in p.name}
+    clips_n = sum("clip" in p.name for p in files)
+    v, err = ep.get("_voice") or "?", str(ep.get("_voice_err") or "")
+    json.dump({"voice": v, "voice_err": err, "lines": n, "real_visual_lines": len(real), "set_lines": len(sets),
+               "clips": clips_n, "format": ep.get("format", "")}, open(ROOT / "last_quality.json", "w", encoding="utf-8"),
+              ensure_ascii=False, indent=1)
+    msg = (f"📋 Video जाँच — आवाज़: {'Gemini ✅' if v == 'gemini' else v + ' (backup) ⚠️'}"
+           + (f"\n   Gemini आवाज़ क्यों नहीं: {err[:160]}" if v != "gemini" and err else "")
+           + f"\n🖼 असली तस्वीर/clip वाली lines: {len(real)}/{n} (YouTube clip: {clips_n})"
+           + (f", अपनी AI तस्वीर: {len(sets)}" if sets else ""))
+    if v != "gemini" or len(real) * 2 < n:
+        msg += "\n⚠️ ये video पूरी quality का नहीं — Gemini का कोटा दोपहर 12:30 के बाद नया होता है, तब दोबारा बनवाना बेहतर।"
+    return msg
 
 
 def vischeck(script_path):
@@ -286,6 +334,8 @@ def post_studio(ep):
                          "still": Image.open(IN / f"react_{i}.png").convert("RGB"), "vis": []})
     out = ROOT / "episode.mp4"
     secs = reel_studio.render(ep, segs, CHARS, out, ROOT / "preview_episode.jpg")
+    report = quality(ep)
+    print(report)
     print(f"बन गया: {out} ({secs:.1f}s)")
     import telegram
     cap = ep.get("caption_post") if ep.get("production") else f"🎬 3D demo: {ep.get('title', '')}"
@@ -293,6 +343,7 @@ def post_studio(ep):
         print("  (no_send) Telegram पर नहीं भेजा")
         return
     telegram.send_video(out, cap or ep.get("breaking", ""))
+    telegram.send_text(report)
 
 
 def post():

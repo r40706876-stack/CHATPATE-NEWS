@@ -119,7 +119,9 @@ def _ask(key, prompt, search, json_mode, temperature, prefer, patient=True):
                 raise
             except Exception as e:                    # noqa: BLE001
                 errors.append(f"{model}: {e!r}")
-        if daily_hits and not busy:                   # हर model पर दिन वाली सीमा — रुको मत, साफ़ बताओ
+        # आधे या ज़्यादा models पर दिन वाली सीमा = कोटा ख़त्म (पहले किसी एक model का 503 इसे "busy" बना देता था →
+        # 40s + 4 मिनट के बेकार retry और Telegram पर ग़लत "busy" message)
+        if daily_hits and (not busy or daily_hits * 2 >= len(order)):
             raise QuotaOver("आज का Gemini कोटा ख़त्म")
         if not busy:
             break

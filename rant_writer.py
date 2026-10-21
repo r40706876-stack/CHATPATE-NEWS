@@ -9,6 +9,7 @@ Gemini calls: news_writer.gather (खबर चुनो + पक्के त�
 Visuals/आवाज़ के cue (expr, sfx, ठहराव, zoom, बड़े अक्षर) यहीं beat से तय होते हैं — Gemini पर नहीं छोड़े.
 """
 import json
+import os
 import re
 from pathlib import Path
 
@@ -18,6 +19,7 @@ import writer
 
 ROOT = Path(__file__).parent
 GOLD = ROOT / "episodes/samples_rant.json"
+LEAN = os.getenv("LEAN", "1") == "1"                      # 1 = एक ही Gemini call में rant (free कोटा बचे)
 BEATS = ("hook", "tathya", "saboot", "maang", "dhamki", "twist", "takiya")
 
 # beat → (expr, sfx जब line शुरू हो, background मूड, आवाज़ का अंदाज़, line के बाद ठहराव सेकंड)
@@ -74,10 +76,20 @@ def prompt_mudde(packs):
  "maang": "...", "twist": "...", "takiya": "...", "tag_who": "...", "score": 0}}]}}]"""
 
 
-def prompt_write(chosen):
-    return f"""तुम "बकरा न्यूज़" के head writer हो — segment "बकरा बहस" ("खबर सौ टका पक्की, अंदाज़ अधपका!").
-हर खबर के लिए चुना हुआ मुद्दा और उसके पक्के तथ्य:
+def prompt_write(chosen, k=0):
+    if k:                                                   # LEAN: मुद्दा भी इसी call में (मन में), सिर्फ़ script लौटे
+        head = f"""आज की खबरें, पक्के तथ्यों के साथ:
 {json.dumps(chosen, ensure_ascii=False, indent=1)}
+
+पहले हर खबर के लिए मन में 3 अलग 'मुद्दे' सोचो (लिखो मत): किस छोटे 'समाज' की तरफ़ से लड़ेंगे ("हम परदेसी", "हम घर के बच्चे",
+"हम प्राइवेट नौकरी वाले", "हम कुँवारे"), बेतुका इल्ज़ाम, 3 बढ़ते सबूत, सरकारी-भाषा वाली बेतुकी माँग, और सबसे ज़रूरी — twist:
+धमकी का छोटा, घटिया, सबका पहचाना हुआ अंत (किसी की छोटी पोल या अपनी ही चोरी पकड़ी जाना). जिस खबर पर ऐसा twist न बने,
+उसे छोड़ दो. फिर सबसे तगड़े twist वाली {k} खबरें चुनकर हर एक की script लिखो (हर script अलग खबर पर)."""
+    else:
+        head = f"""हर खबर के लिए चुना हुआ मुद्दा और उसके पक्के तथ्य:
+{json.dumps(chosen, ensure_ascii=False, indent=1)}"""
+    return f"""तुम "बकरा न्यूज़" के head writer हो — segment "बकरा बहस" ("खबर सौ टका पक्की, अंदाज़ अधपका!").
+{head}
 
 हमारा नमूना (ढाँचा और ऊर्जा ऐसी ही; शब्द, माँग, twist बिल्कुल मत दोहराना):
 {gold_text()}
@@ -102,7 +114,8 @@ lines इसी क्रम में, हर line में "beat":
 "photo_hi" (2 Hindi खोजें, 2-4 शब्द, जिनसे इसी बात की असली फ़ोटो मिले), "stamp" (सिर्फ़ maang/twist/takiya पर: उसी line के
 2-4 शब्द, जैसे "सोनपापड़ी की पोल!").
 सिर्फ़ JSON list:
-[{{"topic": "...", "category": "festival/money/travel/tech/rules/home/viral/other", "breaking": "6-9 शब्द, सच्ची खबर, कोई मज़ाक नहीं",
+[{{"khabar": "ऊपर दी गई जिस खबर पर बनी, उसका topic हूबहू", "score": "0-10: twist कितना चौंकाता-हँसाता है (ईमानदारी से)",
+  "topic": "...", "category": "festival/money/travel/tech/rules/home/viral/other", "breaking": "6-9 शब्द, सच्ची खबर, कोई मज़ाक नहीं",
   "samaj": "...", "maang": "...", "twist": "...", "takiya": "...", "tag_who": "...", "source": "प्रकाशकों के नाम",
   "ask": "≤ 9 शब्द, comment वाला सवाल", "ticker": ["≤ 10 शब्द", "...", "..."],
   "lines": [{{"who": "bablu", "beat": "hook", "say": "...", "caption": "...", "visuals": ["...", "...", "..."], "photo_hi": ["...", "..."]}}],
@@ -146,10 +159,42 @@ def prompt_sharpen(weak):
 वो छोटा, घटिया, पहचाना और चौंकाने वाला हो. सिर्फ़ JSON list लौटाओ — उतने ही episodes, उसी क्रम में, वही fields."""
 
 
+def _num(x):
+    try:
+        return float(str(x).split("/")[0])
+    except ValueError:
+        return 0.0
+
+
+def copied(lines):
+    """नमूनों से हूबहू/थोड़ा बदलकर उठाई lines (तकिया-कलाम जैसी छोटी lines छोड़कर)."""
+    import difflib
+    try:
+        golds = [g["say"] for e in json.load(open(GOLD, encoding="utf-8")) for g in e["lines"]]
+    except Exception:                                       # noqa: BLE001
+        return []
+    return [l["say"] for l in lines if len(l["say"].split()) > 5
+            and any(difflib.SequenceMatcher(None, l["say"], g).ratio() > 0.7 for g in golds)]
+
+
+def learn(ep, keep_max=6):
+    """मालिक ने जो rant चुनी, वो अगली बार Gemini का नमूना बनती है (पहला नमूना हमेशा रहता है, बाक़ी सबसे नए)."""
+    try:
+        g = json.load(open(GOLD, encoding="utf-8"))
+    except Exception:                                       # noqa: BLE001
+        g = []
+    if any(x.get("topic") == ep.get("topic") for x in g):
+        return
+    new = {k: ep.get(k, "") for k in ("topic", "samaj", "maang", "twist", "takiya")}
+    new["lines"] = [{"who": l["who"], "beat": l.get("beat", ""), "say": l["say"]} for l in ep.get("lines", [])]
+    g = (g[:1] + [new] + g[1:])[:keep_max]
+    json.dump(g, open(GOLD, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    print("  ✍️ चुनी हुई rant नमूनों में जुड़ी:", new["topic"])
+
+
 def finish(ep, strict=True):
     """beat से सारे cue तय करो (expr, sfx, मूड, आवाज़ का अंदाज़, ठहराव, zoom, ठप्पा, बड़े अक्षर) + पक्के नियम."""
     ep["format"], ep["label"] = "rant", "बकरा बहस"
-    ep["no_clips"] = True                                   # खबर के बाहरी clips rant की बात से मेल नहीं खाते थे
     lines = [l for l in ep.get("lines", []) if l.get("who") in writer.WHO and str(l.get("say", "")).strip()]
     lines = [l for l in lines if not nw.SEND.search(l["say"])]
     if len(lines) > 10:                                     # ज़्यादा से ज़्यादा 10 (writer.clean की सीमा): hook + 8 + takiya
@@ -181,13 +226,16 @@ def finish(ep, strict=True):
         ln["punch"] = b in ("maang", "dhamki", "twist", "takiya")       # इन पर चेहरे पर zoom
         st = str(ln.get("stamp") or "").strip()
         if b in ("maang", "twist", "takiya"):              # ठप्पा: Gemini का, वरना मुद्दे के शब्द (line के आख़िरी आधे-अधूरे शब्द नहीं)
-            fb = {"maang": ep.get("maang"), "twist": ep.get("twist"), "takiya": ln["say"]}[b] or ln["say"]
+            fb = ln["say"] if b == "takiya" else ""          # maang/twist: Gemini का ठप्पा न हो तो कोई नहीं (कटे-फटे टुकड़े नहीं)
             words, out = str(st or fb).replace("!", "").split(), ""
             for w in words:                                 # पूरे शब्द, 27 अक्षर तक (≈800px)
                 if len((out + " " + w).strip()) > 27:
                     break
                 out = (out + " " + w).strip()
-            ln["stamp"] = out + "!"
+            if out:
+                ln["stamp"] = out + "!"
+            else:
+                ln.pop("stamp", None)
         else:
             ln.pop("stamp", None)
         # ऊपर की screen: TV-बहस वाले बड़े अक्षर, हर beat का अपना (बोली जा रही बात का ढाँचा — punch पहले से नहीं खुलता).
@@ -217,6 +265,8 @@ def finish(ep, strict=True):
         assert not re.match(r"\s*(नमस्कार|आज की खबर)", first), "नमस्कार से शुरुआत"
         assert any(l["beat"] == "twist" for l in lines), "twist वाली line नहीं"
         assert lines[-1]["beat"] == "takiya", "आख़िर में तकिया-कलाम नहीं"
+        cp = copied(lines)
+        assert not cp, f"नमूने की line उठाई: {cp[0][:40]}"
         bad = [l["say"] for l in lines if nw.FILLER.search(l["say"])]
         assert not bad, f"ख़ाली शब्द: {bad[0][:40]}"
     return ep
@@ -261,19 +311,25 @@ def write_options(c, n=3):
 
 def write_from(c, packs, picks, n=3):
     """पक्के तथ्यों (news_writer.gather) से n "बकरा बहस" scripts."""
-    bank = gemini.json_from(gemini.ask(prompt_mudde(packs), json_mode=True, temperature=0.95))
-    chosen = []
-    for b, pk in zip(bank if isinstance(bank, list) else [], packs):
-        mudde = sorted(b.get("mudde") or [], key=lambda m: -int(m.get("score", 0) or 0))
-        if mudde:
-            chosen.append({"facts": pk, "mudda": mudde[0], "dusra": mudde[1] if len(mudde) > 1 else None})
-            print(f"  मुद्दा ({mudde[0].get('score')}/10): {mudde[0].get('samaj')} — {mudde[0].get('ilzaam')}")
-    chosen.sort(key=lambda x: -int(x["mudda"].get("score", 0) or 0))
-    chosen = chosen[:n + 1]
-    c["rant_topics"] = [str(x["facts"].get("topic", "")) for x in chosen]   # "वायरल खबर" वाली इनसे अलग खबरें ले
-    if not chosen:
-        raise SystemExit("एक भी मुद्दा नहीं बना")
-    raw = gemini.json_from(gemini.ask(prompt_write(chosen), json_mode=True, temperature=0.85))
+    if LEAN:                                                # 1 call: मन में 3 मुद्दे → सबसे तगड़ा twist → script
+        raw = gemini.json_from(gemini.ask(prompt_write([{"facts": p} for p in packs], k=n + 1), json_mode=True,
+                                          temperature=0.9))
+        raw = raw if isinstance(raw, list) else []
+        c["rant_topics"] = [str(r.get("khabar", "")) for r in raw if isinstance(r, dict)]
+    else:
+        bank = gemini.json_from(gemini.ask(prompt_mudde(packs), json_mode=True, temperature=0.95))
+        chosen = []
+        for b, pk in zip(bank if isinstance(bank, list) else [], packs):
+            mudde = sorted(b.get("mudde") or [], key=lambda m: -int(m.get("score", 0) or 0))
+            if mudde:
+                chosen.append({"facts": pk, "mudda": mudde[0], "dusra": mudde[1] if len(mudde) > 1 else None})
+                print(f"  मुद्दा ({mudde[0].get('score')}/10): {mudde[0].get('samaj')} — {mudde[0].get('ilzaam')}")
+        chosen.sort(key=lambda x: -int(x["mudda"].get("score", 0) or 0))
+        chosen = chosen[:n + 1]
+        c["rant_topics"] = [str(x["facts"].get("topic", "")) for x in chosen]   # "वायरल खबर" वाली इनसे अलग खबरें ले
+        if not chosen:
+            raise SystemExit("एक भी मुद्दा नहीं बना")
+        raw = gemini.json_from(gemini.ask(prompt_write(chosen), json_mode=True, temperature=0.85))
     eps = []
     for ep in raw if isinstance(raw, list) else []:
         if not isinstance(ep, dict) or not ep.get("lines"):
@@ -294,8 +350,9 @@ def write_from(c, packs, picks, n=3):
         best = max(picks, key=lambda p: len(w & set(str(p.get("topic", "")).split())))
         ep["trend"] = best.get("trend")
         ep["hasi"] = f"टैग: {ep.get('tag_who', '')} | twist: {ep.get('twist', '')}"
-    judge(eps)
-    weak = [e for e in eps if (e.get("connect") or {}).get("score", 10) < CONNECT_MIN]
+    if not LEAN:                                            # LEAN: जज/तीखा वाले calls बंद (कोटा बचे; चुनाव मालिक करता है)
+        judge(eps)
+    weak = [] if LEAN else [e for e in eps if (e.get("connect") or {}).get("score", 10) < CONNECT_MIN]
     if weak:
         try:
             again = gemini.json_from(gemini.ask(prompt_sharpen(weak), json_mode=True, temperature=0.85))
@@ -317,7 +374,7 @@ def write_from(c, packs, picks, n=3):
             raise
         except Exception as e:                              # noqa: BLE001
             print("  तीखा करने वाला कदम छोड़ा:", repr(e)[:150])
-    eps.sort(key=lambda e: (bool(e.get("_loose")), -(e.get("connect") or {}).get("score", 0)))
+    eps.sort(key=lambda e: (bool(e.get("_loose")), -(e.get("connect") or {}).get("score", _num(e.get("score")))))
     for e in eps:
         print(f"  {(e.get('connect') or {}).get('score', '?')}/10: {e.get('topic')} | {e.get('samaj')}")
     return eps[:n]

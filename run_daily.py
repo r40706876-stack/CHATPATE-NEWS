@@ -213,6 +213,9 @@ def do_check():
     ep = p["eps"][k - 1]
     import writer
     writer.learn([ep], liked=True)                     # तुम्हारी पसंद याद रहती है
+    if ep.get("format") == "rant":                     # चुनी हुई "बकरा बहस" = Gemini का अगला नमूना (वो इसी से सीखता है)
+        import rant_writer
+        rant_writer.learn(ep)
     json.dump(ep, open(CHOICE, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
     telegram.send_text(f"✅ विकल्प {k} चुना: {ep.get('topic') or ep.get('breaking', '')}\n🎬 video बन रहा है, 10-15 मिनट…")
     print("  चुना:", k)

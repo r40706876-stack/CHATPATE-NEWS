@@ -82,6 +82,12 @@ def _to_array(raw):
 
 
 _gem_ok = {"model": None, "dead": False}
+LAST_ERR = ""                                     # Gemini आवाज़ न चले तो क्यों (video के साथ Telegram पर बताया जाता है)
+EDGE_BEAT = {   # "बकरा बहस" में Microsoft वाली backup आवाज़ भी beat के हिसाब से: (rate, pitch, volume)
+    "hook": ("-4%", "+0Hz", "+0%"), "tathya": ("+6%", "+4Hz", "+0%"), "saboot": ("+14%", "+10Hz", "+15%"),
+    "maang": ("+8%", "+14Hz", "+20%"), "dhamki": ("-22%", "-12Hz", "-25%"), "twist": ("+10%", "+16Hz", "+25%"),
+    "takiya": ("+12%", "+20Hz", "+35%"),
+}
 
 
 RANT = {   # "बकरा बहस": anchor की आवाज़ भड़कती जाए — एक ही call में पूरा rant, ताकि ऊर्जा line-दर-line बढ़े
@@ -144,7 +150,7 @@ EDGE = {   # किरदार: (voice, pitch, rate)
 }
 
 
-def edge_line(text, who, tmp):
+def edge_line(text, who, tmp, beat=""):
     try:
         import edge_tts                                   # noqa: F401
     except ImportError:
@@ -152,10 +158,13 @@ def edge_line(text, who, tmp):
     import asyncio
     import edge_tts
     voice, pitch, rate = EDGE.get(who, EDGE["bablu"])
+    volume = "+0%"
+    if beat in EDGE_BEAT:
+        rate, pitch, volume = EDGE_BEAT[beat]
     mp3 = Path(tmp).with_suffix(".mp3")
 
     async def go():
-        await edge_tts.Communicate(text, voice, rate=rate, pitch=pitch).save(str(mp3))
+        await edge_tts.Communicate(text, voice, rate=rate, pitch=pitch, volume=volume).save(str(mp3))
     asyncio.run(asyncio.wait_for(go(), timeout=60))
     wav = Path(tmp).with_suffix(".e.wav")
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(mp3), "-ac", "1", "-ar", str(SR), str(wav)], check=True)
@@ -272,7 +281,8 @@ def make_all(script, engine, out, key):
             print(f"  {who}: {len(idx)} lines की आवाज़ एक साथ बनी")
     else:
         for i, l in enumerate(lines):
-            res[i] = (edge_line if engine == "edge" else kokoro_line)(l["say"], l["who"], out / f"{i:02d}")
+            res[i] = edge_line(l["say"], l["who"], out / f"{i:02d}", l.get("beat", "")) if engine == "edge" \
+                else kokoro_line(l["say"], l["who"], out / f"{i:02d}")
     return res
 
 
@@ -318,6 +328,8 @@ def speak_script(script, out):
             break
         except Exception as e:                            # noqa: BLE001
             last = e
+            global LAST_ERR
+            LAST_ERR = f"{engine}: {str(e)[:250]}"
             print(f"  आवाज़ ({engine}) पूरी नहीं बनी: {str(e)[:300]} → सारी lines अगले engine से")
     else:
         raise RuntimeError(f"कोई आवाज़ नहीं चली: {last}")

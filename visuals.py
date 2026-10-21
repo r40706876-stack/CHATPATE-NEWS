@@ -291,6 +291,9 @@ def _hindi_keys(text):
 
 def short_queries(lines, topic=""):
     """हर line के लिए: 4 छोटी English खोजें (Pixabay/Wikimedia) + 2 Hindi खबर-खोजें (अख़बारों की असली फ़ोटो के लिए)."""
+    if lines and all(len(ln.get("visuals") or []) >= 2 and ln.get("photo_hi") for ln in lines):   # script ने खोजें दी हैं
+        return [([" ".join(str(q).split()[:3]) for q in ln["visuals"]][:6], [str(q) for q in ln["photo_hi"]][:2])
+                for ln in lines]                           # → Gemini का एक call बचा
     import gemini
     rows = "\n".join(f"{i + 1}. {ln.get('say', '')}" for i, ln in enumerate(lines))
     try:
@@ -338,7 +341,7 @@ def _ahash(path):
         return None
 
 
-def pick_for_lines(lines, per_line=3, pool=14, topic="", strict=False):   # 3 तक: एक तस्वीर पर देर तक न अटके
+def pick_for_lines(lines, per_line=3, pool=9, topic="", strict=False):   # 3 तक: एक तस्वीर पर देर तक न अटके
     # strict=True ("बकरा बहस"): AI ने देखकर पास न की हो तो कोई तस्वीर नहीं — पहले बिना जाँच वाली cartoon/model फ़ोटो 30 सेकंड अटकी रही
     """{line_index: [path, ...]} — हर line की सारी खोजों का एक pool, AI एक बार में देखकर हर line के लिए 2 तक चुनता है
     (भारत की / बात से सीधी जुड़ी; विदेशी पहचान वाली कभी नहीं)."""
@@ -426,8 +429,8 @@ def pick_for_lines(lines, per_line=3, pool=14, topic="", strict=False):   # 3 �
             'सिर्फ़ JSON: {"picks": [[पहली line के नंबर], [दूसरी line के नंबर], ...], '
             '"hero": {"line": line नंबर (1 से), "pick": तस्वीर नंबर, "score": 0-10}}')
     picks, heroes = [], []
-    for b0 in range(0, len(pools), 2):                     # 2-2 lines एक बार में (बड़ी request timeout हो जाती है)
-        batch = pools[b0:b0 + 2]
+    for b0 in range(0, len(pools), 3):                     # 3-3 lines, हर line की 9 तक तस्वीरें (पहले 2×14) — कम Gemini calls
+        batch = pools[b0:b0 + 3]
         parts = [{"text": head}]
         for n, (i, qs, cs) in enumerate(batch):
             parts.append({"text": f"\nLine {n + 1}: \"{lines[i].get('say', '')}\" — {len(cs)} तस्वीरें:"})

@@ -23,6 +23,7 @@ env:
   MODELS_DIR: models_cache
   GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
   GEMINI_API_KEY2: ${{ secrets.GEMINI_API_KEY2 }}
+  GEMINI_API_KEY3: ${{ secrets.GEMINI_API_KEY3 }}
   PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
   TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
   TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -48,7 +49,7 @@ jobs:
           # GitHub का 15 मिनट वाला schedule अक्सर 1-3 घंटे देर से चलता है — इसलिए scripts भेजने के बाद 40 मिनट तक
           # यहीं हर मिनट तुम्हारा जवाब देखो; नंबर मिलते ही इसी run में video शुरू
           if [ "$MODE" = "write" ] && [ -f pending.json ] && grep -q '"topic"' pending.json; then
-            for i in $(seq 1 40); do
+            for i in $(seq 1 120); do                       # 2 घंटे (GitHub का 15 मिनट वाला schedule 1-5 घंटे देर से चलता है)
               sleep 60
               python run_daily.py check 2>&1 | tee -a last_run.log | grep -v "^$" | tail -2
               [ -f choice.json ] && break

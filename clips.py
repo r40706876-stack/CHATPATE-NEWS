@@ -9,6 +9,7 @@
 """
 import json
 import os
+import re
 import subprocess
 import sys
 import tempfile
@@ -46,7 +47,7 @@ def _cookies(env):
 
 def search(query, n=8):
     """YouTube खोज: [(url, title, channel, duration, upload_date)] — बिना download."""
-    cmd = _ytdlp() + ["--flat-playlist", "-J", "--no-warnings", f"ytsearch{n}:{query}"] + _cookies("YT_COOKIES")
+    cmd = _ytdlp() + ["--flat-playlist", "-J", "--no-warnings", f"ytsearchdate{n}:{query}"] + _cookies("YT_COOKIES")   # नई पहले
     try:
         r = subprocess.run(cmd, capture_output=True, text=True, timeout=90)
         data = json.loads(r.stdout or "{}")
@@ -84,6 +85,16 @@ def cut(url, out, start, secs=CLIP_SECS):
         return None
 
 
+INDIAN = ("aaj tak", "abp", "ndtv", "zee", "india tv", "news18", "tv9", "republic", "times now", "lallantop", "bhaskar",
+          "navbharat", "amar ujala", "jagran", "hindustan", "dd news", "ani news", "india today", "the print", "news24",
+          "news nation", " tak", "bharat", "ibc24", "first india", "punjab kesari", "etv", "zee news", "good news today")
+
+
+def indian(title, ch):
+    """भारत का video: title में देवनागरी, या जाना-पहचाना भारतीय channel (विदेशी clip कभी नहीं — paramotor वाली ग़लती)."""
+    return bool(re.search(r"[\u0900-\u097F]", title)) or any(k in f" {ch.lower()}" for k in INDIAN)
+
+
 def for_topic(topic, queries=(), want=2):
     """इसी खबर के `want` clips: [(path, credit)]. title में खबर के 2+ असली शब्द हों, video 15 सेकंड-20 मिनट का."""
     import visuals
@@ -97,14 +108,14 @@ def for_topic(topic, queries=(), want=2):
             if url in seen or len(got) >= want:
                 continue
             seen.add(url)
-            if len(tw & visuals._stems(title)) < need or not (15 <= (dur or 60) <= 1200):
+            if len(tw & visuals._stems(title)) < need or not (15 <= (dur or 60) <= 1200) or not indian(title, ch):
                 continue
             start = max(2.0, min((dur or 60) * 0.25, 40.0))   # शुरू का intro/logo छोड़कर, असली हिस्से से
             path = cut(url, CACHE / f"clip_{len(seen)}.mp4", start)
             if path:
                 credit = f"वीडियो: {ch[:30]} (YouTube)"
                 path.with_suffix(".txt").write_text(credit, encoding="utf-8")
-                got.append((path, credit))
+                got.append((path, credit, title))
                 print(f"  🎬 असली clip: {title[:60]} — {ch}")
     if not got:
         print("  असली clip नहीं मिला (YouTube ने रोका या मेल वाला video नहीं) — तस्वीरें चलेंगी")
@@ -112,5 +123,5 @@ def for_topic(topic, queries=(), want=2):
 
 
 if __name__ == "__main__":
-    for p, c in for_topic(" ".join(sys.argv[1:]) or "उड़कर ऑफिस वायरल वीडियो"):
-        print(p, c)
+    for p, c, t in for_topic(" ".join(sys.argv[1:]) or "उड़कर ऑफिस वायरल वीडियो"):
+        print(p, c, t)

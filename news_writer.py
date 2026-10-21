@@ -5,6 +5,7 @@
   3. लिखो:   खबर (card, बिना मज़ाक) + मतलब (बबलू, देसी तुलना) + मसाला (एक किरदार) + क्या करें
 """
 import json
+import os
 import re
 from pathlib import Path
 
@@ -13,6 +14,7 @@ import writer
 
 ROOT = Path(__file__).parent
 ICONS = {"cylinder", "calendar", "rupee", "bank", "phone", "train", "percent", "check", "alert", "gift"}
+LEAN = os.getenv("LEAN", "1") == "1"                      # 1 = कम Gemini calls (free कोटा: एक run में ~4 text calls)
 GOLDS = [ROOT / "examples_news_lpg.json", ROOT / "examples_news_rbi.json"]   # मालिक को पसंद आए नमूने
 
 ALLOWED = """कौन-सी खबर लें: वो जिस पर आज लोग WhatsApp/Instagram/चाय की दुकान पर बात कर रहे हों — थोड़ी viral, थोड़ी बेतुकी,
@@ -414,7 +416,7 @@ def gather(c, n):
         raw = gemini.ask(prompt_pick(c, min(n * 2 + 3, 15)), json_mode=True, temperature=0.4)
     except gemini.QuotaOver:
         raise
-    except RuntimeError as e:
+    except gemini.Blocked as e:                            # सिर्फ़ safety filter पर (कोटा/busy पर दोबारा भेजना बेकार था)
         print("  खबरों की list Gemini ने नहीं ली, अपराध/मौत वाली हटाकर दोबारा:", repr(e)[:150])
         c.update(_safe(c))                                  # वही dict रहे (c["rejected"] बाहर भी दिखे)
         raw = gemini.ask(prompt_pick(c, min(n * 2 + 3, 15)), json_mode=True, temperature=0.4)
@@ -476,7 +478,7 @@ def write_from(c, packs, picks, n=3):
     c.setdefault("rejected", [])
     bank = None                                             # पंच-बैंक: पहले ढेर सारे hooks/पंच, फिर सबसे तेज़ से script
     try:
-        bank = gemini.json_from(gemini.ask(prompt_punches(packs), json_mode=True, temperature=0.95))
+        bank = None if LEAN else gemini.json_from(gemini.ask(prompt_punches(packs), json_mode=True, temperature=0.95))
         bank = bank if isinstance(bank, list) and bank else None
         print("  पंच-बैंक:", sum(len(b.get("punches", [])) + len(b.get("hooks", [])) for b in bank or []), "विकल्प")
     except gemini.QuotaOver:
@@ -503,9 +505,10 @@ def write_from(c, packs, picks, n=3):
         best = max(picks, key=lambda p: len(w & set(str(p.get("topic", "")).split())))
         ep["trend"] = best["trend"]
         ep["category"] = best.get("cat") or ep.get("category", "other")
-    vc.connect(eps)                                         # दूसरी जाँच: लोग जुड़ेंगे? (Gemini 1 call)
+    if not LEAN:                                            # LEAN: जज/तीखा वाले calls बंद (free कोटा बचे; चुनाव मालिक करता है)
+        vc.connect(eps)                                     # दूसरी जाँच: लोग जुड़ेंगे? (Gemini 1 call)
     penalize(eps)
-    weak = [e for e in eps if (e.get("connect") or {}).get("score", 10) < vc.CONNECT_MIN]
+    weak = [] if LEAN else [e for e in eps if (e.get("connect") or {}).get("score", 10) < vc.CONNECT_MIN]
     if weak:                                                # कमज़ोर scripts एक बार और तीखी करो, फिर दोबारा जाँचो
         try:
             try:
@@ -547,6 +550,8 @@ def write_from(c, packs, picks, n=3):
         print("  कोई 7+ नहीं — फिर भी सबसे अच्छी", len(good), "भेज रहे (नंबर साफ़ दिखेंगे)")
     if not good:
         raise NoViral(c["rejected"])
+    if LEAN:                                                # सबसे चर्चित खबर पहले
+        good.sort(key=lambda e: -((e.get("trend") or {}).get("score", 0)))
     return good
 
 
