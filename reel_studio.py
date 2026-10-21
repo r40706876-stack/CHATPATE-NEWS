@@ -322,8 +322,9 @@ def _kinetic(card, bg, t, size):
     return im
 
 
-def _screen_gen(src, seed, size, bg=None):
-    """तस्वीर/clip/कार्ड के frames (size के हिसाब से), ख़त्म नहीं होते."""
+def _screen_gen(src, seed, size, bg=None, hero=False):
+    """तस्वीर/clip/कार्ड के frames (size के हिसाब से), ख़त्म नहीं होते.
+    hero=True (reel का पहला frame): तेज़ "झटके वाला" zoom — पहले 2 सेकंड में हरकत (graph: 3-5 सेकंड पर आधे लोग जाते थे)."""
     w, h = size
     if isinstance(src, Path) and src.suffix == ".mp4":
         got = False
@@ -337,6 +338,12 @@ def _screen_gen(src, seed, size, bg=None):
         im = Image.open(src).convert("RGB")
         t = 0
         mode = seed % 3
+        if hero:                                      # 1.45 से 1.08 तक 0.6 सेकंड में (झटका), फिर धीरे-धीरे अंदर
+            while True:
+                q = min(1, t / (0.6 * FPS))
+                z = 1.45 - 0.37 * (1 - (1 - q) ** 3) + 0.06 * max(0, t - 0.6 * FPS) / (CUT * FPS)
+                yield rv._cover_img(im, w, h, z, 0.4)
+                t += 1
         while True:                                   # तेज़ Ken Burns: अंदर / बाहर / बग़ल
             p = min(1, t / (CUT * FPS))
             if mode == 0:
@@ -616,7 +623,7 @@ def render(ep, segs, chars, out, preview):
                 seed += 1
                 if cur is not None:
                     cur.close()
-                cur, credit = _screen_gen(vis[j], seed, size, last_screen), _credit(vis[j])
+                cur, credit = _screen_gen(vis[j], seed, size, last_screen, hero=(si == 0 and t == 0)), _credit(vis[j])
             if face:
                 fr = next(face, None) or last or still
                 last = fr
