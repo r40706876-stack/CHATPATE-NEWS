@@ -402,8 +402,17 @@ def _kinetic(card, bg, t, size):
     """भूरे कार्ड की जगह: पिछली तस्वीर धुंधली करके उस पर उछलते बड़े अक्षर (अंक हो तो 0 से गिनती चढ़े)."""
     import re
     w, h = size
-    im = bg.resize(size).filter(ImageFilter.GaussianBlur(14)) if bg is not None else Image.new("RGB", size, (30, 20, 60))
-    im = Image.blend(im, Image.new("RGB", size), 0.5)
+    if card.get("color"):                                         # "बकरा बहस" beat card: साफ़ रंगीन पट्टी, पीछे धुंधली परछाईं नहीं
+        c = card["color"]
+        y = np.linspace(0, 1, h)[:, None, None]
+        g = np.array(c)[None, None] * (1 - 0.55 * y)
+        im = Image.fromarray(np.repeat(g, w, axis=1).astype(np.uint8))
+        dd = ImageDraw.Draw(im)
+        for k in range(-h, w, 70):                                # TV-बहस जैसी तिरछी धारियाँ
+            dd.line((k, h, k + h, 0), fill=tuple(min(255, int(x * 1.18)) for x in c), width=18)
+    else:
+        im = bg.resize(size).filter(ImageFilter.GaussianBlur(14)) if bg is not None else Image.new("RGB", size, (30, 20, 60))
+        im = Image.blend(im, Image.new("RGB", size), 0.5)
     d = ImageDraw.Draw(im)
     big, sub = str(card.get("big", "")), str(card.get("sub", ""))
     m = re.search(r"\d[\d,]*", big)
@@ -705,7 +714,7 @@ def render(ep, segs, chars, out, preview):
     headline = ep.get("breaking") or ep.get("title") or ""
     last_react = max([i for i, s in enumerate(segs) if s.get("react")], default=-1)
     pool = list(dict.fromkeys(p for s in segs for p in (s.get("vis") or []) if isinstance(p, Path)))   # सारी असली तस्वीरें
-    k, seed, last_screen, prev_im, last_vis = 0, 0, None, None, []
+    k, seed, last_screen, prev_im, last_vis, carry = 0, 0, None, None, [], 0
     cur, credit, clean = None, "", None
     st_text, st_t, seen = "", 0, set()
     im = bases[True]
@@ -716,17 +725,19 @@ def render(ep, segs, chars, out, preview):
         size = (W, H) if shot == "full" else (SW_, SH_)
         vis = list(s.get("vis") or [])
         if ln.get("big") and vis and not react and shot in ("split", "full"):   # माँग वाली line: पहले बड़े अक्षर, फिर तस्वीर
-            vis = [{"big": ln["big"], "sub": ln.get("sub", "")}] + vis
-        if shot in ("split", "full") and not vis and not react and pool:
+            card = [{"big": ln["big"], "sub": ln.get("sub", ""), "color": ln.get("card_color")}]
+            vis = (vis + card) if si == 0 else (card + vis)   # पहला सेकंड असली तस्वीर का (scroll वहीं रुकता है)
+        if shot in ("split", "full") and not vis and not react and pool and not ln.get("big") and carry < 1:
             # तस्वीर नहीं मिली: ख़ाली/धुंधली screen नहीं (पहली video में 2.5 से 13 सेकंड तक ऊपर काला रहा — ठीक खाई पर) —
             # इसी खबर की दूसरी lines की असली तस्वीरें, जो अभी-अभी न दिखी हों, नए zoom के साथ
             # पहले यहाँ दूसरी lines की फ़ोटो लगती थीं — बोल कुछ और, screen पर कुछ और (मालिक: "mismatch न हो").
             # अब: पिछली line वाली तस्वीर ही चलती रहे (बात उसी से जुड़ी होती है), हर 2 सेकंड नए zoom/कोण से.
             # line के आख़िरी शब्द बड़े अक्षरों में नहीं — वो बोलने से पहले दिखकर punch बिगाड़ते थे और टूटे टुकड़े ("में? मम्मी के!") बनते थे
             vis = [last_vis[0]] if last_vis else []
+            carry += 1                                          # एक ही तस्वीर 2 lines से ज़्यादा नहीं (पहले 30 सेकंड अटकी रही)
         if shot in ("split", "full") and not vis and not react:
             if ln.get("big"):
-                vis = [{"big": ln["big"], "sub": ln.get("sub", "")}]
+                vis = [{"big": ln["big"], "sub": ln.get("sub", ""), "color": ln.get("card_color")}]
             elif cur is None and not (si == 0 and ep.get("hook")):
                 vis = [{"big": headline}]
             elif last_screen is None or not last_vis:           # एक भी तस्वीर नहीं मिली: काली screen नहीं, headline के अक्षर
@@ -735,6 +746,8 @@ def render(ep, segs, chars, out, preview):
                 vis = [{"big": ""}]                             # ऊपर दोबारा वही अक्षर नहीं, सिर्फ़ धुंधली तस्वीर
         if vis and isinstance(vis[0], Path):
             last_vis = vis
+        if list(s.get("vis") or []):
+            carry = 0                                           # इस line की अपनी तस्वीर मिली
         if shot == "full" and not vis:
             shot, size = "split", (SW_, SH_)
         chunk = max(1, int(CUT * FPS))                          # हर 2 सेकंड नया नज़ारा — कम तस्वीरें हों तो वही तस्वीर नए
@@ -756,12 +769,16 @@ def render(ep, segs, chars, out, preview):
         first_seen = ln["who"] not in seen and not react
         seen.add(ln["who"])
         for t in range(n):
-            if shot != "close" and vis and t % chunk == 0:
+            only_cards = all(isinstance(v, dict) for v in vis)
+            if shot != "close" and vis and t % chunk == 0 and not (only_cards and t and len(vis) == 1):
+                # (अकेला card पूरी line एक ही बार उभरे — हर 2 सेकंड दोबारा उछलना झिलमिल लगता था)
                 j = (t // chunk) % len(vis)
                 seed += 1
                 if cur is not None:
                     cur.close()
-                cur, credit = _screen_gen(vis[j], seed, size, last_screen, hero=(si == 0 and t == 0)), _credit(vis[j])
+                beat_card = isinstance(vis[j], dict) and vis[j].get("color")
+                cur, credit = _screen_gen(vis[j], seed, size, None if beat_card else last_screen,
+                                          hero=(si == 0 and t == 0)), _credit(vis[j])
             if face:
                 fr = next(face, None) or last or still
                 last = fr

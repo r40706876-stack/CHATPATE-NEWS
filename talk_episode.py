@@ -108,7 +108,8 @@ def prep(script_path):
         # intro/outro जैसी lines (न खोज, न खबर) पर नई तस्वीर नहीं — पिछली चलती रहती है (वरना बेमेल फ़ोटो आती थी)
     if ep["lines"]:                                            # पहली line (hook) पर हमेशा तस्वीर — पहला सेकंड ही सब तय करता है
         ep["lines"][0]["_need_vis"] = ep["lines"][0].get("shot") != "close"
-    got = visuals.pick_for_lines(ep["lines"], topic=ep.get("breaking") or ep.get("topic", ""))
+    got = visuals.pick_for_lines(ep["lines"], topic=ep.get("breaking") or ep.get("topic", ""),
+                                 strict=ep.get("format") == "rant")
     for i, paths in got.items():
         for j, path in enumerate(paths):
             shutil.copy(path, IN / f"broll/{i}_{j}{Path(path).suffix}")

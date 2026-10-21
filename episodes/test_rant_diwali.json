@@ -24,7 +24,14 @@
    "set": "studio",
    "punch": false,
    "scene": "studio",
-   "insta": ""
+   "insta": "",
+   "big": "बड़ा सवाल",
+   "sub": "हम घर के बच्चे",
+   "card_color": [
+    20,
+    40,
+    110
+   ]
   },
   {
    "who": "bablu",
@@ -45,7 +52,14 @@
    "set": "studio",
    "punch": false,
    "scene": "studio",
-   "insta": ""
+   "insta": "",
+   "big": "सबूत नंबर 1",
+   "sub": "",
+   "card_color": [
+    12,
+    60,
+    120
+   ]
   },
   {
    "who": "bablu",
@@ -67,7 +81,14 @@
    "set": "studio",
    "punch": false,
    "scene": "studio",
-   "insta": ""
+   "insta": "",
+   "big": "सबूत नंबर 2",
+   "sub": "",
+   "card_color": [
+    12,
+    60,
+    120
+   ]
   },
   {
    "who": "bablu",
@@ -88,7 +109,14 @@
    "set": "studio",
    "punch": false,
    "scene": "studio",
-   "insta": ""
+   "insta": "",
+   "big": "सबूत नंबर 3",
+   "sub": "",
+   "card_color": [
+    12,
+    60,
+    120
+   ]
   },
   {
    "who": "bablu",
@@ -110,7 +138,14 @@
    "set": "studio",
    "punch": false,
    "scene": "studio",
-   "insta": ""
+   "insta": "",
+   "big": "सबूत नंबर 4",
+   "sub": "",
+   "card_color": [
+    12,
+    60,
+    120
+   ]
   },
   {
    "who": "bablu",
@@ -134,7 +169,12 @@
    "big": "हमारी माँग",
    "sub": "कबाड़ी के पैसों में पचास प्रतिशत",
    "scene": "studio",
-   "insta": ""
+   "insta": "",
+   "card_color": [
+    110,
+    20,
+    40
+   ]
   },
   {
    "who": "bablu",
@@ -156,7 +196,14 @@
    "set": "studio",
    "punch": true,
    "scene": "studio",
-   "insta": ""
+   "insta": "",
+   "big": "चेतावनी!",
+   "sub": "",
+   "card_color": [
+    40,
+    10,
+    15
+   ]
   },
   {
    "who": "bablu",
@@ -178,7 +225,14 @@
    "punch": true,
    "stamp": "सोनपापड़ी की पोल!",
    "scene": "studio",
-   "insta": ""
+   "insta": "",
+   "big": "बड़ा खुलासा!",
+   "sub": "",
+   "card_color": [
+    170,
+    20,
+    30
+   ]
   },
   {
    "who": "bablu",
@@ -201,7 +255,14 @@
    "punch": true,
    "stamp": "जवाब देना होगा मम्मी को!",
    "scene": "studio_end",
-   "insta": ""
+   "insta": "",
+   "big": "जवाब देना होगा मम्मी को!",
+   "sub": "",
+   "card_color": [
+    170,
+    20,
+    30
+   ]
   }
  ],
  "breaking": "दिवाली से पहले घर-घर सफ़ाई शुरू",
@@ -211,7 +272,6 @@
   "कबाड़ी के भाव आसमान पर"
  ],
  "caption_post": "क्या दिवाली की सफ़ाई बच्चों से छुपाई गई कमाई है? 😤\nTag करो उस दोस्त को जिसकी मम्मी कबाड़ी के पैसे रख लेती हैं!\nआपके घर कबाड़ी के पैसे कौन रखता है? 👇\n#BakraNews #Diwali #DiwaliSafai #Sonpapdi #FunnyNews\n(AI से बने किरदार)",
- "format": "rant",
  "label": "बकरा बहस",
  "icons": [
   "₹",
@@ -227,5 +287,7 @@
  "sprite": {
   "bablu": "assets/toon/bablu"
  },
- "production": true
+ "production": true,
+ "format": "rant",
+ "no_clips": true
 }

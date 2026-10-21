@@ -149,6 +149,7 @@ def prompt_sharpen(weak):
 def finish(ep, strict=True):
     """beat से सारे cue तय करो (expr, sfx, मूड, आवाज़ का अंदाज़, ठहराव, zoom, ठप्पा, बड़े अक्षर) + पक्के नियम."""
     ep["format"], ep["label"] = "rant", "बकरा बहस"
+    ep["no_clips"] = True                                   # खबर के बाहरी clips rant की बात से मेल नहीं खाते थे
     lines = [l for l in ep.get("lines", []) if l.get("who") in writer.WHO and str(l.get("say", "")).strip()]
     lines = [l for l in lines if not nw.SEND.search(l["say"])]
     if len(lines) > 10:                                     # ज़्यादा से ज़्यादा 10 (writer.clean की सीमा): hook + 8 + takiya
@@ -189,8 +190,14 @@ def finish(ep, strict=True):
             ln["stamp"] = out + "!"
         else:
             ln.pop("stamp", None)
-        if b == "maang":                                    # ऊपर की screen पर बड़े अक्षरों में माँग (उसी वक़्त, पहले नहीं)
-            ln["big"], ln["sub"] = "हमारी माँग", " ".join(str(ep.get("maang") or ln["say"]).split()[:6])[:34]
+        # ऊपर की screen: TV-बहस वाले बड़े अक्षर, हर beat का अपना (बोली जा रही बात का ढाँचा — punch पहले से नहीं खुलता).
+        # AI से पास हुई असली तस्वीर हो तो card पहले 2 सेकंड, फिर तस्वीर; न हो तो पूरी line card (बेमेल फ़ोटो कभी नहीं)
+        card = {"hook": ("बड़ा सवाल", str(ep.get("samaj") or "")), "tathya": ("असली खबर", str(ep.get("breaking") or "")),
+                "saboot": (f"सबूत नंबर {sab}", ""), "maang": ("हमारी माँग", " ".join(str(ep.get("maang") or ln["say"]).split()[:6])),
+                "dhamki": ("चेतावनी!", ""), "twist": ("बड़ा खुलासा!", ""), "takiya": (ln["say"].rstrip("!।") + "!", "")}[b]
+        ln["big"], ln["sub"] = card[0][:40], card[1][:34]
+        ln["card_color"] = {"hook": [20, 40, 110], "tathya": [20, 40, 110], "saboot": [12, 60, 120], "maang": [110, 20, 40],
+                            "dhamki": [40, 10, 15], "twist": [170, 20, 30], "takiya": [170, 20, 30]}[b]
     ep = writer.clean(ep, strict=False)
     lines = ep["lines"]
     first = lines[0]["say"].strip()

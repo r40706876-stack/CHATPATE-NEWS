@@ -338,7 +338,8 @@ def _ahash(path):
         return None
 
 
-def pick_for_lines(lines, per_line=3, pool=14, topic=""):   # 3 तक: एक तस्वीर पर देर तक न अटके
+def pick_for_lines(lines, per_line=3, pool=14, topic="", strict=False):   # 3 तक: एक तस्वीर पर देर तक न अटके
+    # strict=True ("बकरा बहस"): AI ने देखकर पास न की हो तो कोई तस्वीर नहीं — पहले बिना जाँच वाली cartoon/model फ़ोटो 30 सेकंड अटकी रही
     """{line_index: [path, ...]} — हर line की सारी खोजों का एक pool, AI एक बार में देखकर हर line के लिए 2 तक चुनता है
     (भारत की / बात से सीधी जुड़ी; विदेशी पहचान वाली कभी नहीं)."""
     import gemini
@@ -452,6 +453,9 @@ def pick_for_lines(lines, per_line=3, pool=14, topic=""):   # 3 तक: एक �
                 break
             except Exception as e:                        # noqa: BLE001
                 print("  AI जाँच में गड़बड़, दोबारा:", repr(e)[:100])
+        if got is None and strict:                        # बिना जाँच कुछ नहीं (screen पर beat वाला card चलेगा)
+            print("  AI जाँच नहीं हुई — strict: इन lines पर कोई तस्वीर नहीं")
+            got = [[] for _ in batch]
         if got is None:                                   # AI नहीं चला: बिना देखे कुछ नहीं लगाते — सिर्फ़ भारत वाली पक्की photo
             print("  AI जाँच नहीं हुई — खबर/search वाली असली फ़ोटो (search engine का मेल), वरना भारत वाली पक्की photo")
             got = [[j for j, c in enumerate(cs) if c.get("news") and not c.get("stock")
@@ -484,7 +488,7 @@ def pick_for_lines(lines, per_line=3, pool=14, topic=""):   # 3 तक: एक �
                 path.with_suffix(".txt").write_text(c["credit"], encoding="utf-8")
             got.append(path)
             where[(n, j)] = path
-        if not got:                                       # कोई नहीं: इसी खबर के लेख की बची फ़ोटो — सिर्फ़ जब title में खबर के
+        if not got and not strict:                        # कोई नहीं: इसी खबर के लेख की बची फ़ोटो — सिर्फ़ जब title में खबर के
             tw_ = _stems(lines[i].get("topic") or topic)   # कम से कम 2 असली शब्द हों (वरना पिछली तस्वीर चलती रहे, बेमेल नहीं)
             for c in cs:
                 if c.get("same_story") and c["id"] not in _used and len(tw_ & _stems(c.get("tags", ""))) >= 2:
