@@ -1,0 +1,231 @@
+{
+ "topic": "दिवाली की सफ़ाई और कबाड़ी के पैसे",
+ "samaj": "हम घर के बच्चे",
+ "maang": "कबाड़ी के पैसों में पचास प्रतिशत आरक्षण",
+ "twist": "सोनपापड़ी की पोल",
+ "takiya": "जवाब देना होगा मम्मी को!",
+ "lines": [
+  {
+   "who": "bablu",
+   "beat": "hook",
+   "say": "क्या दिवाली की सफ़ाई, घर के बच्चों से छुपाई गई सबसे बड़ी कमाई है?",
+   "caption": "क्या दिवाली की सफ़ाई, घर के बच्चों से छुपाई गई सबसे बड़ी कमाई है?",
+   "visuals": [
+    "indian family diwali house cleaning"
+   ],
+   "photo_hi": [
+    "दिवाली सफ़ाई"
+   ],
+   "expr": "hairan",
+   "sfx": "boom",
+   "mood": "tension",
+   "delivery": "बिल्कुल गंभीर, धीमा, हर शब्द पर ज़ोर — जैसे देश का सबसे बड़ा सवाल पूछ रहा हो",
+   "visual": "indian family diwali house cleaning",
+   "set": "studio",
+   "punch": false,
+   "scene": "studio",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "beat": "saboot",
+   "say": "जी हाँ! पंखा हम साफ़ करें, छत पर हम चढ़ें, कबाड़ हम निकालें…",
+   "caption": "जी हाँ! पंखा हम साफ़ करें, छत पर हम चढ़ें, कबाड़ हम निकालें…",
+   "visuals": [
+    "indian boy cleaning ceiling fan"
+   ],
+   "photo_hi": [
+    "दिवाली सफ़ाई पंखा"
+   ],
+   "expr": "gussa",
+   "sfx": "whoosh",
+   "mood": "tension",
+   "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
+   "visual": "indian boy cleaning ceiling fan",
+   "set": "studio",
+   "punch": false,
+   "scene": "studio",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "beat": "saboot",
+   "say": "…और कबाड़ी के पैसे लेकर मम्मी पर्स बंद कर लेती हैं!",
+   "caption": "…और कबाड़ी के पैसे लेकर मम्मी पर्स बंद कर लेती हैं!",
+   "visuals": [
+    "kabadiwala weighing scrap",
+    "indian woman purse money"
+   ],
+   "photo_hi": [
+    "दिवाली सफ़ाई पंखा"
+   ],
+   "expr": "gussa",
+   "sfx": "glitch",
+   "mood": "tension",
+   "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
+   "visual": "kabadiwala weighing scrap",
+   "set": "studio",
+   "punch": false,
+   "scene": "studio",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "beat": "saboot",
+   "say": "इसका जवाब कौन देगा? पापा? पापा ख़ुद पिछले साल से अपना हिस्सा माँग रहे हैं!",
+   "caption": "इसका जवाब कौन देगा? पापा? पापा ख़ुद पिछले साल से अपना हिस्सा माँग रहे हैं!",
+   "visuals": [
+    "indian boy cleaning ceiling fan"
+   ],
+   "photo_hi": [
+    "दिवाली सफ़ाई पंखा"
+   ],
+   "expr": "gussa",
+   "sfx": "pop",
+   "mood": "tension",
+   "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
+   "visual": "indian boy cleaning ceiling fan",
+   "set": "studio",
+   "punch": false,
+   "scene": "studio",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "beat": "saboot",
+   "say": "और बात यहीं ख़त्म नहीं होती… सफ़ाई की फ़ोटो गई किसके किटी ग्रुप में? मम्मी के!",
+   "caption": "और बात यहीं ख़त्म नहीं होती… सफ़ाई की फ़ोटो गई किसके किटी ग्रुप में? मम्मी के!",
+   "visuals": [
+    "indian women kitty party",
+    "whatsapp group phone"
+   ],
+   "photo_hi": [
+    "दिवाली सफ़ाई पंखा"
+   ],
+   "expr": "gussa",
+   "sfx": "whoosh",
+   "mood": "tension",
+   "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
+   "visual": "indian women kitty party",
+   "set": "studio",
+   "punch": false,
+   "scene": "studio",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "beat": "maang",
+   "say": "हमारी माँग: कबाड़ी के पैसों में पचास प्रतिशत आरक्षण, और सफ़ाई के बाद दो घंटे फ़ोन!",
+   "caption": "हमारी माँग: कबाड़ी के पैसों में पचास प्रतिशत आरक्षण, और सफ़ाई के बाद दो घंटे फ़ोन!",
+   "visuals": [
+    "kabadiwala scrap dealer india"
+   ],
+   "photo_hi": [
+    "कबाड़ी वाला"
+   ],
+   "expr": "gussa",
+   "sfx": "dhol",
+   "mood": "masti",
+   "delivery": "ऐलान की तरह, जोश में, जैसे संसद में भाषण",
+   "visual": "kabadiwala scrap dealer india",
+   "set": "studio",
+   "punch": true,
+   "stamp": "कबाड़ी के पैसों में पचास!",
+   "big": "हमारी माँग",
+   "sub": "कबाड़ी के पैसों में पचास प्रतिशत",
+   "scene": "studio",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "beat": "dhamki",
+   "say": "और अगर माँग नहीं मानी गई…",
+   "caption": "और अगर माँग नहीं मानी गई…",
+   "visuals": [
+    "indian mother angry"
+   ],
+   "photo_hi": [
+    "दिवाली सफ़ाई"
+   ],
+   "expr": "gambhir",
+   "sfx": "tick",
+   "mood": "tension",
+   "delivery": "अचानक बहुत धीमा, रहस्य वाला, लगभग फुसफुसाते हुए",
+   "pause_after": 0.7,
+   "visual": "indian mother angry",
+   "set": "studio",
+   "punch": true,
+   "scene": "studio",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "beat": "twist",
+   "say": "तो सबको बता देंगे… रिश्तेदारों को जो सोनपापड़ी जा रही है, वो पिछले साल उन्हीं ने दी थी!",
+   "caption": "तो सबको बता देंगे… रिश्तेदारों को जो सोनपापड़ी जा रही है, वो पिछले साल उन्हीं ने दी थी!",
+   "visuals": [
+    "soan papdi box"
+   ],
+   "photo_hi": [
+    "सोन पापड़ी डिब्बा"
+   ],
+   "expr": "hairan",
+   "sfx": "boom",
+   "mood": "masti",
+   "delivery": "धमाके से, जीत वाले अंदाज़ में, आख़िरी हिस्सा ज़ोर से",
+   "visual": "soan papdi box",
+   "set": "studio",
+   "punch": true,
+   "stamp": "सोनपापड़ी की पोल!",
+   "scene": "studio",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "beat": "takiya",
+   "say": "जवाब देना होगा मम्मी को!",
+   "caption": "जवाब देना होगा मम्मी को!",
+   "visuals": [
+    "indian news studio"
+   ],
+   "photo_hi": [
+    "दिवाली सफ़ाई"
+   ],
+   "expr": "gussa",
+   "sfx": "thug",
+   "mood": "masti",
+   "delivery": "पूरी ताक़त से चिल्लाकर, मेज़ पर हाथ मारते हुए",
+   "pause_after": 0.3,
+   "visual": "indian news studio",
+   "set": "studio",
+   "punch": true,
+   "stamp": "जवाब देना होगा मम्मी को!",
+   "scene": "studio_end",
+   "insta": ""
+  }
+ ],
+ "breaking": "दिवाली से पहले घर-घर सफ़ाई शुरू",
+ "ask": "आपके घर कबाड़ी के पैसे कौन रखता है?",
+ "ticker": [
+  "दिवाली आठ नवंबर को",
+  "कबाड़ी के भाव आसमान पर"
+ ],
+ "caption_post": "क्या दिवाली की सफ़ाई बच्चों से छुपाई गई कमाई है? 😤\nTag करो उस दोस्त को जिसकी मम्मी कबाड़ी के पैसे रख लेती हैं!\nआपके घर कबाड़ी के पैसे कौन रखता है? 👇\n#BakraNews #Diwali #DiwaliSafai #Sonpapdi #FunnyNews\n(AI से बने किरदार)",
+ "format": "rant",
+ "label": "बकरा बहस",
+ "icons": [
+  "₹",
+  "NEWS",
+  "%"
+ ],
+ "hook": "क्या दिवाली की सफ़ाई, घर के बच्चों से छुपाई गई सबसे बड़ी कमाई है?",
+ "hook_text": "क्या दिवाली की सफ़ाई, घर के बच्चों से छुपाई गई सबसे बड़ी कमाई है?",
+ "source": "Google News",
+ "poll": null,
+ "key_word": "",
+ "cast_why": "समाज: हम घर के बच्चे | माँग: कबाड़ी के पैसों में पचास प्रतिशत आरक्षण",
+ "sprite": {
+  "bablu": "assets/toon/bablu"
+ },
+ "production": true
+}
