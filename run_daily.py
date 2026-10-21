@@ -190,7 +190,7 @@ def do_check():
     p = json.load(open(PENDING, encoding="utf-8"))
     n = len(p["eps"])
     k = None
-    for when, text in telegram.read_replies(OFFSET):
+    for when, text in replies():
         if when + 60 < p["sent_at"]:                  # scripts भेजने से पहले के पुराने messages नहीं
             continue
         got = pick(text, n)
@@ -411,11 +411,63 @@ def script_warnings(ep):
     return ("\n\n⚠️ ध्यान दो:\n• " + "\n• ".join(w)) if w else ""
 
 
+INBOX = ROOT / "tg_inbox.json"                          # पढ़े गए पर अभी इस्तेमाल न हुए Telegram जवाब (नंबर वग़ैरह)
+
+
+def replies():
+    """Telegram के नए जवाब — पहले बचे हुए (inbox), फिर नए. (offset एक बार ही आगे बढ़े, कोई नंबर खोए नहीं)"""
+    import telegram
+    old = json.load(open(INBOX, encoding="utf-8")) if INBOX.exists() else []
+    INBOX.unlink(missing_ok=True)
+    return [tuple(x) for x in old] + list(telegram.read_replies(OFFSET))
+
+
+def looks_like_script(text):
+    rows = [r for r in text.splitlines() if ":" in r and len(r.split(":", 1)[0]) < 40
+            and any(k in r.split(":", 1)[0] for k in SPEAKER)]
+    return len(rows) >= 3
+
+
+def grab_pasted_script():
+    """Telegram पर चिपकाई script (जैसे Gemini app के Gem से) → topics.txt → उसी पर video. बाक़ी जवाब do_check के लिए."""
+    rest, script = [], None
+    for when, text in replies():
+        if looks_like_script(text):
+            script = text                                  # कई हों तो आख़िरी
+        else:
+            rest.append((when, text))
+    if rest:
+        json.dump(rest, open(INBOX, "w", encoding="utf-8"), ensure_ascii=False)
+    if script:
+        (ROOT / "topics.txt").write_text(TOPICS_HEAD + script.strip() + "\n", encoding="utf-8")
+        print("  Telegram पर चिपकाई script मिली")
+
+
+def as_rant(ep):
+    """चिपकाई script "बकरा बहस" जैसी हो ("हमारी माँग" वाली line) तो उसी ढाँचे में: beat के cards, आवाज़, zoom, ठप्पे."""
+    lines = ep["lines"]
+    mi = next((i for i, l in enumerate(lines) if i and re.search(r"माँग|मांग", l["say"])), None)
+    if mi is None or len(lines) < 6 or mi >= len(lines) - 2:
+        return ep
+    di = next((i for i in range(mi + 1, len(lines) - 1) if re.search(r"अगर|वरना|नहीं तो", lines[i]["say"])), mi + 1)
+    for i, l in enumerate(lines):
+        l["beat"] = ("hook" if i == 0 else "maang" if i == mi else "dhamki" if i == di else "twist" if i == di + 1
+                     else "takiya" if i == len(lines) - 1 else "saboot")
+    import rant_writer
+    maang = re.split(r"माँग|मांग", lines[mi]["say"], maxsplit=1)[-1].strip(" :–-")
+    try:
+        return rant_writer.finish(dict(ep, maang=maang, twist="", samaj=""), strict=False)
+    except Exception as e:                             # noqa: BLE001
+        print("  rant ढाँचा नहीं लगा, सादा ढाँचा:", e)
+        return ep
+
+
 def take_user_script():
     """तुम्हारी script मिली तो उसी पर video (Gemini की ज़रूरत नहीं)."""
     ep = user_script()
     if not ep:
         return False
+    ep = as_rant(ep)
     import telegram
     tf = ROOT / "topics.txt"
     keep = ROOT / "meri_scripts.txt"                    # पुरानी scripts का रिकॉर्ड
@@ -440,6 +492,8 @@ def main():
     if a.script:
         return do_render(ROOT / a.script)
     mode = a.mode
+    if mode in ("write", "check", "auto") and not CHOICE.exists():
+        grab_pasted_script()                            # Telegram पर script चिपकाई हो तो वही topics.txt में
     if mode in ("write", "check", "auto") and not CHOICE.exists() and take_user_script():
         return                                          # तुम्हारी script पहले — बाक़ी काम अगली बार
     if mode == "auto":
