@@ -407,16 +407,16 @@ def _safe(c):
     return c2
 
 
-def write_options(c, n=3):
+def gather(c, n):
+    """खबरें चुनो → trend जाँचो → पक्के तथ्य. लौटाता है (packs, picks). c["rejected"] भरता है. rant_writer भी यही इस्तेमाल करता है."""
     import viral_check as vc
-    c = _safe(c)                                            # मौत/हादसा/चोट/अपराध वाली खबरें शुरू से बाहर (उन पर हँसी नहीं बनती)
     try:
         raw = gemini.ask(prompt_pick(c, min(n * 2 + 3, 15)), json_mode=True, temperature=0.4)
     except gemini.QuotaOver:
         raise
     except RuntimeError as e:
         print("  खबरों की list Gemini ने नहीं ली, अपराध/मौत वाली हटाकर दोबारा:", repr(e)[:150])
-        c = _safe(c)
+        c.update(_safe(c))                                  # वही dict रहे (c["rejected"] बाहर भी दिखे)
         raw = gemini.ask(prompt_pick(c, min(n * 2 + 3, 15)), json_mode=True, temperature=0.4)
     picks = [p for p in gemini.json_from(raw).get("picks", [])
              if p.get("topic") and not RISKY.search(str(p.get("topic")) + " " + str(p.get("query", "")))]
@@ -461,6 +461,13 @@ def write_options(c, n=3):
         print("  तथ्य:", p.get("topic"), "|", p.get("source"), "|", p.get("confidence"))
     if not packs:
         raise SystemExit("एक भी खबर के पक्के तथ्य नहीं मिले")
+    return packs, picks
+
+
+def write_options(c, n=3):
+    import viral_check as vc
+    c = _safe(c)                                            # मौत/हादसा/चोट/अपराध वाली खबरें शुरू से बाहर (उन पर हँसी नहीं बनती)
+    packs, picks = gather(c, n)
     bank = None                                             # पंच-बैंक: पहले ढेर सारे hooks/पंच, फिर सबसे तेज़ से script
     try:
         bank = gemini.json_from(gemini.ask(prompt_punches(packs), json_mode=True, temperature=0.95))

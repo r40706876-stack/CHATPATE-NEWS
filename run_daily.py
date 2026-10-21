@@ -57,7 +57,11 @@ def preview(eps):
             out.append("⚠️ ये script नए ढाँचे से बाहर है (लंबा hook या लंबी script) — दूसरा विकल्प हो तो वही चुनो")
         if ep.get("hasi"):
             out.append(f"😂 क्यों चुना: {ep['hasi']}")
-        if ep.get("cast_why"):
+        if ep.get("format") == "rant":
+            out.append(f"🔥 बकरा बहस | समाज: {ep.get('samaj', '')}")
+            out.append(f"📢 माँग: {ep.get('maang', '')}")
+            out.append(f"💣 Twist: {ep.get('twist', '')}")
+        elif ep.get("cast_why"):
             out.append(f"🎭 किरदार: {ep['cast_why']}")
         import viral_check
         if viral_check.line(ep):
@@ -81,6 +85,21 @@ def preview(eps):
     return "\n".join(out)
 
 
+def write_scripts(news, n):
+    """FORMAT=rant (default): "बकरा बहस" — भड़का हुआ anchor-rant (viral reels वाला ढाँचा). न बने तो पुराना "काम की खबर"."""
+    import gemini
+    import news_writer
+    if os.getenv("FORMAT", "rant") == "rant":
+        import rant_writer
+        try:
+            return rant_writer.write_options(news, n)
+        except (gemini.QuotaOver, news_writer.NoViral):
+            raise
+        except (Exception, SystemExit) as e:               # noqa: BLE001
+            print("  rant नहीं बनी, पुराना ढाँचा:", repr(e)[:200])
+    return news_writer.write_options(news, n)
+
+
 def do_write(feed=None):
     import gemini
     import news_writer
@@ -89,14 +108,14 @@ def do_write(feed=None):
     try:                                               # काम की खबर, देसी अंदाज़ (Gemini के सिर्फ़ 3 call)
         news = topics.collect_news(feed)
         try:
-            eps = news_writer.write_options(news, 6)
+            eps = write_scripts(news, 6)
         except (gemini.QuotaOver, news_writer.NoViral):
             raise
         except RuntimeError as e:                      # Gemini busy (503) — 4 मिनट रुककर एक बार और
             print("  Gemini busy, 4 मिनट बाद दोबारा:", str(e)[:120])
             time.sleep(240)
             try:
-                eps = news_writer.write_options(news, 6)
+                eps = write_scripts(news, 6)
             except (gemini.QuotaOver, news_writer.NoViral):
                 raise
             except RuntimeError:

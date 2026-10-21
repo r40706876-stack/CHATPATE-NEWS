@@ -665,6 +665,9 @@ def mix_studio(voices, events, tail, out, moods=None):
         w.writeframes((mix * 32767).astype(np.int16).tobytes())
 
 
+LINE_SFX = {"boom", "ding", "glitch", "whoosh", "pop", "laugh", "dhol", "thug", "tick"}
+
+
 def render(ep, segs, chars, out, preview):
     """segs: [{"ln", "wav", "face" (video या None), "still" (PIL), "vis" [Path], "react", "shot"}]
     shot: close = पूरा close-up (720x1280 source) | split = ऊपर खबर+नीचे किरदार | full = पूरी तस्वीर+कोने में किरदार."""
@@ -681,6 +684,8 @@ def render(ep, segs, chars, out, preview):
             if s.get("react"):                                # reaction कभी चुप नहीं: मज़ेदार आवाज़ तुरंत
                 pose = (segs[i_ - 1]["ln"].get("react_pose") if i_ else "") or "laugh"
                 events.append((t0, REACT_SFX.get(pose, "laugh")))
+            elif s["ln"].get("sfx") in LINE_SFX:              # script ने beat के हिसाब से आवाज़ तय की ("बकरा बहस")
+                events.append((t0, s["ln"]["sfx"]))
             else:                                             # किरदार बदले = TV glitch, वही रहे = whoosh
                 events.append((t0, "glitch" if s["ln"]["who"] != prev_who else "whoosh"))
         if not s.get("react"):
@@ -710,6 +715,8 @@ def render(ep, segs, chars, out, preview):
         _, name, role = chars[ln["who"]]
         size = (W, H) if shot == "full" else (SW_, SH_)
         vis = list(s.get("vis") or [])
+        if ln.get("big") and vis and not react and shot in ("split", "full"):   # माँग वाली line: पहले बड़े अक्षर, फिर तस्वीर
+            vis = [{"big": ln["big"], "sub": ln.get("sub", "")}] + vis
         if shot in ("split", "full") and not vis and not react and pool:
             # तस्वीर नहीं मिली: ख़ाली/धुंधली screen नहीं (पहली video में 2.5 से 13 सेकंड तक ऊपर काला रहा — ठीक खाई पर) —
             # इसी खबर की दूसरी lines की असली तस्वीरें, जो अभी-अभी न दिखी हों, नए zoom के साथ
@@ -780,7 +787,12 @@ def render(ep, segs, chars, out, preview):
                 im = bases[strap].copy()
                 im.paste(sf, (SCR[0], SCR[1]))
                 zb = (1.0 + 0.10 * min(1, t / 8)) if (ln.get("punch") and not react) else (1.05 if react else 1.0 + 0.03 * t / n)
-                im.paste(_zoomr(fr, zb), (0, BAND_Y))
+                dx = 0
+                if ln.get("beat") == "dhamki" and not react:     # धमकी: धीरे-धीरे चेहरे के बहुत पास (suspense)
+                    zb = 1.0 + 0.24 * t / max(1, n)
+                elif ln.get("beat") in ("twist", "takiya") and not react and t < 8:   # धमाका: हल्का झटका
+                    dx = int(16 * math.sin(t * 2.6) * (1 - t / 8))
+                im.paste(_zoomr(fr, zb), (dx, BAND_Y))
                 clean = im.copy()                                # बिना लिखाई वाला frame (आख़िरी poll के पीछे)
             d = ImageDraw.Draw(im)
             chrome_safe(d, k)

@@ -84,9 +84,15 @@ def _to_array(raw):
 _gem_ok = {"model": None, "dead": False}
 
 
-def gemini_line(text, who, expr, key):
+RANT = {   # "बकरा बहस": anchor की आवाज़ भड़कती जाए — एक ही call में पूरा rant, ताकि ऊर्जा line-दर-line बढ़े
+    "bablu": "तीस साल का गुस्सैल TV debate anchor, ऊँची दमदार आवाज़, तेज़ रफ़्तार, शब्दों पर ज़ोर, ड्रामैटिक ठहराव — "
+             "पूरे दिल से नाराज़ जैसे देश का सबसे बड़ा अन्याय हुआ हो, पर अंदर से मज़ा ले रहा हो",
+}
+
+
+def gemini_line(text, who, expr, key, base=None):
     voice, style = GEM.get(who, GEM["bablu"])
-    style = ", ".join(s for s in (style, MOOD.get(expr, expr if len(expr) > 12 else "")) if s)
+    style = ", ".join(s for s in (base or style, MOOD.get(expr, expr if len(expr) > 12 else "")) if s)
     style += ". लिखे शब्द हूबहू बोलो, कुछ जोड़ना/छोड़ना नहीं"
     errors = []
     models = [_gem_ok["model"]] if _gem_ok["model"] else TTS_MODELS
@@ -233,11 +239,17 @@ def split_by_silence(a, n):
 
 def gemini_character(lines, who, key):
     """एक किरदार की सारी lines एक ही call में — आवाज़ हर line में एक जैसी."""
+    rant = any(l.get("delivery") for l in lines)
+    base = RANT.get(who) if rant else None
     if len(lines) == 1:
-        return [gemini_line(lines[0]["say"], who, lines[0].get("expr", ""), key)]
+        return [gemini_line(lines[0]["say"], who, lines[0].get("delivery") or lines[0].get("expr", ""), key, base)]
     joined = "\n\n".join(l["say"] for l in lines)
+    how = "हर लाइन के बाद पूरा एक सेकंड रुकना"
+    if rant:                                              # line-दर-line अंदाज़ (बोलना नहीं, सिर्फ़ निर्देश)
+        how = ("लाइनें क्रम से, हर एक का अंदाज़ — " + "; ".join(f"{k + 1}) {l.get('delivery', '')}" for k, l in enumerate(lines))
+               + ". ऊर्जा शुरू से आख़िर तक बढ़ती जाए. " + how)
     try:
-        a = gemini_line(joined + "\n", who, "हर लाइन के बाद पूरा एक सेकंड रुकना", key)
+        a = gemini_line(joined + "\n", who, how, key, base)
         parts = split_by_silence(a, len(lines))
         for l, p in zip(lines, parts):                    # लंबाई का अंदाज़ा: ~0.06s प्रति अक्षर
             exp = len(l["say"]) * 0.06
@@ -246,7 +258,7 @@ def gemini_character(lines, who, key):
         return parts
     except ValueError as e:                               # काटना ठीक न बैठे → line-line, पर वही voice
         print(f"  {who}: एक साथ वाली आवाज़ काट नहीं पाए ({e}), line-line बना रहे हैं")
-        return [gemini_line(l["say"], who, l.get("expr", ""), key) for l in lines]
+        return [gemini_line(l["say"], who, l.get("delivery") or l.get("expr", ""), key, base) for l in lines]
 
 
 def make_all(script, engine, out, key):

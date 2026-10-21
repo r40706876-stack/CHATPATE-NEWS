@@ -74,8 +74,14 @@ def prep(script_path):
     ep = json.load(open(ROOT / script_path, encoding="utf-8"))
     import tts
     tts.speak_script(ep, IN / "audio")
-    for i in range(len(ep["lines"])):
+    for i, ln in enumerate(ep["lines"]):
         tighten(IN / f"audio/{i:02d}.wav")
+        pause = float(ln.get("pause_after") or 0)
+        if 0 < pause <= 1.5:                                   # "और अगर माँग नहीं मानी गई…" के बाद जानबूझकर सन्नाटा (suspense)
+            w = IN / f"audio/{i:02d}.wav"
+            subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(w), "-af", f"apad=pad_dur={pause}",
+                            str(w.with_suffix(".p.wav"))], check=True)
+            w.with_suffix(".p.wav").replace(w)
     for i, ln in enumerate(ep["lines"]):
         d = IN / str(i)
         d.mkdir(parents=True, exist_ok=True)
