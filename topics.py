@@ -21,7 +21,8 @@ BAD = re.compile("|".join(map(re.escape, trends.BLOCK)), re.I)
 EXTRA_RECENT = []                                    # अभी-अभी रिजेक्ट हुई scripts के topics
 # असली इंसान/celebrity का बयान — इस पर घर वाली हँसी नहीं बनती
 CELEB = re.compile(r"बोले|बोलीं|ने कहा|बयान|अभिनेता|अभिनेत्री|एक्ट्रेस|actor|actress|फ़ैन|फैन|बच्चन|चोपड़ा|"
-                   r"मंत्री|सांसद|विधायक|नेता|पार्टी|चुनाव|पुलिस|गिरफ़्तार|गिरफ्तार|मौत|हत्या|हादसा", re.I)
+                   r"मंत्री|सांसद|विधायक|नेता|पार्टी|चुनाव|पुलिस|गिरफ़्तार|गिरफ्तार|मौत|हत्या|हादसा|"
+                   r"घायल|डूब|बह गए|नदी में गिर|छत से गिर|फ़ायरिंग|फायरिंग|गोली", re.I)
 WEATHER = re.compile(r"मौसम|बारिश|आंधी|weather|rain|ठंड|गर्मी|तूफ़ान|तूफान|imd|ओले", re.I)
 
 
@@ -47,7 +48,7 @@ def _words(s):
     return {w.strip(".,!?:;\"'()|-") for w in s.lower().split()} - stop - {""}
 
 
-def recently_used(text, days=4):
+def recently_used(text, days=7):                  # एक ही topic 7 दिन में दोबारा = मरा (return वाली दूसरी reel 148 views)
     words = {w for w in _words(text) if len(w) >= 3}
     for _, _, topic in history(days):
         if len(words & _words(topic)) >= 2:

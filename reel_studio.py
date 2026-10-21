@@ -541,7 +541,7 @@ def render(ep, segs, chars, out, preview):
     shot: close = पूरा close-up (720x1280 source) | split = ऊपर खबर+नीचे किरदार | full = पूरी तस्वीर+कोने में किरदार."""
     lens = [rv._read(s["wav"]).shape[0] / rv.SR for s in segs]
     counts = [max(1, round(x * FPS)) for x in lens]
-    tail = 2.6 if ep.get("poll") else 0.8
+    tail = 0.8                                            # आख़िर में poll वाली 2.6 सेकंड की ख़ाली screen = % देखा घटता था; अब छोटा अंत → loop
     tailn = int(tail * FPS)
     total = sum(counts) + tailn
     events, t0 = [(0.0, "boom")], 0.0
@@ -637,7 +637,7 @@ def render(ep, segs, chars, out, preview):
             else:
                 sf = next(cur) if cur is not None else Image.new("RGB", size)
                 last_screen = sf
-                strap = k < FPS * 5 or bool(ep.get("bulletin") and ln.get("headline"))
+                strap = bool(ep.get("bulletin") and ln.get("headline"))   # headline पट्टी सिर्फ़ bulletin में (पहले 4 परतें लिखाई की थीं)
                 im = bases[strap].copy()
                 im.paste(sf, (SCR[0], SCR[1]))
                 zb = (1.0 + 0.10 * min(1, t / 8)) if (ln.get("punch") and not react) else (1.05 if react else 1.0 + 0.03 * t / n)
@@ -652,23 +652,23 @@ def render(ep, segs, chars, out, preview):
                 d.text((SCR[0] + 16 + bw / 2, SCR[1] + 41), badge, font=tt.font(34), fill="white", anchor="mm")
                 if ep.get("bulletin") and ln.get("headline"):                # bulletin: हर खबर की अपनी headline हमेशा
                     _headline(d, ln["headline"])
-                elif k < FPS * 5:
-                    _headline(d, headline)
             if credit and shot != "close":
                 f = tt.font(22)
                 cw = f.getlength(credit)
                 bx1, by1 = (SCR[2], SCR[3]) if shot == "split" else (W - 10, 1236)
                 d.rectangle((bx1 - cw - 24, by1 - 38, bx1, by1), fill=(0, 0, 0))
                 d.text((bx1 - 12, by1 - 19), credit, font=f, fill=(220, 220, 220), anchor="rm")
-            if k < FPS * 1.8 and ep.get("hook"):
-                _hook(d, ep["hook"], 330)
             if react:
                 d.rounded_rectangle((30, BAND_Y + 380, 560, BAND_Y + 456), 20, fill=RED)
                 d.text((58, BAND_Y + 418), f"{name} का रिएक्शन", font=tt.font(44), fill="white", anchor="lm")
             else:
-                if first_seen and t < FPS * 2.5 and shot != "close":
+                hooking = si == 0 and ep.get("hook")              # पहली line: वही बात बड़े पीले hook में (जो सुनाई दे, वही दिखे)
+                if first_seen and t < FPS * 2.5 and shot != "close" and not hooking:
                     rv.name_strap(d, (BAND_Y + 84) if shot == "split" else 1130, name, role)
-                karaoke_safe(d, ln.get("caption") or ln["say"], t / n, BAND_Y + 460, span)
+                if hooking:
+                    _hook(d, ep["hook"], BAND_Y + 470)
+                else:
+                    karaoke_safe(d, ln.get("caption") or ln["say"], t / n, BAND_Y + 460, span)
             if bool(ln.get("punch")) and not react and not st_text and t >= n * 0.6:
                 st_text = ln.get("stamp") or STAMP_OF.get(ln.get("react_pose"), "")
                 st_t = 0
@@ -696,8 +696,6 @@ def render(ep, segs, chars, out, preview):
         im = end.copy()
         d = ImageDraw.Draw(im)
         pass
-        if ep.get("poll"):
-            rv.poll(d, ep["poll"], t)
         d.rounded_rectangle((260, 1420, W - 260, 1520), 50, fill=RED)
         d.text((W / 2, 1470), "फ़ॉलो करो • बकरा न्यूज़", font=tt.font(46), fill="white", anchor="mm")
         d.rectangle((0, H - 12, int(W * k / total), H), fill=YEL)

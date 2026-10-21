@@ -53,6 +53,8 @@ def preview(eps):
             out.append(f"📱 Insta trend: {ep['insta_used']}")
         if ep.get("hook_text"):
             out.append(f"🪝 Hook: {ep['hook_text']}")
+        if ep.get("_loose"):
+            out.append("⚠️ ये script नए ढाँचे से बाहर है (लंबा hook या लंबी script) — दूसरा विकल्प हो तो वही चुनो")
         if ep.get("hasi"):
             out.append(f"😂 क्यों चुना: {ep['hasi']}")
         if ep.get("cast_why"):
@@ -320,19 +322,45 @@ def user_script():
     head = re.split(r"[!?।]", first)[0].strip()
     words = head.split()
     topic = " ".join(l["say"] for l in lines)
-    poses = ["eyeroll", "facepalm", "laugh"]
     k = 0
     for ln in lines:
-        ln["set"] = _set_for(ln["who"], ln["say"], topic)
+        import news_writer                               # set पहले line की अपनी बात से, फिर खबर (पहली line) से
+        ln["set"] = news_writer.pick_set(ln["who"], ln["say"], head)
         ln["topic"] = head                              # तस्वीरें: इसी खबर के अख़बारों से
-        if ln.get("punch") and k < 3:                    # सबसे तेज़ 3 lines पर reaction
-            ln["react_pose"] = poses[k]
+        if ln.get("punch") and k < 2:                    # सबसे तेज़ 2 lines पर ठप्पा (reaction वाला ठहराव नहीं — flow टूटता था)
             k += 1
+        else:
+            ln.pop("punch", None)
+    fw = lines[0]["say"].split()                        # screen का hook = पहली बोली गई line (अलग-अलग बातें पढ़ना-सुनना नहीं)
+    hook = lines[0]["say"] if len(fw) <= 12 else " ".join(fw[:10]) + "…"
     return {"format": "explain", "label": "BREAKING", "user_script": True, "category": "user",
-            "topic": head, "breaking": " ".join(words[:10]), "hook_text": " ".join(words[:5]),
-            "hook": " ".join(words[:6]), "ask": "आपके साथ भी ऐसा हुआ है? कमेंट करो",
+            "topic": head, "breaking": " ".join(words[:10]), "hook_text": hook,
+            "hook": hook, "ask": "आपके साथ भी ऐसा हुआ है? कमेंट करो",
             "source": "", "lines": lines,
             "caption_post": first[:180] + "\n\nआपके साथ भी ऐसा होता है? कमेंट में बताओ 👇\n\n#बकरान्यूज़ #desicomedy #funnyreels\n(AI से बने किरदार)"}
+
+
+POLITICS = re.compile(r"नेता|नेताजी|चुनाव|मंत्री|मुख्यमंत्री|सांसद|विधायक|पार्टी|सरकार ने|योगी|मोदी|राहुल|भाजपा|कांग्रेस|वोट")
+
+
+def script_warnings(ep):
+    """तुम्हारी script पर वो बातें जिनसे हमारे page की reels पहले मरीं (असली आँकड़े) — video फिर भी बनेगा, बस सावधानी."""
+    import topics
+    w, lines = [], ep["lines"]
+    first = len(lines[0]["say"].split())
+    words = sum(len(l["say"].split()) for l in lines)
+    blob = " ".join(l["say"] for l in lines)
+    if first > 12:
+        w.append(f"पहली line {first} शब्द की है — 10 शब्द तक का मज़ाक वाला hook हो तो 3 सेकंड में कम लोग भागते हैं")
+    if words > 78:
+        w.append(f"script {words} शब्द की है (~{words // 3} सेकंड) — 50-70 शब्द पर पूरा देखने वाले बढ़ते हैं")
+    if POLITICS.search(blob):
+        w.append("राजनीति/नेता वाली बात है — Instagram ऐसी reels अनजान लोगों को कम दिखाता है (मुख्यमंत्री वाली reel = 10 views)")
+    if topics.recently_used(ep.get("topic", "") + " " + blob[:200]):
+        w.append("ये विषय पिछले 7 दिन में आ चुका है — दोबारा वाली reel पहले 148 views पर रुकी थी")
+    if any(re.search(r"वीडियो.{0,25}(भेजो|शेयर|टैग)", l["say"]) for l in lines):
+        w.append("'वीडियो भेजो' बोलने से share नहीं होता — किसी पहचाने जाने वाले इंसान पर सटीक चोट से होता है")
+    return ("\n\n⚠️ ध्यान दो:\n• " + "\n• ".join(w)) if w else ""
 
 
 def take_user_script():
@@ -348,7 +376,8 @@ def take_user_script():
     tf.write_text(TOPICS_HEAD, encoding="utf-8")
     json.dump(ep, open(CHOICE, "w", encoding="utf-8"), ensure_ascii=False, indent=2)
     cast = ", ".join(dict.fromkeys(NAME.get(l["who"], l["who"]) for l in ep["lines"]))
-    telegram.send_text(f"✅ आपकी script मिल गई ({len(ep['lines'])} lines, किरदार: {cast}): {ep['topic']}\n🎬 उसी पर video बन रहा है, 25-30 मिनट…")
+    telegram.send_text(f"✅ आपकी script मिल गई ({len(ep['lines'])} lines, किरदार: {cast}): {ep['topic']}\n🎬 उसी पर video बन रहा है, 25-30 मिनट…"
+                       + script_warnings(ep))
     print("  तुम्हारी script मिली —", len(ep["lines"]), "lines → सीधे video")
     return True
 

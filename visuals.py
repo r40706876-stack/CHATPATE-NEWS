@@ -269,7 +269,8 @@ def pick_checked(items):
 # ---------------------------------------------------------------- हर line के लिए 1-2 पक्की तस्वीरें (बड़ा pool)
 HSTOP = set("है हैं था थे की का के को में से पर और भी तो ही कि जो वो ये यह वह अब कर करें करना किया गया गई रहे रहा रही "
              "होता होती होगा होगी नहीं सब कुछ एक दो साफ़ कहना कहा कहते लिए साथ बाद पहले उसको उसे इस उस हमारे ज़माने "
-             "वीडियो भेजो जिसका जिसकी".split())
+             "वीडियो भेजो जिसका जिसकी वायरल रील रीलें रील्स सोशल मीडिया खबर ख़बर मामला लोगों लोग इंटरनेट यूजर्स यूज़र्स "
+             "देखिए जानिए देखें जानें अजब गजब अनोखा ताज़ा ताजा बड़ी बड़ा viral video reel news".split())
 
 
 def _stems(text):
@@ -413,9 +414,13 @@ def pick_for_lines(lines, per_line=2, pool=12, topic=""):
             "(गोरे विदेशी लोग, यूरोप-अमेरिका की गलियाँ/इमारतें, बर्फ़ीले पहाड़, डॉलर/यूरो, विदेशी पुलिस) कभी नहीं. "
             "4. animation, 3D, कार्टून, फूल-पत्ती, सजावटी background, watermark वाली, पुरानी black-and-white/ऐतिहासिक "
             "(अंग्रेज़ों के ज़माने की) तस्वीर = कभी नहीं. "
-            "5. सुंदर पर बेमेल = नहीं. कोई ठीक न हो तो उस line के लिए [] दो.\n"
-            'सिर्फ़ JSON: {"picks": [[पहली line के नंबर], [दूसरी line के नंबर], ...]}')
-    picks = []
+            "5. फ़िल्मी हीरो-हीरोइन/मशहूर चेहरे का portrait या photoshoot = कभी नहीं (line उसी के बारे में हो तब भी नहीं). "
+            "6. सुंदर पर बेमेल = नहीं. कोई ठीक न हो तो उस line के लिए [] दो.\n"
+            "साथ में \"hero\": इन सब तस्वीरों में से वो एक, जो reel के पहले सेकंड में सबसे ज़्यादा रोके — असली घटना/हरकत "
+            "दिखे (लोग कुछ अजीब/मज़ेदार करते हुए, भीड़, नज़ारा), ख़ाली सड़क/इमारत/logo नहीं; \"score\" 0-10.\n"
+            'सिर्फ़ JSON: {"picks": [[पहली line के नंबर], [दूसरी line के नंबर], ...], '
+            '"hero": {"line": line नंबर (1 से), "pick": तस्वीर नंबर, "score": 0-10}}')
+    picks, heroes = [], []
     for b0 in range(0, len(pools), 2):                     # 2-2 lines एक बार में (बड़ी request timeout हो जाती है)
         batch = pools[b0:b0 + 2]
         parts = [{"text": head}]
@@ -429,7 +434,15 @@ def pick_for_lines(lines, per_line=2, pool=12, topic=""):
         got = None
         for attempt in range(1):
             try:
-                got = gemini.json_from(gemini.ask(parts, json_mode=True, temperature=0.1, patient=False)).get("picks", [])
+                res = gemini.json_from(gemini.ask(parts, json_mode=True, temperature=0.1, patient=False))
+                got = res.get("picks", [])
+                hr = res.get("hero") or {}
+                try:
+                    hl, hp, hs = int(hr.get("line", 0)) - 1, int(hr.get("pick", -1)), float(hr.get("score", 0))
+                    if 0 <= hl < len(batch) and 0 <= hp < len(batch[hl][2]):
+                        heroes.append((hs, b0 + hl, hp))
+                except (TypeError, ValueError):
+                    pass
                 break
             except gemini.QuotaOver:
                 break
@@ -437,11 +450,12 @@ def pick_for_lines(lines, per_line=2, pool=12, topic=""):
                 print("  AI जाँच में गड़बड़, दोबारा:", repr(e)[:100])
         if got is None:                                   # AI नहीं चला: बिना देखे कुछ नहीं लगाते — सिर्फ़ भारत वाली पक्की photo
             print("  AI जाँच नहीं हुई — खबर/search वाली असली फ़ोटो (search engine का मेल), वरना भारत वाली पक्की photo")
-            got = [[j for j, c in enumerate(cs) if c.get("news") and not c.get("stock")][:per_line]
-                   for _, _, cs in batch]
+            got = [[j for j, c in enumerate(cs) if c.get("news") and not c.get("stock")
+                    and len(_stems(lines[i].get("topic") or topic) & _stems(c.get("tags", ""))) >= 2][:per_line]
+                   for i, _, cs in batch]
         picks += [got[n] if n < len(got) else [] for n in range(len(batch))]
     CACHE.mkdir(exist_ok=True)
-    out = {}
+    out, where = {}, {}
     for n, (i, qs, cs) in enumerate(pools):
         got = []
         sel = picks[n] if n < len(picks) and isinstance(picks[n], list) else []
@@ -465,9 +479,11 @@ def pick_for_lines(lines, per_line=2, pool=12, topic=""):
             if c.get("credit"):
                 path.with_suffix(".txt").write_text(c["credit"], encoding="utf-8")
             got.append(path)
-        if not got:                                       # कोई नहीं: इसी खबर के लेख की बची फ़ोटो (बेमेल stock से बेहतर)
+            where[(n, j)] = path
+        if not got:                                       # कोई नहीं: इसी खबर के लेख की बची फ़ोटो — सिर्फ़ जब title में खबर के
+            tw_ = _stems(lines[i].get("topic") or topic)   # कम से कम 2 असली शब्द हों (वरना पिछली तस्वीर चलती रहे, बेमेल नहीं)
             for c in cs:
-                if c.get("same_story") and c["id"] not in _used:
+                if c.get("same_story") and c["id"] not in _used and len(tw_ & _stems(c.get("tags", ""))) >= 2:
                     try:
                         path = _download(c["url"], CACHE / f"{c['id']}.jpg")
                     except Exception:                     # noqa: BLE001
@@ -479,4 +495,16 @@ def pick_for_lines(lines, per_line=2, pool=12, topic=""):
                     break
         out[i] = got
         print(f"  line {i + 1}: {len(got)} तस्वीर ({', '.join(qs[:4])})" + ("" if got else "  ❌"))
+    # सबसे दमदार तस्वीर (असली घटना) पहले सेकंड पर — पहले वो 30वें सेकंड पर आती थी, जब तक लोग जा चुके होते थे
+    heroes.sort(reverse=True)
+    for hs, hn, hp in heroes:
+        hpath = where.get((hn, hp))
+        if not hpath or not pools or hs < 5:
+            continue
+        first_i, hero_i = pools[0][0], pools[hn][0]
+        if hero_i != first_i and len(out.get(hero_i, [])) > 1:
+            out[hero_i] = [p for p in out[hero_i] if p != hpath]
+        out[first_i] = [hpath] + [p for p in out.get(first_i, []) if p != hpath][:per_line - 1]
+        print(f"  ⭐ सबसे दमदार तस्वीर पहले सेकंड पर: line {hn + 1} से ({hs}/10)")
+        break
     return out

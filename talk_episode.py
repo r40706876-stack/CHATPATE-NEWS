@@ -86,7 +86,7 @@ def prep(script_path):
             ln["shot"] = reel_studio.shot_for(i, ln)
             src_shot = "close" if ln["shot"] == "close" else "band"
             reel_studio.source_for(sprite, ln.get("expr", ""), d / "source.png", d / "still.png", st, src_shot)
-            rp = ln.get("react_pose")
+            rp = ln.get("react_pose") if ep.get("react") else None    # reaction ठहराव बंद (flow टूटता था); ep["react"] से चालू
             if rp:
                 reel_studio.source_for(sprite, rp, IN / f"react_{i}_small.png", IN / f"react_{i}.png", st, src_shot)
         else:
@@ -100,6 +100,8 @@ def prep(script_path):
         ln["_need_vis"] = ln.get("shot") != "close" and bool(ln.get("visuals") or ln.get("photo_hi") or ln.get("topic")
                                                             or len(ln.get("say", "").split()) >= 8)
         # intro/outro जैसी lines (न खोज, न खबर) पर नई तस्वीर नहीं — पिछली चलती रहती है (वरना बेमेल फ़ोटो आती थी)
+    if ep["lines"]:                                            # पहली line (hook) पर हमेशा तस्वीर — पहला सेकंड ही सब तय करता है
+        ep["lines"][0]["_need_vis"] = ep["lines"][0].get("shot") != "close"
     got = visuals.pick_for_lines(ep["lines"], topic=ep.get("breaking") or ep.get("topic", ""))
     for i, paths in got.items():
         for j, path in enumerate(paths):
@@ -254,9 +256,8 @@ def post_studio(ep):
                     "set": ln.get("set") or ("studio" if ln["who"] == "bablu" else "village")}
         segs.append({"ln": ln, "wav": IN / f"audio/{i:02d}.wav", "face": None if talk else (clips[-1] if clips else None),
                      "talk": talk, "still": still, "vis": vis, "shot": shot})
-        if (IN / f"react_{i}.png").exists():
+        if ep.get("react") and (IN / f"react_{i}.png").exists():
             rw = IN / f"audio/{i:02d}_r.wav"
-            last_r = max(j for j, l in enumerate(ep["lines"]) if (IN / f"react_{j}.png").exists())
             dur = "0.7"                                       # छोटा reaction, साथ में मज़ेदार आवाज़ (सन्नाटा नहीं)
             subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "lavfi", "-i", "anullsrc=r=24000:cl=mono",
                             "-t", dur, "-c:a", "pcm_s16le", str(rw)], check=True)

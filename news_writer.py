@@ -21,16 +21,20 @@ ALLOWED = """कौन-सी खबर लें: वो जिस पर आ�
 दाम में अचानक उछाल (प्याज़, टमाटर, गैस, रिचार्ज), बिजली-पानी कटौती, viral हुआ सरकारी दफ़्तर/अस्पताल का हाल, ठगी का नया तरीका,
 नया नियम जिससे सब परेशान, त्योहार की भीड़/किराया, AI/फ़ोन/internet वाली चर्चित बात, मौसम की मार (बिना मौत/हादसे).
 सूखी "योजना की जानकारी" वाली खबर तभी, जब उसमें कोई बेतुका पेच हो.
-**हमारे page पर सच में जो चला (Instagram के आँकड़े)**: "Return policy ya muft ki almari" 2.7K views, "10 reel banakar
-saree return" 1.9K (10 shares), "Ramlila mein Shurpanakha" 1.2K, "Garba kam baraat zyada" 832 — यानी लोगों की आदतों/
-viral trend पर comedy (सोशल मीडिया, त्योहार, शादी, shopping, रिश्तेदार), जिसमें देखने वाला किसी को tag कर सके.
-जो नहीं चला (150-300 views, 0 share): सूखी खबर — APK ठगी, DA hike, सब्ज़ी के दाम, चुनावी बातें, 4 खबरों वाला bulletin.
-इसलिए: viral trend/आम आदत वाली खबर सबसे पहले; सूखी सरकारी खबर तभी, जब उसमें किसी जानी-पहचानी आदत का मज़ाक बने.
+**हमारे page के असली आँकड़े (19 reels, अक्टूबर 2026)**: चली — "Return policy ya muft ki almari" 2.7K (skip 40%),
+"10 reel banakar saree return" 1.7K (10 shares), "Ramlila mein Shurpanakha" 1.3K (skip 27%), "Garba kam baraat zyada" 900
+(6 shares), "Mumbai mein muft action" 461 (सबसे ज़्यादा देखा गया, 60%). यानी लोगों की आदतों/viral trend पर comedy (सोशल मीडिया,
+त्योहार, शादी, shopping, रिश्तेदार, सफ़र) जिसमें देखने वाला किसी दोस्त/रिश्तेदार को tag कर सके.
+मरी (60-130 views, 70-80% लोग 3 सेकंड में भागे): APK ठगी, DA hike, गोभी के दाम, "दिन भर की खबरें" bulletin, राजनीति/नेता,
+सरकारी योजना. Instagram राजनीतिक content अनजान लोगों को कम दिखाता है (मुख्यमंत्री के नाम वाली reel = 10 views).
+एक ही विषय दोबारा जल्दी = मर गया (return वाली दूसरी reel 148 views).
+इसलिए: 6 में से कम से कम 5 खबरें आदत/viral trend वाली; सूखी सरकारी/दाम वाली ज़्यादा से ज़्यादा 1, वो भी तभी जब उसमें
+किसी जानी-पहचानी आदत का मज़ाक बने. सबसे अच्छी खबर वो, जिसकी असली फ़ोटो/वीडियो में ख़ुद कुछ मज़ेदार/अजीब दिखे.
 **राष्ट्रीय खबर पहले**: पूरे देश के लोगों पर असर वाली — केंद्र सरकार/RBI/रेलवे/UPI/आधार/टैक्स के नियम, देशभर के दाम,
 राष्ट्रीय भर्ती-परीक्षा (SSC, रेलवे, NEET, UPSC), देशभर में viral बात. किसी एक शहर/ज़िले/मोहल्ले की खबर (जैसे "कानपुर की
 सड़क", "पटना का सेंटर", "किसी नगर निगम का आदेश") नहीं — सिर्फ़ तब, जब वो पूरे देश में viral हो और हर जगह के लोग जुड़ें.
-कभी नहीं: मौत, हादसा, हत्या/दंगा, युद्ध, किसी नेता/पार्टी/असली व्यक्ति का नाम या बयान, धर्म, जाति, celebrity gossip,
-बीमारी का डर."""
+कभी नहीं: मौत, हादसा, चोट/डूबना/गिरना, हत्या/दंगा/फ़ायरिंग, युद्ध, किसी नेता/पार्टी/चुनाव/मुख्यमंत्री या असली व्यक्ति का
+नाम या बयान, धर्म, जाति, celebrity gossip, बीमारी का डर."""
 
 
 def _cands(c):
@@ -94,7 +98,7 @@ def prompt_pick(c, n=3):
 
 {ALLOWED}
 
-इनमें से {n} अलग-अलग खबरें चुनो. कम से कम दो-तिहाई खबरें लोगों की आदतों/viral trend वाली हों ([वायरल वीडियो],
+इनमें से {n} अलग-अलग खबरें चुनो. कम से कम 80% खबरें लोगों की आदतों/viral trend वाली हों ([वायरल वीडियो],
 [रील का शौक], [शादी-रिश्ते], [shopping-आदत], [त्योहार-ट्रेंड], [सफ़र-जुगाड़], [दफ़्तर-नौकरी], [फ़िल्म-क्रिकेट फैन]) — ऐसी जिसमें
 पढ़ते ही किसी जानने वाले का चेहरा याद आए; बाकी सिर्फ़ बहुत बड़ी ज़रूरी खबर. "हाल में बन चुकी" वाली बात या उससे
 मिलती-जुलती (वही विषय दूसरे शब्दों में) बिल्कुल नहीं. सबसे पहले ये पूछो: "क्या आम आदमी इस पर आज बात कर रहा है, और सुनते ही बोलेगा —
@@ -129,16 +133,18 @@ def prompt_facts(picks, evidence):
   "source": "प्रकाशकों के नाम, जैसे 'दैनिक भास्कर, ABP News'"}}]"""
 
 
-GOLD_SATIRE = ROOT / "episodes/samples_dark.json"     # मालिक को पसंद आया अंदाज़ (बिजली वाली सबसे ऊपर)
+GOLD_SATIRE = ROOT / "episodes/samples_v4.json"       # मालिक को पसंद आया v4 ढाँचा (मज़ाक से शुरुआत, टकराव, callback)
+
+
+def gold_eps():
+    try:
+        return json.load(open(GOLD_SATIRE, encoding="utf-8"))
+    except Exception:                                       # noqa: BLE001
+        return []
 
 
 def gold_satire():
-    try:
-        eps = json.load(open(GOLD_SATIRE, encoding="utf-8"))
-    except Exception:                                       # noqa: BLE001
-        return ""
-    eps = sorted(eps, key=lambda e: 0 if "बिजली" in e.get("topic", "") else 1)
-    return "\n\n".join(f"[{e['topic']}]\n" + "\n".join(f"  {l['who']}: {l['say']}" for l in e["lines"]) for e in eps)
+    return "\n\n".join(f"[{e['topic']}]\n" + "\n".join(f"  {l['who']}: {l['say']}" for l in e["lines"]) for e in gold_eps())
 
 
 # मालिक को सबसे ज़्यादा पसंद आई lines — यही हमारा असली हथियार है ("मुहर वाली line")
@@ -153,140 +159,184 @@ GOLD_LINES = [
     "पुलिस का कहना है, चालान आपकी सुरक्षा के लिए है। सड़क के गड्ढे आपकी हिम्मत के लिए हैं।",
 ]
 
-MUHAR = """सबसे तेज़ हथियार — "मुहर वाली line" (हर script में 2-3 बार, हर line में नहीं — बीच में बातचीत, टकराव और
-इनके बीच बातचीत, टकराव और धागा छोड़ने वाली lines. ज़्यादातर bablu के मुँह से, बिल्कुल गंभीर anchor की आवाज़ में; कभी-कभी चाचा/दादी भी
-इसी ढाँचे में बोल सकते हैं):
-  ढाँचा: [पहला वाक्य: सरकारी/विशेषज्ञ/विभाग वाली सीधी, भरोसे वाली बात] + [दूसरा छोटा वाक्य: उसी बात के एक शब्द को पकड़कर
-  उलट देना, जो ज़मीनी सच्चाई खोल दे]. दूसरा वाक्य 4-8 शब्द का, आख़िरी शब्द पर वार.
-  असली नमूने (इसी स्तर के नए बनाओ, इन्हें दोहराओ मत):
+MUHAR = """"मुहर वाली line" (पूरी script में सिर्फ़ 1, ज़्यादा से ज़्यादा 2 — हर line में ये ढाँचा आया तो दूसरी line तक पैटर्न
+पकड़ में आ जाता है और लोग आगे बढ़ जाते हैं):
+  ढाँचा: [सरकारी/विशेषज्ञ/विभाग वाली भरोसे की बात] + [उसी के एक शब्द को पकड़कर 4-8 शब्द का उलटा वार, आख़िरी शब्द पर चोट].
+  असली नमूने (स्तर समझो, शब्द मत दोहराओ):
 """ + "\n".join(f"   • {l}" for l in GOLD_LINES) + """
-  इनमें खेल ये है: "धैर्य" → "धैर्य की आयु सीमा नहीं"; "सेहत बनती है" → "ख़रीदने से नहीं"; "योजना नहीं" → "बिना योजना के";
-  "OTP नहीं माँगते" → "बाकी सब माँगते हैं". यानी सरकारी शब्द को उसी के ख़िलाफ़ खड़ा कर दो. ऐसी line के बाद
-  "react_pose": "eyeroll"."""
+  "शायद", "थोड़ा", "लगता है" जैसे नरम शब्द वार को मार देते हैं — वार सीधा और पक्का हो."""
 
-SATIRE = """अंदाज़ (सबसे ज़रूरी): गंभीर news channel जैसा चेहरा, बात बेतुकी सच्चाई की — Prakash Bharati जैसा dark व्यंग्य, पर
-हमारे गाँव-कस्बे की ज़बान में. हर खबर में "कागज़/सरकार/विभाग क्या कहता है" बनाम "ज़मीन पर क्या होता है" का फ़ासला ढूँढो और
-उसी पर वार करो. इन 5 तरीकों से (हर script में कम से कम 3):
- 1. सरकारी भाषा, बेतुका सच: "कटौती की कोई योजना नहीं है। कटौती बिना योजना के हो रही है।"
- 2. बात को उसके बेतुके अंजाम तक: "अगली परीक्षा पूरी सुरक्षा में होगी। तारीख़ जल्द ही… लीक की जाएगी।"
- 3. छोटा सवाल, 2-4 शब्द का जवाब, punch जवाब में: "परीक्षा कितनी बार हुई?" — "हुई तीन बार। लीक चार बार।"
- 4. पहले बनाम अब: "पहले बिजली नहीं थी, तो बिल भी नहीं था। अब तरक्की हुई है, बिल आ गया है।"
- 5. काम की बात, तीखे अंदाज़ में: "ठगी हो जाए तो रोना बाद में, पहले एक नौ तीन शून्य पे फ़ोन।"
-मना (ऐसा लिखा तो script रद्द): "मतलब… जैसे फूफा/मंदिर की चप्पल" वाली ज़बरदस्ती की तुलना, "हाहा", "नमस्कार, आज हम बात करेंगे",
-हर line में देसी शब्द ठूँसना (पूरी script में भइया/लल्ला/गज़ब जैसे 1-2 बस), किसी असली इंसान/नेता/पार्टी/धर्म/जाति पर वार,
-मौत/हादसे पर मज़ाक, झूठा तथ्य."""
+SATIRE = """अंदाज़: Prakash Bharati जैसा गहरा, काला व्यंग्य — चेहरा बिल्कुल गंभीर, बात सिस्टम की कड़वी सच्चाई, पर हमारे गाँव-कस्बे
+की बोलचाल में (सरकारी/अख़बारी शब्द नहीं: "दंपत्ति", "निस्तारण", "जलापूर्ति", "प्रशासन द्वारा" जैसे शब्द बोलचाल में बदलो).
+गहराई कैसे आती है: छोटी खबर को बड़ी सच्चाई से जोड़ो — ज़िंदगी भर के चक्कर, काग़ज़ पर मिले हक़, बेकार समझे जाने वाले बुज़ुर्ग,
+"नियम बनाम ज़मीन". पर हर गहरी बात का अंत **हँसी** पर हो, उदासी पर नहीं (बेतुकेपन को और आगे बढ़ाओ, रोओ मत).
+मना (ऐसा लिखा तो script रद्द): "नमस्कार/आज की खबर" वाली शुरुआत, ज़बरदस्ती की तुलना, "हाहा", हर line में देसी शब्द ठूँसना,
+किसी असली इंसान/नेता/पार्टी/धर्म/जाति पर वार, मौत/हादसे/चोट पर मज़ाक, झूठा तथ्य, "ये वीडियो उसको भेजो" वाली line."""
 
-CASTING = """किरदार — सबकी 3D फ़ोटो तैयार हैं: bablu हमेशा + ज़रूरत हो तो 1-2 और (कुल ज़्यादा से ज़्यादा 3):
-- bablu: आज का तेज़ गाँव संवाददाता/anchor. तथ्य बताता है, छोटे सवाल पूछता है, बिल्कुल गंभीर चेहरे से तंज़ (तरीका 1, 2).
-- ramesh: 29 साल का परेशान नौजवान — नौकरी, परीक्षा, दफ़्तर के चक्कर, चालान, सिस्टम की परेशानी पर सच्ची भड़ास (तरीका 3).
-- chacha: पुरानी सोच वाले चाचा — महँगाई, "हमारे ज़माने में", सबसे गहरा/काला तंज़ (तरीका 4).
-- dadi: उम्र ज़्यादा, सोच नई — ठगी से बचाव, योजना, सेहत, घर का बजट, असली काम की सलाह; प्यार से पर तीखी (तरीका 5).
-- pinky: अभी-अभी 18 की — फ़ोन, ऑनलाइन, पढ़ाई, सपने बनाम हकीकत, लड़कियों से जुड़ी बात.
-मिसाल: पेपर लीक/भर्ती = bablu+ramesh. UPI ठगी = bablu+dadi+pinky. गैस/सब्ज़ी महँगी = bablu+chacha. चालान/सड़क = bablu+ramesh+chacha."""
+CASTING = """किरदार — सबकी 3D फ़ोटो तैयार हैं: कुल 2-3 किरदार (ज़्यादा से ज़्यादा 4) (bablu ज़रूरी नहीं, पर तथ्य वाली line अक्सर उसी की):
+- bablu: तेज़ गाँव संवाददाता/anchor. तथ्य और सरकारी दावे वाली मुहर line, बिल्कुल गंभीर चेहरा.
+- ramesh: 29 साल का परेशान नौजवान — नौकरी, परीक्षा, दफ़्तर, चालान, सिस्टम पर सच्ची भड़ास; सवाल पूछने वाला.
+- chacha: पुरानी सोच वाले चाचा — "हमारे ज़माने में" को पलटकर सबसे गहरा/काला तंज़ (dark satire इन्हीं से).
+- dadi: उम्र ज़्यादा, सोच नई — प्यार से पर सबसे तीखी, घर की "सरकार".
+- pinky: अभी-अभी 18 की — फ़ोन, रील, online, सपने बनाम हकीकत; सबसे पहले भिड़ने वाली.
+टकराव वाली जोड़ियाँ (सबसे अच्छी): pinky बनाम chacha/dadi, ramesh बनाम bablu (सरकारी दावा बनाम भड़ास), chacha बनाम ramesh."""
+
+STRUCTURE = """ढाँचा — हमारे page के असली आँकड़ों से (19 reels, अक्टूबर 2026): जिन reels ने पहले 3 सेकंड में मज़ाक किया, उन्हें 2-10 गुना
+views मिले; "खबर पढ़ने" से शुरू होने वाली reels पर 70-80% लोग 3 सेकंड में भाग गए. लोग line 2-3 पर इसलिए छोड़ते थे कि हर line
+का ढाँचा एक जैसा था. Share सिर्फ़ उन पर हुए जिनमें किसी जानने वाले की आदत पर सटीक चोट थी (saree, garba, return).
+कुल 5-6 lines, 50-70 शब्द (बोलने में 18-23 सेकंड; 75 से ज़्यादा = script रद्द). क्रम:
+ 1. HOOK (≤ 10 शब्द): line ख़ुद मज़ाक है — खबर का सबसे बेतुका पहलू, बीच-बहस से शुरुआत ("भाई, ट्रेन लेट है… या रिटायर हो गई?")
+    या उलटा सच. खबर पढ़ना नहीं. पहला शब्द ही कुछ दिखाए/चौंकाए.
+ 2. तथ्य (≤ 16 शब्द): असली बात, अंक/तारीख़ हूबहू — एक वाक्य, बोलचाल में. यहीं "card" (वैकल्पिक).
+ 3. टकराव: कोई किरदार भिड़े/पोल खोले — और यहीं (या line 4 में) **TAG वाली line**: किसी पहचाने जाने वाले इंसान की आदत पर इतनी
+    सटीक चोट कि देखने वाला बोले "अरे ये तो बिल्कुल राहुल/बुआ/मम्मी है!" ("हर घर में एक मम्मी होती है, जो…").
+ 4. बढ़ता बेतुकापन: पिछली बात से बड़ी, और बेतुकी बात (हर line पिछली से एक सीढ़ी ऊपर).
+ 5. मुहर वाली line — सबसे बड़ा वार.
+ 6. CALLBACK (≤ 10 शब्द, वैकल्पिक पर अच्छा): पहली line का शब्द पकड़कर पलटो, ताकि video घूमकर शुरू से जुड़े (लोग दोबारा देखें).
+    "ये वीडियो उसको भेजो/शेयर करो/टैग करो" कभी नहीं — भेजने की वजह line 3 की चोट है, बोलकर माँगना नहीं.
+हर line अलग ढाँचे की हो: सवाल, भड़ास, तुलना, मुहर, callback — एक ही ढाँचा दो बार लगातार नहीं."""
+
+FIELDS = """हर line में: "expr" (gambhir / hasi / tanz / gussa / hairan / udaas — एक ही भाव लगातार 2 से ज़्यादा नहीं; bablu की
+मुहर line "gambhir"), "set" (पीछे की जगह — line की बात से, किरदार से नहीं: bablu तथ्य/मुहर = "studio"; दफ़्तर/फ़ॉर्म/भर्ती =
+"office"; चालान/गड्ढे/सड़क/ट्रैफिक = "road"; सब्ज़ी/दाम/बाज़ार = "mandi"; घर/परिवार/आँगन की बात = "aangan"; फ़ोन/रील/online/पढ़ाई =
+"room"; गैस/सिलेंडर = "gas"; रसोई/खाना = "kitchen"; ट्रेन/स्टेशन/सफ़र = "station"; अस्पताल = "hospital"; खेत/किसान = "khet";
+स्कूल/परीक्षा = "school"; बैंक/UPI/लोन = "bank"; बिजली = "bijli"; राशन = "ration"; ठगी की रिपोर्ट = "thana"; बाकी = "village").
+"visuals" = 3 English खोज जो उस line की ठोस चीज़/जगह दिखाएँ ("indian train platform crowd", "train engine door") — भाव नहीं,
+हीरो-हीरोइन/मशहूर चेहरे नहीं. "photo_hi" = 2 Hindi खबर-खोजें (2-4 शब्द, जगह/चीज़ का नाम) जिनसे इसी खबर की असली फ़ोटो मिले.
+"punch": true + "stamp" (2-4 शब्द, उसी line के शब्दों से: "सुविधा… आउटर पर!") सिर्फ़ 2 सबसे तेज़ lines पर.
+"say" में अंक शब्दों में ("चौबीस घंटे"), English short form देवनागरी में; "caption" = वही बात, अंक अंकों में."""
 
 
-def prompt_write(packs):
-    return f"""तुम "बकरा न्यूज़" के head writer हो ("खबर सौ टका पक्की, अंदाज़ अधपका!"). तथ्य (सिर्फ़ इन्हीं से, कुछ जोड़ना नहीं):
+def prompt_punches(packs):
+    """पंच-बैंक: हर खबर पर पहले ढेर सारे hooks/पंच — फिर सिर्फ़ सबसे तेज़ से script बनती है (एक बार में लिखी script औसत रहती है)."""
+    return f"""तुम "बकरा न्यूज़" के सबसे तेज़ comedy writer हो (Prakash Bharati जैसा गहरा, देसी व्यंग्य). तथ्य (सिर्फ़ इन्हीं से):
 {json.dumps(packs, ensure_ascii=False, indent=1)}
-
-{MUHAR}
 
 {SATIRE}
 
+हर खबर के लिए कच्चा माल लिखो (script नहीं — सिर्फ़ ढेर सारे विकल्प, हर एक अलग ढाँचे का):
+- "people": 3 पहचाने जाने वाले इंसान जिनकी आदत इस खबर से जुड़ती है ("वो दोस्त जो हर ट्रेन को टाइम पे बताता है").
+- "hooks": 6 पहली lines (≤ 10 शब्द), हर एक ख़ुद में मज़ाक: 2 बीच-बहस वाली (किरदार की भड़ास/सवाल), 2 उलटा सच, 2 बेतुका अंजाम.
+- "tags": 3 TAG lines (≤ 18 शब्द) — "people" में से किसी की आदत पर ऐसी सटीक चोट कि सुनने वाला किसी को tag करे.
+- "punches": 8 पंच (≤ 18 शब्द): 2 मुहर वाली (सरकारी दावा + उसी शब्द का उलटा), 2 "हमारे ज़माने" को पलटकर काला तंज़ (चाचा),
+  2 बेतुका अंजाम तक, 2 छोटा सवाल-छोटा जवाब.
+- "callbacks": 3 आख़िरी lines (≤ 10 शब्द) जो किसी hook के शब्द पर लौटें.
+सिर्फ़ JSON list, खबरों के क्रम में: [{{"topic": "...", "people": [...], "hooks": [...], "tags": [...], "punches": [...], "callbacks": [...]}}]"""
+
+
+def prompt_write(packs, bank=None):
+    raw = ""
+    if bank:
+        raw = f"""
+हर खबर का कच्चा माल (पंच-बैंक) — पहले सख़्त editor बनो: हर खबर के लिए सबसे तेज़ 1 hook, 1 TAG line और 2 पंच चुनो (पैमाना:
+"क्या गाँव-कस्बे का आदमी पहली बार सुनकर हँसेगा, और किसी को tag करेगा?"), फिर script उन्हीं के चारों ओर बनाओ — ज़रूरत हो तो
+उन्हें और तेज़ करो, पर कमज़ोर filler line मत जोड़ो (हर line में अपना मज़ा हो):
+{json.dumps(bank, ensure_ascii=False, indent=1)}
+"""
+    return f"""तुम "बकरा न्यूज़" के head writer हो ("खबर सौ टका पक्की, अंदाज़ अधपका!"). तथ्य (सिर्फ़ इन्हीं से, कुछ जोड़ना नहीं):
+{json.dumps(packs, ensure_ascii=False, indent=1)}
+{raw}
+{STRUCTURE}
+
+{SATIRE}
+
+{MUHAR}
+
 {CASTING}
 
-हर खबर का ढाँचा — share होने वाला फ़ॉर्मूला (हमारे page के असली आँकड़ों से: जिन videos में किसी पहचाने जाने वाले इंसान
-की आदत पर हँसी थी उन्हें 7-10 share मिले, बाकी को 0). Reels पर लोग तेज़ी से आगे बढ़ते हैं: 20-28 सेकंड, 5-6 lines,
-कुल 55-85 शब्द; bablu के साथ कम से कम 1-2 और किरदार. नमूनों वाली lines हूबहू या थोड़ा बदलकर लिखीं तो script रद्द.
-**5 पक्के नियम**:
- (क) पूरी script एक "पहचाने जाने वाले इंसान" पर बने — वो दोस्त/बुआ/सहेली/रिश्तेदार/मम्मी जिसकी ये आदत है (खबर उस आदत
-     का बहाना है). पहली line से आख़िरी तक उसी आदत की परतें खुलें, और आख़िरी line उसी को भेजने की बात करे.
- (ख) हर line अगली का धागा छोड़े — line पूरी होकर बंद न हो; आख़िर में अधूरी बात/खुला सवाल/झलक हो ताकि देखने वाला
-     अगली line का इंतज़ार करे: "…पर असली खेल तो इसके बाद हुआ", "…और फिर जो हुआ, वो किसी ने नहीं सोचा था",
-     "…वजह सुनकर आप भी चौंक जाओगे". (हर line पर नहीं, 2-3 जगह — ख़ासकर पहली line पर ज़रूर.)
- (ग) कम से कम एक टकराव — दो किरदार उलटी राय रखें या एक-दूसरे की पोल खोलें (चाचा बनाम पिंकी, रमेश बनाम बबलू,
-     दादी किसी को टोके). ये बातचीत लगे, अलग-अलग भाषण नहीं.
- (घ) भाव बदलते रहें — एक ही "expr" लगातार 2 से ज़्यादा lines पर नहीं (hairan → tanz → gussa → hasi…).
- (ङ) "मुहर वाली line" (तथ्य/दावा + उसी शब्द का उलटा) 2-3 lines में — हर line में नहीं, ताकि सुर बदले.
-1. पहली line = hook (≤ 16 शब्द): सबसे चौंकाने वाली बात + अधूरा सवाल (नियम ख), "नमस्कार"/"आज की खबर" नहीं.
-   उसका छोटा रूप "hook_text" (3-7 शब्द).
-2. असली तथ्य (अंक/तारीख़ हूबहू) पहली 1-2 lines में; ज़रूरत हो तो उसी line पर "card".
-3. trending/celebrity वाली खबर भी चलेगी, पर मज़ाक आम आदमी की आदत पर हो, उस व्यक्ति पर नहीं; उस व्यक्ति का नाम
-   मत लो ("एक मशहूर क्रिकेटर", "एक बड़े हीरो"). "punch": true सिर्फ़ 2-3 सबसे तेज़ lines पर, "react_pose" भी वहीं.
-4. "जानकारी वाली" line (पोर्टल पर देखें, यहाँ आवेदन करें) मत लिखो — ये reel है, सूचना-पत्र नहीं.
-   हर line ज़्यादा से ज़्यादा 16 शब्द (बोलने में 4-5 सेकंड).
-4b. किरदार बदलते वक़्त जोड़ने वाला वाक्य (connector) — नया किरदार सीधे न कूदे; पिछली line के आख़िर में bablu (या पिछला
-   किरदार) उसे बुलाए, ताकि देखने वाला रुका रहे: "लेकिन लड़कों को छोड़िए, उधर पिंकी का अलग ही दर्द है…",
-   "और ये सुनकर चाचा का पारा चढ़ गया…", "पर दादी के पास इसका भी इलाज है…". फिर तुरंत अगला किरदार बोले.
-   पहली line ही सबसे बड़ा झटका/सवाल हो (पहले 2 सेकंड में मुद्दा + बड़ा अंक या मज़ेदार टकराव), "आज की खबर…" जैसी शुरुआत नहीं.
-5. आख़िरी line: "ये वीडियो उसको भेजो, जो…" — इसी खबर से जुड़ा, पहचाने जाने वाला इंसान (विषय से भटको मत), और हो
-   सके तो पहली line के शब्द पर लौटो ताकि video घूमकर शुरुआत से जुड़े (लोग दोबारा देखें).
-"ask" = बीच में comment बटोरने वाला छोटा सवाल (≤ 9 शब्द), जिसका जवाब हर कोई अपने अनुभव से दे सके — जैसे
-"आपकी कौन-सी परीक्षा सबसे ज़्यादा बार टली?", "आपके गाँव में बिजली कितने घंटे आती है?".
-हर line में: "expr" (भाव: gambhir / hasi / tanz / gussa / hairan / udaas — bablu की मुहर वाली line पर "gambhir", बाकी किरदारों के भाव बदलते रहें:
-बिल्कुल गंभीर anchor चेहरा, सीधा कैमरे में; मज़ा बात में हो, चेहरे में नहीं), "set" (पीछे की जगह, बात के हिसाब से: bablu के तथ्य/anchor वाले = "studio"; दफ़्तर/फ़ॉर्म/भर्ती/परीक्षा/बैंक के चक्कर =
-"office"; चालान/गड्ढे/ट्रैफिक/पेट्रोल/सड़क = "road"; महँगाई/सब्ज़ी/दाम/बाज़ार = "mandi"; घर/ठगी से बचाव/योजना/बिजली-पानी/
-रसोई = "aangan"; फ़ोन/online/पढ़ाई/सोशल मीडिया (ज़्यादातर पिंकी) = "room"; LPG/गैस/पेट्रोल के दाम = "gas"; रसोई का बजट/खाना = "kitchen";
-ट्रेन/किराया/भीड़/सफ़र = "station"; अस्पताल/दवा/इलाज = "hospital"; किसान/खाद/फ़सल/मौसम = "khet";
-स्कूल/परीक्षा केंद्र/पेपर लीक/रिज़ल्ट = "school"; थाना/शिकायत/साइबर ठगी की रिपोर्ट = "thana"; बैंक/ATM/UPI/लोन = "bank";
-बिजली कटौती/बिल/ट्रांसफ़ॉर्मर = "bijli"; राशन/गेहूँ-चावल/राशन कार्ड = "ration"; गाँव/बाकी आम बात = "village"), "visuals" = 3 अलग English खोज जो उस line की बात को screen पर ठोस, असली
-तस्वीर में दिखाएँ (बड़ी screen पर चलेंगी, सबसे ज़रूरी हिस्सा): चीज़/जगह/काम का नाम लो, भाव नहीं — जैसे
-["lpg gas cylinder", "woman cooking gas stove india", "gas cylinder delivery truck"]; परीक्षा = ["students writing exam hall",
-"exam result notice board", "calendar pages"]. "sad", "problem", "system" जैसे खोखले शब्द नहीं.
-"photo_hi" = 2 Hindi खबर-खोजें (2-4 शब्द) जिनसे अख़बारों में उसी बात की असली फ़ोटो मिले — जगह/चीज़ का नाम ("बिहार सड़क गड्ढा",
-"ट्रैफिक पुलिस चालान मशीन", "छत्तीसगढ़ परीक्षा केंद्र").
-"react_pose" (line के ठीक बाद 1 सेकंड का reaction) line के मतलब से ही चुनो:
-  eyeroll = सरकारी दावा और सच्चाई उलटी ("कोई कमी नहीं है" वाली lines); facepalm = हद दर्जे की बेवकूफ़ी/बार-बार वही गलती;
-  laugh = सच इतना बेतुका कि हँसी छूट जाए; thinking = सवाल छोड़ने वाली line; smug = "समझ गए न?" वाला तंज़.
-  जिस line पर react_pose हो, उसी पर "stamp" = 2-4 शब्द का ठप्पा जो उसी line की बात पकड़े (जैसे "धैर्य… उम्र भर!",
-  "दिखती ही नहीं!", "OTP छोड़ के सब!"). "गज़ब!", "बवाल!" जैसे हर जगह चलने वाले शब्द नहीं.
-"ticker" = नीचे चलने वाली पट्टी के 3 छोटे जोक (हर एक ≤ 10 शब्द, इसी खबर पर, सरकारी-खबर वाली भाषा में:
-"विभाग ने कहा, धैर्य ही असली योजना है").
-"say" में अंक शब्दों में ("एक अक्टूबर") और English short form देवनागरी में ("यूपीआई"); "caption" में अंक अंकों में.
+{FIELDS}
+"ask" = आख़िर में screen पर लिखा comment वाला सवाल (≤ 9 शब्द, बोला नहीं जाएगा), जिसका जवाब हर कोई अपने अनुभव से दे.
+"ticker" = 3 छोटे जोक (≤ 10 शब्द, सरकारी-खबर वाली भाषा में).
 
-हमारे पसंदीदा नमूने (अंदाज़ ऐसा ही — शब्द मत दोहराना):
+हमारे पसंदीदा नमूने — ढाँचा और गहराई ऐसी ही (शब्द/पंच मत दोहराना, हर खबर के अपने शब्द पकड़ो):
 {gold_satire()}
 
 सिर्फ़ JSON — हर खबर का एक episode:
 [{{"topic": "...", "category": "money/rules/bank/jobs/scheme/tech/travel/civic/other", "breaking": "6-9 शब्द, सच्ची headline",
-  "hook_text": "...", "ask": "...", "source": "प्रकाशकों के नाम", "poll": ["2-4 शब्द", "2-4 शब्द"], "ticker": ["...", "...", "..."],
-  "cast_why": "इन किरदारों को क्यों चुना, एक लाइन",
-  "lines": [{{"who": "bablu", "say": "...", "caption": "...", "expr": "gambhir", "set": "studio", "visuals": ["...", "...", "..."], "photo_hi": ["...", "..."],
-              "card": {{"tag": "...", "big": "...", "sub": "...", "icon": "rupee"}}}},
-            {{"who": "ramesh", "say": "...", "caption": "...", "expr": "udaas", "set": "village", "visuals": ["...", "...", "..."],
-              "punch": true, "react_pose": "facepalm", "stamp": "2-4 शब्द"}}],
-  "caption_post": "एक तीखी लाइन + poll वाला सवाल + 'Family group में भेजो' + स्रोत: ... + 4-5 hashtags + (AI से बने किरदार)"}}]
+  "hook_text": "पहली line हूबहू", "ask": "...", "source": "प्रकाशकों के नाम", "poll": ["2-4 शब्द", "2-4 शब्द"], "ticker": ["...", "...", "..."],
+  "cast_why": "इन किरदारों में टकराव क्या है, एक लाइन", "tag_who": "किस पहचाने जाने वाले इंसान पर चोट है",
+  "lines": [{{"who": "ramesh", "say": "...", "caption": "...", "expr": "gussa", "set": "station", "visuals": ["...", "...", "..."], "photo_hi": ["...", "..."]}},
+            {{"who": "bablu", "say": "...", "caption": "...", "expr": "gambhir", "set": "studio", "visuals": ["...", "...", "..."], "photo_hi": ["...", "..."],
+              "card": {{"tag": "...", "big": "...", "sub": "...", "icon": "train"}}}},
+            {{"who": "chacha", "say": "...", "caption": "...", "expr": "tanz", "set": "station", "visuals": ["...", "...", "..."],
+              "punch": true, "stamp": "2-4 शब्द"}}],
+  "caption_post": "पहली line + 'Tag करो उसको जो…' (tag_who वाला इंसान) + comment वाला सवाल + स्रोत: ... + 4-5 hashtags + (AI से बने किरदार)"}}]
 icon इनमें से: {", ".join(sorted(ICONS))}."""
 
 
 def prompt_sharpen(eps):
-    """जज की बताई कमी दूर करो — तथ्य वही, सिर्फ़ व्यंग्य/hook/punch तीखे."""
+    """जज की बताई कमी दूर करो — तथ्य वही, सिर्फ़ व्यंग्य/hook/पंच तीखे."""
     slim = [{"n": i + 1, "weak": (e.get("connect") or {}).get("weak", ""), "fix": (e.get("connect") or {}).get("fix", ""),
              "episode": e} for i, e in enumerate(eps)]
     return f"""तुम "बकरा न्यूज़" के comedy editor हो. इन scripts को जज ने कम नंबर दिए; उसकी बताई कमी ("weak") और सुझाव ("fix")
 के हिसाब से दोबारा लिखो:
 {json.dumps(slim, ensure_ascii=False, indent=1)}
 
-{MUHAR}
+{STRUCTURE}
 
 {SATIRE}
-नियम: तथ्य, अंक, तारीख़, card, स्रोत बिल्कुल वही. कोई नया तथ्य नहीं. वही किरदार. JSON का ढाँचा वही (सारे fields रखो).
+
+{MUHAR}
+नियम: तथ्य, अंक, तारीख़, card, स्रोत बिल्कुल वही. कोई नया तथ्य नहीं. JSON का ढाँचा वही (सारे fields रखो, "hook_text" = पहली line).
 सिर्फ़ JSON list लौटाओ — उतने ही episodes, उसी क्रम में."""
 
 
 EXPRS, POSES, SETS_OK = {"gambhir", "hasi", "tanz", "gussa", "hairan", "udaas"}, {"laugh", "facepalm", "eyeroll", "thinking", "smug"}, {"studio", "village", "office", "road", "mandi", "aangan", "room", "gas", "kitchen", "station", "hospital", "khet", "school", "thana", "bank", "bijli", "ration"}
 
 
+SET_PAT = {   # set → उसकी बात के शब्द. Gemini का चुना set line/खबर से मेल न खाए तो शब्दों से सही set (नदी वाली खबर पर मंडी नहीं)
+    "thana": "ठगी|थाना|पुलिस|फ़्रॉड|फ्रॉड|साइबर|हैक|एपीके|लिंक|ओटीपी",
+    "road": "चालान|गड्ढ|सड़क|ट्रैफिक|हेलमेट|बाइक|गाड़ी|स्कूटी",
+    "mandi": "सब्ज़ी|सब्जी|टमाटर|प्याज़|प्याज|मंडी|बाज़ार|बाजार|भाव|दाम",
+    "office": "दफ़्तर|दफ्तर|(?<!प्लेट)फ़ॉर्म|(?<!प्लेट)फॉर्म|भर्ती|बाबू|फ़ाइल|फाइल|नौकरी|बॉस|ऑफिस|पेंशन",
+    "school": "परीक्षा|पेपर|रिज़ल्ट|रिजल्ट|स्कूल|कॉलेज|छात्र",
+    "bank": "बैंक|यूपीआई|लोन|एटीएम|खाता|किस्त|ईएमआई",
+    "bijli": "बिजली|ट्रांसफ़ॉर्मर|ट्रांसफार्मर|कटौती",
+    "station": "ट्रेन|रेल|स्टेशन|टिकट|प्लेटफ़ॉर्म|प्लेटफार्म|सफ़र|सफर|बस अड्डा|बस स्टैंड",
+    "hospital": "अस्पताल|डॉक्टर|दवा|इलाज|मरीज़|मरीज",
+    "khet": "किसान|खाद|फ़सल|फसल|खेत",
+    "gas": "गैस|सिलेंडर",
+    "ration": "राशन",
+    "kitchen": "रसोई|खाना|थाली|चूल्हा",
+    "room": "फ़ोन|फोन|मोबाइल|ऑनलाइन|इंस्टा|रील|वाई-फ़ाई|इंटरनेट|शॉपिंग|पार्सल|लहंगा|साड़ी",
+    "aangan": "घर|मम्मी|पापा|सफ़ाई|सफाई|कबाड़|रिश्तेदार|शादी|बुआ|दिवाली|त्योहार|गरबा",
+}
+SEND = re.compile(r"(वीडियो|वीडिओ|video|रील).{0,25}(भेजो|भेज दो|शेयर|टैग)|उसको भेजो|उसे भेजो")
+
+
+def pick_set(who, text, topic, given=""):
+    """line की बात से set: पहले line के शब्द, फिर खबर के. bablu का anchor/तथ्य = studio."""
+    if given in SET_PAT and re.search(SET_PAT[given], text + " " + topic):
+        return given
+    if who == "bablu" and given in ("studio", ""):
+        return "studio"
+    for src in (text, topic):
+        for name, pat in SET_PAT.items():
+            if re.search(pat, src):
+                return name
+    return "studio" if who == "bablu" else ("village" if given not in SETS_OK or given in SET_PAT else given)
+
+
+def nwords(t):
+    return len(str(t).split())
+
+
 def finish(ep, strict=True):
-    """नए व्यंग्य वाले episode को पक्का करो. strict=False: लंबाई की सख़्ती ढीली (कुछ भी न बने, उससे अच्छा)."""
+    """नए v4 ढाँचे वाले episode को पक्का करो. strict=False: लंबाई की सख़्ती ढीली (कुछ भी न बने, उससे अच्छा).
+    पक्के नियम (असली आँकड़ों से): पहली line = मज़ाक वाला hook ≤ 12 शब्द, कुल ≤ 78 शब्द, "वीडियो भेजो" वाली line नहीं,
+    hook (screen) = पहली बोली गई line, reaction वाला ठहराव नहीं, ज़्यादा से ज़्यादा 2 पंच."""
     ep["format"], ep["label"] = "explain", "काम की खबर"
     ep.setdefault("key_word", "")
     ep.setdefault("icons", ["₹", "NEWS", "%"])
     ep["source"] = ep.get("source") or "Google News"
     ep["ticker"] = [str(t)[:80] for t in (ep.get("ticker") or [])][:4]
     ep["ask"] = str(ep.get("ask") or "")[:60]
-    ep["hook"] = ep.get("hook") or ep.get("hook_text") or ""
     ep["lines"] = [l for l in ep["lines"] if l.get("who") in writer.WHO and str(l.get("say", "")).strip()]
+    sends = [l for l in ep["lines"] if SEND.search(l["say"])]
+    if sends and len(ep["lines"]) - len(sends) >= 5:            # "ये वीडियो उसको भेजो" — बोलकर माँगने से share नहीं होता
+        ep["lines"] = [l for l in ep["lines"] if l not in sends]
+    topic = str(ep.get("topic") or ep.get("breaking") or "")
+    punches = 0
     for ln in ep["lines"]:
         cap = str(ln.get("caption") or "")
         if len(re.findall(r"[\u0900-\u097F]", cap)) < len(re.findall(r"[A-Za-z]", cap)) or len(cap) < 4:
@@ -296,12 +346,15 @@ def finish(ep, strict=True):
         if vis and not ln.get("visual"):
             ln["visual"] = vis[0]                           # पुराने renderer के लिए
         ln["expr"] = ln.get("expr") if ln.get("expr") in EXPRS else "gambhir"
-        ln["set"] = ln.get("set") if ln.get("set") in SETS_OK else ("studio" if ln["who"] == "bablu" else "village")
-        if ln.get("react_pose") not in POSES:
-            ln.pop("react_pose", None)
+        ln["set"] = pick_set(ln["who"], ln["say"], topic, ln.get("set") if ln.get("set") in SETS_OK else "")
+        ln.pop("react_pose", None)                          # reaction का 0.7 सेकंड ठहराव = flow टूटता था → हटाया
+        if ln.get("punch") and punches < 2:
+            punches += 1
+            if ln.get("stamp"):
+                ln["stamp"] = str(ln["stamp"])[:22]
+        else:
+            ln.pop("punch", None)
             ln.pop("stamp", None)
-        elif ln.get("stamp"):
-            ln["stamp"] = str(ln["stamp"])[:22]
         c = ln.get("card")
         if c:
             if not c.get("big"):
@@ -309,19 +362,25 @@ def finish(ep, strict=True):
                 continue
             c["icon"] = c.get("icon") if c.get("icon") in ICONS else "check"
             c["big"], c["tag"], c["sub"] = str(c["big"])[:40], str(c.get("tag", ""))[:28], str(c.get("sub", ""))[:70]
-    if len(ep["lines"]) > 6:                                # reel 20-28 सेकंड: ज़्यादा से ज़्यादा 6 lines
-        ep["lines"] = ep["lines"][:5] + ep["lines"][-1:]
+    if len(ep["lines"]) > 7:                                # reel 18-24 सेकंड: ज़्यादा से ज़्यादा 7 lines
+        ep["lines"] = ep["lines"][:6] + ep["lines"][-1:]
     ep = writer.clean(ep, strict=False)
-    words = sum(len(l["say"].split()) for l in ep["lines"])
+    first = ep["lines"][0]["say"].strip()
+    ep["hook"] = ep["hook_text"] = first if nwords(first) <= 12 else " ".join(first.split()[:10]) + "…"
+    words = sum(nwords(l["say"]) for l in ep["lines"])
     cast = {l["who"] for l in ep["lines"]}
     if strict:
-        assert words <= 140, f"बहुत लंबा: {words} शब्द"
+        assert nwords(first) <= 12, f"पहली line लंबी ({nwords(first)} शब्द) — hook 10 शब्द तक"
+        assert words <= 78, f"बहुत लंबा: {words} शब्द (50-70 चाहिए)"
         assert len(cast) <= 4, f"किरदार बहुत: {cast}"
-        assert not re.match(r"\s*नमस्कार", ep["lines"][0]["say"]), "नमस्कार से शुरुआत"
+        assert len(cast) >= 2, "टकराव के लिए कम से कम 2 किरदार"
+        assert not any(SEND.search(l["say"]) for l in ep["lines"]), "'वीडियो भेजो' वाली line"
+        assert not re.match(r"\s*(नमस्कार|आज की खबर)", first), "नमस्कार/आज की खबर से शुरुआत"
     return ep
 
 
 RISKY = re.compile(r"हत्या|मर्डर|रेप|दुष्कर्म|बलात्कार|यौन|आत्महत्या|सुसाइड|लाश|शव|मौत|मारे गए|हमला|आतंक|गोली|"
+                   r"घायल|डूब|बह गए|बह गई|नदी में गिर|छत से गिर|फ़ायरिंग|फायरिंग|"
                    r"murder|rape|suicide|killed|dead|terror|sex", re.I)
 
 
@@ -335,6 +394,7 @@ def _safe(c):
 
 def write_options(c, n=3):
     import viral_check as vc
+    c = _safe(c)                                            # मौत/हादसा/चोट/अपराध वाली खबरें शुरू से बाहर (उन पर हँसी नहीं बनती)
     try:
         raw = gemini.ask(prompt_pick(c, min(n * 2 + 3, 15)), json_mode=True, temperature=0.4)
     except gemini.QuotaOver:
@@ -343,7 +403,8 @@ def write_options(c, n=3):
         print("  खबरों की list Gemini ने नहीं ली, अपराध/मौत वाली हटाकर दोबारा:", repr(e)[:150])
         c = _safe(c)
         raw = gemini.ask(prompt_pick(c, min(n * 2 + 3, 15)), json_mode=True, temperature=0.4)
-    picks = gemini.json_from(raw).get("picks", [])
+    picks = [p for p in gemini.json_from(raw).get("picks", [])
+             if p.get("topic") and not RISKY.search(str(p.get("topic")) + " " + str(p.get("query", "")))]
     for p in picks:                                         # पहली जाँच: खबर सच में आज उठी हुई है? (free, Gemini नहीं)
         sc, why, heads = vc.trend(p.get("query") or p["topic"])
         p["trend"], p["_heads"] = {"score": sc, "why": why}, heads
@@ -351,19 +412,26 @@ def write_options(c, n=3):
     recent = set(c.get("recent_cats", []))
     picks.sort(key=lambda p: (str(p.get("cat", "")) in recent, -p["trend"]["score"]))   # नए विषय पहले
     c["rejected"] = [p for p in picks if p["trend"]["score"] < vc.TREND_MIN]
+    import topics
     ok, cats = [], set()
+
+    def dry(p):                                             # सूखी खबर (APK/DA/सब्ज़ी के दाम: 70-80% skip) — 6 में ज़्यादा से ज़्यादा 1
+        return not any(v in str(p.get("cat", "")) for v in topics.VIRAL_CATS)
+
+    def room(p):
+        return not dry(p) or sum(dry(q) for q in ok) < 1
+
     for p in picks:                                         # एक विषय से एक ही खबर
         cat = str(p.get("cat") or p.get("topic"))
-        if p["trend"]["score"] >= vc.TREND_MIN and cat not in cats:
+        if p["trend"]["score"] >= vc.TREND_MIN and cat not in cats and room(p):
             ok.append(p)
             cats.add(cat)
     for p in picks:                                         # कम पड़ें तो: थोड़ी कम चर्चित पर असली खबरें (2+ अख़बार) से 3 पूरे
         cat = str(p.get("cat") or p.get("topic"))
         if len(ok) >= n + 1:
             break
-        import topics
         if p not in ok and p["trend"]["score"] >= (1 if any(v in cat for v in topics.VIRAL_CATS) else 2) \
-                and p.get("_heads") and cat not in cats:
+                and p.get("_heads") and cat not in cats and room(p):
             ok.append(p)
             cats.add(cat)
     picks = ok[:n + 1]                                      # 1 ज़्यादा, ताकि आगे कोई कटे तो भी 3 बचें
@@ -377,13 +445,25 @@ def write_options(c, n=3):
         print("  तथ्य:", p.get("topic"), "|", p.get("source"), "|", p.get("confidence"))
     if not packs:
         raise SystemExit("एक भी खबर के पक्के तथ्य नहीं मिले")
-    raw = gemini.json_from(gemini.ask(prompt_write(packs), json_mode=True, temperature=0.8))
+    bank = None                                             # पंच-बैंक: पहले ढेर सारे hooks/पंच, फिर सबसे तेज़ से script
+    try:
+        bank = gemini.json_from(gemini.ask(prompt_punches(packs), json_mode=True, temperature=0.95))
+        bank = bank if isinstance(bank, list) and bank else None
+        print("  पंच-बैंक:", sum(len(b.get("punches", [])) + len(b.get("hooks", [])) for b in bank or []), "विकल्प")
+    except gemini.QuotaOver:
+        raise
+    except Exception as e:                                  # noqa: BLE001
+        print("  पंच-बैंक नहीं बना, सीधे script:", repr(e)[:120])
+    raw = gemini.json_from(gemini.ask(prompt_write(packs, bank), json_mode=True, temperature=0.8))
     raw = [r for r in raw if isinstance(r, dict) and r.get("lines")]
     eps = []
     for ep in raw:
         for strict in (True, False):
             try:
-                eps.append(finish(json.loads(json.dumps(ep)), strict))
+                fe = finish(json.loads(json.dumps(ep)), strict)
+                if not strict:
+                    fe["_loose"] = True                     # ढाँचे से बाहर — Telegram पर ⚠️, और चुनाव में सबसे आख़िर
+                eps.append(fe)
                 break
             except Exception as e:                          # noqa: BLE001
                 print(f"  episode ({'सख़्त' if strict else 'ढीला'}) नहीं बना:", ep.get("topic"), "—", e)
@@ -432,7 +512,8 @@ def write_options(c, n=3):
         print(f"  {'✅' if e in good else '❌'} connect {(e.get('connect') or {}).get('score', '?')}/10: {e.get('topic')}")
     c["rejected"] += [e for e in eps if e not in good]
     if len(good) < n and eps:                               # हमेशा 3 विकल्प: कम पड़ें तो बाकी में से सबसे अच्छी (नंबर साफ़ दिखते हैं)
-        rest = sorted([e for e in eps if e not in good], key=lambda e: -(e.get("connect") or {}).get("score", 0))
+        rest = sorted([e for e in eps if e not in good],
+                      key=lambda e: (bool(e.get("_loose")), -(e.get("connect") or {}).get("score", 0)))
         good = good + rest[:n - len(good)]
         print("  कोई 7+ नहीं — फिर भी सबसे अच्छी", len(good), "भेज रहे (नंबर साफ़ दिखेंगे)")
     if not good:
@@ -444,8 +525,9 @@ def copied(ep):
     """नमूनों (GOLD_LINES) से हूबहू/थोड़ा बदलकर उठाई lines."""
     import difflib
     out = []
+    golds = GOLD_LINES + [l["say"] for e in gold_eps() for l in e.get("lines", [])]
     for ln in ep.get("lines", []):
-        for g in GOLD_LINES:
+        for g in golds:
             if difflib.SequenceMatcher(None, ln.get("say", ""), g).ratio() > 0.7:
                 out.append(ln["say"])
                 break
