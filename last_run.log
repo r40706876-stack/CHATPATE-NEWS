@@ -1,1 +1,66 @@
-  कोई script इंतज़ार में नहीं
+  विषय: ['shopping-आदत', 'ठगी से बचाव', 'त्योहार-ट्रेंड', 'दफ़्तर-नौकरी', 'नियम/नौकरी', 'फ़िल्म-क्रिकेट फैन', 'महँगाई', 'रील का शौक', 'वायरल वीडियो', 'शादी-रिश्ते', 'सफ़र-जुगाड़'] | हाल के विषय (अभी नहीं): ['shopping-आदत', 'ठगी से बचाव', 'दफ़्तर-नौकरी', 'नियम/नौकरी', 'महँगाई', 'वायरल वीडियो', 'शादी-रिश्ते', 'सफ़र-जुगाड़']
+  topics: 33 काम की, 8 वायरल, 6 Trends, 4 त्योहार
+  Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
+    Gemini gemini-3.5-flash: 19s
+  ❌ trend 0/10: 2 साल तक नेटफ्लिक्स देखा और घूमे, फिर भी कंपनी देती रही 2 करोड़ सैलरी | 0 अख़बार/चैनल 2 दिन में, 9 खबरें 7 दिन में
+  ✅ trend 5/10: कंपनी खुद निकाल दे ताकि सेवरेंस पैकेज मिले, कर्मचारी ने इस्तीफा देने से किया इनकार | 14 अख़बार/चैनल 2 दिन में, 61 खबरें 7 दिन में
+  ❌ trend 2/10: चलती ट्रेन के डिब्बे में दीपक जलाया, नारियल फोड़ा और की बाकायदा आरती | 2 अख़बार/चैनल 2 दिन में, 4 खबरें 7 दिन में
+  ❌ trend 2/10: भारत और पाकिस्तान के स्कैमर्स ने मिलाया हाथ, मिलकर लूटा कनाडा का बैंक | 1 अख़बार/चैनल 2 दिन में, 2 खबरें 7 दिन में
+  ❌ trend 0/10: दहन करते ही रावण के पुतले में हुआ धमाका, दुम दबाकर भागे दर्शक | 0 अख़बार/चैनल 2 दिन में, 0 खबरें 7 दिन में
+  ❌ trend 1/10: 75 साल के बुजुर्ग की 30 साल की महिला से सगाई की खबर निकली फर्जी | 1 अख़बार/चैनल 2 दिन में, 7 खबरें 7 दिन में
+  ❌ trend 2/10: दिवाली पर पहनें ये 6 फ्यूजन आउटफिट्स, सोशल मीडिया पर छाने का ट्रेंड | 2 अख़बार/चैनल 2 दिन में, 2 खबरें 7 दिन में
+  ❌ trend 0/10: मोबाइल रिचार्ज में 15% की बढ़ोतरी की तैयारी, कंपनियों की नई रणनीति | 0 अख़बार/चैनल 2 दिन में, 6 खबरें 7 दिन में
+  ✅ trend 5/10: OTP फ्रॉड रोकने के लिए TRAI ला रहा है नया सिस्टम, रुकेगी ठगी | 8 अख़बार/चैनल 2 दिन में, 8 खबरें 7 दिन में
+  ✅ trend 8/10: दिल्ली-NCR में हवा खराब होते ही GRAP-1 लागू, 10 हजार के चालान का डर | 33 अख़बार/चैनल 2 दिन में, 41 खबरें 7 दिन में
+  ❌ trend 2/10: ताइवान के कैफे में कमोड में परोसा खाना, वायरल वीडियो का सामने आया सच | 1 अख़बार/चैनल 2 दिन में, 1 खबरें 7 दिन में
+  ❌ trend 2/10: ऑनलाइन रिश्ता पक्का करने की नई तकनीक का वीडियो सोशल मीडिया पर छाया | 2 अख़बार/चैनल 2 दिन में, 3 खबरें 7 दिन में
+  ❌ trend 0/10: दिवाली बोनस का बेसब्री से इंतज़ार, पर हाथ में वही घूमता हुआ सोनपापड़ी का डिब्बा | 0 अख़बार/चैनल 2 दिन में, 0 खबरें 7 दिन में
+  ❌ trend 0/10: गुलाबी ठंड की आहट के साथ ही रजाई बाहर और नहाने से बचने की बहानेबाजी शुरू | 0 अख़बार/चैनल 2 दिन में, 0 खबरें 7 दिन में
+  ✅ trend 5/10: भारत-न्यूजीलैंड T20 सीरीज़ के शुरू होने से पहले ही बिक गए सारे टिकट | 6 अख़बार/चैनल 2 दिन में, 8 खबरें 7 दिन में
+  चुने विषय: ['फ़िल्म-क्रिकेट फैन', 'नियम/नौकरी', 'दफ़्तर-नौकरी', 'त्योहार-ट्रेंड', 'वायरल', 'सफ़र-जुगाड़', 'वायरल वीडियो']
+    सब models busy — 40s रुककर दोबारा
+    सब models busy — 40s रुककर दोबारा
+    key 1 नहीं चली → key 2
+  Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
+    Gemini gemini-3.5-flash: 17s
+  तथ्य: भारत-न्यूजीलैंड T20 सीरीज़ के शुरू होने से पहले ही बिक गए सारे टिकट | India TV Hindi, Newsnation, Zoom News, Cricket News, Lalluram | high
+  तथ्य: दिल्ली-NCR में हवा खराब होते ही GRAP-1 लागू, 10 हजार के चालान का डर | News18 Hindi, Hindustan, Jagran, Amar Ujala, First India News, NDTV India, Livemint | high
+  तथ्य: कंपनी खुद निकाल दे ताकि सेवरेंस पैकेज मिले, कर्मचारी ने इस्तीफा देने से किया इनकार | AajTak, Dainik Bhaskar | medium
+  तथ्य: दिवाली पर पहनें ये 6 फ्यूजन आउटफिट्स, सोशल मीडिया पर छाने का ट्रेंड | News18 Hindi, Herzindagi | high
+  तथ्य: ताइवान के कैफे में कमोड में परोसा खाना, वायरल वीडियो का सामने आया सच | India TV Hindi | medium
+  तथ्य: चलती ट्रेन के डिब्बे में दीपक जलाया, नारियल फोड़ा और की बाकायदा आरती | AajTak, Amar Ujala | high
+  तथ्य: भारत और पाकिस्तान के स्कैमर्स ने मिलाया हाथ, मिलकर लूटा कनाडा का बैंक | ABP News | medium
+    सब models busy — 40s रुककर दोबारा
+    सब models busy — 40s रुककर दोबारा
+    key 1 नहीं चली → key 2
+    सब models busy — 40s रुककर दोबारा
+    सब models busy — 40s रुककर दोबारा
+  बकरा बहस नहीं बनी: RuntimeError('Gemini nahi chala:\n  gemini-flash-latest: 503 {\n  "error": {\n    "code": 503,\n    "message": "This model is currently experiencing high demand. Spikes in demand are u\n  gemini-3.5-f
+    सब models busy — 40s रुककर दोबारा
+    सब models busy — 40s रुककर दोबारा
+    key 1 नहीं चली → key 2
+    सब models busy — 40s रुककर दोबारा
+    सब models busy — 40s रुककर दोबारा
+  पंच-बैंक नहीं बना, सीधे script: RuntimeError('Gemini nahi chala:\n  gemini-flash-latest: 429 {\n  "error": {\n    "code": 429,\n    "message": "You exce
+    सब models busy — 40s रुककर दोबारा
+    सब models busy — 40s रुककर दोबारा
+    key 1 नहीं चली → key 2
+    सब models busy — 40s रुककर दोबारा
+    सब models busy — 40s रुककर दोबारा
+  वायरल खबर वाली नहीं बनी: RuntimeError('Gemini nahi chala:\n  gemini-flash-latest: 429 {\n  "error": {\n    "code": 429,\n    "message": "You exceeded your current quota, please check your plan and billing deta\n  gemini-3.5-f
+  Gemini busy, 4 मिनट बाद दोबारा: Gemini nahi chala:
+  gemini-flash-latest: 429 {
+  "error": {
+    "code": 429,
+    "message": "You exceeded your current 
+    सब models busy — 40s रुककर दोबारा
+    सब models busy — 40s रुककर दोबारा
+    key 1 नहीं चली → key 2
+    सब models busy — 40s रुककर दोबारा
+    सब models busy — 40s रुककर दोबारा
+  खबरों की list Gemini ने नहीं ली, अपराध/मौत वाली हटाकर दोबारा: RuntimeError('Gemini nahi chala:\n  gemini-flash-latest: 429 {\n  "error": {\n    "code": 429,\n    "message": "You exceeded your current quota, pleas
+    सब models busy — 40s रुककर दोबारा
+    सब models busy — 40s रुककर दोबारा
+    key 1 नहीं चली → key 2
+    सब models busy — 40s रुककर दोबारा
+    सब models busy — 40s रुककर दोबारा
