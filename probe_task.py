@@ -1,7 +1,7 @@
 import subprocess, sys, json
 subprocess.run([sys.executable, "-m", "pip", "install", "-q", "--break-system-packages", "yt-dlp"])
 import clips
-r = subprocess.run(clips._ytdlp() + ["--flat-playlist", "-J", "ytsearchdate5:paramotor office viral"], capture_output=True, text=True, timeout=120)
+r = subprocess.run(clips._ytdlp() + ["--flat-playlist", "-J", "ytsearch5:paramotor office viral"], capture_output=True, text=True, timeout=120)
 print("SEARCH rc", r.returncode, "| err:", r.stderr[-600:])
 try:
     e = json.loads(r.stdout).get("entries") or []

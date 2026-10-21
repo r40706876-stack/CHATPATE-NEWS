@@ -40,7 +40,7 @@ def _cookies(env):
 
 def search(query, n=8):
     """YouTube खोज: [(url, title, channel, duration, upload_date)] — बिना download."""
-    cmd = _ytdlp() + ["--flat-playlist", "-J", "--no-warnings", f"ytsearchdate{n}:{query}"] + _cookies("YT_COOKIES")
+    cmd = _ytdlp() + ["--flat-playlist", "-J", "--no-warnings", f"ytsearch{n}:{query}"] + _cookies("YT_COOKIES")
     try:
         r = subprocess.run(cmd, capture_output=True, text=True, timeout=90)
         data = json.loads(r.stdout or "{}")
