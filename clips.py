@@ -33,8 +33,14 @@ def _cookies(env):
     txt = os.getenv(env, "")
     if not txt.strip():
         return []
+    rows = ["# Netscape HTTP Cookie File"]                # email/Telegram से copy हुआ हो तो tab → space और "#" बिगड़ जाते हैं —
+    for ln in txt.replace("\r", "").splitlines():       # हर cookie line फिर से tab वाली बनाओ
+        p = ln.split()
+        if len(p) >= 7 and p[0].lstrip("#").startswith(".") or (len(p) >= 7 and "." in p[0] and p[1] in ("TRUE", "FALSE")):
+            rows.append("\t".join(p[:6] + [" ".join(p[6:])]))
     f = Path(tempfile.gettempdir()) / f"{env.lower()}.txt"
-    f.write_text(txt, encoding="utf-8")
+    f.write_text("\n".join(rows) + "\n", encoding="utf-8")
+    print(f"  {env}: {len(rows) - 1} cookies")
     return ["--cookies", str(f)]
 
 
