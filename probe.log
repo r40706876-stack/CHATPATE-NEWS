@@ -1,8 +1,7 @@
-SEARCH rc 1 | err: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate5" (urllib)
-
-parse fail 'NoneType' object has no attribute 'get'
+SEARCH rc 0 | err: 
+found 5 ['Colorado man flies to work on a paramotor — and loves it', 'US Air Traffic Controller Flies to Work in a Paramotor! Just 20 Minutes to the Airport', 'I Got a Brand New PAP Moster 185!']
 CUT -> None
-DL rc 1 | err tail: VRw: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies
+DL rc 1 | err tail: dG0: Sign in to confirm you’re not a bot. Use --cookies-from-browser or --cookies for the authentication. See  https://github.com/yt-dlp/yt-dlp/wiki/FAQ#how-do-i-pass-cookies-to-yt-dlp  for how to manually pass cookies. Also see  https://github.com/yt-dlp/yt-dlp/wiki/Extractors#exporting-youtube-cookies  for tips on effectively exporting YouTube cookies
   File "/home/runner/.local/lib/python3.12/site-packages/yt_dlp/extractor/common.py", line 765, in extract
     ie_result = self._real_extract(url)
                 ^^^^^^^^^^^^^^^^^^^^^^^
