@@ -464,9 +464,16 @@ def as_rant(ep):
 
 def take_user_script():
     """तुम्हारी script मिली तो उसी पर video (Gemini की ज़रूरत नहीं)."""
+    tf0 = ROOT / "topics.txt"
+    vishay = re.search(r"^\s*विषय\s*[:：]\s*(.+)$", tf0.read_text(encoding="utf-8"), re.M) if tf0.exists() else None
     ep = user_script()
     if not ep:
         return False
+    if vishay:                                         # "विषय:" वाली line = असली खबर → अख़बार की फ़ोटो/YouTube clip इसी से खोजे जाते हैं
+        v = vishay.group(1).strip()[:90]
+        ep["topic"], ep["breaking"] = v, " ".join(v.split()[:10])
+        for ln in ep["lines"]:
+            ln["topic"] = v
     ep = as_rant(ep)
     import telegram
     tf = ROOT / "topics.txt"
