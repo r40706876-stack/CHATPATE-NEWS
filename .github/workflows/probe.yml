@@ -15,6 +15,7 @@ jobs:
     permissions: {contents: write}
     steps:
       - uses: actions/checkout@v4
+      - run: sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg
       - run: |
           /usr/bin/python3 -m pip install -q --break-system-packages numpy scipy pillow
           curl -fsSL https://deno.land/install.sh | sh -s -- -y >/dev/null 2>&1; export PATH=$HOME/.deno/bin:$PATH   # YouTube के JS challenge के लिए
