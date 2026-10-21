@@ -380,7 +380,8 @@ def finish(ep, strict=True):
 
 
 RISKY = re.compile(r"हत्या|मर्डर|रेप|दुष्कर्म|बलात्कार|यौन|आत्महत्या|सुसाइड|लाश|शव|मौत|मारे गए|हमला|आतंक|गोली|"
-                   r"घायल|डूब|बह गए|बह गई|नदी में गिर|छत से गिर|फ़ायरिंग|फायरिंग|"
+                   r"घायल|डूब|बह गए|बह गई|नदी में गिर|छत से गिर|फ़ायरिंग|फायरिंग|झुलस|डंक|अस्पताल पहुं|अस्पताल पहुँ|"
+                   r"रेस्क्यू|फंसी मासूम|फंसा मासूम|फंसी बच्ची|जेल|"
                    r"murder|rape|suicide|killed|dead|terror|sex", re.I)
 
 
@@ -416,7 +417,8 @@ def write_options(c, n=3):
     ok, cats = [], set()
 
     def dry(p):                                             # सूखी खबर (APK/DA/सब्ज़ी के दाम: 70-80% skip) — 6 में ज़्यादा से ज़्यादा 1
-        return not any(v in str(p.get("cat", "")) for v in topics.VIRAL_CATS)
+        cat = str(p.get("cat", ""))                         # Gemini "[वायरल]" जैसे brackets के साथ भी लौटाता है
+        return not any(v in cat for v in (*topics.VIRAL_CATS, "वायरल", "Trends", "त्योहार", "मेरी feed", "रील"))
 
     def room(p):
         return not dry(p) or sum(dry(q) for q in ok) < 1
