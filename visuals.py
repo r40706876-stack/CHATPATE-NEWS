@@ -338,7 +338,7 @@ def _ahash(path):
         return None
 
 
-def pick_for_lines(lines, per_line=2, pool=12, topic=""):
+def pick_for_lines(lines, per_line=3, pool=14, topic=""):   # 3 तक: एक तस्वीर पर देर तक न अटके
     """{line_index: [path, ...]} — हर line की सारी खोजों का एक pool, AI एक बार में देखकर हर line के लिए 2 तक चुनता है
     (भारत की / बात से सीधी जुड़ी; विदेशी पहचान वाली कभी नहीं)."""
     import gemini

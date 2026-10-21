@@ -652,7 +652,7 @@ def render(ep, segs, chars, out, preview):
     shot: close = पूरा close-up (720x1280 source) | split = ऊपर खबर+नीचे किरदार | full = पूरी तस्वीर+कोने में किरदार."""
     lens = [rv._read(s["wav"]).shape[0] / rv.SR for s in segs]
     counts = [max(1, round(x * FPS)) for x in lens]
-    tail = 0.8                                            # आख़िर में poll वाली 2.6 सेकंड की ख़ाली screen = % देखा घटता था; अब छोटा अंत → loop
+    tail = 1.6 if ep.get("ask") else 0.8                  # comment वाला सवाल अब आख़िरी पंच के *बाद* (पहले पंच के ऊपर चढ़ता था)
     tailn = int(tail * FPS)
     total = sum(counts) + tailn
     events, t0 = [(0.0, "boom")], 0.0
@@ -710,9 +710,8 @@ def render(ep, segs, chars, out, preview):
             last_vis = vis
         if shot == "full" and not vis:
             shot, size = "split", (SW_, SH_)
-        chunk = max(1, int(CUT * FPS))
-        if vis and len(vis) * chunk < n:                        # कम तस्वीरें: हर तस्वीर एक ही बार, बराबर समय (A-B-A-B नहीं)
-            chunk = max(1, math.ceil(n / len(vis)))
+        chunk = max(1, int(CUT * FPS))                          # हर 2 सेकंड नया नज़ारा — कम तस्वीरें हों तो वही तस्वीर नए
+        # zoom/कोण (अंदर/बाहर/बग़ल) से; पहले एक तस्वीर 5-6 सेकंड खिंच जाती थी और video रुकी हुई लगती थी
         face = None
         if s.get("talk"):                                       # हमारी 3 मुँह वाली फ़ोटो से बोलना (साफ़ 3D चेहरा)
             face = talk_frames(s["talk"], shot, n, si)
@@ -793,7 +792,7 @@ def render(ep, segs, chars, out, preview):
             if bool(ln.get("punch")) and not react and not st_text and t >= n * 0.6:
                 st_text = ln.get("stamp") or STAMP_OF.get(ln.get("react_pose"), "")
                 st_t = 0
-            asking = ep.get("ask") and si == len(segs) - 1 and t >= n - 2 * FPS     # सिर्फ़ आख़िरी 2 सेकंड
+            asking = False                                      # सवाल अब सिर्फ़ अंत में (पंच line साफ़ सुनाई-दिखाई दे)
             if st_text and not asking:                          # सवाल वाले पल ठप्पा नहीं (ऊपर एक-दूसरे पर चढ़ते थे)
                 if shot == "close":
                     _stamp(im, st_text, st_t, W / 2 + 60, 330, 78)
@@ -816,7 +815,8 @@ def render(ep, segs, chars, out, preview):
     for t in range(tailn):
         im = end.copy()
         d = ImageDraw.Draw(im)
-        pass
+        if ep.get("ask"):
+            _ask(d, ep["ask"], t + 5, SCR[1] + 260)
         d.rounded_rectangle((260, 1420, W - 260, 1520), 50, fill=RED)
         d.text((W / 2, 1470), "फ़ॉलो करो • बकरा न्यूज़", font=tt.font(46), fill="white", anchor="mm")
         d.rectangle((0, H - 12, int(W * k / total), H), fill=YEL)
