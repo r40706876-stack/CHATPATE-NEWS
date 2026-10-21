@@ -87,6 +87,7 @@ _gem_ok = {"model": None, "dead": False}
 def gemini_line(text, who, expr, key):
     voice, style = GEM.get(who, GEM["bablu"])
     style = ", ".join(s for s in (style, MOOD.get(expr, expr if len(expr) > 12 else "")) if s)
+    style += ". लिखे शब्द हूबहू बोलो, कुछ जोड़ना/छोड़ना नहीं"
     errors = []
     models = [_gem_ok["model"]] if _gem_ok["model"] else TTS_MODELS
     for model in models:
@@ -98,7 +99,8 @@ def gemini_line(text, who, expr, key):
                 "response_format": {"type": "audio"},
                 "generation_config": {"speech_config": [{"voice": voice}]}}),
             ("generateContent", f"{BASE}/models/{model}:generateContent", {
-                "contents": [{"parts": [{"text": f"इस अंदाज़ में बोलो — {style}:\n{text}"}]}],
+                "contents": [{"parts": [{"text": f"इस अंदाज़ में बोलो — {style}. नीचे लिखे शब्द हूबहू, उसी क्रम में "
+                                                  f"बोलो — कोई शब्द जोड़ना, छोड़ना या बदलना नहीं (screen पर यही लिखा दिखेगा):\n{text}"}]}],
                 "generationConfig": {"responseModalities": ["AUDIO"], "speechConfig": {
                     "voiceConfig": {"prebuiltVoiceConfig": {"voiceName": voice}}}}}),
         ]

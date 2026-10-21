@@ -254,6 +254,110 @@ def speech_span(wav):
     return 0.0, 1.0
 
 
+PUNCT = ",।…!?;:"
+
+
+def _weight(w):
+    """एक शब्द बोलने में लगने वाला मोटा समय: अक्षर (व्यंजन/स्वर/अंक) गिनकर."""
+    import re
+    return max(1, len(re.findall(r"[\u0915-\u0939\u0958-\u095F\u0905-\u0914A-Za-z0-9]", w))) + 0.6
+
+
+def word_times(wav, say, n_words=None):
+    """हर शब्द कब शुरू होता है (सेकंड) — असली आवाज़ से: चुप्पी के ठहराव (comma/पूर्णविराम पर) ढूँढकर वाक्य-टुकड़े
+    आवाज़ पर बिठाओ, फिर टुकड़े के अंदर शब्दों की लंबाई से. (पहले सिर्फ़ लंबाई से अंदाज़ा = लिखाई आगे-पीछे.)"""
+    words = str(say).split()
+    if not words:
+        return []
+    try:
+        a = np.abs(rv._read(wav).astype(np.float32))
+        hop = max(1, int(rv.SR * 0.01))
+        env = np.array([a[i:i + hop].mean() for i in range(0, len(a), hop)])
+        on = env > max(0.006, env.max() * 0.08)
+        idx = np.nonzero(on)[0]
+        s0, s1 = (int(idx[0]), int(idx[-1]) + 1) if len(idx) else (0, len(env))
+        pauses, k = [], s0
+        while k < s1:                                     # 120ms+ की चुप्पी = ठहराव
+            if not on[k]:
+                j = k
+                while j < s1 and not on[j]:
+                    j += 1
+                if j - k >= 12:
+                    pauses.append((k, j))
+                k = j
+            else:
+                k += 1
+        wts = np.array([_weight(w) for w in words])
+        cum = np.concatenate([[0], np.cumsum(wts)]) / wts.sum()
+        bounds = [i + 1 for i, w in enumerate(words[:-1]) if w[-1] in PUNCT]
+        anchors, used = [(0, s0)], set()
+        speech = s1 - s0 - sum(b - a_ for a_, b in pauses)
+        for b in bounds:                                  # हर comma/पूर्णविराम के लिए सबसे नज़दीक का ठहराव
+            exp = s0 + cum[b] * (s1 - s0)
+            best = min((p for p in pauses if p not in used), key=lambda p: abs(p[1] - exp), default=None)
+            if best and abs(best[1] - exp) < max(60, 0.25 * speech) and best[1] > anchors[-1][1]:
+                used.add(best)
+                anchors.append((b, best[1]))
+        anchors.append((len(words), s1))
+        out = []
+        for (wa, ta), (wb, tb) in zip(anchors, anchors[1:]):
+            seg = wts[wa:wb]
+            c = np.concatenate([[0], np.cumsum(seg)[:-1]]) / max(1e-6, seg.sum())
+            out += [(ta + x * (tb - ta)) / 100 for x in c]
+        times = out
+    except Exception:                                     # noqa: BLE001
+        L = 1.0
+        times = list(np.linspace(0, L, len(words), endpoint=False))
+    if n_words and n_words != len(times):                 # caption के शब्द (अंक वगैरह) अलग गिनती — अनुपात से
+        times = [times[min(len(times) - 1, int(i * len(times) / n_words))] for i in range(n_words)]
+    return times
+
+
+def karaoke_timed(d, text, now, times, cy):
+    """असली आवाज़ के समय वाले captions: जो शब्द बोला जा रहा है, वही पीला; टुकड़ा comma/पूर्णविराम पर टूटे (4 शब्द तक)."""
+    words = str(text).split()
+    if not words or not times:
+        return
+    cur = max(0, int(np.searchsorted(np.array(times), now, side="right")) - 1)
+    chunks, c = [], []
+    for i, w in enumerate(words):
+        c.append(i)
+        if len(c) >= 4 or w[-1] in PUNCT:
+            chunks.append(c)
+            c = []
+    if c:
+        chunks.append(c)
+    chunk = next(ch for ch in chunks if cur <= ch[-1])
+    f = tt.font(62)
+    ws = [words[i] for i in chunk]
+    widths = [f.getlength(w + " ") for w in ws]
+    total = sum(widths)
+    if total > 940:
+        f = tt.font(int(62 * 940 / total))
+        widths = [f.getlength(w + " ") for w in ws]
+        total = sum(widths)
+    x = (W - total) / 2
+    d.rounded_rectangle((x - 26, cy - 50, x + total + 8, cy + 50), 24, fill=(0, 0, 0), outline=YEL, width=4)
+    for i, w, wd in zip(chunk, ws, widths):
+        d.text((x, cy), w, font=f, fill=YEL if i == cur else (255, 255, 255), anchor="lm", stroke_width=3,
+               stroke_fill=(0, 0, 0))
+        x += wd
+
+
+def hook_low(d, text):
+    """पहली line का पीला hook — किरदार के चेहरे/मुँह के नीचे (ठोड़ी से नीचे), ज़्यादा से ज़्यादा 3 छोटी lines."""
+    f = tt.font(66)
+    rows = rv._wrap(text, f, 980)[:3]
+    if len(rows) == 3:
+        f = tt.font(58)
+        rows = rv._wrap(text, f, 990)[:3]
+    lh = int(f.size * 1.12)
+    top = BAND_Y + 440
+    d.rounded_rectangle((24, top, W - 24, top + 30 + lh * len(rows)), 24, fill=YEL, outline=(0, 0, 0), width=5)
+    for r, row in enumerate(rows):
+        d.text((W / 2, top + 15 + lh * r + lh / 2), row, font=f, fill=(0, 0, 0), anchor="mm")
+
+
 def karaoke_safe(d, text, frac, cy, span=(0.0, 1.0)):
     """बोले जा रहे शब्द के साथ चलते captions (4 शब्द एक बार में): समय शब्दों की लंबाई के हिसाब से बँटता है
     (लंबा शब्द = ज़्यादा देर), और सिर्फ़ आवाज़ वाले हिस्से में — ताकि caption आगे-पीछे न हो."""
@@ -612,6 +716,8 @@ def render(ep, segs, chars, out, preview):
         if not react:
             st_text = ""
         span = speech_span(s["wav"]) if not react else (0.0, 1.0)
+        cap_text = ln.get("caption") or ln.get("say", "")
+        wtimes = word_times(s["wav"], ln.get("say", ""), len(cap_text.split())) if not react else []
         last = None                                              # cur/credit पिछली line से चलते रहते हैं (reaction पर भी)
         if shot != "close" and not vis and cur is None:
             cur = _screen_gen({"big": headline}, seed, size, last_screen)
@@ -673,9 +779,11 @@ def render(ep, segs, chars, out, preview):
                 if first_seen and t < FPS * 2.5 and shot != "close" and not hooking:
                     rv.name_strap(d, (BAND_Y + 84) if shot == "split" else 1130, name, role)
                 if hooking:
-                    _hook(d, ep["hook"], BAND_Y + 470)
+                    hook_low(d, ep["hook"])
+                elif wtimes:
+                    karaoke_timed(d, cap_text, t / FPS, wtimes, BAND_Y + 460)
                 else:
-                    karaoke_safe(d, ln.get("caption") or ln["say"], t / n, BAND_Y + 460, span)
+                    karaoke_safe(d, cap_text, t / n, BAND_Y + 460, span)
             if bool(ln.get("punch")) and not react and not st_text and t >= n * 0.6:
                 st_text = ln.get("stamp") or STAMP_OF.get(ln.get("react_pose"), "")
                 st_t = 0
