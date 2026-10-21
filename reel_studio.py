@@ -545,10 +545,17 @@ def render(ep, segs, chars, out, preview):
     tailn = int(tail * FPS)
     total = sum(counts) + tailn
     events, t0 = [(0.0, "boom")], 0.0
-    for s, L in zip(segs, lens):
+    REACT_SFX = {"laugh": "laugh", "eyeroll": "thug", "smug": "thug", "facepalm": "dhol", "thinking": "glitch"}
+    prev_who = None
+    for i_, (s, L) in enumerate(zip(segs, lens)):
         if t0:
-            events.append((t0, "boom" if s.get("shot") == "close" and not s.get("react") else
-                           "pop" if s.get("react") else "whoosh"))
+            if s.get("react"):                                # reaction कभी चुप नहीं: मज़ेदार आवाज़ तुरंत
+                pose = (segs[i_ - 1]["ln"].get("react_pose") if i_ else "") or "laugh"
+                events.append((t0, REACT_SFX.get(pose, "laugh")))
+            else:                                             # किरदार बदले = TV glitch, वही रहे = whoosh
+                events.append((t0, "glitch" if s["ln"]["who"] != prev_who else "whoosh"))
+        if not s.get("react"):
+            prev_who = s["ln"]["who"]
         t0 += L
     events.append((t0, "ding"))
     moods, last_m = [], "news"
@@ -665,7 +672,7 @@ def render(ep, segs, chars, out, preview):
             if bool(ln.get("punch")) and not react and not st_text and t >= n * 0.6:
                 st_text = ln.get("stamp") or STAMP_OF.get(ln.get("react_pose"), "")
                 st_t = 0
-            asking = ep.get("ask") and (si == last_react or (last_react < 0 and si == len(segs) - 1))
+            asking = ep.get("ask") and si == len(segs) - 1 and t >= n - 2 * FPS     # सिर्फ़ आख़िरी 2 सेकंड
             if st_text and not asking:                          # सवाल वाले पल ठप्पा नहीं (ऊपर एक-दूसरे पर चढ़ते थे)
                 if shot == "close":
                     _stamp(im, st_text, st_t, W / 2 + 60, 330, 78)
@@ -673,7 +680,7 @@ def render(ep, segs, chars, out, preview):
                     _stamp(im, st_text, st_t, SCR[2] - 200, SCR[1] + 120)
                 st_t += 1
                 d = ImageDraw.Draw(im)
-            if ep.get("ask") and (si == last_react or (last_react < 0 and si == len(segs) - 1)):
+            if asking:
                 _ask(d, ep["ask"], t, 300 if shot == "split" else 1040)
             if shot == "split" and not react:
                 pass                                             # नीचे की पट्टी Instagram caption के नीचे छिपती थी — हटाई

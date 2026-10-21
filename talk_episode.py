@@ -65,7 +65,7 @@ def tighten(wav):
     tmp = wav.with_suffix(".t.wav")
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(wav), "-af",
                     "silenceremove=start_periods=1:start_threshold=-45dB,areverse,"
-                    "silenceremove=start_periods=1:start_threshold=-45dB,areverse,atempo=1.1,apad=pad_dur=0.15",
+                    "silenceremove=start_periods=1:start_threshold=-45dB,areverse,atempo=1.1,apad=pad_dur=0.05",
                     str(tmp)], check=True)
     tmp.replace(wav)
 
@@ -257,7 +257,7 @@ def post_studio(ep):
         if (IN / f"react_{i}.png").exists():
             rw = IN / f"audio/{i:02d}_r.wav"
             last_r = max(j for j, l in enumerate(ep["lines"]) if (IN / f"react_{j}.png").exists())
-            dur = "2.4" if ep.get("ask") and i == last_r else "0.9"        # comment वाला सवाल पढ़ने का वक़्त
+            dur = "0.7"                                       # छोटा reaction, साथ में मज़ेदार आवाज़ (सन्नाटा नहीं)
             subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "lavfi", "-i", "anullsrc=r=24000:cl=mono",
                             "-t", dur, "-c:a", "pcm_s16le", str(rw)], check=True)
             segs.append({"ln": {"who": ln["who"], "say": ""}, "wav": rw, "face": None, "react": True, "shot": shot,

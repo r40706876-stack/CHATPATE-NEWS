@@ -49,6 +49,33 @@ def sfx(kind):
         n = int(SR * 0.8)
         t = np.arange(n) / SR
         return 0.25 * (np.sin(2 * math.pi * 1320 * t) + 0.5 * np.sin(2 * math.pi * 1980 * t)) * _env(n, 0.005, 0.3)
+    if kind == "glitch":                                          # TV glitch: टूटी-टूटी तेज़ आवाज़
+        n = int(SR * 0.22)
+        x = rng.normal(0, 1, n) * (np.sin(np.arange(n) / SR * 2 * math.pi * 30) > 0)
+        return 0.22 * x * _env(n, 0.01, 0.4)
+    if kind == "laugh":                                           # हँसी जैसी "हा-हा-हा"
+        out = np.zeros(int(SR * 0.9))
+        for j in range(5):
+            n = int(SR * 0.11)
+            t = np.arange(n) / SR
+            f = 420 - j * 25
+            i0 = int(j * SR * 0.16)
+            out[i0:i0 + n] += 0.3 * (np.sin(2 * math.pi * f * t) + 0.5 * np.sin(2 * math.pi * 2 * f * t)) * \
+                rng.normal(1, 0.25, n) * _env(n, 0.1, 0.5)
+        return out
+    if kind == "dhol":                                            # ढोल की दो थाप
+        out = np.zeros(int(SR * 0.7))
+        for j, (f, a) in enumerate(((95, 0.8), (140, 0.6), (95, 0.9))):
+            n = int(SR * 0.22)
+            t = np.arange(n) / SR
+            i0 = int(j * SR * 0.2)
+            out[i0:i0 + n] += a * np.sin(2 * math.pi * f * t * (1 - 0.6 * t)) * np.exp(-t * 16)
+        return 0.7 * out
+    if kind == "thug":                                            # "Thug life" जैसा भारी bass + ऊँचा ping
+        n = int(SR * 0.8)
+        t = np.arange(n) / SR
+        return 0.5 * np.sin(2 * math.pi * (60 - 20 * t) * t) * np.exp(-t * 4) + \
+            0.15 * np.sin(2 * math.pi * 1760 * t) * np.exp(-t * 9)
     if kind == "tick":
         n = int(SR * 0.02)
         return 0.05 * rng.normal(0, 1, n) * _env(n, 0.01, 0.2)
