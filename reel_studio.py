@@ -471,7 +471,7 @@ def key_phrase(ln):
     if ln.get("stamp"):
         return str(ln["stamp"])
     t = str(ln.get("caption") or ln.get("say") or "")
-    tail = re.split(r"…|\.\.\.|।|,", t.strip(" ।!?"))
+    tail = re.split(r"…|\.\.\.|।|,|:", t.strip(" ।!?"))
     tail = [x.strip() for x in tail if x.strip()]
     w = (tail[-1] if tail else t).split()
     aux = {"है", "हैं", "था", "थे", "थी", "रहा", "रही", "रहे", "पड़", "गया", "गई", "गए", "हो", "जाता", "जाती"}
