@@ -108,6 +108,18 @@ def prep(script_path):
             shutil.copy(path, IN / f"broll/{i}_{j}{Path(path).suffix}")
             if Path(path).with_suffix(".txt").exists():          # photo वाले का नाम (CC license)
                 shutil.copy(Path(path).with_suffix(".txt"), IN / f"broll/{i}_{j}.txt")
+    if not ep.get("no_clips"):                                 # असली खबर के छोटे video clips (पहले सेकंड में हरकत)
+        try:
+            import clips
+            qs = [q for ln in ep["lines"][:2] for q in (ln.get("photo_hi") or [])]
+            got_c = clips.for_topic(ep.get("topic") or ep.get("breaking", ""), qs, want=2)
+            empty = [i for i in range(1, len(ep["lines"])) if not list((IN / "broll").glob(f"{i}_*"))]
+            for k, (cp, _) in enumerate(got_c):
+                li = 0 if k == 0 else (empty[0] if empty else min(2, len(ep["lines"]) - 1))
+                shutil.copy(cp, IN / f"broll/{li}_clip{k}.mp4")
+                shutil.copy(cp.with_suffix(".txt"), IN / f"broll/{li}_clip{k}.txt")
+        except Exception as e:                                 # noqa: BLE001
+            print("  clips वाला हिस्सा छोड़ा:", repr(e)[:150])
     json.dump(ep, open(IN / "episode.json", "w", encoding="utf-8"), ensure_ascii=False)
     sprite_lips = ep.get("sprite") and ep.get("lips", "sadtalker") == "sprite"
     print(json.dumps([] if sprite_lips else list(range(len(ep["lines"])))))   # sprite वाले होंठ = SadTalker की ज़रूरत नहीं
@@ -247,7 +259,8 @@ def post_studio(ep):
     for i, ln in enumerate(ep["lines"]):
         clips = sorted((OUT / str(i)).rglob("*.mp4"))
         still = Image.open(IN / f"{i}/still.png").convert("RGB")
-        vis = sorted(p for p in (IN / "broll").glob(f"{i}_*") if p.suffix != ".txt") if (IN / "broll").exists() else []
+        vis = sorted((p for p in (IN / "broll").glob(f"{i}_*") if p.suffix != ".txt"),   # असली clip सबसे पहले
+                     key=lambda p: ("clip" not in p.name, p.name)) if (IN / "broll").exists() else []
         shot = ln.get("shot") or reel_studio.shot_for(i, ln)
         talk = None
         sprite = (ep.get("sprite") or {}).get(ln["who"])

@@ -465,6 +465,24 @@ def _screen_gen(src, seed, size, bg=None, hero=False):
         t += 1
 
 
+def key_phrase(ln):
+    """line की सबसे चुटीली छोटी बात (2-4 शब्द): ठप्पा, वरना "…" के बाद वाला हिस्सा, वरना आख़िरी 3 शब्द."""
+    import re
+    if ln.get("stamp"):
+        return str(ln["stamp"])
+    t = str(ln.get("caption") or ln.get("say") or "")
+    tail = re.split(r"…|\.\.\.|।|,", t.strip(" ।!?"))
+    tail = [x.strip() for x in tail if x.strip()]
+    w = (tail[-1] if tail else t).split()
+    aux = {"है", "हैं", "था", "थे", "थी", "रहा", "रही", "रहे", "पड़", "गया", "गई", "गए", "हो", "जाता", "जाती"}
+    while len(w) > 2 and w[-1].strip("!?") in aux:          # "बनना पड़ रहा है" → "हनुमान बनना"
+        w = w[:-1]
+    w = w[-3:]
+    while len(w) > 1 and w[0] in {"के", "की", "का", "लिए", "में", "से", "को", "पर", "और", "तो"}:
+        w = w[1:]
+    return " ".join(w) + ("!" if t.rstrip().endswith("!") else "") if len(w) >= 1 and len("".join(w)) > 3 else ""
+
+
 def _credit(src):
     if isinstance(src, Path) and src.with_suffix(".txt").exists():
         return src.with_suffix(".txt").read_text(encoding="utf-8")[:70]
@@ -697,6 +715,9 @@ def render(ep, segs, chars, out, preview):
             # इसी खबर की दूसरी lines की असली तस्वीरें, जो अभी-अभी न दिखी हों, नए zoom के साथ
             fresh = [p for p in pool if p not in last_vis] or pool
             vis = [fresh[(si + k) % len(fresh)] for k in range(min(2, len(fresh)))]
+            key = key_phrase(ln)                                # बीच में उसी line की मुख्य बात, बड़े उछलते अक्षरों में
+            if key:                                             # (वही तस्वीर बार-बार दोहराने की जगह)
+                vis = [vis[0], {"big": key}] + vis[1:]
         if shot in ("split", "full") and not vis and not react:
             if ln.get("big"):
                 vis = [{"big": ln["big"], "sub": ln.get("sub", "")}]
