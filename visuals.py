@@ -357,11 +357,17 @@ def pick_for_lines(lines, per_line=2, pool=12, topic=""):
             tqs += [h for h, _, _ in topics.rss_search(" ".join(str(tp).split()[:6]), n=5)]
         except Exception:                                                  # noqa: BLE001
             pass
+        tw0 = _stems(tp)
+        need = 2 if len(tw0) >= 3 else 1
         for tq in dict.fromkeys(q for q in tqs if q):
             for c in news_images.article_images(tq, n=8):
-                if c["url"] not in seen_u:
-                    seen_u.add(c["url"])
-                    imgs.append(c)
+                if c["url"] in seen_u:
+                    continue
+                if len(tw0 & _stems(c.get("tags", ""))) < need:            # उसी खबर का लेख नहीं (दूसरी खबर की फ़ोटो) = नहीं
+                    continue
+                seen_u.add(c["url"])
+                c["same_story"] = True
+                imgs.append(c)
             if len(imgs) >= 16:
                 break
         print(f"  '{str(tp)[:40]}' के लेखों से {len(imgs)} फ़ोटो")
@@ -384,13 +390,15 @@ def pick_for_lines(lines, per_line=2, pool=12, topic=""):
         for c in news:                                                     # title में न line की बात, न खबर की = बेमेल (बैंक छुट्टी, बिजली…)
             tt_ = _stems(c.get("tags", ""))
             ml, mt = len(lw & tt_), len(tw & tt_)
-            if ml + mt == 0:
+            if not c.get("same_story") and (ml == 0 or mt == 0):       # line-खोज वाली फ़ोटो: line और खबर दोनों से मेल ज़रूरी
                 continue
             c["score"] = c["match"] + 2.5 + 1.5 * ml + 0.5 * mt
             kept.append(c)
         news = kept
-        for qi, q in enumerate(qs):
+        for qi, q in enumerate(qs):                                        # stock फ़ोटो सिर्फ़ AI जाँच के लिए (बिना जाँच कभी नहीं)
             for c in candidates(q, k=4, free=qi < 2):
+                c["stock"] = True
+                c["score"] = c.get("score", 0) - 2
                 news.append(c)
         for c in sorted(news, key=lambda c: -c["score"]):
             if c["id"] not in seen and c["id"] not in _used:
@@ -429,8 +437,7 @@ def pick_for_lines(lines, per_line=2, pool=12, topic=""):
                 print("  AI जाँच में गड़बड़, दोबारा:", repr(e)[:100])
         if got is None:                                   # AI नहीं चला: बिना देखे कुछ नहीं लगाते — सिर्फ़ भारत वाली पक्की photo
             print("  AI जाँच नहीं हुई — खबर/search वाली असली फ़ोटो (search engine का मेल), वरना भारत वाली पक्की photo")
-            got = [[j for j, c in enumerate(cs) if c.get("news")][:per_line] or
-                   [j for j, c in enumerate(cs) if c.get("india") and c["match"] >= 2 and not c["id"].startswith("v")][:1]
+            got = [[j for j, c in enumerate(cs) if c.get("news") and not c.get("stock")][:per_line]
                    for _, _, cs in batch]
         picks += [got[n] if n < len(got) else [] for n in range(len(batch))]
     CACHE.mkdir(exist_ok=True)
@@ -458,6 +465,18 @@ def pick_for_lines(lines, per_line=2, pool=12, topic=""):
             if c.get("credit"):
                 path.with_suffix(".txt").write_text(c["credit"], encoding="utf-8")
             got.append(path)
+        if not got:                                       # कोई नहीं: इसी खबर के लेख की बची फ़ोटो (बेमेल stock से बेहतर)
+            for c in cs:
+                if c.get("same_story") and c["id"] not in _used:
+                    try:
+                        path = _download(c["url"], CACHE / f"{c['id']}.jpg")
+                    except Exception:                     # noqa: BLE001
+                        continue
+                    _used.add(c["id"])
+                    if c.get("credit"):
+                        path.with_suffix(".txt").write_text(c["credit"], encoding="utf-8")
+                    got.append(path)
+                    break
         out[i] = got
         print(f"  line {i + 1}: {len(got)} तस्वीर ({', '.join(qs[:4])})" + ("" if got else "  ❌"))
     return out
