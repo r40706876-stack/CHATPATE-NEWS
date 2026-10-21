@@ -1,1 +1,62 @@
-  कोई script इंतज़ार में नहीं
+  विषय: ['अस्पताल/सेहत', 'किसान/गाँव', 'ठगी से बचाव', 'नियम/बैंक', 'नौकरी/परीक्षा', 'पढ़ाई/स्कूल', 'फ़ोन/इंटरनेट', 'महँगाई', 'योजना', 'शहर-कस्बा', 'सफ़र'] | हाल के विषय (अभी नहीं): ['अस्पताल/सेहत', 'किसान/गाँव', 'ठगी से बचाव', 'नियम/बैंक', 'पढ़ाई/स्कूल', 'फ़ोन/इंटरनेट', 'महँगाई', 'योजना', 'शहर-कस्बा', 'सफ़र']
+  topics: 33 काम की, 8 वायरल, 6 Trends, 4 त्योहार
+  Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
+    Gemini gemini-flash-latest: 53s
+  ❌ trend 2/10: ससुर और बहू की रात में छिपकर स्कूटी पर मटरगश्ती का वीडियो वायरल | 1 अख़बार/चैनल 2 दिन में, 1 खबरें 7 दिन में
+  ✅ trend 4/10: चाय की टपरी से चल रहा था मेडिकल नीट पेपर लीक का फर्जी खेल | 3 अख़बार/चैनल 2 दिन में, 9 खबरें 7 दिन में
+  ❌ trend 2/10: छह साल बाद यूपीआई पेमेंट नियमों में संभावित बदलाव से आम उपभोक्ता परेशान | 4 अख़बार/चैनल 2 दिन में, 28 खबरें 7 दिन में
+  ❌ trend 1/10: खुदरा महंगाई दर पांच फीसदी पार और थाली से प्याज फिर हुआ गायब | 2 अख़बार/चैनल 2 दिन में, 7 खबरें 7 दिन में
+  ❌ trend 0/10: दिवाली बोनस की आस में ऑनलाइन शॉपिंग कार्ट सजाए बैठे प्राइवेट नौकरीपेशा कर्मचारी | 0 अख़बार/चैनल 2 दिन में, 5 खबरें 7 दिन में
+  ❌ trend 2/10: दिवाली और छठ पर घर जाने की होड़ में स्पेशल ट्रेनों में मारामारी | 3 अख़बार/चैनल 2 दिन में, 54 खबरें 7 दिन में
+  ❌ trend 2/10: खस्ताहाल सड़कों के बीच हर कुछ मिनट में दनादन कट रहे भारी चालान | 5 अख़बार/चैनल 2 दिन में, 17 खबरें 7 दिन में
+  ❌ trend 0/10: कैंसर की जरूरी दवाओं पर भारी मुनाफाखोरी, बाजार में कई गुना महंगे इंजेक्शन | 0 अख़बार/चैनल 2 दिन में, 7 खबरें 7 दिन में
+  ❌ trend 1/10: सरकारी दावों के विपरीत खाद की किल्लत, समितियों पर कतारों में उलझे किसान | 1 अख़बार/चैनल 2 दिन में, 10 खबरें 7 दिन में
+  ❌ trend 2/10: डिजिटल व्यवस्था के दावों के बीच अस्पताल में सर्वर ठप, मरीज हुए बेहाल | 1 अख़बार/चैनल 2 दिन में, 1 खबरें 7 दिन में
+  ❌ trend 2/10: इंजीनियरिंग प्रवेश परीक्षा के फॉर्म जारी होते ही छात्रों पर बढ़ा नया दबाव | 5 अख़बार/चैनल 2 दिन में, 66 खबरें 7 दिन में
+  ✅ trend 5/10: त्योहारों के मौसम में किसान सम्मान निधि की अगली किस्त पर टिकी निगाहें | 16 अख़बार/चैनल 2 दिन में, 60 खबरें 7 दिन में
+  ✅ trend 7/10: फेस्टिव सीजन में भारी छूट और सस्ते ऑफर्स के नाम पर ऑनलाइन ठगी | 20 अख़बार/चैनल 2 दिन में, 65 खबरें 7 दिन में
+  ❌ trend 2/10: दिवाली सफाई के लिए ऐप पर सर्विस बुक करने का नया घरेलू ट्रेंड | 0 अख़बार/चैनल 2 दिन में, 1 खबरें 7 दिन में, Google Trends में: urban company share price
+  ✅ trend 6/10: गुलाबी ठंड की दस्तक के साथ रजाई बाहर और नहाने से बहानेबाजी शुरू | 15 अख़बार/चैनल 2 दिन में, 53 खबरें 7 दिन में
+  चुने विषय: ['[ठगी से बचाव]', '[मौसम]', '[योजना]', '[नौकरी/परीक्षा]', '[वायरल]', '[नियम/बैंक]', '[सफ़र]']
+    सब models busy — 40s रुककर दोबारा
+    सब models busy — 40s रुककर दोबारा
+    key 1 नहीं चली → key 2
+  Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
+    Gemini gemini-flash-latest: 22s
+  तथ्य: फेस्टिव सीजन में फर्जी ऑफर्स और ऑनलाइन साइबर ठगी | ABP News, India TV Hindi, Dainik Bhaskar, Amar Ujala, ETV Bharat, Hindustan | high
+  तथ्य: मौसम में बदलाव और गुलाबी ठंड की शुरुआत | ETV Bharat, Dainik Bhaskar, Jagran, NDTV India, Hindustan | high
+  तथ्य: पीएम किसान सम्मान निधि की 24वीं किस्त का इंतजार | NDTV India, Jagran, ABP News, Amar Ujala, Livemint, Hindustan, Navbharat Times | high
+  तथ्य: चाय की टपरी से फर्जी नीट पेपर लीक का मामला | Jansatta, News24 Hindi, Prabhat Khabar, The Lallantop | high
+  तथ्य: ससुर और बहू का रात में स्कूटी चलाने का वीडियो वायरल | News18 Hindi | medium
+  तथ्य: ₹2,000 से अधिक के यूपीआई (UPI) ट्रांजैक्शन पर चार्ज से जुड़े नियम | Dainik Bhaskar, Gadgets 360 Hindi, Business Standard, Livemint, Prabhat Khabar | high
+  तथ्य: दिवाली और छठ महापर्व पर स्पेशल ट्रेनों का संचालन | AajTak, NDTV India, News18 Hindi, Navbharat Times, Amar Ujala, Jagran, ETV Bharat | high
+    सब models busy — 40s रुककर दोबारा
+    सब models busy — 40s रुककर दोबारा
+    key 1 नहीं चली → key 2
+    Gemini gemini-3.5-flash: 55s
+    Gemini gemini-3.6-flash: 18s
+    सब models busy — 40s रुककर दोबारा
+    सब models busy — 40s रुककर दोबारा
+    key 1 नहीं चली → key 2
+    सब models busy — 40s रुककर दोबारा
+    Gemini gemini-flash-latest: 79s
+  तीखी script नहीं बनी: 'lines'
+  तीखी script नहीं बनी: 'lines'
+  तीखी script नहीं बनी: 'lines'
+  तीखी script नहीं बनी: 'lines'
+  तीखी script नहीं बनी: 'lines'
+  तीखी script नहीं बनी: 'lines'
+  तीखी script नहीं बनी: 'lines'
+  ❌ connect 5/10: फेस्टिव सीजन में फर्जी ऑफर्स और ऑनलाइन साइबर ठगी
+  ❌ connect 5/10: मौसम में बदलाव और गुलाबी ठंड की शुरुआत
+  ❌ connect 4/10: पीएम किसान सम्मान निधि की 24वीं किस्त का इंतजार
+  ❌ connect 2/10: चाय की टपरी से फर्जी नीट पेपर लीक का मामला
+  ❌ connect 4/10: ससुर और बहू का रात में स्कूटी चलाने का वीडियो वायरल
+  ❌ connect 4/10: ₹2,000 से अधिक के यूपीआई (UPI) ट्रांजैक्शन पर चार्ज से जुड़े नियम
+  ❌ connect 6/10: दिवाली और छठ महापर्व पर स्पेशल ट्रेनों का संचालन
+  कोई 7+ नहीं — फिर भी सबसे अच्छी 6 भेज रहे (नंबर साफ़ दिखेंगे)
+/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/run_daily.py:31: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  return dt.datetime.utcnow() + dt.timedelta(hours=5, minutes=30)
+  6 scripts Telegram पर भेजीं — जवाब का इंतज़ार
+  अभी जवाब नहीं आया
+  अभी जवाब नहीं आया
