@@ -23,7 +23,7 @@ def _ytdlp():
     try:
         import yt_dlp  # noqa: F401
     except ImportError:
-        subprocess.run([sys.executable, "-m", "pip", "install", "-q", "--break-system-packages", "yt-dlp"],
+        subprocess.run([sys.executable, "-m", "pip", "install", "-q", "--break-system-packages", "-U", "yt-dlp[default]"],
                        capture_output=True)
         subprocess.run([sys.executable, "-m", "pip", "install", "-q", "yt-dlp"], capture_output=True)
     return [sys.executable, "-m", "yt_dlp"]
@@ -87,12 +87,12 @@ def cut(url, out, start, secs=CLIP_SECS):
 def for_topic(topic, queries=(), want=2):
     """इसी खबर के `want` clips: [(path, credit)]. title में खबर के 2+ असली शब्द हों, video 15 सेकंड-20 मिनट का."""
     import visuals
-    tw = visuals._stems(topic)
-    need = 2 if len(tw) >= 3 else 1
     seen, got = set(), []
     for q in [*queries, topic, " ".join(str(topic).split()[:5])]:
         if not q or len(got) >= want:
             continue
+        tw = visuals._stems(q)                            # title उसी खोज (Hindi या English) के 2+ शब्दों से मिले
+        need = 2 if len(tw) >= 3 else 1
         for url, title, ch, dur in search(q):
             if url in seen or len(got) >= want:
                 continue

@@ -117,7 +117,8 @@ def prep(script_path):
     if not ep.get("no_clips"):                                 # असली खबर के छोटे video clips (पहले सेकंड में हरकत)
         try:
             import clips
-            qs = [q for ln in ep["lines"][:2] for q in (ln.get("photo_hi") or [])]
+            qs = [q for ln in ep["lines"][:2] for q in (ln.get("photo_hi") or [])] + \
+                 [" ".join(str(q).split()[:4]) for ln in ep["lines"][:2] for q in (ln.get("visuals") or [])[:1]]
             got_c = clips.for_topic(ep.get("topic") or ep.get("breaking", ""), qs, want=2)
             empty = [i for i in range(1, len(ep["lines"])) if not list((IN / "broll").glob(f"{i}_*"))]
             for k, (cp, _) in enumerate(got_c):
