@@ -681,6 +681,7 @@ def render(ep, segs, chars, out, preview):
     bases = _bases()
     headline = ep.get("breaking") or ep.get("title") or ""
     last_react = max([i for i, s in enumerate(segs) if s.get("react")], default=-1)
+    pool = list(dict.fromkeys(p for s in segs for p in (s.get("vis") or []) if isinstance(p, Path)))   # सारी असली तस्वीरें
     k, seed, last_screen, prev_im, last_vis = 0, 0, None, None, []
     cur, credit, clean = None, "", None
     st_text, st_t, seen = "", 0, set()
@@ -691,6 +692,11 @@ def render(ep, segs, chars, out, preview):
         _, name, role = chars[ln["who"]]
         size = (W, H) if shot == "full" else (SW_, SH_)
         vis = list(s.get("vis") or [])
+        if shot in ("split", "full") and not vis and not react and pool:
+            # तस्वीर नहीं मिली: ख़ाली/धुंधली screen नहीं (पहली video में 2.5 से 13 सेकंड तक ऊपर काला रहा — ठीक खाई पर) —
+            # इसी खबर की दूसरी lines की असली तस्वीरें, जो अभी-अभी न दिखी हों, नए zoom के साथ
+            fresh = [p for p in pool if p not in last_vis] or pool
+            vis = [fresh[(si + k) % len(fresh)] for k in range(min(2, len(fresh)))]
         if shot in ("split", "full") and not vis and not react:
             if ln.get("big"):
                 vis = [{"big": ln["big"], "sub": ln.get("sub", "")}]
