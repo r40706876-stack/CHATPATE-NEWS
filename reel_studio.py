@@ -478,7 +478,7 @@ def key_phrase(ln):
     while len(w) > 2 and w[-1].strip("!?") in aux:          # "बनना पड़ रहा है" → "हनुमान बनना"
         w = w[:-1]
     w = w[-3:]
-    while len(w) > 1 and w[0] in {"के", "की", "का", "लिए", "में", "से", "को", "पर", "और", "तो"}:
+    while len(w) > 1 and w[0] in {"के", "की", "का", "लिए", "में", "से", "को", "पर", "और", "तो", "भी", "फिर", "ही", "अब", "बस"}:
         w = w[1:]
     return " ".join(w) + ("!" if t.rstrip().endswith("!") else "") if len(w) >= 1 and len("".join(w)) > 3 else ""
 
