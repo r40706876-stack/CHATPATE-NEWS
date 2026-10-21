@@ -1,12 +1,4 @@
-ffmpeg: None
   YT_COOKIES: 22 cookies
   YT_COOKIES: 22 cookies
-rc 1 | out: e7e60-main
-[youtube] MfQxOYWqqbU: Downloading web embedded player API JSON
-[youtube] MfQxOYWqqbU: Downloading tv downgraded player API JSON
-[youtube] [jsc:deno] Solving JS challenges using deno
-[info] MfQxOYWqqbU: Downloading 1 format(s): 398
-[info] MfQxOYWqqbU: Downloading 1 time ranges: 30.0-34.0
- | err: ERROR: You have requested downloading the video partially, but ffmpeg is not installed. Aborting
-
-[]
+  🎬 असली clip: Flying To Work On My Paramotor! — Chucky Wright
+RESULT: [('/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/visuals_cache/clips/clip_2.mp4', 565084, 'वीडियो: Chucky Wright (YouTube)')]
