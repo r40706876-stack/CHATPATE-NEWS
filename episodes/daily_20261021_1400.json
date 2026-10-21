@@ -1,0 +1,165 @@
+{
+ "topic": "उड़कर ऑफिस जाने वाले शख्स का वीडियो देख ट्रैफिक पीड़ित जनता हैरान",
+ "category": "वायरल वीडियो",
+ "breaking": "ट्रैफिक से बचने के लिए उड़कर दफ्तर जाने का वीडियो वायरल",
+ "hook_text": "ट्रैफिक जाम से बचने के लिए बंदा उड़कर दफ़्तर पहुँच गया!",
+ "ask": "क्या आप भी जाम से बचने के लिए उड़कर जाना चाहेंगे?",
+ "source": "आज तक, दैनिक भास्कर, News18 Hindi, जागरण, NDTV India",
+ "poll": {
+  "q": "क्या आप भी जाम से बचने के लिए उड़कर जाना चाहेंगे?",
+  "a": "उड़ना सही",
+  "b": "मेट्रो सही"
+ },
+ "ticker": [
+  "पीठ पर उड़ने वाली मशीन बाँधकर उड़ा बंदा",
+  "दफ़्तर जाने का वीडियो सोशल मीडिया पर छाया",
+  "ट्रैफिक पीड़ित जनता वीडियो देखकर हैरान"
+ ],
+ "cast_why": "जाम में फँसे कर्मचारी का दर्द और उड़ने वाले वीडियो पर चाचा की टिप्पणी",
+ "tag_who": "जो दो मिनट की देरी पर भी लेट आने का बहाना बनाता है",
+ "lines": [
+  {
+   "who": "ramesh",
+   "say": "ट्रैफिक जाम से बचने के लिए बंदा उड़कर दफ़्तर पहुँच गया!",
+   "caption": "ट्रैफिक जाम से बचने के लिए बंदा उड़कर दफ़्तर पहुँच गया!",
+   "expr": "hairan",
+   "set": "road",
+   "visuals": [
+    "man with flying jetpack in sky",
+    "heavy traffic jam on city flyover",
+    "commuter looking frustrated in car"
+   ],
+   "photo_hi": [
+    "उड़ने वाली मशीन ऑफिस",
+    "ट्रैफिक जाम वायरल वीडियो"
+   ],
+   "visual": "man with flying jetpack in sky",
+   "scene": "studio",
+   "punch": false,
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "say": "पीठ पर उड़ने वाली मशीन बाँधकर ऑफिस जाने वाले व्यक्ति का वीडियो वायरल हुआ है।",
+   "caption": "पीठ पर उड़ने वाली मशीन बाँधकर ऑफिस जाने वाले व्यक्ति का वीडियो वायरल हुआ है।",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "social media viral video player frame",
+    "jetpack technology suit demonstration",
+    "office building high angle view"
+   ],
+   "photo_hi": [
+    "फ्लाई मशीन दफ्तर वीडियो",
+    "सोशल मीडिया वायरल न्यूज"
+   ],
+   "card": {
+    "tag": "वायरल वीडियो",
+    "big": "उड़कर पहुँचा ऑफिस",
+    "sub": "ट्रैफिक से बचने का अनूठा तरीका",
+    "icon": "alert"
+   },
+   "visual": "social media viral video player frame",
+   "scene": "card",
+   "punch": false,
+   "insta": ""
+  },
+  {
+   "who": "chacha",
+   "say": "हमारे ज़माने में लोग पैदल चलते थे, अब दफ़्तर पहुँचने के लिए हनुमान बनना पड़ रहा है।",
+   "caption": "हमारे ज़माने में लोग पैदल चलते थे, अब दफ़्तर पहुँचने के लिए हनुमान बनना पड़ रहा है।",
+   "expr": "tanz",
+   "set": "office",
+   "visuals": [
+    "elderly man sitting looking at smartphone",
+    "skyline with high rise corporate office buildings",
+    "birds flying over busy city road"
+   ],
+   "photo_hi": [
+    "ट्रैफिक से परेशान जनता",
+    "सड़क पर भारी जाम"
+   ],
+   "visual": "elderly man sitting looking at smartphone",
+   "scene": "chacha",
+   "punch": false,
+   "insta": ""
+  },
+  {
+   "who": "pinky",
+   "say": "हर दफ़्तर में एक बॉस है, जो उड़कर आने पर भी कहेगा… दो मिनट लेट हो!",
+   "caption": "हर दफ़्तर में एक बॉस है, जो उड़कर आने पर भी कहेगा… 2 मिनट लेट हो!",
+   "expr": "gussa",
+   "set": "office",
+   "visuals": [
+    "boss pointing at wrist watch in office",
+    "employee standing nervously in cabin",
+    "office wall clock ticking"
+   ],
+   "photo_hi": [
+    "ऑफिस लेट आने पर गुस्सा",
+    "कॉर्पोरेट बॉस डांट"
+   ],
+   "visual": "boss pointing at wrist watch in office",
+   "scene": "pinky",
+   "punch": false,
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "say": "विशेषज्ञों का कहना है, वायरल वीडियो की सत्यता जाँचें। जाम की सत्यता रोज़ जाँच रहे हैं।",
+   "caption": "विशेषज्ञों का कहना है, वायरल वीडियो की सत्यता जाँचें। जाम की सत्यता रोज़ जाँच रहे हैं।",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "fact check label screen digital",
+    "endless line of cars stopped in traffic",
+    "news studio presenter serious expression"
+   ],
+   "photo_hi": [
+    "वायरल वीडियो सच या झूठ",
+    "शहर का भयानक ट्रैफिक"
+   ],
+   "punch": true,
+   "stamp": "सत्यता… रोज़ सड़क पर!",
+   "visual": "fact check label screen digital",
+   "scene": "studio_end",
+   "insta": ""
+  }
+ ],
+ "caption_post": "ट्रैफिक जाम से बचने के लिए बंदा उड़कर दफ़्तर पहुँच गया! Tag करो उस बॉस को जो उड़कर आने के बाद भी दो मिनट की देरी पर बायोमेट्रिक काट लेता है! क्या आप भी जाम से बचने के लिए उड़कर जाना चाहेंगे? स्रोत: आज तक, दैनिक भास्कर, News18 Hindi, जागरण, NDTV India #TrafficJam #ViralVideo #FlyingToOffice #CorporateLife #BakraNews (AI से बने किरदार)",
+ "format": "explain",
+ "label": "काम की खबर",
+ "key_word": "",
+ "icons": [
+  "₹",
+  "NEWS",
+  "%"
+ ],
+ "hook": "ट्रैफिक जाम से बचने के लिए बंदा उड़कर दफ़्तर पहुँच गया!",
+ "trend": {
+  "score": 5,
+  "why": "14 अख़बार/चैनल 2 दिन में, 53 खबरें 7 दिन में"
+ },
+ "connect": {
+  "score": 8,
+  "why": "'उड़कर आने पर भी बॉस कहेगा 2 मिनट लेट हो' वाली लाइन पर लोग दोस्तों और सहकर्मियों को जमकर टैग करेंगे।",
+  "weak": "हर लाइन में 'बबलू तथ्य पढ़ता है और बाकी मज़ाक बनाते हैं' वाला ढाँचा दोहराया गया है।",
+  "fix": "बातचीत में आपसी टकराव लाएँ, जैसे चाचा और पिंकी के बीच सीधे बहस शुरू करवाएँ।",
+  "parts": {
+   "A": 1,
+   "B": 2,
+   "C": 2,
+   "D": 2,
+   "E": 1,
+   "F": 1,
+   "G": 0
+  }
+ },
+ "sprite": {
+  "chacha": "assets/toon/chacha",
+  "ramesh": "assets/toon/ramesh",
+  "pinky": "assets/toon/pinky",
+  "bablu": "assets/toon/bablu"
+ },
+ "production": true
+}
