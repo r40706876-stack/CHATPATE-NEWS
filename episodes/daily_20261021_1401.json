@@ -1,0 +1,166 @@
+{
+ "topic": "दिवाली और छठ महापर्व पर स्पेशल ट्रेनों का संचालन",
+ "category": "[सफ़र]",
+ "breaking": "दिवाली-छठ पर रेलवे की बड़ी राहत: 38 स्पेशल ट्रेनें और 150 अतिरिक्त डिब्बे",
+ "hook_text": "छठ-दिवाली पर घर जाने की कन्फर्म टिकट मिलेगी?",
+ "ask": "क्या आपकी त्योहार की ट्रेन टिकट कन्फर्म हुई?",
+ "source": "AajTak, NDTV India, News18 Hindi, Navbharat Times, Amar Ujala, Jagran, ETV Bharat",
+ "poll": {
+  "q": "क्या आपकी त्योहार की ट्रेन टिकट कन्फर्म हुई?",
+  "a": "कन्फर्म सीट मिली",
+  "b": "वेटिंग ही वेटिंग"
+ },
+ "ticker": [
+  "दिवाली और छठ पर भीड़ नियंत्रण के लिए 38 स्पेशल ट्रेनें घोषित",
+  "16 अक्टूबर से दिल्ली-पटना रूट पर वंदे भारत फेस्टिवल स्पेशल शुरू",
+  "दिल्ली, यूपी, बिहार और राजस्थान से बंगाल व पटना-बरौनी के लिए स्पेशल ट्रेनें"
+ ],
+ "cast_why": "बबलू स्पेशल ट्रेनों की घोषणा बताएगा, रमेश वेटिंग लिस्ट का दर्द बयां करेगा और चाचा भीड़ पर तंज़ कसेंगे।",
+ "lines": [
+  {
+   "who": "bablu",
+   "say": "दिवाली और छठ पर घर जाने वालों के लिए रेलवे ने अड़तीस स्पेशल ट्रेनें और डेढ़ सौ अतिरिक्त डिब्बे उतारे हैं…",
+   "caption": "दिवाली और छठ पर घर जाने वालों के लिए Railway ने 38 special trains और 150 अतिरिक्त डिब्बे उतारे हैं…",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "indian railway special train passing track",
+    "vande bharat festival special train exterior",
+    "crowded railway station platform diwali"
+   ],
+   "photo_hi": [
+    "स्पेशल ट्रेन रेलवे स्टेशन",
+    "वंदे भारत फेस्टिवल स्पेशल"
+   ],
+   "card": {
+    "tag": "रेलवे का तोहफा",
+    "big": "38 स्पेशल ट्रेनें",
+    "sub": "150 अतिरिक्त डिब्बे, वंदे भारत शुरू",
+    "icon": "train"
+   },
+   "visual": "indian railway special train passing track",
+   "scene": "studio",
+   "punch": false,
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "say": "सोलह अक्टूबर से दिल्ली-पटना रूट पर वंदे भारत स्पेशल चालू हो गई है। मगर रमेश की सीट का क्या हुआ…",
+   "caption": "16 अक्टूबर से Delhi-Patna route पर Vande Bharat special चालू हो गई है। मगर रमेश की seat का क्या हुआ…",
+   "expr": "tanz",
+   "set": "studio",
+   "visuals": [
+    "delhi patna train schedule irctc app",
+    "irctc app showing seat availability screen",
+    "railway ticket counter crowd queue"
+   ],
+   "photo_hi": [
+    "आईआरसीटीसी वेटिंग लिस्ट",
+    "दिल्ली पटना ट्रेन"
+   ],
+   "visual": "delhi patna train schedule irctc app",
+   "scene": "chacha",
+   "punch": false,
+   "insta": ""
+  },
+  {
+   "who": "ramesh",
+   "say": "रेलवे का कहना है, विशेष ट्रेनें चला दी गई हैं। आईआरसीटीसी ऐप का कहना है, वेटिंग लिस्ट अभी दो सौ पार है!",
+   "caption": "Railway का कहना है, विशेष ट्रेनें चला दी गई हैं। IRCTC app का कहना है, waiting list अभी 200 पार है!",
+   "expr": "udaas",
+   "set": "station",
+   "visuals": [
+    "mobile app irctc waiting list status",
+    "passenger standing with heavy luggage railway platform",
+    "crowded train compartment door standing"
+   ],
+   "photo_hi": [
+    "रेलवे स्टेशन भीड़ छठ",
+    "आईआरसीटीसी ऐप वेटिंग"
+   ],
+   "punch": true,
+   "react_pose": "facepalm",
+   "stamp": "वेटिंग 200 पार!",
+   "visual": "mobile app irctc waiting list status",
+   "scene": "chacha",
+   "insta": ""
+  },
+  {
+   "who": "chacha",
+   "say": "हमारे ज़माने में छत पर बैठकर जाते थे। अब तरक्की हुई है, स्पेशल ट्रेन के शौचालय के सामने खड़े होकर जा रहे हैं!",
+   "caption": "हमारे ज़माने में छत पर बैठकर जाते थे। अब तरक्की हुई है, special train के शौचालय के सामने खड़े होकर जा रहे हैं!",
+   "expr": "tanz",
+   "set": "station",
+   "visuals": [
+    "crowded train coach passage passengers",
+    "old man with luggage on platform",
+    "railway signboard bihar bengal trains"
+   ],
+   "photo_hi": [
+    "छठ पूजा ट्रेन भीड़",
+    "रेलवे कोच पैसेंजर"
+   ],
+   "punch": true,
+   "react_pose": "smug",
+   "stamp": "तरक्की का सफ़र!",
+   "visual": "crowded train coach passage passengers",
+   "scene": "chacha",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "say": "यह वीडियो उस दोस्त को भेजो, जो छठ पर घर जाने के लिए पिछले दो महीने से तत्काल टिकट की फिराक में है।",
+   "caption": "यह video उस दोस्त को भेजो, जो छठ पर घर जाने के लिए पिछले 2 महीने से tatkal ticket की फिराक में है।",
+   "expr": "tanz",
+   "set": "studio",
+   "visuals": [
+    "tatkal ticket booking timer laptop screen",
+    "happy family celebrating chhath puja at ghat",
+    "irctc booking confirmed ticket message"
+   ],
+   "photo_hi": [
+    "तत्काल टिकट बुकिंग",
+    "छठ पूजा घाट परिवार"
+   ],
+   "visual": "tatkal ticket booking timer laptop screen",
+   "scene": "studio_end",
+   "punch": false,
+   "insta": ""
+  }
+ ],
+ "caption_post": "छठ और दिवाली के लिए रेलवे चला रहा है 38 स्पेशल ट्रेनें! वंदे भारत स्पेशल भी शुरू। 🚆\n\nआपकी टिकट कन्फर्म हुई या वेटिंग में अ अटकी है?\n\nघर जाने वाले दोस्तों के साथ शेयर करें।\n\nस्रोत: AajTak, NDTV India, Amar Ujala\n\n#ChhathPuja #DiwaliSpecialTrain #IndianRailways #IRCTC #BakraNews (AI से बने किरदार)",
+ "format": "explain",
+ "label": "काम की खबर",
+ "key_word": "",
+ "icons": [
+  "₹",
+  "NEWS",
+  "%"
+ ],
+ "hook": "छठ-दिवाली पर घर जाने की कन्फर्म टिकट मिलेगी?",
+ "trend": {
+  "score": 2,
+  "why": "3 अख़बार/चैनल 2 दिन में, 54 खबरें 7 दिन में"
+ },
+ "connect": {
+  "score": 6,
+  "why": "छठ-दिवाली पर ट्रेन टिकट की किल्लत हर यूपी-बिहार के परिवार का सबसे बड़ा दर्द है।",
+  "weak": "मुहर वाली हँसी और दो किरदारों के बीच सीधी भिड़ंत की कमी है।",
+  "fix": "रमेश और चाचा के बीच तत्काल टिकट बुक करने को लेकर लाइव झगड़ा और डायलॉगबाजी दिखाएं।",
+  "parts": {
+   "A": 2,
+   "B": 1,
+   "C": 2,
+   "D": 1,
+   "E": 0,
+   "F": 1,
+   "G": 0
+  }
+ },
+ "sprite": {
+  "ramesh": "assets/toon/ramesh",
+  "bablu": "assets/toon/bablu",
+  "chacha": "assets/toon/chacha"
+ },
+ "production": true
+}
