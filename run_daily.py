@@ -48,6 +48,7 @@ def preview(eps):
     out = [f"🐐 बकरा न्यूज़ — आज की {len(eps)} scripts ({ist():%d %b, %I:%M %p})"]
     for i, ep in enumerate(eps, 1):
         out.append(f"\n━━━━━━━━━━  {i}  ━━━━━━━━━━")
+        out.append("🔥 बकरा बहस" if ep.get("format") == "rant" else "📰 वायरल खबर")
         out.append(f"📰 {ep.get('topic') or ep.get('breaking', '')}")
         if ep.get("insta_used"):
             out.append(f"📱 Insta trend: {ep['insta_used']}")
@@ -58,7 +59,7 @@ def preview(eps):
         if ep.get("hasi"):
             out.append(f"😂 क्यों चुना: {ep['hasi']}")
         if ep.get("format") == "rant":
-            out.append(f"🔥 बकरा बहस | समाज: {ep.get('samaj', '')}")
+            out.append(f"👥 समाज: {ep.get('samaj', '')}")
             out.append(f"📢 माँग: {ep.get('maang', '')}")
             out.append(f"💣 Twist: {ep.get('twist', '')}")
         elif ep.get("cast_why"):
@@ -86,18 +87,43 @@ def preview(eps):
 
 
 def write_scripts(news, n):
-    """FORMAT=rant (default): "बकरा बहस" — भड़का हुआ anchor-rant (viral reels वाला ढाँचा). न बने तो पुराना "काम की खबर"."""
+    """दोनों format एक साथ (मालिक का फ़ैसला: दोनों डालकर देखेंगे, जो viral होगा उसी पर बढ़ेंगे):
+    आधी "🔥 बकरा बहस" (भड़का anchor-rant) + आधी "📰 वायरल खबर" (पुराना काम-की-खबर ढाँचा). खबरें/तथ्य एक ही बार (Gemini बचे).
+    FORMAT=rant या FORMAT=news हो तो सिर्फ़ वही."""
     import gemini
     import news_writer
-    if os.getenv("FORMAT", "rant") == "rant":
-        import rant_writer
+    import rant_writer
+    fmt = os.getenv("FORMAT", "both")
+    c = news_writer._safe(news)
+    packs, picks = news_writer.gather(c, n)
+    n_rant = n if fmt == "rant" else 0 if fmt == "news" else (n + 1) // 2
+    rants, newsy = [], []
+    if n_rant:
         try:
-            return rant_writer.write_options(news, n)
-        except (gemini.QuotaOver, news_writer.NoViral):
+            rants = rant_writer.write_from(c, packs, picks, n_rant)
+        except gemini.QuotaOver:
             raise
         except (Exception, SystemExit) as e:               # noqa: BLE001
-            print("  rant नहीं बनी, पुराना ढाँचा:", repr(e)[:200])
-    return news_writer.write_options(news, n)
+            print("  बकरा बहस नहीं बनी:", repr(e)[:200])
+    if len(rants) < n:
+        used = set(c.get("rant_topics") or [])
+        rest = [p for p in packs if str(p.get("topic", "")) not in used]
+        rest = rest if len(rest) >= 2 else packs            # अलग खबरें हों तो अलग, वरना वही खबर दूसरे अंदाज़ में
+        try:
+            newsy = news_writer.write_from(c, rest, picks, n - len(rants))
+        except (gemini.QuotaOver, news_writer.NoViral):
+            if not rants:
+                raise
+        except (Exception, SystemExit) as e:               # noqa: BLE001
+            print("  वायरल खबर वाली नहीं बनी:", repr(e)[:200])
+            if not rants:
+                raise
+    for e in newsy:
+        e.setdefault("label", "वायरल खबर")
+    out = []                                               # बारी-बारी: 🔥, 📰, 🔥, 📰…
+    for k in range(max(len(rants), len(newsy))):
+        out += rants[k:k + 1] + newsy[k:k + 1]
+    return out[:n]
 
 
 def do_write(feed=None):

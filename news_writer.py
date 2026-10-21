@@ -465,9 +465,15 @@ def gather(c, n):
 
 
 def write_options(c, n=3):
-    import viral_check as vc
     c = _safe(c)                                            # मौत/हादसा/चोट/अपराध वाली खबरें शुरू से बाहर (उन पर हँसी नहीं बनती)
     packs, picks = gather(c, n)
+    return write_from(c, packs, picks, n)
+
+
+def write_from(c, packs, picks, n=3):
+    """पक्के तथ्यों (gather) से "वायरल खबर" वाली n scripts — पंच-बैंक → script → जज → तीखा."""
+    import viral_check as vc
+    c.setdefault("rejected", [])
     bank = None                                             # पंच-बैंक: पहले ढेर सारे hooks/पंच, फिर सबसे तेज़ से script
     try:
         bank = gemini.json_from(gemini.ask(prompt_punches(packs), json_mode=True, temperature=0.95))

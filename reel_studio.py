@@ -720,11 +720,10 @@ def render(ep, segs, chars, out, preview):
         if shot in ("split", "full") and not vis and not react and pool:
             # तस्वीर नहीं मिली: ख़ाली/धुंधली screen नहीं (पहली video में 2.5 से 13 सेकंड तक ऊपर काला रहा — ठीक खाई पर) —
             # इसी खबर की दूसरी lines की असली तस्वीरें, जो अभी-अभी न दिखी हों, नए zoom के साथ
-            fresh = [p for p in pool if p not in last_vis] or pool
-            vis = [fresh[(si + k) % len(fresh)] for k in range(min(2, len(fresh)))]
-            key = key_phrase(ln)                                # बीच में उसी line की मुख्य बात, बड़े उछलते अक्षरों में
-            if key:                                             # (वही तस्वीर बार-बार दोहराने की जगह)
-                vis = [vis[0], {"big": key}] + vis[1:]
+            # पहले यहाँ दूसरी lines की फ़ोटो लगती थीं — बोल कुछ और, screen पर कुछ और (मालिक: "mismatch न हो").
+            # अब: पिछली line वाली तस्वीर ही चलती रहे (बात उसी से जुड़ी होती है), हर 2 सेकंड नए zoom/कोण से.
+            # line के आख़िरी शब्द बड़े अक्षरों में नहीं — वो बोलने से पहले दिखकर punch बिगाड़ते थे और टूटे टुकड़े ("में? मम्मी के!") बनते थे
+            vis = [last_vis[0]] if last_vis else []
         if shot in ("split", "full") and not vis and not react:
             if ln.get("big"):
                 vis = [{"big": ln["big"], "sub": ln.get("sub", "")}]

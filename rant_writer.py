@@ -249,6 +249,11 @@ def write_options(c, n=3):
     """n "बकरा बहस" scripts. c = topics.collect_news(). news_writer.QuotaOver/NoViral ऊपर जाते हैं."""
     c = nw._safe(c)
     packs, picks = nw.gather(c, n)
+    return write_from(c, packs, picks, n)
+
+
+def write_from(c, packs, picks, n=3):
+    """पक्के तथ्यों (news_writer.gather) से n "बकरा बहस" scripts."""
     bank = gemini.json_from(gemini.ask(prompt_mudde(packs), json_mode=True, temperature=0.95))
     chosen = []
     for b, pk in zip(bank if isinstance(bank, list) else [], packs):
@@ -258,6 +263,7 @@ def write_options(c, n=3):
             print(f"  मुद्दा ({mudde[0].get('score')}/10): {mudde[0].get('samaj')} — {mudde[0].get('ilzaam')}")
     chosen.sort(key=lambda x: -int(x["mudda"].get("score", 0) or 0))
     chosen = chosen[:n + 1]
+    c["rant_topics"] = [str(x["facts"].get("topic", "")) for x in chosen]   # "वायरल खबर" वाली इनसे अलग खबरें ले
     if not chosen:
         raise SystemExit("एक भी मुद्दा नहीं बना")
     raw = gemini.json_from(gemini.ask(prompt_write(chosen), json_mode=True, temperature=0.85))
