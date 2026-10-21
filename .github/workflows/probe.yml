@@ -8,6 +8,7 @@ env:
   GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
   GEMINI_API_KEY2: ${{ secrets.GEMINI_API_KEY2 }}
   PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+  YT_COOKIES: ${{ secrets.YT_COOKIES }}
 jobs:
   run:
     runs-on: ubuntu-latest
