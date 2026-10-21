@@ -1,8 +1,9 @@
 import subprocess, sys
 from pathlib import Path
-subprocess.run([sys.executable, "-m", "pip", "install", "-q", "--break-system-packages", "-U", "yt-dlp"])
 import clips
-got = clips.for_topic("पैरामोटर से उड़कर ऑफिस जाने वाला शख्स", ["paramotor flies to work"], want=1)
-print("RESULT:", got)
-for p, c in got:
-    print("size", Path(p).stat().st_size)
+res = clips.search("paramotor flies to work", 3)
+print("SEARCH:", [(t, d) for _, t, _, d in res])
+url = res[0][0]
+print("CUT:", clips.cut(url, Path("probe_clip.mp4"), 10))
+r = subprocess.run(clips._ytdlp() + ["--simulate", "-f", "bv*[height<=720]/b"] + clips._cookies("YT_COOKIES") + [url], capture_output=True, text=True, timeout=180)
+print("DL rc", r.returncode, "| err:", r.stderr[-700:])
