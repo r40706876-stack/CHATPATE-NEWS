@@ -1,0 +1,9 @@
+{
+ "voice": "gemini",
+ "voice_err": "gemini: gemini-3.8-flash-tts/interactions: 429 {\"error\":{\"message\":\"Rate limit exceeded for model gemini-3.8-flash-tts (limit: 10 requests per day on Free Tier). Please retry in 3h43m25s or upgrade your tier | gemini-3.8-flash-tts/interactions: 429 {\"error\":",
+ "lines": 7,
+ "real_visual_lines": 7,
+ "set_lines": 0,
+ "clips": 0,
+ "format": "explain"
+}
