@@ -750,8 +750,21 @@ def render(ep, segs, chars, out, preview):
             carry = 0                                           # इस line की अपनी तस्वीर मिली
         if shot == "full" and not vis:
             shot, size = "split", (SW_, SH_)
-        chunk = max(1, int(CUT * FPS))                          # हर 2 सेकंड नया नज़ारा — कम तस्वीरें हों तो वही तस्वीर नए
-        # zoom/कोण (अंदर/बाहर/बग़ल) से; पहले एक तस्वीर 5-6 सेकंड खिंच जाती थी और video रुकी हुई लगती थी
+        chunk = max(1, int(CUT * FPS))                          # हर 2 सेकंड नया नज़ारा
+        need = math.ceil(n / chunk)
+        if shot != "close" and not react and vis and len(vis) < need:
+            # सिर्फ़ zoom बदलने से वही तस्वीर 5 सेकंड "रुकी" दिखती थी (छठ वाली video) — कमी हो तो: line की मुख्य बात
+            # वाला card, फिर इसी खबर की दूसरी असली तस्वीरें (जो अभी इस line में नहीं)
+            extra = []
+            key = key_phrase(ln) if isinstance(vis[0], Path) else ""
+            if key:
+                extra.append({"big": key})
+            extra += [p for p in pool if p not in vis and p not in last_vis] + [p for p in pool if p not in vis]
+            for e_ in extra:
+                if len(vis) >= need:
+                    break
+                if e_ not in vis:
+                    vis.insert(1 if len(vis) == 1 else len(vis), e_)
         face = None
         if s.get("talk"):                                       # हमारी 3 मुँह वाली फ़ोटो से बोलना (साफ़ 3D चेहरा)
             face = talk_frames(s["talk"], shot, n, si)

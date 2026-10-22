@@ -339,6 +339,14 @@ def post_studio(ep):
     print(f"बन गया: {out} ({secs:.1f}s)")
     import telegram
     cap = ep.get("caption_post") if ep.get("production") else f"🎬 3D demo: {ep.get('title', '')}"
+    try:                                                  # अपने-आप जाँच: वही कमियाँ जो पहले हाथ से पकड़नी पड़ती थीं
+        import qa
+        issues = qa.check(out)
+        print("  जाँच:", issues or "पास")
+        if issues:
+            telegram.send_text("🔍 video की अपने-आप जाँच में कमी मिली — post से पहले देख लेना:\n• " + "\n• ".join(issues))
+    except Exception as e:                                # noqa: BLE001
+        print("  जाँच नहीं हुई:", repr(e)[:100])
     if ep.get("no_send"):                                 # जाँच वाला video: Telegram पर नहीं, सिर्फ़ repo में
         print("  (no_send) Telegram पर नहीं भेजा")
         return
