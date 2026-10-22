@@ -1,9 +1,9 @@
 {
- "voice": "gemini",
- "voice_err": "gemini: gemini-3.8-flash-tts/interactions: 429 {\"error\":{\"message\":\"Rate limit exceeded for model gemini-3.8-flash-tts (limit: 10 requests per day on Free Tier). Please retry in 3h3m1s or upgrade your tier a | gemini-3.8-flash-tts/interactions: 429 {\"error\":",
+ "voice": "edge",
+ "voice_err": "gemini: gemini-3.8-flash-tts/interactions: 429 {\"error\":{\"message\":\"Rate limit exceeded for model gemini-3.8-flash-tts (limit: 10 requests per day on Free Tier). Please retry in 2h25s or upgrade your tier at | gemini-3.8-flash-tts/interactions: 429 {\"error\":",
  "lines": 7,
- "real_visual_lines": 7,
- "set_lines": 0,
+ "real_visual_lines": 6,
+ "set_lines": 1,
  "clips": 0,
  "format": "explain"
 }
