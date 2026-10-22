@@ -333,24 +333,34 @@ def post_studio(ep):
             segs.append({"ln": {"who": ln["who"], "say": ""}, "wav": rw, "face": None, "react": True, "shot": shot,
                          "still": Image.open(IN / f"react_{i}.png").convert("RGB"), "vis": []})
     out = ROOT / "episode.mp4"
-    secs = reel_studio.render(ep, segs, CHARS, out, ROOT / "preview_episode.jpg")
+    import qa
+    import telegram
+    issues, tries = None, 0
+    for tries in range(3):                                # बनाओ → जाँचो → कमी हो तो ख़ुद ठीक करके दोबारा (2 बार तक)
+        if tries:
+            ep["_fix"] = tries                            # reel_studio: तस्वीरें और जल्दी बदलें, card ज़्यादा
+            print(f"  ♻️ कमी मिली ({'; '.join(issues)}) — ठीक करके दोबारा बना रहे ({tries}/2)")
+        secs = reel_studio.render(ep, segs, CHARS, out, ROOT / "preview_episode.jpg")
+        try:
+            issues = qa.check(out)
+        except Exception as e:                            # noqa: BLE001
+            print("  जाँच नहीं हुई:", repr(e)[:100])
+            issues = []
+        print("  जाँच:", issues or "पास ✅")
+        if not issues:
+            break
     report = quality(ep)
     print(report)
     print(f"बन गया: {out} ({secs:.1f}s)")
-    import telegram
     cap = ep.get("caption_post") if ep.get("production") else f"🎬 3D demo: {ep.get('title', '')}"
-    try:                                                  # अपने-आप जाँच: वही कमियाँ जो पहले हाथ से पकड़नी पड़ती थीं
-        import qa
-        issues = qa.check(out)
-        print("  जाँच:", issues or "पास")
-        if issues:
-            telegram.send_text("🔍 video की अपने-आप जाँच में कमी मिली — post से पहले देख लेना:\n• " + "\n• ".join(issues))
-    except Exception as e:                                # noqa: BLE001
-        print("  जाँच नहीं हुई:", repr(e)[:100])
     if ep.get("no_send"):                                 # जाँच वाला video: Telegram पर नहीं, सिर्फ़ repo में
         print("  (no_send) Telegram पर नहीं भेजा")
         return
     telegram.send_video(out, cap or ep.get("breaking", ""))
+    if issues:
+        report += "\n❌ 2 बार ठीक करने के बाद भी कमी बची — इसे post मत करना:\n• " + "\n• ".join(issues)
+    else:
+        report += "\n✅ अपने-आप जाँच पास" + (f" ({tries} बार ख़ुद ठीक किया)" if tries else "") + " — post कर सकते हो"
     telegram.send_text(report)
 
 

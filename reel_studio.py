@@ -750,8 +750,9 @@ def render(ep, segs, chars, out, preview):
             carry = 0                                           # इस line की अपनी तस्वीर मिली
         if shot == "full" and not vis:
             shot, size = "split", (SW_, SH_)
-        chunk = max(1, int(CUT * FPS))                          # हर 2 सेकंड नया नज़ारा
-        need = math.ceil(n / chunk)
+        cut_s = CUT - 0.4 * int(ep.get("_fix") or 0)            # जाँच में कमी मिली = दोबारा बनाते वक़्त और जल्दी बदलें
+        chunk = max(1, int(cut_s * FPS))                        # हर 2 सेकंड नया नज़ारा
+        need = math.ceil(n / chunk) + int(ep.get("_fix") or 0)
         if shot != "close" and not react and vis and len(vis) < need:
             # सिर्फ़ zoom बदलने से वही तस्वीर 5 सेकंड "रुकी" दिखती थी (छठ वाली video) — कमी हो तो: line की मुख्य बात
             # वाला card, फिर इसी खबर की दूसरी असली तस्वीरें (जो अभी इस line में नहीं)
