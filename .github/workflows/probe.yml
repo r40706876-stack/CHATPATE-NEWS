@@ -7,6 +7,7 @@ on:
 env:
   GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
   GEMINI_API_KEY2: ${{ secrets.GEMINI_API_KEY2 }}
+  GEMINI_API_KEY3: ${{ secrets.GEMINI_API_KEY3 }}
   PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
   YT_COOKIES: ${{ secrets.YT_COOKIES }}
 jobs:
