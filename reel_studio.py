@@ -475,21 +475,19 @@ def _screen_gen(src, seed, size, bg=None, hero=False):
 
 
 def key_phrase(ln):
-    """line की सबसे चुटीली छोटी बात (2-4 शब्द): ठप्पा, वरना "…" के बाद वाला हिस्सा, वरना आख़िरी 3 शब्द."""
+    """card पर line की मुख्य बात — सिर्फ़ पूरी, अपने-आप में समझ आने वाली (ठप्पा, या "…"/"," के बाद का 2-4 शब्द का टुकड़ा).
+    आधे-अधूरे टुकड़े ("ने वही किया", "पहले रूठ") नहीं — तब card ही नहीं, तस्वीर चलेगी."""
     import re
     if ln.get("stamp"):
         return str(ln["stamp"])
-    t = str(ln.get("caption") or ln.get("say") or "")
-    tail = re.split(r"…|\.\.\.|।|,|:", t.strip(" ।!?"))
-    tail = [x.strip() for x in tail if x.strip()]
-    w = (tail[-1] if tail else t).split()
-    aux = {"है", "हैं", "था", "थे", "थी", "रहा", "रही", "रहे", "पड़", "गया", "गई", "गए", "हो", "जाता", "जाती"}
-    while len(w) > 2 and w[-1].strip("!?") in aux:          # "बनना पड़ रहा है" → "हनुमान बनना"
-        w = w[:-1]
-    w = w[-3:]
-    while len(w) > 1 and w[0] in {"के", "की", "का", "लिए", "में", "से", "को", "पर", "और", "तो", "भी", "फिर", "ही", "अब", "बस"}:
-        w = w[1:]
-    return " ".join(w) + ("!" if t.rstrip().endswith("!") else "") if len(w) >= 1 and len("".join(w)) > 3 else ""
+    t = str(ln.get("caption") or ln.get("say") or "").strip()
+    parts = [x.strip(" ।!?\"'") for x in re.split(r"…|\.\.\.|।|,|:|!|\?", t) if x.strip(" ।!?\"'")]
+    bad_start = {"के", "की", "का", "लिए", "में", "से", "को", "पर", "और", "तो", "भी", "फिर", "ही", "अब", "बस", "ने", "जो", "कि"}
+    for seg in reversed(parts):
+        w = seg.split()
+        if 2 <= len(w) <= 4 and w[0] not in bad_start:
+            return seg + ("!" if t.endswith("!") else "")
+    return ""
 
 
 def _credit(src):

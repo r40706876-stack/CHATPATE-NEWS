@@ -28,8 +28,8 @@ def check(video, tail=1.6):
     body = f[: max(FPS * 3, len(f) - int(tail * FPS))]       # आख़िरी "फ़ॉलो करो" वाला हिस्सा छोड़कर
     issues = []
     secs = len(f) / FPS
-    if secs > 31:
-        issues.append(f"लंबाई {secs:.0f} सेकंड (30 से ज़्यादा)")
+    if secs > 40:                                         # 26-37 सेकंड वाली reels भी चलीं; दोबारा बनाने से लंबाई नहीं बदलती
+        issues.append(f"लंबाई {secs:.0f} सेकंड (40 से ज़्यादा)")
     # "वही तस्वीर" = zoom/pan होने पर भी बहुत छोटे (16x12) रूप में scene की शुरुआत जैसी दिखे; cut = पिछले frame से बड़ा फ़र्क
     tiny = [b[::8, ::8].ravel() for b in body]
     cut = np.abs(np.diff(body, axis=0)).mean(axis=(1, 2)) > 18
