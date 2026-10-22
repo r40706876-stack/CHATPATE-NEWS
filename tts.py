@@ -101,7 +101,11 @@ def gemini_line(text, who, expr, key, base=None):
     style = ", ".join(s for s in (base or style, MOOD.get(expr, expr if len(expr) > 12 else "")) if s)
     style += ". लिखे शब्द हूबहू बोलो, कुछ जोड़ना/छोड़ना नहीं"
     errors = []
-    models = [_gem_ok["model"]] if _gem_ok["model"] else TTS_MODELS
+    # पहले वो model जो इस video में चल चुका (आवाज़ एक जैसी रहे) — पर उसका रोज़ का कोटा (10/दिन) बीच में ख़त्म हो तो
+    # बाकी models भी (हर model का अपना कोटा). पहले सिर्फ़ वही एक आज़माते थे → सीधे backup आवाज़ पर गिर जाते थे.
+    dead = _gem_ok.setdefault("dead_models", set())
+    models = [m for m in dict.fromkeys(([_gem_ok["model"]] if _gem_ok["model"] else []) + TTS_MODELS)
+              if (key[-6:], m) not in dead]
     for model in models:
         bodies = [
             ("interactions", f"{BASE}/interactions", {
@@ -117,6 +121,8 @@ def gemini_line(text, who, expr, key, base=None):
                     "voiceConfig": {"prebuiltVoiceConfig": {"voiceName": voice}}}}}),
         ]
         for name, url, body in bodies:
+            if (key[-6:], model) in dead:
+                break
             for attempt in range(2):
                 try:
                     raw = _find_audio(_post(url, body, key))
@@ -128,7 +134,10 @@ def gemini_line(text, who, expr, key, base=None):
                 except urllib.error.HTTPError as e:
                     msg = e.read().decode("utf-8", "ignore")[:160]
                     errors.append(f"{model}/{name}: {e.code} {msg}")
-                    if e.code == 429 and attempt == 0 and "limit: 0" not in msg:
+                    if e.code == 429 and ("per day" in msg.lower() or "limit: 0" in msg):
+                        dead.add((key[-6:], model))       # आज का कोटा ख़त्म — इस key पर ये model दोबारा नहीं
+                        break
+                    if e.code == 429 and attempt == 0:
                         time.sleep(25)
                         continue
                     break
