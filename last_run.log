@@ -1,4 +1,1 @@
-  Telegram पर चिपकाई script मिली
-/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/run_daily.py:31: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
-  return dt.datetime.utcnow() + dt.timedelta(hours=5, minutes=30)
-  तुम्हारी script मिली — 7 lines → सीधे video
+  अभी जवाब नहीं आया
