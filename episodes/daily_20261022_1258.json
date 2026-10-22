@@ -1,0 +1,297 @@
+{
+ "khabar": "घर में चोरी से पहले चोरों ने खाई पूड़ी-अचार",
+ "score": "9",
+ "topic": "रीवा में गनमैन के घर चोरी से पहले चोरों ने उड़ाई पूड़ी-अचार की दावत",
+ "category": "home",
+ "breaking": "रीवा में चोरी से पहले चोरों ने खाई पूड़ी-अचार",
+ "samaj": "हम भुक्खड़ मेहमान",
+ "maang": "हर तिजोरी के साथ भरपेट टिफिन रखना अनिवार्य करो",
+ "twist": "फ्रिज के डिब्बे में आम का अचार नहीं पुराना सड़ा हुआ नींबू है",
+ "takiya": "पहले नाश्ता, फिर तलाशी!",
+ "tag_who": "उस यार को जो आधी रात को फ्रिज खंगालता है",
+ "source": "Nai Dunia, The Sootr, MP Breaking News",
+ "ask": "क्या रात के भूखों के लिए नाश्ता छोड़ना चाहिए?",
+ "ticker": [
+  "रीवा में डीआईजी के गनमैन के घर अजीबोगरीब चोरी",
+  "लॉकर तोड़ने से पहले चोरों ने रसोई में उड़ाई दावत",
+  "पूड़ी और अचार खाकर इत्मीनान से की गई वारदात"
+ ],
+ "lines": [
+  {
+   "who": "bablu",
+   "beat": "hook",
+   "say": "क्या घर में चोरी, अब मुफ़्त की पंगत खाने का बहाना है?",
+   "caption": "क्या घर में चोरी, अब मुफ़्त की पंगत खाने का बहाना है?",
+   "visuals": [
+    "kitchen counter with empty plates scattered",
+    "shadowy intruder eating food in dark kitchen",
+    "pickle jar open beside dining table"
+   ],
+   "photo_hi": [
+    "रसोई में खाली थाली",
+    "अचार का खुला डिब्बा"
+   ],
+   "expr": "hairan",
+   "sfx": "boom",
+   "mood": "tension",
+   "delivery": "बिल्कुल गंभीर, धीमा, हर शब्द पर ज़ोर — जैसे देश का सबसे बड़ा सवाल पूछ रहा हो",
+   "visual": "kitchen counter with empty plates scattered",
+   "set": "studio",
+   "punch": false,
+   "big": "बड़ा सवाल",
+   "sub": "हम भुक्खड़ मेहमान",
+   "card_color": [
+    20,
+    40,
+    110
+   ],
+   "scene": "studio",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "beat": "tathya",
+   "say": "चोरों ने लॉकर तोड़ने से पहले, रसोई में रखी पूड़ी-अचार डकार ली!",
+   "caption": "चोरों ने लॉकर तोड़ने से पहले, रसोई में रखी पूड़ी-अचार डकार ली!",
+   "visuals": [
+    "steel tiffin box open with fried puri crumbs",
+    "mango pickle oil stain on steel plate",
+    "open broken iron safe locker in bedroom"
+   ],
+   "photo_hi": [
+    "पूड़ी अचार की थाली",
+    "टूटी हुई लोहे की तिजोरी"
+   ],
+   "expr": "gambhir",
+   "sfx": "whoosh",
+   "mood": "tension",
+   "delivery": "तेज़, साफ़, न्यूज़-रीडर जैसा",
+   "visual": "steel tiffin box open with fried puri crumbs",
+   "set": "studio",
+   "punch": false,
+   "big": "असली खबर",
+   "sub": "रीवा में चोरी से पहले चोरों ने खाई",
+   "card_color": [
+    20,
+    40,
+    110
+   ],
+   "scene": "studio",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "beat": "saboot",
+   "say": "और बात यहीं ख़त्म नहीं होती… चोरों ने तिजोरी बाद में, पहले कड़ाही चाटी!",
+   "caption": "और बात यहीं ख़त्म नहीं होती… चोरों ने तिजोरी बाद में, पहले कड़ाही चाटी!",
+   "visuals": [
+    "empty cooking wok kadhai on gas stove",
+    "finger wiping food residue from pan",
+    "police yellow tape around home kitchen"
+   ],
+   "photo_hi": [
+    "खाली कड़ाही गैस चूल्हा",
+    "पुलिस जांच घटनास्थल"
+   ],
+   "expr": "gussa",
+   "sfx": "whoosh",
+   "mood": "tension",
+   "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
+   "visual": "empty cooking wok kadhai on gas stove",
+   "set": "studio",
+   "punch": false,
+   "big": "सबूत नंबर 1",
+   "sub": "",
+   "card_color": [
+    12,
+    60,
+    120
+   ],
+   "scene": "chacha",
+   "insta": ""
+  },
+  {
+   "who": "ramesh",
+   "beat": "saboot",
+   "say": "साहब, हमारे रिश्तेदार भी घर आकर इतना मन से खाना नहीं खाते!",
+   "caption": "साहब, हमारे रिश्तेदार भी घर आकर इतना मन से खाना नहीं खाते!",
+   "visuals": [
+    "unhappy guest making face at dining table",
+    "relatives whispering sitting on sofa living room",
+    "pile of unwashed dinner dishes in kitchen sink"
+   ],
+   "photo_hi": [
+    "नाराज़ मेहमान सोफा",
+    "रसोई सिंक जूठे बर्तन"
+   ],
+   "expr": "gussa",
+   "sfx": "glitch",
+   "mood": "tension",
+   "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
+   "visual": "unhappy guest making face at dining table",
+   "set": "kitchen",
+   "punch": false,
+   "big": "सबूत नंबर 2",
+   "sub": "",
+   "card_color": [
+    12,
+    60,
+    120
+   ],
+   "scene": "chacha",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "beat": "maang",
+   "say": "हमारी माँग: हर तिजोरी के साथ भरपेट टिफिन रखना अनिवार्य करो!",
+   "caption": "हमारी माँग: हर तिजोरी के साथ भरपेट टिफिन रखना अनिवार्य करो!",
+   "visuals": [
+    "steel tiffin container placed beside metal locker",
+    "protest banner demand sign in hindi",
+    "steaming hot samosa plate beside cash box"
+   ],
+   "photo_hi": [
+    "स्टील टिफिन तिजोरी",
+    "मांग पत्र प्रदर्शन"
+   ],
+   "stamp": "टिफिन अनिवार्य करो!",
+   "expr": "gussa",
+   "sfx": "dhol",
+   "mood": "masti",
+   "delivery": "ऐलान की तरह, जोश में, जैसे संसद में भाषण",
+   "visual": "steel tiffin container placed beside metal locker",
+   "set": "studio",
+   "punch": true,
+   "big": "हमारी माँग",
+   "sub": "हर तिजोरी के साथ भरपेट टिफिन",
+   "card_color": [
+    110,
+    20,
+    40
+   ],
+   "scene": "studio",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "beat": "dhamki",
+   "say": "और अगर पूड़ी-सब्ज़ी नहीं मिली…",
+   "caption": "और अगर पूड़ी-सब्ज़ी नहीं मिली…",
+   "visuals": [
+    "news anchor pointing finger angrily camera",
+    "dark hallway with flickering bulb light",
+    "kitchen drawer opening slowly in dark"
+   ],
+   "photo_hi": [
+    "एंकर गुस्से में इशारा",
+    "अंधेरे में रसोई दराज"
+   ],
+   "expr": "gambhir",
+   "sfx": "tick",
+   "mood": "tension",
+   "delivery": "अचानक बहुत धीमा, रहस्य वाला, लगभग फुसफुसाते हुए",
+   "pause_after": 0.5,
+   "visual": "news anchor pointing finger angrily camera",
+   "set": "studio",
+   "punch": true,
+   "big": "चेतावनी!",
+   "sub": "",
+   "card_color": [
+    40,
+    10,
+    15
+   ],
+   "scene": "studio",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "beat": "twist",
+   "say": "तो सबको बता देंगे… फ्रिज के डिब्बे में आम का अचार नहीं, पुराना सड़ा हुआ नींबू है!",
+   "caption": "तो सबको बता देंगे… फ्रिज के डिब्बे में आम का अचार नहीं, पुराना सड़ा हुआ नींबू है!",
+   "visuals": [
+    "refrigerator door open green lemon decaying inside plastic box",
+    "old plastic container opened showing dried pickle",
+    "shocked mother gasping holding kitchen towel"
+   ],
+   "photo_hi": [
+    "फ्रिज में पुराना नींबू",
+    "अचार का डिब्बा पोल"
+   ],
+   "stamp": "सड़े नींबू की पोल!",
+   "expr": "hairan",
+   "sfx": "boom",
+   "mood": "masti",
+   "delivery": "धमाके से, जीत वाले अंदाज़ में, आख़िरी हिस्सा ज़ोर से",
+   "visual": "refrigerator door open green lemon decaying inside plastic box",
+   "set": "studio",
+   "punch": true,
+   "big": "बड़ा खुलासा!",
+   "sub": "",
+   "card_color": [
+    170,
+    20,
+    30
+   ],
+   "scene": "studio",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "beat": "takiya",
+   "say": "पहले नाश्ता, फिर तलाशी!",
+   "caption": "पहले नाश्ता, फिर तलाशी!",
+   "visuals": [
+    "anchor hitting table shouting final slogan",
+    "fried golden puri served on brass plate",
+    "breaking news ticker flashing bright red"
+   ],
+   "photo_hi": [
+    "गरमा गरम पूड़ी प्लेट",
+    "न्यूज़ बहस नारा"
+   ],
+   "stamp": "पहले नाश्ता फिर तलाशी!",
+   "expr": "gussa",
+   "sfx": "thug",
+   "mood": "masti",
+   "delivery": "पूरी ताक़त से चिल्लाकर, मेज़ पर हाथ मारते हुए",
+   "pause_after": 0.3,
+   "visual": "anchor hitting table shouting final slogan",
+   "set": "studio",
+   "punch": true,
+   "big": "पहले नाश्ता, फिर तलाशी!",
+   "sub": "",
+   "card_color": [
+    170,
+    20,
+    30
+   ],
+   "scene": "studio_end",
+   "insta": ""
+  }
+ ],
+ "caption_post": "क्या घर में चोरी, अब मुफ़्त की पंगत खाने का बहाना है? Tag करो उसको जो आधी रात को फ्रिज खंगालता है! क्या रात के भूखों के लिए नाश्ता छोड़ना चाहिए? स्रोत: Nai Dunia, The Sootr, MP Breaking News #RewaNews #ChoriMePoori #BakraDebate #DesiComedy #KhabarBakrapur (AI से बने किरदार)",
+ "format": "rant",
+ "label": "बकरा बहस",
+ "icons": [
+  "₹",
+  "NEWS",
+  "%"
+ ],
+ "hook": "क्या घर में चोरी, अब मुफ़्त की पंगत खाने का बहाना है?",
+ "hook_text": "क्या घर में चोरी, अब मुफ़्त की पंगत खाने का बहाना है?",
+ "poll": null,
+ "key_word": "",
+ "cast_why": "समाज: हम भुक्खड़ मेहमान | माँग: हर तिजोरी के साथ भरपेट टिफिन रखना अनिवार्य करो",
+ "trend": {
+  "score": 5,
+  "why": "8 अख़बार/चैनल 2 दिन में, 8 खबरें 7 दिन में"
+ },
+ "hasi": "टैग: उस यार को जो आधी रात को फ्रिज खंगालता है | twist: फ्रिज के डिब्बे में आम का अचार नहीं पुराना सड़ा हुआ नींबू है",
+ "sprite": {
+  "ramesh": "assets/toon/ramesh",
+  "bablu": "assets/toon/bablu"
+ },
+ "production": true
+}
