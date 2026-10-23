@@ -49,6 +49,15 @@ LIB = [
     ("haan_main_pagal", "haan main pagal hoon meme template", "hasi", 0, 2.4),
     ("achha_theek_hai", "acha theek hai meme template hindi", "tanz", 0, 2.0),
 ]
+# मज़ेदार आवाज़ें (सिर्फ़ आवाज़): id, खोज, start, secs — पंच के आख़िरी शब्द पर, tag वाली line के बाद हँसी
+SFX = [
+    ("sfx_vine_boom", "vine boom sound effect", 0, 1.2),
+    ("sfx_crowd_laugh", "crowd laughing sound effect short", 0, 2.2),
+    ("sfx_record_scratch", "record scratch sound effect", 0, 1.0),
+    ("sfx_bruh", "bruh sound effect", 0, 1.0),
+    ("sfx_sad_violin", "sad violin meme sound effect", 0, 2.4),
+    ("sfx_dun_dun", "dun dun dunnn sound effect", 0, 2.0),
+]
 MOOD_OF = {"hairan": "hairan", "gussa": "gussa", "tanz": "tanz", "hasi": "hasi", "udaas": "udaas", "gambhir": "tanz"}
 
 
@@ -100,13 +109,48 @@ def _one(item, status):
     print(f"  ❌ {mid}: नहीं मिला ({len(hits)} नतीजे)", flush=True)
 
 
+def _sfx_ok(sid):
+    p = DIR / f"{sid}.m4a"
+    return p if p.exists() and p.stat().st_size > 3000 else None
+
+
+def _one_sfx(item, status):
+    import clips
+    sid, q, start, secs = item
+    for url, title, ch, dur in clips.search(q, n=3)[:2]:
+        raw = DIR / f"{sid}.src"
+        cmd = clips._ytdlp() + ["-q", "--no-warnings", "--no-playlist", "-f", "ba/b", "--download-sections",
+                                f"*{start:.1f}-{start + secs + 0.3:.1f}", "-o", str(raw) + ".%(ext)s"] + \
+            clips._cookies("YT_COOKIES") + [url]
+        try:
+            subprocess.run(cmd, capture_output=True, timeout=60)
+        except subprocess.TimeoutExpired:
+            pass
+        got = next(iter(DIR.glob(f"{sid}.src.*")), None)
+        if not got:
+            continue
+        out = DIR / f"{sid}.m4a"
+        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(got), "-t", f"{secs}", "-vn", "-af",
+                        "loudnorm=I=-16:TP=-1.5,afade=t=out:st=%.2f:d=0.25" % max(0.1, secs - 0.25),
+                        "-ar", "44100", "-ac", "2", "-c:a", "aac", str(out)], capture_output=True)
+        for q_ in DIR.glob(f"{sid}.src.*"):
+            q_.unlink(missing_ok=True)
+        if _sfx_ok(sid):
+            status[sid] = {"title": title, "channel": ch, "url": url}
+            print(f"  🔊 {sid}: {title[:60]}", flush=True)
+            return
+    print(f"  ❌ {sid}: नहीं मिला", flush=True)
+
+
 def build(only=None):
     """लाइब्रेरी बनाओ (6 एक साथ): हर meme का template video खोजो, शुरू का हिस्सा काटो, 1080x1920 (पीछे धुंधला)."""
     from concurrent.futures import ThreadPoolExecutor
     DIR.mkdir(exist_ok=True)
     status = json.loads((DIR / "status.json").read_text(encoding="utf-8")) if (DIR / "status.json").exists() else {}
     todo = [m for m in LIB if (only and m[0] in only) or (not only and not _ok(m[0]))]
+    sfx = [x for x in SFX if (only and x[0] in only) or (not only and not _sfx_ok(x[0]))]
     with ThreadPoolExecutor(6) as ex:
+        list(ex.map(lambda x: _one_sfx(x, status), sfx))
         list(ex.map(lambda m: _one(m, status), todo))
     (DIR / "status.json").write_text(json.dumps(status, ensure_ascii=False, indent=1), encoding="utf-8")
     sheet()
@@ -195,6 +239,42 @@ def splice(video, picks, out):
     return out
 
 
+def overlay_sfx(video, hits, out):
+    """[(सेकंड, sfx_id)] — reel की आवाज़ के ऊपर मज़ेदार आवाज़ें."""
+    hits = [(t, _sfx_ok(sid)) for t, sid in hits if _sfx_ok(sid)]
+    if not hits:
+        return None
+    ins, fc, labels = ["-i", str(video)], [], ["[0:a]"]
+    for j, (t, p) in enumerate(hits, 1):
+        ins += ["-i", str(p)]
+        ms = int(max(0, t) * 1000)
+        fc.append(f"[{j}:a]adelay={ms}|{ms},volume=0.9[s{j}]")
+        labels.append(f"[s{j}]")
+    fc.append("".join(labels) + f"amix=inputs={len(labels)}:duration=first:normalize=0[a]")
+    r = subprocess.run(["ffmpeg", "-y", "-loglevel", "error", *ins, "-filter_complex", ";".join(fc), "-map", "0:v",
+                        "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "160k", str(out)], capture_output=True, text=True)
+    return out if r.returncode == 0 and Path(out).exists() else None
+
+
+def sfx_hits(ep, lens, meme_after):
+    """कहाँ कौन-सी आवाज़: hook के बाद vine boom; tag वाली line के बाद हँसी; बाकी पंच (जहाँ meme नहीं) पर boom/bruh."""
+    ends, t = [], 0.0
+    for L in lens:
+        t += L
+        ends.append(t)
+    hits = []
+    for i, ln in enumerate(ep["_segs_ln"]):
+        if not ln.get("say") or any(abs(ends[i] - m) < 0.05 for m in meme_after):
+            continue
+        if i == 0:
+            hits.append((ends[i] - 0.15, "sfx_vine_boom"))
+        elif re.match(r"\s*हर .{2,30} में एक", ln.get("say", "")):
+            hits.append((ends[i] - 0.1, "sfx_crowd_laugh"))
+        elif ln.get("punch"):
+            hits.append((ends[i] - 0.15, "sfx_bruh" if ln.get("expr") == "tanz" else "sfx_vine_boom"))
+    return hits
+
+
 def add(ep, segs, video):
     """talk_episode से: बनी reel में memes डालो. लौटाता है [id] (Telegram रिपोर्ट के लिए)."""
     import reel_v3 as rv
@@ -202,7 +282,12 @@ def add(ep, segs, video):
         lens = [rv._read(s["wav"]).shape[0] / rv.SR for s in segs]
         ep["_segs_ln"] = [s["ln"] for s in segs]
         picks = pick(ep, lens)
+        hits = sfx_hits(ep, lens, [t for t, _, _ in picks])
         ep.pop("_segs_ln", None)
+        tmp0 = Path(video).with_name("with_sfx.mp4")
+        if hits and overlay_sfx(video, hits, tmp0):        # पहले आवाज़ें (reel के अपने समय पर), फिर memes बीच में
+            tmp0.replace(video)
+            print("  🔊 आवाज़ें:", [h for _, h in hits])
         tmp = Path(video).with_name("with_memes.mp4")
         if picks and splice(video, picks, tmp):
             tmp.replace(video)
