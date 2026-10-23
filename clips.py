@@ -52,7 +52,7 @@ def search(query, n=8):
         cmd = _ytdlp() + ["--flat-playlist", "-J", "--no-warnings", f"{pre}{n}:{query}"] + _cookies("YT_COOKIES")
         err = ""
         try:
-            r = subprocess.run(cmd, capture_output=True, text=True, timeout=90)
+            r = subprocess.run(cmd, capture_output=True, text=True, timeout=45)
             err = r.stderr or ""
             data = json.loads(r.stdout or "{}")
         except Exception as e:                            # noqa: BLE001

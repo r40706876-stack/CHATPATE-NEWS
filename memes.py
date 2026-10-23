@@ -66,41 +66,48 @@ def _probe_len(p):
         return 0.0
 
 
-def build(only=None):
-    """लाइब्रेरी बनाओ: हर meme का template video खोजो, शुरू का हिस्सा काटो, 1080x1920 (पीछे धुंधला) बनाओ."""
+def _one(item, status):
     import clips
+    mid, q, mood, start, secs = item
+    hits = clips.search(q, n=4)
+    hits = [h for h in hits if 3 <= (h[3] or 30) <= 120] or hits
+    for url, title, ch, dur in hits[:2]:
+        raw = DIR / f"{mid}.src.mp4"
+        cmd = clips._ytdlp() + ["-q", "--no-warnings", "--no-playlist", "-f", "b[height<=720]/bv*[height<=720]+ba/b",
+                                "--download-sections", f"*{start:.1f}-{start + secs + 0.4:.1f}", "--force-keyframes-at-cuts",
+                                "-o", str(raw)] + clips._cookies("YT_COOKIES") + [url]
+        try:
+            subprocess.run(cmd, capture_output=True, timeout=75)
+        except subprocess.TimeoutExpired:
+            print(f"  ⏱ {mid}: download अटका", flush=True)
+        got = next((p for p in DIR.glob(f"{mid}.src*") if p.suffix in (".mp4", ".webm", ".mkv")), None)
+        if not got:
+            continue
+        out = DIR / f"{mid}.mp4"
+        vf = (f"[0:v]split[a][b];[a]scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},boxblur=30:5,"
+              f"eq=brightness=-0.15[bg];[b]scale={W}:-2[fg];[bg][fg]overlay=0:(H-h)/2,fps={FPS},setsar=1,format=yuv420p[v]")
+        r = subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(got), "-f", "lavfi", "-i",
+                            "anullsrc=r=44100:cl=stereo", "-filter_complex", vf, "-map", "[v]", "-map", "0:a?",
+                            "-map", "1:a", "-t", f"{secs}", "-c:v", "libx264", "-preset", "veryfast", "-crf", "22",
+                            "-c:a", "aac", "-ar", "44100", "-ac", "2", "-shortest", str(out)], capture_output=True, text=True)
+        for p in DIR.glob(f"{mid}.src*"):
+            p.unlink(missing_ok=True)
+        if r.returncode == 0 and _ok(mid):
+            status[mid] = {"title": title, "channel": ch, "url": url, "secs": round(_probe_len(out), 2)}
+            print(f"  ✅ {mid}: {title[:60]} — {ch}", flush=True)
+            return
+        print(f"  ⚠️ {mid}: ffmpeg {r.stderr[-160:]}", flush=True)
+    print(f"  ❌ {mid}: नहीं मिला ({len(hits)} नतीजे)", flush=True)
+
+
+def build(only=None):
+    """लाइब्रेरी बनाओ (6 एक साथ): हर meme का template video खोजो, शुरू का हिस्सा काटो, 1080x1920 (पीछे धुंधला)."""
+    from concurrent.futures import ThreadPoolExecutor
     DIR.mkdir(exist_ok=True)
     status = json.loads((DIR / "status.json").read_text(encoding="utf-8")) if (DIR / "status.json").exists() else {}
-    for mid, q, mood, start, secs in LIB:
-        if (only and mid not in only) or (_ok(mid) and not only):
-            continue
-        hits = [h for h in clips.search(q, n=5) if 3 <= (h[3] or 30) <= 90] or clips.search(q, n=5)
-        done = False
-        for url, title, ch, dur in hits[:3]:
-            raw = DIR / f"{mid}.src.mp4"
-            cmd = clips._ytdlp() + ["-q", "--no-warnings", "--no-playlist", "-f", "b[height<=720]/bv*[height<=720]+ba/b",
-                                    "--download-sections", f"*{start:.1f}-{start + secs + 0.4:.1f}", "--force-keyframes-at-cuts",
-                                    "-o", str(raw)] + clips._cookies("YT_COOKIES") + [url]
-            subprocess.run(cmd, capture_output=True, timeout=180)
-            got = next((p for p in DIR.glob(f"{mid}.src*") if p.suffix in (".mp4", ".webm", ".mkv")), None)
-            if not got:
-                continue
-            out = DIR / f"{mid}.mp4"
-            vf = (f"[0:v]split[a][b];[a]scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},boxblur=30:5,"
-                  f"eq=brightness=-0.15[bg];[b]scale={W}:-2[fg];[bg][fg]overlay=0:(H-h)/2,fps={FPS},setsar=1,format=yuv420p[v]")
-            r = subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(got), "-f", "lavfi", "-i",
-                                "anullsrc=r=44100:cl=stereo", "-filter_complex", vf, "-map", "[v]", "-map", "0:a?",
-                                "-map", "1:a", "-t", f"{secs}", "-c:v", "libx264", "-preset", "veryfast", "-crf", "22",
-                                "-c:a", "aac", "-ar", "44100", "-ac", "2", "-shortest", str(out)], capture_output=True, text=True)
-            got.unlink(missing_ok=True)
-            if r.returncode == 0 and _ok(mid):
-                status[mid] = {"title": title, "channel": ch, "url": url, "secs": round(_probe_len(out), 2)}
-                print(f"  ✅ {mid}: {title[:60]} — {ch}")
-                done = True
-                break
-            print(f"  ⚠️ {mid}: ffmpeg {r.stderr[-160:]}")
-        if not done:
-            print(f"  ❌ {mid}: नहीं मिला ({len(hits)} नतीजे)")
+    todo = [m for m in LIB if (only and m[0] in only) or (not only and not _ok(m[0]))]
+    with ThreadPoolExecutor(6) as ex:
+        list(ex.map(lambda m: _one(m, status), todo))
     (DIR / "status.json").write_text(json.dumps(status, ensure_ascii=False, indent=1), encoding="utf-8")
     sheet()
 
