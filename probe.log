@@ -1,13 +1,192 @@
-Fri Oct 23 17:23:00 UTC 2026
+Fri Oct 23 17:24:31 UTC 2026
 deno: /home/runner/.deno/bin/deno
   YT_COOKIES: 22 cookies
-Traceback (most recent call last):
-  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/probe_task.py", line 6, in <module>
-    r = clips.search("jio ipo", n=3)
-        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/clips.py", line 61, in search
-    if data.get("entries"):
-       ^^^^^^^^
-AttributeError: 'NoneType' object has no attribute 'get'
-रुका/समय ख़त्म: 1
-Fri Oct 23 17:23:01 UTC 2026
+ytsearch stdout: {"id": "jio ipo", "title": "jio ipo", "_type": "playlist", "entries": [{"_type": "url", "ie_key": "Youtube", "id": "OTgONlscQXU", "url": "https://www.youtube.com/watch?v=OTgONlscQXU", "title": "JIO IP | stderr: 
+  YT_COOKIES: 22 cookies
+ytsearchdate stdout: null  | stderr: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate3" (requests, urllib, websockets)
+
+बिना cookies stdout: {"id": "jio ipo", "title": "jio ipo", "_type": "playlist", "entries": [{"_type": "url", "ie_key": "Youtube", "id": "OTgONlscQXU", "url": "https://www.youtube.com/watch?v=OTgONlscQXU", "title": "JIO IP | stderr: 
+yt-dlp version: 2026.10.21
+
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies  YT_COOKIES: 22 cookies
+
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate3" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate3" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate3" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate3" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate3" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate3" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  🔊 sfx_sad_violin: Sad Violin - Sound Effect (HD)
+  🔊 sfx_crowd_laugh: Crowd Laughing - Sound Effect (HD)
+  🔊 sfx_vine_boom: Vine boom sound effect
+  🔊 sfx_bruh: Bruh Sound Effect
+  🔊 sfx_dun_dun: DUN DUN DUNNNNN!! | (SOUND EFFECT)DOWNLOAD
+  🔊 sfx_record_scratch: Record Disc Scratch - Sound Effect
+  YT_COOKIES: 22 cookies  YT_COOKIES: 22 cookies
+
+  YT_COOKIES: 22 cookies  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearch) ख़ाली: ERROR: '/tmp/yt_cookies.txt' does not look like a Netscape format cookies file
+  ❌ ye_kya_ho_raha: नहीं मिला (0 नतीजे)
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  ✅ kya_kar_raha_hai: bhai kya kar raha hai tu shark tank meme template | asneer g — 10-X GAMERZ
+  YT_COOKIES: 22 cookies
+  ✅ utha_le_re_baba: utha le re baba Hera Pheri meme templates — Noob Memer
+  YT_COOKIES: 22 cookies
+  ✅ rasode_mein: Rasode mei kon tha # memes templates video — NEW DANK MEMES
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  ✅ paisa_hi_paisa: Akshay Kumar famous dialogue | Paisa hi paisa hoga #memes — Music Mp3✔
+  YT_COOKIES: 22 cookies
+  ✅ na_ho_payega: Tumse na ho payega | meme | No copyright | — Everything's for Free
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  ✅ kehna_kya_chahte: Arey Kehna Kya Chahte Ho Meme Template — Fiction
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  ✅ ye_baburao_style: Ye Baburao ka style hai 😎Meme Template    With Download Link — Memes Rock Clips
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  ✅ mogambo_khush: Mogembo khush hua || Meme template|| — Meme Templates By Abid
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  ✅ picture_baaki: PICTURE ABHI BAKI HAI MERE DOST MEME TEMPLATE | SHAH RUKH KH — Cringee
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  ✅ bahut_hard: Mein Kya Kar Sakta Hu Meme Template HD — Meme Templates HQ
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  ✅ jor_jor_se: Zor zor se bolke logo ko scheme bata de Meme Template for ed — Efx Capital
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  ✅ aaj_khush_honge: Aaj Khush To Bohot Hoge Tum dialogue | Ludo | Netflix — Allauddin Mitra
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  ✅ ye_dukh_kahe: Sala ye dukh kahe khatam nahi hota be | Meme Template | Maza — Mazak Masti Memes
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  ✅ mujhe_pata_tha: Mujhe pata tha yeh hona hai 😂🤣 — Haris Star
+  YT_COOKIES: 22 cookies
+  ✅ bas_kar_pagle: Are bas kar rulayega kya meme template download | mformemez — Meme template videos
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  ✅ ruko_zara: Ruko Zara Sabar Karo Meme Template | ashish chanchlani Versi — Remix Zone
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  ✅ ye_toh_bada_toing: The Amul Macho Orangutan TVC featuring Sana Khan. — littlelambfilms
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  ✅ tension_lene_ka: Tension nai lene ka apun hai na meme template 🤗720p LINK 👇👇  — MEMES FAMOUS
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  ✅ naam_to_suna: Name Tu suna hi hoga Rahul deshwal Civil engineer — Rahul Singh
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  ✅ ab_tera_kya_hoga: TERA KYA HOGA KALIA(NO COPYRIGHT) — FUNNY PUBG VIDEO🤣🤣
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  ✅ bilkul_ricks_nahi: Bilkul Risk nahi leneka | Babu Rao meme — Mi Neve
+  YT_COOKIES: 22 cookies
+  ✅ thapad_se_darr: Thappad se darr nahi lagta sahab, hazard se lagta hai! #boll — Vikaki - Reimagining EHS
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  ✅ ek_baar_commitment: Ek baar jo maine commitment kar di to main apni aap ki bhi n — Everything's for Free
+  YT_COOKIES: 22 cookies
+  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  ✅ kuch_bhi: Kuch bhi | meme template | Arnab goswami | Kuch bhi kuch bhi — FurU Ke MemeS
+  YT_COOKIES: 22 cookies
+  ✅ wah_kya_scene: Wah kya scene hai | Meme template | Modi | FurU Ke MemeS — FurU Ke MemeS
+  ✅ mazak_hai_kya: majak chal raha hai kya 😁😁 — Manjeet Singh
+  ✅ main_kya_karu: Mai Kya Karu Job Chod Du (meme template) — Memes Hai Kya?
+  ✅ achha_theek_hai: Okey samaj gya | Puneet Superstar | Meme Template | Acha Thi — All Easy
+  ✅ haan_main_pagal: Me pagal hu rajpal yadav memes hungama — Valsur Dharmesh ꗇ
+memes बने: 35 / 36 (128s)
+Fri Oct 23 17:26:39 UTC 2026
