@@ -54,7 +54,7 @@ def search(query, n=8):
         try:
             r = subprocess.run(cmd, capture_output=True, text=True, timeout=45)
             err = r.stderr or ""
-            data = json.loads(r.stdout or "{}")
+            data = json.loads(r.stdout or "{}") or {}
         except Exception as e:                            # noqa: BLE001
             print(f"  YouTube खोज ({pre}) नहीं चली:", repr(e)[:120], err[-200:])
             data = {}
