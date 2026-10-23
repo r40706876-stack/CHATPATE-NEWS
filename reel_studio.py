@@ -196,6 +196,16 @@ def shot_for(i, ln):
     return "split"
 
 
+def shot_v2(i, ln):
+    """नई presentation (style "v2"): पहली line और तथ्य = पूरी screen पर तस्वीर/clip (कोने में किरदार),
+    पंच/tag वाली line = किरदार का बड़ा close-up, बाकी split — हर line पर नज़ारा बदले, template जैसा न लगे."""
+    if i == 0 or (ln.get("who") == "bablu" and not ln.get("punch")):
+        return "full"
+    if ln.get("punch") or ln.get("tag_text"):
+        return "close"
+    return "split"
+
+
 _cbg = {}
 
 
@@ -562,13 +572,13 @@ def _ask(d, text, t, y0=1040):
     d.polygon([(W / 2 + 120, by - 12), (W / 2 + 156, by - 12), (W / 2 + 138, by + 14)], fill="white")
 
 
-def _pip(im, band, t, setname="studio"):
+def _pip(im, band, t, setname="studio", left=False):
     """full shot: कोने में गोल खिड़की में बोलता किरदार (चेहरा भरकर)."""
     fx, fy, r = (int(W * 0.54), int(BAND_H * 0.27), 175) if setname == "studio" else (W // 2, int(BAND_H * 0.25), 175)
     face = band.crop((fx - r, fy - r, fx + r, fy + r)).resize((340, 340), Image.BILINEAR)
     m = Image.new("L", (340, 340), 0)
     ImageDraw.Draw(m).ellipse((0, 0, 339, 339), fill=255)
-    x, y = W - 380, 1250
+    x, y = (40, 1250) if left else (W - 380, 1250)   # v2: बाएँ, ताकि Instagram के दाएँ buttons के नीचे न दबे
     ImageDraw.Draw(im).ellipse((x - 10, y - 10, x + 350, y + 350), fill=YEL)
     im.paste(face, (x, y), m)
 
@@ -712,6 +722,7 @@ def render(ep, segs, chars, out, preview):
     headline = ep.get("breaking") or ep.get("title") or ""
     last_react = max([i for i, s in enumerate(segs) if s.get("react")], default=-1)
     pool = list(dict.fromkeys(p for s in segs for p in (s.get("vis") or []) if isinstance(p, Path)))   # सारी असली तस्वीरें
+    v2 = ep.get("style") == "v2"
     k, seed, last_screen, prev_im, last_vis, carry = 0, 0, None, None, [], 0
     cur, credit, clean = None, "", None
     st_text, st_t, seen = "", 0, set()
@@ -807,7 +818,7 @@ def render(ep, segs, chars, out, preview):
                 sf = next(cur)
                 last_screen = sf
                 im = sf.copy()
-                _pip(im, fr, t, ln.get("set", "studio"))
+                _pip(im, fr, t, ln.get("set", "studio"), left=v2)
             else:
                 sf = next(cur) if cur is not None else Image.new("RGB", size)
                 last_screen = sf
@@ -842,14 +853,20 @@ def render(ep, segs, chars, out, preview):
                 d.text((58, BAND_Y + 418), f"{name} का रिएक्शन", font=tt.font(44), fill="white", anchor="lm")
             else:
                 hooking = si == 0 and ep.get("hook")              # पहली line: वही बात बड़े पीले hook में (जो सुनाई दे, वही दिखे)
-                if first_seen and t < FPS * 2.5 and shot != "close" and not hooking:
+                cy = 1150 if (v2 and shot == "full") else BAND_Y + 460
+                if first_seen and t < FPS * 2.5 and shot != "close" and not hooking and not (v2 and shot == "full"):
                     rv.name_strap(d, (BAND_Y + 84) if shot == "split" else 1130, name, role)
-                if hooking:
+                if hooking and v2:                                # v2: झटका ऊपर बड़े अक्षरों में (नीचे Instagram के buttons)
+                    _hook(d, ep["hook"], 330)
+                elif hooking:
                     hook_low(d, ep["hook"])
-                elif wtimes:
-                    karaoke_timed(d, cap_text, t / FPS, wtimes, BAND_Y + 460)
                 else:
-                    karaoke_safe(d, cap_text, t / n, BAND_Y + 460, span)
+                    if v2 and ln.get("tag_text"):                 # "हर घर में एक…" वाली line ऊपर बड़ी — यही tag करवाती है
+                        _hook(d, ln["tag_text"], 330)
+                    if wtimes:
+                        karaoke_timed(d, cap_text, t / FPS, wtimes, cy)
+                    else:
+                        karaoke_safe(d, cap_text, t / n, cy, span)
             if bool(ln.get("punch")) and not react and not st_text and t >= n * 0.6:
                 st_text = ln.get("stamp") or STAMP_OF.get(ln.get("react_pose"), "")
                 st_t = 0

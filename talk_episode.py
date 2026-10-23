@@ -4,6 +4,7 @@
     python talk_episode.py post                   → episode.mp4 (+ preview_episode.jpg, Telegram)
 """
 import json
+import re
 import subprocess
 import sys
 import wave
@@ -317,7 +318,11 @@ def post_studio(ep):
         still = Image.open(IN / f"{i}/still.png").convert("RGB")
         vis = sorted((p for p in (IN / "broll").glob(f"{i}_*") if p.suffix != ".txt"),   # असली clip सबसे पहले
                      key=lambda p: ("clip" not in p.name, p.name)) if (IN / "broll").exists() else []
-        shot = ln.get("shot") or reel_studio.shot_for(i, ln)
+        if ep.get("style") == "v2":
+            m = re.match(r"\s*(हर [^…,।!?]{2,30} में एक [^…,।!?]{2,25})", ln.get("say", ""))
+            if m:
+                ln["tag_text"] = m.group(1) + "…"
+        shot = ln.get("shot") or (reel_studio.shot_v2(i, ln) if ep.get("style") == "v2" else reel_studio.shot_for(i, ln))
         talk = None
         sprite = (ep.get("sprite") or {}).get(ln["who"])
         if sprite and ep.get("lips", "sadtalker") == "sprite":
