@@ -722,7 +722,8 @@ def render(ep, segs, chars, out, preview):
     headline = ep.get("breaking") or ep.get("title") or ""
     last_react = max([i for i, s in enumerate(segs) if s.get("react")], default=-1)
     pool = list(dict.fromkeys(p for s in segs for p in (s.get("vis") or []) if isinstance(p, Path)))   # सारी असली तस्वीरें
-    v2 = ep.get("style") == "v2"
+    v2 = ep.get("style") in ("v2", "nochar")
+    nochar = ep.get("style") == "nochar"                 # बिना किरदार: सिर्फ़ तस्वीर/clip + बड़े अक्षर + आवाज़
     k, seed, last_screen, prev_im, last_vis, carry = 0, 0, None, None, [], 0
     cur, credit, clean = None, "", None
     st_text, st_t, seen = "", 0, set()
@@ -818,7 +819,8 @@ def render(ep, segs, chars, out, preview):
                 sf = next(cur)
                 last_screen = sf
                 im = sf.copy()
-                _pip(im, fr, t, ln.get("set", "studio"), left=v2)
+                if not nochar:
+                    _pip(im, fr, t, ln.get("set", "studio"), left=v2)
             else:
                 sf = next(cur) if cur is not None else Image.new("RGB", size)
                 last_screen = sf
@@ -856,7 +858,9 @@ def render(ep, segs, chars, out, preview):
                 cy = 1150 if (v2 and shot == "full") else BAND_Y + 460
                 if first_seen and t < FPS * 2.5 and shot != "close" and not hooking and not (v2 and shot == "full"):
                     rv.name_strap(d, (BAND_Y + 84) if shot == "split" else 1130, name, role)
-                if hooking and v2:                                # v2: झटका ऊपर बड़े अक्षरों में (नीचे Instagram के buttons)
+                if nochar:                                        # हर line ऊपर बड़े अक्षरों में (meme reel जैसा)
+                    _hook(d, ep["hook"] if hooking else cap_text, 330)
+                elif hooking and v2:                                # v2: झटका ऊपर बड़े अक्षरों में (नीचे Instagram के buttons)
                     _hook(d, ep["hook"], 330)
                 elif hooking:
                     hook_low(d, ep["hook"])

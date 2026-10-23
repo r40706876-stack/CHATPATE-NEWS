@@ -91,7 +91,7 @@ def prep(script_path):
         if sprite:                                             # 3D किरदार: नीले studio में, line के भाव वाली फ़ोटो
             import reel_studio
             st = ln.get("set") or ("studio" if ln["who"] == "bablu" else "village")
-            ln["shot"] = reel_studio.shot_for(i, ln)
+            ln["shot"] = pick_shot(ep, i, ln)
             src_shot = "close" if ln["shot"] == "close" else "band"
             reel_studio.source_for(sprite, ln.get("expr", ""), d / "source.png", d / "still.png", st, src_shot)
             rp = ln.get("react_pose") if ep.get("react") else None    # reaction ठहराव बंद (flow टूटता था); ep["react"] से चालू
@@ -145,6 +145,20 @@ def prep(script_path):
     json.dump(ep, open(IN / "episode.json", "w", encoding="utf-8"), ensure_ascii=False)
     sprite_lips = ep.get("sprite") and ep.get("lips", "sadtalker") == "sprite"
     print(json.dumps([] if sprite_lips else list(range(len(ep["lines"])))))   # sprite वाले होंठ = SadTalker की ज़रूरत नहीं
+
+
+def pick_shot(ep, i, ln):
+    """style: v2 = पूरी screen तस्वीर/close-up/split बदलते रहें; nochar = बिना किरदार (सिर्फ़ तस्वीर/clip + बड़े अक्षर);
+    बाकी = पुराना हमेशा split."""
+    import reel_studio
+    style = ep.get("style")
+    if style in ("v2", "nochar"):
+        m = re.match(r"\s*(हर [^…,।!?]{2,30} में एक [^…,।!?]{2,25})", ln.get("say", ""))
+        if m:
+            ln["tag_text"] = m.group(1) + "…"
+    if style == "nochar":
+        return "full"
+    return reel_studio.shot_v2(i, ln) if style == "v2" else reel_studio.shot_for(i, ln)
 
 
 def fill_sets(ep):
@@ -318,11 +332,7 @@ def post_studio(ep):
         still = Image.open(IN / f"{i}/still.png").convert("RGB")
         vis = sorted((p for p in (IN / "broll").glob(f"{i}_*") if p.suffix != ".txt"),   # असली clip सबसे पहले
                      key=lambda p: ("clip" not in p.name, p.name)) if (IN / "broll").exists() else []
-        if ep.get("style") == "v2":
-            m = re.match(r"\s*(हर [^…,।!?]{2,30} में एक [^…,।!?]{2,25})", ln.get("say", ""))
-            if m:
-                ln["tag_text"] = m.group(1) + "…"
-        shot = ln.get("shot") or (reel_studio.shot_v2(i, ln) if ep.get("style") == "v2" else reel_studio.shot_for(i, ln))
+        shot = ln.get("shot") or pick_shot(ep, i, ln)
         talk = None
         sprite = (ep.get("sprite") or {}).get(ln["who"])
         if sprite and ep.get("lips", "sadtalker") == "sprite":

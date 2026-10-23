@@ -479,6 +479,10 @@ def take_user_script():
         ep["topic"], ep["breaking"] = v, " ".join(v.split()[:10])
         for ln in ep["lines"]:
             ln["topic"] = v
+    fmt = re.search(r"^\s*(?:फ़ॉर्मेट|फॉर्मेट|फार्मेट|format)\s*[:：]\s*(\S+)", tf0.read_text(encoding="utf-8"), re.M | re.I)
+    if fmt:                                            # "फ़ॉर्मेट: 1/2/3" = नई presentation, "5" = बिना किरदार; 4 = बकरा बहस (माँग वाली line से)
+        ep["style"] = {"1": "v2", "2": "v2", "3": "v2", "5": "nochar", "v2": "v2", "nochar": "nochar"}.get(fmt.group(1).strip().lower(), "")
+        ep["format_no"] = fmt.group(1).strip()
     ep = as_rant(ep)
     import telegram
     tf = ROOT / "topics.txt"
