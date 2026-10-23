@@ -1,0 +1,1277 @@
+{
+  "sent_at": 1792778808,
+  "eps": [
+    {
+      "khabar": "फोल्डेबल iPhone की पहली सेल से पहले Apple Store के बाहर जुटी भीड़",
+      "score": "9",
+      "topic": "iPhone Duo की ₹2.99 लाख से बिक्री शुरू",
+      "category": "tech",
+      "breaking": "एप्पल ने भारत में लॉन्च किया पहला फोल्डेबल फोन",
+      "samaj": "हम किश्तों वाले शौकीन",
+      "maang": "फोन के साथ गुर्दा सुरक्षा बीमा मुफ़्त मिले!",
+      "twist": "तीन लाख के कवर में असल में दस साल पुराना टूटा फोन है!",
+      "takiya": "किश्त बाद में, किडनी पहले!",
+      "tag_who": "जो ईएमआई पर फोन लेने का सपना देख रहा है",
+      "source": "ABP News, Jagran, Hindustan, Amar Ujala, Gadgets 360 Hindi, Navbharat Times",
+      "ask": "क्या तीन लाख का फोन लेना अकलमंदी है?",
+      "ticker": [
+        "iPhone Duo की भारत में पहली सेल शुरू",
+        "कीमत 2.99 लाख से 4.5 लाख रुपये तक",
+        "12 महीने की नो-कॉस्ट ईएमआई उपलब्ध"
+      ],
+      "lines": [
+        {
+          "who": "bablu",
+          "beat": "hook",
+          "say": "क्या तीन लाख का फोल्डेबल फोन, किडनी बचाने वालों पर सीधा हमला है?",
+          "caption": "क्या 3 लाख का फोल्डेबल फोन, किडनी बचाने वालों पर हमला है?",
+          "visuals": [
+            "indian crowd outside apple store",
+            "man looking at expensive phone launch",
+            "foldable smartphone display close up"
+          ],
+          "photo_hi": [
+            "एप्पल स्टोर भीड़ भारत",
+            "महंगा स्मार्टफोन डिस्प्ले"
+          ],
+          "expr": "hairan",
+          "sfx": "boom",
+          "mood": "tension",
+          "delivery": "बिल्कुल गंभीर, धीमा, हर शब्द पर ज़ोर — जैसे देश का सबसे बड़ा सवाल पूछ रहा हो",
+          "visual": "indian crowd outside apple store",
+          "set": "studio",
+          "punch": false,
+          "big": "बड़ा सवाल",
+          "sub": "हम किश्तों वाले शौकीन",
+          "card_color": [
+            20,
+            40,
+            110
+          ],
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "saboot",
+          "say": "आईफोन डुओ की शुरुआती कीमत पौने तीन लाख से साढ़े चार लाख रुपये है!",
+          "caption": "iPhone Duo की कीमत 2.99 लाख से 4.5 लाख रुपये है!",
+          "visuals": [
+            "apple store billing counter india",
+            "expensive smartphone price tag display",
+            "man shocked looking at phone price"
+          ],
+          "photo_hi": [
+            "आईफोन स्टोर बिलिंग",
+            "महंगा मोबाइल बिल"
+          ],
+          "expr": "gussa",
+          "sfx": "whoosh",
+          "mood": "tension",
+          "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
+          "visual": "apple store billing counter india",
+          "set": "studio",
+          "punch": false,
+          "big": "सबूत नंबर 1",
+          "sub": "",
+          "card_color": [
+            12,
+            60,
+            120
+          ],
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "ramesh",
+          "beat": "saboot",
+          "say": "और बात यहीं ख़त्म नहीं होती… बारह महीने की ईएमआई पर भी पूरा राशन बिक रहा है!",
+          "caption": "12 महीने की EMI पर भी राशन बिकने की नौबत आ गई है!",
+          "visuals": [
+            "sad indian middle class man calculating EMI",
+            "grocery shop bill payment india",
+            "man holding credit card worried"
+          ],
+          "photo_hi": [
+            "किश्त हिसाब लगाता आदमी",
+            "क्रेडिट कार्ड बिल चिंता"
+          ],
+          "expr": "gussa",
+          "sfx": "glitch",
+          "mood": "tension",
+          "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
+          "visual": "sad indian middle class man calculating EMI",
+          "set": "bank",
+          "punch": false,
+          "big": "सबूत नंबर 2",
+          "sub": "",
+          "card_color": [
+            12,
+            60,
+            120
+          ],
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "maang",
+          "say": "हमारी माँग: फोन के साथ गुर्दा सुरक्षा बीमा मुफ़्त मिले!",
+          "caption": "हमारी माँग: फोन के साथ गुर्दा सुरक्षा बीमा मुफ़्त मिले!",
+          "visuals": [
+            "funny kidney health insurance poster hindi",
+            "angry customer demanding in mobile store",
+            "doctor checking patient in clinic"
+          ],
+          "photo_hi": [
+            "मोबाइल दुकान बहस",
+            "गुर्दा सुरक्षा बीमा कागज़"
+          ],
+          "stamp": "गुर्दा सुरक्षा बीमा मुफ़्त!",
+          "expr": "gussa",
+          "sfx": "dhol",
+          "mood": "masti",
+          "delivery": "ऐलान की तरह, जोश में, जैसे संसद में भाषण",
+          "visual": "funny kidney health insurance poster hindi",
+          "set": "studio",
+          "punch": true,
+          "big": "हमारी माँग",
+          "sub": "फोन के साथ गुर्दा सुरक्षा बीमा",
+          "card_color": [
+            110,
+            20,
+            40
+          ],
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "dhamki",
+          "say": "और अगर किश्तें माफ़ नहीं हुईं…",
+          "caption": "और अगर किश्तें माफ़ नहीं हुईं…",
+          "visuals": [
+            "angry indian news anchor pointing finger",
+            "dramatic tv studio lighting dark",
+            "close up angry face man"
+          ],
+          "photo_hi": [
+            "गुस्सैल एंकर उंगली",
+            "टीवी स्टूडियो ड्रामा"
+          ],
+          "expr": "gambhir",
+          "sfx": "tick",
+          "mood": "tension",
+          "delivery": "अचानक बहुत धीमा, रहस्य वाला, लगभग फुसफुसाते हुए",
+          "pause_after": 0.5,
+          "visual": "angry indian news anchor pointing finger",
+          "set": "studio",
+          "punch": true,
+          "big": "चेतावनी!",
+          "sub": "",
+          "card_color": [
+            40,
+            10,
+            15
+          ],
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "twist",
+          "say": "तो सबको बता देंगे… तीन लाख के कवर में असल में दस साल पुराना टूटा फोन है!",
+          "caption": "तो सबको बता देंगे… 3 लाख के कवर में 10 साल पुराना टूटा फोन है!",
+          "visuals": [
+            "man taking old broken phone out of fancy cover",
+            "cracked screen old smartphone display",
+            "funny exposed secret expression face"
+          ],
+          "photo_hi": [
+            "टूटा हुआ पुराना मोबाइल",
+            "फैनसी कवर पुराना फोन"
+          ],
+          "stamp": "टूटा फोन की पोल खोल!",
+          "expr": "hairan",
+          "sfx": "boom",
+          "mood": "masti",
+          "delivery": "धमाके से, जीत वाले अंदाज़ में, आख़िरी हिस्सा ज़ोर से",
+          "visual": "man taking old broken phone out of fancy cover",
+          "set": "studio",
+          "punch": true,
+          "big": "बड़ा खुलासा!",
+          "sub": "",
+          "card_color": [
+            170,
+            20,
+            30
+          ],
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "takiya",
+          "say": "किश्त बाद में, किडनी पहले!",
+          "caption": "किश्त बाद में, किडनी पहले!",
+          "visuals": [
+            "angry anchor shouting in microphone",
+            "tv news studio breaking graphic",
+            "bold hindi text display graphic"
+          ],
+          "photo_hi": [
+            "एंकर चिल्लाता हुआ",
+            "बकरा बहस लोगो"
+          ],
+          "stamp": "किश्त बाद में, किडनी पहले!",
+          "expr": "gussa",
+          "sfx": "thug",
+          "mood": "masti",
+          "delivery": "पूरी ताक़त से चिल्लाकर, मेज़ पर हाथ मारते हुए",
+          "pause_after": 0.3,
+          "visual": "angry anchor shouting in microphone",
+          "set": "studio",
+          "punch": true,
+          "big": "किश्त बाद में, किडनी पहले!",
+          "sub": "",
+          "card_color": [
+            170,
+            20,
+            30
+          ],
+          "scene": "studio_end",
+          "insta": ""
+        }
+      ],
+      "caption_post": "क्या तीन लाख का फोल्डेबल फोन, किडनी बचाने वालों पर सीधा हमला है? Tag करो उसको जो ईएमआई पर फोन लेने का सपना देख रहा है। क्या तीन लाख का फोन लेना अकलमंदी है? स्रोत: ABP News, Jagran, Hindustan #BakraNews #iPhoneDuo #EMI #TechHumor #BakraBahash (AI किरदारों द्वारा निर्मित)",
+      "format": "rant",
+      "label": "बकरा बहस",
+      "icons": [
+        "₹",
+        "NEWS",
+        "%"
+      ],
+      "hook": "क्या तीन लाख का फोल्डेबल फोन, किडनी बचाने वालों पर सीधा हमला है?",
+      "hook_text": "क्या तीन लाख का फोल्डेबल फोन, किडनी बचाने वालों पर सीधा हमला है?",
+      "poll": null,
+      "key_word": "",
+      "cast_why": "समाज: हम किश्तों वाले शौकीन | माँग: फोन के साथ गुर्दा सुरक्षा बीमा मुफ़्त मिले!",
+      "trend": {
+        "score": 7,
+        "why": "20 अख़बार/चैनल 2 दिन में, 45 खबरें 7 दिन में"
+      },
+      "hasi": "टैग: जो ईएमआई पर फोन लेने का सपना देख रहा है | twist: तीन लाख के कवर में असल में दस साल पुराना टूटा फोन है!"
+    },
+    {
+      "topic": "वीडियो कॉल पर तय हुई शादी, लोगों ने पूछा- तलाक का क्या प्रोसेस होगा",
+      "category": "[वायरल वीडियो]",
+      "breaking": "बहराइच में एक सौ बीस फुट ऊंचे टावर पर चढ़कर हुआ निकाह",
+      "hook_text": "शादी नेटवर्क पर हुई... अब तलाक का लिंक माँग रहे हैं!",
+      "ask": "क्या ऑनलाइन शादी का रिश्ता लंबे समय तक टिक सकता है?",
+      "source": "Tez Tarrar News, Amar Ujala, Jagran, Hindustan",
+      "poll": [
+        "ऑनलाइन सही है",
+        "पुराना तरीका बेस्ट"
+      ],
+      "ticker": [
+        "बहराइच: टावर पर चढ़कर युवती ने वीडियो कॉल पर किया निकाह",
+        "नेटवर्क मिलते ही काज़ी ने ऑनलाइन पढ़ा दिया निकाह",
+        "रिश्तेदारों ने पूछा: अब विदाई की रील कौन बनाएगा?"
+      ],
+      "cast_why": "पिंकी की ऑनलाइन सोच पर चाचा का पुराना तंज़ और दादी का तीखा फ़ैसला",
+      "tag_who": "हर वो रिश्तेदार जो शादी में सिर्फ मुफ़्त वाई-फाई ढूंढता है",
+      "lines": [
+        {
+          "who": "pinky",
+          "say": "शादी नेटवर्क पर हुई... अब तलाक का लिंक माँग रहे हैं!",
+          "caption": "शादी नेटवर्क पर हुई... अब तलाक का लिंक माँग रहे हैं!",
+          "expr": "hairan",
+          "set": "thana",
+          "visuals": [
+            "girl holding smartphone video call",
+            "mobile network cell tower sky",
+            "wedding ritual online screen"
+          ],
+          "photo_hi": [
+            "मोबाइल टावर निकाह",
+            "बहराइच शादी वीडियो"
+          ],
+          "visual": "girl holding smartphone video call",
+          "scene": "studio",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "बहराइच में युवती एक सौ बीस फुट ऊंचे टावर पर चढ़ी... प्रेमी से वीडियो कॉल पर निकाह हुआ!",
+          "caption": "बहराइच में युवती 120 फुट ऊंचे टावर पर चढ़ी... प्रेमी से वीडियो कॉल पर निकाह हुआ!",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "tall telecom tower india",
+            "police near mobile tower",
+            "crowd looking up tower"
+          ],
+          "photo_hi": [
+            "बहराइच टावर युवती",
+            "वीडियो कॉल शादी यूपी"
+          ],
+          "card": {
+            "tag": "बहराइच ख़बर",
+            "big": "120 फुट ऊंचा टावर",
+            "sub": "वीडियो कॉल पर निकाह संपन्न",
+            "icon": "phone"
+          },
+          "visual": "tall telecom tower india",
+          "scene": "card",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "chacha",
+          "say": "हमारे ज़माने में सात फेरे होते थे... यहाँ सात जीबी डेटा में पूरा निकाह निपट गया!",
+          "caption": "हमारे ज़माने में सात फेरे होते थे... यहाँ 7 GB डेटा में पूरा निकाह निपट गया!",
+          "expr": "tanz",
+          "set": "aangan",
+          "visuals": [
+            "indian wedding mandap blur",
+            "old man talking village",
+            "mobile phone in hand"
+          ],
+          "photo_hi": [
+            "देसी शादी रस्म",
+            "गांव के बुजुर्ग चर्चा"
+          ],
+          "visual": "indian wedding mandap blur",
+          "scene": "chacha",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "pinky",
+          "say": "हर घर में एक रिश्तेदार होता है, जो शादी में सिर्फ वाई-फाई का पासवर्ड ढूंढता है!",
+          "caption": "हर घर में एक रिश्तेदार होता है, जो शादी में सिर्फ वाई-फ़ाई का पासवर्ड ढूंढता है!",
+          "expr": "hasi",
+          "set": "aangan",
+          "visuals": [
+            "wedding guest using phone",
+            "wifi router icon light",
+            "funny wedding guest reaction"
+          ],
+          "photo_hi": [
+            "शादी में रिश्तेदार",
+            "मोबाइल वाईफाई उपयोग"
+          ],
+          "visual": "wedding guest using phone",
+          "scene": "pinky",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "dadi",
+          "say": "काज़ी साहब ने कहा है, निकाह ऑनलाइन जायज़ है। बशर्ते नेटवर्क बीच में न कटे।",
+          "caption": "काज़ी साहब ने कहा है, निकाह ऑनलाइन जायज़ है। बशर्ते नेटवर्क बीच में न कटे।",
+          "expr": "gambhir",
+          "set": "aangan",
+          "visuals": [
+            "elderly woman talking serious",
+            "mobile screen buffering icon",
+            "traditional village courtyard"
+          ],
+          "photo_hi": [
+            "दादी का बयान",
+            "नेटवर्क सिग्नल शादी"
+          ],
+          "punch": true,
+          "stamp": "नेटवर्क… जायज़ है!",
+          "visual": "elderly woman talking serious",
+          "scene": "dadi_call",
+          "insta": ""
+        },
+        {
+          "who": "pinky",
+          "say": "शादी तो हो गई... अब देखना है नेटवर्क पहले कटता है या रिश्ता!",
+          "caption": "शादी तो हो गई... अब देखना है नेटवर्क पहले कटता है या रिश्ता!",
+          "expr": "tanz",
+          "set": "aangan",
+          "visuals": [
+            "smartphone video disconnect",
+            "wedding couple illustration",
+            "girl smiling at camera"
+          ],
+          "photo_hi": [
+            "वीडियो कॉल कट गई",
+            "शादी रील वायरल"
+          ],
+          "visual": "smartphone video disconnect",
+          "scene": "studio_end",
+          "punch": false,
+          "insta": ""
+        }
+      ],
+      "caption_post": "शादी नेटवर्क पर हुई... अब तलाक का लिंक माँग रहे हैं! Tag करो उसको जो हर शादी में सिर्फ वाई-फाई ढूंढता है। क्या ऑनलाइन शादी लंबे समय तक टिक सकती है? स्रोत: Tez Tarrar News, Amar Ujala, Jagran, Hindustan #BakraNews #BahraichNews #VideoCallNikah #ViralVideo #DigitalIndia (AI किरदारों की व्यंग्यात्मक पेशकश)",
+      "format": "explain",
+      "label": "काम की खबर",
+      "key_word": "",
+      "icons": [
+        "₹",
+        "NEWS",
+        "%"
+      ],
+      "hook": "शादी नेटवर्क पर हुई... अब तलाक का लिंक माँग रहे हैं!",
+      "_loose": true,
+      "trend": {
+        "score": 7,
+        "why": "15 अख़बार/चैनल 2 दिन में, 48 खबरें 7 दिन में"
+      }
+    },
+    {
+      "khabar": "दिवाली-छठ पर ट्रेनों में ‘नो रूम’, दिल्ली-मुंबई से घर लौटने वालों की फंसी जान",
+      "score": "9",
+      "topic": "दिवाली-छठ पर ट्रेनों में लंबी वेटिंग, हवाई किराया ₹35k हुआ",
+      "category": "travel",
+      "breaking": "त्योहारों पर ट्रेनों में लंबी वेटिंग, हवाई किराया 35 हजार पार",
+      "samaj": "हम परदेसी",
+      "maang": "हर परदेसी यात्री को विशेष उड़न-खटोला मुफ़्त मिले!",
+      "twist": "घर जाने के बहाने गोवा जाने का प्लान बन रहा था!",
+      "takiya": "बर्थ दो, भाषण बंद करो!",
+      "tag_who": "जिसकी ट्रेन की टिकट अभी तक वेटिंग में अटकी है",
+      "source": "Dainik Bhaskar, Hindustan, Jagran, Prabhat Khabar, Amar Ujala",
+      "ask": "क्या त्योहारों पर स्पेशल ट्रेनें काफी हैं?",
+      "ticker": [
+        "दिवाली-छठ की ट्रेनों में लंबी वेटिंग लिस्ट",
+        "दिल्ली से पटना हवाई किराया 35000 रुपये पहुँचा",
+        "बिहार-झारखंड रूट की ट्रेनें पूरी तरह हाउसफुल"
+      ],
+      "lines": [
+        {
+          "who": "bablu",
+          "beat": "hook",
+          "say": "क्या दिवाली पर ट्रेनों की नो-रूम वेटिंग, परदेसियों को रोकने की साज़िश है?",
+          "caption": "क्या दिवाली पर ट्रेनों की नो-रूम वेटिंग, परदेसियों को रोकने की साज़िश है?",
+          "visuals": [
+            "crowded indian railway station platform festival season",
+            "people waiting with luggage at train station",
+            "frustrated passenger looking at train ticket board"
+          ],
+          "photo_hi": [
+            "रेलवे स्टेशन दिवाली भीड़",
+            "वेटिंग टिकट यात्री"
+          ],
+          "expr": "hairan",
+          "sfx": "boom",
+          "mood": "tension",
+          "delivery": "बिल्कुल गंभीर, धीमा, हर शब्द पर ज़ोर — जैसे देश का सबसे बड़ा सवाल पूछ रहा हो",
+          "visual": "crowded indian railway station platform festival season",
+          "set": "studio",
+          "punch": false,
+          "big": "बड़ा सवाल",
+          "sub": "हम परदेसी",
+          "card_color": [
+            20,
+            40,
+            110
+          ],
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "saboot",
+          "say": "ट्रेनों में जगह ख़त्म और दिल्ली से पटना का हवाई किराया पैंतीस हज़ार रुपये पहुँचा!",
+          "caption": "ट्रेनों में नो-रूम, दिल्ली-पटना फ्लाइट किराया ₹35000 पहुँचा!",
+          "visuals": [
+            "flight ticket booking website high price display",
+            "airplane taking off from airport delhi",
+            "packed indian train coach interior"
+          ],
+          "photo_hi": [
+            "हवाई जहाज टिकट महंगा",
+            "ट्रेन हाउसफुल भीड़"
+          ],
+          "expr": "gussa",
+          "sfx": "whoosh",
+          "mood": "tension",
+          "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
+          "visual": "flight ticket booking website high price display",
+          "set": "studio",
+          "punch": false,
+          "big": "सबूत नंबर 1",
+          "sub": "",
+          "card_color": [
+            12,
+            60,
+            120
+          ],
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "ramesh",
+          "beat": "saboot",
+          "say": "और बात यहीं ख़त्म नहीं होती… बॉस ने छुट्टी की अर्ज़ी फाड़कर ओवरटाइम पकड़ा दिया!",
+          "caption": "और बात यहीं ख़त्म नहीं होती… बॉस ने छुट्टी की अर्ज़ी फाड़ दी!",
+          "visuals": [
+            "angry boss tearing leave application paper",
+            "sad employee sitting at office desk late night",
+            "office desk overtime work files"
+          ],
+          "photo_hi": [
+            "बॉस अर्जी फाड़ते हुए",
+            "परेशान कर्मचारी ऑफिस"
+          ],
+          "expr": "gussa",
+          "sfx": "glitch",
+          "mood": "tension",
+          "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
+          "visual": "angry boss tearing leave application paper",
+          "set": "office",
+          "punch": false,
+          "big": "सबूत नंबर 2",
+          "sub": "",
+          "card_color": [
+            12,
+            60,
+            120
+          ],
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "maang",
+          "say": "हमारी माँग: हर परदेसी यात्री को विशेष उड़न-खटोला मुफ़्त मिले!",
+          "caption": "हमारी माँग: हर परदेसी यात्री को विशेष उड़न-खटोला मुफ़्त मिले!",
+          "visuals": [
+            "funny flying carpet graphic hindi travel",
+            "helicopter landing in indian village",
+            "happy villagers waving at sky"
+          ],
+          "photo_hi": [
+            "उड़न खटोला पोस्टर",
+            "गांव में हेलीकॉप्टर"
+          ],
+          "stamp": "मुफ़्त उड़न-खटोला दो!",
+          "expr": "gussa",
+          "sfx": "dhol",
+          "mood": "masti",
+          "delivery": "ऐलान की तरह, जोश में, जैसे संसद में भाषण",
+          "visual": "funny flying carpet graphic hindi travel",
+          "set": "studio",
+          "punch": true,
+          "big": "हमारी माँग",
+          "sub": "हर परदेसी यात्री को विशेष उड़न-खटो",
+          "card_color": [
+            110,
+            20,
+            40
+          ],
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "dhamki",
+          "say": "और अगर कंफर्म बर्थ नहीं मिली…",
+          "caption": "और अगर कंफर्म बर्थ नहीं मिली…",
+          "visuals": [
+            "news anchor leaning forward angry stare",
+            "railway tracks stretching into distance",
+            "dramatic dark studio light"
+          ],
+          "photo_hi": [
+            "गंभीर एंकर चेहरा",
+            "रेलवे ट्रैक शाम"
+          ],
+          "expr": "gambhir",
+          "sfx": "tick",
+          "mood": "tension",
+          "delivery": "अचानक बहुत धीमा, रहस्य वाला, लगभग फुसफुसाते हुए",
+          "pause_after": 0.5,
+          "visual": "news anchor leaning forward angry stare",
+          "set": "studio",
+          "punch": true,
+          "big": "चेतावनी!",
+          "sub": "",
+          "card_color": [
+            40,
+            10,
+            15
+          ],
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "twist",
+          "say": "तो सबको बता देंगे… घर जाने के बहाने गोवा जाने का प्लान बन रहा था!",
+          "caption": "तो सबको बता देंगे… घर जाने के बहाने गोवा जाने का प्लान बन रहा था!",
+          "visuals": [
+            "beach holiday sunglasses shorts secretly in luggage bag",
+            "goa flight ticket hidden under railway ticket",
+            "funny shocked face caught red handed"
+          ],
+          "photo_hi": [
+            "गोवा ट्रिप बैग",
+            "पकड़ी गई चोरी चेहरा"
+          ],
+          "stamp": "गोवा प्लान की पोल खोल!",
+          "expr": "hairan",
+          "sfx": "boom",
+          "mood": "masti",
+          "delivery": "धमाके से, जीत वाले अंदाज़ में, आख़िरी हिस्सा ज़ोर से",
+          "visual": "beach holiday sunglasses shorts secretly in luggage bag",
+          "set": "studio",
+          "punch": true,
+          "big": "बड़ा खुलासा!",
+          "sub": "",
+          "card_color": [
+            170,
+            20,
+            30
+          ],
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "takiya",
+          "say": "बर्थ दो, भाषण बंद करो!",
+          "caption": "बर्थ दो, भाषण बंद करो!",
+          "visuals": [
+            "anchor hitting desk shouting",
+            "red breaking news graphic banner",
+            "train engine blowing horn"
+          ],
+          "photo_hi": [
+            "एंकर गुस्सा मेज",
+            "रेलवे इंजन धुआं"
+          ],
+          "stamp": "बर्थ दो, भाषण बंद करो!",
+          "expr": "gussa",
+          "sfx": "thug",
+          "mood": "masti",
+          "delivery": "पूरी ताक़त से चिल्लाकर, मेज़ पर हाथ मारते हुए",
+          "pause_after": 0.3,
+          "visual": "anchor hitting desk shouting",
+          "set": "studio",
+          "punch": true,
+          "big": "बर्थ दो, भाषण बंद करो!",
+          "sub": "",
+          "card_color": [
+            170,
+            20,
+            30
+          ],
+          "scene": "studio_end",
+          "insta": ""
+        }
+      ],
+      "caption_post": "क्या दिवाली पर ट्रेनों की नो-रूम वेटिंग, परदेसियों को रोकने की साज़िश है? Tag करो उसको जिसकी ट्रेन की टिकट अभी तक वेटिंग में अटकी है। क्या त्योहारों पर स्पेशल ट्रेनें काफी हैं? स्रोत: Dainik Bhaskar, Jagran #BakraNews #DiwaliFestival #IRCTC #TrainWaiting #DiwaliRush (AI किरदारों द्वारा निर्मित)",
+      "format": "rant",
+      "label": "बकरा बहस",
+      "icons": [
+        "₹",
+        "NEWS",
+        "%"
+      ],
+      "hook": "क्या दिवाली पर ट्रेनों की नो-रूम वेटिंग, परदेसियों को रोकने की साज़िश है?",
+      "hook_text": "क्या दिवाली पर ट्रेनों की नो-रूम वेटिंग, परदेसियों को रोकने की साज़िश है?",
+      "poll": null,
+      "key_word": "",
+      "cast_why": "समाज: हम परदेसी | माँग: हर परदेसी यात्री को विशेष उड़न-खटोला मुफ़्त मिले!",
+      "trend": {
+        "score": 4,
+        "why": "4 अख़बार/चैनल 2 दिन में, 9 खबरें 7 दिन में"
+      },
+      "hasi": "टैग: जिसकी ट्रेन की टिकट अभी तक वेटिंग में अटकी है | twist: घर जाने के बहाने गोवा जाने का प्लान बन रहा था!"
+    },
+    {
+      "topic": "महिला ने शीशे में देखकर लगाया सटीक निशाना, लोग बोले- यह तो अर्जुन निकली",
+      "category": "[वायरल]",
+      "breaking": "शीशे में देखकर महिला ने लगाया अचूक निशाना, वीडियो वायरल",
+      "hook_text": "निशाना पीछे लगा... पर डर पूरे मोहल्ले को लगा!",
+      "ask": "क्या आपके घर में भी मम्मी का निशाना बिना देखे सटीक लगता है?",
+      "source": "ABP News, Times Now Navbharat",
+      "poll": [
+        "हाँ, हमेशा सटीक",
+        "नहीं, निशाना चूकता है"
+      ],
+      "ticker": [
+        "महिला ने दर्पण में देखकर लगाया सटीक निशाना",
+        "सोशल मीडिया पर यूज़र्स ने बताया कलयुग की 'अर्जुन'",
+        "पड़ोसियों का दावा: अब पीछे मुड़कर देखना भी मना है"
+      ],
+      "cast_why": "पिंकी की नई रील पर चाचा की तंज़भरी टिप्पणी और दादी का कड़ा संदेश",
+      "tag_who": "हर वो मम्मी जिसका निशाना बिना देखे भी कभी नहीं चूकता",
+      "lines": [
+        {
+          "who": "ramesh",
+          "say": "निशाना पीछे लगा... पर डर पूरे मोहल्ले को लगा!",
+          "caption": "निशाना पीछे लगा... पर डर पूरे मोहल्ले को लगा!",
+          "expr": "hairan",
+          "set": "village",
+          "visuals": [
+            "archery target hitting bullseye",
+            "mirror reflection looking back",
+            "scared young man face"
+          ],
+          "photo_hi": [
+            "अचूक निशाना महिला",
+            "शीशा निशाना वीडियो"
+          ],
+          "visual": "archery target hitting bullseye",
+          "scene": "studio",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "महिला ने शीशे में देखकर पीछे सटीक निशाना लगाया... लोगों ने कहा यह तो अर्जुन निकली!",
+          "caption": "महिला ने शीशे में देखकर पीछे सटीक निशाना लगाया... लोगों ने कहा यह तो अर्जुन निकली!",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "woman looking in mirror shooting",
+            "target hitting exact center",
+            "social media viral video playing"
+          ],
+          "photo_hi": [
+            "महिला अर्जुन निशाना",
+            "शीशा देखकर वार"
+          ],
+          "card": {
+            "tag": "अचूक वार",
+            "big": "शीशे में देखकर निशाना",
+            "sub": "सोशल मीडिया पर तुलना 'अर्जुन' से",
+            "icon": "check"
+          },
+          "visual": "woman looking in mirror shooting",
+          "scene": "card",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "chacha",
+          "say": "अर्जुन ने मछली की आँख देखी थी... हमारी बुआ बिना देखे तानने में उस्ताद हैं!",
+          "caption": "अर्जुन ने मछली की आँख देखी थी... हमारी बुआ बिना देखे तानने में उस्ताद हैं!",
+          "expr": "tanz",
+          "set": "aangan",
+          "visuals": [
+            "traditional archer mythological graphic",
+            "elderly man taunting expression",
+            "flying slipper funny concept"
+          ],
+          "photo_hi": [
+            "अर्जुन निशाना चित्र",
+            "गांव चाचा बातचीत"
+          ],
+          "visual": "traditional archer mythological graphic",
+          "scene": "chacha",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "pinky",
+          "say": "हर घर में एक मम्मी होती हैं, जो बिना देखे पीछे उड़ती चप्पल मार देती हैं!",
+          "caption": "हर घर में एक मम्मी होती हैं, जो बिना देखे पीछे उड़ती चप्पल मार देती हैं!",
+          "expr": "hasi",
+          "set": "aangan",
+          "visuals": [
+            "flying slipper hitting target",
+            "mother scolding child funny",
+            "girl shocked laughing"
+          ],
+          "photo_hi": [
+            "मम्मी की चप्पल निशाना",
+            "देसी घर मज़ाक"
+          ],
+          "visual": "flying slipper hitting target",
+          "scene": "pinky",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "dadi",
+          "say": "विशेषज्ञों का कहना है, निशाना साधना एक कला है। निशाने से बचना पूरी ज़िंदगी की साधना है।",
+          "caption": "विशेषज्ञों का कहना है, निशाना साधना एक कला है। निशाने से बचना पूरी ज़िंदगी की साधना है।",
+          "expr": "gambhir",
+          "set": "village",
+          "visuals": [
+            "old lady sitting serious",
+            "target board with arrows",
+            "funny defensive posture man"
+          ],
+          "photo_hi": [
+            "दादी का ज्ञान",
+            "सटीक निशाना वीडियो"
+          ],
+          "punch": true,
+          "stamp": "निशाने से… साधना है!",
+          "visual": "old lady sitting serious",
+          "scene": "dadi_call",
+          "insta": ""
+        },
+        {
+          "who": "ramesh",
+          "say": "भाई... निशाना पीछे था, पर सावधान पूरा मोहल्ला हो गया!",
+          "caption": "भाई... निशाना पीछे था, पर सावधान पूरा मोहल्ला हो गया!",
+          "expr": "tanz",
+          "set": "village",
+          "visuals": [
+            "scared neighbors looking around",
+            "mirror reflection target shoot",
+            "young boy ducking down"
+          ],
+          "photo_hi": [
+            "मोहल्ला सावधान",
+            "अचूक वार रील"
+          ],
+          "visual": "scared neighbors looking around",
+          "scene": "studio_end",
+          "punch": false,
+          "insta": ""
+        }
+      ],
+      "caption_post": "निशाना पीछे लगा... पर डर पूरे मोहल्ले को लगा! Tag करो उसको जिसकी मम्मी का निशाना बिना देखे भी सटीक लगता है। क्या आपके घर में भी मम्मी का निशाना पक्का है? स्रोत: ABP News, Times Now Navbharat #BakraNews #ArjunNishana #ViralVideo #DesiJugaad #TrendingHindi (AI किरदारों की व्यंग्यात्मक पेशकश)",
+      "format": "explain",
+      "label": "काम की खबर",
+      "key_word": "",
+      "icons": [
+        "₹",
+        "NEWS",
+        "%"
+      ],
+      "hook": "निशाना पीछे लगा... पर डर पूरे मोहल्ले को लगा!",
+      "_loose": true,
+      "trend": {
+        "score": 5,
+        "why": "7 अख़बार/चैनल 2 दिन में, 10 खबरें 7 दिन में"
+      }
+    },
+    {
+      "khabar": "व्यूज और रील के लिए रचा 75 साल के बुजुर्ग से शादी का नाटक",
+      "score": "8",
+      "topic": "औरैया में 75 वर्षीय बुजुर्ग और 30 वर्षीय महिला की शादी की रील फर्जी निकली",
+      "category": "viral",
+      "breaking": "औरैया में 75 साल के बुजुर्ग से शादी की रील फर्जी निकली",
+      "samaj": "हम व्यूज के भूखे",
+      "maang": "रील में शादी रचाने वालों को तुरंत बेरोजगारी भत्ता मिले!",
+      "twist": "व्लॉग वाले दादा जी के दांत नकली हैं और चाय बिस्कुट डुबोकर खाते हैं!",
+      "takiya": "ड्रामा बंद, असली खाना चालू!",
+      "tag_who": "जो दिन भर रील बनाने में लगा रहता है",
+      "source": "Amar Ujala, News18 Hindi, Prabhat Khabar, Navbharat Times",
+      "ask": "क्या रील के लिए फर्जी नाटक सही है?",
+      "ticker": [
+        "औरैया में बुजुर्ग संग शादी का वीडियो निकला फर्जी",
+        "फॉलोअर्स बढ़ाने के लिए रचा गया था शादी का नाटक",
+        "सोशल मीडिया पर वीडियो वायरल होने के बाद सच आया सामने"
+      ],
+      "lines": [
+        {
+          "who": "bablu",
+          "beat": "hook",
+          "say": "क्या पचहत्तर के दादा की रील शादी, व्यूज का राष्ट्रीय नाटक है?",
+          "caption": "क्या 75 के दादा की रील शादी, व्यूज का राष्ट्रीय नाटक है?",
+          "visuals": [
+            "smartphone recording funny wedding reel scene",
+            "old indian man in wedding attire posing for camera",
+            "ring light camera vlog setup india"
+          ],
+          "photo_hi": [
+            "रील शूटिंग शादी",
+            "बुजुर्ग शादी रील"
+          ],
+          "expr": "hairan",
+          "sfx": "boom",
+          "mood": "tension",
+          "delivery": "बिल्कुल गंभीर, धीमा, हर शब्द पर ज़ोर — जैसे देश का सबसे बड़ा सवाल पूछ रहा हो",
+          "visual": "smartphone recording funny wedding reel scene",
+          "set": "studio",
+          "punch": false,
+          "big": "बड़ा सवाल",
+          "sub": "हम व्यूज के भूखे",
+          "card_color": [
+            20,
+            40,
+            110
+          ],
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "saboot",
+          "say": "औरैया में तीस साल की महिला और पचहत्तर साल के बुजुर्ग की शादी फर्जी निकली!",
+          "caption": "औरैया में 30 साल की महिला और 75 साल के बुजुर्ग की शादी फर्जी निकली!",
+          "visuals": [
+            "fake wedding garland exchange stage video shot",
+            "local news paper report on viral fake wedding",
+            "villagers gathered watching smartphone screen"
+          ],
+          "photo_hi": [
+            "फर्जी शादी वरमाला",
+            "औरैया वायरल वीडियो"
+          ],
+          "expr": "gussa",
+          "sfx": "whoosh",
+          "mood": "tension",
+          "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
+          "visual": "fake wedding garland exchange stage video shot",
+          "set": "studio",
+          "punch": false,
+          "big": "सबूत नंबर 1",
+          "sub": "",
+          "card_color": [
+            12,
+            60,
+            120
+          ],
+          "scene": "pinky",
+          "insta": ""
+        },
+        {
+          "who": "pinky",
+          "beat": "saboot",
+          "say": "Literally, लोग फॉलोअर्स के चक्कर में पूरे मोहल्ले को शगुन का खाना खिला गए!",
+          "caption": "Literally, लोग फॉलोअर्स के चक्कर में पूरे मोहल्ले को शगुन खिला गए!",
+          "visuals": [
+            "gen-z girl looking shocked at phone screen",
+            "wedding feast food plates community dining",
+            "social media followers counter increasing fast"
+          ],
+          "photo_hi": [
+            "लड़की हैरान मोबाइल",
+            "शादी शगुन दावत"
+          ],
+          "expr": "gussa",
+          "sfx": "glitch",
+          "mood": "tension",
+          "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
+          "visual": "gen-z girl looking shocked at phone screen",
+          "set": "kitchen",
+          "punch": false,
+          "big": "सबूत नंबर 2",
+          "sub": "",
+          "card_color": [
+            12,
+            60,
+            120
+          ],
+          "scene": "pinky",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "maang",
+          "say": "हमारी माँग: रील में शादी रचाने वालों को तुरंत बेरोजगारी भत्ता मिले!",
+          "caption": "हमारी माँग: रील में शादी रचाने वालों को तुरंत बेरोजगारी भत्ता मिले!",
+          "visuals": [
+            "funny government allowance certificate stamp hindi",
+            "content creators shooting with tripod in street",
+            "police station front banner viral news"
+          ],
+          "photo_hi": [
+            "बेरोजगारी भत्ता कागज",
+            "कैमरा ट्राइपॉड शूटिंग"
+          ],
+          "stamp": "बेरोजगारी भत्ता दिया जाए!",
+          "expr": "gussa",
+          "sfx": "dhol",
+          "mood": "masti",
+          "delivery": "ऐलान की तरह, जोश में, जैसे संसद में भाषण",
+          "visual": "funny government allowance certificate stamp hindi",
+          "set": "studio",
+          "punch": true,
+          "big": "हमारी माँग",
+          "sub": "रील में शादी रचाने वालों को",
+          "card_color": [
+            110,
+            20,
+            40
+          ],
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "dhamki",
+          "say": "और अगर ड्रामा बंद नहीं हुआ…",
+          "caption": "और अगर ड्रामा बंद नहीं हुआ…",
+          "visuals": [
+            "anchor pointing strictly at camera",
+            "tv studio lights flickering dramatic",
+            "serious face news presenter"
+          ],
+          "photo_hi": [
+            "एंकर सख्त चेहरा",
+            "न्यूज स्टूडियो चेतावनी"
+          ],
+          "expr": "gambhir",
+          "sfx": "tick",
+          "mood": "tension",
+          "delivery": "अचानक बहुत धीमा, रहस्य वाला, लगभग फुसफुसाते हुए",
+          "pause_after": 0.5,
+          "visual": "anchor pointing strictly at camera",
+          "set": "studio",
+          "punch": true,
+          "big": "चेतावनी!",
+          "sub": "",
+          "card_color": [
+            40,
+            10,
+            15
+          ],
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "twist",
+          "say": "तो सबको बता देंगे… व्लॉग वाले दादा जी के दांत नकली हैं और चाय बिस्कुट डुबोकर खाते हैं!",
+          "caption": "तो सबको बता देंगे… दादा जी के दांत नकली हैं और चाय बिस्कुट डुबोते हैं!",
+          "visuals": [
+            "old man glass dipped biscuit in tea funny shot",
+            "false dentures teeth in glass water table",
+            "funny exposed granddad laughing caught"
+          ],
+          "photo_hi": [
+            "नकली दांत कटोरी",
+            "चाय बिस्कुट डुबोना"
+          ],
+          "stamp": "दादा जी के दांत की पोल!",
+          "expr": "hairan",
+          "sfx": "boom",
+          "mood": "masti",
+          "delivery": "धमाके से, जीत वाले अंदाज़ में, आख़िरी हिस्सा ज़ोर से",
+          "visual": "old man glass dipped biscuit in tea funny shot",
+          "set": "studio",
+          "punch": true,
+          "big": "बड़ा खुलासा!",
+          "sub": "",
+          "card_color": [
+            170,
+            20,
+            30
+          ],
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "takiya",
+          "say": "ड्रामा बंद, असली खाना चालू!",
+          "caption": "ड्रामा बंद, असली खाना चालू!",
+          "visuals": [
+            "anchor shouting with mic in hand",
+            "hot jalebi samosa plate food table",
+            "bakra bahas funny studio graphic"
+          ],
+          "photo_hi": [
+            "एंकर चिल्लाना माइक",
+            "देसी नाश्ता थाली"
+          ],
+          "stamp": "ड्रामा बंद, असली खाना चालू!",
+          "expr": "gussa",
+          "sfx": "thug",
+          "mood": "masti",
+          "delivery": "पूरी ताक़त से चिल्लाकर, मेज़ पर हाथ मारते हुए",
+          "pause_after": 0.3,
+          "visual": "anchor shouting with mic in hand",
+          "set": "studio",
+          "punch": true,
+          "big": "ड्रामा बंद, असली खाना चालू!",
+          "sub": "",
+          "card_color": [
+            170,
+            20,
+            30
+          ],
+          "scene": "studio_end",
+          "insta": ""
+        }
+      ],
+      "caption_post": "क्या पचहत्तर के दादा की रील शादी, व्यूज का राष्ट्रीय नाटक है? Tag करो उसको जो दिन भर रील बनाने में लगा रहता है। क्या रील के लिए फर्जी नाटक सही है? स्रोत: News18 Hindi, Amar Ujala #BakraNews #ReelsViral #FakeMarriage #AuraiyaNews #SocialMediaBakra (AI किरदारों द्वारा निर्मित)",
+      "format": "rant",
+      "label": "बकरा बहस",
+      "icons": [
+        "₹",
+        "NEWS",
+        "%"
+      ],
+      "hook": "क्या पचहत्तर के दादा की रील शादी, व्यूज का राष्ट्रीय नाटक है?",
+      "hook_text": "क्या पचहत्तर के दादा की रील शादी, व्यूज का राष्ट्रीय नाटक है?",
+      "poll": null,
+      "key_word": "",
+      "cast_why": "समाज: हम व्यूज के भूखे | माँग: रील में शादी रचाने वालों को तुरंत बेरोजगारी भत्ता मिले!",
+      "trend": {
+        "score": 4,
+        "why": "4 अख़बार/चैनल 2 दिन में, 7 खबरें 7 दिन में"
+      },
+      "hasi": "टैग: जो दिन भर रील बनाने में लगा रहता है | twist: व्लॉग वाले दादा जी के दांत नकली हैं और चाय बिस्कुट डुबोकर खाते हैं!"
+    },
+    {
+      "topic": "ट्रेन की फर्स्ट एसी बर्थ देखकर ब्रिटिश यूट्यूबर बोला- 'ये क्या देख लिया'",
+      "category": "[सफ़र-जुगाड़]",
+      "breaking": "ब्रिटिश यूट्यूबर ने भारतीय ट्रेन के फर्स्ट एसी कूपे में किया सफ़र",
+      "hook_text": "अंग्रेज़ फर्स्ट एसी देखकर चौंक गया... या ट्रेन ही ग़लत थी?",
+      "ask": "क्या भारतीय रेलवे का फर्स्ट एसी वाकई लग्जरी अनुभव देता है?",
+      "source": "NDTV India",
+      "poll": [
+        "हाँ, पूरी लग्जरी",
+        "नहीं, सिर्फ़ नाम की"
+      ],
+      "ticker": [
+        "ब्रिटिश यूट्यूबर ने फर्स्ट एसी कूपे का वीडियो किया शेयर",
+        "अमेरिकी यूट्यूबर कपल ने वंदे भारत में पहली बार की यात्रा",
+        "यात्रियों ने कहा: विदेशी चौंक गए, हम रोज़ झेलते हैं"
+      ],
+      "cast_why": "रमेश की जनरल डिब्बे की भड़ास बनाम बबलू का रेलवे दावों पर तंज़",
+      "tag_who": "हर वो दोस्त जो फर्स्ट एसी की रील बनाकर जनरल कोच में चढ़ता है",
+      "lines": [
+        {
+          "who": "ramesh",
+          "say": "अंग्रेज़ फर्स्ट एसी देखकर चौंक गया... या ट्रेन ही ग़लत थी?",
+          "caption": "अंग्रेज़ फर्स्ट एसी देखकर चौंक गया... या ट्रेन ही ग़लत थी?",
+          "expr": "hairan",
+          "set": "station",
+          "visuals": [
+            "british tourist surprised face",
+            "indian railway train AC coach",
+            "crowded railway platform india"
+          ],
+          "photo_hi": [
+            "ब्रिटिश यूट्यूबर ट्रेन",
+            "फर्स्ट एसी कूपे सफर"
+          ],
+          "visual": "british tourist surprised face",
+          "scene": "studio",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "ब्रिटिश यूट्यूबर ने भारतीय ट्रेन के फर्स्ट एसी कूपे में सफ़र किया... और अपना अनुभव साझा किया!",
+          "caption": "ब्रिटिश यूट्यूबर ने भारतीय ट्रेन के 1st AC कूपे में सफ़र किया... और अपना अनुभव साझा किया!",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "inside indian train first ac coupe",
+            "youtuber shooting video with phone",
+            "vande bharat train running"
+          ],
+          "photo_hi": [
+            "फर्स्ट एसी कूपे रील",
+            "वंदे भारत सफर यूट्यूबर"
+          ],
+          "card": {
+            "tag": "रेल सफ़र",
+            "big": "फर्स्ट एसी कूपे",
+            "sub": "ब्रिटिश यूट्यूबर का अनोखा अनुभव",
+            "icon": "train"
+          },
+          "visual": "inside indian train first ac coupe",
+          "scene": "card",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "ramesh",
+          "say": "कूपे देखकर हैरान है... कभी जनरल बोगी में चढ़कर देखता तो देश छोड़ देता!",
+          "caption": "कूपे देखकर हैरान है... कभी जनरल बोगी में चढ़कर देखता तो देश छोड़ देता!",
+          "expr": "gussa",
+          "set": "station",
+          "visuals": [
+            "extremely crowded general train coach",
+            "people hanging on train door",
+            "frustrated passenger face"
+          ],
+          "photo_hi": [
+            "जनरल डिब्बा भीड़",
+            "ट्रेन का धक्का मुक्की"
+          ],
+          "visual": "extremely crowded general train coach",
+          "scene": "chacha",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "pinky",
+          "say": "हर ग्रुप में एक दोस्त होता है, जो फर्स्ट एसी की रील बनाकर जनरल में चढ़ता है!",
+          "caption": "हर ग्रुप में एक दोस्त होता है, जो फर्स्ट एसी की रील बनाकर जनरल में चढ़ता है!",
+          "expr": "hasi",
+          "set": "room",
+          "visuals": [
+            "young boy filming reel train",
+            "girl holding smartphone laughing",
+            "train compartment window light"
+          ],
+          "photo_hi": [
+            "ट्रेन रील दोस्त",
+            "फर्स्ट एसी बनाम जनरल"
+          ],
+          "visual": "young boy filming reel train",
+          "scene": "pinky",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "रेलवे का कहना है, फर्स्ट एसी में पूरा आराम मिलेगा। आराम तभी मिलेगा जब ट्रेन समय पर पहुंचेगी।",
+          "caption": "रेलवे का कहना है, फर्स्ट एसी में पूरा आराम मिलेगा। आराम तभी मिलेगा जब ट्रेन समय पर पहुंचेगी।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "train delayed status board station",
+            "luxury train berth empty",
+            "railway signal red light"
+          ],
+          "photo_hi": [
+            "ट्रेन लेट बोर्ड",
+            "फर्स्ट एसी बर्थ रेलवे"
+          ],
+          "punch": true,
+          "stamp": "आराम… समय पर!",
+          "visual": "train delayed status board station",
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "ramesh",
+          "say": "अंग्रेज़ तो उतर गया... पर डिब्बा आज भी वहीं आउटर पर खड़ा है!",
+          "caption": "अंग्रेज़ तो उतर गया... पर डिब्बा आज भी वहीं आउटर पर खड़ा है!",
+          "expr": "tanz",
+          "set": "station",
+          "visuals": [
+            "train standing outer signal night",
+            "empty railway track perspective",
+            "young man sighing station"
+          ],
+          "photo_hi": [
+            "ट्रेन आउटर पर रुकी",
+            "भारतीय रेलवे लेट"
+          ],
+          "visual": "train standing outer signal night",
+          "scene": "studio_end",
+          "punch": false,
+          "insta": ""
+        }
+      ],
+      "caption_post": "अंग्रेज़ फर्स्ट एसी देखकर चौंक गया... या ट्रेन ही ग़लत थी? Tag करो उस दोस्त को जो फर्स्ट एसी की रील बनाकर जनरल डिब्बे में सोता है। क्या रेलवे का फर्स्ट एसी वाकई लग्जरी है? स्रोत: NDTV India #BakraNews #IndianRailways #FirstAC #BritishYouTuber #VandeBharat (AI किरदारों की व्यंग्यात्मक पेशकश)",
+      "format": "explain",
+      "label": "काम की खबर",
+      "key_word": "",
+      "icons": [
+        "₹",
+        "NEWS",
+        "%"
+      ],
+      "hook": "अंग्रेज़ फर्स्ट एसी देखकर चौंक गया... या ट्रेन ही ग़लत थी?",
+      "_loose": true,
+      "trend": {
+        "score": 3,
+        "why": "1 अख़बार/चैनल 2 दिन में, 6 खबरें 7 दिन में"
+      }
+    }
+  ]
+}
