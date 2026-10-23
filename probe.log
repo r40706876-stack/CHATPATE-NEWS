@@ -1,3 +1,13 @@
-GEMINI_API_KEY ✅ चल रही | अलग key: True
-GEMINI_API_KEY2 ✅ चल रही | अलग key: True
-GEMINI_API_KEY3 ✅ चल रही | अलग key: True
+Fri Oct 23 17:23:00 UTC 2026
+deno: /home/runner/.deno/bin/deno
+  YT_COOKIES: 22 cookies
+Traceback (most recent call last):
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/probe_task.py", line 6, in <module>
+    r = clips.search("jio ipo", n=3)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/clips.py", line 61, in search
+    if data.get("entries"):
+       ^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+रुका/समय ख़त्म: 1
+Fri Oct 23 17:23:01 UTC 2026
