@@ -216,7 +216,7 @@ def compose_close(sprite, setname, w=SW, h=SH):
         bg = bg.filter(ImageFilter.GaussianBlur(7 * w / W))
         _cbg[(setname, w, h)] = Image.blend(bg, Image.new("RGB", bg.size), 0.25)
     bg = _cbg[(setname, w, h)].copy()
-    s = h * 0.80 / sprite.height
+    s = h * 0.72 / sprite.height                      # 768x1376 फ़ोटो कभी बड़ी (upscale) नहीं — पास से खिंचकर नक़ली दिखती थी
     sp = sprite.resize((int(sprite.width * s), int(sprite.height * s)), Image.LANCZOS)
     bg.paste(sp, ((w - sp.width) // 2, h - sp.height + int(h * 0.02)), sp)
     return bg
@@ -811,7 +811,7 @@ def render(ep, segs, chars, out, preview):
             punchy = shot == "close" and not react
             if shot == "close":
                 if punchy:
-                    z = 1.0 + 0.08 * min(1, t / 8)
+                    z = 1.0 + 0.03 * min(1, t / 8)                # हल्का — ज़्यादा zoom पर 3D चेहरे की कमी दिखती थी
                 else:                                     # reaction: ज़िंदा लगे — धीरे-धीरे पास आना + हल्की साँस
                     z = 1.04 + 0.05 * t / n + 0.006 * math.sin(t / 3)
                 im = _zoomr(fr, z, 0.3).copy()

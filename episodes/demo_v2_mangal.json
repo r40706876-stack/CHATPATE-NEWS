@@ -61,5 +61,6 @@
   "chacha": "assets/toon/chacha"
  },
  "production": true,
- "style": "v2"
+ "style": "v2",
+ "lips": "sprite"
 }

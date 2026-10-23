@@ -60,5 +60,6 @@
   "pinky": "assets/toon/pinky"
  },
  "production": true,
- "style": "v2"
+ "style": "v2",
+ "lips": "sprite"
 }
