@@ -1,0 +1,297 @@
+{
+ "khabar": "सुहागरात पर नशीला दूध पिलाकर दुल्हन फरार",
+ "score": "9.6",
+ "topic": "सुहागरात पर दूल्हे को बेहोश कर दुल्हन गहने लेकर फरार",
+ "category": "home",
+ "breaking": "अमरोहा में सुहागरात पर दुल्हन ने दूल्हे को नशीला दूध पिलाया, नकदी व जेवरात लेकर फरार",
+ "samaj": "हम सीधे-सादे दूल्हे",
+ "maang": "हमारी माँग: सुहागरात के दूध की फॉरेंसिक जाँच अनिवार्य की जाए",
+ "twist": "तो सबको बता देंगे… दूल्हे राजा शादी से पहले दुल्हन को खुद नकली हार दिखाए थे!",
+ "takiya": "दूध बाद में, लॉकर पहले!",
+ "tag_who": "उस दोस्त को जिसकी जल्द ही शादी होने वाली है",
+ "source": "News18 Hindi, Hindustan, Navbharat Times, Sanjeevni Today",
+ "ask": "क्या शादी से पहले बैकग्राउंड चेकिंग अनिवार्य होनी चाहिए?",
+ "ticker": [
+  "अमरोहा में सुहागरात पर दुल्हन ने दूल्हे को पिलाया नशीला दूध",
+  "नकदी और जेवरात लेकर रात में ही दुल्हन हुई फरार",
+  "पीड़ित परिवार ने थाने में दर्ज कराई एफआईआर"
+ ],
+ "lines": [
+  {
+   "who": "bablu",
+   "beat": "hook",
+   "say": "क्या सुहागरात का दूध, अब दूल्हों को बेहोश करने का सरकारी हथियार है?",
+   "caption": "क्या सुहागरात का दूध, दूल्हों को बेहोश करने का हथियार है?",
+   "visuals": [
+    "decorated wedding bedroom glass of turmeric milk bedside",
+    "sleeping groom on bed decorated with flowers india",
+    "empty open wooden wardrobe safe box jewel box"
+   ],
+   "photo_hi": [
+    "सुहागरात दूध का ग्लास",
+    "सजा हुआ कमरा"
+   ],
+   "expr": "hairan",
+   "sfx": "boom",
+   "mood": "tension",
+   "delivery": "बिल्कुल गंभीर, धीमा, हर शब्द पर ज़ोर — जैसे देश का सबसे बड़ा सवाल पूछ रहा हो",
+   "visual": "decorated wedding bedroom glass of turmeric milk bedside",
+   "set": "studio",
+   "punch": false,
+   "big": "बड़ा सवाल",
+   "sub": "हम सीधे-सादे दूल्हे",
+   "card_color": [
+    20,
+    40,
+    110
+   ],
+   "scene": "studio",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "beat": "saboot",
+   "say": "अमरोहा में दुल्हन ने नशीला दूध पिलाकर दूल्हे को सुलाया और जेवरात लेकर भाग गई!",
+   "caption": "दुल्हन ने नशीला दूध पिलाकर दूल्हे को सुलाया, नकदी-जेवर लेकर फरार!",
+   "visuals": [
+    "bride running away night in bridal dress with bag",
+    "amroha police station document fir register",
+    "shocked family looking at open empty jewelry box"
+   ],
+   "photo_hi": [
+    "अमरोहा दुल्हन फरार",
+    "खाली तिजोरी जेवर"
+   ],
+   "expr": "gussa",
+   "sfx": "whoosh",
+   "mood": "tension",
+   "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
+   "visual": "bride running away night in bridal dress with bag",
+   "set": "studio",
+   "punch": false,
+   "big": "सबूत नंबर 1",
+   "sub": "",
+   "card_color": [
+    12,
+    60,
+    120
+   ],
+   "scene": "studio",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "beat": "saboot",
+   "say": "और बात यहीं ख़त्म नहीं होती… दूल्हे राजा दोपहर बारह बजे तक खर्राटे मारते रहे!",
+   "caption": "और बात यहीं ख़त्म नहीं होती… दूल्हे राजा दोपहर 12 बजे तक खर्राटे मारते रहे!",
+   "visuals": [
+    "groom sleeping deep unconscious snoring decorated bed",
+    "wall clock showing twelve o clock noon sun light window",
+    "family trying to wake up groom morning bedroom"
+   ],
+   "photo_hi": [
+    "सोता हुआ दूल्हा",
+    "सुबह की घड़ी 12"
+   ],
+   "expr": "gussa",
+   "sfx": "glitch",
+   "mood": "tension",
+   "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
+   "visual": "groom sleeping deep unconscious snoring decorated bed",
+   "set": "studio",
+   "punch": false,
+   "big": "सबूत नंबर 2",
+   "sub": "",
+   "card_color": [
+    12,
+    60,
+    120
+   ],
+   "scene": "chacha",
+   "insta": ""
+  },
+  {
+   "who": "chacha",
+   "beat": "saboot",
+   "say": "हमारे ज़माने में तो दूध ठंडा भी हो जाए, तब भी दूल्हा जागता रहता था!",
+   "caption": "हमारे ज़माने में दूध ठंडा हो जाए, तब भी दूल्हा जागता रहता था!",
+   "visuals": [
+    "elderly indian uncle sitting in traditional kurta talking",
+    "old traditional indian wedding photo frame wall",
+    "vintage glass of milk brass tray table"
+   ],
+   "photo_hi": [
+    "पुरानी सोच चाचा",
+    "पारंपरिक शादी"
+   ],
+   "expr": "gussa",
+   "sfx": "glitch",
+   "mood": "tension",
+   "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
+   "visual": "elderly indian uncle sitting in traditional kurta talking",
+   "set": "village",
+   "punch": false,
+   "big": "सबूत नंबर 3",
+   "sub": "",
+   "card_color": [
+    12,
+    60,
+    120
+   ],
+   "scene": "chacha",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "beat": "maang",
+   "say": "हमारी माँग: सुहागरात के दूध की फॉरेंसिक जाँच अनिवार्य की जाए!",
+   "caption": "हमारी माँग: सुहागरात के दूध की फॉरेंसिक जाँच अनिवार्य की जाए!",
+   "visuals": [
+    "forensic science lab testing glass of milk chemistry",
+    "lab technician examining liquid test tube microscope",
+    "police stamped official petition paper demand"
+   ],
+   "photo_hi": [
+    "दूध जाँच लैब",
+    "माँग पत्र एफआईआर"
+   ],
+   "stamp": "दूध की लैब जाँच करो!",
+   "expr": "gussa",
+   "sfx": "dhol",
+   "mood": "masti",
+   "delivery": "ऐलान की तरह, जोश में, जैसे संसद में भाषण",
+   "visual": "forensic science lab testing glass of milk chemistry",
+   "set": "studio",
+   "punch": true,
+   "big": "हमारी माँग",
+   "sub": "हमारी माँग: सुहागरात के दूध की",
+   "card_color": [
+    110,
+    20,
+    40
+   ],
+   "scene": "studio",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "beat": "dhamki",
+   "say": "और अगर दूल्हों की सुरक्षा नहीं हुई…",
+   "caption": "और अगर दूल्हों की सुरक्षा नहीं हुई…",
+   "visuals": [
+    "furious news anchor standing pointing finger dramatic lighting",
+    "breaking news studio desk high contrast backdrop",
+    "news caster talking angrily directly to camera"
+   ],
+   "photo_hi": [
+    "एंकर सख्त रुख",
+    "न्यूज़ रूम ड्रामा"
+   ],
+   "expr": "gambhir",
+   "sfx": "tick",
+   "mood": "tension",
+   "delivery": "अचानक बहुत धीमा, रहस्य वाला, लगभग फुसफुसाते हुए",
+   "pause_after": 0.5,
+   "visual": "furious news anchor standing pointing finger dramatic lighting",
+   "set": "studio",
+   "punch": true,
+   "big": "चेतावनी!",
+   "sub": "",
+   "card_color": [
+    40,
+    10,
+    15
+   ],
+   "scene": "studio",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "beat": "twist",
+   "say": "तो सबको बता देंगे… दूल्हे राजा शादी से पहले दुल्हन को खुद नकली हार दिखाए थे!",
+   "caption": "तो सबको बता देंगे… दूल्हे राजा शादी से पहले दुल्हन को नकली हार दिखाए थे!",
+   "visuals": [
+    "cheap artificial fake gold necklace in velvet box",
+    "groom showing fake jewelry box photo on phone secret",
+    "embarrassed groom hiding face relatives laughing"
+   ],
+   "photo_hi": [
+    "नकली सोने का हार",
+    "दूल्हा पोल खोल"
+   ],
+   "stamp": "नकली सोने का हार!",
+   "expr": "hairan",
+   "sfx": "boom",
+   "mood": "masti",
+   "delivery": "धमाके से, जीत वाले अंदाज़ में, आख़िरी हिस्सा ज़ोर से",
+   "visual": "cheap artificial fake gold necklace in velvet box",
+   "set": "studio",
+   "punch": true,
+   "big": "बड़ा खुलासा!",
+   "sub": "",
+   "card_color": [
+    170,
+    20,
+    30
+   ],
+   "scene": "studio",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "beat": "takiya",
+   "say": "दूध बाद में, लॉकर पहले!",
+   "caption": "दूध बाद में, लॉकर पहले!",
+   "visuals": [
+    "anchor desk slam broadcast overlay graphic",
+    "heavy iron locker safe door closing punch",
+    "bakra bahas show end screen title card"
+   ],
+   "photo_hi": [
+    "एंकर डेस्क पंच",
+    "तिजोरी लॉकर"
+   ],
+   "stamp": "दूध बाद में, लॉकर पहले!",
+   "expr": "gussa",
+   "sfx": "thug",
+   "mood": "masti",
+   "delivery": "पूरी ताक़त से चिल्लाकर, मेज़ पर हाथ मारते हुए",
+   "pause_after": 0.3,
+   "visual": "anchor desk slam broadcast overlay graphic",
+   "set": "studio",
+   "punch": true,
+   "big": "दूध बाद में, लॉकर पहले!",
+   "sub": "",
+   "card_color": [
+    170,
+    20,
+    30
+   ],
+   "scene": "studio_end",
+   "insta": ""
+  }
+ ],
+ "caption_post": "क्या सुहागरात का दूध, अब दूल्हों को बेहोश करने का सरकारी हथियार है? Tag करो उसको जिसकी जल्द ही शादी होने वाली है. क्या शादी से पहले बैकग्राउंड चेकिंग अनिवार्य होनी चाहिए? स्रोत: News18 Hindi, Hindustan, Navbharat Times, Sanjeevni Today #BakraNews #AmrohaIncident #BrideStory #HindiSatire #DulhaAlert (AI निर्मित किरदार)",
+ "format": "rant",
+ "label": "बकरा बहस",
+ "icons": [
+  "₹",
+  "NEWS",
+  "%"
+ ],
+ "hook": "क्या सुहागरात का दूध, अब दूल्हों को बेहोश करने का सरकारी हथियार है?",
+ "hook_text": "क्या सुहागरात का दूध, अब दूल्हों को बेहोश करने का सरकारी हथियार है?",
+ "poll": null,
+ "key_word": "",
+ "cast_why": "समाज: हम सीधे-सादे दूल्हे | माँग: हमारी माँग: सुहागरात के दूध की फॉरेंसिक जाँच अनिवार्य की जाए",
+ "trend": {
+  "score": 4,
+  "why": "5 अख़बार/चैनल 2 दिन में, 6 खबरें 7 दिन में"
+ },
+ "hasi": "टैग: उस दोस्त को जिसकी जल्द ही शादी होने वाली है | twist: तो सबको बता देंगे… दूल्हे राजा शादी से पहले दुल्हन को खुद नकली हार दिखाए थे!",
+ "sprite": {
+  "bablu": "assets/toon/bablu",
+  "chacha": "assets/toon/chacha"
+ },
+ "production": true
+}
