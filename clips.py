@@ -47,13 +47,20 @@ def _cookies(env):
 
 def search(query, n=8):
     """YouTube खोज: [(url, title, channel, duration, upload_date)] — बिना download."""
-    cmd = _ytdlp() + ["--flat-playlist", "-J", "--no-warnings", f"ytsearchdate{n}:{query}"] + _cookies("YT_COOKIES")   # नई पहले
-    try:
-        r = subprocess.run(cmd, capture_output=True, text=True, timeout=90)
-        data = json.loads(r.stdout or "{}")
-    except Exception as e:                                # noqa: BLE001
-        print("  YouTube खोज नहीं चली:", repr(e)[:120])
-        return []
+    data = {}
+    for pre in ("ytsearchdate", "ytsearch"):              # नई पहले; वो न चले तो सादी खोज
+        cmd = _ytdlp() + ["--flat-playlist", "-J", "--no-warnings", f"{pre}{n}:{query}"] + _cookies("YT_COOKIES")
+        err = ""
+        try:
+            r = subprocess.run(cmd, capture_output=True, text=True, timeout=90)
+            err = r.stderr or ""
+            data = json.loads(r.stdout or "{}")
+        except Exception as e:                            # noqa: BLE001
+            print(f"  YouTube खोज ({pre}) नहीं चली:", repr(e)[:120], err[-200:])
+            data = {}
+        if data.get("entries"):
+            break
+        print(f"  YouTube खोज ({pre}) ख़ाली:", err.strip()[-200:])
     out = []
     for e in data.get("entries") or []:
         url = e.get("url") or (f"https://www.youtube.com/watch?v={e['id']}" if e.get("id") else "")

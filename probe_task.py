@@ -1,10 +1,7 @@
-import os, json, urllib.request
-for kn in ("GEMINI_API_KEY", "GEMINI_API_KEY2", "GEMINI_API_KEY3"):
-    k = os.getenv(kn, "").strip()
-    if not k:
-        print(kn, "❌ नहीं मिली"); continue
-    try:
-        r = json.load(urllib.request.urlopen(urllib.request.Request("https://generativelanguage.googleapis.com/v1beta/models?pageSize=5", headers={"x-goog-api-key": k}), timeout=30))
-        print(kn, "✅ चल रही", "| अलग key:", k[-4:] not in [os.getenv(x, "")[-4:] for x in ("GEMINI_API_KEY", "GEMINI_API_KEY2", "GEMINI_API_KEY3") if x != kn])
-    except Exception as e:
-        print(kn, "❌", repr(e)[:120])
+# जाँच: YouTube खोज चल रही है? + meme लाइब्रेरी बनाओ (memes/*.mp4, memes/_sheet.jpg)
+import clips, memes
+for q in ("भारत न्यूज़ीलैंड टी20", "jio ipo"):
+    r = clips.search(q, n=3)
+    print("खोज", q, "→", len(r), [t[1][:40] for t in r])
+memes.build()
+import json; s = json.load(open("memes/status.json")); print("memes बने:", len(s), "/", len(memes.LIB))

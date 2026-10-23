@@ -349,7 +349,11 @@ def post_studio(ep):
         print("  जाँच:", issues or "पास ✅")
         if not issues:
             break
+    import memes                                          # पंच के बाद मशहूर meme (अपनी आवाज़ के साथ)
+    used = memes.add(ep, segs, out)
     report = quality(ep)
+    if used:
+        report += "\n😂 Memes: " + ", ".join(used)
     print(report)
     print(f"बन गया: {out} ({secs:.1f}s)")
     cap = ep.get("caption_post") if ep.get("production") else f"🎬 3D demo: {ep.get('title', '')}"
