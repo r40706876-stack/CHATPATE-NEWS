@@ -48,7 +48,7 @@ def _cookies(env):
 def search(query, n=8):
     """YouTube खोज: [(url, title, channel, duration, upload_date)] — बिना download."""
     data = {}
-    for pre in ("ytsearchdate", "ytsearch"):              # नई पहले; वो न चले तो सादी खोज
+    for pre in ("ytsearch",):                             # (ytsearchdate इस yt-dlp में नहीं चलता)
         cmd = _ytdlp() + ["--flat-playlist", "-J", "--no-warnings", f"{pre}{n}:{query}"] + _cookies("YT_COOKIES")
         err = ""
         try:
