@@ -100,8 +100,9 @@ def frames(folder, expr, wav, n, cut=None, seed=0):
             im = Image.composite(blink, im, eye_mask.point(lambda v, a=[0.5, 1, 1, 0.5][k]: int(v * a)))
         nod += ((raw[i] > 0.6) * 1.0 - nod) * 0.3          # ज़ोर वाले शब्द पर सिर का झटका (पहले लगभग स्थिर — "बेजान" लगता था)
         talk = o                                           # बोलते वक़्त ज़्यादा हिलना, चुप रहने पर कम
-        ang = (1.4 + 1.2 * talk) * math.sin(i / 17 + seed) + 1.6 * nod * math.sin(i / 3.1 + seed)
-        dx = 5 * math.sin(i / 29 + seed * 2)
-        dy = 4 * math.sin(i / 9) + 9 * nod
+        # मालिक: "किरदार फालतू हिल रहे" — अब सिर लगभग स्थिर: सिर्फ़ धीमी साँस जैसी हल्की हरकत, कोई झटका नहीं
+        ang = 0.35 * math.sin(i / 45 + seed)
+        dx = 0.0
+        dy = 1.5 * math.sin(i / 32 + seed)
         im = im.rotate(ang, resample=Image.BICUBIC, center=(w / 2, h * 0.9), translate=(dx, dy))
         yield im
