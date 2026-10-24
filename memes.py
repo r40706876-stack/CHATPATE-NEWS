@@ -185,11 +185,13 @@ def pick(ep, lens):
     for L in lens:
         t += L
         ends.append(t)
-    want = [i for i, ln in enumerate(lines) if i > 0 and ln.get("punch") and ln.get("say")]
     last = max((i for i, ln in enumerate(lines) if ln.get("say")), default=-1)
-    if last > 0 and last not in want:
-        want.append(last)
-    want = sorted(set(want))[-2:]
+    # virality skill: reel अब 13-18 सेकंड की — ज़्यादा से ज़्यादा 1 meme, बीच के पंच के बाद (बीच वाला झटका = लोग रुके रहें).
+    # आख़िरी line के बाद नहीं: वहाँ meme आने से reel शुरू से नहीं जुड़ती (loop टूटता) और लंबाई बढ़ती.
+    want = [i for i, ln in enumerate(lines) if 0 < i < last and ln.get("punch") and ln.get("say")]
+    if not want:
+        want = [i for i, ln in enumerate(lines) if 0 < i < last and ln.get("tag") and ln.get("say")]
+    want = sorted(set(want))[:1]
     seed = int(hashlib.md5(str(ep.get("topic", "")).encode()).hexdigest(), 16)
     used, out = set(), []
     for k, i in enumerate(want):

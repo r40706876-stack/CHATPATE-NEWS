@@ -186,15 +186,18 @@ def ticker(d, ep, k):
 STAMP_OF = {"eyeroll": "वाह रे दावा!", "facepalm": "हद है!", "laugh": "सच्ची बात!", "thinking": "सोचो ज़रा!",
             "smug": "समझ गए न?"}
 SW_, SH_ = SCR[2] - SCR[0], SCR[3] - SCR[1]
-CUT = 2.0                                  # कोई भी तस्वीर इससे ज़्यादा सेकंड नहीं टिकती
+HOOK_EVENT = 1.2                                  # सेकंड: hook में कुछ "होता" है (ठप्पा गिरता है) — virality skill
+CUT = 1.7                                  # कोई भी तस्वीर इससे ज़्यादा सेकंड नहीं टिकती (virality skill: हर 1.5-2 सेकंड नया नज़ारा)
 YEL, RED = (255, 214, 0), (225, 30, 45)
 
 
 def shot_for(i, ln):
     """हर line का दृश्य: hook और सबसे तेज़ punch (react वाली) = पूरा close-up; बाकी में बारी-बारी
     split (ऊपर खबर, नीचे किरदार) और full (पूरी screen तस्वीर, कोने में किरदार) — ताकि हर कुछ सेकंड में नज़ारा बदले."""
-    # मालिक का फ़ैसला: हमेशा split — ऊपर खबर की screen, नीचे studio में बबलू (close/full बंद)
-    return "split"
+    # मालिक का फ़ैसला: हमेशा split — ऊपर खबर की screen, नीचे studio में बबलू (close/full बंद).
+    # virality skill: सिर्फ़ पहली line (पहले 2-3 सेकंड) में पूरी screen पर असली खबर की तस्वीर/clip, कोने में बबलू —
+    # scroll करता अँगूठा studio नहीं, पहचानी हुई खबर देखकर रुकता है. उसके बाद वही split.
+    return "full" if i == 0 else "split"
 
 
 def shot_v2(i, ln):
@@ -705,10 +708,16 @@ def render(ep, segs, chars, out, preview):
     shot: close = पूरा close-up (720x1280 source) | split = ऊपर खबर+नीचे किरदार | full = पूरी तस्वीर+कोने में किरदार."""
     lens = [rv._read(s["wav"]).shape[0] / rv.SR for s in segs]
     counts = [max(1, round(x * FPS)) for x in lens]
-    tail = 1.6 if (ep.get("ask") or ep.get("tag_ask")) else 0.8                  # comment वाला सवाल अब आख़िरी पंच के *बाद* (पहले पंच के ऊपर चढ़ता था)
+    # virality skill: आख़िर में ख़ाली/धुंधला "फ़ॉलो करो" वाला हिस्सा नहीं — वो % देखा गिराता और loop तोड़ता था.
+    # comment वाला सवाल अब सिर्फ़ caption में; "टैग:" वाली बात पहचान वाली line पर screen पर.
+    tail = 0.3
+    if ep.get("tag_ask") and not any(s_["ln"].get("tag_text") for s_ in segs):
+        real = [s_ for s_ in segs if not s_.get("react")]
+        if len(real) >= 3:
+            real[-2]["ln"]["tag_text"] = re.sub(r"[\U0001F000-\U0001FFFF\u2600-\u27BF\uFE0F]", "", ep["tag_ask"]).strip()
     tailn = int(tail * FPS)
     total = sum(counts) + tailn
-    events, t0 = [(0.0, "boom")], 0.0
+    events, t0 = [(0.0, "whoosh"), (HOOK_EVENT, "boom")], 0.0        # 1.2 सेकंड पर "अधपकी खबर" का ठप्पा + धमाका
     REACT_SFX = {"laugh": "laugh", "eyeroll": "thug", "smug": "thug", "facepalm": "dhol", "thinking": "glitch"}
     prev_who = None
     for i_, (s, L) in enumerate(zip(segs, lens)):
@@ -851,7 +860,7 @@ def render(ep, segs, chars, out, preview):
                 im.paste(_zoomr(fr, zb), (dx, BAND_Y))
                 clean = im.copy()                                # बिना लिखाई वाला frame (आख़िरी poll के पीछे)
             d = ImageDraw.Draw(im)
-            if not (v2 and k < FPS * 2):                     # vidIQ: पहले 2 सेकंड कोई logo/पट्टी नहीं — सिर्फ़ तस्वीर + 4 शब्द
+            if k >= FPS * 2:                                 # vidIQ + virality skill: पहले 2 सेकंड कोई logo/पट्टी नहीं (हर style में) — सिर्फ़ तस्वीर + 4 शब्द
                 chrome_safe(d, k)
             if shot == "split":
                 badge = f"खबर {ln['item']}/{ln['items_total']}" if ln.get("item") else "ब्रेकिंग"
@@ -876,7 +885,7 @@ def render(ep, segs, chars, out, preview):
                     rv.name_strap(d, (BAND_Y + 84) if shot == "split" else 1130, name, role)
                 if nochar:                                        # हर line ऊपर बड़े अक्षरों में (meme reel जैसा)
                     _hook(d, ep["hook"] if hooking else cap_text, 330)
-                elif hooking and v2 and ep.get("hook_short"):    # पहले 3 सेकंड: 3 lines पढ़नी पड़ती थीं (skip 46%) — अब ≤6 शब्द, बड़े
+                elif hooking and ep.get("hook_short"):           # पहले 3 सेकंड: 3 lines पढ़नी पड़ती थीं (skip 46%) — अब ≤6 शब्द, बड़े
                     _hook_big(d, re.sub(r"[\U0001F000-\U0001FFFF\u2600-\u27BF\uFE0F]", "", ep["hook_short"]).strip(), 360)
                     if wtimes:
                         karaoke_timed(d, cap_text, t / FPS, wtimes, cy)
@@ -885,18 +894,22 @@ def render(ep, segs, chars, out, preview):
                 elif hooking:
                     hook_low(d, ep["hook"])
                 else:
-                    if v2 and ln.get("tag_text"):                 # "हर घर में एक…" वाली line ऊपर बड़ी — यही tag करवाती है
+                    if ln.get("tag_text"):                        # पहचान वाली line ऊपर बड़ी — यही share/tag करवाती है
                         _hook(d, ln["tag_text"], 330)
                     if wtimes:
                         karaoke_timed(d, cap_text, t / FPS, wtimes, cy)
                     else:
                         karaoke_safe(d, cap_text, t / n, cy, span)
+            if si == 0 and not react and not st_text and t == int(HOOK_EVENT * FPS):   # hook का "event"
+                st_text, st_t = ep.get("hook_stamp") or "अधपकी खबर!", 0
             if bool(ln.get("punch")) and not react and not st_text and t >= n * 0.6:
                 st_text = ln.get("stamp") or STAMP_OF.get(ln.get("react_pose"), "")
                 st_t = 0
             asking = False                                      # सवाल अब सिर्फ़ अंत में (पंच line साफ़ सुनाई-दिखाई दे)
             if st_text and not asking:                          # सवाल वाले पल ठप्पा नहीं (ऊपर एक-दूसरे पर चढ़ते थे)
-                if shot == "close":
+                if si == 0:                                     # hook का ठप्पा: hook के बड़े अक्षरों के नीचे, बीच में
+                    _stamp(im, st_text, st_t, W / 2, 640 if shot != "split" else SCR[3] - 130, 84)
+                elif shot == "close":
                     _stamp(im, st_text, st_t, W / 2 + 60, 330, 78)
                 else:
                     _stamp(im, st_text, st_t, SCR[2] - 200, SCR[1] + 120)
@@ -912,18 +925,10 @@ def render(ep, segs, chars, out, preview):
             wr.stdin.write(im.tobytes())
             k += 1
         prev_im = im
-    end = (clean if clean is not None else im).filter(ImageFilter.GaussianBlur(10))
-    end = Image.blend(end, Image.new("RGB", end.size), 0.35)
+    end = im                                             # आख़िरी पंच वाला frame ही थोड़ा रुके (loop: सीधे शुरू से जुड़े)
     for t in range(tailn):
         im = end.copy()
         d = ImageDraw.Draw(im)
-        if ep.get("tag_ask"):                            # vidIQ: share की माँग किसी ख़ास इंसान का नाम लेकर, screen पर; follow की माँग नहीं
-            _hook(d, re.sub(r"[\U0001F000-\U0001FFFF\u2600-\u27BF\uFE0F]", "", ep["tag_ask"]).strip(), 760)   # emoji का font नहीं (□ दिखता था)
-        else:
-            if ep.get("ask"):
-                _ask(d, ep["ask"], t + 5, SCR[1] + 260)
-            d.rounded_rectangle((260, 1420, W - 260, 1520), 50, fill=RED)
-            d.text((W / 2, 1470), "फ़ॉलो करो • बकरा न्यूज़", font=tt.font(46), fill="white", anchor="mm")
         d.rectangle((0, H - 12, int(W * k / total), H), fill=YEL)
         wr.stdin.write(im.tobytes())
         k += 1

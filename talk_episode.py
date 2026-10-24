@@ -79,6 +79,7 @@ def prep(script_path):
     for i, ln in enumerate(ep["lines"]):
         tighten(IN / f"audio/{i:02d}.wav")
         pause = float(ln.get("pause_after") or 0)
+        pause = min(pause, 0.5)                                # virality skill: 0.5 सेकंड से लंबा सन्नाटा = लोग scroll कर देते हैं
         if 0 < pause <= 1.5:                                   # "और अगर माँग नहीं मानी गई…" के बाद जानबूझकर सन्नाटा (suspense)
             w = IN / f"audio/{i:02d}.wav"
             subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(w), "-af", f"apad=pad_dur={pause}",
@@ -367,6 +368,10 @@ def post_studio(ep):
     import memes                                          # पंच के बाद मशहूर meme (अपनी आवाज़ के साथ)
     used = memes.add(ep, segs, out)
     report = quality(ep)
+    try:                                                  # virality skill के लक्ष्य: लंबाई, पहला frame, पहला शब्द
+        report += "\n" + qa.targets(out, segs[0]["wav"] if segs else None)
+    except Exception as e:                                # noqa: BLE001
+        print("  लक्ष्य-जाँच नहीं हुई:", repr(e)[:100])
     if used:
         report += "\n😂 Memes: " + ", ".join(used)
     print(report)
