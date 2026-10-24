@@ -87,19 +87,21 @@ def frames(folder, expr, wav, n, cut=None, seed=0):
         d[int(cy - ry * 0.5):, :] = False                 # सिर्फ़ मुँह से ऊपर (आँखें)
         eye_mask = Image.fromarray((ndimage.binary_dilation(d, iterations=int(w * 0.02)) * 255).astype(np.uint8))
         eye_mask = eye_mask.filter(ImageFilter.GaussianBlur(w * 0.01))
-    nod = 0.0
+    nod, state, hold = 0.0, 0, 0
     for i in range(n):
-        o = env[i]
-        if o < 0.5:
-            base = Image.blend(imgs[0], imgs[1], o * 2)
-        else:
-            base = Image.blend(imgs[1], imgs[2], (o - 0.5) * 2)
+        # मुँह की 3 साफ़ हालतें (पहले blend से धुंधला "दो-मुँह" दिखता था) — आवाज़ के साथ खुले, शब्दों के बीच बंद
+        lvl = 2 if raw[i] > 0.55 else 1 if raw[i] > 0.18 else 0
+        if i and lvl != state and hold < 2 and abs(lvl - state) == 1:
+            lvl = state                                     # 1 frame की झिलमिल नहीं
+        hold = hold + 1 if lvl == state else 0
+        state = lvl
+        base = imgs[lvl]
         im = Image.composite(base, imgs[0], mask)
         if blink is not None and i in blinks:
             k = i - min(b for b in blinks if b <= i and b > i - 4)
             im = Image.composite(blink, im, eye_mask.point(lambda v, a=[0.5, 1, 1, 0.5][k]: int(v * a)))
         nod += ((raw[i] > 0.6) * 1.0 - nod) * 0.3          # ज़ोर वाले शब्द पर सिर का झटका (पहले लगभग स्थिर — "बेजान" लगता था)
-        talk = o                                           # बोलते वक़्त ज़्यादा हिलना, चुप रहने पर कम
+        talk = env[i]
         # मालिक: "किरदार फालतू हिल रहे" — अब सिर लगभग स्थिर: सिर्फ़ धीमी साँस जैसी हल्की हरकत, कोई झटका नहीं
         ang = 0.35 * math.sin(i / 45 + seed)
         dx = 0.0

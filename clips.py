@@ -102,6 +102,45 @@ def indian(title, ch):
     return bool(re.search(r"[\u0900-\u097F]", title)) or any(k in f" {ch.lower()}" for k in INDIAN)
 
 
+def vision_ok(path, topic):
+    """clip में असल में क्या दिखता है — 3 frames Gemini को: anchor का बोलता चेहरा, दूसरे चैनल का बैनर/'FOLLOW US',
+    सिर्फ़ लिखाई, या ख़बर से अलग दृश्य = नहीं (Jaipur demo: बोलती anchor पर Bablu की आवाज़ = होंठ बेमेल लगे)."""
+    import base64
+    import io
+    import gemini
+    from PIL import Image
+    tiles = []
+    for frac in (0.2, 0.5, 0.8):
+        jpg = path.with_suffix(f".{int(frac * 10)}.jpg")
+        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{CLIP_SECS * frac:.2f}", "-i", str(path),
+                        "-frames:v", "1", "-vf", "scale=320:-2", str(jpg)])
+        if jpg.exists():
+            tiles.append(Image.open(jpg).convert("RGB"))
+            jpg.unlink()
+    if not tiles:
+        return False
+    W_ = sum(t.width for t in tiles)
+    sheet = Image.new("RGB", (W_, max(t.height for t in tiles)))
+    x = 0
+    for t in tiles:
+        sheet.paste(t, (x, 0))
+        x += t.width
+    buf = io.BytesIO()
+    sheet.save(buf, "JPEG", quality=80)
+    part = {"inline_data": {"mime_type": "image/jpeg", "data": base64.b64encode(buf.getvalue()).decode()}}
+    q = (f"ये एक news video clip के 3 frames हैं. खबर: \"{topic}\". reel में ये clip बिना आवाज़ चलेगा और ऊपर हमारे anchor की "
+         "आवाज़ होगी. सिर्फ़ JSON: {\"ok\": true/false, \"why\": \"...\"}. ok=false अगर: कोई anchor/रिपोर्टर/इंसान कैमरे की तरफ़ "
+         "बोलता दिखे (होंठ बेमेल लगेंगे), channel का logo-बैनर/subscribe/FOLLOW US/promo भरा हो, सिर्फ़ लिखाई/graphic हो, "
+         "या दृश्य इस खबर से जुड़ा न हो. ok=true सिर्फ़ तब जब असली घटना/जगह/चीज़ दिख रही हो.")
+    try:
+        r = gemini.json_from(gemini.ask([{"text": q}, part], json_mode=True, temperature=0.1))
+        print(f"  👁 clip जाँच: {'✅' if r.get('ok') else '❌'} {str(r.get('why', ''))[:80]}")
+        return bool(r.get("ok"))
+    except Exception as e:                                # noqa: BLE001  जाँच न हो सके तो clip नहीं (फ़ोटो चलेंगी)
+        print("  clip जाँच नहीं हुई:", repr(e)[:100])
+        return False
+
+
 def for_topic(topic, queries=(), want=2):
     """इसी खबर के `want` clips: [(path, credit)]. title में खबर के 2+ असली शब्द हों, video 15 सेकंड-20 मिनट का."""
     import visuals
@@ -119,6 +158,9 @@ def for_topic(topic, queries=(), want=2):
                 continue
             start = max(2.0, min((dur or 60) * 0.25, 40.0))   # शुरू का intro/logo छोड़कर, असली हिस्से से
             path = cut(url, CACHE / f"clip_{len(seen)}.mp4", start)
+            if path and not vision_ok(path, topic):
+                path.unlink(missing_ok=True)
+                continue
             if path:
                 credit = f"वीडियो: {ch[:30]} (YouTube)"
                 path.with_suffix(".txt").write_text(credit, encoding="utf-8")
