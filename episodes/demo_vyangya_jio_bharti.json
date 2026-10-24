@@ -49,6 +49,5 @@
   "bablu": "assets/toon/bablu"
  },
  "production": true,
- "style": "v2",
- "lips": "sprite"
+ "style": "v2"
 }

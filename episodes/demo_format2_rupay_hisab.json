@@ -61,6 +61,5 @@
   "dadi": "assets/toon/dadi"
  },
  "production": true,
- "style": "v2",
- "lips": "sprite"
+ "style": "v2"
 }
