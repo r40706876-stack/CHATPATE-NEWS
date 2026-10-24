@@ -5,6 +5,7 @@ Studio reel (3D किरदार, बिना retro) — news channel वा�
 punch पर किरदार पर हल्का zoom, line के बाद 1 सेकंड reaction pose, बड़े captions, ticker, आख़िर में poll.
 """
 import math
+import re
 import subprocess
 from pathlib import Path
 
@@ -876,7 +877,7 @@ def render(ep, segs, chars, out, preview):
                 if nochar:                                        # हर line ऊपर बड़े अक्षरों में (meme reel जैसा)
                     _hook(d, ep["hook"] if hooking else cap_text, 330)
                 elif hooking and v2 and ep.get("hook_short"):    # पहले 3 सेकंड: 3 lines पढ़नी पड़ती थीं (skip 46%) — अब ≤6 शब्द, बड़े
-                    _hook_big(d, ep["hook_short"], 360)
+                    _hook_big(d, re.sub(r"[\U0001F000-\U0001FFFF\u2600-\u27BF\uFE0F]", "", ep["hook_short"]).strip(), 360)
                     if wtimes:
                         karaoke_timed(d, cap_text, t / FPS, wtimes, cy)
                 elif hooking and v2:                                # v2: झटका ऊपर बड़े अक्षरों में (नीचे Instagram के buttons)
@@ -917,7 +918,7 @@ def render(ep, segs, chars, out, preview):
         im = end.copy()
         d = ImageDraw.Draw(im)
         if ep.get("tag_ask"):                            # vidIQ: share की माँग किसी ख़ास इंसान का नाम लेकर, screen पर; follow की माँग नहीं
-            _hook(d, ep["tag_ask"], 760)
+            _hook(d, re.sub(r"[\U0001F000-\U0001FFFF\u2600-\u27BF\uFE0F]", "", ep["tag_ask"]).strip(), 760)   # emoji का font नहीं (□ दिखता था)
         else:
             if ep.get("ask"):
                 _ask(d, ep["ask"], t + 5, SCR[1] + 260)
