@@ -48,7 +48,8 @@ def preview(eps):
     out = [f"🐐 बकरा न्यूज़ — आज की {len(eps)} scripts ({ist():%d %b, %I:%M %p})"]
     for i, ep in enumerate(eps, 1):
         out.append(f"\n━━━━━━━━━━  {i}  ━━━━━━━━━━")
-        out.append("🔥 बकरा बहस" if ep.get("format") == "rant" else "📰 वायरल खबर")
+        out.append("🔥 बकरा बहस" if ep.get("format") == "rant" else
+                   "⚡ एक पंच (8-10 सेकंड, loop — retention experiment)" if ep.get("kind") == "punch" else "📰 वायरल खबर")
         out.append(f"📰 {ep.get('topic') or ep.get('breaking', '')}")
         if ep.get("insta_used"):
             out.append(f"📱 Insta trend: {ep['insta_used']}")
@@ -123,7 +124,16 @@ def write_scripts(news, n):
     out = []                                               # बारी-बारी: 🔥, 📰, 🔥, 📰…
     for k in range(max(len(rants), len(newsy))):
         out += rants[k:k + 1] + newsy[k:k + 1]
-    return out[:n]
+    punch = []                                             # ⚡ एक पंच (8-10 सेकंड, loop) — retention वाला experiment, रोज़ 1 विकल्प
+    if os.getenv("PUNCH", "1") == "1" and fmt == "both" and n >= 3:
+        try:
+            import punch_writer
+            punch = punch_writer.write_from(c, packs, picks, 1)
+        except gemini.QuotaOver:
+            pass
+        except (Exception, SystemExit) as e:               # noqa: BLE001
+            print("  एक पंच नहीं बना:", repr(e)[:200])
+    return (punch + out)[:n] if punch else out[:n]
 
 
 def do_write(feed=None):
