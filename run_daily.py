@@ -481,7 +481,10 @@ def take_user_script():
             ln["topic"] = v
     hk = re.search(r"^\s*(?:हुक|hook)\s*[:：]\s*(.+)$", tf0.read_text(encoding="utf-8"), re.M | re.I)
     if hk:                                             # screen पर पहले 3 सेकंड का छोटा झटका (≤6 शब्द), बोली गई line से अलग
-        ep["hook_short"] = " ".join(hk.group(1).split()[:7])
+        ep["hook_short"] = " ".join(hk.group(1).split()[:5])     # vidIQ: 4 शब्द — 1 सेकंड में पढ़ा जाए
+    tg = re.search(r"^\s*(?:टैग|tag)\s*[:：]\s*(.+)$", tf0.read_text(encoding="utf-8"), re.M | re.I)
+    if tg:                                             # आख़िर में screen पर: "टैग करो उसे जिसने…" (follow की जगह)
+        ep["tag_ask"] = tg.group(1).strip()[:60]
     fmt = re.search(r"^\s*(?:फ़ॉर्मेट|फॉर्मेट|फार्मेट|format)\s*[:：]\s*(\S+)", tf0.read_text(encoding="utf-8"), re.M | re.I)
     if fmt:                                            # "फ़ॉर्मेट: 1/2/3" = नई presentation, "5" = बिना किरदार; 4 = बकरा बहस (माँग वाली line से)
         ep["style"] = {"1": "v2", "2": "v2", "3": "v2", "5": "nochar", "v2": "v2", "nochar": "nochar"}.get(fmt.group(1).strip().lower(), "")

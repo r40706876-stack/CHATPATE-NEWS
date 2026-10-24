@@ -704,7 +704,7 @@ def render(ep, segs, chars, out, preview):
     shot: close = पूरा close-up (720x1280 source) | split = ऊपर खबर+नीचे किरदार | full = पूरी तस्वीर+कोने में किरदार."""
     lens = [rv._read(s["wav"]).shape[0] / rv.SR for s in segs]
     counts = [max(1, round(x * FPS)) for x in lens]
-    tail = 1.6 if ep.get("ask") else 0.8                  # comment वाला सवाल अब आख़िरी पंच के *बाद* (पहले पंच के ऊपर चढ़ता था)
+    tail = 1.6 if (ep.get("ask") or ep.get("tag_ask")) else 0.8                  # comment वाला सवाल अब आख़िरी पंच के *बाद* (पहले पंच के ऊपर चढ़ता था)
     tailn = int(tail * FPS)
     total = sum(counts) + tailn
     events, t0 = [(0.0, "boom")], 0.0
@@ -850,7 +850,8 @@ def render(ep, segs, chars, out, preview):
                 im.paste(_zoomr(fr, zb), (dx, BAND_Y))
                 clean = im.copy()                                # बिना लिखाई वाला frame (आख़िरी poll के पीछे)
             d = ImageDraw.Draw(im)
-            chrome_safe(d, k)
+            if not (v2 and k < FPS * 2):                     # vidIQ: पहले 2 सेकंड कोई logo/पट्टी नहीं — सिर्फ़ तस्वीर + 4 शब्द
+                chrome_safe(d, k)
             if shot == "split":
                 badge = f"खबर {ln['item']}/{ln['items_total']}" if ln.get("item") else "ब्रेकिंग"
                 bw = max(180, int(tt.font(34).getlength(badge)) + 40)
@@ -915,10 +916,13 @@ def render(ep, segs, chars, out, preview):
     for t in range(tailn):
         im = end.copy()
         d = ImageDraw.Draw(im)
-        if ep.get("ask"):
-            _ask(d, ep["ask"], t + 5, SCR[1] + 260)
-        d.rounded_rectangle((260, 1420, W - 260, 1520), 50, fill=RED)
-        d.text((W / 2, 1470), "फ़ॉलो करो • बकरा न्यूज़", font=tt.font(46), fill="white", anchor="mm")
+        if ep.get("tag_ask"):                            # vidIQ: share की माँग किसी ख़ास इंसान का नाम लेकर, screen पर; follow की माँग नहीं
+            _hook(d, ep["tag_ask"], 760)
+        else:
+            if ep.get("ask"):
+                _ask(d, ep["ask"], t + 5, SCR[1] + 260)
+            d.rounded_rectangle((260, 1420, W - 260, 1520), 50, fill=RED)
+            d.text((W / 2, 1470), "फ़ॉलो करो • बकरा न्यूज़", font=tt.font(46), fill="white", anchor="mm")
         d.rectangle((0, H - 12, int(W * k / total), H), fill=YEL)
         wr.stdin.write(im.tobytes())
         k += 1
