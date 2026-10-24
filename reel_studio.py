@@ -556,6 +556,20 @@ def _hook(d, text, cy):
         d.text((W / 2, y0 + 66 + r * 92), row, font=f, fill=(0, 0, 0), anchor="mm")
 
 
+def _hook_big(d, text, cy):
+    """बहुत बड़े अक्षर, 1-2 lines (≤6 शब्द) — scroll करते अँगूठे को 1 नज़र में पढ़ने लायक."""
+    f = tt.font(118)
+    rows = rv._wrap(text, f, 1000)[:2]
+    while len(rows) > 2 or any(f.getlength(r) > 1000 for r in rows):
+        f = tt.font(f.size - 6)
+        rows = rv._wrap(text, f, 1000)[:2]
+    lh = int(f.size * 1.15)
+    y0 = cy - lh * len(rows) // 2 - 24
+    d.rounded_rectangle((24, y0, W - 24, y0 + 48 + lh * len(rows)), 30, fill=YEL, outline=(0, 0, 0), width=7)
+    for r, row in enumerate(rows):
+        d.text((W / 2, y0 + 24 + lh * r + lh / 2), row, font=f, fill=(0, 0, 0), anchor="mm")
+
+
 def _ask(d, text, t, y0=1040):
     """बीच में comment वाला सवाल (Instagram पर comments = video आगे बढ़ता है)."""
     a = min(1, t / 5)
@@ -860,6 +874,10 @@ def render(ep, segs, chars, out, preview):
                     rv.name_strap(d, (BAND_Y + 84) if shot == "split" else 1130, name, role)
                 if nochar:                                        # हर line ऊपर बड़े अक्षरों में (meme reel जैसा)
                     _hook(d, ep["hook"] if hooking else cap_text, 330)
+                elif hooking and v2 and ep.get("hook_short"):    # पहले 3 सेकंड: 3 lines पढ़नी पड़ती थीं (skip 46%) — अब ≤6 शब्द, बड़े
+                    _hook_big(d, ep["hook_short"], 360)
+                    if wtimes:
+                        karaoke_timed(d, cap_text, t / FPS, wtimes, cy)
                 elif hooking and v2:                                # v2: झटका ऊपर बड़े अक्षरों में (नीचे Instagram के buttons)
                     _hook(d, ep["hook"], 330)
                 elif hooking:
