@@ -134,8 +134,14 @@ def prep(script_path):
                 if not free:
                     break
                 li = max(free, key=lambda i: (fit(i), -i))
-                if fit(li) == 0:
-                    continue  # No matching dialogue: do not force an unrelated opening clip.
+                # A clip must match BOTH the underlying news story and this
+                # dialogue; a common word like "मोबाइल" alone is not enough.
+                topic_words = visuals._stems(ep.get("topic") or ep.get("breaking") or "")
+                story_overlap = len(tw & topic_words)
+                min_story = 2 if len(topic_words) >= 3 else 1
+                if fit(li) == 0 or story_overlap < min_story:
+                    print(f"  clip rejected (dialogue/story mismatch): {title[:70]}")
+                    continue
                 shutil.copy(cp, IN / f"broll/{li}_clip{k}.mp4")
                 shutil.copy(cp.with_suffix(".txt"), IN / f"broll/{li}_clip{k}.txt")
                 print(f"  🎬 clip → line {li + 1}: {title[:50]}")
