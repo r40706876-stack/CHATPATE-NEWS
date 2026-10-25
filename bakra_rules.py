@@ -34,8 +34,8 @@ def violations(ep):
     words = sum(len(s.split()) for s in lines)
     if ep.get("kind") == "punch" and words > 24:
         out.append(f"एक पंच लंबा ({words} शब्द, सीमा 24)")
-    elif ep.get("format") == "rant" and not (60 <= words <= 85):
-        out.append(f"बकरा बहस की लंबाई {words} शब्द (60-85 चाहिए)")
+    elif ep.get("format") == "rant" and not (70 <= words <= 100):
+        out.append(f"बकरा बहस की लंबाई {words} शब्द (70-100 चाहिए)")
     elif ep.get("format") != "rant" and ep.get("kind") != "punch" and words > 55:
         out.append(f"script लंबी ({words} शब्द, सीमा 55)")
     # पहचान/tag: share की वजह — punch और rant में ख़ाली हो तो रद्द (news में writer पहले से रोकता है)
