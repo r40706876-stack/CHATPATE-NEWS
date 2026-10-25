@@ -5,6 +5,7 @@ on:
       - 'bakra_rules.py'
       - 'news_writer.py'
       - 'visuals.py'
+      - 'episodes/bijli.json'
       - 'run_daily.py'
       - 'tests/**'
       - '.github/workflows/comedy-regression.yml'
@@ -51,6 +52,8 @@ jobs:
               with open('live_visual_report.json','w') as f: json.dump(report,f,ensure_ascii=False,indent=2)
               print(json.dumps(report,ensure_ascii=False))
           if not report['success']: raise SystemExit(1)
+          if report['matched_lines'] < report['total_lines']:
+              print('Coverage incomplete; see report for missing lines')
           PY
       - uses: actions/upload-artifact@v4
         if: always()
