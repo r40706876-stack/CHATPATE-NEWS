@@ -341,15 +341,17 @@ def _ahash(path):
         return None
 
 
-def safe_story_indices(candidates_, topic, limit=3):
+def safe_story_indices(candidates_, topic, limit=3, line=None):
     """Deterministic Gemini-free matching; only photos from the same news story."""
     tw = _stems(str(topic))
     if not tw:
         return []
     need = 2 if len(tw) >= 2 else 1
+    spoken = _stems((line or {}).get("say", "")) - tw
     return [j for j, c in enumerate(candidates_)
             if c.get("same_story") and not c.get("stock")
-            and len(tw & _stems(c.get("tags", ""))) >= need][:limit]
+            and len(tw & _stems(c.get("tags", ""))) >= need
+            and bool(spoken & _stems(c.get("tags", "")))][:limit]
 
 
 def pick_for_lines(lines, per_line=3, pool=9, topic="", strict=False):   # 3 तक: एक तस्वीर पर देर तक न अटके
@@ -479,7 +481,7 @@ def pick_for_lines(lines, per_line=3, pool=9, topic="", strict=False):   # 3 त
             print("  Gemini photo review unavailable: verified story-title fallback")
             got = []
             for i, _, cs in batch:
-                got.append(safe_story_indices(cs, lines[i].get("topic") or topic, per_line))
+                got.append(safe_story_indices(cs, lines[i].get("topic") or topic, per_line, lines[i]))
         # Never trust AI-provided indices without checking their type and bounds.
         clean = []
         for n, (_, _, cs) in enumerate(batch):
@@ -489,7 +491,7 @@ def pick_for_lines(lines, per_line=3, pool=9, topic="", strict=False):   # 3 त
             valid = [j for j in chosen if type(j) is int and 0 <= j < len(cs)]
             if chosen and not valid:
                 # Gemini returned out-of-range or non-integer picks.
-                valid = safe_story_indices(cs, lines[batch[n][0]].get("topic") or topic, per_line)
+                valid = safe_story_indices(cs, lines[batch[n][0]].get("topic") or topic, per_line, lines[batch[n][0]])
             clean.append(valid[:per_line])
         got = clean
         picks += [got[n] if n < len(got) else [] for n in range(len(batch))]
