@@ -151,7 +151,11 @@ def write_scripts(news, n):
         if v:
             print("  ❌ नियम टूटा, हटाई:", e.get("topic"), v)
             e["_loose"] = True
-    return ok or eps
+    # Never silently send rejected scripts as approved candidates.
+    # Keep the original format experiments, but select only passing episodes.
+    if not ok:
+        print("  QUALITY GATE: सभी विकल्प rejected; Telegram पर कमजोर scripts नहीं भेजेंगे")
+    return ok[:n]
 
 
 def do_write(feed=None):
@@ -188,6 +192,10 @@ def do_write(feed=None):
         telegram.send_text("🔍 आज की कोई खबर viral पैमाने पर पास नहीं हुई, इसलिए script नहीं भेजी।\n\n" + "\n".join(rows)
                            + "\n\n👉 फिर भी नई कोशिश चाहिए तो 0 भेजो।")
         json.dump({"sent_at": int(time.time()), "eps": []}, open(PENDING, "w", encoding="utf-8"))
+        return
+    if not eps:
+        telegram.send_text("⚠️ आज की scripts Quality Gate पास नहीं कर पाईं। कमजोर स्क्रिप्ट भेजने के बजाय अगली कोशिश में नया विषय चुनेंगे।")
+        print("  QUALITY GATE: कोई script पास नहीं हुई")
         return
     json.dump({"sent_at": int(time.time()), "eps": eps}, open(PENDING, "w", encoding="utf-8"),
               ensure_ascii=False, indent=2)
