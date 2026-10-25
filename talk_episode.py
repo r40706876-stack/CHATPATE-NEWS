@@ -168,8 +168,11 @@ def pick_shot(ep, i, ln):
 
 
 def fill_sets(ep):
-    """जिस line को न जाँची हुई तस्वीर मिली न clip: उसकी बात वाली अपनी AI तस्वीर (आँगन, रसोई, स्टेशन, बैंक…).
-    बेमेल फ़ोटो कभी नहीं; ठीक न बैठे (गाँव/studio) तो कुछ नहीं — screen पर उस line का card चलेगा."""
+    """No unrelated news photos: use existing sets or a dialogue-specific card.
+
+    Every dialogue gets a visual treatment, even when news search fails.
+    A card is rendered by reel_studio from the line's 'big' text.
+    """
     import shutil
     import news_writer as nw
     topic = str(ep.get("topic") or ep.get("breaking") or "")
@@ -178,8 +181,13 @@ def fill_sets(ep):
             continue
         scene = nw.pick_set("x", ln.get("say", ""), topic)
         src = ROOT / f"assets/sets/{scene}.png"
-        if scene not in ("village", "studio") and src.exists():
+        if src.exists():
             shutil.copy(src, IN / f"broll/{i}_set.png")
+        if not ln.get("big"):
+            words = str(ln.get("say", "")).replace("।", " ").split()
+            ln["big"] = " ".join(words[-min(7, len(words)):]) if words else topic
+        ln.setdefault("card_color", "yellow")
+        print(f"  line {i + 1}: safe set/card fallback (no unverified news image)")
 
 
 def quality(ep):
