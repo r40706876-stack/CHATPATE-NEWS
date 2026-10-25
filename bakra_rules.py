@@ -34,6 +34,19 @@ def violations(ep):
     words = sum(len(s.split()) for s in lines)
     if ep.get("kind") == "punch" and words > 24:
         out.append(f"एक पंच लंबा ({words} शब्द, सीमा 24)")
+    elif ep.get("format") == "rant" and not (60 <= words <= 85):
+        out.append(f"बकरा बहस की लंबाई {words} शब्द (60-85 चाहिए)")
     elif ep.get("format") != "rant" and ep.get("kind") != "punch" and words > 55:
         out.append(f"script लंबी ({words} शब्द, सीमा 55)")
+    # पहचान/tag: share की वजह — punch और rant में ख़ाली हो तो रद्द (news में writer पहले से रोकता है)
+    if ep.get("kind") == "punch" or ep.get("format") == "rant":
+        if not str(ep.get("tag_who", "")).strip():
+            out.append("पहचान (tag) नहीं — share की वजह नहीं")
+    # किताबी/सरकारी शब्द (वितरक, उपभोक्ता, द्वारा…) — skill की जाँच
+    try:
+        import news_writer as _nw
+        if lines and _nw.bookish(ep.get("lines", [])):
+            out.append("किताबी/सरकारी शब्द")
+    except Exception:
+        pass
     return out
