@@ -1,1 +1,54 @@
+  विषय: ['shopping-आदत', 'ठगी से बचाव', 'त्योहार-ट्रेंड', 'दफ़्तर-नौकरी', 'नियम/नौकरी', 'फ़िल्म-क्रिकेट फैन', 'महँगाई', 'रील का शौक', 'वायरल वीडियो', 'शादी-रिश्ते', 'सफ़र-जुगाड़'] | हाल के विषय (अभी नहीं): []
+  topics: 33 काम की, 8 वायरल, 4 Trends, 2 त्योहार
+  Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
+    Gemini gemini-3.5-flash: 24s
+  ❌ trend 2/10: मां के जन्मदिन पर बेटे ने बनाया रोबोट, अनोखे अंदाज में पहुंचाया कार्ड | 2 अख़बार/चैनल 2 दिन में, 2 खबरें 7 दिन में
+  ❌ trend 1/10: गांव में दुल्हन की विदाई के लिए उतरा हेलीकॉप्टर, देखने वाले रह गए दंग | 1 अख़बार/चैनल 2 दिन में, 9 खबरें 7 दिन में
+  ❌ trend 3/10: ट्रेन के डिब्बे में गूंजा ढोलक और हारमोनियम, यात्रियों ने लिए सुरीले मजे | 1 अख़बार/चैनल 2 दिन में, 5 खबरें 7 दिन में
+  ❌ trend 3/10: करवाचौथ पर महिला शिक्षकों की छुट्टी से स्कूलों में क्लास संचालन पर संशय | 3 अख़बार/चैनल 2 दिन में, 8 खबरें 7 दिन में
+  ✅ trend 4/10: 28 दिन या 84 दिन का मोबाइल रिचार्ज, समझें जेब का असली गणित | 5 अख़बार/चैनल 2 दिन में, 7 खबरें 7 दिन में
+  ❌ trend 3/10: बिजली बिल न भरने पर कनेक्शन काटने का मैसेज, साइबर फ्रॉड का नया पैंतरा | 4 अख़बार/चैनल 2 दिन में, 16 खबरें 7 दिन में
+  ✅ trend 6/10: कोचिंग सेंटरों पर कसने लगा शिकंजा, हर 3 साल में कराना होगा रजिस्ट्रेशन | 14 अख़बार/चैनल 2 दिन में, 22 खबरें 7 दिन में
+  ❌ trend 3/10: बैंक एफडी पर 8.25% तक ब्याज, जानें किस समय के लिए कितना रिटर्न | 9 अख़बार/चैनल 2 दिन में, 48 खबरें 7 दिन में
+  ❌ trend 2/10: श्रीलंका ने इंग्लैंड को ऐतिहासिक रन चेज में हराकर किया बड़ा उलटफेर | 3 अख़बार/चैनल 2 दिन में, 56 खबरें 7 दिन में
+  ❌ trend 2/10: कमाई के 4.5 लाख दिखते हैं मेहनत नहीं, दिल्ली की मेकअप आर्टिस्ट की पीड़ा | 1 अख़बार/चैनल 2 दिन में, 1 खबरें 7 दिन में
+  ✅ trend 4/10: बिहटा-औरंगाबाद नई रेल लाइन काम फंसा, 13 किमी हिस्से पर अटका प्रोजेक्ट | 3 अख़बार/चैनल 2 दिन में, 11 खबरें 7 दिन में
+  ❌ trend 0/10: गुलाबी ठंड की दस्तक के साथ ही रज़ाई निकली और नहाने से शुरू हुई दूरी | 0 अख़बार/चैनल 2 दिन में, 0 खबरें 7 दिन में
+  ❌ trend 1/10: चेहरा देखकर एआई बता सकेगा इंसान कितने समय तक और जीवित रहेगा | 1 अख़बार/चैनल 2 दिन में, 6 खबरें 7 दिन में
+  ✅ trend 8/10: बंगाल की खाड़ी में उठे चक्रवाती तूफान को लेकर तटीय इलाकों में अलर्ट जारी | 37 अख़बार/चैनल 2 दिन में, 100 खबरें 7 दिन में
+  चुने विषय: ['[Trends]', '[नियम/नौकरी]', '[रील का शौक]', '[सफ़र-जुगाड़]', '[दफ़्तर-नौकरी]', '[shopping-आदत]', '[वायरल वीडियो]']
+    key 1 का कोटा ख़त्म → key 2
+  Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
+    Gemini gemini-3.5-flash: 41s
+  तथ्य: बंगाल की खाड़ी में चक्रवाती तूफान का अलर्ट | AajTak, India TV Hindi, Hindustan, Jagran, Prabhat Khabar, ETV Bharat, ABP News, News18 Hindi | high
+  तथ्य: एमपी में कोचिंग सेंटरों के लिए नए नियम और पंजीयन | Amar Ujala, Jagran, Dainik Bhaskar, Pradesh Today | high
+  तथ्य: बिहटा-औरंगाबाद रेल परियोजना में रुकावट | Prabhat Khabar, Navbharat Times, Jagran | high
+  तथ्य: ट्रेन के डिब्बे में यात्रियों का संगीतमय सफर | Times Now Navbharat | medium
+  तथ्य: करवाचौथ व आगामी त्योहारों पर स्कूलों की छुट्टी की स्थिति | News18 Hindi, Jagran, Raj Express, Punjab Kesari, Tirandaj | high
+  तथ्य: बैंक एफडी (FD) की नई ब्याज दरें | AajTak, ABP News, Hindustan, Business Standard, Navbharat Times, Livemint | high
+  तथ्य: हैदराबाद के छात्र ने मां के जन्मदिन पर बनाया मिनी रोबोट | India TV Hindi, AajTak | high
+    सब models busy — 40s रुककर दोबारा
+    key 2 का कोटा ख़त्म → key 3
+  Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
+    Gemini gemini-3.5-flash: 37s
+  rant (सख़्त) नहीं बना: एमपी कोचिंग नियम और वेबसाइट फीस विवरण — लंबाई 79 शब्द (18-24 सेकंड = 50-70 चाहिए)
+  rant (सख़्त) नहीं बना: बैंकों में एफडी की नई ब्याज दरें और निवेश — लंबाई 80 शब्द (18-24 सेकंड = 50-70 चाहिए)
+  rant (सख़्त) नहीं बना: दसवीं के छात्र ने माँ के लिए रोबोट बनाया — लंबाई 76 शब्द (18-24 सेकंड = 50-70 चाहिए)
+  ?/10: ट्रेन में यात्रियों का ढोलक और हारमोनियम संग सफर | हम ख़ामोश मुसाफ़िर
+  ?/10: एमपी कोचिंग नियम और वेबसाइट फीस विवरण | हम बैकबेंचर छात्र
+  ?/10: दसवीं के छात्र ने माँ के लिए रोबोट बनाया | हम नॉर्मल औलाद
+  ?/10: बैंकों में एफडी की नई ब्याज दरें और निवेश | हम एफडी वाले मिडिल क्लास
+  पंच-बैंक: 0 विकल्प
+  ❌ नियम टूटा, हटाई: ट्रेन में यात्रियों का ढोलक और हारमोनियम संग सफर ['hook लंबा (>10 शब्द)']
+  ❌ नियम टूटा, हटाई: एमपी कोचिंग नियम और वेबसाइट फीस विवरण ['hook लंबा (>10 शब्द)']
+  ❌ नियम टूटा, हटाई: दसवीं के छात्र ने माँ के लिए रोबोट बनाया ['hook लंबा (>10 शब्द)']
+/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/run_daily.py:31: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  return dt.datetime.utcnow() + dt.timedelta(hours=5, minutes=30)
+  3 scripts Telegram पर भेजीं — जवाब का इंतज़ार
   अभी जवाब नहीं आया
+  अभी जवाब नहीं आया
+  अभी जवाब नहीं आया
+  Telegram पर चिपकाई script मिली
+/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/run_daily.py:31: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  return dt.datetime.utcnow() + dt.timedelta(hours=5, minutes=30)
+  तुम्हारी script मिली — 5 lines → सीधे video

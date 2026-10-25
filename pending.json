@@ -1,104 +1,48 @@
 {
-  "sent_at": 1792916131,
+  "sent_at": 1792931852,
   "eps": [
     {
-      "topic": "अवधूत साठे पर सेबी की कार्रवाई",
-      "breaking": "सेबी ने शेयर गुरु पर लगाया 11.5 करोड़ का जुर्माना",
-      "source": "AajTak",
-      "hook_screen": "546 करोड़ रिफंड का आदेश!",
-      "tag_who": "वो दोस्त जो शेयर बाज़ार के टिप्स देता है",
-      "lines": [
-        {
-          "who": "bablu",
-          "say": "ट्रेडिंग गुरु से पांच सौ छियालीस करोड़ रिफंड कराएगा सेबी।",
-          "caption": "ट्रेडिंग गुरु से 546 करोड़ रिफंड कराएगा SEBI।",
-          "expr": "gambhir",
-          "visuals": [
-            "sebi office building india",
-            "stock market chart drop"
-          ],
-          "photo_hi": [
-            "सेबी मुख्यालय मुंबई",
-            "शेयर बाजार गिरावट ग्राफ"
-          ],
-          "set": "studio",
-          "topic": "अवधूत साठे पर सेबी की कार्रवाई"
-        },
-        {
-          "who": "chacha",
-          "say": "पैसा वापसी की योजना पक्की है। योजना बिना तारीख के है, सेबी।",
-          "caption": "पैसा वापसी की योजना पक्की है। योजना बिना तारीख के है, SEBI।",
-          "expr": "tanz",
-          "punch": true,
-          "stamp": "योजना पक्की है",
-          "visuals": [
-            "disappointed stock investor bench",
-            "empty wallet indian rupee"
-          ],
-          "photo_hi": [
-            "उदास शेयर निवेशक",
-            "खाली बटुआ भारतीय रुपया"
-          ],
-          "set": "village",
-          "topic": "अवधूत साठे पर सेबी की कार्रवाई"
-        }
-      ],
-      "caption_post": "ट्रेडिंग गुरु से 546 करोड़ रुपये रिफंड का आदेश! आपका पैसा शेयर बाज़ार में सुरक्षित है या टिप्स में? कमेंट में बताएं। स्रोत: AajTak #SEBI #StockMarket #TradingTips #AvadhutSathe #BakraNews",
-      "format": "explain",
-      "kind": "punch",
-      "label": "एक पंच",
-      "hook": "ट्रेडिंग गुरु से पांच सौ छियालीस करोड़ रिफंड कराएगा सेबी।",
-      "hook_text": "ट्रेडिंग गुरु से पांच सौ छियालीस करोड़ रिफंड कराएगा सेबी।",
-      "hook_short": "546 करोड़ रिफंड का आदेश!",
-      "hasi": "⚡ 22 शब्द (~8 सेकंड) | टैग: वो दोस्त जो शेयर बाज़ार के टिप्स देता है",
-      "trend": {
-        "score": 4,
-        "why": "5 अख़बार/चैनल 2 दिन में, 5 खबरें 7 दिन में"
-      },
-      "category": "[shopping-आदत]"
-    },
-    {
-      "khabar": "भोपाल में हथकड़ी पहने आरोपी का वायरल वीडियो",
-      "score": "9",
-      "topic": "भोपाल में हथकड़ी पहने आरोपी का वायरल वीडियो",
-      "category": "viral",
-      "breaking": "भोपाल कोर्ट बाहर हथकड़ी पहने आरोपी सिगरेट पीता दिखा",
-      "samaj": "हम वीआईपी कैदी",
-      "maang": "हमारी माँग: हर हथकड़ी के साथ लाइटर देना अनिवार्य करो!",
-      "twist": "तो सबको बता देंगे… सिगरेट आरोपी की नहीं, हवलदार साहब ने अपनी जेब से दी थी!",
-      "takiya": "पहले लाइटर, फिर जेल!",
-      "tag_who": "उस दोस्त को जो हर जगह वीआईपी ट्रीटमेंट ढूँढता है",
-      "source": "Navbharat Live, Dainik Bhaskar, Lalluram",
-      "ask": "क्या कैदियों को ऐसी सुविधाएं मिलनी चाहिए?",
+      "khabar": "ट्रेन के डिब्बे में यात्रियों का संगीतमय सफर",
+      "score": "8/10",
+      "topic": "ट्रेन में यात्रियों का ढोलक और हारमोनियम संग सफर",
+      "category": "travel",
+      "breaking": "ट्रेन कोच में यात्रियों ने ढोलक-हारमोनियम पर गाना गाया",
+      "samaj": "हम ख़ामोश मुसाफ़िर",
+      "maang": "हर स्लीपर कोच में ढोलक बजाने पर टैक्स लगाया जाए",
+      "twist": "ढोलक बजाने वाले अंकल बिना टिकट के ट्रेन में सफ़र कर रहे हैं",
+      "takiya": "टिकट दिखाओ, ढोलक नहीं!",
+      "tag_who": "उस दोस्त को जो बिना टिकट घूमता है",
+      "source": "Times Now Navbharat",
+      "ask": "क्या ट्रेन में ढोलक बजाना सही है?",
       "ticker": [
-        "भोपाल कोर्ट परिसर में पुलिस अभिरक्षा पर उठे सवाल",
-        "हथकड़ी पहने आरोपी का वीडियो सोशल मीडिया पर",
-        "सिगरेट और मोबाइल इस्तेमाल पर हुआ विवाद"
+        "ट्रेन में ढोलक-हारमोनियम के साथ महफ़िल जम गई",
+        "यात्रियों ने 'जान से गुजरते हैं' गाना गाकर मज़ा लिया",
+        "सोशल मीडिया पर ट्रेन संगीत का वीडियो वायरल"
       ],
       "lines": [
         {
           "who": "bablu",
           "beat": "hook",
-          "say": "हथकड़ी बंद करो, पुलिस वाले पहले आरोपी को चाय-नाश्ता कराओ!",
-          "caption": "हथकड़ी बंद करो, पुलिस वाले पहले आरोपी को चाय-नाश्ता कराओ!",
+          "say": "…और तभी ट्रेन के डिब्बे में यात्रियों ने ढोलक बजाना शुरू कर दिया!",
+          "caption": "…और तभी ट्रेन के डिब्बे में यात्रियों ने ढोलक बजाना शुरू कर दिया!",
           "visuals": [
-            "handcuffs on wrist close up",
-            "tea cup snacks court premises",
-            "police station entrance india"
+            "dholak playing inside indian train coach",
+            "passengers sitting in sleeper class train India",
+            "surprised passenger covering ears train"
           ],
           "photo_hi": [
-            "हथकड़ी पुलिस",
-            "भोपाल कोर्ट परिसर"
+            "ट्रेन के अंदर ढोलक",
+            "भारतीय रेल डिब्बा"
           ],
           "expr": "hairan",
           "sfx": "boom",
           "mood": "tension",
           "delivery": "बिल्कुल गंभीर, धीमा, हर शब्द पर ज़ोर — जैसे देश का सबसे बड़ा सवाल पूछ रहा हो",
-          "visual": "handcuffs on wrist close up",
+          "visual": "dholak playing inside indian train coach",
           "set": "studio",
           "punch": false,
           "big": "बड़ा सवाल",
-          "sub": "हम वीआईपी कैदी",
+          "sub": "हम ख़ामोश मुसाफ़िर",
           "card_color": [
             20,
             40,
@@ -110,22 +54,22 @@
         {
           "who": "bablu",
           "beat": "saboot",
-          "say": "भोपाल में पुलिस अभिरक्षा में आरोपी सिगरेट पीते और फ़ोन पर बतियाते पकड़ा गया!",
-          "caption": "भोपाल में पुलिस अभिरक्षा में आरोपी सिगरेट पीते और फ़ोन पर बतियाते पकड़ा गया!",
+          "say": "यात्रियों ने ट्रेन में ढोलक-हारमोनियम के साथ महफ़िल जमा ली!",
+          "caption": "यात्रियों ने ट्रेन में ढोलक-हारमोनियम के साथ महफ़िल जमा ली!",
           "visuals": [
-            "man smoking cigarette with handcuffs",
-            "bhopal court building exterior",
-            "policemen standing near accused"
+            "harmonium playing inside train compartment",
+            "group of passengers singing together train",
+            "train window view moving landscape"
           ],
           "photo_hi": [
-            "भोपाल हथकड़ी सिगरेट",
-            "पुलिस अभिरक्षा वायरल"
+            "ट्रेन में हारमोनियम",
+            "यात्री गाना गाते हुए"
           ],
           "expr": "gussa",
           "sfx": "whoosh",
           "mood": "tension",
           "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
-          "visual": "man smoking cigarette with handcuffs",
+          "visual": "harmonium playing inside train compartment",
           "set": "studio",
           "punch": false,
           "big": "सबूत नंबर 1",
@@ -141,23 +85,23 @@
         {
           "who": "chacha",
           "beat": "saboot",
-          "say": "और बात यहीं ख़त्म नहीं होती… हमारे ज़माने में सिपाही जी बीड़ी भी माँगकर पीते थे!",
-          "caption": "और बात यहीं ख़त्म नहीं होती… हमारे ज़माने में सिपाही जी बीड़ी भी माँगकर पीते थे!",
+          "say": "और बात यहीं ख़त्म नहीं होती… टीटीई साहब भी टिकट छोड़कर ताली बजाने लगे!",
+          "caption": "और बात यहीं ख़त्म नहीं होती… टीटीई साहब भी टिकट छोड़कर ताली बजाने लगे!",
           "visuals": [
-            "old indian policeman smoking bidi",
-            "vintage police station india",
-            "old man shaking head annoyed"
+            "indian railway TTE clapping inside coach",
+            "TTE black coat holding ticket chart smiling",
+            "crowd cheering inside train berth"
           ],
           "photo_hi": [
-            "पुरानी पुलिस बीड़ी",
-            "चाचा गुस्सा"
+            "टीटीई ताली बजाते हुए",
+            "ट्रेन का डिब्बा भीड़"
           ],
           "expr": "gussa",
           "sfx": "glitch",
           "mood": "tension",
           "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
-          "visual": "old indian policeman smoking bidi",
-          "set": "village",
+          "visual": "indian railway TTE clapping inside coach",
+          "set": "station",
           "punch": false,
           "big": "सबूत नंबर 2",
           "sub": "",
@@ -172,27 +116,27 @@
         {
           "who": "bablu",
           "beat": "maang",
-          "say": "हमारी माँग: हर हथकड़ी के साथ लाइटर देना अनिवार्य करो!",
-          "caption": "हमारी माँग: हर हथकड़ी के साथ लाइटर देना अनिवार्य करो!",
+          "say": "हमारी माँग: हर स्लीपर डिब्बे को साइलेंस ज़ोन घोषित करो!",
+          "caption": "हमारी माँग: हर स्लीपर डिब्बे को साइलेंस ज़ोन घोषित करो!",
           "visuals": [
-            "lighter sparking close up",
-            "handcuffs with key on table",
-            "official demand document stamp"
+            "silence zone sign board indian railway",
+            "passenger sleeping peacefully in berth",
+            "news anchor holding mic presenting demand"
           ],
           "photo_hi": [
-            "हथकड़ी लाइटर मांग",
-            "वीआईपी ट्रीटमेंट जेल"
+            "शांत क्षेत्र बोर्ड",
+            "ट्रेन बर्थ सोना"
           ],
-          "stamp": "लाइटर देना अनिवार्य!",
+          "stamp": "साइलेंस ज़ोन बनाओ!",
           "expr": "gussa",
           "sfx": "dhol",
           "mood": "masti",
           "delivery": "ऐलान की तरह, जोश में, जैसे संसद में भाषण",
-          "visual": "lighter sparking close up",
+          "visual": "silence zone sign board indian railway",
           "set": "studio",
           "punch": true,
           "big": "हमारी माँग",
-          "sub": "हमारी माँग: हर हथकड़ी के साथ",
+          "sub": "हर स्लीपर कोच में ढोलक बजाने",
           "card_color": [
             110,
             20,
@@ -204,23 +148,23 @@
         {
           "who": "bablu",
           "beat": "dhamki",
-          "say": "और अगर ये माँग नहीं मानी गई…",
-          "caption": "और अगर ये माँग नहीं मानी गई…",
+          "say": "और अगर ये गाना-बजाना बंद नहीं हुआ…",
+          "caption": "और अगर ये गाना-बजाना बंद नहीं हुआ…",
           "visuals": [
-            "news studio lights dimming",
-            "anchor staring intently into camera",
-            "dramatic pause face zoom"
+            "anchor warning gesture to camera",
+            "dramatic train horn sound visual blur",
+            "news studio anchor intense look"
           ],
           "photo_hi": [
-            "बबलू धमकी",
-            "बकरा बहस चेतावनी"
+            "एंकर गुस्सा",
+            "ट्रेन न्यूज़"
           ],
           "expr": "gambhir",
           "sfx": "tick",
           "mood": "tension",
           "delivery": "अचानक बहुत धीमा, रहस्य वाला, लगभग फुसफुसाते हुए",
           "pause_after": 0.5,
-          "visual": "news studio lights dimming",
+          "visual": "anchor warning gesture to camera",
           "set": "studio",
           "punch": true,
           "big": "चेतावनी!",
@@ -236,23 +180,23 @@
         {
           "who": "bablu",
           "beat": "twist",
-          "say": "तो सबको बता देंगे… सिगरेट आरोपी की नहीं, हवलदार साहब ने अपनी जेब से दी थी!",
-          "caption": "तो सबको बता देंगे… सिगरेट आरोपी की नहीं, हवलदार साहब ने अपनी जेब से दी थी!",
+          "say": "तो टीटीई को बता देंगे… ढोलक वाले अंकल बिना टिकट के सफ़र कर रहे हैं!",
+          "caption": "तो TTE को बता देंगे… ढोलक वाले अंकल बिना टिकट के सफ़र कर रहे हैं!",
           "visuals": [
-            "policeman taking cigarette out of pocket",
-            "police constable laughing court",
-            "shocked courtroom crowd face"
+            "TTE checking fine challan paper India",
+            "uncle holding dholak getting nervous face",
+            "without ticket fine receipt Indian railway"
           ],
           "photo_hi": [
-            "हवलदार की सिगरेट",
-            "पुलिस की पोल"
+            "बिना टिकट जुर्माना",
+            "टीटीई रसीद"
           ],
-          "stamp": "हवलदार की सिगरेट!",
+          "stamp": "बिना टिकट पकड़े गए!",
           "expr": "hairan",
           "sfx": "boom",
           "mood": "masti",
           "delivery": "धमाके से, जीत वाले अंदाज़ में, आख़िरी हिस्सा ज़ोर से",
-          "visual": "policeman taking cigarette out of pocket",
+          "visual": "TTE checking fine challan paper India",
           "set": "studio",
           "punch": true,
           "big": "बड़ा खुलासा!",
@@ -268,27 +212,27 @@
         {
           "who": "bablu",
           "beat": "takiya",
-          "say": "पहले लाइटर, फिर जेल!",
-          "caption": "पहले लाइटर, फिर जेल!",
+          "say": "टिकट दिखाओ, ढोलक नहीं!",
+          "caption": "टिकट दिखाओ, ढोलक नहीं!",
           "visuals": [
-            "jail lock icon graphics",
-            "anchor shouting microphone studio",
-            "bold text animation screen"
+            "indian railway ticket paper close up",
+            "dholak icon with cross mark",
+            "bakra news final anchor desk pose"
           ],
           "photo_hi": [
-            "पहले लाइटर फिर जेल",
-            "बकरा न्यूज़"
+            "रेलवे टिकट",
+            "बकरा न्यूज"
           ],
-          "stamp": "पहले लाइटर, फिर जेल!",
+          "stamp": "टिकट दिखाओ!",
           "expr": "gussa",
           "sfx": "thug",
           "mood": "masti",
           "delivery": "पूरी ताक़त से चिल्लाकर, मेज़ पर हाथ मारते हुए",
           "pause_after": 0.3,
-          "visual": "jail lock icon graphics",
+          "visual": "indian railway ticket paper close up",
           "set": "studio",
           "punch": true,
-          "big": "पहले लाइटर, फिर जेल!",
+          "big": "टिकट दिखाओ, ढोलक नहीं!",
           "sub": "",
           "card_color": [
             170,
@@ -299,7 +243,7 @@
           "insta": ""
         }
       ],
-      "caption_post": "हथकड़ी बंद करो, पुलिस वाले पहले आरोपी को चाय-नाश्ता कराओ! Tag करो उस दोस्त को जो हर जगह वीआईपी ट्रीटमेंट ढूँढता है। क्या कैदियों को ऐसी सुविधाएं मिलनी चाहिए? स्रोत: Navbharat Live, Dainik Bhaskar, Lalluram #BakraNews #Bakrabahas #BhopalPolice #VIPAccused #ViralVideo",
+      "caption_post": "…और तभी ट्रेन के डिब्बे में यात्रियों ने ढोलक बजाना शुरू कर दिया! Tag करो उसको जो बिना टिकट घूमता है | क्या ट्रेन में ढोलक बजाना सही है? स्रोत: Times Now Navbharat #BakraNews #BakraBahas #TrainSafar #IndianRailways #MusicalJourney (AI एंकर बबलू और चाचा)",
       "format": "rant",
       "label": "बकरा बहस",
       "icons": [
@@ -307,164 +251,541 @@
         "NEWS",
         "%"
       ],
-      "hook": "हथकड़ी बंद करो, पुलिस वाले पहले आरोपी को चाय-नाश्ता कराओ!",
-      "hook_text": "हथकड़ी बंद करो, पुलिस वाले पहले आरोपी को चाय-नाश्ता कराओ!",
+      "hook": "…और तभी ट्रेन के डिब्बे में यात्रियों ने ढोलक बजाना शुरू कर दिया!",
+      "hook_text": "…और तभी ट्रेन के डिब्बे में यात्रियों ने ढोलक बजाना शुरू कर दिया!",
       "poll": null,
       "key_word": "",
-      "cast_why": "समाज: हम वीआईपी कैदी | माँग: हमारी माँग: हर हथकड़ी के साथ लाइटर देना अनिवार्य करो!",
-      "_loose": true,
+      "cast_why": "समाज: हम ख़ामोश मुसाफ़िर | माँग: हर स्लीपर कोच में ढोलक बजाने पर टैक्स लगाया जाए",
       "trend": {
         "score": 3,
-        "why": "4 अख़बार/चैनल 2 दिन में, 4 खबरें 7 दिन में"
+        "why": "1 अख़बार/चैनल 2 दिन में, 5 खबरें 7 दिन में"
       },
-      "hasi": "टैग: उस दोस्त को जो हर जगह वीआईपी ट्रीटमेंट ढूँढता है | twist: तो सबको बता देंगे… सिगरेट आरोपी की नहीं, हवलदार साहब ने अपनी जेब से दी थी!"
+      "hasi": "टैग: उस दोस्त को जो बिना टिकट घूमता है | twist: ढोलक बजाने वाले अंकल बिना टिकट के ट्रेन में सफ़र कर रहे हैं",
+      "_loose": true
     },
     {
-      "topic": "अवधूत साठे पर सेबी की कार्रवाई",
-      "category": "[shopping-आदत]",
-      "breaking": "सेबी का बड़ा एक्शन: अवधूत साठे पर 11.5 करोड़ जुर्माना, 546 करोड़ रिफंड आदेश",
-      "hook_text": "बिना रजिस्ट्रेशन गुरु जी शेयर टिप बाँट रहे थे!",
-      "hook_screen": "बिना रजिस्ट्रेशन गुरुजी की टिप!",
-      "ask": "क्या आपने कभी किसी के कहने पर शेयर ख़रीदे हैं?",
-      "source": "AajTak, Jagran, Zee Business",
-      "poll": [
-        "पैसे वापस मिलेंगे",
-        "भूल जाओ पैसे"
-      ],
+      "khabar": "एमपी में कोचिंग सेंटरों के लिए नए नियम और पंजीयन",
+      "score": "9/10",
+      "topic": "एमपी कोचिंग नियम और वेबसाइट फीस विवरण",
+      "category": "rules",
+      "breaking": "मध्य प्रदेश में कोचिंग सेंटरों का 3 साल में पंजीयन नवीनीकरण अनिवार्य",
+      "samaj": "हम बैकबेंचर छात्र",
+      "maang": "बैकबेंचरों के लिए कोचिंग फीस पर अस्सी प्रतिशत डिस्काउंट मिले",
+      "twist": "मास्टर जी की अपनी दसवीं की मार्कशीट में गणित में ग्रेस नंबर हैं",
+      "takiya": "फीस घटाओ, रिन्यूअल बाद में!",
+      "tag_who": "उस दोस्त को जो बैकबेंचर है",
+      "source": "Amar Ujala, Jagran, Dainik Bhaskar",
+      "ask": "क्या कोचिंग की फीस वेबसाइट पर दिखनी चाहिए?",
       "ticker": [
-        "अवधूत साठे और एएसटीपीएल पर साढ़े ग्यारह करोड़ जुर्माना",
-        "निवेशकों के साढ़े पाँच सौ करोड़ रुपये रिफंड करने के आदेश",
-        "बिना सेबी रजिस्ट्रेशन शेयर बाजार टिप्स देने पर गिरी गाज़"
+        "एमपी में कोचिंग का हर 3 साल में रजिस्ट्रेशन ज़रूरी",
+        "वेबसाइट पर देनी होगी फीस और शिक्षकों की जानकारी",
+        "कोचिंग में सीसीटीवी और काउंसलिंग अनिवार्य"
       ],
-      "cast_why": "शेयर बाज़ार में रईस बनने के सपने बनाम सेबी की सख़्ती",
-      "tag_who": "वो दोस्त जो रील्स देखकर शेयर बाज़ार का ज्ञान दे",
       "lines": [
         {
-          "who": "ramesh",
-          "say": "बिना रजिस्ट्रेशन गुरु जी शेयर टिप बाँट रहे थे!",
-          "caption": "बिना रजिस्ट्रेशन गुरु जी शेयर टिप बाँट रहे थे!",
-          "expr": "gussa",
-          "set": "village",
+          "who": "bablu",
+          "beat": "hook",
+          "say": "कोचिंग वाले बनाम बैकबेंचर, क्या यह रजिस्ट्रेशन की नई नौटंकी है?",
+          "caption": "कोचिंग वाले बनाम बैकबेंचर, क्या यह रजिस्ट्रेशन की नई नौटंकी है?",
           "visuals": [
-            "stock market chart screen",
-            "man stressed looking at laptop",
-            "trading desk view"
+            "indian coaching center classroom students",
+            "angry student in indian classroom",
+            "coaching board outside coaching institute India"
           ],
           "photo_hi": [
-            "शेयर बाजार गिरावट",
-            "ट्रेडिंग मोबाइल ऐप"
+            "कोचिंग क्लासरूम भारत",
+            "छात्र पढ़ाई करते हुए"
           ],
-          "visual": "stock market chart screen",
+          "expr": "hairan",
+          "sfx": "boom",
+          "mood": "tension",
+          "delivery": "बिल्कुल गंभीर, धीमा, हर शब्द पर ज़ोर — जैसे देश का सबसे बड़ा सवाल पूछ रहा हो",
+          "visual": "indian coaching center classroom students",
+          "set": "studio",
+          "punch": false,
+          "big": "बड़ा सवाल",
+          "sub": "हम बैकबेंचर छात्र",
+          "card_color": [
+            20,
+            40,
+            110
+          ],
           "scene": "studio",
-          "punch": false,
           "insta": ""
         },
         {
           "who": "bablu",
-          "say": "सेबी ने अवधूत साठे पर ग्यारह करोड़ जुर्माना ठोका… पाँच सौ करोड़ रिफंड करो!",
-          "caption": "सेबी ने अवधूत साठे पर ₹11.5 करोड़ जुर्माना ठोका… ₹546 करोड़ रिफंड का आदेश!",
-          "expr": "gambhir",
+          "beat": "saboot",
+          "say": "एमपी में कोचिंग वालों को हर 3 साल में रजिस्ट्रेशन रिन्यू कराना होगा!",
+          "caption": "MP में कोचिंग वालों को हर 3 साल में रजिस्ट्रेशन रिन्यू कराना होगा!",
+          "visuals": [
+            "madhya pradesh government office building",
+            "official registration document seal India",
+            "teacher writing on blackboard India"
+          ],
+          "photo_hi": [
+            "सरकारी दस्तावेज स्टैंप",
+            "टीचर ब्लैकबोर्ड"
+          ],
+          "expr": "gussa",
+          "sfx": "whoosh",
+          "mood": "tension",
+          "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
+          "visual": "madhya pradesh government office building",
           "set": "studio",
-          "visuals": [
-            "sebi office building mumbai",
-            "financial documents table",
-            "calculator and money stack"
-          ],
-          "photo_hi": [
-            "सेबी कार्रवाई आदेश",
-            "अवधूत साठे एएसटीपीएल"
-          ],
-          "card": {
-            "tag": "सेबी का बड़ा फ़ैसला",
-            "big": "₹546 करोड़",
-            "sub": "रिफंड करने का आदेश",
-            "icon": "rupee"
-          },
-          "visual": "sebi office building mumbai",
-          "scene": "card",
           "punch": false,
-          "insta": ""
-        },
-        {
-          "who": "chacha",
-          "say": "टिप गुरुजी की मुफ़्त थी, पर फ़ीस भारी पड़ गई।",
-          "caption": "टिप गुरुजी की मुफ़्त थी, पर फ़ीस भारी पड़ गई।",
-          "expr": "tanz",
-          "set": "village",
-          "visuals": [
-            "old man shaking head",
-            "rupees notes counting",
-            "newspaper financial news"
+          "big": "सबूत नंबर 1",
+          "sub": "",
+          "card_color": [
+            12,
+            60,
+            120
           ],
-          "photo_hi": [
-            "शेयर बाजार नुकसान",
-            "निवेशक परेशान"
-          ],
-          "visual": "old man shaking head",
           "scene": "chacha",
-          "punch": false,
           "insta": ""
         },
         {
-          "who": "pinky",
-          "say": "जैसे रील्स देखकर दोस्त रईस बनने की स्कीम समझाए।",
-          "caption": "जैसे रील्स देखकर दोस्त रईस बनने की स्कीम समझाए।",
-          "expr": "hasi",
-          "set": "room",
+          "who": "ramesh",
+          "beat": "saboot",
+          "say": "और बात यहीं ख़त्म नहीं होती… मास्टर जी को वेबसाइट पर फीस भी लिखनी पड़ेगी!",
+          "caption": "और बात यहीं ख़त्म नहीं होती… मास्टर जी को वेबसाइट पर फीस भी लिखनी पड़ेगी!",
           "visuals": [
-            "girl holding phone laughing",
-            "social media finance video screen",
-            "piggy bank sitting table"
+            "typing on laptop website fees India",
+            "shocked student looking at computer screen",
+            "indian teacher explaining fees"
           ],
           "photo_hi": [
-            "सोशल मीडिया ट्रेंड",
-            "यंग इन्वेस्टर भारत"
+            "कंप्यूटर पर फीस",
+            "परेशान छात्र"
           ],
-          "tag": true,
-          "tag_screen": "वो दोस्त जो रातों-रात अमीर बनाए",
-          "visual": "girl holding phone laughing",
-          "scene": "pinky",
+          "expr": "gussa",
+          "sfx": "glitch",
+          "mood": "tension",
+          "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
+          "visual": "typing on laptop website fees India",
+          "set": "village",
           "punch": false,
-          "insta": "",
-          "tag_text": "वो दोस्त जो रातों-रात अमीर बनाए"
+          "big": "सबूत नंबर 2",
+          "sub": "",
+          "card_color": [
+            12,
+            60,
+            120
+          ],
+          "scene": "chacha",
+          "insta": ""
         },
         {
           "who": "bablu",
-          "say": "सेबी ने कहा, रजिस्ट्रेशन ज़रूरी है। बिना रजिस्ट्रेशन सिर्फ़ जुर्माना मिलता है।",
-          "caption": "सेबी ने कहा, रजिस्ट्रेशन ज़रूरी है। बिना रजिस्ट्रेशन सिर्फ़ जुर्माना मिलता है।",
-          "expr": "gambhir",
-          "set": "studio",
+          "beat": "maang",
+          "say": "हमारी माँग: बैकबेंचरों के लिए कोचिंग फीस में अस्सी प्रतिशत सब्सिडी मिले!",
+          "caption": "हमारी माँग: बैकबेंचरों के लिए कोचिंग फीस में 80% सब्सिडी मिले!",
           "visuals": [
-            "gavel striking sound block",
-            "sebi official seal logo",
-            "stock market trading board"
+            "student protest banner India",
+            "indian students standing together",
+            "calculator showing discount percentage"
           ],
           "photo_hi": [
-            "सेबी रजिस्ट्रेशन नियम",
-            "शेयर बाजार ब्रोकर"
+            "छात्र विरोध प्रदर्शन",
+            "रुपये की बचत"
           ],
+          "stamp": "80% फीस डिस्काउंट!",
+          "expr": "gussa",
+          "sfx": "dhol",
+          "mood": "masti",
+          "delivery": "ऐलान की तरह, जोश में, जैसे संसद में भाषण",
+          "visual": "student protest banner India",
+          "set": "studio",
           "punch": true,
-          "stamp": "सलाह… बिना काग़ज़!",
-          "visual": "gavel striking sound block",
+          "big": "हमारी माँग",
+          "sub": "बैकबेंचरों के लिए कोचिंग फीस पर",
+          "card_color": [
+            110,
+            20,
+            40
+          ],
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "dhamki",
+          "say": "और अगर ये माँग पूरी नहीं हुई…",
+          "caption": "और अगर ये माँग पूरी नहीं हुई…",
+          "visuals": [
+            "serious anchor pointing at camera",
+            "dramatic shadow face close up",
+            "mic close up news studio"
+          ],
+          "photo_hi": [
+            "न्यूज एंकर गंभीर",
+            "माइक क्लोज अप"
+          ],
+          "expr": "gambhir",
+          "sfx": "tick",
+          "mood": "tension",
+          "delivery": "अचानक बहुत धीमा, रहस्य वाला, लगभग फुसफुसाते हुए",
+          "pause_after": 0.5,
+          "visual": "serious anchor pointing at camera",
+          "set": "studio",
+          "punch": true,
+          "big": "चेतावनी!",
+          "sub": "",
+          "card_color": [
+            40,
+            10,
+            15
+          ],
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "twist",
+          "say": "तो सबको बता देंगे… सर की अपनी दसवीं की मार्कशीट में गणित में ग्रेस नंबर थे!",
+          "caption": "तो सबको बता देंगे… सर की अपनी 10वीं की मार्कशीट में गणित में ग्रेस नंबर थे!",
+          "visuals": [
+            "old indian marksheet paper",
+            "failing marks close up red pen",
+            "embarrassed teacher face India"
+          ],
+          "photo_hi": [
+            "पुरानी मार्कशीट",
+            "गणित में नंबर"
+          ],
+          "stamp": "गणित में ग्रेस नंबर!",
+          "expr": "hairan",
+          "sfx": "boom",
+          "mood": "masti",
+          "delivery": "धमाके से, जीत वाले अंदाज़ में, आख़िरी हिस्सा ज़ोर से",
+          "visual": "old indian marksheet paper",
+          "set": "studio",
+          "punch": true,
+          "big": "बड़ा खुलासा!",
+          "sub": "",
+          "card_color": [
+            170,
+            20,
+            30
+          ],
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "takiya",
+          "say": "फीस घटाओ, रिन्यूअल बाद में!",
+          "caption": "फीस घटाओ, रिन्यूअल बाद में!",
+          "visuals": [
+            "angry student shouting banner",
+            "coaching board close up",
+            "news anchor striking desk"
+          ],
+          "photo_hi": [
+            "फीस माफी बैनर",
+            "न्यूज स्टूडियो"
+          ],
+          "stamp": "फीस घटाओ!",
+          "expr": "gussa",
+          "sfx": "thug",
+          "mood": "masti",
+          "delivery": "पूरी ताक़त से चिल्लाकर, मेज़ पर हाथ मारते हुए",
+          "pause_after": 0.3,
+          "visual": "angry student shouting banner",
+          "set": "studio",
+          "punch": true,
+          "big": "फीस घटाओ, रिन्यूअल बाद में!",
+          "sub": "",
+          "card_color": [
+            170,
+            20,
+            30
+          ],
           "scene": "studio_end",
           "insta": ""
         }
       ],
-      "caption_post": "बिना रजिस्ट्रेशन गुरु जी शेयर टिप बाँट रहे थे! Tag करो उसको जो रील्स देखकर शेयर बाज़ार समझाए! क्या आपने भी टिप पर पैसे गंवाए हैं? कमेंट करें। स्रोत: AajTak, Jagran, Zee Business #SEBI #AvadhutSathe #StockMarket #BakraNews #Satire (AI से बने किरदार)",
-      "format": "explain",
-      "label": "काम की खबर",
-      "key_word": "",
+      "caption_post": "कोचिंग वाले बनाम बैकबेंचर, क्या यह रजिस्ट्रेशन की नई नौटंकी है? Tag करो उसको जो बैकबेंचर है | क्या कोचिंग की फीस वेबसाइट पर दिखनी चाहिए? स्रोत: Amar Ujala, Jagran, Dainik Bhaskar #BakraNews #BakraBahas #CoachingRules #MPNews #Backbenchers (AI एंकर बबलू और रमेश)",
+      "format": "rant",
+      "label": "बकरा बहस",
       "icons": [
         "₹",
         "NEWS",
         "%"
       ],
-      "hook": "बिना रजिस्ट्रेशन गुरु जी शेयर टिप बाँट रहे थे!",
-      "hook_short": "बिना रजिस्ट्रेशन गुरुजी की टिप!",
+      "hook": "कोचिंग वाले बनाम बैकबेंचर, क्या यह रजिस्ट्रेशन की नई नौटंकी है?",
+      "hook_text": "कोचिंग वाले बनाम बैकबेंचर, क्या यह रजिस्ट्रेशन की नई नौटंकी है?",
+      "poll": null,
+      "key_word": "",
+      "cast_why": "समाज: हम बैकबेंचर छात्र | माँग: बैकबेंचरों के लिए कोचिंग फीस पर अस्सी प्रतिशत डिस्काउंट मिले",
+      "_loose": true,
       "trend": {
-        "score": 4,
-        "why": "5 अख़बार/चैनल 2 दिन में, 5 खबरें 7 दिन में"
-      }
+        "score": 6,
+        "why": "14 अख़बार/चैनल 2 दिन में, 22 खबरें 7 दिन में"
+      },
+      "hasi": "टैग: उस दोस्त को जो बैकबेंचर है | twist: मास्टर जी की अपनी दसवीं की मार्कशीट में गणित में ग्रेस नंबर हैं"
+    },
+    {
+      "khabar": "हैदराबाद के छात्र ने मां के जन्मदिन पर बनाया मिनी रोबोट",
+      "score": "9/10",
+      "topic": "दसवीं के छात्र ने माँ के लिए रोबोट बनाया",
+      "category": "tech",
+      "breaking": "हैदराबाद में दसवीं के छात्र ने माँ के लिए रोबोट बनाया",
+      "samaj": "हम नॉर्मल औलाद",
+      "maang": "माँ के जन्मदिन पर रोबोटिक गिफ्ट देने पर रोक लगे",
+      "twist": "रोबोट बनाने वाले भाई साहब का फ़िज़िक्स में कंपार्टमेंट आया था",
+      "takiya": "प्यार दिखाओ, मशीन नहीं!",
+      "tag_who": "उस दोस्त को जो पढ़ाई में कमज़ोर है",
+      "source": "India TV Hindi, AajTak",
+      "ask": "क्या आपने कभी माँ को कोई अनोखा गिफ्ट दिया?",
+      "ticker": [
+        "हैदराबाद के 10वीं के छात्र का अनोखा कारनामा",
+        "माँ के जन्मदिन पर मिनी रोबोट बनाकर दिया कार्ड",
+        "सोशल मीडिया पर रोबोटिक गिफ्ट की चर्चा"
+      ],
+      "lines": [
+        {
+          "who": "bablu",
+          "beat": "hook",
+          "say": "रोबोट बनाना बंद करो, हाथ से ग्रीटिंग कार्ड बनाना शुरू करो!",
+          "caption": "रोबोट बनाना बंद करो, हाथ से ग्रीटिंग कार्ड बनाना शुरू करो!",
+          "visuals": [
+            "mini robot moving cable wires India",
+            "handmade birthday card indian mother",
+            "angry student shouting at robot"
+          ],
+          "photo_hi": [
+            "छोटा रोबोट भारत",
+            "ग्रीटिंग कार्ड"
+          ],
+          "expr": "hairan",
+          "sfx": "boom",
+          "mood": "tension",
+          "delivery": "बिल्कुल गंभीर, धीमा, हर शब्द पर ज़ोर — जैसे देश का सबसे बड़ा सवाल पूछ रहा हो",
+          "visual": "mini robot moving cable wires India",
+          "set": "studio",
+          "punch": false,
+          "big": "बड़ा सवाल",
+          "sub": "हम नॉर्मल औलाद",
+          "card_color": [
+            20,
+            40,
+            110
+          ],
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "saboot",
+          "say": "हैदराबाद में दसवीं के छात्र ने रोबोट से माँ को जन्मदिन कार्ड भेजा!",
+          "caption": "हैदराबाद में 10वीं के छात्र ने रोबोट से माँ को जन्मदिन कार्ड भेजा!",
+          "visuals": [
+            "small ropeway robot holding greeting card",
+            "indian mother smiling receiving card",
+            "school boy controlling robot with remote"
+          ],
+          "photo_hi": [
+            "रोबोट ग्रीटिंग कार्ड",
+            "भारतीय मां और बेटा"
+          ],
+          "expr": "gussa",
+          "sfx": "whoosh",
+          "mood": "tension",
+          "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
+          "visual": "small ropeway robot holding greeting card",
+          "set": "studio",
+          "punch": false,
+          "big": "सबूत नंबर 1",
+          "sub": "",
+          "card_color": [
+            12,
+            60,
+            120
+          ],
+          "scene": "pinky",
+          "insta": ""
+        },
+        {
+          "who": "pinky",
+          "beat": "saboot",
+          "say": "और बात यहीं ख़त्म नहीं होती… मेरी मम्मी अब मुझे रोबोट बनने को कह रही हैं!",
+          "caption": "और बात यहीं ख़त्म नहीं होती… मेरी मम्मी अब मुझे रोबोट बनने को कह रही हैं!",
+          "visuals": [
+            "indian mother scolding teenage daughter",
+            "sad teen girl sweeping floor India",
+            "newspaper clipping boy robot mother"
+          ],
+          "photo_hi": [
+            "मां की डांट",
+            "परेशान लड़की"
+          ],
+          "expr": "gussa",
+          "sfx": "glitch",
+          "mood": "tension",
+          "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
+          "visual": "indian mother scolding teenage daughter",
+          "set": "aangan",
+          "punch": false,
+          "big": "सबूत नंबर 2",
+          "sub": "",
+          "card_color": [
+            12,
+            60,
+            120
+          ],
+          "scene": "pinky",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "maang",
+          "say": "हमारी माँग: जन्मदिन पर रोबोटिक गिफ्ट्स पर राष्ट्रीय प्रतिबंध लगे!",
+          "caption": "हमारी माँग: जन्मदिन पर रोबोटिक गिफ्ट्स पर राष्ट्रीय प्रतिबंध लगे!",
+          "visuals": [
+            "banned red mark on robot icon",
+            "protest banner against robots India",
+            "anchor raising hand on TV news"
+          ],
+          "photo_hi": [
+            "रोबोट बैन पोस्टर",
+            "विरोध प्रदर्शन"
+          ],
+          "stamp": "रोबोट पर बैन!",
+          "expr": "gussa",
+          "sfx": "dhol",
+          "mood": "masti",
+          "delivery": "ऐलान की तरह, जोश में, जैसे संसद में भाषण",
+          "visual": "banned red mark on robot icon",
+          "set": "studio",
+          "punch": true,
+          "big": "हमारी माँग",
+          "sub": "माँ के जन्मदिन पर रोबोटिक गिफ्ट",
+          "card_color": [
+            110,
+            20,
+            40
+          ],
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "dhamki",
+          "say": "और अगर ये रोबोट बंद नहीं हुआ…",
+          "caption": "और अगर ये रोबोट बंद नहीं हुआ…",
+          "visuals": [
+            "close up anchor mysterious eye gaze",
+            "studio light dimming transition",
+            "hand slamming desk background"
+          ],
+          "photo_hi": [
+            "एंकर गंभीर चेहरा",
+            "न्यूज एंकर स्टूडियो"
+          ],
+          "expr": "gambhir",
+          "sfx": "tick",
+          "mood": "tension",
+          "delivery": "अचानक बहुत धीमा, रहस्य वाला, लगभग फुसफुसाते हुए",
+          "pause_after": 0.5,
+          "visual": "close up anchor mysterious eye gaze",
+          "set": "studio",
+          "punch": true,
+          "big": "चेतावनी!",
+          "sub": "",
+          "card_color": [
+            40,
+            10,
+            15
+          ],
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "twist",
+          "say": "तो चाची को बता देंगे… रोबोट वाले भाई साहब का फ़िज़िक्स में कंपार्टमेंट आया था!",
+          "caption": "तो चाची को बता देंगे… रोबोट वाले भाई साहब का फ़िज़िक्स में कंपार्टमेंट आया था!",
+          "visuals": [
+            "report card with compartment stamp India",
+            "shocked indian aunt reaction close up",
+            "school physics textbook on desk"
+          ],
+          "photo_hi": [
+            "रिजल्ट कार्ड कंपार्टमेंट",
+            "भौतिकी किताब"
+          ],
+          "stamp": "फ़िज़िक्स में कंपार्टमेंट!",
+          "expr": "hairan",
+          "sfx": "boom",
+          "mood": "masti",
+          "delivery": "धमाके से, जीत वाले अंदाज़ में, आख़िरी हिस्सा ज़ोर से",
+          "visual": "report card with compartment stamp India",
+          "set": "studio",
+          "punch": true,
+          "big": "बड़ा खुलासा!",
+          "sub": "",
+          "card_color": [
+            170,
+            20,
+            30
+          ],
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "takiya",
+          "say": "प्यार दिखाओ, मशीन नहीं!",
+          "caption": "प्यार दिखाओ, मशीन नहीं!",
+          "visuals": [
+            "hand drawn red heart card",
+            "anchor pointing thumb down to robot",
+            "bakra news screen sign off logo"
+          ],
+          "photo_hi": [
+            "हाथ से बना कार्ड",
+            "बकरा न्यूज"
+          ],
+          "stamp": "प्यार दिखाओ!",
+          "expr": "gussa",
+          "sfx": "thug",
+          "mood": "masti",
+          "delivery": "पूरी ताक़त से चिल्लाकर, मेज़ पर हाथ मारते हुए",
+          "pause_after": 0.3,
+          "visual": "hand drawn red heart card",
+          "set": "studio",
+          "punch": true,
+          "big": "प्यार दिखाओ, मशीन नहीं!",
+          "sub": "",
+          "card_color": [
+            170,
+            20,
+            30
+          ],
+          "scene": "studio_end",
+          "insta": ""
+        }
+      ],
+      "caption_post": "रोबोट बनाना बंद करो, हाथ से ग्रीटिंग कार्ड बनाना शुरू करो! Tag करो उसको जो पढ़ाई में कमज़ोर है | क्या आपने कभी माँ को कोई अनोखा गिफ्ट दिया? स्रोत: India TV Hindi, AajTak #BakraNews #BakraBahas #HyderabadStudent #RobotGift #NormalAulad (AI एंकर बबलू और पिंकी)",
+      "format": "rant",
+      "label": "बकरा बहस",
+      "icons": [
+        "₹",
+        "NEWS",
+        "%"
+      ],
+      "hook": "रोबोट बनाना बंद करो, हाथ से ग्रीटिंग कार्ड बनाना शुरू करो!",
+      "hook_text": "रोबोट बनाना बंद करो, हाथ से ग्रीटिंग कार्ड बनाना शुरू करो!",
+      "poll": null,
+      "key_word": "",
+      "cast_why": "समाज: हम नॉर्मल औलाद | माँग: माँ के जन्मदिन पर रोबोटिक गिफ्ट देने पर रोक लगे",
+      "_loose": true,
+      "trend": {
+        "score": 3,
+        "why": "1 अख़बार/चैनल 2 दिन में, 5 खबरें 7 दिन में"
+      },
+      "hasi": "टैग: उस दोस्त को जो पढ़ाई में कमज़ोर है | twist: रोबोट बनाने वाले भाई साहब का फ़िज़िक्स में कंपार्टमेंट आया था"
     }
   ]
 }
