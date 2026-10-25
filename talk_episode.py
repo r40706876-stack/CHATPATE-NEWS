@@ -112,24 +112,16 @@ def prep(script_path):
         # intro/outro जैसी lines (न खोज, न खबर) पर नई तस्वीर नहीं — पिछली चलती रहती है (वरना बेमेल फ़ोटो आती थी)
     if ep["lines"]:                                            # पहली line (hook) पर हमेशा तस्वीर — पहला सेकंड ही सब तय करता है
         ep["lines"][0]["_need_vis"] = ep["lines"][0].get("shot") != "close"
-    got = visuals.pick_for_lines(ep["lines"], topic=ep.get("breaking") or ep.get("topic", ""),
-                                 strict=True)                    # बिना AI जाँच कोई तस्वीर नहीं (cartoon/model वाली ग़लती)
-    for i, paths in got.items():
-        for j, path in enumerate(paths):
-            shutil.copy(path, IN / f"broll/{i}_{j}{Path(path).suffix}")
-            if Path(path).with_suffix(".txt").exists():          # photo वाले का नाम (CC license)
-                shutil.copy(Path(path).with_suffix(".txt"), IN / f"broll/{i}_{j}.txt")
     if not ep.get("no_clips"):                                 # असली खबर के छोटे video clips (पहले सेकंड में हरकत)
         try:
             import clips
             topic = ep.get("topic") or ep.get("breaking", "")
-            # YouTube is a fallback for dialogue lines without a verified photo.
+            # YouTube is the first-choice visual for every dialogue.
             # Keep the search bounded; clips.for_topic checks video frames with
             # Gemini and rejects clips it cannot visually verify.
-            missing = [i for i in range(len(ep["lines"]))
-                       if not any((IN / "broll").glob(f"{i}_*"))]
+            missing = [i for i, ln in enumerate(ep["lines"]) if ln.get("_need_vis", True)]
             used_titles = set()
-            for i in missing[:6]:
+            for i in missing:
                 ln = ep["lines"][i]
                 hints = list(ln.get("photo_hi") or [])
                 queries = hints[:2] or [ln.get("say", "")[:65]]
@@ -156,6 +148,19 @@ def prep(script_path):
                     break
         except Exception as e:                                 # noqa: BLE001
             print("  clips वाला हिस्सा छोड़ा:", repr(e)[:150])
+    # Second choice: only visually reviewed news images for lines without clips.
+    photo_lines = [dict(ln, _need_vis=ln.get("_need_vis", True) and
+                        not any((IN / "broll").glob(f"{i}_clip*")))
+                   for i, ln in enumerate(ep["lines"])]
+    got = visuals.pick_for_lines(photo_lines, topic=ep.get("breaking") or ep.get("topic", ""),
+                                 strict=True)
+    for i, paths in got.items():
+        if any((IN / "broll").glob(f"{i}_clip*")):
+            continue
+        for j, path in enumerate(paths):
+            shutil.copy(path, IN / f"broll/{i}_{j}{Path(path).suffix}")
+            if Path(path).with_suffix(".txt").exists():
+                shutil.copy(Path(path).with_suffix(".txt"), IN / f"broll/{i}_{j}.txt")
     fill_sets(ep)
     json.dump(ep, open(IN / "episode.json", "w", encoding="utf-8"), ensure_ascii=False)
     sprite_lips = ep.get("sprite") and ep.get("lips", "sadtalker") == "sprite"
