@@ -227,6 +227,18 @@ views मिले; "खबर पढ़ने" से शुरू होने
 हर line पिछली से एक सीढ़ी ज़्यादा बेतुकी, और अलग ढाँचे की (सवाल, भड़ास, तुलना, मुहर, callback). कोई line सिर्फ़ अगली line
 को सेट करने के लिए नहीं — हर line में अपना मज़ा."""
 
+COMEDY_FORMAT_BRIEF = """बकरा न्यूज़ के तीन प्रयोग योग्य कॉमेडी formats (हर episode में सिर्फ़ एक, खबर का तथ्य वही):
+1) news_roast: सत्यापित खबर → चाचा का बेतुका मगर relatable आत्मविश्वास → पिंकी की तीखी काट → सबसे बड़ा callback.
+2) character_clash: खबर पर बबलू की छोटी line → चाचा-पिंकी की असली बहस, हर जवाब पिछले जवाब को पलटे; अलग-अलग jokes नहीं.
+3) reverse_punch: खबर के एक अनोखे पहलू से शुरू → दर्शक का अनुमान बने → आखिरी line उसे अप्रत्याशित मगर समझ आने वाले तरीके से उलट दे.
+चुनाव खबर के हिसाब से करो; news_roast को प्राथमिकता, बाकी दोनों को भी test करने दो. episode में \"comedy_format\" लिखो.
+पहली बोली गई line में ही खबर का स्पष्ट संकेत और मजाक हो. 0-2 sec में उसी खबर की फोटो/clip या relevant character reaction;
+अगली line में कोई लंबा explanation नहीं. हर 3-5 sec में जवाब या visual बदलना चाहिए; लेकिन बिना वजह meme और whoosh मत ठूँसो.
+Visual searches में headline के ठोस nouns, location और event लिखो; unrelated stock photo को real event का प्रमाण मत बनाओ.
+एक line का punch दूसरे से जुड़ा हो. 2-3 किरदार, तैयार expressions और sets; वस्तु उठाने या complex action पर निर्भर मजाक नहीं.
+मात्र लंबाई घटाने से viral नहीं होता; 10% skip / 90% retention लक्ष्य हैं, गारंटी नहीं.
+"""
+
 RETENTION_BRIEF = """लेखकीय निर्देश (लक्ष्य हैं, नतीजों की गारंटी नहीं):
 - 10% skip और 90% average percentage viewed प्रयोग के लक्ष्य हैं। खुद को 10/10 लिखकर पास मत करो।
 - एक सत्यापित खबर, एक समझ आने वाला टकराव। बबलू/चाचा/पिंकी/दादी में ज़रूरत के 2-3 किरदार।
@@ -290,7 +302,7 @@ def prompt_write(packs, bank=None):
 {raw}
 {STRUCTURE}
 
-{RETENTION_BRIEF}
+{RETENTION_BRIEF}\n\n{COMEDY_FORMAT_BRIEF}
 
 {SATIRE}
 
@@ -308,7 +320,7 @@ def prompt_write(packs, bank=None):
 सिर्फ़ JSON — हर खबर का एक episode:
 [{{"topic": "...", "category": "money/rules/bank/jobs/scheme/tech/travel/civic/other", "breaking": "6-9 शब्द, सच्ची headline",
   "hook_text": "पहली line हूबहू", "hook_screen": "≤ 5 शब्द, पहले 2 सेकंड screen पर (बोली गई line का सबसे चौंकाने वाला हिस्सा)", "ask": "...", "source": "प्रकाशकों के नाम", "poll": ["2-4 शब्द", "2-4 शब्द"], "ticker": ["...", "...", "..."],
-  "cast_why": "इन किरदारों में टकराव क्या है, एक लाइन", "tag_who": "किस पहचाने जाने वाले इंसान पर चोट है",
+  "comedy_format": "news_roast/character_clash/reverse_punch", "cast_why": "इन किरदारों में टकराव क्या है, एक लाइन", "tag_who": "किस पहचाने जाने वाले इंसान पर चोट है",
   "lines": [{{"who": "ramesh", "say": "...", "caption": "...", "expr": "gussa", "set": "station", "visuals": ["...", "...", "..."], "photo_hi": ["...", "..."]}},
             {{"who": "bablu", "say": "...", "caption": "...", "expr": "gambhir", "set": "studio", "visuals": ["...", "...", "..."], "photo_hi": ["...", "..."],
               "card": {{"tag": "...", "big": "...", "sub": "...", "icon": "train"}}}},
