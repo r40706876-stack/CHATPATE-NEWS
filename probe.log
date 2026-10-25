@@ -1,192 +1,206 @@
-Fri Oct 23 17:24:31 UTC 2026
-deno: /home/runner/.deno/bin/deno
-  YT_COOKIES: 22 cookies
-ytsearch stdout: {"id": "jio ipo", "title": "jio ipo", "_type": "playlist", "entries": [{"_type": "url", "ie_key": "Youtube", "id": "OTgONlscQXU", "url": "https://www.youtube.com/watch?v=OTgONlscQXU", "title": "JIO IP | stderr: 
-  YT_COOKIES: 22 cookies
-ytsearchdate stdout: null  | stderr: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate3" (requests, urllib, websockets)
-
-बिना cookies stdout: {"id": "jio ipo", "title": "jio ipo", "_type": "playlist", "entries": [{"_type": "url", "ie_key": "Youtube", "id": "OTgONlscQXU", "url": "https://www.youtube.com/watch?v=OTgONlscQXU", "title": "JIO IP | stderr: 
-yt-dlp version: 2026.10.21
-
-  YT_COOKIES: 22 cookies
+Sun Oct 25 11:54:56 UTC 2026
   YT_COOKIES: 22 cookies
   YT_COOKIES: 22 cookies  YT_COOKIES: 22 cookies
 
   YT_COOKIES: 22 cookies
   YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate3" (requests, urllib, websockets)
   YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate3" (requests, urllib, websockets)
+  Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
+    Gemini gemini-flash-latest: 82s
+  ↷ ye_kya_ho_raha: पूरा dialogue नहीं मिला — Harsh beniwal - Yeh kya ho gaya meme template down | None
   YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate3" (requests, urllib, websockets)
+    Gemini gemini-3.5-flash: 5s
+  ↷ ye_kya_ho_raha: पूरा dialogue नहीं मिला — Yeh kya ho gaya meme template | Harsh Beniwal | None
   YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate3" (requests, urllib, websockets)
+    Gemini gemini-3.5-flash: 3s
+  ↷ kya_kar_raha_hai: पूरा dialogue नहीं मिला — Bhai kya kar raha hai tu meme template, Ashneer gr | None
   YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate3" (requests, urllib, websockets)
-  YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate3" (requests, urllib, websockets)
-  YT_COOKIES: 22 cookies
-  YT_COOKIES: 22 cookies
-  YT_COOKIES: 22 cookies
-  YT_COOKIES: 22 cookies
+    Gemini gemini-3.5-flash: 4s
+  ✅ na_ho_payega: 2.8s "बेटा तुमसे ना हो पाएगा" — Tumse na ho payega | meme | No copyright
   YT_COOKIES: 22 cookies
   YT_COOKIES: 22 cookies
+    सब models busy — 40s रुककर दोबारा
+    Gemini gemini-3.5-flash: 6s
+    key 1 का कोटा ख़त्म → key 2
+  Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
+  ✅ ye_kya_ho_raha: 1.9s "ये क्या हो रहा है" — Ye Kya Ho Raha Hai Meme Template (Arpit 
   YT_COOKIES: 22 cookies
-  🔊 sfx_sad_violin: Sad Violin - Sound Effect (HD)
-  🔊 sfx_crowd_laugh: Crowd Laughing - Sound Effect (HD)
-  🔊 sfx_vine_boom: Vine boom sound effect
-  🔊 sfx_bruh: Bruh Sound Effect
-  🔊 sfx_dun_dun: DUN DUN DUNNNNN!! | (SOUND EFFECT)DOWNLOAD
-  🔊 sfx_record_scratch: Record Disc Scratch - Sound Effect
-  YT_COOKIES: 22 cookies  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+    Gemini gemini-3.5-flash: 4s
+  ✅ kehna_kya_chahte: 2.7s "अरे कहना क्या चाहते हो" — Arey Kehna Kya Chahte Ho Meme Template
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+    Gemini gemini-flash-latest: 32s
+  ✅ rasode_mein: 2.0s "रसोड़े में कौन था" — Rasode mei kon tha # memes templates vid
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+    Gemini gemini-3.5-flash: 5s
+  ↷ kya_kar_raha_hai: पूरा dialogue नहीं मिला — bhai kya kar raha hai tu shark tank meme template  | None
+  YT_COOKIES: 22 cookies
+    Gemini gemini-3.5-flash: 3s
+    Gemini gemini-3.5-flash: 3s
+  ↷ kya_kar_raha_hai: पूरा dialogue नहीं मिला — Bhai kya kar raha hai tu meme template Green scree | None
+  ❌ kya_kar_raha_hai: पूरा dialogue किसी video में नहीं मिला (5 नतीजे)
+  YT_COOKIES: 22 cookies
+  ✅ paisa_hi_paisa: 2.6s "पैसा ही पैसा होगा" — Akshay Kumar famous dialogue | Paisa hi 
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+    Gemini gemini-flash-latest: 20s
+  ✅ ye_baburao_style: 3.2s "ये बाबूराव का स्टाइल है" — Ye Baburao ka style hai 😎Meme Template  
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+    Gemini gemini-flash-latest: 14s
+    Gemini gemini-flash-latest: 81s
+  ✅ mogambo_khush: 3.0s "मोगैम्बो खुश हुआ" — Mogembo khush hua || Meme template||
+  YT_COOKIES: 22 cookies
+  ✅ utha_le_re_baba: 1.2s "उठा ले रे बाबा" — utha le re baba Hera Pheri meme template
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+    Gemini gemini-flash-latest: 25s
+  ✅ picture_baaki: 5.8s "पिक्चर अभी बाकी है मेरे दोस्त" — PICTURE ABHI BAKI HAI MERE DOST MEME TEM
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+    Gemini gemini-3.5-flash: 6s
+  ↷ jor_jor_se: पूरा dialogue नहीं मिला — Zor zor se bolke logo ko scheme bata de Meme Templ | None
+  YT_COOKIES: 22 cookies
+    Gemini gemini-flash-latest: 43s
+  ↷ bahut_hard: पूरा dialogue नहीं मिला — Bahut Hard Memes for download | None
+  YT_COOKIES: 22 cookies
+    Gemini gemini-flash-latest: 4s
+  ↷ aaj_khush_honge: पूरा dialogue नहीं मिला — Aaj Khush To Bohot Hoge Tum dialogue | Ludo | Netf | None
+  YT_COOKIES: 22 cookies
+    Gemini gemini-3.5-flash: 3s
+  ↷ bahut_hard: पूरा dialogue नहीं मिला — Mein Kya Kar Sakta Hu Meme Template HD | None
+  YT_COOKIES: 22 cookies
+    Gemini gemini-3.5-flash: 15s
+  ✅ aaj_khush_honge: 4.0s "आज खुश तो बहुत होगे तुम" — Aaj Khush to bahut hoge Tum || Amitabh B
+  YT_COOKIES: 22 cookies
+    Gemini gemini-flash-latest: 43s
+  ↷ jor_jor_se: पूरा dialogue नहीं मिला — Jor jor se bol kar logo ko Skemia bhta de meme cli | None
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+    Gemini gemini-3.6-flash: 11s
+  ✅ ye_dukh_kahe: 3.0s "साला ये दुख काहे खतम नहीं होता बे" — Samay ye dukh kahe khatam nahi hota hai 
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+    सब models busy — 40s रुककर दोबारा
+    Gemini gemini-flash-latest: 81s
+  ↷ jor_jor_se: पूरा dialogue नहीं मिला — ZOR ZOR SE BOLKE LOGO KO SCHEME BATA DE MEME TEMPL | None
+  ❌ jor_jor_se: पूरा dialogue किसी video में नहीं मिला (5 नतीजे)
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+    Gemini gemini-3.5-flash: 7s
+  ✅ bahut_hard: 1.6s "बहुत हार्ड" — Attitude meme😈| attitude meme template|a
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+    Gemini gemini-3.5-flash: 4s
+  ↷ mujhe_pata_tha: पूरा dialogue नहीं मिला — Mein Kya Kar Sakta Hu Meme Template HD | None
+  YT_COOKIES: 22 cookies
+    Gemini gemini-3.6-flash: 8s
+    Gemini gemini-3.5-flash: 4s
+  ↷ mujhe_pata_tha: पूरा dialogue नहीं मिला — Ye kaise ho gaya meme | Arpit Bala Shocked | Arpit | None
+  YT_COOKIES: 22 cookies
+  ✅ ruko_zara: 2.9s "अरे रुको ज़रा सबर करो" — Ruko Zara Sabar Karo Meme Template | ash
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+    Gemini gemini-3.6-flash: 3s
+  ↷ mujhe_pata_tha: पूरा dialogue नहीं मिला — Mujhe pata tha yeh hona hai 😂🤣 | None
+  ❌ mujhe_pata_tha: पूरा dialogue किसी video में नहीं मिला (4 नतीजे)
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+    key 2 का कोटा ख़त्म → key 3
+  Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
+    Gemini gemini-3.6-flash: 3s
+  ↷ bas_kar_pagle: पूरा dialogue नहीं मिला — Are bas kar rulayega kya meme template download |  | None
+  YT_COOKIES: 22 cookies
+    Gemini gemini-flash-latest: 65s
+  ↷ ab_tera_kya_hoga: पूरा dialogue नहीं मिला — TERA KYA HOGA KALIA(NO COPYRIGHT) | None
+  YT_COOKIES: 22 cookies
+    सब models busy — 40s रुककर दोबारा
+    Gemini gemini-3.6-flash: 5s
+  ↷ tension_lene_ka: पूरा dialogue नहीं मिला — Tension nai lene ka apun hai na meme template 🤗720 | None
+  YT_COOKIES: 22 cookies
+    Gemini gemini-3.5-flash: 8s
+  ↷ bas_kar_pagle: पूरा dialogue नहीं मिला — Bus kar ab rulayega kya 🥹 | Meme template | Munna  | None
+  YT_COOKIES: 22 cookies
+    Gemini gemini-3.5-flash: 5s
+  ↷ ab_tera_kya_hoga: पूरा dialogue नहीं मिला — Main To Mar Jaunga Par Tera Kya Hoga Kaliya | aksh | None
+  YT_COOKIES: 22 cookies
+    Gemini gemini-3.5-flash: 4s
+  ↷ bas_kar_pagle: पूरा dialogue नहीं मिला — arey bas kar rulayega kya | Meme template | No cop | None
+  ❌ bas_kar_pagle: पूरा dialogue किसी video में नहीं मिला (5 नतीजे)
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+    Gemini gemini-3.5-flash: 4s
+  ↷ ab_tera_kya_hoga: पूरा dialogue नहीं मिला — Gabbar ab Tera Kya Hoga Kaliya | None
+  ❌ ab_tera_kya_hoga: पूरा dialogue किसी video में नहीं मिला (5 नतीजे)
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+    Gemini gemini-3.5-flash: 6s
+  ↷ ek_baar_commitment: पूरा dialogue नहीं मिला — Ek baar jo maine commitment kar di to main apni aa | (0.0, 7.52325, 'एक बार जो मैंने कमिटमेंट कर दी उसके बाद तो मैं खुद की भी नहीं सुनता')
+  YT_COOKIES: 22 cookies
+    Gemini gemini-3.5-flash: 4s
+  ↷ tension_lene_ka: पूरा dialogue नहीं मिला — Tension dene ka Lene ka nahi | None
+  YT_COOKIES: 22 cookies
+    Gemini gemini-3.5-flash: 7s
+  ↷ ek_baar_commitment: पूरा dialogue नहीं मिला — 3 movie dialogue ek baar jo maine commitment kar d | (12.040000000000001, 19.5, 'एक बार जो मैंने कमिटमेंट कर दी उसके बाद तो मैं खुद की भी नहीं सुनता')
+  YT_COOKIES: 22 cookies
+    Gemini gemini-3.5-flash: 3s
+  ↷ tension_lene_ka: पूरा dialogue नहीं मिला — Tension Nahi Lene ka Baba | None
+  ❌ tension_lene_ka: पूरा dialogue किसी video में नहीं मिला (4 नतीजे)
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+    Gemini gemini-3.5-flash: 3s
+  ↷ main_kya_karu: पूरा dialogue नहीं मिला — Mai kya kroo Job Chhod du.. 😂| Abhishek upmanyu st | None
+  YT_COOKIES: 22 cookies
+    Gemini gemini-3.5-flash: 4s
+    Gemini gemini-3.5-flash: 14s
+  ✅ main_kya_karu: 3.9s "मैं क्या करूँ फिर जॉब छोड़ दूँ" — Mai Kya Karu Job Chod Du (meme template)
+  YT_COOKIES: 22 cookies
+  ✅ bilkul_ricks_nahi: 4.9s "बिल्कुल रीक्स नहीं लेने का" — Bilkul Risk nahi leneka | Babu Rao meme
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+  YT_COOKIES: 22 cookies
+    Gemini gemini-3.5-flash: 4s
+  ↷ haan_main_pagal: पूरा dialogue नहीं मिला — Me pagal hu rajpal yadav memes hungama | None
+  YT_COOKIES: 22 cookies
+    Gemini gemini-3.5-flash: 7s
+  ↷ haan_main_pagal: पूरा dialogue नहीं मिला — Main pagal hu🤤😃😃😃 funny memes | None
+  YT_COOKIES: 22 cookies
+    Gemini gemini-3.5-flash: 14s
+  ↷ ek_baar_commitment: पूरा dialogue नहीं मिला — Ek Baar Jo maine comittment kardi | Salman Khan |  | None
+  ❌ ek_baar_commitment: पूरा dialogue किसी video में नहीं मिला (5 नतीजे)
+    Gemini gemini-3.5-flash: 4s
+  ↷ haan_main_pagal: पूरा dialogue नहीं मिला — Mein Kya Kar Sakta Hu Meme Template HD | None
+  ❌ haan_main_pagal: पूरा dialogue किसी video में नहीं मिला (4 नतीजे)
+    Gemini gemini-3.5-flash: 10s
+  ✅ achha_theek_hai: 3.2s "अच्छा ठीक है" — Okey samaj gya | Puneet Superstar | Meme
 
-  YT_COOKIES: 22 cookies  YT_COOKIES: 22 cookies
-  YT_COOKIES: 22 cookies
-
-  YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
-  YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
-  YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
-  YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearch) ख़ाली: ERROR: '/tmp/yt_cookies.txt' does not look like a Netscape format cookies file
-  ❌ ye_kya_ho_raha: नहीं मिला (0 नतीजे)
-  YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
-  YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
-  YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
-  YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
-  YT_COOKIES: 22 cookies
-  YT_COOKIES: 22 cookies
-  YT_COOKIES: 22 cookies
-  YT_COOKIES: 22 cookies
-  YT_COOKIES: 22 cookies
-  YT_COOKIES: 22 cookies
-  YT_COOKIES: 22 cookies
-  ✅ kya_kar_raha_hai: bhai kya kar raha hai tu shark tank meme template | asneer g — 10-X GAMERZ
-  YT_COOKIES: 22 cookies
-  ✅ utha_le_re_baba: utha le re baba Hera Pheri meme templates — Noob Memer
-  YT_COOKIES: 22 cookies
-  ✅ rasode_mein: Rasode mei kon tha # memes templates video — NEW DANK MEMES
-  YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
-  YT_COOKIES: 22 cookies
-  ✅ paisa_hi_paisa: Akshay Kumar famous dialogue | Paisa hi paisa hoga #memes — Music Mp3✔
-  YT_COOKIES: 22 cookies
-  ✅ na_ho_payega: Tumse na ho payega | meme | No copyright | — Everything's for Free
-  YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
-  YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
-  YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
-  YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
-  YT_COOKIES: 22 cookies
-  ✅ kehna_kya_chahte: Arey Kehna Kya Chahte Ho Meme Template — Fiction
-  YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
-  YT_COOKIES: 22 cookies
-  YT_COOKIES: 22 cookies
-  YT_COOKIES: 22 cookies
-  YT_COOKIES: 22 cookies
-  YT_COOKIES: 22 cookies
-  YT_COOKIES: 22 cookies
-  YT_COOKIES: 22 cookies
-  ✅ ye_baburao_style: Ye Baburao ka style hai 😎Meme Template    With Download Link — Memes Rock Clips
-  YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
-  YT_COOKIES: 22 cookies
-  ✅ mogambo_khush: Mogembo khush hua || Meme template|| — Meme Templates By Abid
-  YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
-  YT_COOKIES: 22 cookies
-  ✅ picture_baaki: PICTURE ABHI BAKI HAI MERE DOST MEME TEMPLATE | SHAH RUKH KH — Cringee
-  YT_COOKIES: 22 cookies
-  YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
-  YT_COOKIES: 22 cookies
-  ✅ bahut_hard: Mein Kya Kar Sakta Hu Meme Template HD — Meme Templates HQ
-  YT_COOKIES: 22 cookies
-  YT_COOKIES: 22 cookies
-  ✅ jor_jor_se: Zor zor se bolke logo ko scheme bata de Meme Template for ed — Efx Capital
-  YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
-  YT_COOKIES: 22 cookies
-  YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
-  YT_COOKIES: 22 cookies
-  YT_COOKIES: 22 cookies
-  YT_COOKIES: 22 cookies
-  ✅ aaj_khush_honge: Aaj Khush To Bohot Hoge Tum dialogue | Ludo | Netflix — Allauddin Mitra
-  YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
-  YT_COOKIES: 22 cookies
-  YT_COOKIES: 22 cookies
-  ✅ ye_dukh_kahe: Sala ye dukh kahe khatam nahi hota be | Meme Template | Maza — Mazak Masti Memes
-  YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
-  YT_COOKIES: 22 cookies
-  ✅ mujhe_pata_tha: Mujhe pata tha yeh hona hai 😂🤣 — Haris Star
-  YT_COOKIES: 22 cookies
-  ✅ bas_kar_pagle: Are bas kar rulayega kya meme template download | mformemez — Meme template videos
-  YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
-  YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
-  YT_COOKIES: 22 cookies
-  YT_COOKIES: 22 cookies
-  YT_COOKIES: 22 cookies
-  YT_COOKIES: 22 cookies
-  ✅ ruko_zara: Ruko Zara Sabar Karo Meme Template | ashish chanchlani Versi — Remix Zone
-  YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
-  YT_COOKIES: 22 cookies
-  ✅ ye_toh_bada_toing: The Amul Macho Orangutan TVC featuring Sana Khan. — littlelambfilms
-  YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
-  YT_COOKIES: 22 cookies
-  YT_COOKIES: 22 cookies
-  YT_COOKIES: 22 cookies
-  ✅ tension_lene_ka: Tension nai lene ka apun hai na meme template 🤗720p LINK 👇👇  — MEMES FAMOUS
-  YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
-  YT_COOKIES: 22 cookies
-  YT_COOKIES: 22 cookies
-  ✅ naam_to_suna: Name Tu suna hi hoga Rahul deshwal Civil engineer — Rahul Singh
-  YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
-  YT_COOKIES: 22 cookies
-  ✅ ab_tera_kya_hoga: TERA KYA HOGA KALIA(NO COPYRIGHT) — FUNNY PUBG VIDEO🤣🤣
-  YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
-  YT_COOKIES: 22 cookies
-  YT_COOKIES: 22 cookies
-  ✅ bilkul_ricks_nahi: Bilkul Risk nahi leneka | Babu Rao meme — Mi Neve
-  YT_COOKIES: 22 cookies
-  ✅ thapad_se_darr: Thappad se darr nahi lagta sahab, hazard se lagta hai! #boll — Vikaki - Reimagining EHS
-  YT_COOKIES: 22 cookies
-  YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
-  YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
-  YT_COOKIES: 22 cookies
-  ✅ ek_baar_commitment: Ek baar jo maine commitment kar di to main apni aap ki bhi n — Everything's for Free
-  YT_COOKIES: 22 cookies
-  YouTube खोज (ytsearchdate) ख़ाली: ERROR: Unable to handle request: Unsupported url scheme: "ytsearchdate4" (requests, urllib, websockets)
-  YT_COOKIES: 22 cookies
-  YT_COOKIES: 22 cookies
-  YT_COOKIES: 22 cookies
-  ✅ kuch_bhi: Kuch bhi | meme template | Arnab goswami | Kuch bhi kuch bhi — FurU Ke MemeS
-  YT_COOKIES: 22 cookies
-  ✅ wah_kya_scene: Wah kya scene hai | Meme template | Modi | FurU Ke MemeS — FurU Ke MemeS
-  ✅ mazak_hai_kya: majak chal raha hai kya 😁😁 — Manjeet Singh
-  ✅ main_kya_karu: Mai Kya Karu Job Chod Du (meme template) — Memes Hai Kya?
-  ✅ achha_theek_hai: Okey samaj gya | Puneet Superstar | Meme Template | Acha Thi — All Easy
-  ✅ haan_main_pagal: Me pagal hu rajpal yadav memes hungama — Valsur Dharmesh ꗇ
-memes बने: 35 / 36 (128s)
-Fri Oct 23 17:26:39 UTC 2026
+पूरे dialogue वाले memes: 16 / 24  (894s)
+✅ na_ho_payega 2.76 | बेटा तुमसे ना हो पाएगा | Tumse na ho payega | meme | No copyright |
+❌ kya_kar_raha_hai None |  | 
+✅ ye_kya_ho_raha 1.92 | ये क्या हो रहा है | Ye Kya Ho Raha Hai Meme Template (Arpit Bala)
+✅ rasode_mein 2.0 | रसोड़े में कौन था | Rasode mei kon tha # memes templates video
+✅ kehna_kya_chahte 2.72 | अरे कहना क्या चाहते हो | Arey Kehna Kya Chahte Ho Meme Template
+✅ utha_le_re_baba 1.2 | उठा ले रे बाबा | utha le re baba Hera Pheri meme templates
+✅ paisa_hi_paisa 2.6 | पैसा ही पैसा होगा | Akshay Kumar famous dialogue | Paisa hi paisa hoga
+✅ ye_baburao_style 3.24 | ये बाबूराव का स्टाइल है | Ye Baburao ka style hai 😎Meme Template    With Dow
+❌ jor_jor_se None |  | 
+✅ mogambo_khush 3.02 | मोगैम्बो खुश हुआ | Mogembo khush hua || Meme template||
+✅ picture_baaki 5.75 | पिक्चर अभी बाकी है मेरे दोस्त | PICTURE ABHI BAKI HAI MERE DOST MEME TEMPLATE | SH
+✅ bahut_hard 1.61 | बहुत हार्ड | Attitude meme😈| attitude meme template|attitude me
+✅ aaj_khush_honge 3.97 | आज खुश तो बहुत होगे तुम | Aaj Khush to bahut hoge Tum || Amitabh Bacchan || 
+✅ ye_dukh_kahe 2.96 | साला ये दुख काहे खतम नहीं होता बे | Samay ye dukh kahe khatam nahi hota hai bey #short
+❌ bas_kar_pagle None |  | 
+❌ mujhe_pata_tha None |  | 
+✅ ruko_zara 2.88 | अरे रुको ज़रा सबर करो | Ruko Zara Sabar Karo Meme Template | ashish chanch
+❌ tension_lene_ka None |  | 
+❌ ab_tera_kya_hoga None |  | 
+✅ bilkul_ricks_nahi 4.95 | बिल्कुल रीक्स नहीं लेने का | Bilkul Risk nahi leneka | Babu Rao meme
+❌ ek_baar_commitment None |  | 
+✅ main_kya_karu 3.92 | मैं क्या करूँ फिर जॉब छोड़ दूँ | Mai Kya Karu Job Chod Du (meme template)
+❌ haan_main_pagal None |  | 
+✅ achha_theek_hai 3.24 | अच्छा ठीक है | Okey samaj gya | Puneet Superstar | Meme Template 
+Sun Oct 25 12:09:50 UTC 2026
