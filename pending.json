@@ -1,104 +1,104 @@
 {
-  "sent_at": 1792904762,
+  "sent_at": 1792914877,
   "eps": [
     {
-      "topic": "त्योहारों पर रेलकर्मियों की छुट्टी पर बैन",
-      "breaking": "त्योहारों पर रेलकर्मियों की छुट्टी पर रोक",
-      "source": "Navbharat Times",
-      "hook_screen": "छुट्टियों पर लगा पूर्ण बैन",
-      "tag_who": "वो दोस्त जो दीवाली पर छुट्टी माँग रहा था",
+      "topic": "शेयर गुरु पर सेबी का चाबुक",
+      "breaking": "गुरुजी को लौटाने होंगे ₹546 करोड़",
+      "source": "आजतक, मनीकंट्रोल हिंदी",
+      "hook_screen": "लौटाने होंगे ₹546 करोड़",
+      "tag_who": "वो दोस्त जो रोज़ शेयर टिप्स देता है",
       "lines": [
         {
           "who": "bablu",
-          "say": "त्योहारों पर रेलकर्मियों की छुट्टियों पर बैन लग गया।",
-          "caption": "त्योहारों पर रेलकर्मियों की छुट्टियों पर बैन लग गया।",
+          "say": "शेयर गुरु पांच सौ छियालीस करोड़ रुपये लौटाएंगे।",
+          "caption": "शेयर गुरु ₹546.17 करोड़ लौटाएंगे।",
           "expr": "gambhir",
           "visuals": [
-            "railway staff working station festive rush",
-            "train crowded platform holiday season"
+            "stock market ticker red drop",
+            "rupee cash stack"
           ],
           "photo_hi": [
-            "रेलवे कर्मचारी प्लेटफॉर्म भीड़",
-            "त्योहारों पर ट्रेन स्टेशन"
+            "शेयर बाजार गिरावट",
+            "रुपये के नोट"
           ],
           "set": "studio",
-          "topic": "त्योहारों पर रेलकर्मियों की छुट्टी पर बैन"
+          "topic": "शेयर गुरु पर सेबी का चाबुक"
         },
         {
           "who": "chacha",
-          "say": "विभाग ने साफ़ किया है, काम चालू रहेगा… फ़िलहाल टाइम पर सिर्फ़ छुट्टियाँ हैं।",
-          "caption": "विभाग ने साफ़ किया है, काम चालू रहेगा… फ़िलहाल टाइम पर सिर्फ़ छुट्टियाँ हैं।",
+          "say": "सलाह से अमीर बनने की गारंटी सिर्फ़ सलाह देने वाले की थी... शेयर गुरु।",
+          "caption": "सलाह से अमीर बनने की गारंटी सिर्फ़ सलाह देने वाले की थी... शेयर गुरु।",
           "expr": "tanz",
           "punch": true,
-          "stamp": "छुट्टियाँ टाइम पर",
+          "stamp": "सलाह की गारंटी",
           "visuals": [
-            "frustrated railway worker looking at notice board",
-            "busy railway station office"
+            "elderly man sipping tea",
+            "stock broker office outside"
           ],
           "photo_hi": [
-            "रेलवे दफ़्तर नोटिस बोर्ड",
-            "ट्रेन दफ़्तर काम"
+            "चाय पीता बुज़ुर्ग",
+            "दफ़्तर का बोर्ड"
           ],
-          "set": "station",
-          "topic": "त्योहारों पर रेलकर्मियों की छुट्टी पर बैन"
+          "set": "village",
+          "topic": "शेयर गुरु पर सेबी का चाबुक"
         }
       ],
-      "caption_post": "त्योहारों पर रेलवे स्टाफ़ की छुट्टियाँ कैंसिल! आपकी छुट्टी मंज़ूर हुई या रिजेक्ट? स्रोत: Navbharat Times #RailwayNews #FestiveSeason #BakraNews #Satire",
+      "caption_post": "शेयर गुरु पांच सौ छियालीस करोड़ रुपये लौटाएंगे। आपकी गाढ़ी कमाई की टिप कौन दे रहा है? स्रोत: आजतक, मनीकंट्रोल हिंदी #StockMarket #SEBI #Trading #BakraNews (AI से बने किरदार)",
       "format": "explain",
       "kind": "punch",
       "label": "एक पंच",
-      "hook": "त्योहारों पर रेलकर्मियों की छुट्टियों पर बैन लग गया।",
-      "hook_text": "त्योहारों पर रेलकर्मियों की छुट्टियों पर बैन लग गया।",
-      "hook_short": "छुट्टियों पर लगा पूर्ण बैन",
-      "hasi": "⚡ 23 शब्द (~9 सेकंड) | टैग: वो दोस्त जो दीवाली पर छुट्टी माँग रहा था",
+      "hook": "शेयर गुरु पांच सौ छियालीस करोड़ रुपये लौटाएंगे।",
+      "hook_text": "शेयर गुरु पांच सौ छियालीस करोड़ रुपये लौटाएंगे।",
+      "hook_short": "लौटाने होंगे ₹546 करोड़",
+      "hasi": "⚡ 22 शब्द (~8 सेकंड) | टैग: वो दोस्त जो रोज़ शेयर टिप्स देता है",
       "trend": {
         "score": 6,
-        "why": "11 अख़बार/चैनल 2 दिन में, 36 खबरें 7 दिन में"
+        "why": "10 अख़बार/चैनल 2 दिन में, 10 खबरें 7 दिन में"
       },
-      "category": "[दफ़्तर-नौकरी]"
+      "category": "[shopping-आदत]"
     },
     {
-      "khabar": "धनतेरस पर भारी बजट के सपने और आखिर में चम्मच की खरीदारी",
-      "score": "9",
-      "topic": "धनतेरस पर सोने के दाम गिरे पर बजट चम्मच तक सीमित",
-      "category": "festival",
-      "breaking": "धनतेरस पर सोना हुआ सस्ता, पैन कार्ड नियम लागू हुआ",
-      "samaj": "हम सोने के खरीदार",
-      "maang": "हमारी माँग: हर चम्मच के साथ दस ग्राम सोना मुफ़्त दो!",
-      "twist": "तो सबको बता देंगे… मम्मी की सोने की चूड़ी असल में पीतल की है!",
-      "takiya": "पहले सोना, फिर चम्मच!",
-      "tag_who": "उस दोस्त को जो धनतेरस पर सिर्फ़ चम्मच खरीदता है",
-      "source": "ETV Bharat, News18 Hindi, Amar Ujala",
-      "ask": "क्या आपने भी धनतेरस पर सिर्फ़ चम्मच खरीदा?",
+      "khabar": "हथकड़ी में आरोपी ने सिगरेट के कश खींचकर की मोबाइल पर बात",
+      "score": "10",
+      "topic": "पुलिस हिरासत में वीआईपी खातिरदारी और सिगरेट के छल्ले",
+      "category": "rules",
+      "breaking": "भोपाल जिला अदालत के बाहर कस्टडी में सिगरेट पीता दिखा आरोपी",
+      "samaj": "हम शरीफ़ और आम नागरिक",
+      "maang": "हमारी माँग: कस्टडी में सिगरेट और लाइटर सप्लाई करने वालों पर कार्रवाई हो!",
+      "twist": "तो सबको बता देंगे… पुलिस वाले सिगरेट का पैकेट आरोपी के पैसों से मँगवाए थे!",
+      "takiya": "कानून चलाओ, सिगरेट नहीं!",
+      "tag_who": "उस दोस्त को जो पुलिस के नाम से ही डरता है",
+      "source": "नवभारत लाइव, दैनिक भास्कर, यशभारत, लल्लूराम",
+      "ask": "क्या पुलिस कस्टडी का ये वीडियो आपने देखा?",
       "ticker": [
-        "सोना 4796 रुपये हुआ सस्ता",
-        "चांदी के भाव 16503 रुपये तक गिरे",
-        "बड़ा सोना खरीदने पर पैन कार्ड हुआ अनिवार्य"
+        "भोपाल कोर्ट परिसर के बाहर आरोपी की वीआईपी स्टाइल का वीडियो वायरल",
+        "हथकड़ी पहने आरोपी ने सिगरेट पी और मोबाइल पर बात की",
+        "पुलिस की कार्यप्रणाली पर उठे गंभीर सवाल"
       ],
       "lines": [
         {
           "who": "bablu",
           "beat": "hook",
-          "say": "सोना खरीदने वालो, क्या तुम्हारी अलमारी सिर्फ़ चम्मचों का गोदाम है?",
-          "caption": "सोना खरीदने वालो, क्या तुम्हारी अलमारी सिर्फ़ चम्मचों का गोदाम है?",
+          "say": "हथकड़ी पहनकर वीआईपी टौशन दिखाना बंद करो!",
+          "caption": "हथकड़ी पहनकर वीआईपी टौशन दिखाना बंद करो!",
           "visuals": [
-            "indian utensil shop steel spoons display",
-            "person opening kitchen drawer filled with spoons",
-            "gold jewellery shop display window india"
+            "handcuffs on accused hands close up metal shining",
+            "court building entry gate india police van",
+            "man smoking cigarette stylish pose smoke ring"
           ],
           "photo_hi": [
-            "धनतेरस बर्तन दुकान बर्तन",
-            "स्टील चम्मच रसोई घर"
+            "हथकड़ी आरोपी",
+            "कोर्ट परिसर"
           ],
           "expr": "hairan",
           "sfx": "boom",
           "mood": "tension",
           "delivery": "बिल्कुल गंभीर, धीमा, हर शब्द पर ज़ोर — जैसे देश का सबसे बड़ा सवाल पूछ रहा हो",
-          "visual": "indian utensil shop steel spoons display",
+          "visual": "handcuffs on accused hands close up metal shining",
           "set": "studio",
           "punch": false,
           "big": "बड़ा सवाल",
-          "sub": "हम सोने के खरीदार",
+          "sub": "हम शरीफ़ और आम नागरिक",
           "card_color": [
             20,
             40,
@@ -110,22 +110,22 @@
         {
           "who": "bablu",
           "beat": "saboot",
-          "say": "सोना चार हज़ार सात सौ सस्ता हुआ, फिर भी हमने चम्मच खरीदा!",
-          "caption": "सोना 4,796 रुपये सस्ता हुआ, फिर भी हमने चम्मच खरीदा!",
+          "say": "भोपाल में कस्टडी में आरोपी सिगरेट पीते और फ़ोन पर बात करते पकड़ा गया!",
+          "caption": "भोपाल में कस्टडी में आरोपी सिगरेट पीते और फ़ोन पर बात करते पकड़ा गया!",
           "visuals": [
-            "gold price drop news banner television",
-            "indian family buying steel spoon at market",
-            "cashier taking money for small steel utensil"
+            "bhopal district court board entrance gate",
+            "accused holding smartphone talking handcuffed hands",
+            "police constable standing near prisoner casual"
           ],
           "photo_hi": [
-            "सोना सस्ता धनतेरस खबर",
-            "धनतेरस स्टील चम्मच खरीद"
+            "भोपाल जिला कोर्ट",
+            "पुलिस कस्टडी"
           ],
           "expr": "gussa",
           "sfx": "whoosh",
           "mood": "tension",
           "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
-          "visual": "gold price drop news banner television",
+          "visual": "bhopal district court board entrance gate",
           "set": "studio",
           "punch": false,
           "big": "सबूत नंबर 1",
@@ -136,437 +136,28 @@
             120
           ],
           "scene": "chacha",
-          "insta": ""
-        },
-        {
-          "who": "ramesh",
-          "beat": "saboot",
-          "say": "और बात यहीं ख़त्म नहीं होती… पैन कार्ड माँगते ही पापा ने चम्मच थाम ली!",
-          "caption": "और बात यहीं ख़त्म नहीं होती… पैन कार्ड माँगते ही पापा ने चम्मच थाम ली!",
-          "visuals": [
-            "jeweller asking for pan card indian customer",
-            "father sweating holding pan card in hand",
-            "shopkeeper handing small steel spoon"
-          ],
-          "photo_hi": [
-            "सर्राफा बाजार पैन कार्ड नियम",
-            "पापा दुकान पर परेशान"
-          ],
-          "expr": "gussa",
-          "sfx": "glitch",
-          "mood": "tension",
-          "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
-          "visual": "jeweller asking for pan card indian customer",
-          "set": "aangan",
-          "punch": false,
-          "big": "सबूत नंबर 2",
-          "sub": "",
-          "card_color": [
-            12,
-            60,
-            120
-          ],
-          "scene": "chacha",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "beat": "maang",
-          "say": "हमारी माँग: हर चम्मच के साथ दस ग्राम सोना मुफ़्त दो!",
-          "caption": "हमारी माँग: हर चम्मच के साथ 10 ग्राम सोना मुफ़्त दो!",
-          "visuals": [
-            "steel spoon placed next to gold coin",
-            "protest banner outside jewellery showroom",
-            "angry indian customer shouting at counter"
-          ],
-          "photo_hi": [
-            "चम्मच और सोना सिक्का",
-            "दुकानदार से बहस ग्राहक"
-          ],
-          "stamp": "दस ग्राम सोना मुफ़्त!",
-          "expr": "gussa",
-          "sfx": "dhol",
-          "mood": "masti",
-          "delivery": "ऐलान की तरह, जोश में, जैसे संसद में भाषण",
-          "visual": "steel spoon placed next to gold coin",
-          "set": "studio",
-          "punch": true,
-          "big": "हमारी माँग",
-          "sub": "हमारी माँग: हर चम्मच के साथ",
-          "card_color": [
-            110,
-            20,
-            40
-          ],
-          "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "beat": "dhamki",
-          "say": "और अगर माँग नहीं मानी गई…",
-          "caption": "और अगर माँग नहीं मानी गई…",
-          "visuals": [
-            "bablu pointing finger seriously into camera",
-            "dramatic shadow lowering over jewellery store",
-            "close up tension face expression"
-          ],
-          "photo_hi": [
-            "गुस्सैल एंकर चेतावनी",
-            "गंभीर माहौल न्यूज़ रूम"
-          ],
-          "expr": "gambhir",
-          "sfx": "tick",
-          "mood": "tension",
-          "delivery": "अचानक बहुत धीमा, रहस्य वाला, लगभग फुसफुसाते हुए",
-          "pause_after": 0.5,
-          "visual": "bablu pointing finger seriously into camera",
-          "set": "studio",
-          "punch": true,
-          "big": "चेतावनी!",
-          "sub": "",
-          "card_color": [
-            40,
-            10,
-            15
-          ],
-          "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "beat": "twist",
-          "say": "तो सबको बता देंगे… मम्मी की सोने की चूड़ी असल में पीतल की है!",
-          "caption": "तो सबको बता देंगे… मम्मी की सोने की चूड़ी असल में पीतल की है!",
-          "visuals": [
-            "gold bangles turning yellow brass under light",
-            "mother shocked face hiding wrist behind saree",
-            "magnifying glass examining fake gold bangle"
-          ],
-          "photo_hi": [
-            "नकली सोने की चूड़ी पीतल",
-            "मम्मी हैरान चेहरा घर"
-          ],
-          "stamp": "मम्मी की पीतल चूड़ी!",
-          "expr": "hairan",
-          "sfx": "boom",
-          "mood": "masti",
-          "delivery": "धमाके से, जीत वाले अंदाज़ में, आख़िरी हिस्सा ज़ोर से",
-          "visual": "gold bangles turning yellow brass under light",
-          "set": "studio",
-          "punch": true,
-          "big": "बड़ा खुलासा!",
-          "sub": "",
-          "card_color": [
-            170,
-            20,
-            30
-          ],
-          "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "beat": "takiya",
-          "say": "पहले सोना, फिर चम्मच!",
-          "caption": "पहले सोना, फिर चम्मच!",
-          "visuals": [
-            "bablu banging hand on news desk",
-            "gold bar next to shiny steel spoon",
-            "bakra news logo flashing brightly"
-          ],
-          "photo_hi": [
-            "न्यूज़ एंकर मेज़ पर हाथ",
-            "सोना और चम्मच"
-          ],
-          "stamp": "पहले सोना फिर चम्मच!",
-          "expr": "gussa",
-          "sfx": "thug",
-          "mood": "masti",
-          "delivery": "पूरी ताक़त से चिल्लाकर, मेज़ पर हाथ मारते हुए",
-          "pause_after": 0.3,
-          "visual": "bablu banging hand on news desk",
-          "set": "studio",
-          "punch": true,
-          "big": "पहले सोना, फिर चम्मच!",
-          "sub": "",
-          "card_color": [
-            170,
-            20,
-            30
-          ],
-          "scene": "studio_end",
-          "insta": ""
-        }
-      ],
-      "caption_post": "सोना खरीदने वालो, क्या तुम्हारी अलमारी सिर्फ़ चम्मचों का गोदाम है? Tag करो उसको जो धनतेरस पर सिर्फ़ चम्मच खरीदता है! क्या आपने भी धनतेरस पर सिर्फ़ चम्मच खरीदा? स्रोत: ETV Bharat, News18 Hindi, Amar Ujala #Dhanteras #GoldPrice #Bakrabahas #BakraNews #FestivalShopping (AI से बने किरदार)",
-      "format": "rant",
-      "label": "बकरा बहस",
-      "icons": [
-        "₹",
-        "NEWS",
-        "%"
-      ],
-      "hook": "सोना खरीदने वालो, क्या तुम्हारी अलमारी सिर्फ़ चम्मचों का गोदाम है?",
-      "hook_text": "सोना खरीदने वालो, क्या तुम्हारी अलमारी सिर्फ़ चम्मचों का गोदाम है?",
-      "poll": null,
-      "key_word": "",
-      "cast_why": "समाज: हम सोने के खरीदार | माँग: हमारी माँग: हर चम्मच के साथ दस ग्राम सोना मुफ़्त दो!",
-      "_loose": true,
-      "trend": {
-        "score": 5,
-        "why": "12 अख़बार/चैनल 2 दिन में, 30 खबरें 7 दिन में"
-      },
-      "hasi": "टैग: उस दोस्त को जो धनतेरस पर सिर्फ़ चम्मच खरीदता है | twist: तो सबको बता देंगे… मम्मी की सोने की चूड़ी असल में पीतल की है!"
-    },
-    {
-      "topic": "अजिंक्य रहाणे की बेस्ट टेस्ट इलेवन में कोहली और बुमराह बाहर",
-      "category": "[फ़िल्म-क्रिकेट फैन]",
-      "breaking": "रहाणे की ऑल-टाइम बेस्ट टेस्ट टीम से कोहली और बुमराह बाहर",
-      "hook_text": "रहाणे भाई, बिना कोहली-रोहित कौन सी टीम बनाई?",
-      "hook_screen": "बिना कोहली-रोहित कौन सी टीम?",
-      "ask": "क्या रहाणे की इस प्लेइंग-11 से आप सहमत हैं?",
-      "source": "Navbharat Times, Amar Ujala, Hindustan",
-      "poll": [
-        "रहाणे सही",
-        "कोहली ज़रूरी"
-      ],
-      "ticker": [
-        "रहाणे ने चुनी ऑल-टाइम भारत टेस्ट इलेवन",
-        "कोहली और रोहित शर्मा टीम से बाहर",
-        "जसप्रीत बुमराह को भी नहीं मिली जगह"
-      ],
-      "cast_why": "रमेश की तीखी भड़ास और बबलु का गंभीर तथ्य विश्लेषण",
-      "tag_who": "वो दोस्त जो क्रिकेट मैच में अपनी बॉल लाकर ख़ुद बैटिंग करता है",
-      "lines": [
-        {
-          "who": "ramesh",
-          "say": "रहाणे भाई, बिना कोहली-रोहित कौन सी टीम बनाई?",
-          "caption": "रहाणे भाई, बिना कोहली-रोहित कौन सी टीम बनाई?",
-          "expr": "hairan",
-          "set": "studio",
-          "visuals": [
-            "indian cricket stadium crowd",
-            "cricket bat ball closeup",
-            "cricket ground lights night"
-          ],
-          "photo_hi": [
-            "अजिंक्य रहाणे",
-            "भारतीय क्रिकेट टीम"
-          ],
-          "visual": "indian cricket stadium crowd",
-          "scene": "studio",
-          "punch": false,
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "say": "रहाणे की ऑल-टाइम इलेवन से कोहली, रोहित, बुमराह बाहर… कप्तान शायद ख़ुद हैं!",
-          "caption": "रहाणे की ऑल-टाइम इलेवन से कोहली, रोहित, बुमराह बाहर… कप्तान शायद ख़ुद हैं!",
-          "expr": "gambhir",
-          "set": "studio",
-          "visuals": [
-            "cricket scoreboard stadium",
-            "test match cricket pitch",
-            "cricket player in whites"
-          ],
-          "photo_hi": [
-            "विराट कोहली रोहित शर्मा",
-            "जसप्रीत बुमराह टेस्ट"
-          ],
-          "card": {
-            "tag": "टेस्ट इलेवन",
-            "big": "कोहली-बुमराह बाहर",
-            "sub": "रहाणे की ऑल-टाइम बेस्ट टेस्ट टीम घोषित",
-            "icon": "alert"
-          },
-          "visual": "cricket scoreboard stadium",
-          "scene": "card",
-          "punch": false,
           "insta": ""
         },
         {
           "who": "chacha",
-          "say": "यहाँ शादी के कार्ड से फूफा गायब हैं!",
-          "caption": "यहाँ शादी के कार्ड से फूफा गायब हैं!",
-          "expr": "tanz",
-          "set": "aangan",
-          "visuals": [
-            "wedding invitation card india",
-            "old indian man sitting chair",
-            "traditional courtyard india"
-          ],
-          "photo_hi": [
-            "शादी का कार्ड",
-            "भारतीय परिवार"
-          ],
-          "visual": "wedding invitation card india",
-          "scene": "chacha",
-          "punch": false,
-          "insta": ""
-        },
-        {
-          "who": "pinky",
-          "say": "ये वही दोस्त है जो अपनी बॉल से ख़ुद बैटिंग करता है!",
-          "caption": "ये वही दोस्त है जो अपनी बॉल से ख़ुद बैटिंग करता है!",
-          "expr": "hasi",
-          "set": "village",
-          "visuals": [
-            "gully cricket india street",
-            "young boy holding cricket bat",
-            "street cricket match"
-          ],
-          "photo_hi": [
-            "गली क्रिकेट",
-            "क्रिकेट बैट"
-          ],
-          "tag": true,
-          "tag_screen": "वो दोस्त जो बॉल लाकर ख़ुद बैटिंग करे",
-          "visual": "gully cricket india street",
-          "scene": "pinky",
-          "punch": false,
-          "insta": "",
-          "tag_text": "वो दोस्त जो बॉल लाकर ख़ुद"
-        },
-        {
-          "who": "bablu",
-          "say": "बोर्ड ने कहा, टीम पूरी संतुलित है। संतुलन बिना सितारों के ही रहता है।",
-          "caption": "बोर्ड ने कहा, टीम पूरी संतुलित है। संतुलन बिना सितारों के ही रहता है।",
-          "expr": "gambhir",
-          "set": "studio",
-          "visuals": [
-            "cricket control board office",
-            "empty sports stadium chairs",
-            "cricket match press conference"
-          ],
-          "photo_hi": [
-            "क्रिकेट बोर्ड",
-            "टेस्ट क्रिकेट टीम"
-          ],
-          "punch": true,
-          "stamp": "संतुलन… बिना सितारों क",
-          "visual": "cricket control board office",
-          "scene": "studio_end",
-          "insta": ""
-        }
-      ],
-      "caption_post": "रहाणे भाई, बिना कोहली-रोहित कौन सी टीम बनाई? Tag करो उसको जो मैच में अपनी बॉल लाकर ख़ुद बैटिंग करता है! क्या रहाणे की इस प्लेइंग-11 से आप सहमत हैं? स्रोत: Navbharat Times, Amar Ujala #AjinkyaRahane #ViratKohli #RohitSharma #CricketReels #BakraNews (AI से बने किरदार)",
-      "format": "explain",
-      "label": "काम की खबर",
-      "key_word": "",
-      "icons": [
-        "₹",
-        "NEWS",
-        "%"
-      ],
-      "hook": "रहाणे भाई, बिना कोहली-रोहित कौन सी टीम बनाई?",
-      "hook_short": "बिना कोहली-रोहित कौन सी टीम?",
-      "trend": {
-        "score": 6,
-        "why": "16 अख़बार/चैनल 2 दिन में, 58 खबरें 7 दिन में"
-      }
-    },
-    {
-      "khabar": "लड़के ने स्टारबक्स की सारी कॉफी एक बार में कर दी ऑर्डर",
-      "score": "9",
-      "topic": "स्टारबक्स में युवक ने 26 हज़ार का बिल बनाकर सारी कॉफी ऑर्डर की",
-      "category": "viral",
-      "breaking": "स्टारबक्स आउटलेट में दीपक ने मेन्यू की हर कॉफी मंगवाई",
-      "samaj": "हम कॉफ़ी के शौक़ीन",
-      "maang": "हमारी माँग: हर कॉफ़ी के साथ कुल्हड़ वाली चाय मुफ़्त दो!",
-      "twist": "तो सबको बता देंगे… छब्बीस हज़ार का बिल भरने के लिए उसने मम्मी का Google Pay चुराया!",
-      "takiya": "कॉफ़ी छोड़ो, अदरक लाओ!",
-      "tag_who": "उस दोस्त को जो स्टारबक्स जाकर भी कुल्हड़ चाय ढूँढता है",
-      "source": "ABP News, Navbharat Times, TV9 Hindi",
-      "ask": "क्या आप 26 हजार की कॉफी पी सकते हैं?",
-      "ticker": [
-        "दीपक नाम के ग्राहक ने मेन्यू की हर कॉफी मंगवाई",
-        "सभी वैरायटी ट्राई करने पर बिल आया 26000 रुपये",
-        "स्टारबक्स बिल की सोशल मीडिया पर चर्चा"
-      ],
-      "lines": [
-        {
-          "who": "bablu",
-          "beat": "hook",
-          "say": "कॉफ़ी पीना बंद करो, पूरे स्टारबक्स का बिल फाड़ना शुरू करो!",
-          "caption": "कॉफ़ी पीना बंद करो, पूरे स्टारबक्स का बिल फाड़ना शुरू करो!",
-          "visuals": [
-            "starbucks cafe counter filled with multiple coffee cups",
-            "long cafe bill receipt printing out continuously",
-            "young indian guy looking shocked at coffee menu"
-          ],
-          "photo_hi": [
-            "कॉफी शॉप लंबा बिल",
-            "स्टारबक्स कड़ा कप ढेर"
-          ],
-          "expr": "hairan",
-          "sfx": "boom",
-          "mood": "tension",
-          "delivery": "बिल्कुल गंभीर, धीमा, हर शब्द पर ज़ोर — जैसे देश का सबसे बड़ा सवाल पूछ रहा हो",
-          "visual": "starbucks cafe counter filled with multiple coffee cups",
-          "set": "studio",
-          "punch": false,
-          "big": "बड़ा सवाल",
-          "sub": "हम कॉफ़ी के शौक़ीन",
-          "card_color": [
-            20,
-            40,
-            110
-          ],
-          "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
           "beat": "saboot",
-          "say": "दीपक ने एक बार में सारी कॉफ़ी मंगवाई, बिल आया छब्बीस हज़ार!",
-          "caption": "दीपक ने एक बार में सारी कॉफ़ी मंगवाई, बिल आया 26,000 रुपये!",
+          "say": "और बात यहीं ख़त्म नहीं होती… हवलदार साहब तो फ़ोन रिचार्ज भी खुद करवाते हैं!",
+          "caption": "और बात यहीं ख़त्म नहीं होती… हवलदार साहब तो फ़ोन रिचार्ज भी खुद करवाते हैं!",
           "visuals": [
-            "twenty six thousand rupees printed on cafe bill",
-            "row of twenty different coffee cups on wooden table",
-            "young guy standing next to endless coffee cups"
+            "senior indian police constable holding mobile phone shop",
+            "mobile recharge shop counter india street",
+            "old indian uncle giving sarcastic look camera"
           ],
           "photo_hi": [
-            "26 हजार बिल कॉफी",
-            "स्टारबक्स कॉफी वैरायटी"
-          ],
-          "expr": "gussa",
-          "sfx": "whoosh",
-          "mood": "tension",
-          "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
-          "visual": "twenty six thousand rupees printed on cafe bill",
-          "set": "studio",
-          "punch": false,
-          "big": "सबूत नंबर 1",
-          "sub": "",
-          "card_color": [
-            12,
-            60,
-            120
-          ],
-          "scene": "pinky",
-          "insta": ""
-        },
-        {
-          "who": "pinky",
-          "beat": "saboot",
-          "say": "और बात यहीं ख़त्म नहीं होती… उसने एक घूँट पीकर कहा—अदरक कम है!",
-          "caption": "और बात यहीं ख़त्म नहीं होती… उसने एक घूँट पीकर कहा—अदरक कम है!",
-          "visuals": [
-            "teen girl sipping fancy coffee making disappointed face",
-            "barista looking confused holding coffee cup",
-            "ginger piece held next to luxury coffee cup"
-          ],
-          "photo_hi": [
-            "लड़की कॉफी पीते परेशान",
-            "चाय अदरक कुल्हड़"
+            "पुलिस हवलदार",
+            "मोबाइल दुकान"
           ],
           "expr": "gussa",
           "sfx": "glitch",
           "mood": "tension",
           "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
-          "visual": "teen girl sipping fancy coffee making disappointed face",
-          "set": "village",
+          "visual": "senior indian police constable holding mobile phone shop",
+          "set": "room",
           "punch": false,
           "big": "सबूत नंबर 2",
           "sub": "",
@@ -575,33 +166,33 @@
             60,
             120
           ],
-          "scene": "pinky",
+          "scene": "chacha",
           "insta": ""
         },
         {
           "who": "bablu",
           "beat": "maang",
-          "say": "हमारी माँग: हर कॉफ़ी के साथ कुल्हड़ वाली चाय मुफ़्त दो!",
-          "caption": "हमारी माँग: हर कॉफ़ी के साथ कुल्हड़ वाली चाय मुफ़्त दो!",
+          "say": "हमारी माँग: कस्टडी में सिगरेट और लाइटर सप्लाई करने वालों पर कार्रवाई हो!",
+          "caption": "हमारी माँग: कस्टडी में सिगरेट और लाइटर सप्लाई करने वालों पर कार्रवाई हो!",
           "visuals": [
-            "clay tea cup placed beside starbucks paper cup",
-            "protest sign demanding kulhad chai in cafes",
-            "indian street chai maker pouring hot tea"
+            "cigarette packet and lighter close up on table",
+            "police station inquiry room table officer writing",
+            "suspension order paper official document stamp"
           ],
           "photo_hi": [
-            "कुल्हड़ चाय कॉफी कप",
-            "भारतीय चाय दुकान"
+            "सिगरेट और लाइटर",
+            "पुलिस जांच"
           ],
-          "stamp": "कुल्हड़ चाय मुफ़्त दो!",
+          "stamp": "लाइटर सप्लाई पर बैन!",
           "expr": "gussa",
           "sfx": "dhol",
           "mood": "masti",
           "delivery": "ऐलान की तरह, जोश में, जैसे संसद में भाषण",
-          "visual": "clay tea cup placed beside starbucks paper cup",
+          "visual": "cigarette packet and lighter close up on table",
           "set": "studio",
           "punch": true,
           "big": "हमारी माँग",
-          "sub": "हमारी माँग: हर कॉफ़ी के साथ",
+          "sub": "हमारी माँग: कस्टडी में सिगरेट और",
           "card_color": [
             110,
             20,
@@ -613,23 +204,23 @@
         {
           "who": "bablu",
           "beat": "dhamki",
-          "say": "और अगर माँग नहीं मानी गई…",
-          "caption": "और अगर माँग नहीं मानी गई…",
+          "say": "और अगर जाँच रिपोर्ट में लीपापोती हुई…",
+          "caption": "और अगर जाँच रिपोर्ट में लीपापोती हुई…",
           "visuals": [
-            "anchor narrowing eyes into camera lens",
-            "dark spotlight effect on coffee cup",
-            "dramatic pause face close up"
+            "news anchor furious pointing finger studio light",
+            "viral video phone screen recording play icon",
+            "inquiry panel police officers sitting discussion"
           ],
           "photo_hi": [
-            "एंग्री एंकर न्यूज़ स्टूडियो",
-            "गंभीर मुद्रा एंकर"
+            "वायरल वीडियो",
+            "जांच टीम"
           ],
           "expr": "gambhir",
           "sfx": "tick",
           "mood": "tension",
           "delivery": "अचानक बहुत धीमा, रहस्य वाला, लगभग फुसफुसाते हुए",
           "pause_after": 0.5,
-          "visual": "anchor narrowing eyes into camera lens",
+          "visual": "news anchor furious pointing finger studio light",
           "set": "studio",
           "punch": true,
           "big": "चेतावनी!",
@@ -645,23 +236,23 @@
         {
           "who": "bablu",
           "beat": "twist",
-          "say": "तो सबको बता देंगे… छब्बीस हज़ार का बिल भरने के लिए उसने मम्मी का Google Pay चुराया!",
-          "caption": "तो सबको बता देंगे… 26,000 का बिल भरने के लिए उसने मम्मी का Google Pay चुराया!",
+          "say": "तो सबको बता देंगे… पुलिस वाले सिगरेट का पैकेट आरोपी के पैसों से मँगवाए थे!",
+          "caption": "तो सबको बता देंगे… पुलिस वाले सिगरेट का पैकेट आरोपी के पैसों से मँगवाए थे!",
           "visuals": [
-            "smartphone screen showing google pay transaction success",
-            "boy stealthily scanning QR code with mother phone",
-            "mother holding rolling pin looking angry at phone notification"
+            "hundred rupee note exchange hands secret handover",
+            "cigarette packet inside police jeep compartment",
+            "funny guilty face constable looking around"
           ],
           "photo_hi": [
-            "गूगल पे ऑनलाइन पेमेंट",
-            "मम्मी गुस्सा बेलन हाथ"
+            "पैसों का लेन-देन",
+            "पुलिस जीप"
           ],
-          "stamp": "मम्मी का UPI चुराया!",
+          "stamp": "आरोपी के पैसों की सिगरेट!",
           "expr": "hairan",
           "sfx": "boom",
           "mood": "masti",
           "delivery": "धमाके से, जीत वाले अंदाज़ में, आख़िरी हिस्सा ज़ोर से",
-          "visual": "smartphone screen showing google pay transaction success",
+          "visual": "hundred rupee note exchange hands secret handover",
           "set": "studio",
           "punch": true,
           "big": "बड़ा खुलासा!",
@@ -677,27 +268,27 @@
         {
           "who": "bablu",
           "beat": "takiya",
-          "say": "कॉफ़ी छोड़ो, अदरक लाओ!",
-          "caption": "कॉफ़ी छोड़ो, अदरक लाओ!",
+          "say": "कानून चलाओ, सिगरेट नहीं!",
+          "caption": "कानून चलाओ, सिगरेट नहीं!",
           "visuals": [
-            "bablu shouting enthusiastically holding tea glass",
-            "steaming hot ginger tea close up shot",
-            "bakra news debater studio shot"
+            "law book statue of justice blindfold scales",
+            "no smoking sign red circle cross icon",
+            "news presenter speaking bold mic studio"
           ],
           "photo_hi": [
-            "गरमा गरम अदरक चाय",
-            "न्यूज़ बहस एंकर"
+            "कानून की किताब",
+            "नो स्मोकिंग बोर्ड"
           ],
-          "stamp": "अदरक लाओ!",
+          "stamp": "कानून चलाओ सिगरेट नहीं!",
           "expr": "gussa",
           "sfx": "thug",
           "mood": "masti",
           "delivery": "पूरी ताक़त से चिल्लाकर, मेज़ पर हाथ मारते हुए",
           "pause_after": 0.3,
-          "visual": "bablu shouting enthusiastically holding tea glass",
+          "visual": "law book statue of justice blindfold scales",
           "set": "studio",
           "punch": true,
-          "big": "कॉफ़ी छोड़ो, अदरक लाओ!",
+          "big": "कानून चलाओ, सिगरेट नहीं!",
           "sub": "",
           "card_color": [
             170,
@@ -708,7 +299,7 @@
           "insta": ""
         }
       ],
-      "caption_post": "कॉफ़ी पीना बंद करो, पूरे स्टारबक्स का बिल फाड़ना शुरू करो! Tag करो उसको जो स्टारबक्स जाकर भी कुल्हड़ चाय ढूँढता है! क्या आप 26 हजार की कॉफी पी सकते हैं? स्रोत: ABP News, Navbharat Times, TV9 Hindi #Starbucks #CoffeeBill #BakraNews #Bakrabahas #ViralHindiNews (AI से बने किरदार)",
+      "caption_post": "हथकड़ी पहनकर वीआईपी टौशन दिखाना बंद करो! Tag करो उसको जो पुलिस के नाम से ही डरता है क्या पुलिस कस्टडी का ये वीडियो आपने देखा? स्रोत: नवभारत लाइव, दैनिक भास्कर #BhopalPolice #ViralVideo #LawAndOrder #BakraNews #BakraBahas",
       "format": "rant",
       "label": "बकरा बहस",
       "icons": [
@@ -716,207 +307,59 @@
         "NEWS",
         "%"
       ],
-      "hook": "कॉफ़ी पीना बंद करो, पूरे स्टारबक्स का बिल फाड़ना शुरू करो!",
-      "hook_text": "कॉफ़ी पीना बंद करो, पूरे स्टारबक्स का बिल फाड़ना शुरू करो!",
+      "hook": "हथकड़ी पहनकर वीआईपी टौशन दिखाना बंद करो!",
+      "hook_text": "हथकड़ी पहनकर वीआईपी टौशन दिखाना बंद करो!",
       "poll": null,
       "key_word": "",
-      "cast_why": "समाज: हम कॉफ़ी के शौक़ीन | माँग: हमारी माँग: हर कॉफ़ी के साथ कुल्हड़ वाली चाय मुफ़्त दो!",
-      "_loose": true,
+      "cast_why": "समाज: हम शरीफ़ और आम नागरिक | माँग: हमारी माँग: कस्टडी में सिगरेट और लाइटर सप्लाई करने वालों पर कार्रवाई हो!",
       "trend": {
         "score": 3,
         "why": "4 अख़बार/चैनल 2 दिन में, 4 खबरें 7 दिन में"
       },
-      "hasi": "टैग: उस दोस्त को जो स्टारबक्स जाकर भी कुल्हड़ चाय ढूँढता है | twist: तो सबको बता देंगे… छब्बीस हज़ार का बिल भरने के लिए उसने मम्मी का Google Pay चुराया!"
+      "hasi": "टैग: उस दोस्त को जो पुलिस के नाम से ही डरता है | twist: तो सबको बता देंगे… पुलिस वाले सिगरेट का पैकेट आरोपी के पैसों से मँगवाए थे!"
     },
     {
-      "topic": "1 नवंबर से लागू होंगे GST के नए नियम, छोटे व्यापारियों को राहत",
-      "category": "[नियम/नौकरी]",
-      "breaking": "1 नवंबर से नए GST नियम लागू, 9.5 लाख ई-कॉमर्स विक्रेताओं को राहत",
-      "hook_text": "एक नवंबर से जीएसटी आसान… सपना देखूँ?",
-      "hook_screen": "जीएसटी आसान… सपना देखूँ?",
-      "ask": "क्या नए जीएसटी नियमों से छोटे व्यापारियों को सच में फ़ायदा ह",
-      "source": "Business Standard, ETV Bharat, Jagran, Amar Ujala, ABP News, India TV Hindi",
-      "poll": [
-        "राहत मिलेगी",
-        "फ़ॉर्म वही रहेंगे"
-      ],
+      "khabar": "शेयर बाजार की टिप्स देने वाले कथित गुरु पर सेबी का बड़ा एक्शन",
+      "score": "9",
+      "topic": "ट्रेडिंग गुरुओं का फर्जी ज्ञान और सेबी की पेनल्टी",
+      "category": "money",
+      "breaking": "सेबी का अवधूत साठे एकेडमी पर 546 करोड़ रिफंड का आदेश",
+      "samaj": "हम रील देखकर अमीर बनने वाले निवेशक",
+      "maang": "हमारी माँग: हर स्टॉक गुरु के बोर्ड पर जोखिम चेतावनी अनिवार्य हो!",
+      "twist": "तो सबको बता देंगे… ट्रेडिंग क्लास वाले भैया ख़ुद अपने बैंक बैलेंस से डरते हैं!",
+      "takiya": "टिप्स बंद, रिफ़ंड चालू!",
+      "tag_who": "उस दोस्त को जो टेलीग्राम के टिप्स पर शेयर खरीदता है",
+      "source": "आजतक, नवभारत लाइव, लाइवमिंट, न्यूज़18 हिंदी, हिंदुस्तान, मनीकंट्रोल हिंदी, ज़ी बिज़नेस, द इकोनॉमिक टाइम्स हिंदी, पंजाब केसरी",
+      "ask": "क्या आपने भी कभी किसी ट्रेडिंग गुरु की टिप मानी है?",
       "ticker": [
-        "1 नवंबर 2026 से लागू होंगे नए जीएसटी नियम",
-        "9.5 लाख ई-कॉमर्स विक्रेताओं को मिलेगी बड़ी राहत",
-        "जीएसटी रिटर्न फॉर्म के लिए जनता से माँगे जाएँगे सुझाव"
-      ],
-      "cast_why": "रमेश की टैक्स से भड़ास और चाचा का सरकारी काग़ज़ों पर तंज",
-      "tag_who": "वो सीए जो टैक्स बचाने का दावा करके अपनी फ़ीस बढ़ा लेते हैं",
-      "lines": [
-        {
-          "who": "ramesh",
-          "say": "एक नवंबर से जीएसटी आसान… सपना देखूँ?",
-          "caption": "1 नवंबर से जीएसटी आसान… सपना देखूँ?",
-          "expr": "hairan",
-          "set": "village",
-          "visuals": [
-            "calculator invoice paper tax",
-            "indian businessman shop counter",
-            "gst tax file laptop"
-          ],
-          "photo_hi": [
-            "जीएसटी बिल",
-            "छोटे व्यापारी"
-          ],
-          "visual": "calculator invoice paper tax",
-          "scene": "studio",
-          "punch": false,
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "say": "एक नवंबर से नए नियम लागू… साढे नौ लाख व्यापारियों को सीधी राहत!",
-          "caption": "1 नवंबर से नए नियम लागू… 9.5 लाख व्यापारियों को सीधी राहत!",
-          "expr": "gambhir",
-          "set": "studio",
-          "visuals": [
-            "online e commerce warehouse india",
-            "small retail shopkeeper billing",
-            "finance ministry building delhi"
-          ],
-          "photo_hi": [
-            "जीएसटी पोर्टल",
-            "ई कॉमर्स सेलर"
-          ],
-          "card": {
-            "tag": "जीएसटी नियम",
-            "big": "9.5 लाख को राहत",
-            "sub": "1 नवंबर से नया रजिस्ट्रेशन व रिटर्न नियम",
-            "icon": "percent"
-          },
-          "visual": "online e commerce warehouse india",
-          "scene": "card",
-          "punch": false,
-          "insta": ""
-        },
-        {
-          "who": "chacha",
-          "say": "छूट फ़ॉर्म में है… काग़ज़ अब भी चौगुने माँगेंगे!",
-          "caption": "छूट फ़ॉर्म में है… काग़ज़ अब भी चौगुने माँगेंगे!",
-          "expr": "tanz",
-          "set": "office",
-          "visuals": [
-            "stacks of tax files paper",
-            "old accountant working ledger",
-            "indian government office files"
-          ],
-          "photo_hi": [
-            "टैक्स फ़ाइल",
-            "सरकारी दस्तावेज़"
-          ],
-          "visual": "stacks of tax files paper",
-          "scene": "chacha",
-          "punch": false,
-          "insta": ""
-        },
-        {
-          "who": "pinky",
-          "say": "ये वही सीए हैं जो टैक्स बचाकर अपनी फ़ीस बढ़ा लेते हैं!",
-          "caption": "ये वही सीए हैं जो टैक्स बचाकर अपनी फ़ीस बढ़ा लेते हैं!",
-          "expr": "hasi",
-          "set": "village",
-          "visuals": [
-            "chartered accountant desk office",
-            "financial audit paper stamp",
-            "laptop tax filling session"
-          ],
-          "photo_hi": [
-            "सीए दफ़्तर",
-            "टैक्स रिटर्न"
-          ],
-          "tag": true,
-          "tag_screen": "वो सीए जो टैक्स बचाकर फ़ीस बढ़ा दे",
-          "visual": "chartered accountant desk office",
-          "scene": "pinky",
-          "punch": false,
-          "insta": "",
-          "tag_text": "वो सीए जो टैक्स बचाकर फ़ीस"
-        },
-        {
-          "who": "bablu",
-          "say": "मंत्रालय ने साफ़ किया, सुधार जारी हैं। सुधार काग़ज़ पर ही जारी हैं।",
-          "caption": "मंत्रालय ने साफ़ किया, सुधार जारी हैं। सुधार काग़ज़ पर ही जारी हैं।",
-          "expr": "gambhir",
-          "set": "studio",
-          "visuals": [
-            "finance ministry official press release",
-            "tax collection chart document",
-            "indian business market survey"
-          ],
-          "photo_hi": [
-            "वित्त मंत्रालय",
-            "जीएसटी नियम"
-          ],
-          "punch": true,
-          "stamp": "सुधार… काग़ज़ पर!",
-          "visual": "finance ministry official press release",
-          "scene": "studio_end",
-          "insta": ""
-        }
-      ],
-      "caption_post": "एक नवंबर से जीएसटी आसान… सपना देखूँ? Tag करो उस सीए को जो टैक्स बचाकर अपनी फ़ीस बढ़ा देता है! क्या नए जीएसटी नियमों से छोटे व्यापारियों को सच में फ़ायदा होगा? स्रोत: Business Standard, Jagran #GSTRules #SmallBusiness #GSTUpdate #BakraNews (AI से बने किरदार)",
-      "format": "explain",
-      "label": "काम की खबर",
-      "key_word": "",
-      "icons": [
-        "₹",
-        "NEWS",
-        "%"
-      ],
-      "hook": "एक नवंबर से जीएसटी आसान… सपना देखूँ?",
-      "hook_short": "जीएसटी आसान… सपना देखूँ?",
-      "trend": {
-        "score": 6,
-        "why": "16 अख़बार/चैनल 2 दिन में, 54 खबरें 7 दिन में"
-      }
-    },
-    {
-      "khabar": "त्योहारों पर रेलवे के कमर्शियल स्टाफ की छुट्टियों पर लगा पूर्ण बैन",
-      "score": "8",
-      "topic": "रेलवे कमर्शियल स्टाफ की त्योहारी छुट्टियों पर पूर्ण रोक",
-      "category": "rules",
-      "breaking": "उत्तर रेलवे में त्योहारी सीज़न पर रेलकर्मियों की छुट्टियों पर रोक",
-      "samaj": "हम छुट्टियों के भूखे",
-      "maang": "हमारी माँग: हर रेलकर्मी को दिवाली पर पाँच दिन की छुट्टी दो!",
-      "twist": "तो सबको बता देंगे… टीटीई साहब ने बिना टिकट वाले साले को एसी में सुलाया है!",
-      "takiya": "छुट्टी दो, ड्यूटी बाद में!",
-      "tag_who": "उस दोस्त को जो दिवाली पर भी ऑफ़िस से छुट्टी माँग रहा है",
-      "source": "Navbharat Times, Amar Ujala, Hindustan",
-      "ask": "क्या त्योहारों पर सरकारी छुट्टी बंद होनी चाहिए?",
-      "ticker": [
-        "लखनऊ मंडल और जम्मू में छुट्टियों पर लगी रोक",
-        "कमर्शियल स्टाफ की त्योहारी छुट्टी पूरी तरह रद्द",
-        "उत्तर पश्चिम रेलवे में अप्रेंटिस भर्ती का संशोधित नोटिस जारी"
+        "SEBI ने अवधूत साठे एकेडमी पर लगाया ₹11.5 करोड़ जुर्माना",
+        "निवेशकों के ₹546.17 करोड़ लौटाने का सेबी का सख्त आदेश",
+        "शेयर बाजार में फर्जी गुरुओं पर शिकंजा कसना शुरू"
       ],
       "lines": [
         {
           "who": "bablu",
           "beat": "hook",
-          "say": "…और तभी त्योहार पर छुट्टी माँगते ही टीटीई को चाबी पकड़ा दी!",
-          "caption": "…और तभी त्योहार पर छुट्टी माँगते ही टीटीई को चाबी पकड़ा दी!",
+          "say": "शेयर बाजार के गुरुओं का ज्ञान बंद करो!",
+          "caption": "शेयर बाजार के गुरुओं का ज्ञान बंद करो!",
           "visuals": [
-            "railway ticket collector tte looking stressed at platform",
-            "leave application form stamped rejected in red ink",
-            "crowded indian railway train station festival rush"
+            "stock market trading charts screen red green",
+            "man posing as financial guru stage microphone",
+            "indian stock market investor looking frustrated"
           ],
           "photo_hi": [
-            "रेलवे टीटीई स्टेशन भीड़",
-            "छुट्टी का आवेदन रद्द"
+            "शेयर बाजार ग्राफ",
+            "ट्रेडिंग क्लास"
           ],
           "expr": "hairan",
           "sfx": "boom",
           "mood": "tension",
           "delivery": "बिल्कुल गंभीर, धीमा, हर शब्द पर ज़ोर — जैसे देश का सबसे बड़ा सवाल पूछ रहा हो",
-          "visual": "railway ticket collector tte looking stressed at platform",
+          "visual": "stock market trading charts screen red green",
           "set": "studio",
           "punch": false,
           "big": "बड़ा सवाल",
-          "sub": "हम छुट्टियों के भूखे",
+          "sub": "हम रील देखकर अमीर बनने वाले निवेशक",
           "card_color": [
             20,
             40,
@@ -928,22 +371,22 @@
         {
           "who": "bablu",
           "beat": "saboot",
-          "say": "उत्तर रेलवे में त्योहारों पर स्टाफ की छुट्टियों पर बैन लगा दिया!",
-          "caption": "उत्तर रेलवे में त्योहारों पर स्टाफ की छुट्टियों पर बैन लगा दिया!",
+          "say": "SEBI ने कथित गुरु पर ₹546 करोड़ वापस करने का आदेश दिया!",
+          "caption": "SEBI ने कथित गुरु पर 546 करोड़ रुपये वापस करने का आदेश दिया!",
           "visuals": [
-            "official railway notice circular pinned on board",
-            "commercial staff working tiredly at ticket counter",
-            "lucknow railway division office exterior board"
+            "sebi office logo building india mumbai",
+            "rupee currency notes stacks calculator",
+            "court order official stamp document legal"
           ],
           "photo_hi": [
-            "उत्तर रेलवे नोटिस बोर्ड",
-            "रेलवे टिकट काउंटर कर्मी"
+            "सेबी दफ्तर",
+            "भारतीय रुपये नोट"
           ],
           "expr": "gussa",
           "sfx": "whoosh",
           "mood": "tension",
           "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
-          "visual": "official railway notice circular pinned on board",
+          "visual": "sebi office logo building india mumbai",
           "set": "studio",
           "punch": false,
           "big": "सबूत नंबर 1",
@@ -957,25 +400,25 @@
           "insta": ""
         },
         {
-          "who": "chacha",
+          "who": "ramesh",
           "beat": "saboot",
-          "say": "और बात यहीं ख़त्म नहीं होती… शर्मा जी का बीमारी वाला बहाना भी धर लिया!",
-          "caption": "और बात यहीं ख़त्म नहीं होती… शर्मा जी का बीमारी वाला बहाना भी धर लिया!",
+          "say": "और बात यहीं ख़त्म नहीं होती… शर्मा जी ट्यूशन छोड़ शेयर गुरु बन गए!",
+          "caption": "और बात यहीं ख़त्म नहीं होती… शर्मा जी ट्यूशन छोड़ शेयर गुरु बन गए!",
           "visuals": [
-            "old employee holding fake medical prescription certificate",
-            "boss pointing at calendar scolding employee",
-            "thermometer in water glass medical fake trick"
+            "indian neighborhood tuition teacher classroom whiteboard",
+            "middle aged indian man talking phone stock market",
+            "confused student sitting desk"
           ],
           "photo_hi": [
-            "मेडिकल सर्टिफिकेट पर्चा",
-            "सरकारी दफ़्तर बॉस गुस्सा"
+            "ट्यूशन क्लास",
+            "देसी अंकल"
           ],
           "expr": "gussa",
           "sfx": "glitch",
           "mood": "tension",
           "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
-          "visual": "old employee holding fake medical prescription certificate",
-          "set": "station",
+          "visual": "indian neighborhood tuition teacher classroom whiteboard",
+          "set": "village",
           "punch": false,
           "big": "सबूत नंबर 2",
           "sub": "",
@@ -990,27 +433,27 @@
         {
           "who": "bablu",
           "beat": "maang",
-          "say": "हमारी माँग: हर रेलकर्मी को दिवाली पर पाँच दिन की छुट्टी दो!",
-          "caption": "हमारी माँग: हर रेलकर्मी को दिवाली पर 5 दिन की छुट्टी दो!",
+          "say": "हमारी माँग: हर स्टॉक गुरु के बोर्ड पर जोखिम चेतावनी अनिवार्य हो!",
+          "caption": "हमारी माँग: हर स्टॉक गुरु के बोर्ड पर जोखिम चेतावनी अनिवार्य हो!",
           "visuals": [
-            "railway workers holding strike placard at station",
-            "diwali festival holiday calendar marked in red",
-            "happy family celebrating diwali with sparklers"
+            "warning sign board red sticker caution",
+            "finance class banner hanging street",
+            "government official holding stamp paper"
           ],
           "photo_hi": [
-            "रेलवे कर्मचारी हड़ताल",
-            "दिवाली छुट्टी कैलेंडर"
+            "चेतावनी बोर्ड",
+            "सरकारी नियम"
           ],
-          "stamp": "पाँच दिन छुट्टी दो!",
+          "stamp": "जोखिम चेतावनी अनिवार्य!",
           "expr": "gussa",
           "sfx": "dhol",
           "mood": "masti",
           "delivery": "ऐलान की तरह, जोश में, जैसे संसद में भाषण",
-          "visual": "railway workers holding strike placard at station",
+          "visual": "warning sign board red sticker caution",
           "set": "studio",
           "punch": true,
           "big": "हमारी माँग",
-          "sub": "हमारी माँग: हर रेलकर्मी को दिवाली",
+          "sub": "हमारी माँग: हर स्टॉक गुरु के",
           "card_color": [
             110,
             20,
@@ -1022,23 +465,23 @@
         {
           "who": "bablu",
           "beat": "dhamki",
-          "say": "और अगर छुट्टी नहीं मिली…",
-          "caption": "और अगर छुट्टी नहीं मिली…",
+          "say": "और अगर रिफ़ंड का पैसा नहीं मिला…",
+          "caption": "और अगर रिफ़ंड का पैसा नहीं मिला…",
           "visuals": [
-            "bablu taking off glasses in dramatic fashion",
-            "train green signal turning stark red",
-            "intense close up news studio lighting"
+            "angry investor shouting microphone news studio",
+            "bank passbook empty balance sheet",
+            "crowd protest banner holding"
           ],
           "photo_hi": [
-            "एंकर चश्मा उतारते",
-            "ट्रेन लाल सिग्नल"
+            "खाली पासबुक",
+            "गुस्सा जनता"
           ],
           "expr": "gambhir",
           "sfx": "tick",
           "mood": "tension",
           "delivery": "अचानक बहुत धीमा, रहस्य वाला, लगभग फुसफुसाते हुए",
           "pause_after": 0.5,
-          "visual": "bablu taking off glasses in dramatic fashion",
+          "visual": "angry investor shouting microphone news studio",
           "set": "studio",
           "punch": true,
           "big": "चेतावनी!",
@@ -1054,23 +497,23 @@
         {
           "who": "bablu",
           "beat": "twist",
-          "say": "तो सबको बता देंगे… टीटीई साहब ने बिना टिकट वाले साले को एसी में सुलाया है!",
-          "caption": "तो सबको बता देंगे… टीटीई साहब ने बिना टिकट वाले साले को एसी में सुलाया है!",
+          "say": "तो सबको बता देंगे… ट्रेडिंग क्लास वाले भैया ख़ुद अपने बैंक बैलेंस से डरते हैं!",
+          "caption": "तो सबको बता देंगे… ट्रेडिंग क्लास वाले भैया ख़ुद अपने बैंक बैलेंस से डरते हैं!",
           "visuals": [
-            "person sleeping peacefully inside AC train berth",
-            "tte secretly winking and putting key in pocket",
-            "ticketless passenger caught sleeping under blanket"
+            "young man checking phone atm receipt shocked face",
+            "bank atm machine india screen low balance",
+            "funny scared face expression man"
           ],
           "photo_hi": [
-            "ट्रेन एसी कोच डिब्बा",
-            "टीटीई ट्रेन चेकिंग"
+            "एटीएम पर्ची",
+            "बैंक बैलेंस ख़ाली"
           ],
-          "stamp": "साले को AC में सुलाया!",
+          "stamp": "बैंक बैलेंस का सच!",
           "expr": "hairan",
           "sfx": "boom",
           "mood": "masti",
           "delivery": "धमाके से, जीत वाले अंदाज़ में, आख़िरी हिस्सा ज़ोर से",
-          "visual": "person sleeping peacefully inside AC train berth",
+          "visual": "young man checking phone atm receipt shocked face",
           "set": "studio",
           "punch": true,
           "big": "बड़ा खुलासा!",
@@ -1086,27 +529,27 @@
         {
           "who": "bablu",
           "beat": "takiya",
-          "say": "छुट्टी दो, ड्यूटी बाद में!",
-          "caption": "छुट्टी दो, ड्यूटी बाद में!",
+          "say": "टिप्स बंद, रिफ़ंड चालू!",
+          "caption": "टिप्स बंद, रिफ़ंड चालू!",
           "visuals": [
-            "bablu slamming file folder on table",
-            "train blowing whistle leaving railway platform",
-            "bakra news logo graphic punch"
+            "news anchor shouting camera pointing finger",
+            "red stop sign stamp overlay graphic",
+            "rupee symbol refund arrow icon"
           ],
           "photo_hi": [
-            "न्यूज़ टेबल एंकर फाइलों के साथ",
-            "भारतीय रेलवे ट्रेन"
+            "खबर एंकर",
+            "रिफंड का पैसा"
           ],
-          "stamp": "छुट्टी दो पहले!",
+          "stamp": "टिप्स बंद रिफ़ंड चालू!",
           "expr": "gussa",
           "sfx": "thug",
           "mood": "masti",
           "delivery": "पूरी ताक़त से चिल्लाकर, मेज़ पर हाथ मारते हुए",
           "pause_after": 0.3,
-          "visual": "bablu slamming file folder on table",
+          "visual": "news anchor shouting camera pointing finger",
           "set": "studio",
           "punch": true,
-          "big": "छुट्टी दो, ड्यूटी बाद में!",
+          "big": "टिप्स बंद, रिफ़ंड चालू!",
           "sub": "",
           "card_color": [
             170,
@@ -1117,7 +560,7 @@
           "insta": ""
         }
       ],
-      "caption_post": "…और तभी त्योहार पर छुट्टी माँगते ही टीटीई को चाबी पकड़ा दी! Tag करो उसको जो दिवाली पर भी ऑफ़िस से छुट्टी माँग रहा है! क्या त्योहारों पर सरकारी छुट्टी बंद होनी चाहिए? स्रोत: Navbharat Times, Amar Ujala, Hindustan #RailwayLeaves #DiwaliRush #BakraNews #Bakrabahas #RailwayRules (AI से बने किरदार)",
+      "caption_post": "शेयर बाजार के गुरुओं का ज्ञान बंद करो! Tag करो उसको जो टेलीग्राम के टिप्स पर शेयर खरीदता है क्या आपने भी कभी किसी ट्रेडिंग गुरु की टिप मानी है? स्रोत: आजतक, लाइवमिंट, मनीकंट्रोल #StockMarket #SEBI #TradingGuru #BakraNews #BakraBahas",
       "format": "rant",
       "label": "बकरा बहस",
       "icons": [
@@ -1125,17 +568,424 @@
         "NEWS",
         "%"
       ],
-      "hook": "…और तभी त्योहार पर छुट्टी माँगते ही टीटीई को चाबी पकड़ा दी!",
-      "hook_text": "…और तभी त्योहार पर छुट्टी माँगते ही टीटीई को चाबी पकड़ा दी!",
+      "hook": "शेयर बाजार के गुरुओं का ज्ञान बंद करो!",
+      "hook_text": "शेयर बाजार के गुरुओं का ज्ञान बंद करो!",
       "poll": null,
       "key_word": "",
-      "cast_why": "समाज: हम छुट्टियों के भूखे | माँग: हमारी माँग: हर रेलकर्मी को दिवाली पर पाँच दिन की छुट्टी दो!",
-      "_loose": true,
+      "cast_why": "समाज: हम रील देखकर अमीर बनने वाले निवेशक | माँग: हमारी माँग: हर स्टॉक गुरु के बोर्ड पर जोखिम चेतावनी अनिवार्य हो!",
       "trend": {
         "score": 6,
-        "why": "11 अख़बार/चैनल 2 दिन में, 36 खबरें 7 दिन में"
+        "why": "10 अख़बार/चैनल 2 दिन में, 10 खबरें 7 दिन में"
       },
-      "hasi": "टैग: उस दोस्त को जो दिवाली पर भी ऑफ़िस से छुट्टी माँग रहा है | twist: तो सबको बता देंगे… टीटीई साहब ने बिना टिकट वाले साले को एसी में सुलाया है!"
+      "hasi": "टैग: उस दोस्त को जो टेलीग्राम के टिप्स पर शेयर खरीदता है | twist: तो सबको बता देंगे… ट्रेडिंग क्लास वाले भैया ख़ुद अपने बैंक बैलेंस से डरते हैं!"
+    },
+    {
+      "topic": "करवाचौथ पर महिला शिक्षकों की छुट्टी से स्कूल में क्लास की फिक्र",
+      "category": "[दफ़्तर-नौकरी]",
+      "breaking": "करवाचौथ की छुट्टी से स्कूलों में फिक्र",
+      "hook_text": "करवाचौथ की छुट्टी… या बच्चों की लॉटरी?",
+      "hook_screen": "करवाचौथ या बच्चों की लॉटरी?",
+      "ask": "क्या त्यौहारों पर स्कूलों में वैकल्पिक व्यवस्था होनी चाहिए?",
+      "source": "न्यूज़18 हिंदी, अमर उजाला",
+      "poll": [
+        "छुट्टी सही है",
+        "क्लास होनी चाहिए"
+      ],
+      "ticker": [
+        "उनतीस अक्टूबर को करवाचौथ पर महिला शिक्षकों का अवकाश",
+        "स्कूलों में कक्षाओं के संचालन पर अनिश्चितता",
+        "डीटीयू में दो सौ उन्नीस प्रोफेसर पदों पर भर्ती जारी"
+      ],
+      "cast_why": "पिंकी की छुट्टी की ख़ुशी बनाम बबलू का स्कूल प्रशासन का हाल",
+      "tag_who": "वो पापा जो हर छुट्टी पर अपने ज़माने का स्कूल याद दिलाते हैं",
+      "lines": [
+        {
+          "who": "pinky",
+          "say": "करवाचौथ की छुट्टी… या बच्चों की लॉटरी?",
+          "caption": "करवाचौथ की छुट्टी… या बच्चों की लॉटरी?",
+          "expr": "hasi",
+          "set": "school",
+          "visuals": [
+            "school students classroom happy",
+            "school bell ringing",
+            "notebook closed bench"
+          ],
+          "photo_hi": [
+            "स्कूल छात्र",
+            "कक्षा का दृश्य"
+          ],
+          "visual": "school students classroom happy",
+          "scene": "studio",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "उनतीस अक्टूबर करवाचौथ पर शिक्षिकाएँ छुट्टी पर… क्लास संभालना चुनौती।",
+          "caption": "29 अक्टूबर करवाचौथ पर शिक्षिकाएँ छुट्टी पर… क्लास संभालना चुनौती।",
+          "expr": "gambhir",
+          "set": "school",
+          "visuals": [
+            "empty teacher desk classroom",
+            "blackboard chalk writing",
+            "school hallway corridor"
+          ],
+          "photo_hi": [
+            "शिक्षिका स्कूल",
+            "कक्षा ब्लैकबोर्ड"
+          ],
+          "card": {
+            "tag": "स्कूल चिंता",
+            "big": "29 अक्टूबर",
+            "sub": "DTU में 219 पद भर्ती जारी",
+            "icon": "calendar"
+          },
+          "visual": "empty teacher desk classroom",
+          "scene": "card",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "ramesh",
+          "say": "व्रत मैडम का है… और भूखे बच्चे घूम रहे!",
+          "caption": "व्रत मैडम का है… और भूखे बच्चे घूम रहे!",
+          "expr": "gussa",
+          "set": "school",
+          "visuals": [
+            "school playground kids running",
+            "lunch box empty bench",
+            "clock ticking wall"
+          ],
+          "photo_hi": [
+            "स्कूल मैदान",
+            "छात्र मस्ती"
+          ],
+          "visual": "school playground kids running",
+          "scene": "chacha",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "chacha",
+          "say": "वो पापा जो बोलते हैं… हमारे ज़माने में इतवार को भी क्लास चलती थी!",
+          "caption": "वो पापा जो बोलते हैं… हमारे ज़माने में इतवार को भी क्लास चलती थी!",
+          "expr": "tanz",
+          "set": "aangan",
+          "visuals": [
+            "father talking strict son",
+            "old school building black white",
+            "wooden bench old"
+          ],
+          "photo_hi": [
+            "पुराना स्कूल",
+            "अभिभावक चर्चा"
+          ],
+          "tag": true,
+          "tag_screen": "इतवार को भी स्कूल बताने वाले पापा",
+          "visual": "father talking strict son",
+          "scene": "chacha",
+          "punch": false,
+          "insta": "",
+          "tag_text": "इतवार को भी स्कूल बताने वाले"
+        },
+        {
+          "who": "bablu",
+          "say": "प्रशासन ने कहा पढ़ाई जारी रहेगी… जारी सिर्फ़ बच्चों की लॉटरी है।",
+          "caption": "प्रशासन ने कहा पढ़ाई जारी रहेगी… जारी सिर्फ़ बच्चों की लॉटरी है।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "school gates opening morning",
+            "kids running out school",
+            "teacher writing desk"
+          ],
+          "photo_hi": [
+            "स्कूल प्रशासन",
+            "छात्र छुट्टी"
+          ],
+          "punch": true,
+          "stamp": "जारी… सिर्फ़ लॉटरी!",
+          "visual": "school gates opening morning",
+          "scene": "studio_end",
+          "insta": ""
+        }
+      ],
+      "caption_post": "करवाचौथ की छुट्टी… या बच्चों की लॉटरी? Tag करो उनको जो हर छुट्टी पर संडे का स्कूल याद दिलाएँ! क्या आपकी क्लास में भी छुट्टी का इंतज़ार रहता था? स्रोत: अमर उजाला #KarwaChauth #SchoolLife #Bakranews #TeacherHoliday",
+      "format": "explain",
+      "label": "काम की खबर",
+      "key_word": "",
+      "icons": [
+        "₹",
+        "NEWS",
+        "%"
+      ],
+      "hook": "करवाचौथ की छुट्टी… या बच्चों की लॉटरी?",
+      "hook_short": "करवाचौथ या बच्चों की लॉटरी?",
+      "trend": {
+        "score": 4,
+        "why": "4 अख़बार/चैनल 2 दिन में, 14 खबरें 7 दिन में"
+      }
+    },
+    {
+      "khabar": "त्योहारों के सीजन में रेलवे ने एक झटके में रद्द की बावन ट्रेनें",
+      "score": "9",
+      "topic": "त्योहारों के समय रेलवे ट्रेनों का सामूहिक कैंसिलेशन",
+      "category": "travel",
+      "breaking": "नॉन-इंटरलॉकिंग कार्य के कारण रेलवे ने 52 ट्रेनें रद्द कीं",
+      "samaj": "हम त्योहारों पर घर जाने वाले रेल यात्री",
+      "maang": "हमारी माँग: रद्द ट्रेन के हर यात्री को मुफ़्त पास दिया जाए!",
+      "twist": "तो सबको बता देंगे… टीटी साहब ख़ुद बिना टिकट सफ़र करके नौकरी पाए थे!",
+      "takiya": "सीट दो, बहाने नहीं!",
+      "tag_who": "उस दोस्त को जिसकी दिवाली ट्रेन टिकट वेटिंग में है",
+      "source": "नवभारत लाइव, अमर उजाला, दैनिक भास्कर, IBC24",
+      "ask": "क्या आपकी त्योहार वाली ट्रेन भी कैंसल हो गई?",
+      "ticker": [
+        "बिलासपुर और झारसुगुड़ा में काम के चलते 52 ट्रेनें रद्द",
+        "त्योहारों में घर जाने वाले लाखों यात्रियों की बढ़ी परेशानी",
+        "कई ट्रेनों के रूट बदले गए, रेलवे का नया नोटिफिकेशन"
+      ],
+      "lines": [
+        {
+          "who": "bablu",
+          "beat": "hook",
+          "say": "त्योहारों पर घर जाने वालों, ज़रा दिल थामकर बैठो!",
+          "caption": "त्योहारों पर घर जाने वालों, ज़रा दिल थामकर बैठो!",
+          "visuals": [
+            "crowded indian railway platform passengers waiting luggage",
+            "diwali sweets box suitcase packing home travel",
+            "sad passenger looking train schedule display board"
+          ],
+          "photo_hi": [
+            "रेलवे स्टेशन भीड़",
+            "दिवाली का सामान"
+          ],
+          "expr": "hairan",
+          "sfx": "boom",
+          "mood": "tension",
+          "delivery": "बिल्कुल गंभीर, धीमा, हर शब्द पर ज़ोर — जैसे देश का सबसे बड़ा सवाल पूछ रहा हो",
+          "visual": "crowded indian railway platform passengers waiting luggage",
+          "set": "studio",
+          "punch": false,
+          "big": "बड़ा सवाल",
+          "sub": "हम त्योहारों पर घर जाने वाले रेल य",
+          "card_color": [
+            20,
+            40,
+            110
+          ],
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "saboot",
+          "say": "रेलवे ने मरम्मत के नाम पर त्योहारों के सीज़न में 52 ट्रेनें रद्द कीं!",
+          "caption": "रेलवे ने मरम्मत के नाम पर त्योहारों के सीज़न में 52 ट्रेनें रद्द कीं!",
+          "visuals": [
+            "railway track repair workers non interlocking work tools",
+            "train cancelled red stamp board display railway station",
+            "bilaspur railway junction sign board train passing"
+          ],
+          "photo_hi": [
+            "रेलवे ट्रैक काम",
+            "ट्रेन रद्द बोर्ड"
+          ],
+          "expr": "gussa",
+          "sfx": "whoosh",
+          "mood": "tension",
+          "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
+          "visual": "railway track repair workers non interlocking work tools",
+          "set": "studio",
+          "punch": false,
+          "big": "सबूत नंबर 1",
+          "sub": "",
+          "card_color": [
+            12,
+            60,
+            120
+          ],
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "ramesh",
+          "beat": "saboot",
+          "say": "और बात यहीं ख़त्म नहीं होती… दोस्त की सौ वेटिंग सीधे ट्रेन कैंसिलेशन में बदली!",
+          "caption": "और बात यहीं ख़त्म नहीं होती… दोस्त की सौ वेटिंग सीधे ट्रेन कैंसिलेशन में बदली!",
+          "visuals": [
+            "irctc mobile app screen showing waiting list 100 status cancelled",
+            "disappointed young indian man holding head sofa",
+            "railway ticket paper booking counter"
+          ],
+          "photo_hi": [
+            "वेटिंग टिकट",
+            "परेशान युवक"
+          ],
+          "expr": "gussa",
+          "sfx": "glitch",
+          "mood": "tension",
+          "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
+          "visual": "irctc mobile app screen showing waiting list 100 status cancelled",
+          "set": "station",
+          "punch": false,
+          "big": "सबूत नंबर 2",
+          "sub": "",
+          "card_color": [
+            12,
+            60,
+            120
+          ],
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "maang",
+          "say": "हमारी माँग: रद्द ट्रेन के हर यात्री को मुफ़्त पास दिया जाए!",
+          "caption": "हमारी माँग: रद्द ट्रेन के हर यात्री को मुफ़्त पास दिया जाए!",
+          "visuals": [
+            "first class train pass ticket VIP pass stamp",
+            "bullet train speed modern railway track india",
+            "happy passenger holding golden train ticket"
+          ],
+          "photo_hi": [
+            "रेलवे फ्री पास",
+            "बुलेट ट्रेन"
+          ],
+          "stamp": "यात्रियों को मुफ़्त पास!",
+          "expr": "gussa",
+          "sfx": "dhol",
+          "mood": "masti",
+          "delivery": "ऐलान की तरह, जोश में, जैसे संसद में भाषण",
+          "visual": "first class train pass ticket VIP pass stamp",
+          "set": "studio",
+          "punch": true,
+          "big": "हमारी माँग",
+          "sub": "हमारी माँग: रद्द ट्रेन के हर",
+          "card_color": [
+            110,
+            20,
+            40
+          ],
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "dhamki",
+          "say": "और अगर ट्रेनें दोबारा शुरू नहीं हुईं…",
+          "caption": "और अगर ट्रेनें दोबारा शुरू नहीं हुईं…",
+          "visuals": [
+            "railway tracks empty stretching distance sunset",
+            "protesting passengers sitting on tracks agitation",
+            "news studio debate microphone bablu close up"
+          ],
+          "photo_hi": [
+            "खाली रेल पटरी",
+            "यात्री प्रदर्शन"
+          ],
+          "expr": "gambhir",
+          "sfx": "tick",
+          "mood": "tension",
+          "delivery": "अचानक बहुत धीमा, रहस्य वाला, लगभग फुसफुसाते हुए",
+          "pause_after": 0.5,
+          "visual": "railway tracks empty stretching distance sunset",
+          "set": "studio",
+          "punch": true,
+          "big": "चेतावनी!",
+          "sub": "",
+          "card_color": [
+            40,
+            10,
+            15
+          ],
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "twist",
+          "say": "तो सबको बता देंगे… टीटी साहब ख़ुद बिना टिकट सफ़र करके नौकरी पाए थे!",
+          "caption": "तो सबको बता देंगे… टीटी साहब ख़ुद बिना टिकट सफ़र करके नौकरी पाए थे!",
+          "visuals": [
+            "railway tt examiner uniform coat checking ticket train coach",
+            "young boy hiding inside train toilet funny face",
+            "old train ticket collector smiling awkwardly"
+          ],
+          "photo_hi": [
+            "टीटीई चेकिंग",
+            "बिना टिकट रेल"
+          ],
+          "stamp": "टीटी साहब का पुराना सच!",
+          "expr": "hairan",
+          "sfx": "boom",
+          "mood": "masti",
+          "delivery": "धमाके से, जीत वाले अंदाज़ में, आख़िरी हिस्सा ज़ोर से",
+          "visual": "railway tt examiner uniform coat checking ticket train coach",
+          "set": "studio",
+          "punch": true,
+          "big": "बड़ा खुलासा!",
+          "sub": "",
+          "card_color": [
+            170,
+            20,
+            30
+          ],
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "takiya",
+          "say": "सीट दो, बहाने नहीं!",
+          "caption": "सीट दो, बहाने नहीं!",
+          "visuals": [
+            "train seat confirmed green berth passenger relaxing",
+            "news anchor shouting loudly studio microphone",
+            "train engine blowing horn steam track"
+          ],
+          "photo_hi": [
+            "कन्फर्म ट्रेन सीट",
+            "रेल एंकर"
+          ],
+          "stamp": "सीट दो बहाने नहीं!",
+          "expr": "gussa",
+          "sfx": "thug",
+          "mood": "masti",
+          "delivery": "पूरी ताक़त से चिल्लाकर, मेज़ पर हाथ मारते हुए",
+          "pause_after": 0.3,
+          "visual": "train seat confirmed green berth passenger relaxing",
+          "set": "studio",
+          "punch": true,
+          "big": "सीट दो, बहाने नहीं!",
+          "sub": "",
+          "card_color": [
+            170,
+            20,
+            30
+          ],
+          "scene": "studio_end",
+          "insta": ""
+        }
+      ],
+      "caption_post": "त्योहारों पर घर जाने वालों, ज़रा दिल थामकर बैठो! Tag करो उसको जिसकी दिवाली ट्रेन टिकट वेटिंग में है क्या आपकी त्योहार वाली ट्रेन भी कैंसल हो गई? स्रोत: नवभारत लाइव, दैनिक भास्कर #IndianRailways #TrainCancelled #DiwaliTravel #BakraNews #BakraBahas",
+      "format": "rant",
+      "label": "बकरा बहस",
+      "icons": [
+        "₹",
+        "NEWS",
+        "%"
+      ],
+      "hook": "त्योहारों पर घर जाने वालों, ज़रा दिल थामकर बैठो!",
+      "hook_text": "त्योहारों पर घर जाने वालों, ज़रा दिल थामकर बैठो!",
+      "poll": null,
+      "key_word": "",
+      "cast_why": "समाज: हम त्योहारों पर घर जाने वाले रेल यात्री | माँग: हमारी माँग: रद्द ट्रेन के हर यात्री को मुफ़्त पास दिया जाए!",
+      "trend": {
+        "score": 3,
+        "why": "3 अख़बार/चैनल 2 दिन में, 5 खबरें 7 दिन में"
+      },
+      "hasi": "टैग: उस दोस्त को जिसकी दिवाली ट्रेन टिकट वेटिंग में है | twist: तो सबको बता देंगे… टीटी साहब ख़ुद बिना टिकट सफ़र करके नौकरी पाए थे!"
     }
   ]
 }
