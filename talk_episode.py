@@ -122,29 +122,38 @@ def prep(script_path):
     if not ep.get("no_clips"):                                 # असली खबर के छोटे video clips (पहले सेकंड में हरकत)
         try:
             import clips
-            qs = [q for ln in ep["lines"] for q in (ln.get("photo_hi") or [])][:6]
-            got_c = clips.for_topic(ep.get("topic") or ep.get("breaking", ""), qs, want=3)
-            for k, (cp, _, title) in enumerate(got_c):        # हर clip उसी line पर जिसकी बात उसके title से मिले
-                tw = visuals._stems(title)
-
-                def fit(i):
-                    ln = ep["lines"][i]
-                    return len(tw & visuals._stems(ln.get("say", "") + " " + " ".join(ln.get("photo_hi") or [])))
-                free = [i for i in range(len(ep["lines"])) if not list((IN / "broll").glob(f"{i}_clip*"))]
-                if not free:
-                    break
-                li = max(free, key=lambda i: (fit(i), -i))
-                # A clip must match BOTH the underlying news story and this
-                # dialogue; a common word like "मोबाइल" alone is not enough.
-                topic_words = visuals._stems(ep.get("topic") or ep.get("breaking") or "")
-                story_overlap = len(tw & topic_words)
-                min_story = 2 if len(topic_words) >= 3 else 1
-                if fit(li) == 0 or story_overlap < min_story:
-                    print(f"  clip rejected (dialogue/story mismatch): {title[:70]}")
+            topic = ep.get("topic") or ep.get("breaking", "")
+            # YouTube is a fallback for dialogue lines without a verified photo.
+            # Keep the search bounded; clips.for_topic checks video frames with
+            # Gemini and rejects clips it cannot visually verify.
+            missing = [i for i in range(len(ep["lines"]))
+                       if not any((IN / "broll").glob(f"{i}_*"))]
+            used_titles = set()
+            for i in missing[:6]:
+                ln = ep["lines"][i]
+                hints = list(ln.get("photo_hi") or [])
+                queries = hints[:2] or [ln.get("say", "")[:65]]
+                try:
+                    candidates = clips.for_topic(topic, queries, want=1)
+                except Exception as err:
+                    print(f"  YouTube line {i + 1} unavailable: {str(err)[:90]}")
                     continue
-                shutil.copy(cp, IN / f"broll/{li}_clip{k}.mp4")
-                shutil.copy(cp.with_suffix(".txt"), IN / f"broll/{li}_clip{k}.txt")
-                print(f"  🎬 clip → line {li + 1}: {title[:50]}")
+                for cp, _, title in candidates:
+                    if title in used_titles:
+                        continue
+                    tw = visuals._stems(title)
+                    spoken = visuals._stems(ln.get("say", "") + " " + " ".join(hints))
+                    story = visuals._stems(topic)
+                    if not (tw & spoken) or len(tw & story) < (2 if len(story) >= 3 else 1):
+                        print(f"  YouTube clip rejected for line {i + 1}: title mismatch")
+                        continue
+                    used_titles.add(title)
+                    shutil.copy(cp, IN / f"broll/{i}_clip0.mp4")
+                    credit = cp.with_suffix(".txt")
+                    if credit.exists():
+                        shutil.copy(credit, IN / f"broll/{i}_clip0.txt")
+                    print(f"  YouTube verified fallback -> line {i + 1}: {title[:65]}")
+                    break
         except Exception as e:                                 # noqa: BLE001
             print("  clips वाला हिस्सा छोड़ा:", repr(e)[:150])
     fill_sets(ep)
