@@ -1,0 +1,27 @@
+name: Comedy regression checks
+on:
+  pull_request:
+    paths:
+      - 'bakra_rules.py'
+      - 'news_writer.py'
+      - 'visuals.py'
+      - 'run_daily.py'
+      - 'tests/**'
+      - '.github/workflows/comedy-regression.yml'
+  push:
+    branches:
+      - 'feature/retention-comedy-quality-gate-20261025'
+  workflow_dispatch:
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Python syntax checks
+        run: python -m py_compile bakra_rules.py news_writer.py visuals.py run_daily.py talk_episode.py
+      - name: Offline script quality tests
+        run: python -m unittest discover -s tests -p 'test_comedy_gate.py' -v
