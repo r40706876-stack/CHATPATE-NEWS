@@ -351,7 +351,7 @@ def safe_story_indices(candidates_, topic, limit=3, line=None):
     return [j for j, c in enumerate(candidates_)
             if c.get("same_story") and not c.get("stock")
             and len(tw & _stems(c.get("tags", ""))) >= need
-            and bool(spoken & _stems(c.get("tags", "")))][:limit]
+            and (line is None or bool(spoken & _stems(c.get("tags", ""))))][:limit]
 
 
 def pick_for_lines(lines, per_line=3, pool=9, topic="", strict=False):   # 3 तक: एक तस्वीर पर देर तक न अटके
