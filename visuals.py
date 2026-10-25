@@ -459,14 +459,28 @@ def pick_for_lines(lines, per_line=3, pool=9, topic="", strict=False):   # 3 त
                 break
             except Exception as e:                        # noqa: BLE001
                 print("  AI जाँच में गड़बड़, दोबारा:", repr(e)[:100])
-        if got is None and strict:                        # बिना जाँच कुछ नहीं (screen पर beat वाला card चलेगा)
-            print("  AI जाँच नहीं हुई — strict: इन lines पर कोई तस्वीर नहीं")
-            got = [[] for _ in batch]
-        if got is None:                                   # AI नहीं चला: बिना देखे कुछ नहीं लगाते — सिर्फ़ भारत वाली पक्की photo
-            print("  AI जाँच नहीं हुई — खबर/search वाली असली फ़ोटो (search engine का मेल), वरना भारत वाली पक्की photo")
-            got = [[j for j, c in enumerate(cs) if c.get("news") and not c.get("stock")
-                    and len(_stems(lines[i].get("topic") or topic) & _stems(c.get("tags", ""))) >= 2][:per_line]
-                   for i, _, cs in batch]
+        if got is None:
+            # Gemini free tier can exhaust quota, ignore instructions or return bad JSON.
+            # Strict mode must not turn this into 0 visuals automatically: use only
+            # article images whose headline matches this exact story (never stock).
+            print("  Gemini photo review unavailable: verified story-title fallback")
+            got = []
+            for i, _, cs in batch:
+                tw = _stems(lines[i].get("topic") or topic)
+                min_overlap = 2 if len(tw) >= 2 else 1
+                safe = [j for j, c in enumerate(cs)
+                        if c.get("same_story") and not c.get("stock")
+                        and len(tw & _stems(c.get("tags", ""))) >= min_overlap]
+                got.append(safe[:per_line])
+        # Never trust AI-provided indices without checking their type and bounds.
+        clean = []
+        for n, (_, _, cs) in enumerate(batch):
+            chosen = got[n] if isinstance(got, list) and n < len(got) else []
+            if not isinstance(chosen, list):
+                chosen = []
+            valid = [j for j in chosen if type(j) is int and 0 <= j < len(cs)]
+            clean.append(valid[:per_line])
+        got = clean
         picks += [got[n] if n < len(got) else [] for n in range(len(batch))]
     CACHE.mkdir(exist_ok=True)
     out, where = {}, {}
@@ -474,7 +488,7 @@ def pick_for_lines(lines, per_line=3, pool=9, topic="", strict=False):   # 3 त
         got = []
         sel = picks[n] if n < len(picks) and isinstance(picks[n], list) else []
         for j in sel[:per_line]:
-            if not isinstance(j, int) or not 0 <= j < len(cs) or cs[j]["id"] in _used:
+            if type(j) is not int or not 0 <= j < len(cs) or cs[j]["id"] in _used:
                 continue
             c = cs[j]
             ext = ".mp4" if c["id"].startswith("v") else ".jpg"
