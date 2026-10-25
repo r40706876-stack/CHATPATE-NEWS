@@ -5,6 +5,7 @@ on:
       - 'bakra_rules.py'
       - 'news_writer.py'
       - 'visuals.py'
+      - 'talk_episode.py'
       - 'episodes/bijli.json'
       - 'run_daily.py'
       - 'tests/**'
@@ -24,6 +25,20 @@ jobs:
           python-version: '3.11'
       - name: Python syntax checks
         run: python -m py_compile bakra_rules.py news_writer.py visuals.py run_daily.py talk_episode.py
+      - name: Check every missing visual has safe set/card fallback
+        run: |
+          python - <<'PY'
+          import json, tempfile
+          from pathlib import Path
+          import talk_episode as te
+          ep=json.load(open('episodes/bijli.json',encoding='utf-8'))
+          with tempfile.TemporaryDirectory() as d:
+              te.IN=Path(d)
+              (te.IN/'broll').mkdir()
+              te.fill_sets(ep)
+              assert all((te.IN/'broll').glob(f'{i}_*') or ln.get('big') for i,ln in enumerate(ep['lines']))
+          print('PASS: each line has a safe set or card')
+          PY
       - name: Offline script quality tests
         run: python -m unittest discover -s tests -p 'test_comedy_gate.py' -v
       - name: Live visual retrieval with Gemini disabled
