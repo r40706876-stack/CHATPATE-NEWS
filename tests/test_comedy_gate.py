@@ -1,8 +1,6 @@
 """Offline regression tests for comedy format and script quality gates."""
 import unittest
-from unittest.mock import patch
 import bakra_rules
-import run_daily
 
 
 def episode(first="रिचार्ज ने जेब की छुट्टी कर दी!", fmt="news_roast"):
