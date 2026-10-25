@@ -32,6 +32,8 @@ def violations(ep):
         out.append("hook लंबा (>10 शब्द)")
     # bakra-script skill + retention लक्ष्य: news reel छोटी (~12–18 sec ≈ 55 शब्द तक); बकरा बहस (rant) अलग लंबाई रखती है
     words = sum(len(s.split()) for s in lines)
-    if ep.get("format") != "rant" and words > 55:
+    if ep.get("kind") == "punch" and words > 24:
+        out.append(f"एक पंच लंबा ({words} शब्द, सीमा 24)")
+    elif ep.get("format") != "rant" and ep.get("kind") != "punch" and words > 55:
         out.append(f"script लंबी ({words} शब्द, सीमा 55)")
     return out

@@ -54,7 +54,7 @@ def finish(ep):
     words = sum(nw.nwords(l["say"]) for l in lines)
     first = lines[0]["say"].strip()
     assert nw.nwords(first) <= 10, f"hook लंबा ({nw.nwords(first)} शब्द)"
-    assert words <= MAX_WORDS + 4, f"लंबा: {words} शब्द (8-10 सेकंड = {MAX_WORDS} तक)"
+    assert words <= MAX_WORDS, f"लंबा: {words} शब्द (8-10 सेकंड = {MAX_WORDS} तक)"
     assert not re.match(r"\s*(नमस्कार|आज की खबर)", first), "नमस्कार से शुरुआत"
     assert not nw.bookish(lines), "किताबी शब्द"
     assert not any(nw.SEND.search(l["say"]) or nw.FILLER.search(l["say"]) for l in lines), "ख़ाली/भेजो वाली line"
