@@ -17,7 +17,7 @@ W, H, FPS = 132, 101, 10          # ऊपर वाली screen छोटी �
 def _frames(video, crop="1056:810:12:130"):
     raw = subprocess.run(["ffmpeg", "-loglevel", "quiet", "-i", str(video), "-vf",
                           f"crop={crop},scale={W}:{H},fps={FPS}", "-f", "rawvideo", "-pix_fmt", "gray", "-"],
-                         capture_output=True).stdout
+                         capture_output=True, check=True).stdout
     return np.frombuffer(raw, np.uint8).reshape(-1, H, W).astype(np.float32)
 
 
