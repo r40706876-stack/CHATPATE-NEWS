@@ -197,7 +197,7 @@ views मिले; "खबर पढ़ने" से शुरू होने
   • जोक तथ्य जैसा न लगे: जो खबर में हुआ ही नहीं (जैसे "ग्राहकों को सिलेंडर के साथ नमकीन मिल रही"), वो सच की तरह मत बोलो.
 लक्ष्य (virality skill, 24 अक्टूबर 2026): share सबसे ज़्यादा, औसत 70% देखा जाए, skip 10-20%. हमारे page पर लोग औसतन
 सिर्फ़ ~8 सेकंड देखते थे, जबकि reel ~30 सेकंड की थी — इसलिए अब reel छोटी और कसी: 70% = ~11 सेकंड.
-कुल 4-6 lines, 35-50 शब्द (बोलने में 13-18 सेकंड; 55 से ज़्यादा = script रद्द). क्रम:
+कुल 5-6 lines, 35-50 शब्द (बोलने में 13-18 सेकंड; 55 से ज़्यादा = script रद्द). क्रम:
  1. HOOK (≤ 8 शब्द): line ख़ुद मज़ाक है — खबर का सबसे बेतुका पहलू, बीच-बहस से शुरुआत ("भाई, ट्रेन लेट है… या रिटायर हो गई?")
     या उलटा सच. खबर पढ़ना नहीं. **सबसे चौंकाने वाला शब्द पहले 3 शब्दों में** — भूमिका से शुरुआत नहीं
     ("ट्रैफिक जाम से बचने के लिए बंदा उड़कर…" गलत, 51% लोग भागे; "बंदा उड़कर दफ़्तर पहुँचा… जाम देखता रह गया!" सही).
@@ -212,11 +212,11 @@ views मिले; "खबर पढ़ने" से शुरू होने
     हमारे page पर pun वाली headline सबसे ज़्यादा भागी ("टिकट कन्फ़र्म… पर सपने में" 65% skip) — शब्दों का खेल नहीं, सिस्टम पर सीधी चोट.
  2. तथ्य + पंच (≤ 12 शब्द): असली बात (अंक/तारीख़ हूबहू) एक छोटे वाक्य में, और **उसी line के आख़िर में छोटा पंच**.
     Instagram के retention graph में हर reel पर 3-5 सेकंड पर आधे लोग जाते थे — ठीक यहाँ, जब मज़ा रुककर खबर पढ़ी जाती थी.
-    सही: "पीठ पर मशीन बाँधकर बंदा उड़कर दफ़्तर पहुँचा… attendance फिर भी half-day लगी।"
+    सही: सत्यापित उड़ान की खबर के बाद चाचा कहें: "हम होते तो बॉस हवा में भी हाज़िरी माँगता!" कल्पना को कल्पना की तरह बोलो; half-day लगने जैसी घटना मत गढ़ो।
     गलत: "पीठ पर उड़ने वाली मशीन बाँधकर ऑफिस जाने वाले व्यक्ति का वीडियो वायरल हुआ है।" ("वायरल हो गया/हुआ", "सोशल
     मीडिया पर…", "लोगों ने देखा" जैसे ख़ाली शब्द किसी line में कभी नहीं — script रद्द). "card" यहीं (वैकल्पिक).
- 3. RE-HOOK (≤ 10 शब्द): ठीक ~5 सेकंड पर (यहीं हमारे लोग जाते थे) मोड़ — "पर असली खेल तो अब है…", "और सरकार का जवाब
-    सुनिए…" जैसा (अपने शब्दों में) + पिछली से बड़ी बात. "वैसे/ख़ैर/तो दोस्तों" जैसी ढीली line कभी नहीं.
+ 3. RE-HOOK (≤ 10 शब्द): अगला किरदार पिछले दावे को ठोस, मज़ेदार जवाब से पलटे।
+    "असली खेल अब है/जवाब सुनिए" जैसी भूमिका नहीं; सीधे नई बात। "वैसे/ख़ैर/तो दोस्तों" जैसी ढीली line कभी नहीं.
  4. PEHCHAAN / TAG वाली line (≤ 14 शब्द, ज़रूरी): किसी पहचाने जाने वाले इंसान की आदत पर इतनी सटीक चोट कि देखने वाला बोले
     "अरे ये तो बिल्कुल पापा/फूफा/राहुल है!" — यही line share करवाती है (हमारी सबसे ज़्यादा share वाली reel "भैया थोड़ा खिसक
     जाओ" ऐसी ही थी; "Free hit" को 1,240 views मिले पर ऐसा पल नहीं था → 0 share). इस line पर "tag": true और
@@ -226,6 +226,18 @@ views मिले; "खबर पढ़ने" से शुरू होने
     "ये वीडियो उसको भेजो/शेयर करो/टैग करो/फ़ॉलो करो" कभी नहीं — भेजने की वजह line 4 की चोट है, बोलकर माँगना नहीं.
 हर line पिछली से एक सीढ़ी ज़्यादा बेतुकी, और अलग ढाँचे की (सवाल, भड़ास, तुलना, मुहर, callback). कोई line सिर्फ़ अगली line
 को सेट करने के लिए नहीं — हर line में अपना मज़ा."""
+
+RETENTION_BRIEF = """लेखकीय निर्देश (लक्ष्य हैं, नतीजों की गारंटी नहीं):
+- 10% skip और 90% average percentage viewed प्रयोग के लक्ष्य हैं। खुद को 10/10 लिखकर पास मत करो।
+- एक सत्यापित खबर, एक समझ आने वाला टकराव। बबलू/चाचा/पिंकी/दादी में ज़रूरत के 2-3 किरदार।
+- पहले ही वाक्य में समस्या और मज़ा; कोई स्वागत, चैनल परिचय या नकली suspense नहीं।
+- चाचा का आत्मविश्वासी उल्टा तर्क → पिंकी की ठोस काट → ज़रूरत हो तो दादी का अप्रत्याशित अंतिम वार।
+- हर जवाब पिछले संवाद का परिणाम हो; असंबंधित one-liners का ढेर नहीं। आख़िरी पंच के बाद सफ़ाई नहीं।
+- tag_who में स्पष्ट बताओ कौन इसे किस परिचित को और क्यों भेजेगा; सिर्फ tag=true पर्याप्त नहीं।
+- उपलब्ध reactions, जगह बदलना, zoom और विषय से जुड़ी image/clip से दृश्य बनें। हाथ से वस्तु खोलने,
+  उड़ने या जटिल acting पर punch निर्भर न हो। तस्वीर को वास्तविक घटना का सबूत तभी कहो जब सत्यापित हो।
+- पुराने Wi-Fi/शादी/paneer clichés और नमूनों की नकल नहीं। तथ्य और काल्पनिक व्यंग्य साफ़ अलग रहें।
+"""
 
 FIELDS = """हर line में: "expr" (gambhir / hasi / tanz / gussa / hairan / udaas — एक ही भाव लगातार 2 से ज़्यादा नहीं; bablu की
 मुहर line "gambhir"), "set" (पीछे की जगह — line की बात से, किरदार से नहीं: bablu तथ्य/मुहर = "studio"; दफ़्तर/फ़ॉर्म/भर्ती =
@@ -278,6 +290,8 @@ def prompt_write(packs, bank=None):
 {raw}
 {STRUCTURE}
 
+{RETENTION_BRIEF}
+
 {SATIRE}
 
 {MUHAR}
@@ -315,6 +329,8 @@ def prompt_sharpen(eps):
 {json.dumps(slim, ensure_ascii=False, indent=1)}
 
 {STRUCTURE}
+
+{RETENTION_BRIEF}
 
 {SATIRE}
 
@@ -433,7 +449,9 @@ def finish(ep, strict=True):
                 continue
             c["icon"] = c.get("icon") if c.get("icon") in ICONS else "check"
             c["big"], c["tag"], c["sub"] = str(c["big"])[:40], str(c.get("tag", ""))[:28], str(c.get("sub", ""))[:70]
-    if len(ep["lines"]) > 6:                                # virality skill: reel 13-18 सेकंड — ज़्यादा से ज़्यादा 6 lines (आख़िरी = loop)
+    if strict and not 5 <= len(ep["lines"]) <= 6:
+        raise ValueError("script में 5-6 lines चाहिए; बीच का संवाद काटना सुरक्षित नहीं")
+    if not strict and len(ep["lines"]) > 6:                                # virality skill: reel 13-18 सेकंड — ज़्यादा से ज़्यादा 6 lines (आख़िरी = loop)
         ep["lines"] = ep["lines"][:5] + ep["lines"][-1:]
     ep = writer.clean(ep, strict=False)
     first = ep["lines"][0]["say"].strip()
@@ -559,7 +577,7 @@ def write_from(c, packs, picks, n=3):
     raw = [r for r in raw if isinstance(r, dict) and r.get("lines")]
     eps = []
     for ep in raw:
-        for strict in (True, False):
+        for strict in (True,):
             try:
                 fe = finish(json.loads(json.dumps(ep)), strict)
                 if not strict:
@@ -569,7 +587,7 @@ def write_from(c, packs, picks, n=3):
             except Exception as e:                          # noqa: BLE001
                 print(f"  episode ({'सख़्त' if strict else 'ढीला'}) नहीं बना:", ep.get("topic"), "—", e)
     if not eps:
-        raise SystemExit("एक भी script नहीं बनी")
+        raise NoViral(c["rejected"])
     for ep in eps:                                          # हर script पर उसकी खबर का trend नंबर
         w = set(str(ep.get("topic", "")).split())
         best = max(picks, key=lambda p: len(w & set(str(p.get("topic", "")).split())))
@@ -593,7 +611,7 @@ def write_from(c, packs, picks, n=3):
             fixed = []
             for old_ep, new_ep in zip(weak, again if isinstance(again, list) else []):
                 try:
-                    ne = finish(new_ep, strict=False)
+                    ne = finish(new_ep, strict=True)
                     ne["trend"] = old_ep.get("trend")
                     fixed.append((old_ep, ne))
                 except Exception as e:                      # noqa: BLE001
@@ -609,15 +627,14 @@ def write_from(c, packs, picks, n=3):
             raise
         except Exception as e:                              # noqa: BLE001
             print("  तीखा करने वाला कदम छोड़ा:", repr(e)[:150])
-    good = [e for e in eps if (e.get("connect") or {}).get("score", vc.CONNECT_MIN) >= vc.CONNECT_MIN]
+    # LEAN saves API calls: structural approval is explicitly not an audience score.
+    for e in eps:
+        e["review_status"] = "structure_only" if LEAN else "model_reviewed"
+    good = [e for e in eps if not e.get("_loose") and
+            (LEAN or (e.get("connect") or {}).get("score", 0) >= vc.CONNECT_MIN)]
     for e in eps:
         print(f"  {'✅' if e in good else '❌'} connect {(e.get('connect') or {}).get('score', '?')}/10: {e.get('topic')}")
     c["rejected"] += [e for e in eps if e not in good]
-    if len(good) < n and eps:                               # हमेशा 3 विकल्प: कम पड़ें तो बाकी में से सबसे अच्छी (नंबर साफ़ दिखते हैं)
-        rest = sorted([e for e in eps if e not in good],
-                      key=lambda e: (bool(e.get("_loose")), -(e.get("connect") or {}).get("score", 0)))
-        good = good + rest[:n - len(good)]
-        print("  कोई 7+ नहीं — फिर भी सबसे अच्छी", len(good), "भेज रहे (नंबर साफ़ दिखेंगे)")
     if not good:
         raise NoViral(c["rejected"])
     if LEAN:                                                # सबसे चर्चित खबर पहले
