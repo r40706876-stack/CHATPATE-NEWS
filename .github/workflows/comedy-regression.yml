@@ -42,6 +42,31 @@ jobs:
           PY
       - name: Offline script quality tests
         run: python -m unittest discover -s tests -p 'test_comedy_gate.py' -v
+      - name: Verify YouTube first then image then card order
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          s=Path('talk_episode.py').read_text(encoding='utf-8')
+          start=s.index('def prep(')
+          end=s.index('def pick_shot(', start)
+          p=s[start:end]
+          assert p.index('clips.for_topic(') < p.index('visuals.pick_for_lines(') < p.index('fill_sets(ep)')
+          assert 'not any((IN / "broll").glob(f"{i}_clip*"))' in p
+          print('PASS: YouTube > verified images > set/card priority')
+          PY
+      - name: YouTube live search smoke test
+        continue-on-error: true
+        timeout-minutes: 3
+        run: |
+          pip -q install 'yt-dlp[default]'
+          python - <<'PY'
+          import json
+          import clips
+          results=clips.search('भारत बिजली कटौती समाचार', n=3)
+          report={'search_works':bool(results),'titles':[x[1] for x in results[:3]]}
+          open('youtube_smoke.json','w').write(json.dumps(report,ensure_ascii=False,indent=2))
+          print(json.dumps(report,ensure_ascii=False))
+          PY
       - name: Live visual retrieval with Gemini disabled
         env:
           GEMINI_API_KEY: ''
@@ -77,4 +102,5 @@ jobs:
           name: live-visual-retrieval
           path: |
             live_visual_report.json
+            youtube_smoke.json
             visuals_cache/
