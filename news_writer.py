@@ -173,7 +173,9 @@ SATIRE = """अंदाज़: Prakash Bharati जैसा गहरा, क�
 गहराई कैसे आती है: छोटी खबर को बड़ी सच्चाई से जोड़ो — ज़िंदगी भर के चक्कर, काग़ज़ पर मिले हक़, बेकार समझे जाने वाले बुज़ुर्ग,
 "नियम बनाम ज़मीन". पर हर गहरी बात का अंत **हँसी** पर हो, उदासी पर नहीं (बेतुकेपन को और आगे बढ़ाओ, रोओ मत).
 मना (ऐसा लिखा तो script रद्द): "नमस्कार/आज की खबर" वाली शुरुआत, ज़बरदस्ती की तुलना, "हाहा", हर line में देसी शब्द ठूँसना,
-किसी असली इंसान/नेता/पार्टी/धर्म/जाति पर वार, मौत/हादसे/चोट पर मज़ाक, झूठा तथ्य, "ये वीडियो उसको भेजो" वाली line."""
+किसी असली इंसान/नेता/पार्टी/धर्म/जाति पर वार, मौत/हादसे/चोट पर मज़ाक, झूठा तथ्य, "ये वीडियो उसको भेजो" वाली line.
+
+""" + __import__("bakra_rules").GOLD
 
 CASTING = """किरदार — सबकी 3D फ़ोटो तैयार हैं: कुल 2-3 किरदार (ज़्यादा से ज़्यादा 4) (bablu ज़रूरी नहीं, पर तथ्य वाली line अक्सर उसी की):
 - bablu: तेज़ गाँव संवाददाता/anchor. तथ्य और सरकारी दावे वाली मुहर line, बिल्कुल गंभीर चेहरा.
@@ -486,8 +488,10 @@ def gather(c, n):
         print("  खबरों की list Gemini ने नहीं ली, अपराध/मौत वाली हटाकर दोबारा:", repr(e)[:150])
         c.update(_safe(c))                                  # वही dict रहे (c["rejected"] बाहर भी दिखे)
         raw = gemini.ask(prompt_pick(c, min(n * 2 + 3, 15)), json_mode=True, temperature=0.4)
+    import bakra_rules                                       # नेता/PM/चुनाव वाली खबर लिखने से पहले ही बाहर (prompt के बावजूद आती थी)
     picks = [p for p in gemini.json_from(raw).get("picks", [])
-             if p.get("topic") and not RISKY.search(str(p.get("topic")) + " " + str(p.get("query", "")))]
+             if p.get("topic") and not RISKY.search(str(p.get("topic")) + " " + str(p.get("query", "")))
+             and not bakra_rules.POLITICS.search(str(p.get("topic")) + " " + str(p.get("query", "")))]
     for p in picks:                                         # पहली जाँच: खबर सच में आज उठी हुई है? (free, Gemini नहीं)
         sc, why, heads = vc.trend(p.get("query") or p["topic"])
         p["trend"], p["_heads"] = {"score": sc, "why": why}, heads

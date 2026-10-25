@@ -133,7 +133,15 @@ def write_scripts(news, n):
             pass
         except (Exception, SystemExit) as e:               # noqa: BLE001
             print("  एक पंच नहीं बना:", repr(e)[:200])
-    return (punch + out)[:n] if punch else out[:n]
+    eps = (punch + out)[:n] if punch else out[:n]
+    import bakra_rules                                     # मालिक के पक्के नियम: टूटी script Telegram तक नहीं (सब टूटीं तो ⚠️ के साथ)
+    ok = [e for e in eps if not bakra_rules.violations(e)]
+    for e in eps:
+        v = bakra_rules.violations(e)
+        if v:
+            print("  ❌ नियम टूटा, हटाई:", e.get("topic"), v)
+            e["_loose"] = True
+    return ok or eps
 
 
 def do_write(feed=None):
