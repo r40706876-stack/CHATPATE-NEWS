@@ -449,7 +449,7 @@ def pick_for_lines(lines, per_line=3, pool=9, topic="", strict=False):   # 3 त
                 got = res.get("picks", []) if isinstance(res, dict) else None
                 if not isinstance(got, list):
                     got = None
-                hr = res.get("hero") or {} if isinstance(res, dict) else {}
+                hr = (res.get("hero") or {}) if isinstance(res, dict) else {}
                 try:
                     hl, hp, hs = int(hr.get("line", 0)) - 1, int(hr.get("pick", -1)), float(hr.get("score", 0))
                     if 0 <= hl < len(batch) and 0 <= hp < len(batch[hl][2]):
@@ -461,7 +461,7 @@ def pick_for_lines(lines, per_line=3, pool=9, topic="", strict=False):   # 3 त
                 break
             except Exception as e:                        # noqa: BLE001
                 print("  AI जाँच में गड़बड़, दोबारा:", repr(e)[:100])
-        if got is None:
+        if got is None or (not any(isinstance(row, list) and row for row in got) and any(cs for _, _, cs in batch)):
             # Gemini free tier can exhaust quota, ignore instructions or return bad JSON.
             # Strict mode must not turn this into 0 visuals automatically: use only
             # article images whose headline matches this exact story (never stock).
