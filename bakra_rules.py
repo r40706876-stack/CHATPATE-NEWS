@@ -39,7 +39,7 @@ def violations(ep):
     elif ep.get("format") != "rant" and ep.get("kind") != "punch" and words > 55:
         out.append(f"script लंबी ({words} शब्द, सीमा 55)")
     # पहचान/tag: share की वजह — punch और rant में ख़ाली हो तो रद्द (news में writer पहले से रोकता है)
-    if ep.get("kind") == "punch" or ep.get("format") == "rant":
+    if ep.get("kind") in ("punch", "tvshop") or ep.get("format") == "rant":
         if not str(ep.get("tag_who", "")).strip():
             out.append("पहचान (tag) नहीं — share की वजह नहीं")
     # किताबी/सरकारी शब्द (वितरक, उपभोक्ता, द्वारा…) — skill की जाँच

@@ -49,7 +49,8 @@ def preview(eps):
     for i, ep in enumerate(eps, 1):
         out.append(f"\n━━━━━━━━━━  {i}  ━━━━━━━━━━")
         out.append("🔥 बकरा बहस" if ep.get("format") == "rant" else
-                   "⚡ एक पंच (8-10 सेकंड, loop — retention experiment)" if ep.get("kind") == "punch" else "📰 वायरल खबर")
+                   "⚡ एक पंच (8-10 सेकंड, loop — retention experiment)" if ep.get("kind") == "punch" else
+                   "📺 नकली ऐड (नया format — TV-shop वाला ऑफ़र → असली खबर → चाचा → loop)" if ep.get("kind") == "tvshop" else "📰 वायरल खबर")
         out.append(f"📰 {ep.get('topic') or ep.get('breaking', '')}")
         if ep.get("insta_used"):
             out.append(f"📱 Insta trend: {ep['insta_used']}")
@@ -133,7 +134,16 @@ def write_scripts(news, n):
             pass
         except (Exception, SystemExit) as e:               # noqa: BLE001
             print("  एक पंच नहीं बना:", repr(e)[:200])
-    eps = (punch + out)[:n] if punch else out[:n]
+    tv = []                                                # 📺 नकली ऐड — मालिक का चुना नया format (25 Oct), रोज़ 1 विकल्प सबसे ऊपर
+    if os.getenv("TVSHOP", "1") == "1" and fmt == "both":
+        try:
+            import tvshop_writer
+            tv = tvshop_writer.write_from(c, packs, picks, 1)
+        except gemini.QuotaOver:
+            pass
+        except (Exception, SystemExit) as e:               # noqa: BLE001
+            print("  नकली ऐड नहीं बना:", repr(e)[:200])
+    eps = (tv + punch + out)[:n]
     import bakra_rules                                     # मालिक के पक्के नियम: टूटी script Telegram तक नहीं (सब टूटीं तो ⚠️ के साथ)
     ok = [e for e in eps if not bakra_rules.violations(e)]
     for e in eps:
