@@ -1,950 +1,104 @@
 {
-  "sent_at": 1792862113,
+  "sent_at": 1792902955,
   "eps": [
     {
-      "khabar": "डॉक्टर की पत्नी से फेसबुक पर ऑनलाइन ड्रेस ऑर्डर के नाम पर साइबर ठगी",
-      "score": "9/10: दस रुपये के डिस्काउंट के चक्कर में ₹43,000 गँवाने वाली घरेलू शॉपिंग की पोल खोलना तगड़ा ट्विस्ट है।",
-      "topic": "फेसबुक पर ड्रेस ऑर्डर से 43 हजार की ठगी",
-      "category": "money",
-      "breaking": "बिलासपुर में ऑनलाइन सस्ती ड्रेस के चक्कर में डॉक्टर की पत्नी से ₹43,000 साइबर ठगी",
-      "samaj": "हम ऑनलाइन सेल के दीवाने",
-      "maang": "हमारी माँग: सोशल मीडिया विज्ञापनों पर ठगी रोधक सायरन बजाना अनिवार्य हो!",
-      "twist": "तो सबको बता देंगे… भाभी जी दस रुपये का कूपन पाने के चक्कर में पूरा खाता लुटा बैठीं!",
-      "takiya": "डिस्काउंट बाद में, सुरक्षा पहले!",
-      "tag_who": "जो दिन भर फेसबुक पर 90% डिस्काउंट वाले ऑफर ढूंढता है",
-      "source": "Dainik Bhaskar, SbharatNews, palpalindia",
-      "ask": "क्या सोशल मीडिया शॉपिंग विज्ञापनों पर भरोसा करना सही है?",
-      "ticker": [
-        "बिलासपुर में फेसबुक ड्रेस विज्ञापन से महिला डॉक्टर की पत्नी से ठगी",
-        "कूरियर और जीएसटी रिफंड के नाम पर वसूले गए 43 हजार रुपये",
-        "साइबर ठगी होने पर तुरंत 1930 नंबर पर शिकायत दर्ज कराने की अपील"
-      ],
+      "topic": "फोल्डेबल आईफोन की भारत में सेल",
+      "breaking": "साढ़े चार लाख का आईफोन, प्रति ग्राहक लिमिट दो",
+      "source": "Amar Ujala, Dainik Bhaskar",
+      "hook_screen": "साढ़े 4 लाख का फोन!",
+      "tag_who": "वो दोस्त जो हर नए आईफोन पर ईएमआई का हिसाब लगाता है",
       "lines": [
         {
           "who": "bablu",
-          "beat": "hook",
-          "say": "क्या फ़ेसबुक का भारी डिस्काउंट, बैंक खाता साफ़ करने का सरकारी फंदा है?",
-          "caption": "क्या फ़ेसबुक का भारी डिस्काउंट, बैंक खाता साफ़ करने का सरकारी फंदा है?",
-          "visuals": [
-            "facebook shopping ad screen with massive discount tag",
-            "bank transaction error alert message on smartphone",
-            "news anchor shouting with intense expression"
-          ],
-          "photo_hi": [
-            "फेसबुक ऑनलाइन ड्रेस डिस्काउंट",
-            "बैंक खाता बैलेंस शून्य मैसेज"
-          ],
-          "expr": "hairan",
-          "sfx": "boom",
-          "mood": "tension",
-          "delivery": "बिल्कुल गंभीर, धीमा, हर शब्द पर ज़ोर — जैसे देश का सबसे बड़ा सवाल पूछ रहा हो",
-          "visual": "facebook shopping ad screen with massive discount tag",
-          "set": "studio",
-          "punch": false,
-          "big": "बड़ा सवाल",
-          "sub": "हम ऑनलाइन सेल के दीवाने",
-          "card_color": [
-            20,
-            40,
-            110
-          ],
-          "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "beat": "tathya",
-          "say": "बिलासपुर में ड्रेस ऑर्डर पर डॉक्टर की पत्नी से तिरालीस हजार रुपये ठगे गए!",
-          "caption": "बिलासपुर में ड्रेस ऑर्डर पर डॉक्टर की पत्नी से 43000 रुपये ठगे गए!",
-          "visuals": [
-            "bilaspur map graphic glowing cyber fraud center",
-            "woman shocked looking at phone screen transaction debited",
-            "43000 rupees amount debited notification"
-          ],
-          "photo_hi": [
-            "बिलासपुर साइबर क्राइम खबर",
-            "ऑनलाइन शॉपिंग ठगी महिला"
-          ],
+          "say": "साढ़े चार लाख का फोन, लिमिट सिर्फ दो।",
+          "caption": "₹4.5 लाख का फोन, लिमिट सिर्फ 2.",
           "expr": "gambhir",
-          "sfx": "whoosh",
-          "mood": "tension",
-          "delivery": "तेज़, साफ़, न्यूज़-रीडर जैसा",
-          "visual": "bilaspur map graphic glowing cyber fraud center",
-          "set": "studio",
-          "punch": false,
-          "big": "असली खबर",
-          "sub": "बिलासपुर में ऑनलाइन सस्ती ड्रेस के",
-          "card_color": [
-            20,
-            40,
-            110
-          ],
-          "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "beat": "saboot",
-          "say": "कूरियर और जीएसटी रिफ़ंड के बहाने पैसे ऐंठे गए, पर ड्रेस कभी नहीं मिली!",
-          "caption": "कूरियर और जीएसटी रिफ़ंड के बहाने पैसे ऐंठे गए, पर ड्रेस कभी नहीं मिली!",
           "visuals": [
-            "empty courier delivery box open on table",
-            "gst tax refund invoice document fake seal",
-            "frustrated woman holding head in despair"
+            "shocked young Indian man staring at expensive foldable smartphone",
+            "apple store crowded counter billing desk"
           ],
           "photo_hi": [
-            "खाली कूरियर डिब्बा पैकेट",
-            "साइबर फ्रॉड कूरियर कॉल"
+            "महंगे मुड़ने वाले फोन को हैरानी से देखता भारतीय युवक",
+            "एपल स्टोर की बिलिंग काउंटर की भीड़"
           ],
-          "expr": "gussa",
-          "sfx": "whoosh",
-          "mood": "tension",
-          "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
-          "visual": "empty courier delivery box open on table",
           "set": "studio",
-          "punch": false,
-          "big": "सबूत नंबर 1",
-          "sub": "",
-          "card_color": [
-            12,
-            60,
-            120
-          ],
-          "scene": "chacha",
-          "insta": ""
+          "topic": "फोल्डेबल आईफोन की भारत में सेल"
         },
         {
           "who": "chacha",
-          "beat": "saboot",
-          "say": "हमारे ज़माने में तो दर्ज़ी कपड़ा मारकर भागता था, यहाँ पूरा बैंक उड़ा दिया!",
-          "caption": "हमारे ज़माने में तो दर्ज़ी कपड़ा मारकर भागता था, यहाँ पूरा बैंक उड़ा दिया!",
-          "visuals": [
-            "elderly indian uncle sitting on charpai talking animatedly",
-            "old tailor measuring tape and sewing machine",
-            "atm machine debit card transaction failed"
-          ],
-          "photo_hi": [
-            "पुराने जमाने के चाचाजी बाइट",
-            "दर्जी सिलाई मशीन पुराना"
-          ],
-          "expr": "gussa",
-          "sfx": "glitch",
-          "mood": "tension",
-          "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
-          "visual": "elderly indian uncle sitting on charpai talking animatedly",
-          "set": "bank",
-          "punch": false,
-          "big": "सबूत नंबर 2",
-          "sub": "",
-          "card_color": [
-            12,
-            60,
-            120
-          ],
-          "scene": "chacha",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "beat": "maang",
-          "say": "हमारी माँग: सोशल मीडिया विज्ञापनों पर ठगी रोधक सायरन बजाना अनिवार्य हो!",
-          "caption": "हमारी माँग: सोशल मीडिया विज्ञापनों पर ठगी रोधक सायरन बजाना अनिवार्य हो!",
-          "visuals": [
-            "news presenter slamming desk in anger studio",
-            "red siren warning light flashing on computer screen",
-            "cyber security lock shield icon"
-          ],
-          "photo_hi": [
-            "साइबर क्राइम अलर्ट सायरन",
-            "न्यूज एंकर टेबल एंगर"
-          ],
-          "stamp": "ठगी रोधक सायरन बजाओ!",
-          "expr": "gussa",
-          "sfx": "dhol",
-          "mood": "masti",
-          "delivery": "ऐलान की तरह, जोश में, जैसे संसद में भाषण",
-          "visual": "news presenter slamming desk in anger studio",
-          "set": "studio",
-          "punch": true,
-          "big": "हमारी माँग",
-          "sub": "हमारी माँग: सोशल मीडिया विज्ञापनों",
-          "card_color": [
-            110,
-            20,
-            40
-          ],
-          "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "beat": "dhamki",
-          "say": "और अगर साइबर ठग नहीं पकड़े गए…",
-          "caption": "और अगर साइबर ठग नहीं पकड़े गए…",
-          "visuals": [
-            "anchor leaning forward dramatic eye close up",
-            "hacker in dark hoodie behind laptop matrix code",
-            "red backlight studio mood"
-          ],
-          "photo_hi": [
-            "न्यूज एंकर गंभीर चेतावनी",
-            "साइबर हैकर लैपटॉप डार्क"
-          ],
-          "expr": "gambhir",
-          "sfx": "tick",
-          "mood": "tension",
-          "delivery": "अचानक बहुत धीमा, रहस्य वाला, लगभग फुसफुसाते हुए",
-          "pause_after": 0.5,
-          "visual": "anchor leaning forward dramatic eye close up",
-          "set": "studio",
-          "punch": true,
-          "big": "चेतावनी!",
-          "sub": "",
-          "card_color": [
-            40,
-            10,
-            15
-          ],
-          "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "beat": "twist",
-          "say": "तो सबको बता देंगे… भाभी जी दस रुपये का कूपन पाने के चक्कर में पूरा खाता लुटा बैठीं!",
-          "caption": "तो सबको बता देंगे… भाभी जी 10 रुपये का कूपन पाने के चक्कर में पूरा खाता लुटा बैठीं!",
-          "visuals": [
-            "discount coupon 10 rupees voucher graphic pop up",
-            "indian woman searching offers on mobile phone excitedly",
-            "zero rupees bank account statement balance"
-          ],
-          "photo_hi": [
-            "ऑनलाइन शॉपिंग कूपन डिस्काउंट",
-            "महिला फोन शॉपिंग घर"
-          ],
-          "stamp": "10 रुपये के कूपन का चक्कर!",
-          "expr": "hairan",
-          "sfx": "boom",
-          "mood": "masti",
-          "delivery": "धमाके से, जीत वाले अंदाज़ में, आख़िरी हिस्सा ज़ोर से",
-          "visual": "discount coupon 10 rupees voucher graphic pop up",
-          "set": "studio",
-          "punch": true,
-          "big": "बड़ा खुलासा!",
-          "sub": "",
-          "card_color": [
-            170,
-            20,
-            30
-          ],
-          "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "beat": "takiya",
-          "say": "डिस्काउंट बाद में, सुरक्षा पहले!",
-          "caption": "डिस्काउंट बाद में, सुरक्षा पहले!",
-          "visuals": [
-            "anchor shouting loudly text animation on screen",
-            "cyber helpline 1930 number glowing graphic",
-            "padlock cyber safety icon green"
-          ],
-          "photo_hi": [
-            "बकरा बहस एंकर चिल्लाते",
-            "साइबर हेल्पलाइन 1930"
-          ],
-          "stamp": "डिस्काउंट बाद में, सुरक्षा!",
-          "expr": "gussa",
-          "sfx": "thug",
-          "mood": "masti",
-          "delivery": "पूरी ताक़त से चिल्लाकर, मेज़ पर हाथ मारते हुए",
-          "pause_after": 0.3,
-          "visual": "anchor shouting loudly text animation on screen",
-          "set": "studio",
-          "punch": true,
-          "big": "डिस्काउंट बाद में, सुरक्षा पहले!",
-          "sub": "",
-          "card_color": [
-            170,
-            20,
-            30
-          ],
-          "scene": "studio_end",
-          "insta": ""
-        }
-      ],
-      "caption_post": "क्या फ़ेसबुक का भारी डिस्काउंट, बैंक खाता साफ़ करने का सरकारी फंदा है?\n\nTag करो उस दोस्त को जो 10 रुपये के डिस्काउंट कूपन के लिए पूरे इंटरनेट पर लिंक शेयर करता है! 💸👗\n\nक्या सोशल मीडिया शॉपिंग विज्ञापनों पर भरोसा करना सही है?\n\nस्रोत: Dainik Bhaskar, SbharatNews, palpalindia\n#BakraNews #CyberFraud #OnlineShoppingScam #BilaspurNews #BakraBahas",
-      "format": "rant",
-      "label": "बकरा बहस",
-      "icons": [
-        "₹",
-        "NEWS",
-        "%"
-      ],
-      "hook": "क्या फ़ेसबुक का भारी डिस्काउंट, बैंक खाता साफ़ करने का सरकारी फंदा है?",
-      "hook_text": "क्या फ़ेसबुक का भारी डिस्काउंट, बैंक खाता साफ़ करने का सरकारी फंदा है?",
-      "poll": null,
-      "key_word": "",
-      "cast_why": "समाज: हम ऑनलाइन सेल के दीवाने | माँग: हमारी माँग: सोशल मीडिया विज्ञापनों पर ठगी रोधक सायरन बजाना अनिवार्य हो!",
-      "trend": {
-        "score": 7,
-        "why": "17 अख़बार/चैनल 2 दिन में, 18 खबरें 7 दिन में"
-      },
-      "hasi": "टैग: जो दिन भर फेसबुक पर 90% डिस्काउंट वाले ऑफर ढूंढता है | twist: तो सबको बता देंगे… भाभी जी दस रुपये का कूपन पाने के चक्कर में पूरा खाता लुटा बैठीं!"
-    },
-    {
-      "topic": "प्रभास की फिल्म 'फौजी' का टीजर जारी",
-      "category": "[फ़िल्म-क्रिकेट फैन]",
-      "breaking": "प्रभास की फिल्म 'फौजी' का टीजर हुआ जारी",
-      "hook_text": "हिटलर और गीता कोड… प्रभास भाई अब टाइम-मशीन चलाएँगे क्या?",
-      "ask": "क्या आप ऐसी इतिहास वाली फ़िल्में देखते हैं?",
-      "source": "Navbharat Live, AajTak, Jagran",
-      "poll": [
-        "टीज़र देखा",
-        "अभी देखना है"
-      ],
-      "ticker": [
-        "हिटलर और गीता कोड पर बनी नई फ़िल्म",
-        "प्रभास के प्रशंसकों में उत्साह का माहौल",
-        "आधिकारिक चैनलों पर टीज़र हुआ जारी"
-      ],
-      "cast_why": "पिंकी का साउथ फ़िल्मों वाला ड्रामा बनाम चाचा का पुराना ज़माना",
-      "tag_who": "हर वो दोस्त जो हर साउथ फ़िल्म का टीज़र दस बार देखता है",
-      "lines": [
-        {
-          "who": "pinky",
-          "say": "हिटलर और गीता कोड… प्रभास भाई अब टाइम-मशीन चलाएँगे क्या?",
-          "caption": "हिटलर और गीता कोड… प्रभास भाई अब टाइम-मशीन चलाएँगे क्या?",
-          "expr": "hairan",
-          "set": "village",
-          "visuals": [
-            "mobile phone screen video teaser",
-            "young girl shocked watching phone",
-            "cinema movie poster background"
-          ],
-          "photo_hi": [
-            "प्रभास फौजी टीजर",
-            "फिल्म फौजी पोस्टर"
-          ],
-          "visual": "mobile phone screen video teaser",
-          "scene": "studio",
-          "punch": false,
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "say": "फ़ौजी के टीज़र में हिटलर, नेताजी और गीता कोड… सब एक साथ मिले!",
-          "caption": "फ़ौजी के टीज़र में हिटलर, नेताजी और गीता कोड… सब एक साथ मिले!",
-          "expr": "gambhir",
-          "set": "studio",
-          "visuals": [
-            "news studio anchor speaking",
-            "movie teaser premiere screen",
-            "action movie concept visual"
-          ],
-          "photo_hi": [
-            "प्रभास फौजी खबर",
-            "नेपाल नेताजी हिटलर टीजर"
-          ],
-          "card": {
-            "tag": "टीज़र रिलीज़",
-            "big": "प्रभास की 'फौजी' टीज़र जारी",
-            "sub": "नेताजी, हिटलर और भगवत गीता कोड शामिल",
-            "icon": "alert"
-          },
-          "visual": "news studio anchor speaking",
-          "scene": "card",
-          "punch": false,
-          "insta": ""
-        },
-        {
-          "who": "chacha",
-          "say": "हमारे ज़माने में फ़ौजी सरहद पर लड़ते थे… अब फ़िल्मों में कोड सुलझा रहे हैं!",
-          "caption": "हमारे ज़माने में फ़ौजी सरहद पर लड़ते थे… अब फ़िल्मों में कोड सुलझा रहे हैं!",
+          "say": "कंपनी का कहना है जमाखोरी रोकनी है। इतने दाम पर ग्राहक मिलेंगे सिर्फ दो।",
+          "caption": "कंपनी का कहना है जमाखोरी रोकनी है। इतने दाम पर ग्राहक मिलेंगे सिर्फ 2.",
           "expr": "tanz",
-          "set": "village",
-          "visuals": [
-            "old indian man sitting in courtyard",
-            "vintage soldier photo hanging on wall",
-            "confused old man expression"
-          ],
-          "photo_hi": [
-            "फिल्म फौजी प्रभास",
-            "सुभाष चंद्र बोस पोस्टर"
-          ],
           "punch": true,
-          "stamp": "फ़ौजी… कोड सुलझा रहे!",
-          "visual": "old indian man sitting in courtyard",
-          "scene": "chacha",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "say": "मेकर्स ने कहा, फ़िल्म इतिहास पर आधारित है। इतिहास फ़िलहाल डिक्शनरी ढूँढ रहा है।",
-          "caption": "मेकर्स ने कहा, फ़िल्म इतिहास पर आधारित है। इतिहास फ़िलहाल डिक्शनरी ढूँढ रहा है।",
-          "expr": "gambhir",
-          "set": "studio",
+          "stamp": "ग्राहक सिर्फ दो",
           "visuals": [
-            "news anchor desk professional",
-            "history book dictionary pages",
-            "movie production announcement banner"
+            "older wise rural man smirking sitting on cot with spectacles",
+            "empty luxury phone box placed on simple wooden table"
           ],
           "photo_hi": [
-            "फौजी प्रभास रिलीज डेट",
-            "प्रभास नई फिल्म"
+            "खाट पर बैठकर चश्मे से तंजिया मुस्कुराता बुजुर्ग",
+            "लकड़ी की मेज पर रखा खाली फोन का डिब्बा"
           ],
-          "punch": true,
-          "stamp": "इतिहास… डिक्शनरी ढूँढ ",
-          "visual": "news anchor desk professional",
-          "scene": "pinky",
-          "insta": ""
-        },
-        {
-          "who": "pinky",
-          "say": "सच में, टाइम-मशीन चलाकर ही… ऐसी फ़िल्में समझ आएँगी!",
-          "caption": "सच में, टाइम-मशीन चलाकर ही… ऐसी फ़िल्में समझ आएँगी!",
-          "expr": "hasi",
-          "set": "village",
-          "visuals": [
-            "girl holding head laughing",
-            "time machine clock motion blur",
-            "cinema hall seat audience"
-          ],
-          "photo_hi": [
-            "प्रभास फौजी",
-            "फिल्म टीजर रिएक्शन"
-          ],
-          "visual": "girl holding head laughing",
-          "scene": "studio_end",
-          "punch": false,
-          "insta": ""
+          "set": "mandi",
+          "topic": "फोल्डेबल आईफोन की भारत में सेल"
         }
       ],
-      "caption_post": "हिटलर और गीता कोड… प्रभास भाई अब टाइम-मशीन चलाएँगे क्या? Tag करो उसको जो हर साउथ फ़िल्म का टीज़र दस बार देखता है! क्या आप ऐसी इतिहास वाली फ़िल्में देखते हैं? स्रोत: Navbharat Live, AajTak, Jagran #Prabhas #Fauji #TeaserRelease #BakraNews #DarkSatire",
+      "caption_post": "साढ़े चार लाख का फोन और लिमिट सिर्फ दो! क्या सच में कोई दो फोन खरीदेगा? स्रोत: Amar Ujala, Dainik Bhaskar #iPhoneDuo #AppleIndia #BakraNews #Satire (AI से बने किरदार)",
       "format": "explain",
-      "label": "काम की खबर",
-      "key_word": "",
-      "icons": [
-        "₹",
-        "NEWS",
-        "%"
-      ],
-      "hook": "हिटलर और गीता कोड… प्रभास भाई अब टाइम-मशीन चलाएँगे क्या?",
+      "kind": "punch",
+      "label": "एक पंच",
+      "hook": "साढ़े चार लाख का फोन, लिमिट सिर्फ दो।",
+      "hook_text": "साढ़े चार लाख का फोन, लिमिट सिर्फ दो।",
+      "hook_short": "साढ़े 4 लाख का फोन!",
+      "hasi": "⚡ 22 शब्द (~8 सेकंड) | टैग: वो दोस्त जो हर नए आईफोन पर ईएमआई का हिसाब लगाता है",
       "trend": {
         "score": 7,
-        "why": "17 अख़बार/चैनल 2 दिन में, 18 खबरें 7 दिन में"
-      }
-    },
-    {
-      "khabar": "जशपुर स्टेडियम में स्कॉर्पियो से स्टंट पर कार्रवाई",
-      "score": "8/10: रील बनाने के लिए पापा की गाड़ी का इस्तेमाल और पेट्रोल खत्म होने का पोल खोलना बहुत सटीक है।",
-      "topic": "स्टेडियम में रील स्टंट पर चालान",
-      "category": "viral",
-      "breaking": "छत्तीसगढ़ के जशपुर स्टेडियम में स्कॉर्पियो से स्टंट करने पर कार जब्त",
-      "samaj": "हम रील बनाने वाले स्टंटबाज़",
-      "maang": "हमारी माँग: हर स्टेडियम में रील का अलग ड्राइविंग ट्रैक बनाओ!",
-      "twist": "तो सबको बता देंगे… स्टंट वाली स्कॉर्पियो पापा की थी और उसमें रिज़र्व का तेल था!",
-      "takiya": "रील पहले, चालान बाद में!",
-      "tag_who": "जो पापा की कार से इंस्टाग्राम रील बनाने का रिस्क लेता है",
-      "source": "Dainik Bhaskar, IBC24, NPG News, Haribhoomi, Janta Se Rishta",
-      "ask": "क्या रील बनाने वालों पर और भारी जुर्माना होना चाहिए?",
-      "ticker": [
-        "जशपुर के खेल मैदान में स्कॉर्पियो से स्टंट का वीडियो वायरल",
-        "पुलिस ने वाहन जब्त कर 10300 रुपये का लगाया चालान",
-        "सार्वजनिक मैदानों में स्टंटबाज़ी पर पुलिस की सख्त कार्रवाई"
-      ],
-      "lines": [
-        {
-          "who": "bablu",
-          "beat": "hook",
-          "say": "क्या खेल का मैदान, अब रील बनाने पर चालान काटने का अड्डा है?",
-          "caption": "क्या खेल का मैदान, अब रील बनाने पर चालान काटने का अड्डा है?",
-          "visuals": [
-            "black scorpio SUV drifting in open ground dust",
-            "traffic police challan receipt close up",
-            "angry news anchor pointing camera"
-          ],
-          "photo_hi": [
-            "स्कॉर्पियो कार स्टंट मैदान",
-            "पुलिस चालान रसीद कार"
-          ],
-          "expr": "hairan",
-          "sfx": "boom",
-          "mood": "tension",
-          "delivery": "बिल्कुल गंभीर, धीमा, हर शब्द पर ज़ोर — जैसे देश का सबसे बड़ा सवाल पूछ रहा हो",
-          "visual": "black scorpio SUV drifting in open ground dust",
-          "set": "studio",
-          "punch": false,
-          "big": "बड़ा सवाल",
-          "sub": "हम रील बनाने वाले स्टंटबाज़",
-          "card_color": [
-            20,
-            40,
-            110
-          ],
-          "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "beat": "tathya",
-          "say": "जशपुर स्टेडियम में स्कॉर्पियो स्टंट पर पुलिस ने दस हजार तीन सौ जुर्माना ठोका!",
-          "caption": "जशपुर स्टेडियम में स्कॉर्पियो स्टंट पर पुलिस ने 10300 जुर्माना ठोका!",
-          "visuals": [
-            "jashpur sports stadium ground aerial view",
-            "indian police towing seized scorpio car",
-            "fine amount number pop up animation"
-          ],
-          "photo_hi": [
-            "जशपुर स्टेडियम छत्तीसगढ़",
-            "पुलिस जब्त स्कॉर्पियो गाड़ी"
-          ],
-          "expr": "gambhir",
-          "sfx": "whoosh",
-          "mood": "tension",
-          "delivery": "तेज़, साफ़, न्यूज़-रीडर जैसा",
-          "visual": "jashpur sports stadium ground aerial view",
-          "set": "studio",
-          "punch": false,
-          "big": "असली खबर",
-          "sub": "छत्तीसगढ़ के जशपुर स्टेडियम में स्",
-          "card_color": [
-            20,
-            40,
-            110
-          ],
-          "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "beat": "saboot",
-          "say": "गाड़ी ज़ब्त हो गई और रील में सिर्फ़ दो सौ व्यूज ही आए थे!",
-          "caption": "गाड़ी ज़ब्त हो गई और रील में सिर्फ़ 200 व्यूज ही आए थे!",
-          "visuals": [
-            "instagram reel screen showing 200 views low count",
-            "sad young boy holding mobile phone",
-            "police station outer compound cars seized"
-          ],
-          "photo_hi": [
-            "इंस्टाग्राम रील व्यूज कम",
-            "थाने में जब्त गाड़ियां"
-          ],
-          "expr": "gussa",
-          "sfx": "whoosh",
-          "mood": "tension",
-          "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
-          "visual": "instagram reel screen showing 200 views low count",
-          "set": "studio",
-          "punch": false,
-          "big": "सबूत नंबर 1",
-          "sub": "",
-          "card_color": [
-            12,
-            60,
-            120
-          ],
-          "scene": "chacha",
-          "insta": ""
-        },
-        {
-          "who": "ramesh",
-          "beat": "saboot",
-          "say": "साहब, खिलाड़ी तो रोज़ दौड़ते हैं, हमने चार पहियों पर दौड़ लगा दी!",
-          "caption": "साहब, खिलाड़ी तो रोज़ दौड़ते हैं, हमने चार पहियों पर दौड़ लगा दी!",
-          "visuals": [
-            "athletes running on sports track ground",
-            "car tires spinning in dirt close up dust",
-            "frustrated youth complaining in microphone"
-          ],
-          "photo_hi": [
-            "खेल मैदान धावक ट्रैक",
-            "गाड़ी का पहिया धूल स्टंट"
-          ],
-          "expr": "gussa",
-          "sfx": "glitch",
-          "mood": "tension",
-          "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
-          "visual": "athletes running on sports track ground",
-          "set": "road",
-          "punch": false,
-          "big": "सबूत नंबर 2",
-          "sub": "",
-          "card_color": [
-            12,
-            60,
-            120
-          ],
-          "scene": "chacha",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "beat": "maang",
-          "say": "हमारी माँग: हर स्टेडियम में रील का अलग ड्राइविंग ट्रैक बनाओ!",
-          "caption": "हमारी माँग: हर स्टेडियम में रील का अलग ड्राइविंग ट्रैक बनाओ!",
-          "visuals": [
-            "news presenter striking desk forcefully",
-            "blueprint design of stunt track inside stadium",
-            "demand letter document stamp"
-          ],
-          "photo_hi": [
-            "स्टेडियम रील ट्रैक मांग",
-            "बकरा न्यूज एंकर टेबल"
-          ],
-          "stamp": "अलग रील ट्रैक बनाओ!",
-          "expr": "gussa",
-          "sfx": "dhol",
-          "mood": "masti",
-          "delivery": "ऐलान की तरह, जोश में, जैसे संसद में भाषण",
-          "visual": "news presenter striking desk forcefully",
-          "set": "studio",
-          "punch": true,
-          "big": "हमारी माँग",
-          "sub": "हमारी माँग: हर स्टेडियम में रील",
-          "card_color": [
-            110,
-            20,
-            40
-          ],
-          "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "beat": "dhamki",
-          "say": "और अगर चालान वापस नहीं हुआ…",
-          "caption": "और अगर चालान वापस नहीं हुआ…",
-          "visuals": [
-            "anchor squinting eyes suspicious look",
-            "car fuel gauge needle at empty reserve",
-            "dramatic flash effect"
-          ],
-          "photo_hi": [
-            "एंकर गुस्सा चेतावनी",
-            "गाड़ी फ्यूल मीटर रिजर्व"
-          ],
-          "expr": "gambhir",
-          "sfx": "tick",
-          "mood": "tension",
-          "delivery": "अचानक बहुत धीमा, रहस्य वाला, लगभग फुसफुसाते हुए",
-          "pause_after": 0.5,
-          "visual": "anchor squinting eyes suspicious look",
-          "set": "studio",
-          "punch": true,
-          "big": "चेतावनी!",
-          "sub": "",
-          "card_color": [
-            40,
-            10,
-            15
-          ],
-          "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "beat": "twist",
-          "say": "तो सबको बता देंगे… स्टंट वाली स्कॉर्पियो पापा की थी और उसमें रिज़र्व का तेल था!",
-          "caption": "तो सबको बता देंगे… स्टंट वाली स्कॉर्पियो पापा की थी और उसमें रिज़र्व का तेल था!",
-          "visuals": [
-            "father scolding son standing near car garage",
-            "scorpio dashboard red fuel light blinking low",
-            "funny shock expression young boy face"
-          ],
-          "photo_hi": [
-            "पापा बेटे को डांटते कार",
-            "कार पेट्रोल रिज़र्व लाइट"
-          ],
-          "stamp": "पापा की कार का तेल!",
-          "expr": "hairan",
-          "sfx": "boom",
-          "mood": "masti",
-          "delivery": "धमाके से, जीत वाले अंदाज़ में, आख़िरी हिस्सा ज़ोर से",
-          "visual": "father scolding son standing near car garage",
-          "set": "studio",
-          "punch": true,
-          "big": "बड़ा खुलासा!",
-          "sub": "",
-          "card_color": [
-            170,
-            20,
-            30
-          ],
-          "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "beat": "takiya",
-          "say": "रील पहले, चालान बाद में!",
-          "caption": "रील पहले, चालान बाद में!",
-          "visuals": [
-            "news anchor shouting looking directly into camera",
-            "smartphone recording video icon bright overlay",
-            "action camera stunt footage clip"
-          ],
-          "photo_hi": [
-            "एंकर चिल्लाते बकरा बहस",
-            "मोबाइल रील रिकॉर्डिंग"
-          ],
-          "stamp": "रील पहले, चालान बाद में!",
-          "expr": "gussa",
-          "sfx": "thug",
-          "mood": "masti",
-          "delivery": "पूरी ताक़त से चिल्लाकर, मेज़ पर हाथ मारते हुए",
-          "pause_after": 0.3,
-          "visual": "news anchor shouting looking directly into camera",
-          "set": "studio",
-          "punch": true,
-          "big": "रील पहले, चालान बाद में!",
-          "sub": "",
-          "card_color": [
-            170,
-            20,
-            30
-          ],
-          "scene": "studio_end",
-          "insta": ""
-        }
-      ],
-      "caption_post": "क्या खेल का मैदान, अब रील बनाने पर चालान काटने का अड्डा है?\n\nTag करो अपने उस दोस्त को जो पापा की गाड़ी से रील बनाकर खुद को स्टंटबाज़ समझता है! 🚗💨\n\nक्या रील बनाने वालों पर और भारी जुर्माना होना चाहिए?\n\nस्रोत: Dainik Bhaskar, IBC24, NPG News\n#BakraNews #ScorpioStunt #JashpurNews #ReelVsPolice #BakraBahas",
-      "format": "rant",
-      "label": "बकरा बहस",
-      "icons": [
-        "₹",
-        "NEWS",
-        "%"
-      ],
-      "hook": "क्या खेल का मैदान, अब रील बनाने पर चालान काटने का अड्डा है?",
-      "hook_text": "क्या खेल का मैदान, अब रील बनाने पर चालान काटने का अड्डा है?",
-      "poll": null,
-      "key_word": "",
-      "cast_why": "समाज: हम रील बनाने वाले स्टंटबाज़ | माँग: हमारी माँग: हर स्टेडियम में रील का अलग ड्राइविंग ट्रैक बनाओ!",
-      "trend": {
-        "score": 5,
-        "why": "6 अख़बार/चैनल 2 दिन में, 20 खबरें 7 दिन में"
+        "why": "18 अख़बार/चैनल 2 दिन में, 38 खबरें 7 दिन में"
       },
-      "hasi": "टैग: जो पापा की कार से इंस्टाग्राम रील बनाने का रिस्क लेता है | twist: तो सबको बता देंगे… स्टंट वाली स्कॉर्पियो पापा की थी और उसमें रिज़र्व का तेल था!"
+      "category": "[shopping-आदत]"
     },
     {
-      "topic": "करवा चौथ 2026 की खरीदारी और नए ट्रेंड्स",
-      "category": "[त्योहार]",
-      "breaking": "करवा चौथ पर पति की फोटो वाले चूड़े का नया ट्रेंड",
-      "hook_text": "पति की फ़ोटो वाला चूड़ा… चेहरा याद रखने के लिए या खर्चा?",
-      "ask": "क्या आपने करवा चौथ की शॉपिंग शुरू कर दी?",
-      "source": "Jagran, India TV Hindi, News18 Hindi",
-      "poll": [
-        "सिल्क साड़ी",
-        "ऑर्गेंजा साड़ी"
-      ],
-      "ticker": [
-        "करवा चौथ बाज़ार में भारी भीड़",
-        "फ़ोटो वाले चूड़े और पोल्की ज्वेलरी का ट्रेंड",
-        "सात सौ से आठ हज़ार तक की साड़ियाँ उपलब्ध"
-      ],
-      "cast_why": "पिंकी की ट्रेंडिंग रील्स वाली सोच बनाम दादी की सीधी सलाह",
-      "tag_who": "हर वो भाभी या मम्मी जो हफ़्ते भर से शॉपिंग लिस्ट बना रही हैं",
-      "lines": [
-        {
-          "who": "pinky",
-          "say": "पति की फ़ोटो वाला चूड़ा… चेहरा याद रखने के लिए या खर्चा?",
-          "caption": "पति की फ़ोटो वाला चूड़ा… चेहरा याद रखने के लिए या खर्चा?",
-          "expr": "hairan",
-          "set": "village",
-          "visuals": [
-            "designer bangles set display",
-            "woman looking at wedding photo bangle",
-            "shopping bag full of clothes"
-          ],
-          "photo_hi": [
-            "करवा चौथ चूड़ा ट्रेंड",
-            "फोटो वाला चूड़ा"
-          ],
-          "visual": "designer bangles set display",
-          "scene": "studio",
-          "punch": false,
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "say": "करवा चौथ पर आठ हज़ार तक की साड़ी… और पति की फ़ोटो वाला चूड़ा बिक रहा!",
-          "caption": "करवा चौथ पर ₹8000 तक की साड़ी… और पति की फ़ोटो वाला चूड़ा बिक रहा!",
-          "expr": "gambhir",
-          "set": "studio",
-          "visuals": [
-            "indian market crowd shopping sarees",
-            "silk saree showroom display",
-            "jewelry store counter"
-          ],
-          "photo_hi": [
-            "करवा चौथ साड़ी मार्केट",
-            "करवा चौथ शॉपिंग ट्रेंड"
-          ],
-          "card": {
-            "tag": "शॉपिंग ट्रेंड",
-            "big": "करवा चौथ 2026 की खरीदारी",
-            "sub": "₹700 से ₹8000 तक साड़ियों की मांग",
-            "icon": "gift"
-          },
-          "visual": "indian market crowd shopping sarees",
-          "scene": "card",
-          "punch": false,
-          "insta": ""
-        },
-        {
-          "who": "dadi",
-          "say": "हर घर में एक बहू है, जो आठ हज़ार का लहंगा पहनकर… पाँच सौ का शगुन ढूँढती है!",
-          "caption": "हर घर में एक बहू है, जो ₹8000 का लहंगा पहनकर… ₹500 का शगुन ढूँढती है!",
-          "expr": "tanz",
-          "set": "aangan",
-          "visuals": [
-            "elderly indian lady sitting in courtyard",
-            "traditional festival decoration home",
-            "festive saree packet open"
-          ],
-          "photo_hi": [
-            "करवा चौथ लहंगा शॉपिंग",
-            "करवा चौथ त्यौहार घर"
-          ],
-          "punch": true,
-          "stamp": "आठ हज़ार का लहंगा… शगु",
-          "visual": "elderly indian lady sitting in courtyard",
-          "scene": "dadi_call",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "say": "व्यापारियों ने साफ़ किया है, दुकान में भीड़ पूरी है। बजट सिर्फ़ बिल में घट रहा है।",
-          "caption": "व्यापारियों ने साफ़ किया है, दुकान में भीड़ पूरी है। बजट सिर्फ़ बिल में घट रहा है।",
-          "expr": "gambhir",
-          "set": "studio",
-          "visuals": [
-            "busy indian bazaar street night",
-            "cashier counter billing shop",
-            "saree shop owner talking"
-          ],
-          "photo_hi": [
-            "करवा चौथ बाजार भीड़",
-            "साड़ी दुकान करवा चौथ"
-          ],
-          "punch": true,
-          "stamp": "बजट… बिल में घट रहा!",
-          "visual": "busy indian bazaar street night",
-          "scene": "pinky",
-          "insta": ""
-        },
-        {
-          "who": "pinky",
-          "say": "वैसे फ़ोटो चूड़े पर है… तो चेहरा याद रखना आसान रहेगा!",
-          "caption": "वैसे फ़ोटो चूड़े पर है… तो चेहरा याद रखना आसान रहेगा!",
-          "expr": "hasi",
-          "set": "village",
-          "visuals": [
-            "bangle set macro close up photo",
-            "happy girl wearing traditional bangles",
-            "karwa chauth thali decoration"
-          ],
-          "photo_hi": [
-            "करवा चौथ चूड़ा",
-            "करवा चौथ तैयारी"
-          ],
-          "visual": "bangle set macro close up photo",
-          "scene": "studio_end",
-          "punch": false,
-          "insta": ""
-        }
-      ],
-      "caption_post": "पति की फ़ोटो वाला चूड़ा… चेहरा याद रखने के लिए या खर्चा? Tag करो उसको जो हफ़्ते भर से शॉपिंग लिस्ट बना रही हैं! क्या आपने करवा चौथ की शॉपिंग शुरू कर दी? स्रोत: Jagran, India TV Hindi #KarwaChauth #ShoppingTrends #SareeTrends #BakraNews #DarkSatire",
-      "format": "explain",
-      "label": "काम की खबर",
-      "key_word": "",
-      "icons": [
-        "₹",
-        "NEWS",
-        "%"
-      ],
-      "hook": "पति की फ़ोटो वाला चूड़ा… चेहरा याद रखने के लिए या खर्चा?",
-      "_loose": true,
-      "trend": {
-        "score": 7,
-        "why": "15 अख़बार/चैनल 2 दिन में, 64 खबरें 7 दिन में"
-      }
-    },
-    {
-      "khabar": "बिना सिम कार्ड नहीं चलेंगे WhatsApp और अन्य मैसेजिंग ऐप्स (Sim Binding)",
-      "score": "9/10: वाई-फाई पर बिना सिम ऐप चलाने वालों की पोल और फैमिली ग्रुप में नकली मैसेज की पोल खोलना बेहद रिलेटेबल है।",
-      "topic": "बिना सिम नहीं चलेंगे मैसेजिंग ऐप्स",
+      "khabar": "फोल्डेबल आईफोन की भारत में पहली सेल",
+      "score": "9",
+      "topic": "साढ़े चार लाख का फोल्डेबल आईफोन",
       "category": "tech",
-      "breaking": "दूरसंचार विभाग 2027 से लागू करेगा नया सिम बाइंडिंग नियम",
-      "samaj": "हम बिना सिम वाले वाई-फाई यूज़र्स",
-      "maang": "हमारी माँग: बिना सिम के वाई-फ़ाई पर चैट को मौलिक अधिकार बनाओ!",
-      "twist": "तो सबको बता देंगे… शर्मा जी फैमिली ग्रुप में नकली गुड मॉर्निंग खुद टाइप करते हैं!",
-      "takiya": "वाई-फ़ाई दो, सिम नहीं!",
-      "tag_who": "जो बिना सिम के सिर्फ वाई-फाई पर व्हाट्सएप चलाता है",
-      "source": "DD News, AajTak, Navbharat Live, Jagran, ABP News, Navbharat Times, Hindustan, ETV Bharat, The Lallantop, Upstox",
-      "ask": "क्या बिना सिम ऐप बंद होना सही फैसला है?",
+      "breaking": "भारत में आईफोन डुओ की बिक्री शुरू, कीमत साढ़े चार लाख तक",
+      "samaj": "हम EMI वाले मध्यमवर्गीय",
+      "maang": "हमारी माँग: किश्तों पर ब्याज माफ़ करो और पुराना एंड्रॉयड एक्सचेंज में लो!",
+      "twist": "तो सबको बता देंगे… भाई साहब आईफोन के डिब्बे में दो सौ रुपये का पुराना फोन चलाते हैं!",
+      "takiya": "फोन फोल्ड करो, जेब नहीं!",
+      "tag_who": "शो-ऑफ करने वाले दोस्त को",
+      "source": "Amar Ujala, Navbharat Times",
+      "ask": "क्या 4.5 लाख में फोन लेना समझदारी है?",
       "ticker": [
-        "1 जनवरी 2027 से लागू होगा नया सिम बाइंडिंग नियम",
-        "बिना रजिस्टर्ड सिम के नहीं चलेंगे व्हाट्सएप और टेलीग्राम",
-        "वाई-फाई यूज़र्स में नए नियम से मची भारी खलबली"
+        "भारत में आईफोन डुओ की सेल शुरू",
+        "शुरुआती कीमत 2.99 लाख रुपये",
+        "एक ग्राहक को अधिकतम 2 आईफोन"
       ],
       "lines": [
         {
           "who": "bablu",
           "beat": "hook",
-          "say": "क्या बिना सिम का वाई-फ़ाई, वाई-फ़ाई यूज़र्स को दबाने की सरकारी साज़िश है?",
-          "caption": "क्या बिना सिम का वाई-फ़ाई, वाई-फ़ाई यूज़र्स को दबाने की सरकारी साज़िश है?",
+          "say": "क्या साढ़े चार लाख का फोन, मध्यमवर्ग का मज़ाक उड़ाने की साज़िश है?",
+          "caption": "क्या 4.5 लाख का फोन, मध्यमवर्ग का मज़ाक उड़ाने की साज़िश है?",
           "visuals": [
-            "person holding smartphone without sim tray",
-            "wifi router blinking lights close up",
-            "angry young indian news presenter studio"
+            "foldable smartphone display close up",
+            "shocked indian man looking at phone screen",
+            "price tag high cost icon"
           ],
           "photo_hi": [
-            "बिना सिम स्मार्टफोन वाईफाई",
-            "व्हाट्सएप टेलीग्राम ऐप आइकन"
+            "महंगा आईफोन फोन",
+            "हैरान युवक स्मार्टफोन"
           ],
           "expr": "hairan",
           "sfx": "boom",
           "mood": "tension",
           "delivery": "बिल्कुल गंभीर, धीमा, हर शब्द पर ज़ोर — जैसे देश का सबसे बड़ा सवाल पूछ रहा हो",
-          "visual": "person holding smartphone without sim tray",
+          "visual": "foldable smartphone display close up",
           "set": "studio",
           "punch": false,
           "big": "बड़ा सवाल",
-          "sub": "हम बिना सिम वाले वाई-फाई यूज़र्स",
-          "card_color": [
-            20,
-            40,
-            110
-          ],
-          "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "beat": "tathya",
-          "say": "नया नियम 1 जनवरी 2027 से लागू होगा, बिना सिम व्हाट्सएप बंद हो जाएगा!",
-          "caption": "नया नियम 1 जनवरी 2027 से लागू होगा, बिना सिम व्हाट्सएप बंद हो जाएगा!",
-          "visuals": [
-            "whatsapp logo blocked on smartphone screen",
-            "calendar showing 1 january 2027",
-            "telecom department building india"
-          ],
-          "photo_hi": [
-            "दूरसंचार विभाग नियम सिम",
-            "व्हाट्सएप ब्लॉक स्क्रीन फोन"
-          ],
-          "expr": "gambhir",
-          "sfx": "whoosh",
-          "mood": "tension",
-          "delivery": "तेज़, साफ़, न्यूज़-रीडर जैसा",
-          "visual": "whatsapp logo blocked on smartphone screen",
-          "set": "studio",
-          "punch": false,
-          "big": "असली खबर",
-          "sub": "दूरसंचार विभाग 2027 से लागू करेगा ",
+          "sub": "हम EMI वाले मध्यमवर्गीय",
           "card_color": [
             20,
             40,
@@ -956,22 +110,22 @@
         {
           "who": "bablu",
           "beat": "saboot",
-          "say": "फोन में रजिस्टर्ड सिम नहीं तो टेलीग्राम और स्नैपचैट भी ठप हो जाएंगे!",
-          "caption": "फोन में रजिस्टर्ड सिम नहीं तो टेलीग्राम और स्नैपचैट भी ठप हो जाएंगे!",
+          "say": "आईफोन डुओ साढ़े चार लाख में आया, और कंपनी बोली—एक ग्राहक सिर्फ दो ही खरीदेगा!",
+          "caption": "आईफोन Duo 4.5 लाख का, पर सीमा सिर्फ 2 आईफोन की!",
           "visuals": [
-            "telegram and snapchat logo error on phone",
-            "sim card being removed from phone",
-            "frustrated youth looking at phone screen"
+            "apple store line crowds",
+            "expensive luxury phone unboxing",
+            "shopping limit warning banner"
           ],
           "photo_hi": [
-            "टेलीग्राम स्नैपचैट ऐप एरर",
-            "स्मार्टफोन सिम कार्ड स्लॉट"
+            "एप्पल स्टोर भीड़",
+            "नया फोल्डेबल फोन"
           ],
           "expr": "gussa",
           "sfx": "whoosh",
           "mood": "tension",
           "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
-          "visual": "telegram and snapchat logo error on phone",
+          "visual": "apple store line crowds",
           "set": "studio",
           "punch": false,
           "big": "सबूत नंबर 1",
@@ -987,22 +141,22 @@
         {
           "who": "ramesh",
           "beat": "saboot",
-          "say": "साहब, हम तो बिना सिम वाले सेकंड हैंड फोन में ही पूरा दिन बिताते थे!",
-          "caption": "साहब, हम तो बिना सिम वाले सेकंड हैंड फोन में ही पूरा दिन बिताते थे!",
+          "say": "और बात यहीं ख़त्म नहीं होती… पापा बोले: 'दो क्यों, आधा फोन खरीदने की किश्त बताओ!'",
+          "caption": "पापा बोले: 'दो क्यों, आधा फोन खरीदने की किश्त बताओ!'",
           "visuals": [
-            "old broken smartphone displaying wifi symbol",
-            "confused indian boy scrolling phone",
-            "second hand mobile shop market"
+            "angry indian father calculation",
+            "calculator cash budget planning",
+            "middle class home tension"
           ],
           "photo_hi": [
-            "पुराना स्मार्टफोन वाईफाई यूज़र",
-            "सेकंड हैंड मोबाइल फोन"
+            "भारतीय पिता गुस्सा",
+            "हिसाब किताब कैलक्यूलेटर"
           ],
           "expr": "gussa",
           "sfx": "glitch",
           "mood": "tension",
           "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
-          "visual": "old broken smartphone displaying wifi symbol",
+          "visual": "angry indian father calculation",
           "set": "room",
           "punch": false,
           "big": "सबूत नंबर 2",
@@ -1018,27 +172,27 @@
         {
           "who": "bablu",
           "beat": "maang",
-          "say": "हमारी माँग: बिना सिम के वाई-फ़ाई पर चैट को मौलिक अधिकार बनाओ!",
-          "caption": "हमारी माँग: बिना सिम के वाई-फ़ाई पर चैट को मौलिक अधिकार बनाओ!",
+          "say": "हमारी माँग: किश्तों पर ब्याज माफ़ करो और पुराना एंड्रॉयड एक्सचेंज में लो!",
+          "caption": "हमारी माँग: किश्तों पर ब्याज माफ़ करो और पुराना एंड्रॉयड एक्सचेंज में लो!",
           "visuals": [
-            "news anchor pounding fist on table",
-            "protest sign with wifi and smartphone icon",
-            "stamped document official text"
+            "old broken android phone",
+            "zero percent interest loan offer",
+            "demanding protest hand gesture"
           ],
           "photo_hi": [
-            "फ्री वाईफाई अधिकार बैनर",
-            "न्यूज एंकर गुस्सा स्टूडियो"
+            "पुराना टूटा स्मार्टफोन",
+            "मांग प्रदर्शन"
           ],
-          "stamp": "मौलिक अधिकार बनाओ!",
+          "stamp": "पुराना एंड्रॉयड लो!",
           "expr": "gussa",
           "sfx": "dhol",
           "mood": "masti",
           "delivery": "ऐलान की तरह, जोश में, जैसे संसद में भाषण",
-          "visual": "news anchor pounding fist on table",
+          "visual": "old broken android phone",
           "set": "studio",
           "punch": true,
           "big": "हमारी माँग",
-          "sub": "हमारी माँग: बिना सिम के वाई-फ़ाई",
+          "sub": "हमारी माँग: किश्तों पर ब्याज माफ़",
           "card_color": [
             110,
             20,
@@ -1050,23 +204,23 @@
         {
           "who": "bablu",
           "beat": "dhamki",
-          "say": "और अगर हमारी बात नहीं मानी गई…",
-          "caption": "और अगर हमारी बात नहीं मानी गई…",
+          "say": "और अगर किश्त सस्ती नहीं हुई…",
+          "caption": "और अगर किश्त सस्ती नहीं हुई…",
           "visuals": [
-            "anchor leaning forward with serious eyes",
-            "dramatic studio lighting shift red",
-            "silhouetted man pointing finger warning"
+            "dramatic warning close up face",
+            "angry anchor pointing finger",
+            "dark shadow spotlight intensity"
           ],
           "photo_hi": [
-            "न्यूज एंकर चेतावनी लुक",
-            "सस्पेंस स्टूडियो लाइट"
+            "चेतावनी एंकर",
+            "गुस्सा चेहरा"
           ],
           "expr": "gambhir",
           "sfx": "tick",
           "mood": "tension",
           "delivery": "अचानक बहुत धीमा, रहस्य वाला, लगभग फुसफुसाते हुए",
           "pause_after": 0.5,
-          "visual": "anchor leaning forward with serious eyes",
+          "visual": "dramatic warning close up face",
           "set": "studio",
           "punch": true,
           "big": "चेतावनी!",
@@ -1082,23 +236,23 @@
         {
           "who": "bablu",
           "beat": "twist",
-          "say": "तो सबको बता देंगे… शर्मा जी फैमिली ग्रुप में नकली गुड मॉर्निंग खुद टाइप करते हैं!",
-          "caption": "तो सबको बता देंगे… शर्मा जी फैमिली ग्रुप में नकली गुड मॉर्निंग खुद टाइप करते हैं!",
+          "say": "तो सबको बता देंगे… भाई साहब आईफोन के डिब्बे में दो सौ रुपये का पुराना फोन चलाते हैं!",
+          "caption": "तो सबको बता देंगे… भाई साहब आईफोन के डिब्बे में 200 का पुराना फोन चलाते हैं!",
           "visuals": [
-            "whatsapp family group good morning message",
-            "middle aged indian man typing secretively on phone",
-            "funny shocked reaction face close up"
+            "cheap old keypad phone inside luxury box",
+            "secret revealed laughing people",
+            "embarrassed man facepalm"
           ],
           "photo_hi": [
-            "फैमिली व्हाट्सएप ग्रुप मैसेज",
-            "अंकल फोन पर मैसेज टाइप"
+            "पुराना कीपैड फोन",
+            "पोल खुली मजाक"
           ],
-          "stamp": "नकली गुड मॉर्निंग की पोल!",
+          "stamp": "आईफोन के डिब्बे में पुराना!",
           "expr": "hairan",
           "sfx": "boom",
           "mood": "masti",
           "delivery": "धमाके से, जीत वाले अंदाज़ में, आख़िरी हिस्सा ज़ोर से",
-          "visual": "whatsapp family group good morning message",
+          "visual": "cheap old keypad phone inside luxury box",
           "set": "studio",
           "punch": true,
           "big": "बड़ा खुलासा!",
@@ -1114,27 +268,27 @@
         {
           "who": "bablu",
           "beat": "takiya",
-          "say": "वाई-फ़ाई दो, सिम नहीं!",
-          "caption": "वाई-फ़ाई दो, सिम नहीं!",
+          "say": "फोन फोल्ड करो, जेब नहीं!",
+          "caption": "फोन फोल्ड करो, जेब नहीं!",
           "visuals": [
-            "anchor shouting full volume on camera",
-            "bold neon text graphic on screen",
-            "wifi router high signal strength close up"
+            "empty wallet with no cash",
+            "angry news anchor shouting studio",
+            "breaking news red text graphic"
           ],
           "photo_hi": [
-            "बकरा बहस एंकर चिल्लाते",
-            "वाईफाई सिग्नल आइकन"
+            "खाली पर्स",
+            "बकरा बहस एंकर"
           ],
-          "stamp": "वाई-फ़ाई दो, सिम नहीं!",
+          "stamp": "फोन फोल्ड करो!",
           "expr": "gussa",
           "sfx": "thug",
           "mood": "masti",
           "delivery": "पूरी ताक़त से चिल्लाकर, मेज़ पर हाथ मारते हुए",
           "pause_after": 0.3,
-          "visual": "anchor shouting full volume on camera",
+          "visual": "empty wallet with no cash",
           "set": "studio",
           "punch": true,
-          "big": "वाई-फ़ाई दो, सिम नहीं!",
+          "big": "फोन फोल्ड करो, जेब नहीं!",
           "sub": "",
           "card_color": [
             170,
@@ -1145,7 +299,7 @@
           "insta": ""
         }
       ],
-      "caption_post": "क्या बिना सिम का वाई-फ़ाई, वाई-फ़ाई यूज़र्स को दबाने की सरकारी साज़िश है?\n\nTag करो उसको जो बिना सिम के सिर्फ पड़ोसी के वाई-फाई पर व्हाट्सएप चलाता है! 📱⚡\n\nक्या बिना सिम ऐप बंद होना सही फैसला है?\n\nस्रोत: DD News, AajTak, Jagran, ABP News\n#BakraNews #SimBinding #WhatsAppRule #TechBakchodi #BakraBahas",
+      "caption_post": "क्या साढ़े चार लाख का फोन, मध्यमवर्ग का मज़ाक उड़ाने की साज़िश है? Tag करो उसको जो शो-ऑफ के लिए नया फोन लेना चाहता है! क्या 4.5 लाख में फोन लेना समझदारी है? स्रोत: Amar Ujala, Navbharat Times #iPhoneDuo #BakraNews #FoldableiPhone #BakraBehas #FestiveOffers",
       "format": "rant",
       "label": "बकरा बहस",
       "icons": [
@@ -1153,147 +307,150 @@
         "NEWS",
         "%"
       ],
-      "hook": "क्या बिना सिम का वाई-फ़ाई, वाई-फ़ाई यूज़र्स को दबाने की सरकारी साज़िश है?",
-      "hook_text": "क्या बिना सिम का वाई-फ़ाई, वाई-फ़ाई यूज़र्स को दबाने की सरकारी साज़िश है?",
+      "hook": "क्या साढ़े चार लाख का फोन, मध्यमवर्ग का मज़ाक उड़ाने की साज़िश है?",
+      "hook_text": "क्या साढ़े चार लाख का फोन, मध्यमवर्ग का मज़ाक उड़ाने की साज़िश है?",
       "poll": null,
       "key_word": "",
-      "cast_why": "समाज: हम बिना सिम वाले वाई-फाई यूज़र्स | माँग: हमारी माँग: बिना सिम के वाई-फ़ाई पर चैट को मौलिक अधिकार बनाओ!",
+      "cast_why": "समाज: हम EMI वाले मध्यमवर्गीय | माँग: हमारी माँग: किश्तों पर ब्याज माफ़ करो और पुराना एंड्रॉयड एक्सचेंज में लो!",
       "_loose": true,
       "trend": {
-        "score": 8,
-        "why": "34 अख़बार/चैनल 2 दिन में, 49 खबरें 7 दिन में"
+        "score": 7,
+        "why": "18 अख़बार/चैनल 2 दिन में, 38 खबरें 7 दिन में"
       },
-      "hasi": "टैग: जो बिना सिम के सिर्फ वाई-फाई पर व्हाट्सएप चलाता है | twist: तो सबको बता देंगे… शर्मा जी फैमिली ग्रुप में नकली गुड मॉर्निंग खुद टाइप करते हैं!"
+      "hasi": "टैग: शो-ऑफ करने वाले दोस्त को | twist: तो सबको बता देंगे… भाई साहब आईफोन के डिब्बे में दो सौ रुपये का पुराना फोन चलाते हैं!"
     },
     {
-      "topic": "NMC द्वारा मेडिकल शिक्षा नियम वापस लेने पर सफाई",
-      "category": "[Trends]",
-      "breaking": "मेडिकल शिक्षा नियम वापस, NMC ने दी सफाई",
-      "hook_text": "डॉक्टर बनने के नियम बदल गए… या पुरानी रूलबुक ही खो गई?",
-      "ask": "क्या मेडिकल नियमों में बार-बार बदलाव सही है?",
-      "source": "ABP News, News18 Hindi, Jagran",
+      "topic": "विदेशी परिवार को पसंद आईं भारत की 10 बातें व पीएम मोदी का बयान",
+      "category": "[शादी-रिश्ते]",
+      "breaking": "विदेशियों को पसंद आई भारत की दस बातें, पीएम बोले सतर्क रहें",
+      "hook_text": "विदेशी यहाँ दस अच्छाइयाँ खोज रहे…?",
+      "hook_screen": "विदेशी खोज रहे अच्छाइयाँ…?",
+      "ask": "आपको अपने शहर की कौन सी बात सबसे पसंद है?",
+      "source": "India TV Hindi, DD News, ETV Bharat",
       "poll": [
-        "नियम सही हैं",
-        "कन्फ्यूजन बढ़ा"
+        "देसी खाना",
+        "सड़क के गड्ढे"
       ],
       "ticker": [
-        "एनएमसी ने 2023 की रूलबुक ली वापस",
-        "मेडिकल शिक्षा मानकों में कोई ढील नहीं",
-        "एनएमसी पोर्टल पर नया नोटिफिकेशन जारी"
+        "विदेशियों ने मुंबई की दस बातें सराहीं",
+        "पीएम मोदी बोले—देश को बदनाम करने वालों से बचें",
+        "आधिकारिक स्रोतों से खबरों की पुष्टि ज़रूरी"
       ],
-      "cast_why": "रमेश की पढ़ाई वाली परेशानी बनाम बबलू का सरकारी नियम पढ़कर सुनाना",
-      "tag_who": "हर वो स्टूडेंट जो नीट की तैयारी में नियम गिनते-गिनते थक गया",
+      "cast_why": "रमेश की नागरिक भड़ास बनाम बबलू का सरकारी बयान वाला रुख",
+      "tag_who": "वो दोस्त जो विदेश जाकर भी चाय-नमकीन ढूंढता है",
       "lines": [
         {
           "who": "ramesh",
-          "say": "डॉक्टर बनने के नियम बदल गए… या पुरानी रूलबुक ही खो गई?",
-          "caption": "डॉक्टर बनने के नियम बदल गए… या पुरानी रूलबुक ही खो गई?",
-          "expr": "gussa",
-          "set": "hospital",
+          "say": "विदेशी यहाँ दस अच्छाइयाँ खोज रहे…?",
+          "caption": "विदेशी यहाँ 10 अच्छाइयाँ खोज रहे…?",
+          "expr": "hairan",
+          "set": "village",
           "visuals": [
-            "frustrated student with medical books",
-            "official rulebook document stack",
-            "desk with tea cup and papers"
+            "mumbai city street traffic",
+            "foreign tourists india street",
+            "indian road view"
           ],
           "photo_hi": [
-            "एनएमसी मेडिकल नियम",
-            "मेडिकल स्टूडेंट पढ़ाई"
+            "मुंबई विदेशी परिवार",
+            "भारत पर्यटक"
           ],
-          "visual": "frustrated student with medical books",
+          "visual": "mumbai city street traffic",
           "scene": "studio",
           "punch": false,
           "insta": ""
         },
         {
           "who": "bablu",
-          "say": "नेशनल मेडिकल कमीशन ने दो हज़ार तेइस के नियम वापस ले लिए… डॉक्टर हैरान हैं!",
-          "caption": "नेशनल मेडिकल कमीशन ने 2023 के नियम वापस ले लिए… डॉक्टर हैरान हैं!",
+          "say": "मुंबई में विदेशी परिवार ने दस बातें सराहीं… पीएम बोले, कुछ बदनाम करना चाहते हैं!",
+          "caption": "मुंबई में विदेशी परिवार ने 10 बातें सराहीं… PM बोले, कुछ बदनाम करना चाहते हैं!",
           "expr": "gambhir",
           "set": "studio",
           "visuals": [
-            "news studio reporter speaking",
-            "NMC official building notice board",
-            "medical college campus gate"
+            "pm modi speech mic",
+            "news studio anchor india",
+            "mumbai skyline"
           ],
           "photo_hi": [
-            "एनएमसी नोटिस वापस",
-            "नेशनल मेडिकल कमीशन खबर"
+            "पीएम मोदी भाषण",
+            "मुंबई विदेशी फैमिली"
           ],
           "card": {
-            "tag": "नियम वापस",
-            "big": "NMC ने 2023 रूलबुक ली वापस",
-            "sub": "गुणवत्ता और मानकों में कोई ढील नहीं",
+            "tag": "ताज़ा खबर",
+            "big": "10 बातें पसंद",
+            "sub": "विदेशियों ने की सराहना",
             "icon": "check"
           },
-          "visual": "news studio reporter speaking",
+          "visual": "pm modi speech mic",
           "scene": "card",
           "punch": false,
           "insta": ""
         },
         {
           "who": "chacha",
-          "say": "हमारे यहाँ इलाज नियमों से नहीं… कम्पाउंडर के तजुर्बे से चलता है!",
-          "caption": "हमारे यहाँ इलाज नियमों से नहीं… कम्पाउंडर के तजुर्बे से चलता है!",
+          "say": "और असली अजूबा? वो दस बातें अब तक लापता हैं!",
+          "caption": "और असली अजूबा? वो 10 बातें अब तक लापता हैं!",
           "expr": "tanz",
-          "set": "aangan",
+          "set": "village",
           "visuals": [
-            "old man sitting near medical shop",
-            "village clinic doctor stethoscope",
-            "old paper prescription handwritten"
+            "indian village elder laughing",
+            "charpai sitting man",
+            "rural conversation india"
           ],
           "photo_hi": [
-            "गांव का क्लिनिक इलाज",
-            "मेडिकल कॉलेज छात्र"
+            "भारतीय गांव बुजुर्ग",
+            "चौपाल चर्चा"
           ],
-          "punch": true,
-          "stamp": "इलाज… कम्पाउंडर के तजु",
-          "visual": "old man sitting near medical shop",
+          "visual": "indian village elder laughing",
           "scene": "chacha",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "say": "एनएमसी ने साफ़ किया है, गुणवत्ता में ढील नहीं होगी। ढील सिर्फ़ फ़ाइलों में है।",
-          "caption": "NMC ने साफ़ किया है, गुणवत्ता में ढील नहीं होगी। ढील सिर्फ़ फ़ाइलों में है।",
-          "expr": "gambhir",
-          "set": "studio",
-          "visuals": [
-            "official government file close up",
-            "medical education standards book",
-            "news reporter pointing to screen"
-          ],
-          "photo_hi": [
-            "एनएमसी मेडिकल गाइडलाइन",
-            "एमबीबीएस एडमिशन नियम"
-          ],
-          "punch": true,
-          "stamp": "ढील… सिर्फ़ फ़ाइलों मे",
-          "visual": "official government file close up",
-          "scene": "chacha",
+          "punch": false,
           "insta": ""
         },
         {
           "who": "ramesh",
-          "say": "मतलब पढ़ाई वही रहेगी… बस हर साल काग़ज़ बदल जाएँगे!",
-          "caption": "मतलब पढ़ाई वही रहेगी… बस हर साल काग़ज़ बदल जाएँगे!",
-          "expr": "tanz",
-          "set": "aangan",
+          "say": "वो दोस्त जो विदेश जाकर भी ढूंढता है—भाई, देसी चाय कहाँ मिलेगी?",
+          "caption": "वो दोस्त जो विदेश जाकर भी ढूंढता है—भाई, देसी चाय कहाँ मिलेगी?",
+          "expr": "hasi",
+          "set": "village",
           "visuals": [
-            "young boy tearing official paper",
-            "stethoscope on thick medical textbook",
-            "tired medical aspirant student"
+            "indian tea stall crowd",
+            "friends drinking chai",
+            "street tea vendor india"
           ],
           "photo_hi": [
-            "एमबीबीएस छात्र नियम",
-            "एनएमसी पोर्टल नोटिफिकेशन"
+            "देसी चाय दुकान",
+            "टूरिस्ट चाय"
           ],
-          "visual": "young boy tearing official paper",
-          "scene": "studio_end",
+          "tag": true,
+          "tag_screen": "वो दोस्त जो विदेश में चाय ढूंढे",
+          "visual": "indian tea stall crowd",
+          "scene": "chacha",
           "punch": false,
+          "insta": "",
+          "tag_text": "वो दोस्त जो विदेश में चाय"
+        },
+        {
+          "who": "bablu",
+          "say": "आधिकारिक सलाह है, खबर जांच लें। तारीफ असली है या सपना!",
+          "caption": "आधिकारिक सलाह है, खबर जांच लें। तारीफ असली है या सपना!",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "news anchor desk broadcast",
+            "fact check graphics india",
+            "official seal document"
+          ],
+          "photo_hi": [
+            "खबर की पुष्टि",
+            "आधिकारिक बयान"
+          ],
+          "punch": true,
+          "stamp": "तारीफ… या सपना!",
+          "visual": "news anchor desk broadcast",
+          "scene": "studio_end",
           "insta": ""
         }
       ],
-      "caption_post": "डॉक्टर बनने के नियम बदल गए… या पुरानी रूलबुक खो गई? Tag करो उसको जो नीट की तैयारी में नियम गिनते-गिनते थक गया! क्या मेडिकल नियमों में बार-बार बदलाव सही है? स्रोत: ABP News, News18 Hindi #NMC #MedicalEducation #MBBS #BakraNews #DarkSatire",
+      "caption_post": "विदेशी यहाँ दस अच्छाइयाँ खोज रहे…?\nTag करो उसको जो विदेश जाकर भी देसी चाय ढूंढता है!\nआपको अपने शहर की कौन सी बात सबसे पसंद है?\nस्रोत: India TV Hindi, DD News\n#BakraNews #Mumbai #PMModi #IndiaTravel #Satire (AI से बने किरदार)",
       "format": "explain",
       "label": "काम की खबर",
       "key_word": "",
@@ -1302,11 +459,683 @@
         "NEWS",
         "%"
       ],
-      "hook": "डॉक्टर बनने के नियम बदल गए… या पुरानी रूलबुक ही खो गई?",
+      "hook": "विदेशी यहाँ दस अच्छाइयाँ खोज रहे…?",
+      "hook_short": "विदेशी खोज रहे अच्छाइयाँ…?",
       "trend": {
         "score": 5,
-        "why": "6 अख़बार/चैनल 2 दिन में, 16 खबरें 7 दिन में"
+        "why": "11 अख़बार/चैनल 2 दिन में, 33 खबरें 7 दिन में"
       }
+    },
+    {
+      "khabar": "जियो आईपीओ ने बनाए विश्व रिकॉर्ड",
+      "score": "9",
+      "topic": "जियो आईपीओ के रिकॉर्ड आवेदन",
+      "category": "money",
+      "breaking": "जियो आईपीओ को मिली रिकॉर्ड 7.4 लाख करोड़ रुपये की बोलियाँ",
+      "samaj": "हम छोटे शेयर बाजार निवेशक",
+      "maang": "हमारी माँग: हर एक आईपीओ आवेदन पर एक लॉट गारंटी से अलॉट करो!",
+      "twist": "तो सबको बता देंगे… जो करोड़ों का पोर्टफोलियो दिखाते हैं, वो डिमैट अकाउंट का स्क्रीनशॉट एडिटेड है!",
+      "takiya": "शेयर दो, ज्ञान नहीं!",
+      "tag_who": "आईपीओ के अलॉटमेंट का इंतज़ार करने वाले दोस्त को",
+      "source": "AajTak, News18 Hindi",
+      "ask": "क्या आपको जियो का आईपीओ अलॉट होगा?",
+      "ticker": [
+        "जियो आईपीओ 22.19 गुना सब्सक्राइब",
+        "1.38 करोड़ से अधिक आवेदन मिले",
+        "कुल 7.4 लाख करोड़ की बोलियाँ"
+      ],
+      "lines": [
+        {
+          "who": "bablu",
+          "beat": "hook",
+          "say": "साढ़े सात लाख करोड़ की बोलियाँ? क्या शेयर बाज़ार अलॉटमेंट का सपना बेचने की साज़िश है?",
+          "caption": "7.4 लाख करोड़ की बोलियाँ? क्या शेयर बाज़ार अलॉटमेंट का सपना बेचने की साज़िश है?",
+          "visuals": [
+            "stock market trading screen charts",
+            "shocked investor staring at laptop",
+            "bullish market rally graphics"
+          ],
+          "photo_hi": [
+            "शेयर बाजार चार्ट",
+            "हैरान निवेशक"
+          ],
+          "expr": "hairan",
+          "sfx": "boom",
+          "mood": "tension",
+          "delivery": "बिल्कुल गंभीर, धीमा, हर शब्द पर ज़ोर — जैसे देश का सबसे बड़ा सवाल पूछ रहा हो",
+          "visual": "stock market trading screen charts",
+          "set": "studio",
+          "punch": false,
+          "big": "बड़ा सवाल",
+          "sub": "हम छोटे शेयर बाजार निवेशक",
+          "card_color": [
+            20,
+            40,
+            110
+          ],
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "saboot",
+          "say": "जियो आईपीओ बाइस गुना भरा, साढ़े सात लाख करोड़ रुपये की बोलियाँ लग गईं!",
+          "caption": "जियो IPO 22.19 गुना भरा, ₹7.4 लाख करोड़ की बोलियाँ!",
+          "visuals": [
+            "huge financial numbers animation",
+            "stock broker typing fast on computer",
+            "indian stock market exchange building"
+          ],
+          "photo_hi": [
+            "बॉम्बे स्टॉक एक्सचेंज",
+            "आईपीओ शेयर बाजार"
+          ],
+          "expr": "gussa",
+          "sfx": "whoosh",
+          "mood": "tension",
+          "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
+          "visual": "huge financial numbers animation",
+          "set": "studio",
+          "punch": false,
+          "big": "सबूत नंबर 1",
+          "sub": "",
+          "card_color": [
+            12,
+            60,
+            120
+          ],
+          "scene": "pinky",
+          "insta": ""
+        },
+        {
+          "who": "pinky",
+          "beat": "saboot",
+          "say": "और बात यहीं ख़त्म नहीं होती… मेरी मम्मी ने आईपीओ के लिए अपनी पायजेब गिरवी रख दी!",
+          "caption": "मेरी मम्मी ने आईपीओ के लिए अपनी पायजेब गिरवी रख दी!",
+          "visuals": [
+            "indian mother gold silver anklet",
+            "worried Gen-Z girl holding smartphone",
+            "pawn shop jewellery loan"
+          ],
+          "photo_hi": [
+            "चांदी की पायल",
+            "परेशान लड़की"
+          ],
+          "expr": "gussa",
+          "sfx": "glitch",
+          "mood": "tension",
+          "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
+          "visual": "indian mother gold silver anklet",
+          "set": "aangan",
+          "punch": false,
+          "big": "सबूत नंबर 2",
+          "sub": "",
+          "card_color": [
+            12,
+            60,
+            120
+          ],
+          "scene": "pinky",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "maang",
+          "say": "हमारी माँग: हर एक आईपीओ आवेदन पर एक लॉट गारंटी से अलॉट करो!",
+          "caption": "हमारी माँग: हर एक आईपीओ आवेदन पर एक लॉट गारंटी से अलॉट करो!",
+          "visuals": [
+            "ipo allotment status check laptop",
+            "demanding hand raised official document",
+            "guarantee stamp seal on paper"
+          ],
+          "photo_hi": [
+            "आईपीओ अलॉटमेंट",
+            "गारंटी नियम"
+          ],
+          "stamp": "एक लॉट गारंटी दो!",
+          "expr": "gussa",
+          "sfx": "dhol",
+          "mood": "masti",
+          "delivery": "ऐलान की तरह, जोश में, जैसे संसद में भाषण",
+          "visual": "ipo allotment status check laptop",
+          "set": "studio",
+          "punch": true,
+          "big": "हमारी माँग",
+          "sub": "हमारी माँग: हर एक आईपीओ आवेदन",
+          "card_color": [
+            110,
+            20,
+            40
+          ],
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "dhamki",
+          "say": "और अगर अलॉटमेंट शून्य आया…",
+          "caption": "और अगर अलॉटमेंट शून्य आया…",
+          "visuals": [
+            "zero number big on screen",
+            "serious face news anchor close up",
+            "dramatic studio lighting tension"
+          ],
+          "photo_hi": [
+            "जीरो शेयर",
+            "गंभीर एंकर"
+          ],
+          "expr": "gambhir",
+          "sfx": "tick",
+          "mood": "tension",
+          "delivery": "अचानक बहुत धीमा, रहस्य वाला, लगभग फुसफुसाते हुए",
+          "pause_after": 0.5,
+          "visual": "zero number big on screen",
+          "set": "studio",
+          "punch": true,
+          "big": "चेतावनी!",
+          "sub": "",
+          "card_color": [
+            40,
+            10,
+            15
+          ],
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "twist",
+          "say": "तो सबको बता देंगे… जो करोड़ों का पोर्टफोलियो दिखाते हैं, वो डिमैट अकाउंट का स्क्रीनशॉट एडिटेड है!",
+          "caption": "तो सबको बता देंगे… जो करोड़ों का पोर्टफोलियो दिखाते हैं, वो डिमैट का स्क्रीनशॉट एडिटेड है!",
+          "visuals": [
+            "fake edited mobile phone screen screenshot",
+            "busted liar friend embarrassed face",
+            "photo editing software mock up"
+          ],
+          "photo_hi": [
+            "मोबाइल स्क्रीनशॉट एडिट",
+            "झूठ पकड़ा गया"
+          ],
+          "stamp": "स्क्रीनशॉट एडिटेड है!",
+          "expr": "hairan",
+          "sfx": "boom",
+          "mood": "masti",
+          "delivery": "धमाके से, जीत वाले अंदाज़ में, आख़िरी हिस्सा ज़ोर से",
+          "visual": "fake edited mobile phone screen screenshot",
+          "set": "studio",
+          "punch": true,
+          "big": "बड़ा खुलासा!",
+          "sub": "",
+          "card_color": [
+            170,
+            20,
+            30
+          ],
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "takiya",
+          "say": "शेयर दो, ज्ञान नहीं!",
+          "caption": "शेयर दो, ज्ञान नहीं!",
+          "visuals": [
+            "stock certificate paper close up",
+            "angry news anchor shouting hands up",
+            "finance news breaking banner"
+          ],
+          "photo_hi": [
+            "शेयर बाजार प्रमाणपत्र",
+            "बकरा न्यूज"
+          ],
+          "stamp": "शेयर दो, ज्ञान नहीं!",
+          "expr": "gussa",
+          "sfx": "thug",
+          "mood": "masti",
+          "delivery": "पूरी ताक़त से चिल्लाकर, मेज़ पर हाथ मारते हुए",
+          "pause_after": 0.3,
+          "visual": "stock certificate paper close up",
+          "set": "studio",
+          "punch": true,
+          "big": "शेयर दो, ज्ञान नहीं!",
+          "sub": "",
+          "card_color": [
+            170,
+            20,
+            30
+          ],
+          "scene": "studio_end",
+          "insta": ""
+        }
+      ],
+      "caption_post": "साढ़े सात लाख करोड़ की बोलियाँ? क्या शेयर बाज़ार अलॉटमेंट का सपना बेचने की साज़िश है? Tag करो उसको जो आईपीओ के अलॉटमेंट का इंतज़ार कर रहा है! क्या आपको जियो का आईपीओ अलॉट होगा? स्रोत: AajTak, News18 Hindi #JioIPO #StockMarket #BakraNews #IPORecord #BakraBehas",
+      "format": "rant",
+      "label": "बकरा बहस",
+      "icons": [
+        "₹",
+        "NEWS",
+        "%"
+      ],
+      "hook": "साढ़े सात लाख करोड़ की बोलियाँ? क्या शेयर बाज़ार अलॉटमेंट का सपना…",
+      "hook_text": "साढ़े सात लाख करोड़ की बोलियाँ? क्या शेयर बाज़ार अलॉटमेंट का सपना…",
+      "poll": null,
+      "key_word": "",
+      "cast_why": "समाज: हम छोटे शेयर बाजार निवेशक | माँग: हमारी माँग: हर एक आईपीओ आवेदन पर एक लॉट गारंटी से अलॉट करो!",
+      "_loose": true,
+      "trend": {
+        "score": 7,
+        "why": "19 अख़बार/चैनल 2 दिन में, 24 खबरें 7 दिन में"
+      },
+      "hasi": "टैग: आईपीओ के अलॉटमेंट का इंतज़ार करने वाले दोस्त को | twist: तो सबको बता देंगे… जो करोड़ों का पोर्टफोलियो दिखाते हैं, वो डिमैट अकाउंट का स्क्रीनशॉट एडिटेड है!"
+    },
+    {
+      "topic": "विदेश में बैठी बेटी के लिए घर का बना दिवाली गिफ्ट",
+      "category": "[त्योहार-ट्रेंड]",
+      "breaking": "विदेश में बेटी को मिला घर का दिवाली सरप्राइज",
+      "hook_text": "घर का स्वाद सीधे विदेश पहुँचा…!",
+      "hook_screen": "स्वाद पहुँचा विदेश…!",
+      "ask": "क्या आपने भी कभी घर से दूर दीवाली मनाई है?",
+      "source": "Navbharat Times, India TV Hindi, TV9 Hindi",
+      "poll": [
+        "मां के हाथ की नमकीन",
+        "ऑनलाइन गिफ्ट"
+      ],
+      "ticker": [
+        "माता-पिता ने भेजा दिवाली गिफ्ट",
+        "मां की नमकीन पाकर बेटी हुई भावुक",
+        "त्योहारों पर समय से कूरियर बुक करने की सलाह"
+      ],
+      "cast_why": "पिंकी का इमोशनल ड्रामा बनाम चाचा का कड़वा खर्च वाला तंज",
+      "tag_who": "वो बहन जो नमकीन का डिब्बा देखकर रोने लगती है",
+      "lines": [
+        {
+          "who": "pinky",
+          "say": "घर का स्वाद सीधे विदेश पहुँचा…!",
+          "caption": "घर का स्वाद सीधे विदेश पहुँचा…!",
+          "expr": "hairan",
+          "set": "aangan",
+          "visuals": [
+            "diwali gift box opening",
+            "indian girl phone screen",
+            "sweets and snacks box"
+          ],
+          "photo_hi": [
+            "दिवाली गिफ्ट बॉक्स",
+            "घर की नमकीन"
+          ],
+          "visual": "diwali gift box opening",
+          "scene": "studio",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "माता-पिता ने विदेश बेटी को गिफ्ट भेजा… मां की नमकीन पाते ही रो पड़ी!",
+          "caption": "माता-पिता ने विदेश बेटी को गिफ्ट भेजा… मां की नमकीन पाते ही रो पड़ी!",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "courier parcel delivery international",
+            "emotional woman with package",
+            "homemade indian namkeen"
+          ],
+          "photo_hi": [
+            "विदेश कूरियर पार्सल",
+            "मां की नमकीन"
+          ],
+          "card": {
+            "tag": "दिवाली सरप्राइज",
+            "big": "घर का गिफ्ट",
+            "sub": "मां का प्यार",
+            "icon": "gift"
+          },
+          "visual": "courier parcel delivery international",
+          "scene": "card",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "chacha",
+          "say": "पर असली झटका कूरियर वाले ने दिया!",
+          "caption": "पर असली झटका कूरियर वाले ने दिया!",
+          "expr": "tanz",
+          "set": "aangan",
+          "visuals": [
+            "courier bill payment receipt",
+            "indian elderly man shocked",
+            "delivery guy standing"
+          ],
+          "photo_hi": [
+            "कूरियर रसीद",
+            "पार्सल बिल"
+          ],
+          "visual": "courier bill payment receipt",
+          "scene": "chacha",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "pinky",
+          "say": "वो बहन जो दीवाली पर सिर्फ नमकीन का डिब्बा देखकर इमोशनल हो जाती है!",
+          "caption": "वो बहन जो दीवाली पर सिर्फ नमकीन का डिब्बा देखकर इमोशनल हो जाती है!",
+          "expr": "hasi",
+          "set": "aangan",
+          "visuals": [
+            "emotional sister video call",
+            "eating indian snacks home",
+            "diwali festival celebration indoor"
+          ],
+          "photo_hi": [
+            "भावुक बेटी दिवाली",
+            "घर का पार्सल"
+          ],
+          "tag": true,
+          "tag_screen": "वो बहन जो नमकीन देखकर रोए",
+          "visual": "emotional sister video call",
+          "scene": "pinky",
+          "punch": false,
+          "insta": "",
+          "tag_text": "वो बहन जो नमकीन देखकर रोए"
+        },
+        {
+          "who": "bablu",
+          "say": "सलाह है, कूरियर समय से कराएं। कूरियर का किराया नमकीन से महंगा है!",
+          "caption": "सलाह है, कूरियर समय से कराएं। कूरियर का किराया नमकीन से महंगा है!",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "courier shipping service counter",
+            "weighing scale parcel",
+            "price tag high cost"
+          ],
+          "photo_hi": [
+            "कूरियर सेवा बुक",
+            "दिवाली पार्सल"
+          ],
+          "punch": true,
+          "stamp": "किराया… नमकीन से महंगा",
+          "visual": "courier shipping service counter",
+          "scene": "studio_end",
+          "insta": ""
+        }
+      ],
+      "caption_post": "घर का स्वाद सीधे विदेश पहुँचा…!\nTag करो उसको जो दीवाली पर घर के खाने के लिए तरसता है!\nक्या आपने भी कभी घर से दूर दीवाली मनाई है?\nस्रोत: Navbharat Times, India TV Hindi\n#BakraNews #DiwaliGift #NRI #FamilyLove #Satire (AI से बने किरदार)",
+      "format": "explain",
+      "label": "काम की खबर",
+      "key_word": "",
+      "icons": [
+        "₹",
+        "NEWS",
+        "%"
+      ],
+      "hook": "घर का स्वाद सीधे विदेश पहुँचा…!",
+      "hook_short": "स्वाद पहुँचा विदेश…!",
+      "trend": {
+        "score": 4,
+        "why": "4 अख़बार/चैनल 2 दिन में, 5 खबरें 7 दिन में"
+      }
+    },
+    {
+      "khabar": "त्योहारी सीजन में ऑनलाइन साइबर ठगी से सावधान",
+      "score": "9",
+      "topic": "दिवाली ऑफर में ऑनलाइन ड्राई फ्रूट्स ठगी",
+      "category": "viral",
+      "breaking": "सस्ते ड्राई फ्रूट्स और गिफ्ट वाउचर के नाम पर ऑनलाइन साइबर ठगी",
+      "samaj": "हम डिस्काउंट के भूखे",
+      "maang": "हमारी माँग: हर फर्जी लिंक भेजने वाले के घर दो किलो असली काजू भेजो!",
+      "twist": "तो सबको बता देंगे… जो काजू कतली बांटी थी, वो असल में मूंगफली की बर्फी थी!",
+      "takiya": "लिंक नहीं, काजू दो!",
+      "tag_who": "हर अनजान लिंक पर क्लिक करने वाले दोस्त को",
+      "source": "Amar Ujala, Jagran",
+      "ask": "क्या आपके पास भी नकली सेल का मैसेज आया?",
+      "ticker": [
+        "त्योहारी सेल के नाम पर साइबर ठगी",
+        "सस्ते काजू-बादाम के लिंक से बैंक खाली",
+        "अनजान ऑफर्स के लिंक से बचें"
+      ],
+      "lines": [
+        {
+          "who": "bablu",
+          "beat": "hook",
+          "say": "सस्ते काजू और फ्री वाउचर? क्या दिवाली सेल बैंक अकाउंट खाली करने की साज़िश है?",
+          "caption": "सस्ते काजू और फ्री वाउचर? क्या दिवाली सेल बैंक खाली करने की साज़िश है?",
+          "visuals": [
+            "cyber fraud phishing link on mobile screen",
+            "cashew nuts dry fruit gift box festival",
+            "hacker fraud alert red warning sign"
+          ],
+          "photo_hi": [
+            "काजू बादाम डिब्बा",
+            "साइबर ठगी मैसेज"
+          ],
+          "expr": "hairan",
+          "sfx": "boom",
+          "mood": "tension",
+          "delivery": "बिल्कुल गंभीर, धीमा, हर शब्द पर ज़ोर — जैसे देश का सबसे बड़ा सवाल पूछ रहा हो",
+          "visual": "cyber fraud phishing link on mobile screen",
+          "set": "studio",
+          "punch": false,
+          "big": "बड़ा सवाल",
+          "sub": "हम डिस्काउंट के भूखे",
+          "card_color": [
+            20,
+            40,
+            110
+          ],
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "saboot",
+          "say": "नोएडा में सस्ते ड्राई फ्रूट्स के नाम पर लोगों का पूरा बैंक अकाउंट साफ़ कर दिया!",
+          "caption": "सस्ते ड्राई फ्रूट्स के नाम पर पूरा बैंक अकाउंट खाली!",
+          "visuals": [
+            "empty bank account balance zero app screen",
+            "noida police station Cyber Crime Cell sign",
+            "sad man staring at empty wallet"
+          ],
+          "photo_hi": [
+            "नोएडा साइबर पुलिस",
+            "बैंक अकाउंट खाली"
+          ],
+          "expr": "gussa",
+          "sfx": "whoosh",
+          "mood": "tension",
+          "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
+          "visual": "empty bank account balance zero app screen",
+          "set": "studio",
+          "punch": false,
+          "big": "सबूत नंबर 1",
+          "sub": "",
+          "card_color": [
+            12,
+            60,
+            120
+          ],
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "ramesh",
+          "beat": "saboot",
+          "say": "और बात यहीं ख़त्म नहीं होती… रमेश ने पचासी रुपये भेजे, और काजू की जगह मुँगफली मिली!",
+          "caption": "और बात यहीं ख़त्म नहीं होती… काजू की जगह डिब्बे में मुँगफली मिली!",
+          "visuals": [
+            "peanuts in dry fruit box disappointment",
+            "young indian boy showing cheap peanuts package",
+            "funny cheated face expression"
+          ],
+          "photo_hi": [
+            "मुंगफली के दाने",
+            "धोखाधड़ी का डिब्बा"
+          ],
+          "expr": "gussa",
+          "sfx": "glitch",
+          "mood": "tension",
+          "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
+          "visual": "peanuts in dry fruit box disappointment",
+          "set": "thana",
+          "punch": false,
+          "big": "सबूत नंबर 2",
+          "sub": "",
+          "card_color": [
+            12,
+            60,
+            120
+          ],
+          "scene": "chacha",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "maang",
+          "say": "हमारी माँग: हर फर्जी लिंक भेजने वाले के घर दो किलो असली काजू भेजो!",
+          "caption": "हमारी माँग: हर फर्जी लिंक भेजने वाले के घर 2 किलो असली काजू भेजो!",
+          "visuals": [
+            "premium quality cashew nuts pile",
+            "delivery boy holding big gift hamper box",
+            "official punishment order stamped paper"
+          ],
+          "photo_hi": [
+            "असली काजू डिब्बा",
+            "सरकारी मांग पत्र"
+          ],
+          "stamp": "असली काजू भेजो!",
+          "expr": "gussa",
+          "sfx": "dhol",
+          "mood": "masti",
+          "delivery": "ऐलान की तरह, जोश में, जैसे संसद में भाषण",
+          "visual": "premium quality cashew nuts pile",
+          "set": "studio",
+          "punch": true,
+          "big": "हमारी माँग",
+          "sub": "हमारी माँग: हर फर्जी लिंक भेजने",
+          "card_color": [
+            110,
+            20,
+            40
+          ],
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "dhamki",
+          "say": "और अगर काजू वापस नहीं मिले…",
+          "caption": "और अगर काजू वापस नहीं मिले…",
+          "visuals": [
+            "intense glare anchor warning zoom in",
+            "dark news studio backdrop tension",
+            "warning countdown graphic on screen"
+          ],
+          "photo_hi": [
+            "चेतावनी एंकर",
+            "न्यूज स्टूडियो"
+          ],
+          "expr": "gambhir",
+          "sfx": "tick",
+          "mood": "tension",
+          "delivery": "अचानक बहुत धीमा, रहस्य वाला, लगभग फुसफुसाते हुए",
+          "pause_after": 0.5,
+          "visual": "intense glare anchor warning zoom in",
+          "set": "studio",
+          "punch": true,
+          "big": "चेतावनी!",
+          "sub": "",
+          "card_color": [
+            40,
+            10,
+            15
+          ],
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "twist",
+          "say": "तो सबको बता देंगे… जो काजू कतली बांटी थी, वो असल में मूंगफली की बर्फी थी!",
+          "caption": "तो सबको बता देंगे… जो काजू कतली बांटी थी, वो मूंगफली की बर्फी थी!",
+          "visuals": [
+            "peanuts sweet barfi masquerading as kaju katli",
+            "shocked guest spitting sweet funny face",
+            "secret revealed text graphic bold"
+          ],
+          "photo_hi": [
+            "काजू कतली मिठाई",
+            "मूंगफली की बर्फी"
+          ],
+          "stamp": "मूंगफली की बर्फी थी!",
+          "expr": "hairan",
+          "sfx": "boom",
+          "mood": "masti",
+          "delivery": "धमाके से, जीत वाले अंदाज़ में, आख़िरी हिस्सा ज़ोर से",
+          "visual": "peanuts sweet barfi masquerading as kaju katli",
+          "set": "studio",
+          "punch": true,
+          "big": "बड़ा खुलासा!",
+          "sub": "",
+          "card_color": [
+            170,
+            20,
+            30
+          ],
+          "scene": "studio",
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "beat": "takiya",
+          "say": "लिंक नहीं, काजू दो!",
+          "caption": "लिंक नहीं, काजू दो!",
+          "visuals": [
+            "dry fruit box open festive celebration",
+            "news anchor shouting full voice studio",
+            "cyber security alert banner"
+          ],
+          "photo_hi": [
+            "काजू का डिब्बा",
+            "बकरा न्यूज एंकर"
+          ],
+          "stamp": "लिंक नहीं, काजू दो!",
+          "expr": "gussa",
+          "sfx": "thug",
+          "mood": "masti",
+          "delivery": "पूरी ताक़त से चिल्लाकर, मेज़ पर हाथ मारते हुए",
+          "pause_after": 0.3,
+          "visual": "dry fruit box open festive celebration",
+          "set": "studio",
+          "punch": true,
+          "big": "लिंक नहीं, काजू दो!",
+          "sub": "",
+          "card_color": [
+            170,
+            20,
+            30
+          ],
+          "scene": "studio_end",
+          "insta": ""
+        }
+      ],
+      "caption_post": "सस्ते काजू और फ्री वाउचर? क्या दिवाली सेल बैंक अकाउंट खाली करने की साज़िश है? Tag करो उसको जो हर अनजान लिंक पर क्लिक कर देता है! क्या आपके पास भी नकली सेल का मैसेज आया? स्रोत: Amar Ujala, Jagran #CyberFraud #FestiveScam #BakraNews #OnlineShopping #BakraBehas",
+      "format": "rant",
+      "label": "बकरा बहस",
+      "icons": [
+        "₹",
+        "NEWS",
+        "%"
+      ],
+      "hook": "सस्ते काजू और फ्री वाउचर? क्या दिवाली सेल बैंक अकाउंट खाली करने…",
+      "hook_text": "सस्ते काजू और फ्री वाउचर? क्या दिवाली सेल बैंक अकाउंट खाली करने…",
+      "poll": null,
+      "key_word": "",
+      "cast_why": "समाज: हम डिस्काउंट के भूखे | माँग: हमारी माँग: हर फर्जी लिंक भेजने वाले के घर दो किलो असली काजू भेजो!",
+      "_loose": true,
+      "trend": {
+        "score": 4,
+        "why": "4 अख़बार/चैनल 2 दिन में, 5 खबरें 7 दिन में"
+      },
+      "hasi": "टैग: हर अनजान लिंक पर क्लिक करने वाले दोस्त को | twist: तो सबको बता देंगे… जो काजू कतली बांटी थी, वो असल में मूंगफली की बर्फी थी!"
     }
   ]
 }
