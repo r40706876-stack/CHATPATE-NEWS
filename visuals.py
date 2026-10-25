@@ -421,6 +421,8 @@ def pick_for_lines(lines, per_line=3, pool=9, topic="", strict=False):   # 3 त
             ml, mt = len(lw & tt_), len(tw & tt_)
             if not c.get("same_story") and (ml == 0 or mt == 0):       # line-खोज वाली फ़ोटो: line और खबर दोनों से मेल ज़रूरी
                 continue
+            if not c.get("stock") and ml >= 1 and mt >= (2 if len(tw) >= 3 else 1):
+                c["same_story"] = True
             c["score"] = c["match"] + 2.5 + 1.5 * ml + 0.5 * mt
             kept.append(c)
         news = kept
