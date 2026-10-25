@@ -416,6 +416,13 @@ def post():
     out = ROOT / "episode.mp4"
     secs = reel_v3.render(ep, lens, faces, stills, vis, CHARS, out, ROOT / "preview_episode.jpg", audio)
     print(f"बन गया: {out} ({secs:.1f}s)")
+    import qa
+    issues = qa.check(out)
+    if issues:
+        raise RuntimeError("v3 video QA failed; delivery blocked: " + "; ".join(issues))
+    if ep.get("no_send"):
+        print("  (no_send) v3 QA passed, Telegram पर नहीं भेजा")
+        return
     import telegram
     telegram.send_video(out, f"🎬 v3 test: {ep.get('title', '')} — हर 2-3 सेकंड नया नज़ारा, poll के साथ")
 
