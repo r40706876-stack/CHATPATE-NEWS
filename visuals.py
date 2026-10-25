@@ -341,6 +341,17 @@ def _ahash(path):
         return None
 
 
+def safe_story_indices(candidates_, topic, limit=3):
+    """Deterministic Gemini-free matching; only photos from the same news story."""
+    tw = _stems(str(topic))
+    if not tw:
+        return []
+    need = 2 if len(tw) >= 2 else 1
+    return [j for j, c in enumerate(candidates_)
+            if c.get("same_story") and not c.get("stock")
+            and len(tw & _stems(c.get("tags", ""))) >= need][:limit]
+
+
 def pick_for_lines(lines, per_line=3, pool=9, topic="", strict=False):   # 3 तक: एक तस्वीर पर देर तक न अटके
     # strict=True ("बकरा बहस"): AI ने देखकर पास न की हो तो कोई तस्वीर नहीं — पहले बिना जाँच वाली cartoon/model फ़ोटो 30 सेकंड अटकी रही
     """{line_index: [path, ...]} — हर line की सारी खोजों का एक pool, AI एक बार में देखकर हर line के लिए 2 तक चुनता है
@@ -468,12 +479,7 @@ def pick_for_lines(lines, per_line=3, pool=9, topic="", strict=False):   # 3 त
             print("  Gemini photo review unavailable: verified story-title fallback")
             got = []
             for i, _, cs in batch:
-                tw = _stems(lines[i].get("topic") or topic)
-                min_overlap = 2 if len(tw) >= 2 else 1
-                safe = [j for j, c in enumerate(cs)
-                        if c.get("same_story") and not c.get("stock")
-                        and len(tw & _stems(c.get("tags", ""))) >= min_overlap]
-                got.append(safe[:per_line])
+                got.append(safe_story_indices(cs, lines[i].get("topic") or topic, per_line))
         # Never trust AI-provided indices without checking their type and bounds.
         clean = []
         for n, (_, _, cs) in enumerate(batch):
@@ -481,6 +487,9 @@ def pick_for_lines(lines, per_line=3, pool=9, topic="", strict=False):   # 3 त
             if not isinstance(chosen, list):
                 chosen = []
             valid = [j for j in chosen if type(j) is int and 0 <= j < len(cs)]
+            if chosen and not valid:
+                # Gemini returned out-of-range or non-integer picks.
+                valid = safe_story_indices(cs, lines[batch[n][0]].get("topic") or topic, per_line)
             clean.append(valid[:per_line])
         got = clean
         picks += [got[n] if n < len(got) else [] for n in range(len(batch))]
