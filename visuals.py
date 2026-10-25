@@ -342,17 +342,27 @@ def _ahash(path):
 
 
 def safe_story_indices(candidates_, topic, limit=3, line=None):
-    """Deterministic Gemini-free matching; only photos from the same news story."""
+    """Only use same-story photos whose headline supports the dialogue.
+
+    With Gemini unavailable, a title cannot verify the visible contents.
+    Prefer explicit line search hints and reject unrelated news photos.
+    """
     tw = _stems(str(topic))
     if not tw:
         return []
     need = 2 if len(tw) >= 2 else 1
     spoken = _stems((line or {}).get("say", "")) - tw
     intent = _stems(" ".join((line or {}).get("visuals") or []) + " " + " ".join((line or {}).get("photo_hi") or []))
-    return [j for j, c in enumerate(candidates_)
-            if c.get("same_story") and not c.get("stock")
-            and len(tw & _stems(c.get("tags", ""))) >= need
-            and (line is None or bool((spoken | intent) & _stems(c.get("tags", ""))))][:limit]
+    eligible = []
+    for j, c in enumerate(candidates_):
+        tags = _stems(c.get("tags", ""))
+        if not c.get("same_story") or c.get("stock") or len(tw & tags) < need:
+            continue
+        if line is not None and not ((spoken | intent) & tags):
+            continue
+        score = 3 * len(intent & tags) + 2 * len(spoken & tags)
+        eligible.append((score, j))
+    return [j for _, j in sorted(eligible, key=lambda x: (-x[0], x[1]))[:limit]]
 
 
 def pick_for_lines(lines, per_line=3, pool=9, topic="", strict=False):   # 3 तक: एक तस्वीर पर देर तक न अटके
