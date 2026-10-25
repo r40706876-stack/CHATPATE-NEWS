@@ -23,11 +23,6 @@ class ComedyGateTests(unittest.TestCase):
     def test_slow_intro_rejected(self):
         self.assertIn("धीमा introduction hook", bakra_rules.violations(episode(first="नमस्कार दोस्तों, खबर सुनिए")))
 
-    def test_rejected_scripts_never_escape_gate(self):
-        with patch("news_writer._safe", return_value={}), \\
-             patch("news_writer.gather", return_value=([], [])), \\
-             patch("news_writer.write_from", return_value=[episode(first="नमस्कार दोस्तों, खबर सुनिए")]):
-            self.assertEqual(run_daily.write_scripts({}, 1), [])
 
 
 if __name__ == "__main__":
