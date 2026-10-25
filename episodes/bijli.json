@@ -28,9 +28,14 @@
       "expr": "udaas",
       "react": "tanz",
       "photo_hi": [
-        "बिजली बिल मीटर",
-        "बिजली बिल गांव"
-      ]
+        "बिजली बिल भुगतान",
+        "बिजली बिल मीटर"
+      ],
+      "visuals": [
+        "electricity bill paper",
+        "electric meter closeup"
+      ],
+      "big": "बिजली नहीं, बिल पक्का!"
     },
     {
       "who": "bablu",
