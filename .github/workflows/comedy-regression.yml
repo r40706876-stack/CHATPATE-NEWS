@@ -15,7 +15,7 @@ on:
 jobs:
   regression:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 18
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -25,3 +25,37 @@ jobs:
         run: python -m py_compile bakra_rules.py news_writer.py visuals.py run_daily.py talk_episode.py
       - name: Offline script quality tests
         run: python -m unittest discover -s tests -p 'test_comedy_gate.py' -v
+      - name: Live visual retrieval with Gemini disabled
+        env:
+          GEMINI_API_KEY: ''
+          GEMINI_API_KEY2: ''
+          GEMINI_API_KEY3: ''
+          PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+        run: |
+          pip -q install pillow numpy requests
+          python - <<'PY'
+          import json, traceback
+          report={'gemini_disabled':True,'topic':'बिजली कटौती','success':False}
+          try:
+              import visuals
+              ep=json.load(open('episodes/bijli.json',encoding='utf-8'))
+              matches=visuals.pick_for_lines(ep['lines'],topic=report['topic'],strict=True)
+              report['matched']={str(k):[str(p) for p in v] for k,v in matches.items()}
+              report['matched_lines']=sum(bool(v) for v in matches.values())
+              report['total_lines']=len(ep['lines'])
+              report['success']=True
+          except Exception as exc:
+              report['error']=repr(exc)
+              traceback.print_exc()
+          finally:
+              with open('live_visual_report.json','w') as f: json.dump(report,f,ensure_ascii=False,indent=2)
+              print(json.dumps(report,ensure_ascii=False))
+          if not report['success']: raise SystemExit(1)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: live-visual-retrieval
+          path: |
+            live_visual_report.json
+            visuals_cache/
