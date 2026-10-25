@@ -1,7 +1,9 @@
 """
 Memes: पंच वाली line के ठीक बाद 2-2.5 सेकंड का मशहूर Hindi meme (पूरी screen, अपनी आवाज़ के साथ).
   • लाइब्रेरी पहले से बनी रहती है (memes/*.mp4, repo में) — हर बार YouTube खोजने से ग़लत/watermark वाली clip आती थी
-  • build(): YouTube से हर meme का "meme template" video ढूँढकर शुरू के ~2.4 सेकंड काटता है (probe workflow से एक बार)
+  • build(): YouTube से हर meme का "meme template" video (पहले 20 सेकंड) लेकर Gemini से audio सुनवाता है कि पूरा
+    dialogue किस सेकंड से किस सेकंड तक है, फिर चुप्पी पर काटता है. पूरा dialogue न मिले = वो meme लाइब्रेरी में नहीं.
+    (पहले हर meme शुरू के 0-2.6 सेकंड से कटता था — मालिक: "memes आधे-अधूरे हैं, पूरा खेल बिगाड़ देते हैं")
   • pick(): line के भाव (expr) से meme; एक reel में ज़्यादा से ज़्यादा 2, हर बार अलग
   • splice(): बनी हुई reel में उन lines के बाद meme जोड़ता है
 """
@@ -54,10 +56,52 @@ SFX = [
 ]
 MOOD_OF = {"hairan": "hairan", "gussa": "gussa", "tanz": "tanz", "hasi": "hasi", "udaas": "udaas", "gambhir": "tanz"}
 
+# हर meme का पूरा dialogue — Gemini audio में यही ढूँढता है; पूरा न सुनाई दे तो वो clip नहीं लेते
+PHRASE = {
+    "na_ho_payega": "बेटा तुमसे ना हो पाएगा",
+    "kya_kar_raha_hai": "भाई क्या कर रहा है तू",
+    "ye_kya_ho_raha": "ये क्या हो रहा है",
+    "rasode_mein": "रसोड़े में कौन था",
+    "kehna_kya_chahte": "कहना क्या चाहते हो",
+    "utha_le_re_baba": "उठा ले रे बाबा",
+    "paisa_hi_paisa": "पैसा ही पैसा होगा",
+    "ye_baburao_style": "ये बाबूराव का स्टाइल है",
+    "jor_jor_se": "जोर जोर से बोलके सबको स्कीम बता",
+    "mogambo_khush": "मोगैम्बो खुश हुआ",
+    "picture_baaki": "पिक्चर अभी बाकी है मेरे दोस्त",
+    "bahut_hard": "बहुत हार्ड",
+    "aaj_khush_honge": "आज खुश तो बहुत होगे तुम",
+    "ye_dukh_kahe": "ये दुख काहे खतम नहीं होता",
+    "bas_kar_pagle": "बस कर पगले रुलाएगा क्या",
+    "mujhe_pata_tha": "मुझे तो पहले से पता था",
+    "ruko_zara": "रुको ज़रा सबर करो",
+    "tension_lene_ka": "टेंशन लेने का नहीं सिर्फ देने का",
+    "ab_tera_kya_hoga": "अब तेरा क्या होगा कालिया",
+    "bilkul_ricks_nahi": "बिल्कुल रिस्क नहीं लेने का",
+    "ek_baar_commitment": "एक बार जो मैंने कमिटमेंट कर दी उसके बाद तो मैं खुद की भी नहीं सुनता",
+    "main_kya_karu": "मैं क्या करूँ जॉब छोड़ दूँ",
+    "haan_main_pagal": "हाँ मैं पागल हूँ",
+    "achha_theek_hai": "अच्छा ठीक है",
+}
+MAX_SECS, MIN_SECS = 6.0, 0.7          # पूरा dialogue (commitment वाला ~4.5 सेकंड); इससे लंबा = reel की रफ़्तार टूटे
+
+
+_STATUS = {}
+
+
+def _status():
+    if not _STATUS and (DIR / "status.json").exists():
+        try:
+            _STATUS.update(json.loads((DIR / "status.json").read_text(encoding="utf-8")))
+        except ValueError:
+            pass
+    return _STATUS
+
 
 def _ok(mid):
+    """सिर्फ़ जाँचे हुए meme (Gemini ने पूरा dialogue सुना) — पुराने 0-2.6 सेकंड वाले अधूरे clips नहीं चलेंगे."""
     p = DIR / f"{mid}.mp4"
-    return p if p.exists() and p.stat().st_size > 30000 else None
+    return p if p.exists() and p.stat().st_size > 30000 and (_status().get(mid) or {}).get("verified") else None
 
 
 def _probe_len(p):
@@ -69,38 +113,113 @@ def _probe_len(p):
         return 0.0
 
 
+def _speech(wav):
+    """बोलने वाले हिस्से [(start, end)] — silencedetect की चुप्पियों के बीच का हिस्सा."""
+    d = _probe_len(wav)
+    r = subprocess.run(["ffmpeg", "-hide_banner", "-i", str(wav), "-af", "silencedetect=n=-32dB:d=0.2", "-f", "null", "-"],
+                       capture_output=True, text=True)
+    ss = [float(x) for x in re.findall(r"silence_start: ([0-9.]+)", r.stderr)]
+    se = [float(x) for x in re.findall(r"silence_end: ([0-9.]+)", r.stderr)]
+    se += [d] * (len(ss) - len(se))
+    segs, t = [], 0.0
+    for a, b in sorted(zip(ss, se)):
+        if a - t > 0.12:
+            segs.append((t, a))
+        t = b
+    if d - t > 0.12:
+        segs.append((t, d))
+    return segs, d
+
+
+def _locate(wav, phrase):
+    """Gemini audio सुनकर: पूरा dialogue है? किस सेकंड से किस सेकंड तक? (found, start, end, heard)"""
+    import base64
+    import gemini
+    data = base64.b64encode(Path(wav).read_bytes()).decode()
+    q = (f'इस audio में ये Hindi dialogue ढूँढो: "{phrase}". सिर्फ़ JSON: {{"found": true/false, "start": सेकंड, "end": सेकंड, '
+         '"heard": "जो शब्द सच में सुनाई दिए"}}. found=true सिर्फ़ तब जब पूरा dialogue पहले शब्द से आख़िरी शब्द तक साफ़ सुनाई दे. '
+         'बीच से शुरू, आख़िर में कटा, सिर्फ़ music, या कोई दूसरा dialogue = false. start = पहले शब्द की शुरुआत, end = आख़िरी शब्द का अंत.')
+    try:
+        r = gemini.json_from(gemini.ask([{"text": q}, {"inline_data": {"mime_type": "audio/wav", "data": data}}],
+                                        json_mode=True, temperature=0.1))
+    except Exception as e:                                 # noqa: BLE001
+        print("  gemini audio:", repr(e)[:120], flush=True)
+        return None
+    if isinstance(r, list):
+        r = r[0] if r else {}
+    if not isinstance(r, dict) or not r.get("found"):
+        return None
+    try:
+        return float(r["start"]), float(r["end"]), str(r.get("heard", ""))
+    except (KeyError, TypeError, ValueError):
+        return None
+
+
+def _window(wav, phrase):
+    """(काटने की शुरुआत, अंत, सुना हुआ) — Gemini का समय + चुप्पी पर खिसकाकर, ताकि कोई शब्द न कटे."""
+    loc = _locate(wav, phrase)
+    if not loc:
+        return None
+    a, b, heard = loc
+    segs, d = _speech(wav)
+    if not (0 <= a < b <= d + 0.5):
+        return None
+    inside = [x for x in segs if x[1] > a - 0.25 and x[0] < b + 0.25]
+    if inside and inside[-1][1] - inside[0][0] <= MAX_SECS:
+        a, b = min(a, inside[0][0]), max(b, inside[-1][1])          # बोलने वाले हिस्से की पूरी सीमा तक
+        return max(0.0, a - 0.12), min(d, b + 0.25), heard
+    return max(0.0, a - 0.2), min(d, b + 0.4), heard                # पीछे music (चुप्पी नहीं) — Gemini का समय + ज़्यादा पैड
+
+
 def _one(item, status):
     import clips
     mid, q, mood, start, secs = item
-    hits = clips.search(q, n=4)
-    hits = [h for h in hits if 3 <= (h[3] or 30) <= 120] or hits
-    for url, title, ch, dur in hits[:2]:
+    phrase = PHRASE.get(mid) or q.replace(" meme template", "")
+    hits = clips.search(q, n=5)
+    hits = [h for h in hits if 3 <= (h[3] or 30) <= 180] or hits
+    for url, title, ch, dur in hits[:3]:
         raw = DIR / f"{mid}.src.mp4"
         cmd = clips._ytdlp() + ["-q", "--no-warnings", "--no-playlist", "-f", "b[height<=720]/bv*[height<=720]+ba/b",
-                                "--download-sections", f"*{start:.1f}-{start + secs + 0.4:.1f}", "--force-keyframes-at-cuts",
+                                "--download-sections", "*0-20", "--force-keyframes-at-cuts",
                                 "-o", str(raw)] + clips._cookies("YT_COOKIES") + [url]
         try:
-            subprocess.run(cmd, capture_output=True, timeout=75)
+            subprocess.run(cmd, capture_output=True, timeout=90)
         except subprocess.TimeoutExpired:
             print(f"  ⏱ {mid}: download अटका", flush=True)
         got = next((p for p in DIR.glob(f"{mid}.src*") if p.suffix in (".mp4", ".webm", ".mkv")), None)
         if not got:
             continue
+        wav = DIR / f"{mid}.src.wav"
+        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(got), "-vn", "-ac", "1", "-ar", "16000", str(wav)],
+                       capture_output=True)
+        win = _window(wav, phrase) if wav.exists() else None
+        if not win or not (MIN_SECS <= win[1] - win[0] <= MAX_SECS + 0.6):
+            print(f"  ↷ {mid}: पूरा dialogue नहीं मिला — {title[:50]} | {win}", flush=True)
+            for p in DIR.glob(f"{mid}.src*"):
+                p.unlink(missing_ok=True)
+            continue
+        a, b, heard = win
+        n = b - a
         out = DIR / f"{mid}.mp4"
         vf = (f"[0:v]split[a][b];[a]scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},boxblur=30:5,"
-              f"eq=brightness=-0.15[bg];[b]scale={W}:-2[fg];[bg][fg]overlay=0:(H-h)/2,fps={FPS},setsar=1,format=yuv420p[v]")
-        r = subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(got), "-f", "lavfi", "-i",
-                            "anullsrc=r=44100:cl=stereo", "-filter_complex", vf, "-map", "[v]", "-map", "0:a?",
-                            "-map", "1:a", "-t", f"{secs}", "-c:v", "libx264", "-preset", "veryfast", "-crf", "22",
-                            "-c:a", "aac", "-ar", "44100", "-ac", "2", "-shortest", str(out)], capture_output=True, text=True)
+              f"eq=brightness=-0.15[bg];[b]scale={W}:-2[fg];[bg][fg]overlay=0:(H-h)/2,fps={FPS},setsar=1,format=yuv420p[v];"
+              f"[0:a]afade=t=in:d=0.04,afade=t=out:st={max(0.0, n - 0.12):.2f}:d=0.12[ma]")
+        r = subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{a:.2f}", "-i", str(got), "-t", f"{n:.2f}",
+                            "-filter_complex", vf, "-map", "[v]", "-map", "[ma]",
+                            "-c:v", "libx264", "-preset", "veryfast", "-crf", "22",
+                            "-c:a", "aac", "-ar", "44100", "-ac", "2", str(out)], capture_output=True, text=True)
         for p in DIR.glob(f"{mid}.src*"):
             p.unlink(missing_ok=True)
-        if r.returncode == 0 and _ok(mid):
-            status[mid] = {"title": title, "channel": ch, "url": url, "secs": round(_probe_len(out), 2)}
-            print(f"  ✅ {mid}: {title[:60]} — {ch}", flush=True)
+        if r.returncode == 0 and out.exists() and out.stat().st_size > 30000:
+            status[mid] = {"title": title, "channel": ch, "url": url, "from": round(a, 2),
+                           "secs": round(_probe_len(out), 2), "verified": True, "heard": heard}
+            _STATUS[mid] = status[mid]
+            print(f"  ✅ {mid}: {n:.1f}s \"{heard[:50]}\" — {title[:40]}", flush=True)
             return
         print(f"  ⚠️ {mid}: ffmpeg {r.stderr[-160:]}", flush=True)
-    print(f"  ❌ {mid}: नहीं मिला ({len(hits)} नतीजे)", flush=True)
+    status.pop(mid, None)
+    (DIR / f"{mid}.mp4").unlink(missing_ok=True)                      # पुराना अधूरा clip भी हटाओ
+    print(f"  ❌ {mid}: पूरा dialogue किसी video में नहीं मिला ({len(hits)} नतीजे)", flush=True)
 
 
 def _sfx_ok(sid):
@@ -143,7 +262,7 @@ def build(only=None):
     status = json.loads((DIR / "status.json").read_text(encoding="utf-8")) if (DIR / "status.json").exists() else {}
     todo = [m for m in LIB if (only and m[0] in only) or (not only and not _ok(m[0]))]
     sfx = [x for x in SFX if (only and x[0] in only) or (not only and not _sfx_ok(x[0]))]
-    with ThreadPoolExecutor(6) as ex:
+    with ThreadPoolExecutor(3) as ex:                      # हर meme पर Gemini audio call — free limit न टूटे
         list(ex.map(lambda x: _one_sfx(x, status), sfx))
         list(ex.map(lambda m: _one(m, status), todo))
     (DIR / "status.json").write_text(json.dumps(status, ensure_ascii=False, indent=1), encoding="utf-8")
