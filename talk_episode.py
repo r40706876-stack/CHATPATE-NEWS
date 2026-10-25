@@ -100,6 +100,7 @@ def prep(script_path):
                 reel_studio.source_for(sprite, rp, IN / f"react_{i}_small.png", IN / f"react_{i}.png", st, src_shot)
         else:
             source_img(ln["who"], d / "source.png", ln.get("expr", ""))
+            Image.open(d / "source.png").save(d / "still.png")
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(IN / f"audio/{i:02d}.wav"), "-ar", "16000",
                         "-ac", "1", str(d / "talk.wav")], check=True)
     import shutil
@@ -134,9 +135,7 @@ def prep(script_path):
                     break
                 li = max(free, key=lambda i: (fit(i), -i))
                 if fit(li) == 0:
-                    if k:                                          # किसी line से मेल नहीं = बेमेल clip नहीं लगाते
-                        continue
-                    li = 0                                         # पहला clip: खबर का दृश्य, hook पर (पहला सेकंड)
+                    continue  # No matching dialogue: do not force an unrelated opening clip.
                 shutil.copy(cp, IN / f"broll/{li}_clip{k}.mp4")
                 shutil.copy(cp.with_suffix(".txt"), IN / f"broll/{li}_clip{k}.txt")
                 print(f"  🎬 clip → line {li + 1}: {title[:50]}")
@@ -361,12 +360,18 @@ def post_studio(ep):
             issues = qa.check(out)
         except Exception as e:                            # noqa: BLE001
             print("  जाँच नहीं हुई:", repr(e)[:100])
-            issues = []
+            issues = ["QA जाँच नहीं चल पाई: " + type(e).__name__]
         print("  जाँच:", issues or "पास ✅")
         if not issues:
             break
+    if issues:
+        raise RuntimeError("Video QA failed; delivery blocked: " + "; ".join(issues))
     import memes                                          # पंच के बाद मशहूर meme (अपनी आवाज़ के साथ)
     used = memes.add(ep, segs, out)
+    # Validate the final file, including any inserted meme clips.
+    issues = qa.check(out)
+    if issues:
+        raise RuntimeError("Final video QA failed; delivery blocked: " + "; ".join(issues))
     report = quality(ep)
     try:                                                  # virality skill के लक्ष्य: लंबाई, पहला frame, पहला शब्द
         report += "\n" + qa.targets(out, segs[0]["wav"] if segs else None)
