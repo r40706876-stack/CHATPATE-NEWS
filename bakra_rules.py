@@ -38,6 +38,12 @@ def violations(ep):
         out.append(f"बकरा बहस की लंबाई {words} शब्द (70-100 चाहिए)")
     elif ep.get("format") != "rant" and ep.get("kind") != "punch" and words > 55:
         out.append(f"script लंबी ({words} शब्द, सीमा 55)")
+    # News format experiments: preserve the existing formats while validating labels.
+    comedy_format = ep.get("comedy_format")
+    if comedy_format and comedy_format not in ("news_roast", "character_clash", "reverse_punch"):
+        out.append("अनजान comedy_format")
+    if lines and re.match(r"^\\s*(नमस्कार|आज की खबर|हेलो दोस्तों|दोस्तों)", lines[0], re.I):
+        out.append("धीमा introduction hook")
     # पहचान/tag: share की वजह — punch और rant में ख़ाली हो तो रद्द (news में writer पहले से रोकता है)
     if ep.get("kind") in ("punch", "tvshop") or ep.get("format") == "rant":
         if not str(ep.get("tag_who", "")).strip():
