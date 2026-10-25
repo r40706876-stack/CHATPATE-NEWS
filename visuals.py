@@ -446,8 +446,10 @@ def pick_for_lines(lines, per_line=3, pool=9, topic="", strict=False):   # 3 त
         for attempt in range(1):
             try:
                 res = gemini.json_from(gemini.ask(parts, json_mode=True, temperature=0.1, patient=False))
-                got = res.get("picks", [])
-                hr = res.get("hero") or {}
+                got = res.get("picks", []) if isinstance(res, dict) else None
+                if not isinstance(got, list):
+                    got = None
+                hr = res.get("hero") or {} if isinstance(res, dict) else {}
                 try:
                     hl, hp, hs = int(hr.get("line", 0)) - 1, int(hr.get("pick", -1)), float(hr.get("score", 0))
                     if 0 <= hl < len(batch) and 0 <= hp < len(batch[hl][2]):
