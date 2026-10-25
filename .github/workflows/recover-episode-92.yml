@@ -1,0 +1,51 @@
+name: Recover episode MP4 from run 92
+on:
+  push:
+    branches:
+      - feature/retention-comedy-quality-gate-20261025
+    paths:
+      - '.github/workflows/recover-episode-92.yml'
+  workflow_dispatch:
+permissions:
+  actions: read
+  contents: read
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download all nine successful artifacts from run 92
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p st_in st_out
+          gh run download 40214104535 -R ${{ github.repository }} -n st_in -D st_in
+          for i in 0 1 2 3 4 5 6 7; do
+            mkdir -p "st_out/$i"
+            gh run download 40214104535 -R ${{ github.repository }} -n "clip-$i" -D "st_out/$i"
+          done
+          find st_out -name '*.mp4' -print
+          test "$(find st_out -name '*.mp4' | wc -l)" -ge 8
+      - name: Install rendering dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg libraqm0
+          /usr/bin/python3 -m pip install -q --break-system-packages numpy scipy pillow rembg onnxruntime
+      - name: Render final MP4 with corrected file filter
+        run: |
+          python3 -m py_compile talk_episode.py reel_v3.py
+          /usr/bin/python3 talk_episode.py post
+          test -s episode.mp4
+          ffprobe -v error -show_entries format=duration,size -of default=noprint_wrappers=1 episode.mp4
+      - name: Save MP4 and preview even on failure
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: recovered-episode-92
+          path: |
+            episode.mp4
+            preview_episode.jpg
+            last_quality.json
+          retention-days: 7
