@@ -10,49 +10,49 @@
   "lines": [
     {
       "who": "bablu",
-      "say": "मदुरै में वीरमणि ने दिवाली की मिठाई माँगी, लोग COD पर टीवी-फ्रिज भेजने लगे!",
-      "big": "मिठाई माँगी, टीवी आया!",
+      "say": "मदुरै के वीरमणि ने दिवाली पर मिठाई माँगी, लोग उनके पते पर COD टीवी-फ्रिज भेजने लगे!",
+      "big": "मिठाई माँगी, टीवी-फ्रिज आए!",
       "expr": "hairan",
       "visuals": [
-        "animated Madurai map sweets box television fridge COD bill"
+        "cartoon Madurai map sweets box and COD television fridge"
       ]
     },
     {
       "who": "chacha",
-      "say": "अरे! मिठाई का डिब्बा माँगा था, पूरा शोरूम पहुँच गया!",
-      "big": "पूरा शोरूम पहुँचा!",
+      "say": "वाह रे इंटरनेट! मिठाई के बदले पूरा इलेक्ट्रॉनिक्स शोरूम!",
+      "big": "मिठाई नहीं, शोरूम!",
       "expr": "hairan",
       "visuals": [
-        "cartoon sweets box transforming into appliance showroom"
+        "cartoon sweets box beside television and fridge"
       ]
     },
     {
       "who": "pinky",
       "say": "चाचा, एक टीवी का बिल एक लाख उनहत्तर हजार बताया गया!",
-      "big": "टीवी ₹1.69 लाख!",
+      "big": "टीवी का बिल ₹1.69 लाख!",
       "expr": "tanz",
       "visuals": [
-        "animated television and 169000 rupee COD invoice"
+        "animated television COD bill 169000 rupees"
       ]
     },
     {
       "who": "chacha",
-      "say": "इतने में तो मिठाई की दुकान ही खोल लेता!",
+      "say": "इतने में तो मिठाई की दुकान खरीद लेते!",
       "big": "मिठाई की दुकान!",
       "expr": "gussa",
       "punch": true,
       "visuals": [
-        "cartoon sweet shop with price board"
+        "cartoon sweets shop price board"
       ]
     },
     {
       "who": "dadi",
-      "say": "सीख लो! इंटरनेट पर पता बाँटो, फिर घंटी बंद नहीं होती!",
-      "big": "पता सार्वजनिक मत करो!",
-      "expr": "tanz",
+      "say": "मजाक में ऑर्डर किया, दौड़ बेचारे डिलीवरी वाले रहे!",
+      "big": "मजाक किसके खर्चे पर?",
+      "expr": "gussa",
       "punch": true,
       "visuals": [
-        "cartoon doorbell ringing with multiple parcels"
+        "cartoon delivery workers carrying unwanted parcels"
       ]
     }
   ],
@@ -63,7 +63,7 @@
   "fictional_satire": true,
   "source_url": "https://www.indiatoday.in/amp/trending-news/story/madurai-mans-diwali-wish-goes-wrong-tvs-fridges-and-lakhs-in-cod-orders-pour-in-3016108-2026-10-13",
   "no_send": true,
-  "qa_note": "Hold Telegram until independent comedy review and full audio/visual QA pass; no automated metric guarantees.",
+  "qa_note": "News fact first, satire targets prank, not victim. No external YouTube clips. Keep speaker small; hold Telegram until visual/audio and editorial review.",
   "no_clips": true,
   "visual_policy": "character_only"
 }
