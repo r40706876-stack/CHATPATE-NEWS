@@ -237,12 +237,26 @@ jobs:
           npx remotion browser ensure
           npm run render
           test -s out/news-card.mp4
+          # Size alone is not a quality metric: a valid 3-second H264 card can be under 100 KB.
           if command -v ffprobe >/dev/null 2>&1; then
             ffprobe -v error -show_entries stream=width,height,duration -of default=nw=1 out/news-card.mp4
           else
-            file out/news-card.mp4 | grep -E 'ISO Media|MP4|MPEG'
-            test "$(stat -c%s out/news-card.mp4)" -gt 100000
+            node - <<'JS'
+          const fs = require('fs');
+          const b = fs.readFileSync('out/news-card.mp4');
+          const boxes = ['ftyp', 'moov', 'mdat'];
+          if (b.length < 20000 || b.toString('ascii', 4, 8) !== 'ftyp' ||
+              !boxes.every(k => b.includes(Buffer.from(k)))) {
+            throw new Error('Invalid or incomplete MP4 container');
+          }
+          console.log('MP4 container validated, bytes:', b.length);
+          JS
           fi
+          # Sample frames at three different moments; a static card must fail.
+          npx remotion still src/index.jsx NewsCard out/beat-00.png --frame=0
+          npx remotion still src/index.jsx NewsCard out/beat-35.png --frame=35
+          npx remotion still src/index.jsx NewsCard out/beat-65.png --frame=65
+          test "$(sha256sum out/beat-*.png | awk '{print $1}' | sort -u | wc -l)" -eq 3
       - uses: actions/upload-artifact@v4
         if: always()
         with:
