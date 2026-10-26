@@ -393,7 +393,7 @@ def post_studio(ep):
             print(f"  ♻️ कमी मिली ({'; '.join(issues)}) — ठीक करके दोबारा बना रहे ({tries}/2)")
         secs = reel_studio.render(ep, segs, CHARS, out, ROOT / "preview_episode.jpg")
         try:
-            issues = qa.check(out)
+            issues = qa.check(out) + qa.check_media(out)
         except Exception as e:                            # noqa: BLE001
             print("  जाँच नहीं हुई:", repr(e)[:100])
             issues = ["QA जाँच नहीं चल पाई: " + type(e).__name__]
@@ -405,7 +405,7 @@ def post_studio(ep):
     import memes                                          # पंच के बाद मशहूर meme (अपनी आवाज़ के साथ)
     used = memes.add(ep, segs, out)
     # Validate the final file, including any inserted meme clips.
-    issues = qa.check(out)
+    issues = qa.check(out) + qa.check_media(out)
     if issues:
         raise RuntimeError("Final video QA failed; delivery blocked: " + "; ".join(issues))
     report = quality(ep)
@@ -421,7 +421,8 @@ def post_studio(ep):
     if ep.get("no_send"):                                 # जाँच वाला video: Telegram पर नहीं, सिर्फ़ repo में
         print("  (no_send) Telegram पर नहीं भेजा")
         return
-    telegram.send_video(out, cap or ep.get("breaking", ""))
+    if not telegram.send_video(out, cap or ep.get("breaking", "")):
+        raise RuntimeError("Telegram delivery unavailable or failed; video retained as episode.mp4")
     if issues:
         report += "\n❌ 2 बार ठीक करने के बाद भी कमी बची — इसे post मत करना:\n• " + "\n• ".join(issues)
     else:
