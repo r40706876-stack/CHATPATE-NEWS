@@ -41,11 +41,11 @@
     },
     {
       "who": "pinky",
-      "say": "चाचा, रिटर्न फॉर्म में क्या लिखूँ—लड्डू में HDMI पोर्ट नहीं मिला?",
-      "big": "रिटर्न वजह: लड्डू में HDMI नहीं!",
+      "say": "चाचा, रिटर्न फॉर्म में लिखूँ—मुँह मीठा करना था, मकान गिरवी नहीं!",
+      "big": "मुँह मीठा, मकान गिरवी?!",
       "expr": "tanz",
       "visuals": [
-        "animated COD return form and TV invoice, handwritten reason: laddoo has no HDMI port"
+        "cartoon COD return form next to television invoice ₹1.69 lakh, exaggerated funny return reason: मिठाई चाहिए थी, मकान गिरवी नहीं"
       ],
       "scene": "bill"
     },
@@ -68,7 +68,7 @@
   "fictional_satire": true,
   "source_url": "https://www.indiatoday.in/amp/trending-news/story/madurai-mans-diwali-wish-goes-wrong-tvs-fridges-and-lakhs-in-cod-orders-pour-in-3016108-2026-10-13",
   "no_send": true,
-  "qa_note": "Hold Telegram until revised TTS pacing, unobstructed hook, real rendered MP4 and audio/visual checks are verified.",
+  "qa_note": "Telegram hold until independent Gemini review >=8.5, final rendered MP4, audio/visual QA and editorial approval; no_send remains true.",
   "no_clips": true,
   "visual_policy": "character_only",
   "no_memes": true,
