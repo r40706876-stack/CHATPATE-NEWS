@@ -38,5 +38,16 @@ class VisualMatchingTests(unittest.TestCase):
         self.assertEqual(visuals.safe_story_indices([{"same_story": True, "tags": "train"}], ""), [])
 
 
+
+class KineticCardColorTests(unittest.TestCase):
+    def test_named_and_hex_colors_render_without_numpy_type_crash(self):
+        import reel_studio
+        from PIL import Image
+        for color in ("yellow", "#ffc400", (255, 204, 0), [255, 204, 0], "bad-color"):
+            self.assertEqual(len(reel_studio._card_rgb(color)), 3)
+            frame = reel_studio._kinetic({"color": color, "big": "टिकट"}, None, 2, (320, 240))
+            self.assertIsInstance(frame, Image.Image)
+            self.assertEqual(frame.size, (320, 240))
+
 if __name__ == "__main__":
     unittest.main()
