@@ -390,7 +390,7 @@ def post_studio(ep):
     import qa
     import telegram
     issues, tries = None, 0
-    for tries in range(3):                                # बनाओ → जाँचो → कमी हो तो ख़ुद ठीक करके दोबारा (2 बार तक)
+    for tries in range(1):                                # Render once: fail fast rather than repeating a costly unchanged MP4
         if tries:
             ep["_fix"] = tries                            # reel_studio: तस्वीरें और जल्दी बदलें, card ज़्यादा
             print(f"  ♻️ कमी मिली ({'; '.join(issues)}) — ठीक करके दोबारा बना रहे ({tries}/2)")
