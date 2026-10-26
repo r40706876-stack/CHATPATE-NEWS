@@ -53,6 +53,45 @@ def check(video, tail=0.3):
     return issues
 
 
+
+def check_media(video):
+    """Delivery gate: both streams must exist and the opening must have audible sound."""
+    import json
+    from pathlib import Path
+    p = Path(video)
+    if not p.exists() or p.stat().st_size < 100_000:
+        return ["MP4 गायब या बहुत छोटी"]
+    try:
+        probe = subprocess.run(
+            ["ffprobe", "-v", "error", "-show_streams", "-show_format",
+             "-of", "json", str(p)], capture_output=True, text=True, check=True)
+        meta = json.loads(probe.stdout)
+        kinds = {s.get("codec_type") for s in meta.get("streams", [])}
+        issues = []
+        if "video" not in kinds:
+            issues.append("वीडियो stream नहीं")
+        if "audio" not in kinds:
+            issues.append("ऑडियो stream नहीं")
+            return issues
+        duration = float(meta.get("format", {}).get("duration", 0))
+        if duration < 3:
+            issues.append("वीडियो 3 सेकंड से छोटी")
+        raw = subprocess.run(
+            ["ffmpeg", "-loglevel", "error", "-i", str(p), "-t", "3",
+             "-vn", "-ac", "1", "-ar", "8000", "-f", "s16le", "-"],
+            capture_output=True, check=True).stdout
+        if len(raw) < 8000:
+            issues.append("शुरुआती ऑडियो अधूरा")
+        else:
+            samples = np.frombuffer(raw, dtype=np.int16).astype(np.float32)
+            rms = float(np.sqrt(np.mean(samples ** 2)))
+            if rms < 90:
+                issues.append("शुरुआती 3 सेकंड में आवाज़ बहुत कम/गायब")
+        return issues
+    except (OSError, ValueError, subprocess.CalledProcessError) as exc:
+        return ["ऑडियो/वीडियो जाँच नहीं चली: " + type(exc).__name__]
+
+
 def _onset(wav):
     """पहला शब्द कितने सेकंड पर — पहली line की अपनी आवाज़ से (reel की 0 सेकंड वाली whoosh गिनती में न आए)."""
     raw = subprocess.run(["ffmpeg", "-loglevel", "quiet", "-i", str(wav), "-t", "3", "-vn", "-ac", "1", "-ar", "8000",
