@@ -27,7 +27,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Python syntax checks
-        run: python -m py_compile bakra_rules.py news_writer.py visuals.py run_daily.py talk_episode.py
+        run: python -m py_compile bakra_rules.py news_writer.py visuals.py run_daily.py talk_episode.py reel_studio.py visual_strategy.py hybrid_stage.py
       - name: Check every missing visual has safe set/card fallback
         run: |
           pip -q install pillow numpy scipy requests
@@ -45,6 +45,8 @@ jobs:
           PY
       - name: Offline script quality tests
         run: python -m unittest discover -s tests -p 'test_comedy_gate.py' -v
+      - name: Hybrid visual mapping tests
+        run: python -m unittest discover -s tests -p 'test_visual_strategy.py' -v
       - name: Verify YouTube first then image then card order
         run: |
           python - <<'PY'
