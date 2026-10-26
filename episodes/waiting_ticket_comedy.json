@@ -41,11 +41,11 @@
     },
     {
       "who": "pinky",
-      "say": "चाचा, टीवी का बिल ₹1.69 लाख! हलवाई भी साथ पैक होगा?",
-      "big": "₹1.69 लाख का COD बिल!",
+      "say": "चाचा, रिटर्न फॉर्म में क्या लिखूँ—लड्डू में HDMI पोर्ट नहीं मिला?",
+      "big": "रिटर्न वजह: लड्डू में HDMI नहीं!",
       "expr": "tanz",
       "visuals": [
-        "large animated 169000 rupees COD invoice television"
+        "animated COD return form and TV invoice, handwritten reason: laddoo has no HDMI port"
       ],
       "scene": "bill"
     },
