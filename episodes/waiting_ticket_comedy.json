@@ -1,7 +1,7 @@
 {
   "title": "फ्री गिफ्ट में पैसे किसके?",
   "topic": "मदुरै में मिठाई माँगने वाले क्रिएटर को अनचाहे COD ऑर्डर मिले",
-  "hook": "फ्री गिफ्ट आया, पैसे चाचा देंगे!",
+  "hook": "फ्री गिफ्ट आया, साथ में बिल भी!",
   "poll": {
     "q": "फ्री गिफ्ट पर COD बिल आए तो?",
     "a": "वापस करूँगा",
@@ -10,49 +10,49 @@
   "lines": [
     {
       "who": "bablu",
-      "say": "ब्रेकिंग! फ्री गिफ्ट आया, पैसे चाचा देंगे!",
-      "big": "फ्री गिफ्ट, बिल चाचा का!",
+      "say": "चाचा के नाम फ्री गिफ्ट आया, साथ में बिल भी!",
+      "big": "फ्री गिफ्ट का बिल!",
       "expr": "hairan",
       "visuals": [
-        "cartoon parcel with COD bill"
+        "animated gift parcel with cash on delivery label"
       ]
     },
     {
       "who": "chacha",
-      "say": "वाह! गिफ्ट भेजने वाला बड़ा दिलदार है!",
-      "big": "वाह! मुफ्त गिफ्ट!",
-      "expr": "hasi",
+      "say": "बिल? ये गिफ्ट है या बिजली विभाग का नोटिस?",
+      "big": "गिफ्ट या नोटिस?",
+      "expr": "gussa",
       "visuals": [
-        "cartoon uncle delighted by parcel"
+        "cartoon COD invoice popping out of parcel"
       ]
     },
     {
       "who": "pinky",
-      "say": "दिलदार? पैसे आपको देने हैं, चाचा!",
-      "big": "पैसे चाचा देंगे!",
+      "say": "चाचा, भेजने वाले ने गिफ्ट दिया, भुगतान का मौका आपको!",
+      "big": "भुगतान का मौका!",
       "expr": "tanz",
       "visuals": [
-        "cartoon COD bill"
+        "animated COD bill and rupee coins"
       ]
     },
     {
       "who": "chacha",
-      "say": "अरे! फिर गिफ्ट नहीं, मेरे नाम का चालान है!",
-      "big": "मेरे नाम का चालान?!",
+      "say": "अगली बार खाली डिब्बा भेजना, कम से कम उधार तो नहीं होगा!",
+      "big": "खाली डिब्बा भेजना!",
       "expr": "gussa",
       "punch": true,
       "visuals": [
-        "cartoon shocked uncle holding bill"
+        "cartoon empty cardboard parcel"
       ]
     },
     {
       "who": "dadi",
-      "say": "बिल भर दे! हलवाई के उधार से तो सस्ता होगा!",
-      "big": "हलवाई का उधार बाकी!",
+      "say": "पता सबको बाँटोगे तो बिल भी घर आएगा!",
+      "big": "पता वायरल, बिल घर!",
       "expr": "hasi",
       "punch": true,
       "visuals": [
-        "cartoon sweets shop bill book"
+        "cartoon address tag and stack of delivery bills"
       ]
     }
   ],
