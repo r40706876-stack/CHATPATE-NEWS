@@ -1,7 +1,7 @@
 {
-  "title": "मिठाई माँगी, डेढ़ लाख का टीवी पहुँचा!",
+  "title": "मिठाई माँगी, ₹1.69 लाख का टीवी ऑर्डर!",
   "topic": "मदुरै के क्रिएटर वीरमणि ने दिवाली की मिठाई माँगी; उनके पते पर अनचाहे COD टीवी-फ्रिज ऑर्डर आने लगे",
-  "hook": "मदुरै में मिठाई माँगी, बदले में COD टीवी-फ्रिज पहुँचे!",
+  "hook": "मिठाई माँगी, डेढ़ लाख का टीवी ऑर्डर!",
   "poll": {
     "q": "फ्री गिफ्ट पर COD बिल आए तो?",
     "a": "वापस करूँगा",
@@ -10,49 +10,49 @@
   "lines": [
     {
       "who": "bablu",
-      "say": "मदुरै में मिठाई माँगी, बदले में COD टीवी-फ्रिज पहुँचे!",
-      "big": "मिठाई माँगी, टीवी-फ्रिज पहुँचे!",
+      "say": "मिठाई माँगी, डेढ़ लाख का टीवी ऑर्डर हो गया!",
+      "big": "मिठाई के बदले COD टीवी!",
       "expr": "hairan",
       "visuals": [
-        "cartoon Madurai map sweets box and COD television fridge"
-      ]
-    },
-    {
-      "who": "chacha",
-      "say": "वाह रे इंटरनेट! मिठाई के बदले पूरा इलेक्ट्रॉनिक्स शोरूम!",
-      "big": "मिठाई नहीं, शोरूम!",
-      "expr": "hairan",
-      "visuals": [
-        "cartoon sweets box beside television and fridge"
+        "Madurai news report delivery parcels and TV COD"
       ]
     },
     {
       "who": "pinky",
-      "say": "चाचा, एक टीवी का बिल एक लाख उनहत्तर हजार बताया गया!",
-      "big": "टीवी का बिल ₹1.69 लाख!",
+      "say": "मदुरै के वीरमणि ने पता डाला, लोगों ने COD ऑर्डर ठोक दिए!",
+      "big": "मदुरै: वीरमणि का COD प्रैंक",
       "expr": "tanz",
       "visuals": [
-        "animated television COD bill 169000 rupees"
+        "animated address tag parcels television refrigerator COD bill"
       ]
     },
     {
       "who": "chacha",
-      "say": "इतने में तो मिठाई की दुकान खरीद लेते!",
-      "big": "मिठाई की दुकान!",
-      "expr": "gussa",
+      "say": "लड्डू में HDMI लगती है क्या? पूरा शोरूम भेज दिया!",
+      "big": "लड्डू में HDMI?!",
+      "expr": "hairan",
       "punch": true,
       "visuals": [
-        "cartoon sweets shop price board"
+        "cartoon ladoo next to HDMI cable television fridge"
+      ]
+    },
+    {
+      "who": "pinky",
+      "say": "एक टीवी का बिल एक लाख उनहत्तर हजार बताया गया!",
+      "big": "COD बिल ₹1.69 लाख!",
+      "expr": "tanz",
+      "visuals": [
+        "large animated 169000 rupees COD invoice television"
       ]
     },
     {
       "who": "dadi",
-      "say": "मजाक में ऑर्डर किया, दौड़ बेचारे डिलीवरी वाले रहे!",
-      "big": "मजाक किसके खर्चे पर?",
+      "say": "मज़ाक में क्लिक उनका, चप्पल डिलीवरी वाले की घिसी!",
+      "big": "क्लिक उनका, दौड़ डिलीवरी की!",
       "expr": "gussa",
       "punch": true,
       "visuals": [
-        "cartoon delivery workers carrying unwanted parcels"
+        "cartoon delivery worker worn-out sandals and stacked parcels"
       ]
     }
   ],
@@ -63,7 +63,8 @@
   "fictional_satire": true,
   "source_url": "https://www.indiatoday.in/amp/trending-news/story/madurai-mans-diwali-wish-goes-wrong-tvs-fridges-and-lakhs-in-cod-orders-pour-in-3016108-2026-10-13",
   "no_send": true,
-  "qa_note": "News fact first, satire targets prank, not victim. No external YouTube clips. Keep speaker small; hold Telegram until visual/audio and editorial review.",
+  "qa_note": "Do not send until independent editorial/video QA: news must be identifiable, small characters, no unrelated film memes or stale visuals; no retention promises.",
   "no_clips": true,
-  "visual_policy": "character_only"
+  "visual_policy": "character_only",
+  "no_memes": true
 }
