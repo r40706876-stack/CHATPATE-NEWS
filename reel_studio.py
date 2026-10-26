@@ -418,6 +418,17 @@ def _kinetic(card, bg, t, size):
     w, h = size
     if card.get("color"):                                         # "बकरा बहस" beat card: साफ़ रंगीन पट्टी, पीछे धुंधली परछाईं नहीं
         c = card["color"]
+        # Card colors may arrive as CSS hex or named strings from Gemini.
+        # Normalize before NumPy arithmetic and PIL drawing.
+        from PIL import ImageColor
+        if isinstance(c, str):
+            try:
+                c = ImageColor.getrgb(c)
+            except ValueError:
+                c = (45, 35, 90)
+        if not isinstance(c, (tuple, list)) or len(c) < 3:
+            c = (45, 35, 90)
+        c = tuple(max(0, min(255, int(v))) for v in c[:3])
         y = np.linspace(0, 1, h)[:, None, None]
         g = np.array(c)[None, None] * (1 - 0.55 * y)
         im = Image.fromarray(np.repeat(g, w, axis=1).astype(np.uint8))
