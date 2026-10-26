@@ -315,7 +315,7 @@ def speakable(text):
         return w
     # Railway waitlist codes such as WL-48 must be spoken as letters + number,
     # not passed to the acronym letter lookup with a '-' (KeyError).
-    text = re.sub(r"\\b([A-Z]{2,6})-(\\d+)\\b", r"\\1 \\2", text)
+    text = re.sub(r"\b([A-Z]{2,6})-(\d+)\b", r"\1 \2", text)
     text = re.sub(r"[A-Za-z]+(?:-[A-Za-z]+)*", word, text)
     text = re.sub(r"₹\s*([\d,]+)", lambda m: m.group(1).replace(",", "") + " रुपये", text)
     return re.sub(r"(\d+)\s*%", r"\1 परसेंट", text)
