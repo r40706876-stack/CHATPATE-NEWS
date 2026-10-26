@@ -21,6 +21,29 @@ def _frames(video, crop="1056:810:12:130"):
     return np.frombuffer(raw, np.uint8).reshape(-1, H, W).astype(np.float32)
 
 
+def longest_unchanged(frames):
+    """Return (longest frames, start frame, current anchor).
+
+    A cut is meaningful when the *whole upper story panel* has changed enough
+    since the last anchor. Tiny lip movements, caption flicker or compression
+    noise alone must not reset the clock.
+    """
+    if len(frames) == 0:
+        return 0, 0, 0
+    start = 0
+    longest = 0
+    worst_at = 0
+    for i in range(1, len(frames)):
+        delta = float(np.abs(frames[i] - frames[start]).mean())
+        # A clear story-prop/scene change should be visible at 132x101;
+        # similarity can remain high when both scenes share a title/background.
+        if delta >= 10.0:
+            start = i
+        if i - start > longest:
+            longest, worst_at = i - start, start
+    return longest, worst_at, start
+
+
 def check(video, tail=0.3):
     f = _frames(video)
     if len(f) < FPS * 3:
@@ -30,16 +53,11 @@ def check(video, tail=0.3):
     secs = len(f) / FPS
     if secs > 40:                                         # 26-37 सेकंड वाली reels भी चलीं; दोबारा बनाने से लंबाई नहीं बदलती
         issues.append(f"लंबाई {secs:.0f} सेकंड (40 से ज़्यादा)")
-    # "वही तस्वीर" = zoom/pan होने पर भी बहुत छोटे (16x12) रूप में scene की शुरुआत जैसी दिखे; cut = पिछले frame से बड़ा फ़र्क
-    tiny = [b[::8, ::8].ravel() for b in body]
-    cut = np.abs(np.diff(body, axis=0)).mean(axis=(1, 2)) > 18
-    longest, start, worst_at = 0, 0, 0
-    for i in range(1, len(body)):
-        same = tiny[i].std() > 2 and tiny[start].std() > 2 and np.corrcoef(tiny[i], tiny[start])[0, 1] > 0.75
-        if cut[i - 1] and not same:
-            start = i
-        if i - start > longest:
-            longest, worst_at = i - start, start
+    # Compare against the LAST meaningful visual change, not just adjacent 0.1s frames.
+    # The old gate required adjacent-frame delta >18 AND correlation <0.75.
+    # That misses obvious 1.35s cartoon scene cuts (shared backdrop/title), falsely
+    # reporting a 3.7s freeze despite visibly different story props.
+    longest, worst_at, start = longest_unchanged(body)
     if longest > FPS * 3.2:
         issues.append(f"{worst_at / FPS:.0f}वें सेकंड से {longest / FPS:.1f} सेकंड तक ऊपर एक ही तस्वीर")
     dark = [i for i, b in enumerate(body) if b.std() < 8]
