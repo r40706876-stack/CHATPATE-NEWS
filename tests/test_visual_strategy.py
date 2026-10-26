@@ -15,7 +15,8 @@ class VisualStrategyTests(unittest.TestCase):
 
     def test_laddoo_punch_matches_visual(self):
         vis, reason = select_visual({"say": "लड्डू में HDMI लगा दिया"}, {"title": "COD पार्सल"})
-        self.assertEqual(reason, "animated-stage:parcel")
+        self.assertEqual(reason, "animated-stage:laddoo_hdmi")
+        self.assertEqual(vis[0]["concept"], "laddoo_hdmi")
 
     def test_cod_story_without_matching_props_uses_kinetic(self):
         vis, reason = select_visual({"say": "चाचा ने कहा कि ये बहुत अजीब है"}, {"title": "COD पार्सल"})
@@ -33,6 +34,18 @@ class VisualStrategyTests(unittest.TestCase):
         vis, reason = select_visual({"say": "क्या हुआ?"}, {})
         self.assertEqual(reason, "animated-stage:news")
         self.assertTrue(vis[0]["caption"])
+
+    def test_cod_story_uses_distinct_visuals_for_different_punches(self):
+        ep = {"title": "COD पार्सल"}
+        phrases = [
+            "₹1.69 लाख का टीवी!",
+            "वीरमणि ने पता डाला",
+            "लड्डू में HDMI लगाऊँ?",
+            "टीवी का बिल ₹1.69 लाख!",
+            "अब डिलीवरी वाला कह रहा",
+        ]
+        concepts = [select_visual({"say": p}, ep)[0][0]["concept"] for p in phrases]
+        self.assertEqual(concepts, ["television", "address", "laddoo_hdmi", "receipt", "delivery"])
 
     def test_comparison_is_not_retention_claim(self):
         result = compare_visual_options({"say": "बिल आया"}, {"title": "COD पार्सल"})
