@@ -21,11 +21,13 @@ def select_visual(line, episode, index=0):
     context = (speech + " " + topic).lower()
     is_delivery_story = any(word in topic.lower() for word in ("cod", "पार्सल", "डिलीवरी", "कूरियर"))
     if is_delivery_story:
-        if explicit in {"sweets", "arrival", "showroom", "laddoo_hdmi", "bill", "shop", "delivery"}:
-            scene = explicit
-        else:
-            scene = next((name for name, words in SCENE_RULES if any(w in speech.lower() for w in words)), "delivery")
-        return [{"scene": scene}], "illustrated:" + scene
+        matched = next((name for name, words in SCENE_RULES if any(w in speech.lower() for w in words)), None)
+        allowed = {"sweets", "arrival", "showroom", "laddoo_hdmi", "bill", "shop", "delivery"}
+        scene = explicit if explicit in allowed and (matched or any(w in speech.lower() for w in ("आया", "आए", "मंगाया"))) else matched
+        if scene:
+            return [{"scene": scene}], "illustrated:" + scene
+        # Topic relevance alone is not enough to display unrelated props.
+
     # Avoid unrelated COD-specific cartoon props for train, exam, weather, etc.
     short_topic = re.sub(r"\s+", " ", topic).strip()
     short_topic = " ".join(short_topic.split()[:5]) or "खबर का नया मोड़"
