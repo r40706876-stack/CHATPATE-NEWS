@@ -88,7 +88,7 @@ def stage_frames(card, size, fps=25):
     while True:
         p=t/fps
         beat = 0 if p < 0.45 else 1 + int((p-0.45)/1.25)%2
-        backgrounds = ((235,244,252),(251,233,208),(216,236,232))
+        backgrounds = ((235,244,252),(252,215,176),(150,184,209))
         im=Image.new("RGB",(w,h),backgrounds[beat])
         d=ImageDraw.Draw(im)
         d.rectangle((0,int(h*.77),w,h),fill=(204,223,238))
