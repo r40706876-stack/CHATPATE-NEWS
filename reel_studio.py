@@ -959,13 +959,8 @@ def render(ep, segs, chars, out, preview):
                 strap = bool(ep.get("bulletin") and ln.get("headline"))   # headline पट्टी सिर्फ़ bulletin में (पहले 4 परतें लिखाई की थीं)
                 im = bases[strap].copy()
                 im.paste(sf, (SCR[0], SCR[1]))
-                zb = (1.0 + 0.10 * min(1, t / 8)) if (ln.get("punch") and not react) else (1.05 if react else 1.0 + 0.03 * t / n)
-                dx = 0
-                if ln.get("beat") == "dhamki" and not react:     # धमकी: धीरे-धीरे चेहरे के बहुत पास (suspense)
-                    zb = 1.0 + 0.24 * t / max(1, n)
-                elif ln.get("beat") in ("twist", "takiya") and not react and t < 8:   # धमाका: हल्का झटका
-                    dx = int(16 * math.sin(t * 2.6) * (1 - t / 8))
-                im.paste(_zoomr(fr, zb), (dx, BAND_Y))
+                # Small talking characters stay at a fixed scale: no artificial face zoom.
+                im.paste(fr, (0, BAND_Y))
                 clean = im.copy()                                # बिना लिखाई वाला frame (आख़िरी poll के पीछे)
             d = ImageDraw.Draw(im)
             if k >= FPS * 2:                                 # vidIQ + virality skill: पहले 2 सेकंड कोई logo/पट्टी नहीं (हर style में) — सिर्फ़ तस्वीर + 4 शब्द
