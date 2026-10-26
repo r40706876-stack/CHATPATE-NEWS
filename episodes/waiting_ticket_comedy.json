@@ -1,0 +1,87 @@
+{
+  "title": "वेटिंग टिकट की तेरहवीं",
+  "topic": "ट्रेन वेटिंग टिकट",
+  "hook": "टिकट वेटिंग में है, घरवालों ने मेरी तेरहवीं की तैयारी शुरू कर दी!",
+  "poll": {
+    "q": "आपकी टिकट कभी वेटिंग में अटकी है?",
+    "a": "हर बार",
+    "b": "किस्मत अच्छी है"
+  },
+  "lines": [
+    {
+      "who": "chacha",
+      "say": "बबलू! टिकट वेटिंग में है, घरवालों ने मेरी तेरहवीं की तैयारी शुरू कर दी!",
+      "big": "वेटिंग टिकट की तेरहवीं!",
+      "expr": "gussa",
+      "punch": true,
+      "visuals": [
+        "indian railway waiting list ticket"
+      ]
+    },
+    {
+      "who": "bablu",
+      "say": "अरे चाचा, ट्रेन में जाना है या दुनिया से?",
+      "big": "ट्रेन या दुनिया से?",
+      "expr": "hairan",
+      "visuals": [
+        "indian railway train platform"
+      ]
+    },
+    {
+      "who": "chacha",
+      "say": "रिश्तेदार पूछ रहे हैं, कन्फर्म हुआ कि नहीं? मैंने कहा, टिकट है भाई, ICU का मरीज नहीं!",
+      "big": "टिकट है, ICU का मरीज नहीं!",
+      "expr": "tanz",
+      "punch": true,
+      "visuals": [
+        "railway ticket waitlist status"
+      ]
+    },
+    {
+      "who": "pinky",
+      "say": "मैंने टिकट का स्क्रीनशॉट फैमिली ग्रुप में डाल दिया। बुआ बोलीं, भगवान हिम्मत दे!",
+      "big": "भगवान हिम्मत दे!",
+      "expr": "hasi",
+      "visuals": [
+        "smartphone family group chat"
+      ]
+    },
+    {
+      "who": "chacha",
+      "say": "और मामा?",
+      "big": "और मामा?",
+      "expr": "hairan",
+      "visuals": [
+        "phone chat notification"
+      ]
+    },
+    {
+      "who": "pinky",
+      "say": "मामा बोले, अब कोई चमत्कार ही बचा सकता है!",
+      "big": "चमत्कार ही बचा सकता है!",
+      "expr": "tanz",
+      "visuals": [
+        "mobile phone message"
+      ]
+    },
+    {
+      "who": "dadi",
+      "say": "चमत्कार छोड़! टीटी से पूछ, स्वर्ग वाली बर्थ नीचे मिलेगी या ऊपर?",
+      "big": "स्वर्ग वाली बर्थ ऊपर या नीचे?",
+      "expr": "gussa",
+      "punch": true,
+      "visuals": [
+        "indian sleeper train berth"
+      ]
+    },
+    {
+      "who": "bablu",
+      "say": "और चाचा की टिकट अभी भी वेटिंग सैंतालीस पर अटकी है!",
+      "big": "WL 47 अभी भी!",
+      "expr": "hairan",
+      "visuals": [
+        "train ticket waiting list"
+      ]
+    }
+  ]
+}
