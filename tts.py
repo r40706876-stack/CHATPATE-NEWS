@@ -310,10 +310,13 @@ def speakable(text):
         w = m.group(0)
         if w.lower() in WORDS:
             return WORDS[w.lower()]
-        if w.isupper() and 2 <= len(w) <= 6:                       # RBI, EMI, LPG, UPI, ATM
-            return "".join(LETTER[c] for c in w)
+        if w.isalpha() and w.isupper() and 2 <= len(w) <= 6:       # RBI, EMI, WL; never index a hyphen
+            return "".join(LETTER.get(c, c) for c in w)
         return w
-    text = re.sub(r"[A-Za-z][A-Za-z-]*", word, text)
+    # Railway waitlist codes such as WL-48 must be spoken as letters + number,
+    # not passed to the acronym letter lookup with a '-' (KeyError).
+    text = re.sub(r"\\b([A-Z]{2,6})-(\\d+)\\b", r"\\1 \\2", text)
+    text = re.sub(r"[A-Za-z]+(?:-[A-Za-z]+)*", word, text)
     text = re.sub(r"₹\s*([\d,]+)", lambda m: m.group(1).replace(",", "") + " रुपये", text)
     return re.sub(r"(\d+)\s*%", r"\1 परसेंट", text)
 
