@@ -297,7 +297,7 @@ def sheet():
 
 def pick(ep, lens):
     """[(बाद_में_सेकंड, meme_path, id)] — पंच वाली lines (पहली line नहीं, hook न टूटे) और आख़िरी line, ज़्यादा से ज़्यादा 2."""
-    if not DIR.exists() or ep.get("no_memes"):
+    if not DIR.exists() or ep.get("no_memes") or ep.get("no_clips"):
         return []
     lines = [s for s in ep["_segs_ln"]]
     ends, t = [], 0.0
