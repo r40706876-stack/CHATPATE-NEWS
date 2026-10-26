@@ -185,14 +185,13 @@ jobs:
             preview_episode.jpg
           if-no-files-found: ignore
           retention-days: 14
-      - name: Telegram delivery of independently QA-passed demo
+      - name: Independent final MP4 QA (respect editorial hold)
         if: success()
-        continue-on-error: true
         run: |
           /usr/bin/python3 - <<'PY'
           import json, subprocess
           from pathlib import Path
-          import qa, telegram
+          import qa
           p=Path('episode.mp4')
           issues=qa.check(p)+qa.check_media(p)
           if p.exists():
@@ -202,10 +201,12 @@ jobs:
               if duration>28:
                   issues.append(f'Comedy demo too long: {duration:.1f}s (limit 28s)')
           if issues:
-              raise SystemExit('Telegram delivery blocked by independent QA: '+'; '.join(issues))
-          if not telegram.send_video(p,'🐐 बकरा न्यूज़ • QA-पास डेमो (पोस्ट करने से पहले देखें)'):
-              raise SystemExit('Telegram delivery unavailable; use GitHub render-qa-passed artifact')
-          print('PASS: verified demo delivered to Telegram')
+              raise SystemExit('Final independent QA failed: '+'; '.join(issues))
+          ep=json.loads(Path('st_in/episode.json').read_text(encoding='utf-8'))
+          if ep.get('no_send'):
+              print('PASS: final MP4 QA; Telegram held by no_send editorial flag')
+          else:
+              print('PASS: final MP4 QA; talk_episode.py post handles single Telegram delivery')
           PY
       - name: झलक सेव
         if: always()
