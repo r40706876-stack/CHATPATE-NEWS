@@ -57,5 +57,26 @@ class KineticCardColorTests(unittest.TestCase):
             self.assertIsInstance(frame, Image.Image)
             self.assertEqual(frame.size, (320, 240))
 
+
+class VideoMotionGateTests(unittest.TestCase):
+    def test_four_seconds_of_same_picture_is_rejected(self):
+        import numpy as np
+        import qa
+        frames = np.full((42, 101, 132), 100, dtype=np.float32)
+        longest, _, _ = qa.longest_unchanged(frames)
+        self.assertGreater(longest, 32)
+
+    def test_story_scene_cuts_with_shared_background_are_recognized(self):
+        import numpy as np
+        import qa
+        # Reuse most of the backdrop; replace a significant illustrated prop
+        # every 1.3 seconds. The old gate falsely labelled such shots frozen.
+        frames = np.full((52, 101, 132), 120, dtype=np.float32)
+        for t in range(52):
+            beat = t // 13
+            frames[t, 30:85, 12+beat*20:32+beat*20] = 230
+        longest, _, _ = qa.longest_unchanged(frames)
+        self.assertLessEqual(longest, 32)
+
 if __name__ == "__main__":
     unittest.main()
