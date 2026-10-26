@@ -321,19 +321,24 @@ def speakable(text):
     return re.sub(r"(\d+)\s*%", r"\1 परसेंट", text)
 
 
-def audio_length_issues(lines, audios):
-    """Reject Gemini speech that rambles or inserts unrequested content.
+def audio_length_issues(lines, audios, engine="gemini"):
+    """Reject hallucinated Gemini speech; assess deterministic Edge at final speed.
 
-    A single 12-word line once produced 14.1 seconds of speech and inflated a
-    25-second comedy reel to 32 seconds. Do not time-stretch such hallucinated
-    audio; regenerate with another voice engine instead.
+    Edge is spoken exactly from the supplied text, and the pipeline applies
+    TEMPO here plus 1.1x in talk_episode.tighten. Rejecting its raw 7.2s line
+    at a 7s limit previously aborted the whole workflow even though the
+    published audio would be ~6.2s. Keep Gemini's strict raw-duration gate.
     """
     issues = []
     for i, (line, audio) in enumerate(zip(lines, audios)):
-        seconds = len(audio) / SR
+        raw_seconds = len(audio) / SR
+        effective_seconds = raw_seconds / (TEMPO * 1.1) if engine == "edge" else raw_seconds
         limit = max(7.0, 0.11 * len(line.get("say", "")))
-        if seconds > limit:
-            issues.append(f"line {i + 1}: {seconds:.1f}s for {len(line.get('say', ''))} chars (limit {limit:.1f}s)")
+        if effective_seconds > limit:
+            issues.append(
+                f"line {i + 1}: {raw_seconds:.1f}s raw, {effective_seconds:.1f}s effective "
+                f"for {len(line.get('say', ''))} chars (limit {limit:.1f}s)"
+            )
     return issues
 
 
@@ -353,7 +358,7 @@ def speak_script(script, out):
             key, gi = gkeys[gi], gi + 1
         try:
             audios = make_all(script, engine, out, key)
-            length_issues = audio_length_issues(script["lines"], audios)
+            length_issues = audio_length_issues(script["lines"], audios, engine)
             if length_issues:
                 raise ValueError("Unusually long TTS line(s), possible extra speech: " + "; ".join(length_issues))
             break
