@@ -158,15 +158,20 @@ jobs:
           mkdir -p scene_outputs/blender
           BLENDER_OUT="$PWD/scene_outputs/blender/frame_" blender -b -t 2 --python production/blender_shot.py
           test "$(find scene_outputs/blender -name '*.png' | wc -l)" -ge 2
-      - name: Godot scene smoke test
+      - name: Install Godot 4 headless
         run: |
-          python - <<'PY'
-          from pathlib import Path
-          p=Path('production/godot/main.gd').read_text()
-          assert 'queue_redraw()' in p and 'draw_rect(' in p
-          assert Path('production/godot/project.godot').exists()
-          print('Godot scene sources validated; Godot 4 binary not installed in this job')
-          PY
+          curl -fL --retry 3 -o /tmp/godot.zip https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_linux.x86_64.zip
+          unzip -q /tmp/godot.zip -d /tmp
+          sudo install -m 755 /tmp/Godot_v4.3-stable_linux.x86_64 /usr/local/bin/godot4
+          godot4 --version
+      - name: Render real Godot 4 scene frames
+        run: |
+          mkdir -p scene_outputs/godot
+          godot4 --headless --path production/godot --write-movie "$PWD/scene_outputs/godot/parcel.avi" --fixed-fps 30 --quit-after 90
+          test -s scene_outputs/godot/parcel.avi
+          ffprobe -v error -show_entries format=duration -of default=nw=1 scene_outputs/godot/parcel.avi
+          ffmpeg -hide_banner -loglevel error -y -i scene_outputs/godot/parcel.avi -frames:v 1 scene_outputs/godot/preview.png
+          test -s scene_outputs/godot/preview.png
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
