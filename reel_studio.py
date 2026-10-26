@@ -835,10 +835,17 @@ def render(ep, segs, chars, out, preview):
             punchy = shot == "close" and not react
             if shot == "close":
                 if punchy:
-                    z = 1.0 + 0.03 * min(1, t / 8)                # हल्का — ज़्यादा zoom पर 3D चेहरे की कमी दिखती थी
+                    # Long punch lines need a real camera change, not an almost-static face.
+                    # A modest jump cut every ~1.6s preserves lip sync and the same character.
+                    # This also makes _fix retries meaningful for close shots.
+                    jump_frames = max(18, int((1.6 - 0.2 * int(ep.get("_fix") or 0)) * FPS))
+                    angle = (t // jump_frames) % 2 if n > int(2.8 * FPS) else 0
+                    z = (1.04 if angle == 0 else 1.23) + 0.012 * min(1, (t % jump_frames) / 8)
+                    fy = 0.30 if angle == 0 else 0.24
                 else:                                     # reaction: ज़िंदा लगे — धीरे-धीरे पास आना + हल्की साँस
                     z = 1.04 + 0.05 * t / n + 0.006 * math.sin(t / 3)
-                im = _zoomr(fr, z, 0.3).copy()
+                    fy = 0.30
+                im = _zoomr(fr, z, fy).copy()
             elif shot == "full":
                 sf = next(cur)
                 last_screen = sf
