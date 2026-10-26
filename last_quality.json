@@ -1,6 +1,6 @@
 {
  "voice": "gemini",
- "voice_err": "",
+ "voice_err": "gemini: gemini-3.1-flash-tts-preview/generateContent: 429 {\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, | gemini-2.5-flash-preview-tts/interact",
  "lines": 5,
  "real_visual_lines": 2,
  "set_lines": 3,
