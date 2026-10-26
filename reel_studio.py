@@ -479,14 +479,14 @@ def _story_scene(card, size):
     """Looping illustrated news props; no random internet media."""
     w,h=size
     base_scene=card.get("scene","delivery")
-    sequence={"sweets":["sweets","showroom","sweets"],"showroom":["showroom","sweets","showroom"],"laddoo_hdmi":["laddoo_hdmi","showroom","laddoo_hdmi"],"bill":["bill","showroom","bill"],"shop":["shop","sweets","shop"],"delivery":["delivery","bill","delivery"]}.get(base_scene,[base_scene,"delivery"])
+    sequence={"sweets":["sweets","arrival","showroom"],"arrival":["arrival","showroom","arrival"],"showroom":["arrival","showroom","laddoo_hdmi"],"laddoo_hdmi":["laddoo_hdmi","laddoo_hdmi","showroom"],"bill":["bill","bill","delivery"],"shop":["shop","sweets","arrival"],"delivery":["delivery","delivery","arrival"]}.get(base_scene,[base_scene,"arrival"])
     t=0
     while True:
         scene=sequence[(t//max(1,int(FPS*1.35)))%len(sequence)]
         im=Image.new("RGB",(w,h),(235,245,252))
         d=ImageDraw.Draw(im)
         d.rectangle((0,int(h*.79),w,h),fill=(198,220,232))
-        title={"sweets":"मिठाई माँगी!","showroom":"टीवी-फ्रिज आ गए!","laddoo_hdmi":"लड्डू में HDMI?!","bill":"COD बिल ₹1.69 लाख","shop":"मिठाई की दुकान!","delivery":"डिलीवरी वाले परेशान!"}.get(scene,"COD खबर")
+        title={"sweets":"मिठाई माँगी!","arrival":"घर पर COD पार्सल!","showroom":"टीवी-फ्रिज आ गए!","laddoo_hdmi":"लड्डू में HDMI?!","bill":"COD बिल ₹1.69 लाख","shop":"मिठाई की दुकान!","delivery":"डिलीवरी वाले परेशान!"}.get(scene,"COD खबर")
         d.rounded_rectangle((15,20,w-15,110),radius=20,fill=(31,55,90))
         ft=tt.font(54)
         while ft.getlength(title)>w-55 and ft.size>25:ft=tt.font(ft.size-2)
@@ -507,6 +507,14 @@ def _story_scene(card, size):
             parcel(85,int(h*.53),300,170)
             for j in range(3):d.ellipse((115+j*85,int(h*.56),180+j*85,int(h*.65)),fill=(248,204,101))
             if t>8:tv(w-450,int(h*.40)-bounce)
+        elif scene=="arrival":
+            # Parcel enters the door scene from the right instead of reusing the showroom.
+            door_x=100
+            d.rounded_rectangle((door_x,int(h*.28),door_x+270,int(h*.78)),radius=14,fill=(124,79,59),outline=(70,48,41),width=9)
+            d.ellipse((door_x+225,int(h*.54),door_x+246,int(h*.57)),fill=(247,210,112))
+            slide=int((1-min(1,(t%max(1,int(FPS*1.35)))/(FPS*.65)))*360)
+            parcel(w-400+slide,int(h*.59)-bounce,310,175)
+            d.text((w-250,int(h*.44)),"COD",font=tt.font(88),anchor="mm",fill=(195,60,60))
         elif scene=="showroom":
             tv(100,int(h*.43)-bounce)
             fridge(w-305,int(h*.36))
@@ -523,16 +531,24 @@ def _story_scene(card, size):
             tv(50,int(h*.43)-bounce)
             d.rounded_rectangle((450,int(h*.32),w-40,int(h*.76)),radius=20,fill="white",outline=(68,79,99),width=8)
             d.text((w-300,int(h*.46)),"COD",font=tt.font(95),anchor="mm",fill=(199,66,65))
-            d.text((w-300,int(h*.59)),"₹1,69,000",font=tt.font(63),anchor="mm",fill=(34,53,77))
+            bill_size=int(63+12*abs(np.sin(t*.16)))
+            d.text((w-300,int(h*.59)),"₹1,69,000",font=tt.font(bill_size),anchor="mm",fill=(34,53,77))
         elif scene=="shop":
             d.rectangle((110,int(h*.40),w-110,int(h*.77)),fill=(249,216,159),outline=(103,74,53),width=8)
             d.polygon([(80,int(h*.40)),(w//2,int(h*.21)),(w-80,int(h*.40))],fill=(203,82,75))
             parcel(w//2-150,int(h*.52)-bounce,300,160)
         else:
+            # The delivery-worker silhouette and increasing parcel stack are the punchline.
+            d.ellipse((w-220,int(h*.37),w-120,int(h*.49)),fill=(238,183,135),outline=(79,57,48),width=5)
+            d.line((w-170,int(h*.49),w-170,int(h*.70)),fill=(55,94,151),width=40)
+            d.line((w-170,int(h*.55),w-285,int(h*.61)),fill=(55,94,151),width=22)
+            d.line((w-170,int(h*.55),w-60,int(h*.62)),fill=(55,94,151),width=22)
+            d.line((w-170,int(h*.70),w-230,int(h*.79)),fill=(52,58,69),width=23)
+            d.line((w-170,int(h*.70),w-95,int(h*.79)),fill=(52,58,69),width=23)
             for j in range(5):
                 if t<j*5:continue
-                parcel(65+(j%3)*270,int(h*.68)-(j//3)*180-(bounce if j==4 else 0))
-            d.text((w//2,int(h*.31)),"COD",font=tt.font(110),anchor="mm",fill=(204,66,60))
+                parcel(45+(j%3)*230,int(h*.68)-(j//3)*180-(bounce if j==4 else 0),205,140)
+            d.text((w//2,int(h*.28)),"COD",font=tt.font(110),anchor="mm",fill=(204,66,60))
         yield im
         t+=1
 
