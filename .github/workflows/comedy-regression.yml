@@ -51,7 +51,7 @@ jobs:
           end=s.index('def pick_shot(', start)
           p=s[start:end]
           assert p.index('clips.for_topic(') < p.index('visuals.pick_for_lines(') < p.index('fill_sets(ep)')
-          assert 'not any((IN / "broll").glob(f"{i}_clip*"))' in p
+          assert 'not any((IN / "broll").glob(f"{i}_clip*.mp4"))' in p
           print('PASS: YouTube > verified images > set/card priority')
           PY
       - name: YouTube live search smoke test
