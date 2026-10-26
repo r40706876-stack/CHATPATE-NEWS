@@ -205,8 +205,8 @@ def shot_v2(i, ln):
     पंच/tag वाली line = किरदार का बड़ा close-up, बाकी split — हर line पर नज़ारा बदले, template जैसा न लगे."""
     if i == 0 or (ln.get("who") == "bablu" and not ln.get("punch")):
         return "full"
-    if ln.get("punch") or ln.get("tag_text"):
-        return "close"
+    # Keep the speaking character small even on punch lines: close-ups reveal
+    # synthetic mouth movement. Split screen lets visuals carry the story.
     return "split"
 
 
