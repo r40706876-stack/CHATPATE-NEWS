@@ -808,6 +808,12 @@ def render(ep, segs, chars, out, preview):
             last_vis = vis
         if list(s.get("vis") or []):
             carry = 0                                           # इस line की अपनी तस्वीर मिली
+        # Never recycle an old photo for a line without its own verified visual.
+        # Keep the speaker SMALL in split screen; alternate story-specific cards.
+        if shot in ("split", "full") and not any(isinstance(v, Path) and v.exists() for v in (s.get("vis") or [])):
+            shot, size = "split", (SW_, SH_)
+            vis = [{"big": ln.get("big") or key_phrase(ln) or headline, "color": "#243D68"},
+                   {"big": key_phrase(ln) or ln.get("big") or headline, "color": "#9B412A"}]
         if shot == "full" and not vis:
             shot, size = "split", (SW_, SH_)
         cut_s = CUT - 0.4 * int(ep.get("_fix") or 0)            # जाँच में कमी मिली = दोबारा बनाते वक़्त और जल्दी बदलें
