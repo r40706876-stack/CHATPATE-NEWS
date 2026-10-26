@@ -587,6 +587,10 @@ def _screen_gen(src, seed, size, bg=None, hero=False):
     """तस्वीर/clip/कार्ड के frames (size के हिसाब से), ख़त्म नहीं होते.
     hero=True (reel का पहला frame): तेज़ "झटके वाला" zoom — पहले 2 सेकंड में हरकत (graph: 3-5 सेकंड पर आधे लोग जाते थे)."""
     w, h = size
+    if isinstance(src, dict) and src.get("hybrid_stage"):
+        from hybrid_stage import stage_frames
+        yield from stage_frames(src, size, FPS)
+        return
     if isinstance(src, dict) and src.get('scene'):
         yield from _story_scene(src, size)
         return
