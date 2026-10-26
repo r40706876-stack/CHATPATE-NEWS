@@ -1046,7 +1046,7 @@ def render(ep, segs, chars, out, preview):
                     rv.name_strap(d, (BAND_Y + 84) if shot == "split" else 1130, name, role)
                 if nochar:                                        # हर line ऊपर बड़े अक्षरों में (meme reel जैसा)
                     _hook(d, ep["hook"] if hooking else cap_text, 330)
-                elif hooking and ep.get("hook_short"):           # पहले 3 सेकंड: 3 lines पढ़नी पड़ती थीं (skip 46%) — अब ≤6 शब्द, बड़े
+                elif hooking and ep.get("hook_short") and not v2:           # पहले 3 सेकंड: 3 lines पढ़नी पड़ती थीं (skip 46%) — अब ≤6 शब्द, बड़े
                     _hook_big(d, re.sub(r"[\U0001F000-\U0001FFFF\u2600-\u27BF\uFE0F]", "", ep["hook_short"]).strip(), 360)
                     if wtimes:
                         karaoke_timed(d, cap_text, t / FPS, wtimes, cy)
