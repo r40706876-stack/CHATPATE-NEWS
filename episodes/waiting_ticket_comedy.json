@@ -37,7 +37,7 @@
       "visuals": [
         "cartoon ladoo next to HDMI cable television fridge"
       ],
-      "scene": "bill"
+      "scene": "showroom"
     },
     {
       "who": "pinky",
@@ -47,7 +47,7 @@
       "visuals": [
         "large animated 169000 rupees COD invoice television"
       ],
-      "scene": "shop"
+      "scene": "bill"
     },
     {
       "who": "dadi",
@@ -68,7 +68,7 @@
   "fictional_satire": true,
   "source_url": "https://www.indiatoday.in/amp/trending-news/story/madurai-mans-diwali-wish-goes-wrong-tvs-fridges-and-lakhs-in-cod-orders-pour-in-3016108-2026-10-13",
   "no_send": true,
-  "qa_note": "Animated scene alternation QA rerun; hold Telegram until visual review.",
+  "qa_note": "Final candidate: no external B-roll; matching scene to each line; subtle speaker zoom. Hold Telegram for actual video review.",
   "no_clips": true,
   "visual_policy": "character_only",
   "no_memes": true
