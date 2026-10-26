@@ -159,8 +159,11 @@ def prep(script_path):
     photo_lines = [dict(ln, _need_vis=ln.get("_need_vis", True) and
                         not any((IN / "broll").glob(f"{i}_clip*.mp4")))
                    for i, ln in enumerate(ep["lines"])]
-    got = visuals.pick_for_lines(photo_lines, topic=ep.get("breaking") or ep.get("topic", ""),
-                                 strict=True)
+    # Cartoon-only episodes must not silently download unrelated news photos.
+    # Their story-specific animated cards are rendered by reel_studio instead.
+    got = ({} if ep.get("visual_policy") == "character_only" else
+           visuals.pick_for_lines(photo_lines, topic=ep.get("breaking") or ep.get("topic", ""),
+                                  strict=True))
     for i, paths in got.items():
         if any((IN / "broll").glob(f"{i}_clip*.mp4")):
             continue
