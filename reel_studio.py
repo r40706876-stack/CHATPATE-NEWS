@@ -931,11 +931,11 @@ def render(ep, segs, chars, out, preview):
                            for v in (s.get("vis") or []))
         if shot in ("split", "full") and not own_verified:
             shot, size = "split", (SW_, SH_)
-            # News-aware fallback: never illustrate an unrelated story with COD props.
             from visual_strategy import select_visual
             vis, visual_reason = select_visual(ln, ep, si)
-            if si == 0:
-                print("  visual strategy:", visual_reason)
+            print(f"VISUAL_AUDIT line={si+1} speaker={ln.get('who')} strategy={visual_reason} verified_media=False")
+        elif shot in ("split", "full"):
+            print(f"VISUAL_AUDIT line={si+1} speaker={ln.get('who')} strategy=verified-media verified_media=True")
         if shot == "full" and not vis:
             shot, size = "split", (SW_, SH_)
         cut_s = CUT - 0.4 * int(ep.get("_fix") or 0)            # जाँच में कमी मिली = दोबारा बनाते वक़्त और जल्दी बदलें
