@@ -872,6 +872,14 @@ def render(ep, segs, chars, out, preview):
                     z = 1.04 + 0.05 * t / n + 0.006 * math.sin(t / 3)
                     fy = 0.30
                 im = _zoomr(fr, z, fy).copy()
+                # Real full-frame visual interruption, not merely a tiny face zoom.
+                # Older reels kept the same portrait for 3-5s and failed visual QA.
+                if ln.get("big") and n > int(2.9 * FPS):
+                    flash_cycle = max(18, int((1.8 - 0.2 * int(ep.get("_fix") or 0)) * FPS))
+                    flash_len = max(6, int(0.42 * FPS))
+                    if t >= flash_cycle and t % flash_cycle < flash_len:
+                        im = _kinetic({"big": ln["big"], "color": ln.get("card_color") or "#4328A5"},
+                                      None, t % flash_cycle, (W, H))
             elif shot == "full":
                 sf = next(cur)
                 last_screen = sf
