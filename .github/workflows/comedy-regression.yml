@@ -144,54 +144,69 @@ jobs:
             youtube_smoke.json
             visuals_cache/
 
-  scene-engines:
+  godot-render:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 12
     steps:
       - uses: actions/checkout@v4
-      - name: Install Godot Blender and FFmpeg
-        run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq blender godot3-server ffmpeg
-      - name: Blender real 3D render
-        run: |
-          mkdir -p scene_outputs/blender
-          BLENDER_OUT="$PWD/scene_outputs/blender/frame_" blender -b -t 2 --python production/blender_shot.py
-          test "$(find scene_outputs/blender -name '*.png' | wc -l)" -ge 2
       - name: Install Godot 4 headless
         run: |
-          curl -fL --retry 3 -o /tmp/godot.zip https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_linux.x86_64.zip
+          curl -fL --retry 3 --connect-timeout 15 --max-time 180 -o /tmp/godot.zip https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_linux.x86_64.zip
           unzip -q /tmp/godot.zip -d /tmp
           sudo install -m 755 /tmp/Godot_v4.3-stable_linux.x86_64 /usr/local/bin/godot4
-          godot4 --version
-      - name: Render real Godot 4 scene frames
+      - name: Render Godot animation
         run: |
           mkdir -p scene_outputs/godot
           godot4 --headless --path production/godot --write-movie "$PWD/scene_outputs/godot/parcel.avi" --fixed-fps 30 --quit-after 90
           test -s scene_outputs/godot/parcel.avi
-          ffprobe -v error -show_entries format=duration -of default=nw=1 scene_outputs/godot/parcel.avi
+          ffprobe -v error -show_entries stream=width,height,duration -of default=nw=1 scene_outputs/godot/parcel.avi
           ffmpeg -hide_banner -loglevel error -y -i scene_outputs/godot/parcel.avi -frames:v 1 scene_outputs/godot/preview.png
-          test -s scene_outputs/godot/preview.png
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: godot-real-render
+          path: scene_outputs/godot/
+          if-no-files-found: warn
+
+  blender-render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Blender minimal dependencies
+        run: |
+          sudo apt-get install -y --no-install-recommends blender
+      - name: Render 3D parcel
+        run: |
+          mkdir -p scene_outputs/blender
+          BLENDER_OUT="$PWD/scene_outputs/blender/frame_" blender -b -t 2 --python production/blender_shot.py
+          test "$(find scene_outputs/blender -name '*.png' | wc -l)" -ge 2
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: blender-real-render
+          path: scene_outputs/blender/
+          if-no-files-found: warn
+
+  remotion-render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Render Remotion news graphics
+      - name: Install and render motion graphics
         working-directory: production/remotion
         run: |
           npm install --no-audit --no-fund
           npx remotion browser ensure
           npm run render
-      - name: Validate and package rendered footage
-        if: always()
-        run: |
-          mkdir -p scene_outputs/remotion
-          if [ -f production/remotion/out/news-card.mp4 ]; then
-            cp production/remotion/out/news-card.mp4 scene_outputs/remotion/
-            ffprobe -v error -show_entries format=duration -of default=nw=1 scene_outputs/remotion/news-card.mp4
-          fi
+          test -s out/news-card.mp4
+          ffprobe -v error -show_entries stream=width,height,duration -of default=nw=1 out/news-card.mp4
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: scene-engines-real-render
-          path: scene_outputs/
+          name: remotion-real-render
+          path: production/remotion/out/
           if-no-files-found: warn
