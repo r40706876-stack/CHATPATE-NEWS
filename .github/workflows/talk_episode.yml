@@ -16,7 +16,13 @@ on:
       - 'reel_studio.py'
       - 'talk_episode.py'
       - 'qa.py'
+      - 'tts.py'
+      - 'visual_strategy.py'
+      - 'hybrid_stage.py'
       - 'tests/storyboard_preflight.py'
+      - 'tests/test_visual_strategy.py'
+      - 'tests/test_hybrid_stage.py'
+      - 'tests/test_tts_pacing.py'
       - '.github/workflows/talk_episode.yml'
 # Only the newest branch render may consume expensive TTS/render time.
 concurrency:
@@ -53,6 +59,9 @@ jobs:
           # Fast visual/scene validation BEFORE paying the TTS and MP4 render cost.
           python3 tests/storyboard_preflight.py
           python3 -m unittest discover -s tests -p test_comedy_gate.py -q
+          python3 -m unittest discover -s tests -p test_visual_strategy.py -q
+          python3 -m unittest discover -s tests -p test_hybrid_stage.py -q
+          python3 -m unittest discover -s tests -p test_tts_pacing.py -q
           python3 - <<'PY'
           import tts
           assert tts.speakable("WL-48 से WL-47") == "डब्ल्यूएल 48 से डब्ल्यूएल 47"
