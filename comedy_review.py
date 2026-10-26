@@ -9,7 +9,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).parent
 OUT = ROOT / "comedy_review.json"
-MIN_EDITORIAL_SCORE = 7.5
+MIN_EDITORIAL_SCORE = 8.5
 
 
 def review(path):
