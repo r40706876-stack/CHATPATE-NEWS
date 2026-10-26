@@ -2,6 +2,7 @@
 import math
 import re
 from PIL import Image, ImageDraw, ImageFont
+import talk_test as tt
 
 TOPICS = {
  "train": ("ट्रेन","रेल","टिकट","स्टेशन","यात्री"),
@@ -31,10 +32,10 @@ def stage_frames(card, size, fps=25):
         d=ImageDraw.Draw(im)
         d.rectangle((0,int(h*.77),w,h),fill=(204,223,238))
         d.rounded_rectangle((30,25,w-30,110),radius=22,fill=(27,52,86))
-        try:
-            font=ImageFont.truetype("/usr/share/fonts/truetype/noto/NotoSansDevanagari-Bold.ttf",42)
-        except OSError:
-            font=ImageFont.load_default()
+        font=tt.font(42)
+        # Fit Hindi captions to the actual stage width; never crop the hook.
+        while font.getlength(caption) > w-110 and font.size > 22:
+            font=tt.font(font.size-2)
         d.text((w//2,68),caption,font=font,anchor="mm",fill="white")
         shift=int(26*math.sin(p*3.2))
         cx,cy=w//2,int(h*.46)+shift
