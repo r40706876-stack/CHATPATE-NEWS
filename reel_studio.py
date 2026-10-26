@@ -475,10 +475,64 @@ def _kinetic(card, bg, t, size):
     return im
 
 
+def _story_scene(card, size):
+    """Looping illustrated news props; no random internet media."""
+    w,h=size
+    scene=card.get("scene","delivery")
+    t=0
+    while True:
+        im=Image.new("RGB",(w,h),(235,245,252))
+        d=ImageDraw.Draw(im)
+        d.rectangle((0,int(h*.79),w,h),fill=(198,220,232))
+        title={"sweets":"मिठाई माँगी!","showroom":"टीवी-फ्रिज आ गए!","bill":"COD बिल ₹1.69 लाख","shop":"मिठाई की दुकान!","delivery":"डिलीवरी वाले परेशान!"}.get(scene,"COD खबर")
+        d.rounded_rectangle((15,20,w-15,110),radius=20,fill=(31,55,90))
+        ft=tt.font(54)
+        while ft.getlength(title)>w-55 and ft.size>25:ft=tt.font(ft.size-2)
+        d.text((w//2,65),title,font=ft,anchor="mm",fill="white")
+        bounce=int(35*abs(np.sin(t*.12)))
+        def parcel(x,y,ww=215,hh=150):
+            d.rounded_rectangle((x,y,x+ww,y+hh),radius=12,fill=(212,156,91),outline=(88,61,43),width=6)
+            d.line((x+ww//2,y,x+ww//2,y+hh),fill=(245,216,154),width=12)
+        def tv(x,y):
+            d.rounded_rectangle((x,y,x+330,y+245),radius=20,fill=(31,45,65),outline=(82,105,124),width=7)
+            d.rectangle((x+22,y+22,x+308,y+206),fill=(83,184,216))
+            d.ellipse((x+90,y+55,x+210,y+175),fill=(245,209,98))
+        def fridge(x,y):
+            d.rounded_rectangle((x,y,x+175,y+350),radius=20,fill=(219,234,239),outline=(79,105,121),width=7)
+            d.line((x,y+150,x+175,y+150),fill=(79,105,121),width=7)
+            d.line((x+145,y+50,x+145,y+125),fill=(79,105,121),width=10)
+        if scene=="sweets":
+            parcel(85,int(h*.53),300,170)
+            for j in range(3):d.ellipse((115+j*85,int(h*.56),180+j*85,int(h*.65)),fill=(248,204,101))
+            if t>8:tv(w-450,int(h*.40)-bounce)
+        elif scene=="showroom":
+            tv(100,int(h*.43)-bounce)
+            fridge(w-305,int(h*.36))
+        elif scene=="bill":
+            tv(50,int(h*.43)-bounce)
+            d.rounded_rectangle((450,int(h*.32),w-40,int(h*.76)),radius=20,fill="white",outline=(68,79,99),width=8)
+            d.text((w-300,int(h*.46)),"COD",font=tt.font(95),anchor="mm",fill=(199,66,65))
+            d.text((w-300,int(h*.59)),"₹1,69,000",font=tt.font(63),anchor="mm",fill=(34,53,77))
+        elif scene=="shop":
+            d.rectangle((110,int(h*.40),w-110,int(h*.77)),fill=(249,216,159),outline=(103,74,53),width=8)
+            d.polygon([(80,int(h*.40)),(w//2,int(h*.21)),(w-80,int(h*.40))],fill=(203,82,75))
+            parcel(w//2-150,int(h*.52)-bounce,300,160)
+        else:
+            for j in range(5):
+                if t<j*5:continue
+                parcel(65+(j%3)*270,int(h*.68)-(j//3)*180-(bounce if j==4 else 0))
+            d.text((w//2,int(h*.31)),"COD",font=tt.font(110),anchor="mm",fill=(204,66,60))
+        yield im
+        t+=1
+
+
 def _screen_gen(src, seed, size, bg=None, hero=False):
     """तस्वीर/clip/कार्ड के frames (size के हिसाब से), ख़त्म नहीं होते.
     hero=True (reel का पहला frame): तेज़ "झटके वाला" zoom — पहले 2 सेकंड में हरकत (graph: 3-5 सेकंड पर आधे लोग जाते थे)."""
     w, h = size
+    if isinstance(src, dict) and src.get('scene'):
+        yield from _story_scene(src, size)
+        return
     if isinstance(src, Path) and src.suffix == ".mp4":
         got = False
         for f in rv._video_frames(src, w, h):
@@ -816,8 +870,9 @@ def render(ep, segs, chars, out, preview):
                            for v in (s.get("vis") or []))
         if shot in ("split", "full") and not own_verified:
             shot, size = "split", (SW_, SH_)
-            vis = [{"big": ln.get("big") or key_phrase(ln) or headline, "color": "#243D68"},
-                   {"big": key_phrase(ln) or ln.get("big") or headline, "color": "#9B412A"}]
+            scenes = ["sweets", "showroom", "bill", "shop", "delivery"]
+            chosen = ln.get("scene") or scenes[min(si, len(scenes)-1)]
+            vis = [{"scene": chosen}]
         if shot == "full" and not vis:
             shot, size = "split", (SW_, SH_)
         cut_s = CUT - 0.4 * int(ep.get("_fix") or 0)            # जाँच में कमी मिली = दोबारा बनाते वक़्त और जल्दी बदलें
