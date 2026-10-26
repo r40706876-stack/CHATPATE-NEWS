@@ -1,5 +1,5 @@
 name: Recover episode MP4 from run 92
-# Retry with rotating punch-shot visuals and QA
+# Retry with fixed 1.2s upper visual beats on every long dialogue
 on:
   push:
     branches:
