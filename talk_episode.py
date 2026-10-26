@@ -448,14 +448,20 @@ def post():
     secs = reel_v3.render(ep, lens, faces, stills, vis, CHARS, out, ROOT / "preview_episode.jpg", audio)
     print(f"बन गया: {out} ({secs:.1f}s)")
     import qa
-    issues = qa.check(out)
+    # Visual motion alone is not enough: a valid MP4 needs an audible audio stream.
+    issues = qa.check(out) + qa.check_media(out)
     if issues:
-        raise RuntimeError("v3 video QA failed; delivery blocked: " + "; ".join(issues))
+        raise RuntimeError("v3 video/audio QA failed; delivery blocked: " + "; ".join(issues))
+    try:
+        print(qa.targets(out, audio[0] if audio else None))
+    except Exception as exc:
+        print("Virality diagnostics unavailable:", type(exc).__name__)
     if ep.get("no_send"):
-        print("  (no_send) v3 QA passed, Telegram पर नहीं भेजा")
+        print("  (no_send) render QA passed; editorial comedy approval still pending, Telegram blocked")
         return
     import telegram
-    telegram.send_video(out, f"🎬 v3 test: {ep.get('title', '')} — हर 2-3 सेकंड नया नज़ारा, poll के साथ")
+    if not telegram.send_video(out, f"🎬 बकरा न्यूज़: {ep.get('title', '')}"):
+        raise RuntimeError("Telegram delivery failed; QA-approved MP4 retained as episode.mp4")
 
 
 _cc = {}
