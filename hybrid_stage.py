@@ -20,15 +20,76 @@ def topic_of(text):
             return key
     return "news"
 
+def concept_of(text):
+    """Choose the actual visual gag of this line, not the episode's generic topic."""
+    s = str(text).lower()
+    if ("लड्डू" in s or "मिठाई" in s) and ("hdmi" in s or "एचडीएमआई" in s or "4k" in s or "चाशनी" in s):
+        return "laddoo_hdmi"
+    if ("बिल" in s or "इनवॉइस" in s) and ("टीवी" in s or "₹" in s or "लाख" in s):
+        return "receipt"
+    if "पता" in s or "एड्रेस" in s:
+        return "address"
+    if "डिलीवरी वाला" in s or "डिलीवरी वाले" in s:
+        return "delivery"
+    if "टीवी" in s or "फ्रिज" in s:
+        return "television"
+    if "wl-" in s or "वेटिंग" in s or "वेटलिस्ट" in s:
+        return "waiting_ticket"
+    return None
+
+
+def _special(d, cx, cy, concept, beat):
+    """A small set of story-specific illustrations; no fabricated real footage."""
+    ink=(43,58,83)
+    if concept == "television":
+        d.rounded_rectangle((cx-315,cy-205,cx+315,cy+185),radius=32,fill=ink,outline=(23,35,53),width=12)
+        d.rounded_rectangle((cx-280,cy-168,cx+280,cy+132),radius=15,fill=(98,188,217) if beat%2 else (251,201,114))
+        d.line((cx,cy+185,cx,cy+245),fill=ink,width=22)
+        d.line((cx-130,cy+245,cx+130,cy+245),fill=ink,width=20)
+    elif concept == "receipt":
+        d.rounded_rectangle((cx-215,cy-245,cx+215,cy+255),radius=20,fill="white",outline=ink,width=10)
+        for j in range(4):
+            y=cy-125+j*77
+            d.line((cx-150,y,cx+145,y),fill=(97,124,147),width=10)
+        d.rounded_rectangle((cx-175,cy+145,cx+175,cy+224),radius=12,fill=(253,204,92))
+        d.text((cx,cy+182),"₹",font=ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",63),anchor="mm",fill=ink)
+    elif concept == "address":
+        d.rounded_rectangle((cx-305,cy-170,cx+305,cy+190),radius=20,fill=(251,236,204),outline=ink,width=10)
+        d.line((cx-300,cy-155,cx,cy+40),fill=(189,133,85),width=12)
+        d.line((cx+300,cy-155,cx,cy+40),fill=(189,133,85),width=12)
+        d.ellipse((cx+135,cy-110,cx+230,cy-15),fill=(223,99,83))
+    elif concept == "laddoo_hdmi":
+        d.ellipse((cx-240,cy-170,cx+115,cy+185),fill=(239,167,60),outline=(153,92,38),width=12)
+        for x,y in ((-90,-80),(-160,50),(10,95)):
+            d.ellipse((cx+x-15,cy+y-15,cx+x+15,cy+y+15),fill=(255,221,125))
+        d.line((cx+120,cy+65,cx+270,cy+65,cx+270,cy-60),fill=ink,width=24)
+        d.rounded_rectangle((cx+205,cy-140,cx+330,cy-60),radius=10,fill=(66,83,103))
+        d.rectangle((cx+220,cy-120,cx+315,cy-100),fill=(245,210,100))
+    elif concept == "delivery":
+        d.ellipse((cx-90,cy-245,cx+90,cy-65),fill=(248,201,148),outline=ink,width=8)
+        d.rounded_rectangle((cx-150,cy-60,cx+150,cy+240),radius=45,fill=(70,140,195))
+        d.rounded_rectangle((cx+105,cy+25,cx+320,cy+225),radius=12,fill=(215,158,95),outline=ink,width=8)
+    elif concept == "waiting_ticket":
+        d.rounded_rectangle((cx-320,cy-170,cx+320,cy+180),radius=25,fill=(253,244,212),outline=ink,width=10)
+        d.line((cx-270,cy+70,cx+270,cy+70),fill=(114,138,155),width=10)
+        d.text((cx,cy-45),"WL",font=ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",150),anchor="mm",fill=(200,70,65))
+    else:
+        return False
+    return True
+
+
 def stage_frames(card, size, fps=25):
     """Generate looping animated illustrated visual; headline is NOT a repeated full-screen card."""
     w,h=size
     kind=card.get("topic","news")
+    concept=card.get("concept")
     caption=" ".join(str(card.get("caption") or "").split()[:6])
     t=0
     while True:
         p=t/fps
-        im=Image.new("RGB",(w,h),(235,244,252))
+        beat = 0 if p < 0.45 else 1 + int((p-0.45)/1.25)%2
+        backgrounds = ((235,244,252),(251,233,208),(216,236,232))
+        im=Image.new("RGB",(w,h),backgrounds[beat])
         d=ImageDraw.Draw(im)
         d.rectangle((0,int(h*.77),w,h),fill=(204,223,238))
         d.rounded_rectangle((30,25,w-30,110),radius=22,fill=(27,52,86))
@@ -39,7 +100,9 @@ def stage_frames(card, size, fps=25):
         d.text((w//2,68),caption,font=font,anchor="mm",fill="white")
         shift=int(26*math.sin(p*3.2))
         cx,cy=w//2,int(h*.46)+shift
-        if kind=="train":
+        if _special(d,cx,cy,concept,beat):
+            pass
+        elif kind=="train":
             d.rounded_rectangle((cx-320,cy-170,cx+320,cy+150),radius=42,fill=(56,117,185),outline=(25,55,91),width=9)
             for x in (-230,0,230):
                 d.rounded_rectangle((cx+x-72,cy-110,cx+x+72,cy+12),radius=12,fill=(171,226,245))
