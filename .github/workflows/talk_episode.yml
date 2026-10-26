@@ -17,6 +17,7 @@ on:
       - 'talk_episode.py'
       - 'qa.py'
       - 'tts.py'
+      - 'comedy_review.py'
       - 'visual_strategy.py'
       - 'hybrid_stage.py'
       - 'tests/storyboard_preflight.py'
@@ -78,8 +79,18 @@ jobs:
               raise SystemExit("Expected 5-9 comedy dialogue beats")
           print("PASS: comedy script structural checks")
           PY
+          # Independent Gemini critique is editorial, not a claim about real viewers.
+          # If Gemini is quota-limited it records 'unavailable'; a low reviewed score blocks render.
+          python3 comedy_review.py "episodes/waiting_ticket_comedy.json"
           /usr/bin/python3 talk_episode.py prep "${{ inputs.script || 'episodes/waiting_ticket_comedy.json' }}" | tee prep.log
           echo "lines=$(tail -1 prep.log)" >> $GITHUB_OUTPUT
+      - name: Upload independent comedy editorial review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: comedy-editorial-review
+          path: comedy_review.json
+          if-no-files-found: ignore
       - name: Upload fast storyboard preview
         if: always()
         uses: actions/upload-artifact@v4
