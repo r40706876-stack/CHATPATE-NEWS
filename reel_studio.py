@@ -932,7 +932,9 @@ def render(ep, segs, chars, out, preview):
             # Keep visuals tied to the CURRENT spoken line. _story_scene already
             # animates relevant props and cycles through line-specific beats;
             # showing sweets/TV during Dadi's delivery joke would mismatch audio.
-            vis = [{"scene": chosen}]
+            # Keep every beat relevant to the spoken line, but refresh the story panel
+            # at each cut instead of leaving a single dict card on screen throughout.
+            vis = [{"scene": chosen}, {"scene": chosen, "beat": 1}, {"scene": chosen, "beat": 2}]
         if shot == "full" and not vis:
             shot, size = "split", (SW_, SH_)
         cut_s = CUT - 0.4 * int(ep.get("_fix") or 0)            # जाँच में कमी मिली = दोबारा बनाते वक़्त और जल्दी बदलें
