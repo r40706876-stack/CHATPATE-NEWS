@@ -100,8 +100,17 @@ def stage_frames(card, size, fps=25):
         d.text((w//2,68),caption,font=font,anchor="mm",fill="white")
         shift=int(26*math.sin(p*3.2))
         cx,cy=w//2,int(h*.46)+shift
-        if _special(d,cx,cy,concept,beat):
-            pass
+        if concept == "laddoo_hdmi" and p < 0.55:
+            d.ellipse((cx-185,cy-165,cx+185,cy+205),fill=(239,167,60),outline=(153,92,38),width=12)
+        elif concept == "laddoo_hdmi" and p >= 1.2:
+            d.rounded_rectangle((cx-315,cy-210,cx+315,cy+195),radius=30,fill=(38,52,75))
+            d.rounded_rectangle((cx-280,cy-170,cx+280,cy+145),radius=15,fill=(116,204,225))
+            d.ellipse((cx-120,cy-130,cx+120,cy+110),fill=(239,167,60),outline=(153,92,38),width=8)
+            d.text((cx,cy+125),"4K",font=ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",70),anchor="mm",fill=(28,46,74))
+        elif _special(d,cx,cy,concept,beat):
+            if concept == "receipt" and p >= 0.65:
+                d.rounded_rectangle((cx-210,cy+110,cx+210,cy+240),radius=15,fill=(210,60,60))
+                d.text((cx,cy+175),"₹1.69L",font=ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf",58),anchor="mm",fill="white")
         elif kind=="train":
             d.rounded_rectangle((cx-320,cy-170,cx+320,cy+150),radius=42,fill=(56,117,185),outline=(25,55,91),width=9)
             for x in (-230,0,230):
