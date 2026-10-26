@@ -1,7 +1,7 @@
 {
-  "title": "मिठाई माँगी, COD टीवी आ गया",
+  "title": "फ्री गिफ्ट में पैसे किसके?",
   "topic": "मदुरै में मिठाई माँगने वाले क्रिएटर को अनचाहे COD ऑर्डर मिले",
-  "hook": "मिठाई माँगी, डेढ़ लाख से महँगा टीवी आया!",
+  "hook": "फ्री गिफ्ट आया, पैसे चाचा देंगे!",
   "poll": {
     "q": "फ्री गिफ्ट पर COD बिल आए तो?",
     "a": "वापस करूँगा",
@@ -10,60 +10,49 @@
   "lines": [
     {
       "who": "bablu",
-      "say": "मिठाई माँगी, डेढ़ लाख से महँगा टीवी आया!",
-      "big": "मिठाई की जगह महँगा टीवी!",
+      "say": "ब्रेकिंग! फ्री गिफ्ट आया, पैसे चाचा देंगे!",
+      "big": "फ्री गिफ्ट, बिल चाचा का!",
       "expr": "hairan",
-      "punch": true,
       "visuals": [
-        "Indian sweet box next to large television cash on delivery"
+        "cartoon parcel with COD bill"
       ]
     },
     {
       "who": "chacha",
-      "say": "वाह! मेरा पता भी वायरल कर!",
-      "big": "मेरा पता भी डाल!",
-      "expr": "smug",
+      "say": "वाह! गिफ्ट भेजने वाला बड़ा दिलदार है!",
+      "big": "वाह! मुफ्त गिफ्ट!",
+      "expr": "hasi",
       "visuals": [
-        "Indian uncle excited holding mobile phone"
+        "cartoon uncle delighted by parcel"
       ]
     },
     {
       "who": "pinky",
-      "say": "चाचा, टीवी के पैसे खुद देने थे!",
-      "big": "कैश ऑन डिलीवरी!",
+      "say": "दिलदार? पैसे आपको देने हैं, चाचा!",
+      "big": "पैसे चाचा देंगे!",
       "expr": "tanz",
-      "punch": true,
       "visuals": [
-        "courier delivery cash on delivery invoice television"
+        "cartoon COD bill"
       ]
     },
     {
       "who": "chacha",
-      "say": "फिर गिफ्ट नहीं, डकैती का पार्सल है!",
-      "big": "डकैती का पार्सल!",
+      "say": "अरे! फिर गिफ्ट नहीं, मेरे नाम का चालान है!",
+      "big": "मेरे नाम का चालान?!",
       "expr": "gussa",
       "punch": true,
       "visuals": [
-        "Indian man shocked by large delivery invoice"
+        "cartoon shocked uncle holding bill"
       ]
     },
     {
       "who": "dadi",
-      "say": "बाद में उसे असली मिठाई मुफ्त मिली!",
-      "big": "आखिर मिठाई मिल गई!",
+      "say": "बिल भर दे! हलवाई के उधार से तो सस्ता होगा!",
+      "big": "हलवाई का उधार बाकी!",
       "expr": "hasi",
-      "visuals": [
-        "Indian festive sweets gift box"
-      ]
-    },
-    {
-      "who": "chacha",
-      "say": "तो मेरा पता डाल—बिल पड़ोसी के नाम!",
-      "big": "बिल पड़ोसी के नाम!",
-      "expr": "smug",
       "punch": true,
       "visuals": [
-        "Indian uncle whispering to reporter with smartphone"
+        "cartoon sweets shop bill book"
       ]
     }
   ],
