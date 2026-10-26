@@ -1,7 +1,7 @@
 {
   "title": "वेटिंग टिकट की तेरहवीं",
   "topic": "ट्रेन वेटिंग टिकट",
-  "hook": "बबलू! वेटिंग टिकट पर घरवालों ने शोकसभा रख दी!",
+  "hook": "बबलू! टिकट ICU में है—WL अड़तालीस!",
   "poll": {
     "q": "आपकी टिकट कभी वेटिंग में अटकी है?",
     "a": "हर बार",
@@ -10,40 +10,41 @@
   "lines": [
     {
       "who": "chacha",
-      "say": "बबलू! वेटिंग टिकट पर घरवालों ने शोकसभा रख दी!",
-      "big": "टिकट की शोकसभा!",
+      "say": "बबलू! टिकट ICU में है—WL अड़तालीस!",
+      "big": "टिकट ICU में! WL 48",
       "expr": "gussa",
       "punch": true,
       "visuals": [
-        "Indian Railways waiting list train ticket"
+        "Indian Railways waiting list ticket"
       ]
     },
     {
       "who": "bablu",
-      "say": "क्यों, ट्रेन छूटी या साँस?",
-      "big": "ट्रेन छूटी या साँस?",
+      "say": "टीटी बुलाऊँ या डॉक्टर?",
+      "big": "टीटी या डॉक्टर?",
       "expr": "hairan",
+      "punch": true,
       "visuals": [
-        "Indian train station platform"
+        "Indian railway platform ticket examiner"
       ]
     },
     {
       "who": "chacha",
-      "say": "सब पूछ रहे—कन्फर्म हुआ? जैसे ICU में पड़ा हूँ!",
-      "big": "टिकट है, मरीज नहीं!",
+      "say": "घरवाले पूछ रहे—कन्फर्म हुई या बचने की उम्मीद है?",
+      "big": "बचने की उम्मीद है?",
       "expr": "tanz",
-      "punch": true,
       "visuals": [
-        "train waiting list ticket status"
+        "Indian railway reservation chart"
       ]
     },
     {
       "who": "pinky",
-      "say": "टिकट ग्रुप में डाली। बुआ बोलीं—हिम्मत रखना!",
-      "big": "बुआ: हिम्मत रखना!",
+      "say": "बुआ ने स्क्रीनशॉट देखकर RIP लिख दिया!",
+      "big": "बुआ ने RIP भेजा!",
       "expr": "hasi",
+      "punch": true,
       "visuals": [
-        "family group mobile phone chat"
+        "family group phone chat"
       ]
     },
     {
@@ -52,7 +53,7 @@
       "big": "और मामा?",
       "expr": "hairan",
       "visuals": [
-        "phone notification"
+        "Indian train waiting ticket"
       ]
     },
     {
@@ -61,17 +62,17 @@
       "big": "ऊपरवाला बर्थ दिलाएगा!",
       "expr": "tanz",
       "visuals": [
-        "Indian railway sleeper berth"
+        "Indian sleeper coach upper berth"
       ]
     },
     {
       "who": "dadi",
-      "say": "ऊपरवाला? उससे पूछ, लोअर बर्थ देगा या स्वर्ग?",
-      "big": "लोअर बर्थ या स्वर्ग?",
+      "say": "ऊपरवाला? उससे पूछ, साइड अपर देगा या स्वर्ग?",
+      "big": "साइड अपर या स्वर्ग?",
       "expr": "gussa",
       "punch": true,
       "visuals": [
-        "Indian railway sleeper lower berth"
+        "Indian sleeper train side upper berth"
       ]
     }
   ],
