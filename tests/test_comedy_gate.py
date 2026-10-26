@@ -78,5 +78,16 @@ class VideoMotionGateTests(unittest.TestCase):
         longest, _, _ = qa.longest_unchanged(frames)
         self.assertLessEqual(longest, 32)
 
+
+class SpeechLengthTests(unittest.TestCase):
+    def test_gemini_ramble_is_rejected_before_video_render(self):
+        import numpy as np
+        import tts
+        lines = [{"say": "डिलीवरी वाला बोला—मिठाई मुझे दो, टीवी तुम उठाओ!"}]
+        too_long = [np.zeros(int(14.09 * tts.SR), dtype=np.float32)]
+        self.assertEqual(len(tts.audio_length_issues(lines, too_long)), 1)
+        normal = [np.zeros(int(4.5 * tts.SR), dtype=np.float32)]
+        self.assertEqual(tts.audio_length_issues(lines, normal), [])
+
 if __name__ == "__main__":
     unittest.main()
