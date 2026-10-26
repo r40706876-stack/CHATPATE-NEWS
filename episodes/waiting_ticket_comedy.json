@@ -1,65 +1,66 @@
 {
-  "title": "वेटिंग टिकट पर चाचा की विजय यात्रा",
-  "topic": "ट्रेन वेटिंग टिकट",
-  "hook": "बबलू! एक नंबर घटा, बारात निकाल!",
+  "title": "मिठाई माँगी, COD का बिल आ गया",
+  "topic": "ऑनलाइन गिफ्ट और कैश ऑन डिलीवरी पर काल्पनिक न्यूज़ व्यंग्य",
+  "hook": "मिठाई माँगी थी, घर पर बिलों की बारात आ गई!",
   "poll": {
-    "q": "टिकट वेटिंग में हो तो कितनी बार रिफ्रेश करते हो?",
-    "a": "हर 2 मिनट",
-    "b": "चार्ट तक नहीं देखता"
+    "q": "बिना पूछे COD गिफ्ट आए तो?",
+    "a": "वापस करूँगा",
+    "b": "पहले भेजने वाले को फोन"
   },
   "lines": [
     {
-      "who": "chacha",
-      "say": "बबलू! वेटिंग एक नंबर घटी, बारात निकाल!",
-      "big": "एक नंबर घटा, बारात निकाल!",
-      "expr": "smug",
-      "punch": true,
-      "visuals": [
-        "Indian railway ticket waiting list on mobile phone"
-      ]
-    },
-    {
       "who": "bablu",
-      "say": "चाचा, सीट मिली?",
-      "big": "सीट मिली?",
+      "say": "ब्रेकिंग! मिठाई माँगी थी, घर पर बिलों की बारात आ गई!",
+      "big": "मिठाई नहीं, बिलों की बारात!",
       "expr": "hairan",
+      "punch": true,
       "visuals": [
-        "Indian railway train platform"
+        "Indian delivery parcels outside home"
       ]
     },
     {
       "who": "chacha",
-      "say": "नहीं! अड़तालीस से सैंतालीस! मोहल्ले में लड्डू बँटवा दिए!",
-      "big": "WL 48 से 47!",
-      "expr": "happy",
-      "punch": true,
+      "say": "अरे बबलू, मेरा पता भी वायरल कर दे! गिफ्ट आएँगे!",
+      "big": "मेरा पता भी डाल!",
+      "expr": "smug",
       "visuals": [
-        "Indian sweets ladoo box"
+        "Indian uncle excited holding smartphone"
       ]
     },
     {
       "who": "pinky",
-      "say": "चाचा ने मिठाईवाले को भी वेटिंग पर रखा है!",
-      "big": "मिठाई भी वेटिंग में!",
+      "say": "चाचा, सामान कैश ऑन डिलीवरी है!",
+      "big": "पैसे चाचा देंगे!",
       "expr": "tanz",
       "punch": true,
       "visuals": [
-        "Indian sweet shop counter"
+        "cash on delivery payment at door"
+      ]
+    },
+    {
+      "who": "chacha",
+      "say": "मतलब गिफ्ट उनका, पैसे मेरे? ये तो डकैती की होम डिलीवरी है!",
+      "big": "डकैती की होम डिलीवरी!",
+      "expr": "gussa",
+      "punch": true,
+      "visuals": [
+        "Indian man shocked by parcel invoice"
       ]
     },
     {
       "who": "dadi",
-      "say": "अरे टिकट छोड़! ट्रेन कल चली गई। अब बारात पटरी पर नचाएगा?",
-      "big": "ट्रेन तो कल चली गई!",
-      "expr": "gussa",
+      "say": "इसका पता मत डालना! उधार वाला हलवाई भी इसी को ढूँढ़ रहा है!",
+      "big": "हलवाई भी ढूँढ़ रहा!",
+      "expr": "hasi",
       "punch": true,
       "visuals": [
-        "Indian passenger train leaving railway station"
+        "Indian sweet shop owner with bill book"
       ]
     }
   ],
   "comedy_format": "character_clash",
   "style": "v2",
   "react": false,
-  "tag_who": "उस दोस्त को जो वेटिंग एक नंबर घटने पर जश्न मनाता है"
+  "tag_who": "उस दोस्त को जो मुफ्त गिफ्ट के चक्कर में पड़ जाता है",
+  "fictional_satire": true
 }
