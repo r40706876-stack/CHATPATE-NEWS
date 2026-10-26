@@ -241,8 +241,10 @@ def pick_checked(items):
     try:
         picks = gemini.json_from(gemini.ask(parts, json_mode=True, temperature=0.1)).get("picks", [])
     except Exception as e:                                # noqa: BLE001  Gemini न चले: सिर्फ़ पक्के tag-मेल वाले
-        print("  AI जाँच नहीं हुई, सिर्फ़ भारत वाली + पक्के मेल वाली ले रहे:", repr(e)[:120])
-        picks = [next((j for j, c in enumerate(cs) if c.get("india") and c["match"] >= 1), -1) for cs in cands]
+        print("  AI visual review unavailable: reject all unverified external photos:", repr(e)[:120])
+        # Keyword/India tags are not visual proof. Wrong crowd/religious photos
+        # are worse than a dialogue-specific card; fail closed on quota errors.
+        picks = [-1 for _ in cands]
     out = []
     CACHE.mkdir(exist_ok=True)
     for i, cs in enumerate(cands):
