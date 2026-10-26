@@ -1,7 +1,7 @@
 {
-  "title": "रिफ्रेश करते-करते ट्रेन निकल गई",
+  "title": "वेटिंग टिकट पर चाचा की विजय यात्रा",
   "topic": "ट्रेन वेटिंग टिकट",
-  "hook": "बबलू! मेरी टिकट नहीं, अंगूठा कन्फर्म हो गया!",
+  "hook": "बबलू! एक नंबर घटा, बारात निकाल!",
   "poll": {
     "q": "टिकट वेटिंग में हो तो कितनी बार रिफ्रेश करते हो?",
     "a": "हर 2 मिनट",
@@ -10,65 +10,56 @@
   "lines": [
     {
       "who": "chacha",
-      "say": "बबलू! मेरी टिकट नहीं, अंगूठा कन्फर्म हो गया!",
-      "big": "अंगूठा कन्फर्म?!",
-      "expr": "gussa",
+      "say": "बबलू! वेटिंग एक नंबर घटी, बारात निकाल!",
+      "big": "एक नंबर घटा, बारात निकाल!",
+      "expr": "smug",
       "punch": true,
       "visuals": [
-        "Indian train waiting list ticket mobile app"
+        "Indian railway ticket waiting list on mobile phone"
       ]
     },
     {
       "who": "bablu",
-      "say": "अंगूठा कैसे?",
-      "big": "अंगूठा कैसे?",
+      "say": "चाचा, सीट मिली?",
+      "big": "सीट मिली?",
       "expr": "hairan",
       "visuals": [
-        "Indian railway reservation phone screen"
+        "Indian railway train platform"
       ]
     },
     {
       "who": "chacha",
-      "say": "रातभर रिफ्रेश किया—मोबाइल ने फिंगरप्रिंट पहचानना छोड़ दिया!",
-      "big": "फिंगरप्रिंट ने हार मानी!",
-      "expr": "tanz",
+      "say": "नहीं! अड़तालीस से सैंतालीस! मोहल्ले में लड्डू बँटवा दिए!",
+      "big": "WL 48 से 47!",
+      "expr": "happy",
       "punch": true,
       "visuals": [
-        "finger scrolling mobile phone closeup"
+        "Indian sweets ladoo box"
       ]
     },
     {
       "who": "pinky",
-      "say": "WL-48 से WL-47 हुई... चाचा ने मिठाई बाँट दी!",
-      "big": "एक नंबर घटा!",
-      "expr": "hasi",
+      "say": "चाचा ने मिठाईवाले को भी वेटिंग पर रखा है!",
+      "big": "मिठाई भी वेटिंग में!",
+      "expr": "tanz",
       "punch": true,
       "visuals": [
-        "Indian sweets box ladoo"
-      ]
-    },
-    {
-      "who": "chacha",
-      "say": "हर नंबर पर एक लड्डू! कल सीट पक्की!",
-      "big": "हर नंबर पर लड्डू!",
-      "expr": "smug",
-      "visuals": [
-        "Indian ladoo sweets plate"
+        "Indian sweet shop counter"
       ]
     },
     {
       "who": "dadi",
-      "say": "ट्रेन कल निकल गई! अब रिफ्रेश करके पटरी पीछे खींचेगा?",
-      "big": "पटरी पीछे खींचेगा?!",
+      "say": "अरे टिकट छोड़! ट्रेन कल चली गई। अब बारात पटरी पर नचाएगा?",
+      "big": "ट्रेन तो कल चली गई!",
       "expr": "gussa",
       "punch": true,
       "visuals": [
-        "Indian passenger train departing railway platform"
+        "Indian passenger train leaving railway station"
       ]
     }
   ],
   "comedy_format": "character_clash",
   "style": "v2",
   "react": false,
-  "tag_who": "उस दोस्त को जो हर मिनट टिकट रिफ्रेश करता है"
+  "tag_who": "उस दोस्त को जो वेटिंग एक नंबर घटने पर जश्न मनाता है"
 }
