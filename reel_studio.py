@@ -929,7 +929,8 @@ def render(ep, segs, chars, out, preview):
             shot, size = "split", (SW_, SH_)
             scenes = ["sweets", "showroom", "bill", "shop", "delivery"]
             chosen = ln.get("scene") or scenes[min(si, len(scenes)-1)]
-            vis = [{"scene": chosen}]
+            # Rotate distinct story scenes instead of holding one static card for a long spoken line.
+            vis = [{"scene": chosen}] + [{"scene": name} for name in scenes if name != chosen]
         if shot == "full" and not vis:
             shot, size = "split", (SW_, SH_)
         cut_s = CUT - 0.4 * int(ep.get("_fix") or 0)            # जाँच में कमी मिली = दोबारा बनाते वक़्त और जल्दी बदलें
