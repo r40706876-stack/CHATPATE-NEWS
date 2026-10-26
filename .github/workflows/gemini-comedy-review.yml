@@ -1,0 +1,57 @@
+name: Gemini comedy script review
+on:
+  workflow_dispatch:
+  push:
+    branches: [feature/retention-comedy-quality-gate-20261025]
+    paths:
+      - .github/workflows/gemini-comedy-review.yml
+      - episodes/waiting_ticket_comedy.json
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    env:
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Review Hindi comedy script using Gemini free API
+        run: |
+          python3 - <<'PY'
+          import json, os, urllib.request, urllib.error
+          from pathlib import Path
+          episode=json.loads(Path("episodes/waiting_ticket_comedy.json").read_text())
+          key=os.getenv("GEMINI_API_KEY","")
+          if not key:
+              Path("gemini_comedy_review.md").write_text("Gemini API key secret missing. No review was performed.\n")
+              raise SystemExit("GEMINI_API_KEY not configured")
+          prompt=("You are a strict Hindi viral comedy script editor. Review this fictional Bakra News dialogue for Instagram Reels. "
+                  "Evaluate 0-10 for first 2 second hook, escalating situational comedy, novelty, character banter, laugh density, "
+                  "last-line shareability. Avoid empty praise and fake certainty about viral performance. "
+                  "Propose a fully rewritten 25-35 second Hindi script using the same available characters, no new visuals requiring complex animation. "
+                  "Return concise Hindi critique with concrete line-level changes.\n"+json.dumps(episode,ensure_ascii=False))
+          data=json.dumps({"contents":[{"parts":[{"text":prompt}]}],"generationConfig":{"temperature":0.85}},ensure_ascii=False).encode()
+          models=["gemini-2.5-flash","gemini-2.5-flash-lite"]
+          errors=[]
+          for model in models:
+              url="https://generativelanguage.googleapis.com/v1beta/models/"+model+":generateContent"
+              req=urllib.request.Request(url,data=data,headers={"Content-Type":"application/json","x-goog-api-key":key})
+              try:
+                  with urllib.request.urlopen(req,timeout=90) as response:
+                      body=json.load(response)
+                  result="\n".join(p.get("text","") for c in body.get("candidates",[]) for p in c.get("content",{}).get("parts",[]))
+                  if not result.strip(): raise ValueError("Empty model response")
+                  Path("gemini_comedy_review.md").write_text("# Gemini comedy review ("+model+")\n\n"+result+"\n")
+                  print("Gemini review completed using",model)
+                  break
+              except (urllib.error.HTTPError,urllib.error.URLError,ValueError) as e:
+                  errors.append(model+": "+str(getattr(e,"code",e)))
+          else:
+              Path("gemini_comedy_review.md").write_text("# Gemini review unavailable\n\n"+"\n".join(errors)+"\n")
+              raise SystemExit("Gemini quota/API unavailable: "+"; ".join(errors))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gemini-comedy-review
+          path: gemini_comedy_review.md
+          retention-days: 7
