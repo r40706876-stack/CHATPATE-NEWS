@@ -34,10 +34,9 @@ def select_visual(line, episode, index=0):
     # Caption reflects the current speaker, not an identical headline on every line.
     caption = re.sub(r"\s+", " ", str(line.get("tag_text") or line.get("caption") or speech)).strip()
     caption = " ".join(caption.split()[:7]) or short_topic
-    if caption == short_topic:
-        return [{"big": caption, "color": "#274B83"}], "kinetic-topic"
-    return [{"big": caption, "color": "#274B83"},
-            {"big": short_topic, "color": "#8C3B67"}], "kinetic-topic"
+    from hybrid_stage import topic_of
+    kind = topic_of(speech + " " + topic)
+    return [{"hybrid_stage": True, "topic": kind, "caption": caption}], "animated-stage:" + kind
 
 def compare_visual_options(line, episode):
     """Transparent pre-render decision; not an audience engagement score."""
