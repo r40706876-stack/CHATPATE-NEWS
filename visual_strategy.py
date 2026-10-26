@@ -25,9 +25,10 @@ def select_visual(line, episode, index=0):
     # Caption reflects the current speaker, not an identical headline on every line.
     caption = re.sub(r"\s+", " ", str(line.get("tag_text") or line.get("caption") or speech)).strip()
     caption = " ".join(caption.split()[:7]) or short_topic
-    from hybrid_stage import topic_of
+    from hybrid_stage import topic_of, concept_of
     kind = topic_of(speech + " " + topic)
-    return [{"hybrid_stage": True, "topic": kind, "caption": caption}], "animated-stage:" + kind
+    concept = concept_of(speech)
+    return [{"hybrid_stage": True, "topic": kind, "concept": concept, "caption": caption}], "animated-stage:" + (concept or kind)
 
 def compare_visual_options(line, episode):
     """Transparent pre-render decision; not an audience engagement score."""
