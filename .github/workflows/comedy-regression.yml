@@ -202,7 +202,7 @@ jobs:
             echo /tmp/blender-4.2.0-linux-x64 >> "$GITHUB_PATH"
             export PATH="/tmp/blender-4.2.0-linux-x64:$PATH"
           fi
-          if ! ldconfig -p | grep -q 'libEGL.so.1'; then
+          if ! ldconfig -p | grep 'libEGL.so.1' >/dev/null; then
             timeout 120 sudo apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=20 \
               install -y --no-install-recommends libegl1 libgl1 libopengl0
           fi
