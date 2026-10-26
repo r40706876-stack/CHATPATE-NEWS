@@ -204,6 +204,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+      - name: Install video inspection tools
+        run: sudo apt-get install -y --no-install-recommends ffmpeg
       - name: Install and render motion graphics
         working-directory: production/remotion
         run: |
