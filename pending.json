@@ -1,791 +1,482 @@
 {
-  "sent_at": 1792931852,
+  "sent_at": 1793002689,
   "eps": [
     {
-      "khabar": "ट्रेन के डिब्बे में यात्रियों का संगीतमय सफर",
-      "score": "8/10",
-      "topic": "ट्रेन में यात्रियों का ढोलक और हारमोनियम संग सफर",
-      "category": "travel",
-      "breaking": "ट्रेन कोच में यात्रियों ने ढोलक-हारमोनियम पर गाना गाया",
-      "samaj": "हम ख़ामोश मुसाफ़िर",
-      "maang": "हर स्लीपर कोच में ढोलक बजाने पर टैक्स लगाया जाए",
-      "twist": "ढोलक बजाने वाले अंकल बिना टिकट के ट्रेन में सफ़र कर रहे हैं",
-      "takiya": "टिकट दिखाओ, ढोलक नहीं!",
-      "tag_who": "उस दोस्त को जो बिना टिकट घूमता है",
-      "source": "Times Now Navbharat",
-      "ask": "क्या ट्रेन में ढोलक बजाना सही है?",
-      "ticker": [
-        "ट्रेन में ढोलक-हारमोनियम के साथ महफ़िल जम गई",
-        "यात्रियों ने 'जान से गुजरते हैं' गाना गाकर मज़ा लिया",
-        "सोशल मीडिया पर ट्रेन संगीत का वीडियो वायरल"
-      ],
+      "topic": "एफडी पर बढ़ी ब्याज दरें",
+      "breaking": "एफडी पर अब आठ दशमलव पाँच प्रतिशत तक ब्याज",
+      "source": "Business Standard, ABP News",
+      "hook_screen": "8.5% ब्याज का मज़ा!",
+      "tag_who": "वो दोस्त जो FD तोड़कर शेयर बाज़ार में पैसे लगाने वाला था",
       "lines": [
         {
           "who": "bablu",
-          "beat": "hook",
-          "say": "…और तभी ट्रेन के डिब्बे में यात्रियों ने ढोलक बजाना शुरू कर दिया!",
-          "caption": "…और तभी ट्रेन के डिब्बे में यात्रियों ने ढोलक बजाना शुरू कर दिया!",
+          "say": "रातों-रात अमीर बनिए... गारंटी!",
+          "caption": "रातों-रात अमीर बनिए... गारंटी!",
+          "expr": "hasi",
           "visuals": [
-            "dholak playing inside indian train coach",
-            "passengers sitting in sleeper class train India",
-            "surprised passenger covering ears train"
+            "gold coins falling background",
+            "excited salesman holding money"
           ],
           "photo_hi": [
-            "ट्रेन के अंदर ढोलक",
-            "भारतीय रेल डिब्बा"
+            "सोने के सिक्के गिरते हुए",
+            "उत्साहित विक्रेता हाथ में पैसे लिए"
           ],
-          "expr": "hairan",
-          "sfx": "boom",
-          "mood": "tension",
-          "delivery": "बिल्कुल गंभीर, धीमा, हर शब्द पर ज़ोर — जैसे देश का सबसे बड़ा सवाल पूछ रहा हो",
-          "visual": "dholak playing inside indian train coach",
+          "tvshop": true,
           "set": "studio",
-          "punch": false,
-          "big": "बड़ा सवाल",
-          "sub": "हम ख़ामोश मुसाफ़िर",
-          "card_color": [
-            20,
-            40,
-            110
+          "topic": "एफडी पर बढ़ी ब्याज दरें"
+        },
+        {
+          "who": "bablu",
+          "say": "सीनियर सिटीजन को साढ़े आठ प्रतिशत तक ब्याज!",
+          "caption": "वरिष्ठ नागरिकों को 8.5% तक का रिटर्न!",
+          "expr": "hasi",
+          "visuals": [
+            "happy senior citizen smiling",
+            "bank investment graph line up"
           ],
+          "photo_hi": [
+            "खुश बुजुर्ग व्यक्ति",
+            "बैंक में पैसे बढ़ने का ग्राफ"
+          ],
+          "tvshop": true,
+          "set": "studio",
+          "topic": "एफडी पर बढ़ी ब्याज दरें"
+        },
+        {
+          "who": "bablu",
+          "say": "बजाज फाइनेंस में आठ दशमलव पच्चीस प्रतिशत का फायदा!",
+          "caption": "बजाज फाइनेंस में 8.25% ब्याज का मौका!",
+          "expr": "hasi",
+          "visuals": [
+            "glowing calculator showing big returns",
+            "money stack"
+          ],
+          "photo_hi": [
+            "चमकता हुआ कैलकुलेटर",
+            "रुपयों की गड्डी"
+          ],
+          "tvshop": true,
+          "set": "studio",
+          "topic": "एफडी पर बढ़ी ब्याज दरें"
+        },
+        {
+          "who": "bablu",
+          "say": "आरबीआई के फैसले से कई बैंकों ने एफडी की दरें बढ़ाई हैं।",
+          "caption": "RBI फैसले के बाद बैंकों और कंपनियों ने FD दरें बढ़ाईं।",
+          "expr": "gambhir",
+          "news": true,
+          "visuals": [
+            "official bank building",
+            "rbi reserve bank concept photo"
+          ],
+          "photo_hi": [
+            "सरकारी बैंक की इमारत",
+            "रिजर्व बैंक का चिन्ह"
+          ],
+          "tvshop": false,
+          "set": "studio",
+          "topic": "एफडी पर बढ़ी ब्याज दरें"
+        },
+        {
+          "who": "chacha",
+          "say": "बेटा, जब एफडी का पैसा दोगुना होगा, दूध तीन गुना महंगा हो चुका होगा।",
+          "caption": "बेटा, जब एफडी दोगुनी होगी, दूध तीन गुना महंगा हो चुका होगा।",
+          "expr": "tanz",
+          "punch": true,
+          "stamp": "महंगाई की जीत",
+          "visuals": [
+            "old man drinking tea thoughtfully",
+            "empty wallet background"
+          ],
+          "photo_hi": [
+            "चाय पीते हुए ताना मारते बुजुर्ग",
+            "खाली पर्स का चित्र"
+          ],
+          "tvshop": false,
+          "set": "village",
+          "topic": "एफडी पर बढ़ी ब्याज दरें"
+        },
+        {
+          "who": "bablu",
+          "say": "तो तुरंत लगाइए पैसे... गारंटी!",
+          "caption": "तो तुरंत लगाइए पैसे... गारंटी!",
+          "expr": "hasi",
+          "visuals": [
+            "fast flashing offer text",
+            "bank passbook image"
+          ],
+          "photo_hi": [
+            "ऑफर टेक्स्ट चमकता हुआ",
+            "बैंक पासबुक की तस्वीर"
+          ],
+          "tvshop": true,
+          "set": "studio",
+          "topic": "एफडी पर बढ़ी ब्याज दरें"
+        }
+      ],
+      "caption_post": "रातों-रात अमीर बनने की गारंटी स्कीम! आपकी FD का क्या प्लान है? कमेंट में बताओ। स्रोत: Business Standard, ABP News #FD #InterestRates #BakraNews #FinanceHumor #Investment (AI से बने किरदार)",
+      "format": "explain",
+      "kind": "tvshop",
+      "label": "नकली ऐड",
+      "hook": "रातों-रात अमीर बनिए... गारंटी!",
+      "hook_text": "रातों-रात अमीर बनिए... गारंटी!",
+      "hook_short": "8.5% ब्याज का मज़ा!",
+      "hasi": "📺 52 शब्द (~19 सेकंड) | टैग: वो दोस्त जो FD तोड़कर शेयर बाज़ार में पैसे लगाने वाला था",
+      "trend": {
+        "score": 7,
+        "why": "11 अख़बार/चैनल 2 दिन में, 42 खबरें 7 दिन में, Google Trends में: ब्याज दर"
+      },
+      "category": "[Trends]"
+    },
+    {
+      "topic": "UPSSSC PET परीक्षा और स्पेशल ट्रेनें",
+      "breaking": "PET परीक्षार्थियों के लिए अनारक्षित स्पेशल ट्रेनें",
+      "source": "Amar Ujala, Dainik Bhaskar",
+      "hook_screen": "PET परीक्षा पर स्पेशल ट्रेनें",
+      "tag_who": "वो दोस्त जो ट्रेन के धक्के खाकर परीक्षा देने जाता है",
+      "lines": [
+        {
+          "who": "bablu",
+          "say": "पीईटी परीक्षा के लिए रेलवे चलाएगा अनारक्षित स्पेशल ट्रेनें।",
+          "caption": "PET परीक्षा के लिए रेलवे चलाएगा अनारक्षित स्पेशल ट्रेनें।",
+          "expr": "gambhir",
+          "visuals": [
+            "crowded railway station platform",
+            "passengers trying to board train"
+          ],
+          "photo_hi": [
+            "रेलवे स्टेशन पर परीक्षार्थियों की भीड़",
+            "अनारक्षित ट्रेन का डिब्बा"
+          ],
+          "set": "studio",
+          "topic": "UPSSSC PET परीक्षा और स्पेशल ट्रेनें"
+        },
+        {
+          "who": "chacha",
+          "say": "विभाग ने कहा है ट्रेनें स्पेशल हैं। अनारक्षित सिर्फ आपकी सीट और पीईटी परीक्षा है।",
+          "caption": "विभाग ने कहा है ट्रेनें स्पेशल हैं। अनारक्षित सिर्फ आपकी सीट और PET परीक्षा है।",
+          "expr": "tanz",
+          "punch": true,
+          "stamp": "स्पेशल ट्रेनें अनारक्ष",
+          "visuals": [
+            "overcrowded train compartment inside view"
+          ],
+          "photo_hi": [
+            "ट्रेन के अंदर भारी भीड़"
+          ],
+          "set": "school",
+          "topic": "UPSSSC PET परीक्षा और स्पेशल ट्रेनें"
+        }
+      ],
+      "caption_post": "PET परीक्षा के लिए चलीं स्पेशल ट्रेनें। आप किस स्टेशन पर अटके हैं? स्रोत: Amar Ujala, Dainik Bhaskar #UPSSSCPET #IndianRailways #SpecialTrain (AI से बने किरदार)",
+      "format": "explain",
+      "kind": "punch",
+      "label": "एक पंच",
+      "hook": "पीईटी परीक्षा के लिए रेलवे चलाएगा अनारक्षित स्पेशल ट्रेनें।",
+      "hook_text": "पीईटी परीक्षा के लिए रेलवे चलाएगा अनारक्षित स्पेशल ट्रेनें।",
+      "hook_short": "PET परीक्षा पर स्पेशल ट्रेनें",
+      "hasi": "⚡ 24 शब्द (~9 सेकंड) | टैग: वो दोस्त जो ट्रेन के धक्के खाकर परीक्षा देने जाता है",
+      "trend": {
+        "score": 4,
+        "why": "3 अख़बार/चैनल 2 दिन में, 11 खबरें 7 दिन में"
+      },
+      "category": "[सफ़र-जुगाड़]"
+    },
+    {
+      "topic": "एशिया कप राइजिंग स्टार्स 2026: भारत-पाकिस्तान मैच",
+      "category": "[फ़िल्म-क्रिकेट फैन]",
+      "breaking": "कतर में बाईस नवंबर को भारत-पाकिस्तान मुकाबला",
+      "hook_text": "कतर में मैच है... या टीवी टूटने का मुहूर्त?",
+      "hook_screen": "टीवी टूटने का मुहूर्त?",
+      "ask": "क्या आप २२ नवंबर का मैच लाइव देखेंगे?",
+      "source": "Jansatta, Lokmat News Hindi, Navbharat Times, India TV Hindi",
+      "poll": [
+        "भारत जीतेगा",
+        "पाकिस्तान जीतेगा"
+      ],
+      "ticker": [
+        "एशिया कप राइजिंग स्टार्स टूर्नामेंट कतर में आयोजित होगा",
+        "भारत और पाकिस्तान के बीच महामुकाबला २२ नवंबर को",
+        "प्रशंसकों में मैच को लेकर भारी उत्साह"
+      ],
+      "cast_why": "रमेश की टीवी वाली चिंता पर चाचा का पुराना दौर और पिंकी का ताना",
+      "tag_who": "उस दोस्त को जो पहला विकेट गिरते ही टीवी बंद कर देता है",
+      "lines": [
+        {
+          "who": "ramesh",
+          "say": "कतर में मैच है... या टीवी टूटने का मुहूर्त?",
+          "caption": "कतर में मैच है... या टीवी टूटने का मुहूर्त?",
+          "expr": "hairan",
+          "set": "bank",
+          "visuals": [
+            "cricket stadium crowd cheering",
+            "television screen sports match",
+            "man shocked looking at tv"
+          ],
+          "photo_hi": [
+            "भारत पाकिस्तान क्रिकेट",
+            "कतर क्रिकेट स्टेडियम"
+          ],
+          "visual": "cricket stadium crowd cheering",
           "scene": "studio",
+          "punch": false,
           "insta": ""
         },
         {
           "who": "bablu",
-          "beat": "saboot",
-          "say": "यात्रियों ने ट्रेन में ढोलक-हारमोनियम के साथ महफ़िल जमा ली!",
-          "caption": "यात्रियों ने ट्रेन में ढोलक-हारमोनियम के साथ महफ़िल जमा ली!",
+          "say": "बाईस नवंबर दो हज़ार छब्बीस को कतर में भारत-पाकिस्तान मुकाबला होगा।",
+          "caption": "22 नवंबर 2026 को कतर में भारत-पाकिस्तान मुकाबला होगा।",
+          "expr": "gambhir",
+          "set": "studio",
           "visuals": [
-            "harmonium playing inside train compartment",
-            "group of passengers singing together train",
-            "train window view moving landscape"
+            "qatar sports stadium exterior",
+            "cricket ball hit pitch",
+            "india vs pakistan match graphics"
           ],
           "photo_hi": [
-            "ट्रेन में हारमोनियम",
-            "यात्री गाना गाते हुए"
+            "एशिया कप राइजिंग स्टार्स",
+            "कतर मैच शेड्यूल"
           ],
-          "expr": "gussa",
-          "sfx": "whoosh",
-          "mood": "tension",
-          "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
-          "visual": "harmonium playing inside train compartment",
-          "set": "studio",
+          "card": {
+            "tag": "मैच शेड्यूल",
+            "big": "22 नवंबर 2026",
+            "sub": "कतर में महामुकाबला",
+            "icon": "calendar"
+          },
+          "visual": "qatar sports stadium exterior",
+          "scene": "card",
           "punch": false,
-          "big": "सबूत नंबर 1",
-          "sub": "",
-          "card_color": [
-            12,
-            60,
-            120
-          ],
-          "scene": "chacha",
           "insta": ""
         },
         {
           "who": "chacha",
-          "beat": "saboot",
-          "say": "और बात यहीं ख़त्म नहीं होती… टीटीई साहब भी टिकट छोड़कर ताली बजाने लगे!",
-          "caption": "और बात यहीं ख़त्म नहीं होती… टीटीई साहब भी टिकट छोड़कर ताली बजाने लगे!",
+          "say": "हमारे ज़माने में स्कोर पूछने पर पड़ोसी चाय पिलाता था।",
+          "caption": "हमारे ज़माने में स्कोर पूछने पर पड़ोसी चाय पिलाता था।",
+          "expr": "tanz",
+          "set": "bank",
           "visuals": [
-            "indian railway TTE clapping inside coach",
-            "TTE black coat holding ticket chart smiling",
-            "crowd cheering inside train berth"
+            "old indian man drinking tea",
+            "vintage radio listening crowd",
+            "rural indian village porch"
           ],
           "photo_hi": [
-            "टीटीई ताली बजाते हुए",
-            "ट्रेन का डिब्बा भीड़"
+            "क्रिकेट दर्शक चाय",
+            "रेडियो पर क्रिकेट"
           ],
-          "expr": "gussa",
-          "sfx": "glitch",
-          "mood": "tension",
-          "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
-          "visual": "indian railway TTE clapping inside coach",
-          "set": "station",
-          "punch": false,
-          "big": "सबूत नंबर 2",
-          "sub": "",
-          "card_color": [
-            12,
-            60,
-            120
-          ],
+          "visual": "old indian man drinking tea",
           "scene": "chacha",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "beat": "maang",
-          "say": "हमारी माँग: हर स्लीपर डिब्बे को साइलेंस ज़ोन घोषित करो!",
-          "caption": "हमारी माँग: हर स्लीपर डिब्बे को साइलेंस ज़ोन घोषित करो!",
-          "visuals": [
-            "silence zone sign board indian railway",
-            "passenger sleeping peacefully in berth",
-            "news anchor holding mic presenting demand"
-          ],
-          "photo_hi": [
-            "शांत क्षेत्र बोर्ड",
-            "ट्रेन बर्थ सोना"
-          ],
-          "stamp": "साइलेंस ज़ोन बनाओ!",
-          "expr": "gussa",
-          "sfx": "dhol",
-          "mood": "masti",
-          "delivery": "ऐलान की तरह, जोश में, जैसे संसद में भाषण",
-          "visual": "silence zone sign board indian railway",
-          "set": "studio",
-          "punch": true,
-          "big": "हमारी माँग",
-          "sub": "हर स्लीपर कोच में ढोलक बजाने",
-          "card_color": [
-            110,
-            20,
-            40
-          ],
-          "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "beat": "dhamki",
-          "say": "और अगर ये गाना-बजाना बंद नहीं हुआ…",
-          "caption": "और अगर ये गाना-बजाना बंद नहीं हुआ…",
-          "visuals": [
-            "anchor warning gesture to camera",
-            "dramatic train horn sound visual blur",
-            "news studio anchor intense look"
-          ],
-          "photo_hi": [
-            "एंकर गुस्सा",
-            "ट्रेन न्यूज़"
-          ],
-          "expr": "gambhir",
-          "sfx": "tick",
-          "mood": "tension",
-          "delivery": "अचानक बहुत धीमा, रहस्य वाला, लगभग फुसफुसाते हुए",
-          "pause_after": 0.5,
-          "visual": "anchor warning gesture to camera",
-          "set": "studio",
-          "punch": true,
-          "big": "चेतावनी!",
-          "sub": "",
-          "card_color": [
-            40,
-            10,
-            15
-          ],
-          "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "beat": "twist",
-          "say": "तो टीटीई को बता देंगे… ढोलक वाले अंकल बिना टिकट के सफ़र कर रहे हैं!",
-          "caption": "तो TTE को बता देंगे… ढोलक वाले अंकल बिना टिकट के सफ़र कर रहे हैं!",
-          "visuals": [
-            "TTE checking fine challan paper India",
-            "uncle holding dholak getting nervous face",
-            "without ticket fine receipt Indian railway"
-          ],
-          "photo_hi": [
-            "बिना टिकट जुर्माना",
-            "टीटीई रसीद"
-          ],
-          "stamp": "बिना टिकट पकड़े गए!",
-          "expr": "hairan",
-          "sfx": "boom",
-          "mood": "masti",
-          "delivery": "धमाके से, जीत वाले अंदाज़ में, आख़िरी हिस्सा ज़ोर से",
-          "visual": "TTE checking fine challan paper India",
-          "set": "studio",
-          "punch": true,
-          "big": "बड़ा खुलासा!",
-          "sub": "",
-          "card_color": [
-            170,
-            20,
-            30
-          ],
-          "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "beat": "takiya",
-          "say": "टिकट दिखाओ, ढोलक नहीं!",
-          "caption": "टिकट दिखाओ, ढोलक नहीं!",
-          "visuals": [
-            "indian railway ticket paper close up",
-            "dholak icon with cross mark",
-            "bakra news final anchor desk pose"
-          ],
-          "photo_hi": [
-            "रेलवे टिकट",
-            "बकरा न्यूज"
-          ],
-          "stamp": "टिकट दिखाओ!",
-          "expr": "gussa",
-          "sfx": "thug",
-          "mood": "masti",
-          "delivery": "पूरी ताक़त से चिल्लाकर, मेज़ पर हाथ मारते हुए",
-          "pause_after": 0.3,
-          "visual": "indian railway ticket paper close up",
-          "set": "studio",
-          "punch": true,
-          "big": "टिकट दिखाओ, ढोलक नहीं!",
-          "sub": "",
-          "card_color": [
-            170,
-            20,
-            30
-          ],
-          "scene": "studio_end",
-          "insta": ""
-        }
-      ],
-      "caption_post": "…और तभी ट्रेन के डिब्बे में यात्रियों ने ढोलक बजाना शुरू कर दिया! Tag करो उसको जो बिना टिकट घूमता है | क्या ट्रेन में ढोलक बजाना सही है? स्रोत: Times Now Navbharat #BakraNews #BakraBahas #TrainSafar #IndianRailways #MusicalJourney (AI एंकर बबलू और चाचा)",
-      "format": "rant",
-      "label": "बकरा बहस",
-      "icons": [
-        "₹",
-        "NEWS",
-        "%"
-      ],
-      "hook": "…और तभी ट्रेन के डिब्बे में यात्रियों ने ढोलक बजाना शुरू कर दिया!",
-      "hook_text": "…और तभी ट्रेन के डिब्बे में यात्रियों ने ढोलक बजाना शुरू कर दिया!",
-      "poll": null,
-      "key_word": "",
-      "cast_why": "समाज: हम ख़ामोश मुसाफ़िर | माँग: हर स्लीपर कोच में ढोलक बजाने पर टैक्स लगाया जाए",
-      "trend": {
-        "score": 3,
-        "why": "1 अख़बार/चैनल 2 दिन में, 5 खबरें 7 दिन में"
-      },
-      "hasi": "टैग: उस दोस्त को जो बिना टिकट घूमता है | twist: ढोलक बजाने वाले अंकल बिना टिकट के ट्रेन में सफ़र कर रहे हैं",
-      "_loose": true
-    },
-    {
-      "khabar": "एमपी में कोचिंग सेंटरों के लिए नए नियम और पंजीयन",
-      "score": "9/10",
-      "topic": "एमपी कोचिंग नियम और वेबसाइट फीस विवरण",
-      "category": "rules",
-      "breaking": "मध्य प्रदेश में कोचिंग सेंटरों का 3 साल में पंजीयन नवीनीकरण अनिवार्य",
-      "samaj": "हम बैकबेंचर छात्र",
-      "maang": "बैकबेंचरों के लिए कोचिंग फीस पर अस्सी प्रतिशत डिस्काउंट मिले",
-      "twist": "मास्टर जी की अपनी दसवीं की मार्कशीट में गणित में ग्रेस नंबर हैं",
-      "takiya": "फीस घटाओ, रिन्यूअल बाद में!",
-      "tag_who": "उस दोस्त को जो बैकबेंचर है",
-      "source": "Amar Ujala, Jagran, Dainik Bhaskar",
-      "ask": "क्या कोचिंग की फीस वेबसाइट पर दिखनी चाहिए?",
-      "ticker": [
-        "एमपी में कोचिंग का हर 3 साल में रजिस्ट्रेशन ज़रूरी",
-        "वेबसाइट पर देनी होगी फीस और शिक्षकों की जानकारी",
-        "कोचिंग में सीसीटीवी और काउंसलिंग अनिवार्य"
-      ],
-      "lines": [
-        {
-          "who": "bablu",
-          "beat": "hook",
-          "say": "कोचिंग वाले बनाम बैकबेंचर, क्या यह रजिस्ट्रेशन की नई नौटंकी है?",
-          "caption": "कोचिंग वाले बनाम बैकबेंचर, क्या यह रजिस्ट्रेशन की नई नौटंकी है?",
-          "visuals": [
-            "indian coaching center classroom students",
-            "angry student in indian classroom",
-            "coaching board outside coaching institute India"
-          ],
-          "photo_hi": [
-            "कोचिंग क्लासरूम भारत",
-            "छात्र पढ़ाई करते हुए"
-          ],
-          "expr": "hairan",
-          "sfx": "boom",
-          "mood": "tension",
-          "delivery": "बिल्कुल गंभीर, धीमा, हर शब्द पर ज़ोर — जैसे देश का सबसे बड़ा सवाल पूछ रहा हो",
-          "visual": "indian coaching center classroom students",
-          "set": "studio",
           "punch": false,
-          "big": "बड़ा सवाल",
-          "sub": "हम बैकबेंचर छात्र",
-          "card_color": [
-            20,
-            40,
-            110
-          ],
-          "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "beat": "saboot",
-          "say": "एमपी में कोचिंग वालों को हर 3 साल में रजिस्ट्रेशन रिन्यू कराना होगा!",
-          "caption": "MP में कोचिंग वालों को हर 3 साल में रजिस्ट्रेशन रिन्यू कराना होगा!",
-          "visuals": [
-            "madhya pradesh government office building",
-            "official registration document seal India",
-            "teacher writing on blackboard India"
-          ],
-          "photo_hi": [
-            "सरकारी दस्तावेज स्टैंप",
-            "टीचर ब्लैकबोर्ड"
-          ],
-          "expr": "gussa",
-          "sfx": "whoosh",
-          "mood": "tension",
-          "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
-          "visual": "madhya pradesh government office building",
-          "set": "studio",
-          "punch": false,
-          "big": "सबूत नंबर 1",
-          "sub": "",
-          "card_color": [
-            12,
-            60,
-            120
-          ],
-          "scene": "chacha",
-          "insta": ""
-        },
-        {
-          "who": "ramesh",
-          "beat": "saboot",
-          "say": "और बात यहीं ख़त्म नहीं होती… मास्टर जी को वेबसाइट पर फीस भी लिखनी पड़ेगी!",
-          "caption": "और बात यहीं ख़त्म नहीं होती… मास्टर जी को वेबसाइट पर फीस भी लिखनी पड़ेगी!",
-          "visuals": [
-            "typing on laptop website fees India",
-            "shocked student looking at computer screen",
-            "indian teacher explaining fees"
-          ],
-          "photo_hi": [
-            "कंप्यूटर पर फीस",
-            "परेशान छात्र"
-          ],
-          "expr": "gussa",
-          "sfx": "glitch",
-          "mood": "tension",
-          "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
-          "visual": "typing on laptop website fees India",
-          "set": "village",
-          "punch": false,
-          "big": "सबूत नंबर 2",
-          "sub": "",
-          "card_color": [
-            12,
-            60,
-            120
-          ],
-          "scene": "chacha",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "beat": "maang",
-          "say": "हमारी माँग: बैकबेंचरों के लिए कोचिंग फीस में अस्सी प्रतिशत सब्सिडी मिले!",
-          "caption": "हमारी माँग: बैकबेंचरों के लिए कोचिंग फीस में 80% सब्सिडी मिले!",
-          "visuals": [
-            "student protest banner India",
-            "indian students standing together",
-            "calculator showing discount percentage"
-          ],
-          "photo_hi": [
-            "छात्र विरोध प्रदर्शन",
-            "रुपये की बचत"
-          ],
-          "stamp": "80% फीस डिस्काउंट!",
-          "expr": "gussa",
-          "sfx": "dhol",
-          "mood": "masti",
-          "delivery": "ऐलान की तरह, जोश में, जैसे संसद में भाषण",
-          "visual": "student protest banner India",
-          "set": "studio",
-          "punch": true,
-          "big": "हमारी माँग",
-          "sub": "बैकबेंचरों के लिए कोचिंग फीस पर",
-          "card_color": [
-            110,
-            20,
-            40
-          ],
-          "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "beat": "dhamki",
-          "say": "और अगर ये माँग पूरी नहीं हुई…",
-          "caption": "और अगर ये माँग पूरी नहीं हुई…",
-          "visuals": [
-            "serious anchor pointing at camera",
-            "dramatic shadow face close up",
-            "mic close up news studio"
-          ],
-          "photo_hi": [
-            "न्यूज एंकर गंभीर",
-            "माइक क्लोज अप"
-          ],
-          "expr": "gambhir",
-          "sfx": "tick",
-          "mood": "tension",
-          "delivery": "अचानक बहुत धीमा, रहस्य वाला, लगभग फुसफुसाते हुए",
-          "pause_after": 0.5,
-          "visual": "serious anchor pointing at camera",
-          "set": "studio",
-          "punch": true,
-          "big": "चेतावनी!",
-          "sub": "",
-          "card_color": [
-            40,
-            10,
-            15
-          ],
-          "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "beat": "twist",
-          "say": "तो सबको बता देंगे… सर की अपनी दसवीं की मार्कशीट में गणित में ग्रेस नंबर थे!",
-          "caption": "तो सबको बता देंगे… सर की अपनी 10वीं की मार्कशीट में गणित में ग्रेस नंबर थे!",
-          "visuals": [
-            "old indian marksheet paper",
-            "failing marks close up red pen",
-            "embarrassed teacher face India"
-          ],
-          "photo_hi": [
-            "पुरानी मार्कशीट",
-            "गणित में नंबर"
-          ],
-          "stamp": "गणित में ग्रेस नंबर!",
-          "expr": "hairan",
-          "sfx": "boom",
-          "mood": "masti",
-          "delivery": "धमाके से, जीत वाले अंदाज़ में, आख़िरी हिस्सा ज़ोर से",
-          "visual": "old indian marksheet paper",
-          "set": "studio",
-          "punch": true,
-          "big": "बड़ा खुलासा!",
-          "sub": "",
-          "card_color": [
-            170,
-            20,
-            30
-          ],
-          "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "beat": "takiya",
-          "say": "फीस घटाओ, रिन्यूअल बाद में!",
-          "caption": "फीस घटाओ, रिन्यूअल बाद में!",
-          "visuals": [
-            "angry student shouting banner",
-            "coaching board close up",
-            "news anchor striking desk"
-          ],
-          "photo_hi": [
-            "फीस माफी बैनर",
-            "न्यूज स्टूडियो"
-          ],
-          "stamp": "फीस घटाओ!",
-          "expr": "gussa",
-          "sfx": "thug",
-          "mood": "masti",
-          "delivery": "पूरी ताक़त से चिल्लाकर, मेज़ पर हाथ मारते हुए",
-          "pause_after": 0.3,
-          "visual": "angry student shouting banner",
-          "set": "studio",
-          "punch": true,
-          "big": "फीस घटाओ, रिन्यूअल बाद में!",
-          "sub": "",
-          "card_color": [
-            170,
-            20,
-            30
-          ],
-          "scene": "studio_end",
-          "insta": ""
-        }
-      ],
-      "caption_post": "कोचिंग वाले बनाम बैकबेंचर, क्या यह रजिस्ट्रेशन की नई नौटंकी है? Tag करो उसको जो बैकबेंचर है | क्या कोचिंग की फीस वेबसाइट पर दिखनी चाहिए? स्रोत: Amar Ujala, Jagran, Dainik Bhaskar #BakraNews #BakraBahas #CoachingRules #MPNews #Backbenchers (AI एंकर बबलू और रमेश)",
-      "format": "rant",
-      "label": "बकरा बहस",
-      "icons": [
-        "₹",
-        "NEWS",
-        "%"
-      ],
-      "hook": "कोचिंग वाले बनाम बैकबेंचर, क्या यह रजिस्ट्रेशन की नई नौटंकी है?",
-      "hook_text": "कोचिंग वाले बनाम बैकबेंचर, क्या यह रजिस्ट्रेशन की नई नौटंकी है?",
-      "poll": null,
-      "key_word": "",
-      "cast_why": "समाज: हम बैकबेंचर छात्र | माँग: बैकबेंचरों के लिए कोचिंग फीस पर अस्सी प्रतिशत डिस्काउंट मिले",
-      "_loose": true,
-      "trend": {
-        "score": 6,
-        "why": "14 अख़बार/चैनल 2 दिन में, 22 खबरें 7 दिन में"
-      },
-      "hasi": "टैग: उस दोस्त को जो बैकबेंचर है | twist: मास्टर जी की अपनी दसवीं की मार्कशीट में गणित में ग्रेस नंबर हैं"
-    },
-    {
-      "khabar": "हैदराबाद के छात्र ने मां के जन्मदिन पर बनाया मिनी रोबोट",
-      "score": "9/10",
-      "topic": "दसवीं के छात्र ने माँ के लिए रोबोट बनाया",
-      "category": "tech",
-      "breaking": "हैदराबाद में दसवीं के छात्र ने माँ के लिए रोबोट बनाया",
-      "samaj": "हम नॉर्मल औलाद",
-      "maang": "माँ के जन्मदिन पर रोबोटिक गिफ्ट देने पर रोक लगे",
-      "twist": "रोबोट बनाने वाले भाई साहब का फ़िज़िक्स में कंपार्टमेंट आया था",
-      "takiya": "प्यार दिखाओ, मशीन नहीं!",
-      "tag_who": "उस दोस्त को जो पढ़ाई में कमज़ोर है",
-      "source": "India TV Hindi, AajTak",
-      "ask": "क्या आपने कभी माँ को कोई अनोखा गिफ्ट दिया?",
-      "ticker": [
-        "हैदराबाद के 10वीं के छात्र का अनोखा कारनामा",
-        "माँ के जन्मदिन पर मिनी रोबोट बनाकर दिया कार्ड",
-        "सोशल मीडिया पर रोबोटिक गिफ्ट की चर्चा"
-      ],
-      "lines": [
-        {
-          "who": "bablu",
-          "beat": "hook",
-          "say": "रोबोट बनाना बंद करो, हाथ से ग्रीटिंग कार्ड बनाना शुरू करो!",
-          "caption": "रोबोट बनाना बंद करो, हाथ से ग्रीटिंग कार्ड बनाना शुरू करो!",
-          "visuals": [
-            "mini robot moving cable wires India",
-            "handmade birthday card indian mother",
-            "angry student shouting at robot"
-          ],
-          "photo_hi": [
-            "छोटा रोबोट भारत",
-            "ग्रीटिंग कार्ड"
-          ],
-          "expr": "hairan",
-          "sfx": "boom",
-          "mood": "tension",
-          "delivery": "बिल्कुल गंभीर, धीमा, हर शब्द पर ज़ोर — जैसे देश का सबसे बड़ा सवाल पूछ रहा हो",
-          "visual": "mini robot moving cable wires India",
-          "set": "studio",
-          "punch": false,
-          "big": "बड़ा सवाल",
-          "sub": "हम नॉर्मल औलाद",
-          "card_color": [
-            20,
-            40,
-            110
-          ],
-          "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "beat": "saboot",
-          "say": "हैदराबाद में दसवीं के छात्र ने रोबोट से माँ को जन्मदिन कार्ड भेजा!",
-          "caption": "हैदराबाद में 10वीं के छात्र ने रोबोट से माँ को जन्मदिन कार्ड भेजा!",
-          "visuals": [
-            "small ropeway robot holding greeting card",
-            "indian mother smiling receiving card",
-            "school boy controlling robot with remote"
-          ],
-          "photo_hi": [
-            "रोबोट ग्रीटिंग कार्ड",
-            "भारतीय मां और बेटा"
-          ],
-          "expr": "gussa",
-          "sfx": "whoosh",
-          "mood": "tension",
-          "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
-          "visual": "small ropeway robot holding greeting card",
-          "set": "studio",
-          "punch": false,
-          "big": "सबूत नंबर 1",
-          "sub": "",
-          "card_color": [
-            12,
-            60,
-            120
-          ],
-          "scene": "pinky",
           "insta": ""
         },
         {
           "who": "pinky",
-          "beat": "saboot",
-          "say": "और बात यहीं ख़त्म नहीं होती… मेरी मम्मी अब मुझे रोबोट बनने को कह रही हैं!",
-          "caption": "और बात यहीं ख़त्म नहीं होती… मेरी मम्मी अब मुझे रोबोट बनने को कह रही हैं!",
+          "say": "वो दोस्त जो पहला विकेट गिरते ही टीवी बंद करता है!",
+          "caption": "वो दोस्त जो पहला विकेट गिरते ही टीवी बंद करता है!",
+          "expr": "hasi",
+          "set": "bank",
           "visuals": [
-            "indian mother scolding teenage daughter",
-            "sad teen girl sweeping floor India",
-            "newspaper clipping boy robot mother"
+            "young girl holding tv remote",
+            "switching off tv frustrated",
+            "friends watching match together"
           ],
           "photo_hi": [
-            "मां की डांट",
-            "परेशान लड़की"
+            "क्रिकेट टीवी रिमोट",
+            "मैच देखते दोस्त"
           ],
-          "expr": "gussa",
-          "sfx": "glitch",
-          "mood": "tension",
-          "delivery": "गुस्सा बढ़ता हुआ, तेज़ रफ़्तार, आख़िरी शब्द पर ज़ोर",
-          "visual": "indian mother scolding teenage daughter",
-          "set": "aangan",
-          "punch": false,
-          "big": "सबूत नंबर 2",
-          "sub": "",
-          "card_color": [
-            12,
-            60,
-            120
-          ],
+          "tag": true,
+          "tag_screen": "पहला विकेट गिरते ही टीवी बंद",
+          "visual": "young girl holding tv remote",
           "scene": "pinky",
-          "insta": ""
+          "punch": false,
+          "insta": "",
+          "tag_text": "पहला विकेट गिरते ही टीवी बंद"
         },
         {
           "who": "bablu",
-          "beat": "maang",
-          "say": "हमारी माँग: जन्मदिन पर रोबोटिक गिफ्ट्स पर राष्ट्रीय प्रतिबंध लगे!",
-          "caption": "हमारी माँग: जन्मदिन पर रोबोटिक गिफ्ट्स पर राष्ट्रीय प्रतिबंध लगे!",
-          "visuals": [
-            "banned red mark on robot icon",
-            "protest banner against robots India",
-            "anchor raising hand on TV news"
-          ],
-          "photo_hi": [
-            "रोबोट बैन पोस्टर",
-            "विरोध प्रदर्शन"
-          ],
-          "stamp": "रोबोट पर बैन!",
-          "expr": "gussa",
-          "sfx": "dhol",
-          "mood": "masti",
-          "delivery": "ऐलान की तरह, जोश में, जैसे संसद में भाषण",
-          "visual": "banned red mark on robot icon",
-          "set": "studio",
-          "punch": true,
-          "big": "हमारी माँग",
-          "sub": "माँ के जन्मदिन पर रोबोटिक गिफ्ट",
-          "card_color": [
-            110,
-            20,
-            40
-          ],
-          "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "beat": "dhamki",
-          "say": "और अगर ये रोबोट बंद नहीं हुआ…",
-          "caption": "और अगर ये रोबोट बंद नहीं हुआ…",
-          "visuals": [
-            "close up anchor mysterious eye gaze",
-            "studio light dimming transition",
-            "hand slamming desk background"
-          ],
-          "photo_hi": [
-            "एंकर गंभीर चेहरा",
-            "न्यूज एंकर स्टूडियो"
-          ],
+          "say": "मैच कतर में होगा... पर टीवी यहाँ फूटेगा!",
+          "caption": "मैच कतर में होगा... पर टीवी यहाँ फूटेगा!",
           "expr": "gambhir",
-          "sfx": "tick",
-          "mood": "tension",
-          "delivery": "अचानक बहुत धीमा, रहस्य वाला, लगभग फुसफुसाते हुए",
-          "pause_after": 0.5,
-          "visual": "close up anchor mysterious eye gaze",
           "set": "studio",
-          "punch": true,
-          "big": "चेतावनी!",
-          "sub": "",
-          "card_color": [
-            40,
-            10,
-            15
-          ],
-          "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "beat": "twist",
-          "say": "तो चाची को बता देंगे… रोबोट वाले भाई साहब का फ़िज़िक्स में कंपार्टमेंट आया था!",
-          "caption": "तो चाची को बता देंगे… रोबोट वाले भाई साहब का फ़िज़िक्स में कंपार्टमेंट आया था!",
           "visuals": [
-            "report card with compartment stamp India",
-            "shocked indian aunt reaction close up",
-            "school physics textbook on desk"
+            "broken television screen studio",
+            "cricket match excitement crowd",
+            "tv remote control close up"
           ],
           "photo_hi": [
-            "रिजल्ट कार्ड कंपार्टमेंट",
-            "भौतिकी किताब"
+            "टीवी क्रिकेट मैच",
+            "कतर स्टेडियम"
           ],
-          "stamp": "फ़िज़िक्स में कंपार्टमेंट!",
-          "expr": "hairan",
-          "sfx": "boom",
-          "mood": "masti",
-          "delivery": "धमाके से, जीत वाले अंदाज़ में, आख़िरी हिस्सा ज़ोर से",
-          "visual": "report card with compartment stamp India",
-          "set": "studio",
           "punch": true,
-          "big": "बड़ा खुलासा!",
-          "sub": "",
-          "card_color": [
-            170,
-            20,
-            30
-          ],
-          "scene": "studio",
-          "insta": ""
-        },
-        {
-          "who": "bablu",
-          "beat": "takiya",
-          "say": "प्यार दिखाओ, मशीन नहीं!",
-          "caption": "प्यार दिखाओ, मशीन नहीं!",
-          "visuals": [
-            "hand drawn red heart card",
-            "anchor pointing thumb down to robot",
-            "bakra news screen sign off logo"
-          ],
-          "photo_hi": [
-            "हाथ से बना कार्ड",
-            "बकरा न्यूज"
-          ],
-          "stamp": "प्यार दिखाओ!",
-          "expr": "gussa",
-          "sfx": "thug",
-          "mood": "masti",
-          "delivery": "पूरी ताक़त से चिल्लाकर, मेज़ पर हाथ मारते हुए",
-          "pause_after": 0.3,
-          "visual": "hand drawn red heart card",
-          "set": "studio",
-          "punch": true,
-          "big": "प्यार दिखाओ, मशीन नहीं!",
-          "sub": "",
-          "card_color": [
-            170,
-            20,
-            30
-          ],
+          "stamp": "टीवी… यहाँ फूटेगा!",
+          "visual": "broken television screen studio",
           "scene": "studio_end",
           "insta": ""
         }
       ],
-      "caption_post": "रोबोट बनाना बंद करो, हाथ से ग्रीटिंग कार्ड बनाना शुरू करो! Tag करो उसको जो पढ़ाई में कमज़ोर है | क्या आपने कभी माँ को कोई अनोखा गिफ्ट दिया? स्रोत: India TV Hindi, AajTak #BakraNews #BakraBahas #HyderabadStudent #RobotGift #NormalAulad (AI एंकर बबलू और पिंकी)",
-      "format": "rant",
-      "label": "बकरा बहस",
+      "caption_post": "कतर में मैच है... या टीवी टूटने का मुहूर्त? Tag करो उसको जो पहला विकेट गिरते ही टीवी बंद कर देता है! क्या आप २२ नवंबर का मैच लाइव देखेंगे? स्रोत: Jansatta, Lokmat News Hindi, Navbharat Times, India TV Hindi #AsiaCup #IndVsPak #RisingStars #Cricket2026 #BakraNews (AI से बने किरदार)",
+      "format": "explain",
+      "label": "काम की खबर",
+      "key_word": "",
       "icons": [
         "₹",
         "NEWS",
         "%"
       ],
-      "hook": "रोबोट बनाना बंद करो, हाथ से ग्रीटिंग कार्ड बनाना शुरू करो!",
-      "hook_text": "रोबोट बनाना बंद करो, हाथ से ग्रीटिंग कार्ड बनाना शुरू करो!",
-      "poll": null,
-      "key_word": "",
-      "cast_why": "समाज: हम नॉर्मल औलाद | माँग: माँ के जन्मदिन पर रोबोटिक गिफ्ट देने पर रोक लगे",
-      "_loose": true,
+      "hook": "कतर में मैच है... या टीवी टूटने का मुहूर्त?",
+      "hook_short": "टीवी टूटने का मुहूर्त?",
       "trend": {
-        "score": 3,
-        "why": "1 अख़बार/चैनल 2 दिन में, 5 खबरें 7 दिन में"
+        "score": 7,
+        "why": "21 अख़बार/चैनल 2 दिन में, 51 खबरें 7 दिन में"
       },
-      "hasi": "टैग: उस दोस्त को जो पढ़ाई में कमज़ोर है | twist: रोबोट बनाने वाले भाई साहब का फ़िज़िक्स में कंपार्टमेंट आया था"
+      "review_status": "structure_only"
+    },
+    {
+      "topic": "ब्लिंकिट के साइकिल डिलीवरी एजेंट को अनंत अंबानी ने दिया स्कूटर",
+      "category": "[वायरल]",
+      "breaking": "साइकिल डिलीवरी एजेंट को मिला स्कूटर उपहार",
+      "hook_text": "दस मिनट में डिलीवरी... या साइकिल से रेस?",
+      "hook_screen": "साइकिल से रेस?",
+      "ask": "क्या आपकी डिलीवरी समय पर आती है?",
+      "source": "Jagran, AajTak, Jansatta, Asianet News Hindi, Moneycontrol Hindi",
+      "poll": [
+        "हां, हमेशा",
+        "नहीं, देर होती है"
+      ],
+      "ticker": [
+        "साइकिल से डिलीवरी करने वाले एजेंट को मिला तोहफ़ा",
+        "अनंत अंबानी फ़ाउंडेशन ने स्कूटर दिया उपहार",
+        "सोशल मीडिया पर एजेंट की कहानी हुई चर्चित"
+      ],
+      "cast_why": "डिलीवरी की रफ़्तार पर रमेश का सवाल और पिंकी का दोस्तों पर तंज़",
+      "tag_who": "उस दोस्त को जो 10 मिनट वाली डिलीवरी 5 मिनट में खोजता है",
+      "lines": [
+        {
+          "who": "ramesh",
+          "say": "दस मिनट में डिलीवरी... या साइकिल से रेस?",
+          "caption": "10 मिनट में डिलीवरी... या साइकिल से रेस?",
+          "expr": "hairan",
+          "set": "thana",
+          "visuals": [
+            "delivery guy riding bicycle fast",
+            "traffic on indian street",
+            "holding delivery bag courier"
+          ],
+          "photo_hi": [
+            "ब्लिंकिट साइकिल डिलीवरी",
+            "डिलीवरी एजेंट सड़क"
+          ],
+          "visual": "delivery guy riding bicycle fast",
+          "scene": "studio",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "bablu",
+          "say": "साइकिल वाले ब्लिंकिट एजेंट को अनंत अंबानी ने स्कूटर उपहार में दिया।",
+          "caption": "साइकिल वाले ब्लिंकिट एजेंट को अनंत अंबानी ने स्कूटर उपहार में दिया।",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "new electric scooter gift",
+            "delivery boy with scooter",
+            "gift handover moment"
+          ],
+          "photo_hi": [
+            "अनंत अंबानी स्कूटर उपहार",
+            "ब्लिंकिट डिलीवरी एजेंट स्कूटर"
+          ],
+          "card": {
+            "tag": "उपहार",
+            "big": "स्कूटर मिला",
+            "sub": "अनंत अंबानी फ़ाउंडेशन",
+            "icon": "gift"
+          },
+          "visual": "new electric scooter gift",
+          "scene": "card",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "chacha",
+          "say": "हमारे ज़माने में साइकिल चलाने पर तारीफ़ मिलती थी... यहाँ चाबी!",
+          "caption": "हमारे ज़माने में साइकिल चलाने पर तारीफ़ मिलती थी... यहाँ चाबी!",
+          "expr": "tanz",
+          "set": "thana",
+          "visuals": [
+            "old man riding vintage bicycle",
+            "holding scooter key shiny",
+            "surprised village elder"
+          ],
+          "photo_hi": [
+            "पुरानी साइकिल भारत",
+            "स्कूटर चाबी"
+          ],
+          "visual": "old man riding vintage bicycle",
+          "scene": "chacha",
+          "punch": false,
+          "insta": ""
+        },
+        {
+          "who": "pinky",
+          "say": "वो दोस्त जो दस मिनट वाली डिलीवरी पाँच मिनट में खोजता है!",
+          "caption": "वो दोस्त जो 10 मिनट वाली डिलीवरी 5 मिनट में खोजता है!",
+          "expr": "hasi",
+          "set": "thana",
+          "visuals": [
+            "girl looking at smartphone app timer",
+            "waiting impatiently for order delivery",
+            "fast food delivery box"
+          ],
+          "photo_hi": [
+            "ऑनलाइन डिलीवरी ऐप",
+            "इंतज़ार डिलीवरी"
+          ],
+          "tag": true,
+          "tag_screen": "10 मिनट वाली डिलीवरी 5 मिनट में",
+          "visual": "girl looking at smartphone app timer",
+          "scene": "pinky",
+          "punch": false,
+          "insta": "",
+          "tag_text": "10 मिनट वाली डिलीवरी 5 मिनट"
+        },
+        {
+          "who": "bablu",
+          "say": "साइकिल से सफ़र शुरू हुआ था... ख़त्म पेट्रोल पंप पर होगा!",
+          "caption": "साइकिल से सफ़र शुरू हुआ था... ख़त्म पेट्रोल पंप पर होगा!",
+          "expr": "gambhir",
+          "set": "studio",
+          "visuals": [
+            "petrol pump station india",
+            "scooter refueling at station",
+            "delivery agent driving scooter"
+          ],
+          "photo_hi": [
+            "पेट्रोल पंप स्कूटर",
+            "ब्लिंकिट स्कूटर"
+          ],
+          "punch": true,
+          "stamp": "ख़त्म… पेट्रोल पंप पर!",
+          "visual": "petrol pump station india",
+          "scene": "studio_end",
+          "insta": ""
+        }
+      ],
+      "caption_post": "दस मिनट में डिलीवरी... या साइकिल से रेस? Tag करो उसको जो 10 मिनट वाली डिलीवरी 5 मिनट में खोजता है! क्या आपकी डिलीवरी समय पर आती है? स्रोत: Jagran, AajTak, Jansatta, Asianet News Hindi, Moneycontrol Hindi #Blinkit #AnantAmbani #DeliveryAgent #ScooterGift #BakraNews (AI से बने किरदार)",
+      "format": "explain",
+      "label": "काम की खबर",
+      "key_word": "",
+      "icons": [
+        "₹",
+        "NEWS",
+        "%"
+      ],
+      "hook": "दस मिनट में डिलीवरी... या साइकिल से रेस?",
+      "hook_short": "साइकिल से रेस?",
+      "trend": {
+        "score": 4,
+        "why": "5 अख़बार/चैनल 2 दिन में, 5 खबरें 7 दिन में"
+      },
+      "review_status": "structure_only"
     }
   ]
 }
