@@ -927,14 +927,11 @@ def render(ep, segs, chars, out, preview):
                            for v in (s.get("vis") or []))
         if shot in ("split", "full") and not own_verified:
             shot, size = "split", (SW_, SH_)
-            scenes = ["sweets", "showroom", "bill", "shop", "delivery"]
-            chosen = ln.get("scene") or scenes[min(si, len(scenes)-1)]
-            # Keep visuals tied to the CURRENT spoken line. _story_scene already
-            # animates relevant props and cycles through line-specific beats;
-            # showing sweets/TV during Dadi's delivery joke would mismatch audio.
-            # Keep every beat relevant to the spoken line, but refresh the story panel
-            # at each cut instead of leaving a single dict card on screen throughout.
-            vis = [{"scene": chosen}, {"scene": chosen, "beat": 1}, {"scene": chosen, "beat": 2}]
+            # News-aware fallback: never illustrate an unrelated story with COD props.
+            from visual_strategy import select_visual
+            vis, visual_reason = select_visual(ln, ep, si)
+            if si == 0:
+                print("  visual strategy:", visual_reason)
         if shot == "full" and not vis:
             shot, size = "split", (SW_, SH_)
         cut_s = CUT - 0.4 * int(ep.get("_fix") or 0)            # जाँच में कमी मिली = दोबारा बनाते वक़्त और जल्दी बदलें
