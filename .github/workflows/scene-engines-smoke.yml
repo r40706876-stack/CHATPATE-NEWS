@@ -1,0 +1,25 @@
+name: Scene engines smoke test
+on:
+  workflow_dispatch:
+  push:
+    branches: [feature/retention-comedy-quality-gate-20261025]
+    paths:
+      - 'production/**'
+      - '.github/workflows/scene-engines-smoke.yml'
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Validate Blender Python script syntax
+        run: python -m py_compile production/blender_shot.py
+      - name: Validate Remotion dependencies
+        working-directory: production/remotion
+        run: npm install --no-audit --no-fund
+      - name: Validate Remotion bundle
+        working-directory: production/remotion
+        run: npx remotion compositions src/index.jsx
