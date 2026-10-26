@@ -39,9 +39,15 @@ jobs:
           ffmpeg -version | head -1
       - id: p
         run: |
-          /usr/bin/python3 -m pip install -q --break-system-packages numpy scipy pillow edge-tts rembg onnxruntime "yt-dlp[default]"
+          set -o pipefail\n          /usr/bin/python3 -m pip install -q --break-system-packages numpy scipy pillow edge-tts rembg onnxruntime "yt-dlp[default]"
           curl -fsSL https://deno.land/install.sh | sh -s -- -y >/dev/null 2>&1; export PATH=$HOME/.deno/bin:$PATH   # YouTube के JS challenge के लिए
           python3 -m unittest discover -s tests -p test_comedy_gate.py -q
+          python3 - <<'PY'
+          import tts
+          assert tts.speakable("WL-48 से WL-47") == "डब्ल्यूएल 48 से डब्ल्यूएल 47"
+          assert tts.speakable("EMI और wi-fi") == "ईएमआई और वाईफ़ाई"
+          print("PASS: TTS acronyms, hyphens and railway waitlist codes")
+          PY
           python3 - <<'PY'
           import json, bakra_rules
           ep=json.load(open("episodes/waiting_ticket_comedy.json",encoding="utf-8"))
@@ -55,7 +61,10 @@ jobs:
           /usr/bin/python3 talk_episode.py prep "${{ inputs.script || 'episodes/waiting_ticket_comedy.json' }}" | tee prep.log
           echo "lines=$(tail -1 prep.log)" >> $GITHUB_OUTPUT
       - uses: actions/upload-artifact@v4
-        with: {name: st_in, path: st_in}
+        with:
+          name: st_in
+          path: st_in
+          if-no-files-found: error
 
   face:
     needs: prep
