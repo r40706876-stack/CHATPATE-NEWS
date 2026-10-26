@@ -68,8 +68,10 @@
   "fictional_satire": true,
   "source_url": "https://www.indiatoday.in/amp/trending-news/story/madurai-mans-diwali-wish-goes-wrong-tvs-fridges-and-lakhs-in-cod-orders-pour-in-3016108-2026-10-13",
   "no_send": true,
-  "qa_note": "Rewritten after Gemini strict critique (hook 4/10, banter 3/10) and revised cartoon scene preflight; no_send until actual MP4 inspection.",
+  "qa_note": "Hold Telegram until revised TTS pacing, unobstructed hook, real rendered MP4 and audio/visual checks are verified.",
   "no_clips": true,
   "visual_policy": "character_only",
-  "no_memes": true
+  "no_memes": true,
+  "hook_short": "मिठाई माँगी, ₹1.69 लाख का टीवी!",
+  "hook_stamp": "COD का झटका!"
 }
