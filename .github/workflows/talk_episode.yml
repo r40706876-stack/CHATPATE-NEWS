@@ -39,7 +39,8 @@ jobs:
           ffmpeg -version | head -1
       - id: p
         run: |
-          set -o pipefail\n          /usr/bin/python3 -m pip install -q --break-system-packages numpy scipy pillow edge-tts rembg onnxruntime "yt-dlp[default]"
+          set -o pipefail
+          /usr/bin/python3 -m pip install -q --break-system-packages numpy scipy pillow edge-tts rembg onnxruntime "yt-dlp[default]"
           curl -fsSL https://deno.land/install.sh | sh -s -- -y >/dev/null 2>&1; export PATH=$HOME/.deno/bin:$PATH   # YouTube के JS challenge के लिए
           python3 -m unittest discover -s tests -p test_comedy_gate.py -q
           python3 - <<'PY'
