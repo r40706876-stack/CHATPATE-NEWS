@@ -150,12 +150,12 @@ def prep(script_path):
             print("  clips वाला हिस्सा छोड़ा:", repr(e)[:150])
     # Second choice: only visually reviewed news images for lines without clips.
     photo_lines = [dict(ln, _need_vis=ln.get("_need_vis", True) and
-                        not any((IN / "broll").glob(f"{i}_clip*")))
+                        not any((IN / "broll").glob(f"{i}_clip*.mp4")))
                    for i, ln in enumerate(ep["lines"])]
     got = visuals.pick_for_lines(photo_lines, topic=ep.get("breaking") or ep.get("topic", ""),
                                  strict=True)
     for i, paths in got.items():
-        if any((IN / "broll").glob(f"{i}_clip*")):
+        if any((IN / "broll").glob(f"{i}_clip*.mp4")):
             continue
         for j, path in enumerate(paths):
             shutil.copy(path, IN / f"broll/{i}_{j}{Path(path).suffix}")
@@ -191,7 +191,8 @@ def fill_sets(ep):
     import news_writer as nw
     topic = str(ep.get("topic") or ep.get("breaking") or "")
     for i, ln in enumerate(ep["lines"]):
-        if list((IN / "broll").glob(f"{i}_*")):
+        if any(p.suffix.lower() in (".mp4", ".jpg", ".jpeg", ".png", ".webp")
+               for p in (IN / "broll").glob(f"{i}_*")):
             continue
         scene = nw.pick_set("x", ln.get("say", ""), topic)
         src = ROOT / f"assets/sets/{scene}.png"
