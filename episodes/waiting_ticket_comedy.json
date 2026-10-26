@@ -1,7 +1,7 @@
 {
-  "title": "फ्री गिफ्ट में पैसे किसके?",
-  "topic": "मदुरै में मिठाई माँगने वाले क्रिएटर को अनचाहे COD ऑर्डर मिले",
-  "hook": "फ्री गिफ्ट आया, साथ में बिल भी!",
+  "title": "मिठाई माँगी, डेढ़ लाख का टीवी पहुँचा!",
+  "topic": "मदुरै के क्रिएटर वीरमणि ने दिवाली की मिठाई माँगी; उनके पते पर अनचाहे COD टीवी-फ्रिज ऑर्डर आने लगे",
+  "hook": "मिठाई माँगी, डेढ़ लाख का टीवी पहुँचा!",
   "poll": {
     "q": "फ्री गिफ्ट पर COD बिल आए तो?",
     "a": "वापस करूँगा",
@@ -10,49 +10,49 @@
   "lines": [
     {
       "who": "bablu",
-      "say": "चाचा के नाम फ्री गिफ्ट आया, साथ में बिल भी!",
-      "big": "फ्री गिफ्ट का बिल!",
+      "say": "मदुरै में वीरमणि ने दिवाली की मिठाई माँगी, लोग COD पर टीवी-फ्रिज भेजने लगे!",
+      "big": "मिठाई माँगी, टीवी आया!",
       "expr": "hairan",
       "visuals": [
-        "animated gift parcel with cash on delivery label"
+        "animated Madurai map sweets box television fridge COD bill"
       ]
     },
     {
       "who": "chacha",
-      "say": "बिल? ये गिफ्ट है या बिजली विभाग का नोटिस?",
-      "big": "गिफ्ट या नोटिस?",
-      "expr": "gussa",
+      "say": "अरे! मिठाई का डिब्बा माँगा था, पूरा शोरूम पहुँच गया!",
+      "big": "पूरा शोरूम पहुँचा!",
+      "expr": "hairan",
       "visuals": [
-        "cartoon COD invoice popping out of parcel"
+        "cartoon sweets box transforming into appliance showroom"
       ]
     },
     {
       "who": "pinky",
-      "say": "चाचा, भेजने वाले ने गिफ्ट दिया, भुगतान का मौका आपको!",
-      "big": "भुगतान का मौका!",
+      "say": "चाचा, एक टीवी का बिल एक लाख उनहत्तर हजार बताया गया!",
+      "big": "टीवी ₹1.69 लाख!",
       "expr": "tanz",
       "visuals": [
-        "animated COD bill and rupee coins"
+        "animated television and 169000 rupee COD invoice"
       ]
     },
     {
       "who": "chacha",
-      "say": "अगली बार खाली डिब्बा भेजना, कम से कम उधार तो नहीं होगा!",
-      "big": "खाली डिब्बा भेजना!",
+      "say": "इतने में तो मिठाई की दुकान ही खोल लेता!",
+      "big": "मिठाई की दुकान!",
       "expr": "gussa",
       "punch": true,
       "visuals": [
-        "cartoon empty cardboard parcel"
+        "cartoon sweet shop with price board"
       ]
     },
     {
       "who": "dadi",
-      "say": "पता सबको बाँटोगे तो बिल भी घर आएगा!",
-      "big": "पता वायरल, बिल घर!",
-      "expr": "hasi",
+      "say": "सीख लो! इंटरनेट पर पता बाँटो, फिर घंटी बंद नहीं होती!",
+      "big": "पता सार्वजनिक मत करो!",
+      "expr": "tanz",
       "punch": true,
       "visuals": [
-        "cartoon address tag and stack of delivery bills"
+        "cartoon doorbell ringing with multiple parcels"
       ]
     }
   ],
@@ -61,7 +61,7 @@
   "react": false,
   "tag_who": "उस दोस्त को जो फ्री सुनते ही पता भेज देता है",
   "fictional_satire": true,
-  "source_url": "https://www.indiatoday.in/trending-news/story/madurai-influencers-cod-nightmare-gets-a-sweet-twist-with-gifts-from-instamart-3020133-2026-10-18",
+  "source_url": "https://www.indiatoday.in/amp/trending-news/story/madurai-mans-diwali-wish-goes-wrong-tvs-fridges-and-lakhs-in-cod-orders-pour-in-3016108-2026-10-13",
   "no_send": true,
   "qa_note": "Hold Telegram until independent comedy review and full audio/visual QA pass; no automated metric guarantees.",
   "no_clips": true,
