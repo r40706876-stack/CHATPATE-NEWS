@@ -26,9 +26,13 @@ def select_visual(line, episode, index=0):
     caption = re.sub(r"\s+", " ", str(line.get("tag_text") or line.get("caption") or speech)).strip()
     caption = " ".join(caption.split()[:7]) or short_topic
     from hybrid_stage import topic_of, concept_of
-    kind = topic_of(speech + " " + topic)
+    # Prefer what the speaker says over incidental keywords in the headline.
+    line_kind = topic_of(speech)
+    kind = line_kind if line_kind != "news" else topic_of(topic)
     concept = concept_of(speech)
-    return [{"hybrid_stage": True, "topic": kind, "concept": concept, "caption": caption}], "animated-stage:" + (concept or kind)
+    beats = ["setup", "action", "payoff"] if concept in ("laddoo_hdmi", "receipt") else ["setup", "reaction"]
+    return [{"hybrid_stage": True, "topic": kind, "concept": concept,
+             "caption": caption, "beats": beats}], "animated-stage:" + (concept or kind)
 
 def compare_visual_options(line, episode):
     """Transparent pre-render decision; not an audience engagement score."""
