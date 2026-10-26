@@ -17,6 +17,10 @@ on:
       - 'talk_episode.py'
       - 'qa.py'
       - '.github/workflows/talk_episode.yml'
+# Only the newest branch render may consume expensive TTS/render time.
+concurrency:
+  group: talk-episode-${{ github.ref }}
+  cancel-in-progress: true
 env:
   GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
   GEMINI_API_KEY2: ${{ secrets.GEMINI_API_KEY2 }}
