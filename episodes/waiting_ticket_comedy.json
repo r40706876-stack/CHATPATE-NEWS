@@ -1,5 +1,5 @@
 {
-  "title": "वेटिंग टिकट की तेरहवीं",
+  "title": "वेटिंग टिकट ICU में",
   "topic": "ट्रेन वेटिंग टिकट",
   "hook": "बबलू! टिकट ICU में है—WL अड़तालीस!",
   "poll": {
@@ -10,8 +10,8 @@
   "lines": [
     {
       "who": "chacha",
-      "say": "बबलू! टिकट ICU में है—WL अड़तालीस!",
-      "big": "टिकट ICU में! WL 48",
+      "say": "बबलू! मेरी टिकट ICU में है—WL अड़तालीस!",
+      "big": "टिकट ICU में!",
       "expr": "gussa",
       "punch": true,
       "visuals": [
@@ -39,8 +39,8 @@
     },
     {
       "who": "pinky",
-      "say": "बुआ ने स्क्रीनशॉट देखकर RIP लिख दिया!",
-      "big": "बुआ ने RIP भेजा!",
+      "say": "बुआ ने टिकट का स्क्रीनशॉट देखकर RIP लिख दिया!",
+      "big": "बुआ ने RIP लिख दिया!",
       "expr": "hasi",
       "punch": true,
       "visuals": [
@@ -49,25 +49,16 @@
     },
     {
       "who": "chacha",
-      "say": "और मामा?",
-      "big": "और मामा?",
-      "expr": "hairan",
-      "visuals": [
-        "Indian train waiting ticket"
-      ]
-    },
-    {
-      "who": "pinky",
-      "say": "बोले—अब ऊपरवाला ही बर्थ दिलाएगा!",
+      "say": "मामा बोले—अब ऊपरवाला ही बर्थ दिलाएगा!",
       "big": "ऊपरवाला बर्थ दिलाएगा!",
-      "expr": "tanz",
+      "expr": "hairan",
       "visuals": [
         "Indian sleeper coach upper berth"
       ]
     },
     {
       "who": "dadi",
-      "say": "ऊपरवाला? उससे पूछ, साइड अपर देगा या स्वर्ग?",
+      "say": "ऊपरवाला? साइड अपर देगा या स्वर्ग?",
       "big": "साइड अपर या स्वर्ग?",
       "expr": "gussa",
       "punch": true,
@@ -76,5 +67,8 @@
       ]
     }
   ],
-  "comedy_format": "character_clash"
+  "comedy_format": "character_clash",
+  "style": "v2",
+  "react": false,
+  "tag_who": "उस दोस्त को जिसकी टिकट हमेशा वेटिंग में रहती है"
 }
