@@ -11,8 +11,8 @@ from PIL import Image, ImageDraw
 import reel_studio as studio
 
 EP = Path("episodes/waiting_ticket_comedy.json")
-EXPECTED = ["sweets", "showroom", "laddoo_hdmi", "bill", "delivery"]
-VALID = set(EXPECTED) | {"shop"}
+EXPECTED = ["sweets", "arrival", "laddoo_hdmi", "bill", "delivery"]
+VALID = set(EXPECTED) | {"shop", "showroom"}
 
 
 def main():
