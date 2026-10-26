@@ -412,6 +412,21 @@ def _bases():
     return out
 
 
+def _card_rgb(color):
+    """Normalize script card colors (CSS names/hex or RGB) before NumPy math."""
+    from PIL import ImageColor
+    if isinstance(color, str):
+        try:
+            return ImageColor.getrgb(color)[:3]
+        except ValueError:
+            return (60, 40, 100)
+    try:
+        values = tuple(max(0, min(255, int(v))) for v in color)
+        return values[:3] if len(values) >= 3 else (60, 40, 100)
+    except (TypeError, ValueError):
+        return (60, 40, 100)
+
+
 def _kinetic(card, bg, t, size):
     """भूरे कार्ड की जगह: पिछली तस्वीर धुंधली करके उस पर उछलते बड़े अक्षर (अंक हो तो 0 से गिनती चढ़े)."""
     import re
