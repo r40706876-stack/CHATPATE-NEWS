@@ -125,15 +125,26 @@ jobs:
         continue-on-error: true
         with: {pattern: "clip-*", path: st_out, merge-multiple: true}
       - run: |
-          ls -R st_out 2>/dev/null | head -40
+          if [ -d st_out ]; then find st_out -maxdepth 2 -type f | head -40; else echo '3D sprite mode: SadTalker clips correctly skipped'; fi
           /usr/bin/python3 -m pip install -q --break-system-packages numpy scipy pillow rembg onnxruntime
           /usr/bin/python3 talk_episode.py post
+      - name: Preserve rendered MP4 for independent visual and audio review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ job.status == 'success' && 'approved-video' || 'qa-rejected-video' }}
+          path: |
+            episode.mp4
+            preview_episode.jpg
+          if-no-files-found: ignore
+          retention-days: 14
       - name: झलक सेव
         if: always()
         run: |
           git config user.name bot && git config user.email bot@users.noreply.github.com
           git add -f preview_episode.jpg last_quality.json 2>/dev/null || true
-          if [ -f episode.mp4 ] && [ $(stat -c%s episode.mp4) -lt 45000000 ]; then cp episode.mp4 last_episode.mp4; git add -f last_episode.mp4; fi
+          # Never publish a rejected render as the latest successful episode.
+          if [ "${{ job.status }}" = "success" ] && [ -f episode.mp4 ] && [ $(stat -c%s episode.mp4) -lt 45000000 ]; then cp episode.mp4 last_episode.mp4; git add -f last_episode.mp4; fi
           git diff --cached --quiet && exit 0
           git commit -m "episode preview"
           for i in 1 2 3; do git pull --rebase -X theirs && git push && break; sleep 5; done
