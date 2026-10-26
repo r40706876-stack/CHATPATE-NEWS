@@ -49,6 +49,8 @@ jobs:
           set -o pipefail
           /usr/bin/python3 -m pip install -q --break-system-packages numpy scipy pillow edge-tts rembg onnxruntime "yt-dlp[default]"
           curl -fsSL https://deno.land/install.sh | sh -s -- -y >/dev/null 2>&1; export PATH=$HOME/.deno/bin:$PATH   # YouTube के JS challenge के लिए
+          # Fast visual/scene validation BEFORE paying the TTS and MP4 render cost.
+          python3 tests/storyboard_preflight.py
           python3 -m unittest discover -s tests -p test_comedy_gate.py -q
           python3 - <<'PY'
           import tts
@@ -68,6 +70,13 @@ jobs:
           PY
           /usr/bin/python3 talk_episode.py prep "${{ inputs.script || 'episodes/waiting_ticket_comedy.json' }}" | tee prep.log
           echo "lines=$(tail -1 prep.log)" >> $GITHUB_OUTPUT
+      - name: Upload fast storyboard preview
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cartoon-storyboard-preflight
+          path: preflight_storyboard.jpg
+          if-no-files-found: ignore
       - uses: actions/upload-artifact@v4
         with:
           name: st_in
