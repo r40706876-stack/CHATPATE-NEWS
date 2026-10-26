@@ -29,7 +29,12 @@ def select_visual(line, episode, index=0):
     # Avoid unrelated COD-specific cartoon props for train, exam, weather, etc.
     short_topic = re.sub(r"\s+", " ", topic).strip()
     short_topic = " ".join(short_topic.split()[:5]) or "खबर का नया मोड़"
-    return [{"big": short_topic, "color": "#274B83"},
+    # Caption reflects the current speaker, not an identical headline on every line.
+    caption = re.sub(r"\s+", " ", str(line.get("tag_text") or line.get("caption") or speech)).strip()
+    caption = " ".join(caption.split()[:7]) or short_topic
+    if caption == short_topic:
+        return [{"big": caption, "color": "#274B83"}], "kinetic-topic"
+    return [{"big": caption, "color": "#274B83"},
             {"big": short_topic, "color": "#8C3B67"}], "kinetic-topic"
 
 def compare_visual_options(line, episode):
