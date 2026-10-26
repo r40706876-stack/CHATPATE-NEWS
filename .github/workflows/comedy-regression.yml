@@ -143,3 +143,50 @@ jobs:
             live_visual_report.json
             youtube_smoke.json
             visuals_cache/
+
+  scene-engines:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Godot Blender and FFmpeg
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq blender godot3-server ffmpeg
+      - name: Blender real 3D render
+        run: |
+          mkdir -p scene_outputs/blender
+          BLENDER_OUT="$PWD/scene_outputs/blender/frame_" blender -b -t 2 --python production/blender_shot.py
+          test "$(find scene_outputs/blender -name '*.png' | wc -l)" -ge 2
+      - name: Godot scene smoke test
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('production/godot/main.gd').read_text()
+          assert 'queue_redraw()' in p and 'draw_rect(' in p
+          assert Path('production/godot/project.godot').exists()
+          print('Godot scene sources validated; Godot 4 binary not installed in this job')
+          PY
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Render Remotion news graphics
+        working-directory: production/remotion
+        run: |
+          npm install --no-audit --no-fund
+          npx remotion browser ensure
+          npm run render
+      - name: Validate and package rendered footage
+        if: always()
+        run: |
+          mkdir -p scene_outputs/remotion
+          if [ -f production/remotion/out/news-card.mp4 ]; then
+            cp production/remotion/out/news-card.mp4 scene_outputs/remotion/
+            ffprobe -v error -show_entries format=duration -of default=nw=1 scene_outputs/remotion/news-card.mp4
+          fi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: scene-engines-real-render
+          path: scene_outputs/
+          if-no-files-found: warn
