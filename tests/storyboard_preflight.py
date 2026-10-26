@@ -1,6 +1,10 @@
 """Fast storyboard/scene QA before costly TTS and full MP4 encoding."""
 import json
+import sys
 from pathlib import Path
+
+# GitHub executes this file as a script, so the repository root is not on sys.path.
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import numpy as np
 from PIL import Image, ImageDraw
