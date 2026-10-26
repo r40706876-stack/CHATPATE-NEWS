@@ -4,20 +4,20 @@ bpy.ops.object.select_all(action='SELECT')
 bpy.ops.object.delete(use_global=False)
 scene=bpy.context.scene
 scene.render.engine='BLENDER_EEVEE_NEXT' if bpy.app.version[0]>=4 else 'BLENDER_EEVEE'
-scene.render.resolution_x=720
-scene.render.resolution_y=1280
+scene.render.resolution_x=360
+scene.render.resolution_y=640
 scene.render.resolution_percentage=100
 scene.render.fps=25
-scene.frame_end=75
+scene.frame_end=25
 bpy.ops.mesh.primitive_cube_add(size=2, location=(0,0,0))
 box=bpy.context.object
 box.name='Comedy Parcel'
 box.scale=(1.4,0.9,0.65)
 box.keyframe_insert(data_path='rotation_euler',frame=1)
 box.rotation_euler.z=math.radians(18)
-box.keyframe_insert(data_path='rotation_euler',frame=38)
+box.keyframe_insert(data_path='rotation_euler',frame=13)
 box.rotation_euler.z=0
-box.keyframe_insert(data_path='rotation_euler',frame=75)
+box.keyframe_insert(data_path='rotation_euler',frame=25)
 bpy.ops.object.camera_add(location=(0,-8,4))
 cam=bpy.context.object
 direction=box.location-cam.location
