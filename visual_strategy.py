@@ -16,18 +16,9 @@ SCENE_RULES = (
 def select_visual(line, episode, index=0):
     """Return renderer-compatible visual beats and a traceable selection reason."""
     speech = str(line.get("say") or "")
-    explicit = str(line.get("scene") or "").strip()
     topic = " ".join(str(episode.get(k) or "") for k in ("title", "breaking", "topic"))
-    context = (speech + " " + topic).lower()
-    is_delivery_story = any(word in topic.lower() for word in ("cod", "पार्सल", "डिलीवरी", "कूरियर"))
-    if is_delivery_story:
-        matched = next((name for name, words in SCENE_RULES if any(w in speech.lower() for w in words)), None)
-        allowed = {"sweets", "arrival", "showroom", "laddoo_hdmi", "bill", "shop", "delivery"}
-        scene = explicit if explicit in allowed and (matched or any(w in speech.lower() for w in ("आया", "आए", "मंगाया"))) else matched
-        if scene:
-            return [{"scene": scene}], "illustrated:" + scene
-        # Topic relevance alone is not enough to display unrelated props.
-
+    # A news topic alone must not force a literal prop. All unverified media
+    # follows the same animated stage pipeline, including COD stories.
     # Avoid unrelated COD-specific cartoon props for train, exam, weather, etc.
     short_topic = re.sub(r"\s+", " ", topic).strip()
     short_topic = " ".join(short_topic.split()[:5]) or "खबर का नया मोड़"
@@ -41,5 +32,5 @@ def select_visual(line, episode, index=0):
 def compare_visual_options(line, episode):
     """Transparent pre-render decision; not an audience engagement score."""
     visuals, reason = select_visual(line, episode)
-    return {"chosen": reason, "alternatives": ["verified-news-clip", "illustrated-props", "kinetic-topic"],
-            "visuals": visuals, "requires_verified_media": reason != "kinetic-topic"}
+    return {"chosen": reason, "alternatives": ["verified-news-clip", "animated-topic-stage", "kinetic-topic"],
+            "visuals": visuals, "requires_verified_media": False}
