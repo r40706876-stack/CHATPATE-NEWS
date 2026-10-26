@@ -929,8 +929,10 @@ def render(ep, segs, chars, out, preview):
             shot, size = "split", (SW_, SH_)
             scenes = ["sweets", "showroom", "bill", "shop", "delivery"]
             chosen = ln.get("scene") or scenes[min(si, len(scenes)-1)]
-            # Rotate distinct story scenes instead of holding one static card for a long spoken line.
-            vis = [{"scene": chosen}] + [{"scene": name} for name in scenes if name != chosen]
+            # Keep visuals tied to the CURRENT spoken line. _story_scene already
+            # animates relevant props and cycles through line-specific beats;
+            # showing sweets/TV during Dadi's delivery joke would mismatch audio.
+            vis = [{"scene": chosen}]
         if shot == "full" and not vis:
             shot, size = "split", (SW_, SH_)
         cut_s = CUT - 0.4 * int(ep.get("_fix") or 0)            # जाँच में कमी मिली = दोबारा बनाते वक़्त और जल्दी बदलें
