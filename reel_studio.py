@@ -910,7 +910,7 @@ def render(ep, segs, chars, out, preview):
                 if si == 0:                                     # hook का ठप्पा: hook के बड़े अक्षरों के नीचे, बीच में
                     _stamp(im, st_text, st_t, W / 2, 640 if shot != "split" else SCR[3] - 130, 84)
                 elif shot == "close":
-                    _stamp(im, st_text, st_t, W / 2 + 60, 330, 78)
+                    _stamp(im, st_text, st_t, W / 2 + 60, 1080, 62)  # chest, never across face
                 else:
                     _stamp(im, st_text, st_t, SCR[2] - 200, SCR[1] + 120)
                 st_t += 1
