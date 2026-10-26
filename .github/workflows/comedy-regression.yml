@@ -154,9 +154,19 @@ jobs:
           curl -fL --retry 3 --connect-timeout 15 --max-time 180 -o /tmp/godot.zip https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_linux.x86_64.zip
           unzip -q /tmp/godot.zip -d /tmp
           sudo install -m 755 /tmp/Godot_v4.3-stable_linux.x86_64 /usr/local/bin/godot4
-      - name: Install virtual display and video tools
+      - name: Verify preinstalled virtual display and video tools
         run: |
-          sudo apt-get install -y --no-install-recommends xvfb libgl1-mesa-dri ffmpeg
+          set -e
+          missing=""
+          command -v Xvfb >/dev/null 2>&1 || missing="$missing xvfb"
+          command -v ffmpeg >/dev/null 2>&1 || missing="$missing ffmpeg"
+          if [ -n "$missing" ]; then
+            echo "Missing runner tools:$missing"
+            timeout 150 sudo apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=20 install -y --no-install-recommends $missing
+          fi
+          command -v Xvfb
+          command -v ffmpeg
+          command -v ffprobe
       - name: Render Godot animation
         env:
           LIBGL_ALWAYS_SOFTWARE: '1'
