@@ -1,74 +1,74 @@
 {
-  "title": "वेटिंग टिकट ICU में",
+  "title": "रिफ्रेश करते-करते ट्रेन निकल गई",
   "topic": "ट्रेन वेटिंग टिकट",
-  "hook": "बबलू! टिकट ICU में है—WL अड़तालीस!",
+  "hook": "बबलू! मेरी टिकट नहीं, अंगूठा कन्फर्म हो गया!",
   "poll": {
-    "q": "आपकी टिकट कभी वेटिंग में अटकी है?",
-    "a": "हर बार",
-    "b": "किस्मत अच्छी है"
+    "q": "टिकट वेटिंग में हो तो कितनी बार रिफ्रेश करते हो?",
+    "a": "हर 2 मिनट",
+    "b": "चार्ट तक नहीं देखता"
   },
   "lines": [
     {
       "who": "chacha",
-      "say": "बबलू! मेरी टिकट ICU में है—WL अड़तालीस!",
-      "big": "टिकट ICU में!",
+      "say": "बबलू! मेरी टिकट नहीं, अंगूठा कन्फर्म हो गया!",
+      "big": "अंगूठा कन्फर्म?!",
       "expr": "gussa",
       "punch": true,
       "visuals": [
-        "Indian Railways waiting list ticket"
+        "Indian train waiting list ticket mobile app"
       ]
     },
     {
       "who": "bablu",
-      "say": "टीटी बुलाऊँ या डॉक्टर?",
-      "big": "टीटी या डॉक्टर?",
+      "say": "अंगूठा कैसे?",
+      "big": "अंगूठा कैसे?",
       "expr": "hairan",
-      "punch": true,
       "visuals": [
-        "Indian railway platform ticket examiner"
+        "Indian railway reservation phone screen"
       ]
     },
     {
       "who": "chacha",
-      "say": "घरवाले पूछ रहे—कन्फर्म हुई या बचने की उम्मीद है?",
-      "big": "बचने की उम्मीद है?",
+      "say": "रातभर रिफ्रेश किया—मोबाइल ने फिंगरप्रिंट पहचानना छोड़ दिया!",
+      "big": "फिंगरप्रिंट ने हार मानी!",
       "expr": "tanz",
+      "punch": true,
       "visuals": [
-        "Indian railway reservation chart"
+        "finger scrolling mobile phone closeup"
       ]
     },
     {
       "who": "pinky",
-      "say": "बुआ ने टिकट का स्क्रीनशॉट देखकर RIP लिख दिया!",
-      "big": "बुआ ने RIP लिख दिया!",
+      "say": "WL-48 से WL-47 हुई... चाचा ने मिठाई बाँट दी!",
+      "big": "एक नंबर घटा!",
       "expr": "hasi",
       "punch": true,
       "visuals": [
-        "family group phone chat"
+        "Indian sweets box ladoo"
       ]
     },
     {
       "who": "chacha",
-      "say": "मामा बोले—अब ऊपरवाला ही बर्थ दिलाएगा!",
-      "big": "ऊपरवाला बर्थ दिलाएगा!",
-      "expr": "hairan",
+      "say": "हर नंबर पर एक लड्डू! कल सीट पक्की!",
+      "big": "हर नंबर पर लड्डू!",
+      "expr": "smug",
       "visuals": [
-        "Indian sleeper coach upper berth"
+        "Indian ladoo sweets plate"
       ]
     },
     {
       "who": "dadi",
-      "say": "ऊपरवाला? साइड अपर देगा या स्वर्ग?",
-      "big": "साइड अपर या स्वर्ग?",
+      "say": "ट्रेन कल निकल गई! अब रिफ्रेश करके पटरी पीछे खींचेगा?",
+      "big": "पटरी पीछे खींचेगा?!",
       "expr": "gussa",
       "punch": true,
       "visuals": [
-        "Indian sleeper train side upper berth"
+        "Indian passenger train departing railway platform"
       ]
     }
   ],
   "comedy_format": "character_clash",
   "style": "v2",
   "react": false,
-  "tag_who": "उस दोस्त को जिसकी टिकट हमेशा वेटिंग में रहती है"
+  "tag_who": "उस दोस्त को जो हर मिनट टिकट रिफ्रेश करता है"
 }
