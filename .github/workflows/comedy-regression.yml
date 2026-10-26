@@ -30,7 +30,7 @@ jobs:
         run: python -m py_compile bakra_rules.py news_writer.py visuals.py run_daily.py talk_episode.py
       - name: Check every missing visual has safe set/card fallback
         run: |
-          pip -q install pillow numpy requests
+          pip -q install pillow numpy scipy requests
           python - <<'PY'
           import json, tempfile
           from pathlib import Path
