@@ -165,6 +165,28 @@ jobs:
             preview_episode.jpg
           if-no-files-found: ignore
           retention-days: 14
+      - name: Telegram delivery of independently QA-passed demo
+        if: success()
+        continue-on-error: true
+        run: |
+          /usr/bin/python3 - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          import qa, telegram
+          p=Path('episode.mp4')
+          issues=qa.check(p)+qa.check_media(p)
+          if p.exists():
+              probe=subprocess.run(['ffprobe','-v','error','-show_entries','format=duration','-of','json',str(p)],
+                                   capture_output=True,text=True,check=True)
+              duration=float(json.loads(probe.stdout)['format']['duration'])
+              if duration>28:
+                  issues.append(f'Comedy demo too long: {duration:.1f}s (limit 28s)')
+          if issues:
+              raise SystemExit('Telegram delivery blocked by independent QA: '+'; '.join(issues))
+          if not telegram.send_video(p,'🐐 बकरा न्यूज़ • QA-पास डेमो (पोस्ट करने से पहले देखें)'):
+              raise SystemExit('Telegram delivery unavailable; use GitHub render-qa-passed artifact')
+          print('PASS: verified demo delivered to Telegram')
+          PY
       - name: झलक सेव
         if: always()
         run: |
