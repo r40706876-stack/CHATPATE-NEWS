@@ -479,14 +479,14 @@ def _story_scene(card, size):
     """Looping illustrated news props; no random internet media."""
     w,h=size
     base_scene=card.get("scene","delivery")
-    sequence={"sweets":["sweets","showroom","sweets"],"showroom":["showroom","sweets","showroom"],"bill":["bill","showroom","bill"],"shop":["shop","sweets","shop"],"delivery":["delivery","bill","delivery"]}.get(base_scene,[base_scene,"delivery"])
+    sequence={"sweets":["sweets","showroom","sweets"],"showroom":["showroom","sweets","showroom"],"laddoo_hdmi":["laddoo_hdmi","showroom","laddoo_hdmi"],"bill":["bill","showroom","bill"],"shop":["shop","sweets","shop"],"delivery":["delivery","bill","delivery"]}.get(base_scene,[base_scene,"delivery"])
     t=0
     while True:
         scene=sequence[(t//max(1,int(FPS*1.35)))%len(sequence)]
         im=Image.new("RGB",(w,h),(235,245,252))
         d=ImageDraw.Draw(im)
         d.rectangle((0,int(h*.79),w,h),fill=(198,220,232))
-        title={"sweets":"मिठाई माँगी!","showroom":"टीवी-फ्रिज आ गए!","bill":"COD बिल ₹1.69 लाख","shop":"मिठाई की दुकान!","delivery":"डिलीवरी वाले परेशान!"}.get(scene,"COD खबर")
+        title={"sweets":"मिठाई माँगी!","showroom":"टीवी-फ्रिज आ गए!","laddoo_hdmi":"लड्डू में HDMI?!","bill":"COD बिल ₹1.69 लाख","shop":"मिठाई की दुकान!","delivery":"डिलीवरी वाले परेशान!"}.get(scene,"COD खबर")
         d.rounded_rectangle((15,20,w-15,110),radius=20,fill=(31,55,90))
         ft=tt.font(54)
         while ft.getlength(title)>w-55 and ft.size>25:ft=tt.font(ft.size-2)
@@ -510,6 +510,15 @@ def _story_scene(card, size):
         elif scene=="showroom":
             tv(100,int(h*.43)-bounce)
             fridge(w-305,int(h*.36))
+        elif scene=="laddoo_hdmi":
+            # Punchline illustration: a giant laddoo with a dangling HDMI plug.
+            d.ellipse((120,int(h*.35)-bounce,520,int(h*.77)-bounce),fill=(247,177,55),outline=(157,92,27),width=10)
+            for xx,yy in ((215,.46),(360,.53),(280,.66),(430,.65)):
+                d.ellipse((xx,int(h*yy)-bounce,xx+22,int(h*yy)+22-bounce),fill=(209,123,34))
+            d.line((520,int(h*.58),710,int(h*.58),740,int(h*.70),820,int(h*.70)),fill=(39,48,63),width=24)
+            d.rounded_rectangle((815,int(h*.65),955,int(h*.75)),radius=10,fill=(54,62,76))
+            d.rectangle((946,int(h*.67),1000,int(h*.73)),fill=(176,180,183),outline=(45,49,55),width=5)
+            d.text((w//2,int(h*.26)),"HDMI?",font=tt.font(100),anchor="mm",fill=(193,55,56))
         elif scene=="bill":
             tv(50,int(h*.43)-bounce)
             d.rounded_rectangle((450,int(h*.32),w-40,int(h*.76)),radius=20,fill="white",outline=(68,79,99),width=8)
