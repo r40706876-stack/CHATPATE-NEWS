@@ -16,6 +16,7 @@ on:
       - 'reel_studio.py'
       - 'talk_episode.py'
       - 'qa.py'
+      - 'tests/storyboard_preflight.py'
       - '.github/workflows/talk_episode.yml'
 # Only the newest branch render may consume expensive TTS/render time.
 concurrency:
