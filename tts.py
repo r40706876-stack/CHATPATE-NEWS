@@ -321,6 +321,22 @@ def speakable(text):
     return re.sub(r"(\d+)\s*%", r"\1 परसेंट", text)
 
 
+def audio_length_issues(lines, audios):
+    """Reject Gemini speech that rambles or inserts unrequested content.
+
+    A single 12-word line once produced 14.1 seconds of speech and inflated a
+    25-second comedy reel to 32 seconds. Do not time-stretch such hallucinated
+    audio; regenerate with another voice engine instead.
+    """
+    issues = []
+    for i, (line, audio) in enumerate(zip(lines, audios)):
+        seconds = len(audio) / SR
+        limit = max(7.0, 0.11 * len(line.get("say", "")))
+        if seconds > limit:
+            issues.append(f"line {i + 1}: {seconds:.1f}s for {len(line.get('say', ''))} chars (limit {limit:.1f}s)")
+    return issues
+
+
 def speak_script(script, out):
     """पूरी script एक ही engine से — ताकि किसी किरदार की आवाज़ बीच में न बदले."""
     out.mkdir(parents=True, exist_ok=True)
@@ -337,6 +353,9 @@ def speak_script(script, out):
             key, gi = gkeys[gi], gi + 1
         try:
             audios = make_all(script, engine, out, key)
+            length_issues = audio_length_issues(script["lines"], audios)
+            if length_issues:
+                raise ValueError("Unusually long TTS line(s), possible extra speech: " + "; ".join(length_issues))
             break
         except Exception as e:                            # noqa: BLE001
             last = e
