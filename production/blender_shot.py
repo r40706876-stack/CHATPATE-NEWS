@@ -3,7 +3,7 @@ import bpy, math, os
 bpy.ops.object.select_all(action='SELECT')
 bpy.ops.object.delete(use_global=False)
 scene=bpy.context.scene
-scene.render.engine='BLENDER_EEVEE_NEXT' if bpy.app.version[0]>=4 else 'BLENDER_EEVEE'
+scene.render.engine='BLENDER_EEVEE_NEXT' if bpy.app.version >= (4, 2, 0) else 'BLENDER_EEVEE'
 scene.render.resolution_x=360
 scene.render.resolution_y=640
 scene.render.resolution_percentage=100
