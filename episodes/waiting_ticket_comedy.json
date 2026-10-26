@@ -26,7 +26,7 @@
       "visuals": [
         "animated address tag parcels television refrigerator COD bill"
       ],
-      "scene": "showroom"
+      "scene": "arrival"
     },
     {
       "who": "chacha",
@@ -67,8 +67,8 @@
   "tag_who": "उस दोस्त को जो फ्री सुनते ही पता भेज देता है",
   "fictional_satire": true,
   "source_url": "https://www.indiatoday.in/amp/trending-news/story/madurai-mans-diwali-wish-goes-wrong-tvs-fridges-and-lakhs-in-cod-orders-pour-in-3016108-2026-10-13",
-  "no_send": false,
-  "qa_note": "Send to configured Telegram only after storyboard preflight and final audio/visual QA pass. This is a technical gate, not retention proof.",
+  "no_send": true,
+  "qa_note": "New visual-storytelling candidate. Do not auto-post before real video inspection.",
   "no_clips": true,
   "visual_policy": "character_only",
   "no_memes": true
