@@ -1050,8 +1050,11 @@ def render(ep, segs, chars, out, preview):
                     _hook_big(d, re.sub(r"[\U0001F000-\U0001FFFF\u2600-\u27BF\uFE0F]", "", ep["hook_short"]).strip(), 360)
                     if wtimes:
                         karaoke_timed(d, cap_text, t / FPS, wtimes, cy)
-                elif hooking and v2:                                # v2: झटका ऊपर बड़े अक्षरों में (नीचे Instagram के buttons)
-                    _hook(d, ep["hook"], 330)
+                elif hooking and v2:
+                    # Do not cover the animated news story with a huge 3-line
+                    # yellow card. Put the hook on the desk BELOW the speaker;
+                    # the COD delivery and TV must remain visible immediately.
+                    hook_low(d, ep.get("hook_short") or ep["hook"])
                 elif hooking:
                     hook_low(d, ep["hook"])
                 else:
@@ -1069,7 +1072,7 @@ def render(ep, segs, chars, out, preview):
             asking = False                                      # सवाल अब सिर्फ़ अंत में (पंच line साफ़ सुनाई-दिखाई दे)
             if st_text and not asking:                          # सवाल वाले पल ठप्पा नहीं (ऊपर एक-दूसरे पर चढ़ते थे)
                 if si == 0:                                     # hook का ठप्पा: hook के बड़े अक्षरों के नीचे, बीच में
-                    _stamp(im, st_text, st_t, W / 2, 640 if shot != "split" else SCR[3] - 130, 84)
+                    _stamp(im, st_text, st_t, W / 2, 640 if shot != "split" else SCR[2] - 160, 48)
                 elif shot == "close":
                     _stamp(im, st_text, st_t, W / 2 + 60, 1080, 62)  # chest, never across face
                 else:
