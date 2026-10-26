@@ -47,6 +47,40 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_comedy_gate.py' -v
       - name: Hybrid visual mapping tests
         run: python -m unittest discover -s tests -p 'test_visual_strategy.py' -v
+      - name: Render hybrid storyboard frames and verify visual beats
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from hybrid_stage import stage_frames
+          from visual_strategy import select_visual
+          ep=json.loads(Path("episodes/waiting_ticket_comedy.json").read_text(encoding="utf-8"))
+          out=Path("hybrid_preview")
+          out.mkdir(exist_ok=True)
+          report=[]
+          for i,line in enumerate(ep["lines"]):
+              cards,reason=select_visual(line,ep,i)
+              gen=stage_frames(cards[0],(720,550),25)
+              frames=[]
+              for n in range(43):
+                  frame=next(gen)
+                  if n in (0,18,40):
+                      path=out/f"line_{i+1:02d}_beat_{n:02d}.png"
+                      frame.save(path)
+                      frames.append((n,frame.tobytes()))
+              distinct=len({data for _,data in frames})
+              if distinct < 2:
+                  raise AssertionError(f"line {i+1}: static visual")
+              report.append({"line":i+1,"reason":reason,"beats":cards[0]["beats"],"distinct_sampled_frames":distinct})
+          (out/"report.json").write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")
+          print(json.dumps(report,ensure_ascii=False,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hybrid-storyboard-preview
+          path: hybrid_preview/
+          if-no-files-found: ignore
       - name: Verify YouTube first then image then card order
         run: |
           python - <<'PY'
