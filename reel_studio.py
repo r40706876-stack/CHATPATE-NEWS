@@ -959,8 +959,11 @@ def render(ep, segs, chars, out, preview):
                 strap = bool(ep.get("bulletin") and ln.get("headline"))   # headline पट्टी सिर्फ़ bulletin में (पहले 4 परतें लिखाई की थीं)
                 im = bases[strap].copy()
                 im.paste(sf, (SCR[0], SCR[1]))
-                # Small talking characters stay at a fixed scale: no artificial face zoom.
-                im.paste(fr, (0, BAND_Y))
+                # Keep cinematic motion, but cap the speaker zoom so fake lip-sync never fills the frame.
+                # Story visuals above remain free to pan, zoom and animate.
+                zb = 1.0 + (0.035 if ln.get("punch") else 0.022) * min(1.0, t / max(1, n))
+                dx = int(7 * math.sin(t * 0.16)) if ln.get("beat") in ("twist", "takiya") else 0
+                im.paste(_zoomr(fr, zb), (dx, BAND_Y))
                 clean = im.copy()                                # बिना लिखाई वाला frame (आख़िरी poll के पीछे)
             d = ImageDraw.Draw(im)
             if k >= FPS * 2:                                 # vidIQ + virality skill: पहले 2 सेकंड कोई logo/पट्टी नहीं (हर style में) — सिर्फ़ तस्वीर + 4 शब्द
