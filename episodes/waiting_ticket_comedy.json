@@ -1,7 +1,7 @@
 {
   "title": "मिठाई माँगी, ₹1.69 लाख का टीवी ऑर्डर!",
   "topic": "मदुरै के क्रिएटर वीरमणि ने दिवाली की मिठाई माँगी; उनके पते पर अनचाहे COD टीवी-फ्रिज ऑर्डर आने लगे",
-  "hook": "मिठाई माँगी, डेढ़ लाख का टीवी ऑर्डर!",
+  "hook": "₹1.69 लाख का टीवी! भाई ने माँगी थी बस मिठाई!",
   "poll": {
     "q": "फ्री गिफ्ट पर COD बिल आए तो?",
     "a": "वापस करूँगा",
@@ -10,8 +10,8 @@
   "lines": [
     {
       "who": "bablu",
-      "say": "मिठाई माँगी, डेढ़ लाख का टीवी ऑर्डर हो गया!",
-      "big": "मिठाई के बदले COD टीवी!",
+      "say": "₹1.69 लाख का टीवी! भाई ने माँगी थी बस मिठाई!",
+      "big": "₹1.69 लाख का टीवी!",
       "expr": "hairan",
       "visuals": [
         "Madurai news report delivery parcels and TV COD"
@@ -20,8 +20,8 @@
     },
     {
       "who": "pinky",
-      "say": "मदुरै के वीरमणि ने पता डाला, लोगों ने COD ऑर्डर ठोक दिए!",
-      "big": "मदुरै: वीरमणि का COD प्रैंक",
+      "say": "वीरमणि ने पता डाला, जनता ने घर को COD गोदाम बना दिया!",
+      "big": "पता दिया, गोदाम बन गया!",
       "expr": "tanz",
       "visuals": [
         "animated address tag parcels television refrigerator COD bill"
@@ -30,8 +30,8 @@
     },
     {
       "who": "chacha",
-      "say": "लड्डू में HDMI लगती है क्या? पूरा शोरूम भेज दिया!",
-      "big": "लड्डू में HDMI?!",
+      "say": "अरे लड्डू में HDMI लगाऊँ? चाशनी 4K में दिखेगी क्या!",
+      "big": "लड्डू की चाशनी 4K में?",
       "expr": "hairan",
       "punch": true,
       "visuals": [
@@ -41,8 +41,8 @@
     },
     {
       "who": "pinky",
-      "say": "एक टीवी का बिल एक लाख उनहत्तर हजार बताया गया!",
-      "big": "COD बिल ₹1.69 लाख!",
+      "say": "चाचा, टीवी का बिल ₹1.69 लाख! हलवाई भी साथ पैक होगा?",
+      "big": "₹1.69 लाख का COD बिल!",
       "expr": "tanz",
       "visuals": [
         "large animated 169000 rupees COD invoice television"
@@ -51,8 +51,8 @@
     },
     {
       "who": "dadi",
-      "say": "मज़ाक में क्लिक उनका, चप्पल डिलीवरी वाले की घिसी!",
-      "big": "क्लिक उनका, दौड़ डिलीवरी की!",
+      "say": "अब डिलीवरी वाला कह रहा—मिठाई मुझे दो, टीवी तुम उठाओ!",
+      "big": "मिठाई मेरी, टीवी तुम्हारा!",
       "expr": "gussa",
       "punch": true,
       "visuals": [
@@ -68,7 +68,7 @@
   "fictional_satire": true,
   "source_url": "https://www.indiatoday.in/amp/trending-news/story/madurai-mans-diwali-wish-goes-wrong-tvs-fridges-and-lakhs-in-cod-orders-pour-in-3016108-2026-10-13",
   "no_send": true,
-  "qa_note": "New visual-storytelling candidate. Do not auto-post before real video inspection.",
+  "qa_note": "Rewritten after Gemini strict critique (hook 4/10, banter 3/10) and revised cartoon scene preflight; no_send until actual MP4 inspection.",
   "no_clips": true,
   "visual_policy": "character_only",
   "no_memes": true
