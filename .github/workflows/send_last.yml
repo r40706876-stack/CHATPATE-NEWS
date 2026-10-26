@@ -1,13 +1,11 @@
-# Deliver ONLY a newly committed, QA-approved video to the configured Telegram chat.
-# The talk-episode join job commits last_episode.mp4 only after its render/media QA passes.
+# Manual re-send of an already QA-approved last_episode.mp4.
+# The talk-episode join job handles automatic Telegram delivery after QA.
+# GitHub's GITHUB_TOKEN pushes do not trigger new push workflows.
 name: send-last
 on:
   workflow_dispatch:
     inputs:
       caption: {description: "caption", default: "🐐 बकरा न्यूज़ • QA-पास डेमो (पोस्ट करने से पहले देखें)"}
-  push:
-    branches: ['feature/retention-comedy-quality-gate-20261025']
-    paths: ['last_episode.mp4']
 concurrency:
   group: send-last-${{ github.ref }}
   cancel-in-progress: false
