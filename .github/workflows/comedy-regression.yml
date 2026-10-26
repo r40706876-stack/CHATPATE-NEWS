@@ -161,6 +161,9 @@ jobs:
           test -s scene_outputs/godot/parcel.avi
           ffprobe -v error -show_entries stream=width,height,duration -of default=nw=1 scene_outputs/godot/parcel.avi
           ffmpeg -hide_banner -loglevel error -y -i scene_outputs/godot/parcel.avi -frames:v 1 scene_outputs/godot/preview.png
+          ffmpeg -hide_banner -loglevel error -y -i scene_outputs/godot/parcel.avi -c:v libx264 -preset veryfast -crf 28 -pix_fmt yuv420p scene_outputs/godot/parcel.mp4
+          test -s scene_outputs/godot/parcel.mp4
+          rm scene_outputs/godot/parcel.avi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
