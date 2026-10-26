@@ -15,7 +15,8 @@
       "expr": "hairan",
       "visuals": [
         "Madurai news report delivery parcels and TV COD"
-      ]
+      ],
+      "scene": "sweets"
     },
     {
       "who": "pinky",
@@ -24,7 +25,8 @@
       "expr": "tanz",
       "visuals": [
         "animated address tag parcels television refrigerator COD bill"
-      ]
+      ],
+      "scene": "showroom"
     },
     {
       "who": "chacha",
@@ -34,7 +36,8 @@
       "punch": true,
       "visuals": [
         "cartoon ladoo next to HDMI cable television fridge"
-      ]
+      ],
+      "scene": "bill"
     },
     {
       "who": "pinky",
@@ -43,7 +46,8 @@
       "expr": "tanz",
       "visuals": [
         "large animated 169000 rupees COD invoice television"
-      ]
+      ],
+      "scene": "shop"
     },
     {
       "who": "dadi",
@@ -53,7 +57,8 @@
       "punch": true,
       "visuals": [
         "cartoon delivery worker worn-out sandals and stacked parcels"
-      ]
+      ],
+      "scene": "delivery"
     }
   ],
   "comedy_format": "character_clash",
@@ -63,7 +68,7 @@
   "fictional_satire": true,
   "source_url": "https://www.indiatoday.in/amp/trending-news/story/madurai-mans-diwali-wish-goes-wrong-tvs-fridges-and-lakhs-in-cod-orders-pour-in-3016108-2026-10-13",
   "no_send": true,
-  "qa_note": "Do not send until independent editorial/video QA: news must be identifiable, small characters, no unrelated film memes or stale visuals; no retention promises.",
+  "qa_note": "Cartoon-only scene animation test. Hold Telegram until reviewed.",
   "no_clips": true,
   "visual_policy": "character_only",
   "no_memes": true
