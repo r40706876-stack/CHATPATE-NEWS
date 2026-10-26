@@ -810,7 +810,11 @@ def render(ep, segs, chars, out, preview):
             carry = 0                                           # इस line की अपनी तस्वीर मिली
         # Never recycle an old photo for a line without its own verified visual.
         # Keep the speaker SMALL in split screen; alternate story-specific cards.
-        if shot in ("split", "full") and not any(isinstance(v, Path) and v.exists() for v in (s.get("vis") or [])):
+        # A generated *_set.png is only a room backdrop, NOT a news visual.
+        # Never show it in the upper story panel as if it illustrated the line.
+        own_verified = any(isinstance(v, Path) and v.exists() and not v.stem.endswith("_set")
+                           for v in (s.get("vis") or []))
+        if shot in ("split", "full") and not own_verified:
             shot, size = "split", (SW_, SH_)
             vis = [{"big": ln.get("big") or key_phrase(ln) or headline, "color": "#243D68"},
                    {"big": key_phrase(ln) or ln.get("big") or headline, "color": "#9B412A"}]
@@ -819,7 +823,7 @@ def render(ep, segs, chars, out, preview):
         cut_s = CUT - 0.4 * int(ep.get("_fix") or 0)            # जाँच में कमी मिली = दोबारा बनाते वक़्त और जल्दी बदलें
         chunk = max(1, int(cut_s * FPS))                        # हर 2 सेकंड नया नज़ारा
         need = math.ceil(n / chunk) + int(ep.get("_fix") or 0)
-        if shot != "close" and not react and vis and len(vis) < need:
+        if shot != "close" and not react and vis and len(vis) < need and own_verified:
             # सिर्फ़ zoom बदलने से वही तस्वीर 5 सेकंड "रुकी" दिखती थी (छठ वाली video) — कमी हो तो: line की मुख्य बात
             # वाला card, फिर इसी खबर की दूसरी असली तस्वीरें (जो अभी इस line में नहीं)
             extra = []
