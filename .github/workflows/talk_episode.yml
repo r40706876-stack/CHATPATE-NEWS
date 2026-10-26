@@ -14,6 +14,8 @@ on:
     paths:
       - 'episodes/waiting_ticket_comedy.json'
       - 'reel_studio.py'
+      - 'talk_episode.py'
+      - 'qa.py'
       - '.github/workflows/talk_episode.yml'
 env:
   GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
@@ -143,7 +145,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ job.status == 'success' && 'approved-video' || 'qa-rejected-video' }}
+          name: ${{ job.status == 'success' && 'render-qa-passed' || 'qa-rejected-video' }}
           path: |
             episode.mp4
             preview_episode.jpg
