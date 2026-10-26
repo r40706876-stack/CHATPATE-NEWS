@@ -1,66 +1,78 @@
 {
-  "title": "फ्री गिफ्ट का COD झटका",
-  "topic": "ऑनलाइन गिफ्ट और कैश ऑन डिलीवरी पर काल्पनिक न्यूज़ व्यंग्य",
-  "hook": "फ्री गिफ्ट आया, पैसे चाचा देंगे!",
+  "title": "मिठाई माँगी, COD टीवी आ गया",
+  "topic": "मदुरै में मिठाई माँगने वाले क्रिएटर को अनचाहे COD ऑर्डर मिले",
+  "hook": "मिठाई माँगी, डेढ़ लाख से महँगा टीवी आया!",
   "poll": {
-    "q": "बिना पूछे COD गिफ्ट आए तो?",
+    "q": "फ्री गिफ्ट पर COD बिल आए तो?",
     "a": "वापस करूँगा",
-    "b": "पहले भेजने वाले को फोन"
+    "b": "पहले भेजने वाले से पूछूँगा"
   },
   "lines": [
     {
       "who": "bablu",
-      "say": "चाचा, फ्री गिफ्ट आया! पैसे आपको देने हैं!",
-      "big": "फ्री गिफ्ट, पैसे चाचा के!",
+      "say": "मिठाई माँगी, डेढ़ लाख से महँगा टीवी आया!",
+      "big": "मिठाई की जगह महँगा टीवी!",
       "expr": "hairan",
       "punch": true,
       "visuals": [
-        "Indian cash on delivery parcel doorstep"
+        "Indian sweet box next to large television cash on delivery"
       ]
     },
     {
       "who": "chacha",
-      "say": "तो गिफ्ट किस बात का? बेइज्जती की पैकिंग है?",
-      "big": "बेइज्जती की पैकिंग?!",
-      "expr": "gussa",
-      "punch": true,
+      "say": "वाह! मेरा पता भी वायरल कर!",
+      "big": "मेरा पता भी डाल!",
+      "expr": "smug",
       "visuals": [
-        "Indian uncle shocked with delivery parcel"
+        "Indian uncle excited holding mobile phone"
       ]
     },
     {
       "who": "pinky",
-      "say": "आपने ही तो कहा था, मेरा पता वायरल करो!",
-      "big": "पता वायरल कराओ!",
+      "say": "चाचा, टीवी के पैसे खुद देने थे!",
+      "big": "कैश ऑन डिलीवरी!",
       "expr": "tanz",
+      "punch": true,
       "visuals": [
-        "smartphone sharing home address illustration"
+        "courier delivery cash on delivery invoice television"
       ]
     },
     {
       "who": "chacha",
-      "say": "मैंने मिठाई माँगी थी, उधार का गोदाम नहीं!",
-      "big": "मिठाई कहाँ है?",
+      "say": "फिर गिफ्ट नहीं, डकैती का पार्सल है!",
+      "big": "डकैती का पार्सल!",
       "expr": "gussa",
       "punch": true,
       "visuals": [
-        "Indian sweets beside stack of parcels"
+        "Indian man shocked by large delivery invoice"
       ]
     },
     {
       "who": "dadi",
-      "say": "इसका पता हटाओ! उधार वाला हलवाई भी देख लेगा!",
-      "big": "हलवाई से बचाओ!",
-      "expr": "tanz",
+      "say": "बाद में उसे असली मिठाई मुफ्त मिली!",
+      "big": "आखिर मिठाई मिल गई!",
+      "expr": "hasi",
+      "visuals": [
+        "Indian festive sweets gift box"
+      ]
+    },
+    {
+      "who": "chacha",
+      "say": "तो मेरा पता डाल—बिल पड़ोसी के नाम!",
+      "big": "बिल पड़ोसी के नाम!",
+      "expr": "smug",
       "punch": true,
       "visuals": [
-        "Indian sweet shop owner holding bill book"
+        "Indian uncle whispering to reporter with smartphone"
       ]
     }
   ],
   "comedy_format": "character_clash",
   "style": "v2",
   "react": false,
-  "tag_who": "उस दोस्त को जो मुफ्त गिफ्ट के चक्कर में पड़ जाता है",
-  "fictional_satire": true
+  "tag_who": "उस दोस्त को जो फ्री सुनते ही पता भेज देता है",
+  "fictional_satire": true,
+  "source_url": "https://www.indiatoday.in/trending-news/story/madurai-influencers-cod-nightmare-gets-a-sweet-twist-with-gifts-from-instamart-3020133-2026-10-18",
+  "no_send": true,
+  "qa_note": "Hold Telegram until independent comedy review and full audio/visual QA pass; no automated metric guarantees."
 }
