@@ -74,5 +74,7 @@
   "fictional_satire": true,
   "source_url": "https://www.indiatoday.in/trending-news/story/madurai-influencers-cod-nightmare-gets-a-sweet-twist-with-gifts-from-instamart-3020133-2026-10-18",
   "no_send": true,
-  "qa_note": "Hold Telegram until independent comedy review and full audio/visual QA pass; no automated metric guarantees."
+  "qa_note": "Hold Telegram until independent comedy review and full audio/visual QA pass; no automated metric guarantees.",
+  "no_clips": true,
+  "visual_policy": "character_only"
 }
