@@ -69,4 +69,10 @@ def violations(ep):
         out.append("वित्तीय कमाई की भ्रामक गारंटी")
     if finance and re.search(r"बजाज.{0,65}(आठ दशमलव पच्चीस|8\\.25)", blob, re.I) and not re.search(r"रिन्यू|renew|नवीनीकरण", blob, re.I):
         out.append("8.25% की रिन्यूअल शर्त गायब")
+    # Reject obvious generic filler in character payoffs. Human review is still required.
+    weak = ("हमारे ज़माने में", "हमारे जमाने में", "वो दोस्त जो", "फिर क्या हुआ", "देखते रहिए")
+    for ln in ep.get("lines", [])[1:]:
+        if ln.get("who") in ("chacha", "pinky", "dadi", "ramesh") and any(p in str(ln.get("say", "")) for p in weak):
+            out.append("किरदार का कमजोर/घिसा-पिटा डायलॉग")
+            break
     return out
