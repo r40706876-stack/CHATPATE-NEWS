@@ -154,10 +154,15 @@ jobs:
           curl -fL --retry 3 --connect-timeout 15 --max-time 180 -o /tmp/godot.zip https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_linux.x86_64.zip
           unzip -q /tmp/godot.zip -d /tmp
           sudo install -m 755 /tmp/Godot_v4.3-stable_linux.x86_64 /usr/local/bin/godot4
+      - name: Install virtual display and video tools
+        run: |
+          sudo apt-get install -y --no-install-recommends xvfb libgl1-mesa-dri ffmpeg
       - name: Render Godot animation
+        env:
+          LIBGL_ALWAYS_SOFTWARE: '1'
         run: |
           mkdir -p scene_outputs/godot
-          godot4 --headless --path production/godot --write-movie "$PWD/scene_outputs/godot/parcel.avi" --fixed-fps 30 --quit-after 90
+          xvfb-run -a -s '-screen 0 720x1280x24' godot4 --rendering-driver opengl3 --path production/godot --write-movie "$PWD/scene_outputs/godot/parcel.avi" --fixed-fps 30 --quit-after 90
           test -s scene_outputs/godot/parcel.avi
           ffprobe -v error -show_entries stream=width,height,duration -of default=nw=1 scene_outputs/godot/parcel.avi
           ffmpeg -hide_banner -loglevel error -y -i scene_outputs/godot/parcel.avi -frames:v 1 scene_outputs/godot/preview.png
