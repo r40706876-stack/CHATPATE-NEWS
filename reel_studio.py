@@ -479,14 +479,14 @@ def _story_scene(card, size):
     """Looping illustrated news props; no random internet media."""
     w,h=size
     base_scene=card.get("scene","delivery")
-    sequence={"sweets":["sweets","arrival","showroom"],"arrival":["arrival","showroom","arrival"],"showroom":["arrival","showroom","laddoo_hdmi"],"laddoo_hdmi":["laddoo_hdmi","laddoo_hdmi","showroom"],"bill":["bill","bill","delivery"],"shop":["shop","sweets","arrival"],"delivery":["delivery","delivery","arrival"]}.get(base_scene,[base_scene,"arrival"])
+    sequence={"sweets":["sweets","arrival","showroom"],"arrival":["arrival","showroom","arrival"],"showroom":["arrival","showroom","laddoo_hdmi"],"laddoo_hdmi":["laddoo_hdmi","laddoo_connected","showroom"],"bill":["bill","bill_shock","delivery"],"shop":["shop","sweets","arrival"],"delivery":["delivery","delivery_overload","arrival"]}.get(base_scene,[base_scene,"arrival"])
     t=0
     while True:
         scene=sequence[(t//max(1,int(FPS*1.35)))%len(sequence)]
         im=Image.new("RGB",(w,h),(235,245,252))
         d=ImageDraw.Draw(im)
         d.rectangle((0,int(h*.79),w,h),fill=(198,220,232))
-        title={"sweets":"मिठाई माँगी!","arrival":"घर पर COD पार्सल!","showroom":"टीवी-फ्रिज आ गए!","laddoo_hdmi":"लड्डू में HDMI?!","bill":"COD बिल ₹1.69 लाख","shop":"मिठाई की दुकान!","delivery":"डिलीवरी वाले परेशान!"}.get(scene,"COD खबर")
+        title={"sweets":"मिठाई माँगी!","arrival":"घर पर COD पार्सल!","showroom":"टीवी-फ्रिज आ गए!","laddoo_hdmi":"लड्डू में HDMI?!","laddoo_connected":"लड्डू से टीवी चालू!","bill":"COD बिल ₹1.69 लाख","bill_shock":"इतना बड़ा COD बिल!","shop":"मिठाई की दुकान!","delivery":"डिलीवरी वाले परेशान!","delivery_overload":"पार्सलों का पहाड़!"}.get(scene,"COD खबर")
         d.rounded_rectangle((15,20,w-15,110),radius=20,fill=(31,55,90))
         ft=tt.font(54)
         while ft.getlength(title)>w-55 and ft.size>25:ft=tt.font(ft.size-2)
@@ -518,9 +518,9 @@ def _story_scene(card, size):
         elif scene=="showroom":
             tv(100,int(h*.43)-bounce)
             fridge(w-305,int(h*.36))
-        elif scene=="laddoo_hdmi":
+        elif scene in ("laddoo_hdmi","laddoo_connected"):
             # Visual joke: HDMI cable slides into the laddoo, then the TV powers on.
-            phase=(t%max(1,int(FPS*1.35)))/max(1,int(FPS*1.35))
+            phase=1.0 if scene=="laddoo_connected" else (t%max(1,int(FPS*1.35)))/max(1,int(FPS*1.35))
             lad_x=145
             lad_y=int(h*.40)
             d.ellipse((lad_x,lad_y,lad_x+355,lad_y+355),fill=(247,177,55),outline=(157,92,27),width=10)
@@ -540,7 +540,15 @@ def _story_scene(card, size):
                     d.line((sx,int(h*.36),sx+24,int(h*.32)),fill=(242,198,49),width=9)
             else:
                 d.text((w//2,int(h*.27)),"लड्डू में HDMI?",font=tt.font(67),anchor="mm",fill=(193,55,56))
-        elif scene=="bill":
+        elif scene in ("bill","bill_shock"):
+            if scene=="bill_shock":
+                d.rectangle((0,115,w,int(h*.79)),fill=(255,224,219))
+                d.rounded_rectangle((120,int(h*.27),w-120,int(h*.75)),radius=22,fill="white",outline=(200,58,58),width=16)
+                d.text((w//2,int(h*.38)),"COD बिल!",font=tt.font(95),anchor="mm",fill=(200,58,58))
+                d.text((w//2,int(h*.58)),"₹1,69,000",font=tt.font(120),anchor="mm",fill=(38,53,79))
+                yield im
+                t+=1
+                continue
             tv(50,int(h*.43)-bounce)
             d.rounded_rectangle((450,int(h*.32),w-40,int(h*.76)),radius=20,fill="white",outline=(68,79,99),width=8)
             d.text((w-300,int(h*.46)),"COD",font=tt.font(95),anchor="mm",fill=(199,66,65))
@@ -551,6 +559,15 @@ def _story_scene(card, size):
             d.polygon([(80,int(h*.40)),(w//2,int(h*.21)),(w-80,int(h*.40))],fill=(203,82,75))
             parcel(w//2-150,int(h*.52)-bounce,300,160)
         else:
+            if scene=="delivery_overload":
+                d.rectangle((0,115,w,int(h*.79)),fill=(244,232,211))
+                for j in range(9):
+                    parcel(45+(j%4)*245,int(h*.72)-(j//4)*190,215,160)
+                d.ellipse((w-190,int(h*.23),w-80,int(h*.38)),fill=(238,183,135),outline=(79,57,48),width=6)
+                d.text((w//2,int(h*.18)),"इतने पार्सल?!",font=tt.font(76),anchor="mm",fill=(179,59,55))
+                yield im
+                t+=1
+                continue
             # The delivery-worker silhouette and increasing parcel stack are the punchline.
             d.ellipse((w-220,int(h*.37),w-120,int(h*.49)),fill=(238,183,135),outline=(79,57,48),width=5)
             d.line((w-170,int(h*.49),w-170,int(h*.70)),fill=(55,94,151),width=40)
