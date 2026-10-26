@@ -47,6 +47,15 @@ class VisualStrategyTests(unittest.TestCase):
         concepts = [select_visual({"say": p}, ep)[0][0]["concept"] for p in phrases]
         self.assertEqual(concepts, ["television", "address", "laddoo_hdmi", "receipt", "delivery"])
 
+    def test_visual_beats_for_comedy_punch(self):
+        vis, reason = select_visual({"say": "लड्डू में HDMI लगाऊँ?"}, {"title": "COD पार्सल"})
+        self.assertEqual(vis[0]["beats"], ["setup", "action", "payoff"])
+        self.assertEqual(vis[0]["concept"], "laddoo_hdmi")
+
+    def test_dialogue_topic_overrides_unrelated_headline_keyword(self):
+        vis, reason = select_visual({"say": "ट्रेन की सीट नहीं मिली"}, {"title": "मोबाइल से ट्रेन टिकट"})
+        self.assertEqual(vis[0]["topic"], "train")
+
     def test_comparison_is_not_retention_claim(self):
         result = compare_visual_options({"say": "बिल आया"}, {"title": "COD पार्सल"})
         self.assertIn("chosen", result)
