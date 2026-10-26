@@ -55,4 +55,18 @@ def violations(ep):
             out.append("किताबी/सरकारी शब्द")
     except Exception:
         pass
+
+    # Reject news scripts that are just a bulletin plus generic reactions.
+    # This is a structural filter, NOT a prediction of audience laughter.
+    if ep.get("kind") not in ("punch",) and ep.get("format") != "rant":
+        dialogue = [str(l.get("say", "")).strip() for l in ep.get("lines", [])]
+        if len(dialogue) >= 4 and sum(bool(l.get("news")) for l in ep.get("lines", [])) >= 3:
+            out.append("खबर पढ़ना ज़्यादा, किरदारों का टकराव कम")
+    # Financial promises and quoted rates must be fact-checked upstream.
+    # A generic disclaimer cannot rescue a misleading financial claim.
+    finance = bool(re.search(r"एफडी|फिक्स्ड डिपॉजिट|ब्याज दर|FD\\b", blob, re.I))
+    if finance and re.search(r"रातों.?रात अमीर|गारंटी.{0,12}अमीर|पैसा दोगुना.{0,12}गारंटी", blob):
+        out.append("वित्तीय कमाई की भ्रामक गारंटी")
+    if finance and re.search(r"बजाज.{0,65}(आठ दशमलव पच्चीस|8\\.25)", blob, re.I) and not re.search(r"रिन्यू|renew|नवीनीकरण", blob, re.I):
+        out.append("8.25% की रिन्यूअल शर्त गायब")
     return out
