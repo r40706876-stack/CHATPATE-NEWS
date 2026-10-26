@@ -17,6 +17,18 @@ class VisualStrategyTests(unittest.TestCase):
         vis, reason = select_visual({"say": "लड्डू में HDMI लगा दिया"}, {"title": "COD पार्सल"})
         self.assertEqual(reason, "illustrated:laddoo_hdmi")
 
+    def test_cod_story_without_matching_props_uses_kinetic(self):
+        vis, reason = select_visual({"say": "चाचा ने कहा कि ये बहुत अजीब है"}, {"title": "COD पार्सल"})
+        self.assertEqual(reason, "kinetic-topic")
+        self.assertTrue(all("scene" not in item for item in vis))
+
+    def test_non_delivery_line_uses_own_caption(self):
+        vis, reason = select_visual(
+            {"say": "रेलवे का नियम बदला", "caption": "टिकट वाला नया झटका"},
+            {"title": "रेलवे टिकट"})
+        self.assertEqual(reason, "kinetic-topic")
+        self.assertEqual(vis[0]["big"], "टिकट वाला नया झटका")
+
     def test_unknown_news_fallback(self):
         vis, reason = select_visual({"say": "क्या हुआ?"}, {})
         self.assertEqual(reason, "kinetic-topic")
