@@ -225,3 +225,18 @@ jobs:
           name: remotion-real-render
           path: production/remotion/out/
           if-no-files-found: warn
+
+  launch-final-demo:
+    needs: [regression, godot-render, blender-render, remotion-render]
+    if: github.event_name == 'push' && contains(github.event.head_commit.message, '[render-demo]')
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: read
+    steps:
+      - name: Dispatch full comedy episode render
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run talk_episode.yml --repo "${{ github.repository }}" --ref "${{ github.ref_name }}" -f script=episodes/waiting_ticket_comedy.json
+          echo "Full episode render requested; editorial no_send remains active until approved."
