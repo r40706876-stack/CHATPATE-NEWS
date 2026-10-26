@@ -1,7 +1,7 @@
 {
-  "title": "मिठाई माँगी, COD का बिल आ गया",
+  "title": "फ्री गिफ्ट का COD झटका",
   "topic": "ऑनलाइन गिफ्ट और कैश ऑन डिलीवरी पर काल्पनिक न्यूज़ व्यंग्य",
-  "hook": "मिठाई माँगी, बिलों की बारात आई!",
+  "hook": "फ्री गिफ्ट आया, पैसे चाचा देंगे!",
   "poll": {
     "q": "बिना पूछे COD गिफ्ट आए तो?",
     "a": "वापस करूँगा",
@@ -10,51 +10,51 @@
   "lines": [
     {
       "who": "bablu",
-      "say": "ब्रेकिंग! मिठाई माँगी, बिलों की बारात आ गई!",
-      "big": "मिठाई नहीं, बिलों की बारात!",
+      "say": "चाचा, फ्री गिफ्ट आया! पैसे आपको देने हैं!",
+      "big": "फ्री गिफ्ट, पैसे चाचा के!",
       "expr": "hairan",
       "punch": true,
       "visuals": [
-        "Indian delivery parcels outside home"
+        "Indian cash on delivery parcel doorstep"
       ]
     },
     {
       "who": "chacha",
-      "say": "अरे बबलू, मेरा पता भी वायरल कर दे! गिफ्ट आएँगे!",
-      "big": "मेरा पता भी डाल!",
-      "expr": "smug",
+      "say": "तो गिफ्ट किस बात का? बेइज्जती की पैकिंग है?",
+      "big": "बेइज्जती की पैकिंग?!",
+      "expr": "gussa",
+      "punch": true,
       "visuals": [
-        "Indian uncle excited holding smartphone"
+        "Indian uncle shocked with delivery parcel"
       ]
     },
     {
       "who": "pinky",
-      "say": "चाचा, सामान कैश ऑन डिलीवरी है!",
-      "big": "पैसे चाचा देंगे!",
+      "say": "आपने ही तो कहा था, मेरा पता वायरल करो!",
+      "big": "पता वायरल कराओ!",
       "expr": "tanz",
-      "punch": true,
       "visuals": [
-        "cash on delivery payment at door"
+        "smartphone sharing home address illustration"
       ]
     },
     {
       "who": "chacha",
-      "say": "मतलब गिफ्ट उनका, पैसे मेरे? ये तो डकैती की होम डिलीवरी है!",
-      "big": "डकैती की होम डिलीवरी!",
+      "say": "मैंने मिठाई माँगी थी, उधार का गोदाम नहीं!",
+      "big": "मिठाई कहाँ है?",
       "expr": "gussa",
       "punch": true,
       "visuals": [
-        "Indian man shocked by parcel invoice"
+        "Indian sweets beside stack of parcels"
       ]
     },
     {
       "who": "dadi",
-      "say": "इसका पता मत डालना! उधार वाला हलवाई भी इसी को ढूँढ़ रहा है!",
-      "big": "हलवाई भी ढूँढ़ रहा!",
-      "expr": "hasi",
+      "say": "इसका पता हटाओ! उधार वाला हलवाई भी देख लेगा!",
+      "big": "हलवाई से बचाओ!",
+      "expr": "tanz",
       "punch": true,
       "visuals": [
-        "Indian sweet shop owner with bill book"
+        "Indian sweet shop owner holding bill book"
       ]
     }
   ],
