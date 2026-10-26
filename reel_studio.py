@@ -478,9 +478,11 @@ def _kinetic(card, bg, t, size):
 def _story_scene(card, size):
     """Looping illustrated news props; no random internet media."""
     w,h=size
-    scene=card.get("scene","delivery")
+    base_scene=card.get("scene","delivery")
+    sequence={"sweets":["sweets","showroom","sweets"],"showroom":["showroom","sweets","showroom"],"bill":["bill","showroom","bill"],"shop":["shop","sweets","shop"],"delivery":["delivery","bill","delivery"]}.get(base_scene,[base_scene,"delivery"])
     t=0
     while True:
+        scene=sequence[(t//max(1,int(FPS*1.35)))%len(sequence)]
         im=Image.new("RGB",(w,h),(235,245,252))
         d=ImageDraw.Draw(im)
         d.rectangle((0,int(h*.79),w,h),fill=(198,220,232))
