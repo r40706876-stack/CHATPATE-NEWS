@@ -75,4 +75,11 @@ def violations(ep):
         if ln.get("who") in ("chacha", "pinky", "dadi", "ramesh") and any(p in str(ln.get("say", "")) for p in weak):
             out.append("किरदार का कमजोर/घिसा-पिटा डायलॉग")
             break
+    # Catch the specific stale Telegram formats: a news-reading hook and a non-joke payoff.
+    if ep.get("kind") == "punch" and len(lines) >= 2:
+        if re.match(r"^(पीईटी|रेलवे|विभाग|बैंक|आरबीआई).{0,45}(चलाएगा|बढ़ाएगा|होगा|कहा है)", lines[0]):
+            out.append("पंच की शुरुआत न्यूज़ बुलेटिन जैसी")
+    if ep.get("kind") == "tvshop":
+        if len(lines) < 5 or not any(l.get("news") for l in ep.get("lines", [])):
+            out.append("नकली ऐड में असली खबर का स्पष्ट मोड़ नहीं")
     return out
