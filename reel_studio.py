@@ -519,14 +519,27 @@ def _story_scene(card, size):
             tv(100,int(h*.43)-bounce)
             fridge(w-305,int(h*.36))
         elif scene=="laddoo_hdmi":
-            # Punchline illustration: a giant laddoo with a dangling HDMI plug.
-            d.ellipse((120,int(h*.35)-bounce,520,int(h*.77)-bounce),fill=(247,177,55),outline=(157,92,27),width=10)
-            for xx,yy in ((215,.46),(360,.53),(280,.66),(430,.65)):
-                d.ellipse((xx,int(h*yy)-bounce,xx+22,int(h*yy)+22-bounce),fill=(209,123,34))
-            d.line((520,int(h*.58),710,int(h*.58),740,int(h*.70),820,int(h*.70)),fill=(39,48,63),width=24)
-            d.rounded_rectangle((815,int(h*.65),955,int(h*.75)),radius=10,fill=(54,62,76))
-            d.rectangle((946,int(h*.67),1000,int(h*.73)),fill=(176,180,183),outline=(45,49,55),width=5)
-            d.text((w//2,int(h*.26)),"HDMI?",font=tt.font(100),anchor="mm",fill=(193,55,56))
+            # Visual joke: HDMI cable slides into the laddoo, then the TV powers on.
+            phase=(t%max(1,int(FPS*1.35)))/max(1,int(FPS*1.35))
+            lad_x=145
+            lad_y=int(h*.40)
+            d.ellipse((lad_x,lad_y,lad_x+355,lad_y+355),fill=(247,177,55),outline=(157,92,27),width=10)
+            for xx,yy in ((210,.49),(340,.54),(265,.66),(415,.68)):
+                d.ellipse((xx,int(h*yy),xx+22,int(h*yy)+22),fill=(209,123,34))
+            plug_x=int(840-310*min(1,phase*2.1))
+            cable_y=int(h*.59)
+            d.line((plug_x+65,cable_y,980,cable_y,1010,cable_y+85),fill=(39,48,63),width=24)
+            d.rounded_rectangle((plug_x,cable_y-36,plug_x+85,cable_y+36),radius=10,fill=(54,62,76))
+            d.rectangle((plug_x-30,cable_y-20,plug_x,cable_y+20),fill=(176,180,183),outline=(45,49,55),width=4)
+            if phase>.42:
+                d.rounded_rectangle((580,int(h*.32),w-35,int(h*.54)),radius=16,fill=(28,50,71),outline=(83,110,130),width=7)
+                d.rectangle((596,int(h*.34),w-51,int(h*.51)),fill=(84,210,139))
+                d.text(((580+w-35)//2,int(h*.43)),"CONNECTED!",font=tt.font(53),anchor="mm",fill=(22,56,39))
+                for j in range(3):
+                    sx=480+j*45
+                    d.line((sx,int(h*.36),sx+24,int(h*.32)),fill=(242,198,49),width=9)
+            else:
+                d.text((w//2,int(h*.27)),"लड्डू में HDMI?",font=tt.font(67),anchor="mm",fill=(193,55,56))
         elif scene=="bill":
             tv(50,int(h*.43)-bounce)
             d.rounded_rectangle((450,int(h*.32),w-40,int(h*.76)),radius=20,fill="white",outline=(68,79,99),width=8)
