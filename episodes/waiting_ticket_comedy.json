@@ -68,7 +68,7 @@
   "fictional_satire": true,
   "source_url": "https://www.indiatoday.in/amp/trending-news/story/madurai-mans-diwali-wish-goes-wrong-tvs-fridges-and-lakhs-in-cod-orders-pour-in-3016108-2026-10-13",
   "no_send": true,
-  "qa_note": "Cartoon-only scene animation test. Hold Telegram until reviewed.",
+  "qa_note": "Animated scene alternation QA rerun; hold Telegram until visual review.",
   "no_clips": true,
   "visual_policy": "character_only",
   "no_memes": true
