@@ -1,7 +1,7 @@
 {
   "title": "वेटिंग टिकट की तेरहवीं",
   "topic": "ट्रेन वेटिंग टिकट",
-  "hook": "टिकट वेटिंग में है, घरवालों ने मेरी तेरहवीं की तैयारी शुरू कर दी!",
+  "hook": "बबलू! वेटिंग टिकट पर घरवालों ने शोकसभा रख दी!",
   "poll": {
     "q": "आपकी टिकट कभी वेटिंग में अटकी है?",
     "a": "हर बार",
@@ -10,40 +10,40 @@
   "lines": [
     {
       "who": "chacha",
-      "say": "बबलू! टिकट वेटिंग में है, घरवालों ने मेरी तेरहवीं की तैयारी शुरू कर दी!",
-      "big": "वेटिंग टिकट की तेरहवीं!",
+      "say": "बबलू! वेटिंग टिकट पर घरवालों ने शोकसभा रख दी!",
+      "big": "टिकट की शोकसभा!",
       "expr": "gussa",
       "punch": true,
       "visuals": [
-        "indian railway waiting list ticket"
+        "Indian Railways waiting list train ticket"
       ]
     },
     {
       "who": "bablu",
-      "say": "अरे चाचा, ट्रेन में जाना है या दुनिया से?",
-      "big": "ट्रेन या दुनिया से?",
+      "say": "क्यों, ट्रेन छूटी या साँस?",
+      "big": "ट्रेन छूटी या साँस?",
       "expr": "hairan",
       "visuals": [
-        "indian railway train platform"
+        "Indian train station platform"
       ]
     },
     {
       "who": "chacha",
-      "say": "रिश्तेदार पूछ रहे हैं, कन्फर्म हुआ कि नहीं? मैंने कहा, टिकट है भाई, ICU का मरीज नहीं!",
-      "big": "टिकट है, ICU का मरीज नहीं!",
+      "say": "सब पूछ रहे—कन्फर्म हुआ? जैसे ICU में पड़ा हूँ!",
+      "big": "टिकट है, मरीज नहीं!",
       "expr": "tanz",
       "punch": true,
       "visuals": [
-        "railway ticket waitlist status"
+        "train waiting list ticket status"
       ]
     },
     {
       "who": "pinky",
-      "say": "मैंने टिकट का स्क्रीनशॉट फैमिली ग्रुप में डाल दिया। बुआ बोलीं, भगवान हिम्मत दे!",
-      "big": "भगवान हिम्मत दे!",
+      "say": "टिकट ग्रुप में डाली। बुआ बोलीं—हिम्मत रखना!",
+      "big": "बुआ: हिम्मत रखना!",
       "expr": "hasi",
       "visuals": [
-        "smartphone family group chat"
+        "family group mobile phone chat"
       ]
     },
     {
@@ -52,36 +52,28 @@
       "big": "और मामा?",
       "expr": "hairan",
       "visuals": [
-        "phone chat notification"
+        "phone notification"
       ]
     },
     {
       "who": "pinky",
-      "say": "मामा बोले, अब कोई चमत्कार ही बचा सकता है!",
-      "big": "चमत्कार ही बचा सकता है!",
+      "say": "बोले—अब ऊपरवाला ही बर्थ दिलाएगा!",
+      "big": "ऊपरवाला बर्थ दिलाएगा!",
       "expr": "tanz",
       "visuals": [
-        "mobile phone message"
+        "Indian railway sleeper berth"
       ]
     },
     {
       "who": "dadi",
-      "say": "चमत्कार छोड़! टीटी से पूछ, स्वर्ग वाली बर्थ नीचे मिलेगी या ऊपर?",
-      "big": "स्वर्ग वाली बर्थ ऊपर या नीचे?",
+      "say": "ऊपरवाला? उससे पूछ, लोअर बर्थ देगा या स्वर्ग?",
+      "big": "लोअर बर्थ या स्वर्ग?",
       "expr": "gussa",
       "punch": true,
       "visuals": [
-        "indian sleeper train berth"
-      ]
-    },
-    {
-      "who": "bablu",
-      "say": "और चाचा की टिकट अभी भी वेटिंग सैंतालीस पर अटकी है!",
-      "big": "WL 47 अभी भी!",
-      "expr": "hairan",
-      "visuals": [
-        "train ticket waiting list"
+        "Indian railway sleeper lower berth"
       ]
     }
-  ]
+  ],
+  "comedy_format": "character_clash"
 }
