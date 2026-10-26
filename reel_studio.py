@@ -1060,7 +1060,11 @@ def render(ep, segs, chars, out, preview):
                 elif hooking:
                     hook_low(d, ep["hook"])
                 else:
-                    if ln.get("tag_text"):                        # पहचान वाली line ऊपर बड़ी — यही share/tag करवाती है
+                    # A kinetic story card already displays the line's key text.
+                    # Do not overlay a second giant yellow tag over the same visual.
+                    kinetic_story = shot == "split" and vis and all(
+                        isinstance(v, dict) and "big" in v for v in vis)
+                    if ln.get("tag_text") and not kinetic_story:
                         _hook(d, ln["tag_text"], 330)
                     if wtimes:
                         karaoke_timed(d, cap_text, t / FPS, wtimes, cy)
