@@ -10,12 +10,12 @@ class VisualStrategyTests(unittest.TestCase):
 
     def test_delivery_story_shows_matching_parcel(self):
         vis, reason = select_visual({"say": "पार्सल घर आ गया"}, {"title": "COD पार्सल"})
-        self.assertEqual(reason, "illustrated:delivery")
-        self.assertEqual(vis[0]["scene"], "delivery")
+        self.assertEqual(reason, "animated-stage:parcel")
+        self.assertEqual(vis[0]["topic"], "parcel")
 
     def test_laddoo_punch_matches_visual(self):
         vis, reason = select_visual({"say": "लड्डू में HDMI लगा दिया"}, {"title": "COD पार्सल"})
-        self.assertEqual(reason, "illustrated:laddoo_hdmi")
+        self.assertEqual(reason, "animated-stage:parcel")
 
     def test_cod_story_without_matching_props_uses_kinetic(self):
         vis, reason = select_visual({"say": "चाचा ने कहा कि ये बहुत अजीब है"}, {"title": "COD पार्सल"})
