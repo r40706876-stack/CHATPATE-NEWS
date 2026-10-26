@@ -23,6 +23,14 @@ class ComedyGateTests(unittest.TestCase):
         self.assertIn("धीमा introduction hook", bakra_rules.violations(episode(first="नमस्कार दोस्तों, खबर सुनिए")))
 
 
+    def test_no_clips_blocks_fullscreen_meme_insertion(self):
+        import memes
+        from pathlib import Path
+        from unittest.mock import patch
+        with patch.object(memes, "DIR", Path(".")):
+            self.assertEqual(memes.pick({"no_clips": True}, [2.0, 2.0]), [])
+
+
 
 class VisualMatchingTests(unittest.TestCase):
     def test_gemini_quota_fallback_uses_only_same_news(self):
