@@ -175,16 +175,6 @@ jobs:
           if [ -d st_out ]; then find st_out -maxdepth 2 -type f | head -40; else echo '3D sprite mode: SadTalker clips correctly skipped'; fi
           /usr/bin/python3 -m pip install -q --break-system-packages numpy scipy pillow rembg onnxruntime
           /usr/bin/python3 talk_episode.py post
-      - name: Preserve rendered MP4 for independent visual and audio review
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ job.status == 'success' && 'render-qa-passed' || 'qa-rejected-video' }}
-          path: |
-            episode.mp4
-            preview_episode.jpg
-          if-no-files-found: ignore
-          retention-days: 14
       - name: Independent final MP4 QA (respect editorial hold)
         if: success()
         run: |
@@ -208,6 +198,16 @@ jobs:
           else:
               print('PASS: final MP4 QA; talk_episode.py post handles single Telegram delivery')
           PY
+      - name: Preserve rendered MP4 for independent visual and audio review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ job.status == 'success' && 'render-qa-passed' || 'qa-rejected-video' }}
+          path: |
+            episode.mp4
+            preview_episode.jpg
+          if-no-files-found: ignore
+          retention-days: 14
       - name: झलक सेव
         if: always()
         run: |
