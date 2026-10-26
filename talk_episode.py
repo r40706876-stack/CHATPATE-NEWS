@@ -73,6 +73,13 @@ def tighten(wav):
 
 def prep(script_path):
     ep = json.load(open(ROOT / script_path, encoding="utf-8"))
+    # Default to the current expressive 3D character library, not legacy photo faces.
+    # Use sprite lip-sync so a SadTalker job cannot silently substitute old faces.
+    if not ep.get("legacy_faces"):
+        ep["sprite"] = {who: f"assets/toon/{who}" for who in CHARS}
+        ep["lips"] = "sprite"
+        ep.setdefault("style", "v2")
+        print("  3D sprite characters enabled:", ", ".join(ep["sprite"]))
     import tts
     ep["_voice"] = tts.speak_script(ep, IN / "audio")             # कौन-सी आवाज़ लगी (gemini / edge / kokoro)
     ep["_voice_err"] = tts.LAST_ERR[:300]
