@@ -157,12 +157,23 @@ jobs:
       - name: Verify preinstalled virtual display and video tools
         run: |
           set -e
-          missing=""
-          command -v Xvfb >/dev/null 2>&1 || missing="$missing xvfb"
-          command -v ffmpeg >/dev/null 2>&1 || missing="$missing ffmpeg"
-          if [ -n "$missing" ]; then
-            echo "Missing runner tools:$missing"
-            timeout 150 sudo apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=20 install -y --no-install-recommends $missing
+          # Some PR runners lack ffmpeg; the Ubuntu mirror has repeatedly timed out.
+          # Prefer a prebuilt static ffmpeg+ffprobe pair rather than 87 apt dependencies.
+          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
+            echo 'Runner ffmpeg missing; trying static release before apt fallback'
+            (curl -fL --retry 2 --connect-timeout 12 --max-time 120 \
+              https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz \
+              -o /tmp/ffmpeg-static.tar.xz &&
+             mkdir -p /tmp/ffmpeg-static &&
+             tar -xJf /tmp/ffmpeg-static.tar.xz -C /tmp/ffmpeg-static &&
+             sudo install -m 755 /tmp/ffmpeg-static/ffmpeg-*-amd64-static/ffmpeg /usr/local/bin/ffmpeg &&
+             sudo install -m 755 /tmp/ffmpeg-static/ffmpeg-*-amd64-static/ffprobe /usr/local/bin/ffprobe) || true
+          fi
+          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
+            timeout 150 sudo apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=20 install -y --no-install-recommends ffmpeg
+          fi
+          if ! command -v Xvfb >/dev/null 2>&1; then
+            timeout 120 sudo apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=20 install -y --no-install-recommends xvfb
           fi
           command -v Xvfb
           command -v ffmpeg
