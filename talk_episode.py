@@ -363,6 +363,28 @@ def chrome(ep, ln, k, total, broll):
     return o
 
 
+def require_editorial_approval(ep):
+    """A valid MP4 is not permission to deliver an unreviewed comedy script.
+
+    The Gemini report is created during prep and downloaded into the join job
+    from the SAME workflow run. A missing/quota-limited/low-scored report must
+    never be silently treated as editorial approval.
+    """
+    report_path = ROOT / "comedy_review.json"
+    if not report_path.is_file():
+        raise RuntimeError("Telegram blocked: independent Gemini editorial review artifact missing")
+    try:
+        report = json.loads(report_path.read_text(encoding="utf-8"))
+        score = float(report.get("score", -1))
+    except (ValueError, TypeError, OSError, json.JSONDecodeError) as exc:
+        raise RuntimeError("Telegram blocked: invalid Gemini editorial review") from exc
+    if report.get("status") != "reviewed" or score < 8.5:
+        raise RuntimeError(f"Telegram blocked: Gemini editorial approval missing or below 8.5/10 ({score})")
+    if not ep.get("title") or not ep.get("lines"):
+        raise RuntimeError("Telegram blocked: incomplete episode metadata")
+    print(f"PASS: independent editorial approval {score}/10; viewer retention not inferred")
+
+
 def post_studio(ep):
     import reel_studio
     segs = []
@@ -424,6 +446,7 @@ def post_studio(ep):
     if ep.get("no_send"):                                 # जाँच वाला video: Telegram पर नहीं, सिर्फ़ repo में
         print("  (no_send) Telegram पर नहीं भेजा")
         return
+    require_editorial_approval(ep)
     if not telegram.send_video(out, cap or ep.get("breaking", "")):
         raise RuntimeError("Telegram delivery unavailable or failed; video retained as episode.mp4")
     if issues:
@@ -463,6 +486,7 @@ def post():
         print("  (no_send) render QA passed; editorial comedy approval still pending, Telegram blocked")
         return
     import telegram
+    require_editorial_approval(ep)
     if not telegram.send_video(out, f"🎬 बकरा न्यूज़: {ep.get('title', '')}"):
         raise RuntimeError("Telegram delivery failed; QA-approved MP4 retained as episode.mp4")
 
