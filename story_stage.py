@@ -155,8 +155,8 @@ def _scene_action(im, scene, t, n, line=None):
             d.rounded_rectangle((phone_x+24,470,phone_x+301,850),16,fill=(244,250,251))
             d.text((phone_x+162,545),"बैंक ऐप",font=tt.font(53),fill=INK,anchor="mm")
             d.rounded_rectangle((phone_x+45,625,phone_x+280,765),18,fill=RED)
-            d.text((phone_x+162,675),"चाचा",font=tt.font(53),fill="white",anchor="mm")
-            d.text((phone_x+162,731),"ब्लॉक!",font=tt.font(57),fill="white",anchor="mm")
+            d.text((phone_x+162,675),"अगला जन्म",font=tt.font(43),fill="white",anchor="mm")
+            d.text((phone_x+162,731),"गिरवी!",font=tt.font(57),fill="white",anchor="mm")
     elif scene=="house":
         # Visual punchlines are acted out as objects; no giant explanation cards.
         say=str((line or {}).get("say",""))
