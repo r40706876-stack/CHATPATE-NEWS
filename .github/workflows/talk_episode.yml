@@ -15,6 +15,7 @@ on:
       - 'episodes/waiting_ticket_comedy.json'
       - 'reel_studio.py'
       - 'story_stage.py'
+      - 'reel_studio.py'
       - 'talk_episode.py'
       - 'qa.py'
       - 'tts.py'
