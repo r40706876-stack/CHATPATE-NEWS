@@ -255,14 +255,35 @@ def split_by_silence(a, n):
     return [a[pts[k]:pts[k + 1]] for k in range(n)]
 
 
+def trim_boundary_silence(audio, padding=0.08):
+    """Remove generated inter-line pauses before duration QA, never cut speech mid-line.
+
+    Gemini's multi-line output can assign half a long separator to each clip.
+    Counting that silence as spoken words falsely triggers the hallucination gate.
+    """
+    if len(audio) < SR // 5:
+        return audio
+    hop = max(1, SR // 100)
+    count = len(audio) // hop
+    rms = np.sqrt(np.mean(audio[:count * hop].reshape(count, hop) ** 2, axis=1))
+    threshold = max(0.005, float(rms.max()) * 0.035)
+    active = np.flatnonzero(rms > threshold)
+    if len(active) == 0:
+        return audio  # Invalid/quiet audio remains visible to downstream checks.
+    pad = int(padding * SR)
+    lo = max(0, int(active[0]) * hop - pad)
+    hi = min(len(audio), (int(active[-1]) + 1) * hop + pad)
+    return audio[lo:hi]
+
+
 def gemini_character(lines, who, key):
     """एक किरदार की सारी lines एक ही call में — आवाज़ हर line में एक जैसी."""
     rant = any(l.get("delivery") for l in lines)
     base = RANT.get(who) if rant else None
     if len(lines) == 1:
-        return [gemini_line(lines[0]["say"], who, lines[0].get("delivery") or lines[0].get("expr", ""), key, base)]
+        return [trim_boundary_silence(gemini_line(lines[0]["say"], who, lines[0].get("delivery") or lines[0].get("expr", ""), key, base))]
     joined = "\n\n".join(l["say"] for l in lines)
-    how = "हर लाइन के बाद पूरा एक सेकंड रुकना"
+    how = "हर दो लाइनों के बीच 0.4 सेकंड रुकना; आखिरी लाइन के बाद कोई अतिरिक्त ठहराव नहीं"
     if rant:                                              # line-दर-line अंदाज़ (बोलना नहीं, सिर्फ़ निर्देश)
         how = ("लाइनें क्रम से, हर एक का अंदाज़ — " + "; ".join(f"{k + 1}) {l.get('delivery', '')}" for k, l in enumerate(lines))
                + ". ऊर्जा शुरू से आख़िर तक बढ़ती जाए. " + how)
@@ -273,10 +294,10 @@ def gemini_character(lines, who, key):
             exp = len(l["say"]) * 0.06
             if not (0.3 * exp < len(p) / SR < 3.0 * exp):
                 raise ValueError("हिस्से की लंबाई गड़बड़")
-        return parts
+        return [trim_boundary_silence(p) for p in parts]
     except ValueError as e:                               # काटना ठीक न बैठे → line-line, पर वही voice
         print(f"  {who}: एक साथ वाली आवाज़ काट नहीं पाए ({e}), line-line बना रहे हैं")
-        return [gemini_line(l["say"], who, l.get("delivery") or l.get("expr", ""), key, base) for l in lines]
+        return [trim_boundary_silence(gemini_line(l["say"], who, l.get("delivery") or l.get("expr", ""), key, base)) for l in lines]
 
 
 def make_all(script, engine, out, key):
