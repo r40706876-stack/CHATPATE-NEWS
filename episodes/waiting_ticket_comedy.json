@@ -10,7 +10,7 @@
   "lines": [
     {
       "who": "bablu",
-      "say": "₹1.69 लाख का टीवी! भाई ने माँगी थी बस मिठाई!",
+      "say": "₹1.69 लाख का टीवी! भाई ने माँगी थी मिठाई!",
       "big": "₹1.69 लाख का टीवी!",
       "expr": "hairan",
       "visuals": [
@@ -20,8 +20,8 @@
     },
     {
       "who": "pinky",
-      "say": "चाचा, मिठाई के लिए पता दिया था—डिलीवरी वाला पूछे, शोरूम किसका?",
-      "big": "मिठाई माँगी, शोरूम खुल गया!",
+      "say": "चाचा, मिठाई के पते पर टीवी-फ्रिज पहुँचे—घर शोरूम बन गया!",
+      "big": "मिठाई का पता, टीवी का शोरूम!",
       "expr": "tanz",
       "visuals": [
         "fast cartoon parcel pile grows into TV-fridge showroom at home doorway; delivery worker points at showroom sign and Pinky teases Chacha"
@@ -30,8 +30,8 @@
     },
     {
       "who": "chacha",
-      "say": "शोरूम? अरे लड्डू में HDMI लगाऊँ? चाशनी 4K में दिखेगी क्या!",
-      "big": "लड्डू की चाशनी 4K में?!",
+      "say": "शोरूम? लड्डू में HDMI लगाऊँ? चाशनी 4K में दिखाऊँ?",
+      "big": "चाशनी 4K में?!",
       "expr": "hairan",
       "punch": true,
       "visuals": [
@@ -51,12 +51,12 @@
     },
     {
       "who": "dadi",
-      "say": "अब डिलीवरी वाला कह रहा—मिठाई मुझे दो, टीवी तुम उठाओ!",
-      "big": "मिठाई मेरी, टीवी तुम्हारा!",
+      "say": "टीवी उठा ले! COD में दो लड्डू हैं—एक अभी, दूसरा EMI पर!",
+      "big": "एक लड्डू अभी, दूसरा EMI पर!",
       "expr": "gussa",
       "punch": true,
       "visuals": [
-        "cartoon delivery worker worn-out sandals and stacked parcels"
+        "cartoon delivery worker at door holding ₹1.69 lakh COD bill, angry Dadi offering two ladoos as payment, one ladoo labeled अभी and the other EMI; exaggerated character reactions"
       ],
       "scene": "delivery"
     }
@@ -68,7 +68,7 @@
   "fictional_satire": true,
   "source_url": "https://www.indiatoday.in/amp/trending-news/story/madurai-mans-diwali-wish-goes-wrong-tvs-fridges-and-lakhs-in-cod-orders-pour-in-3016108-2026-10-13",
   "no_send": true,
-  "qa_note": "Revised line 2 to an absurd delivery-worker showroom punch and line 3 to answer it. Hold Telegram until independent Gemini >=8.5, final MP4 and audio/visual QA plus editorial approval; no_send remains true.",
+  "qa_note": "2026-10-27: revised all five Hindi dialogue beats after independent Gemini 5.5/10 and fixed 56>55 word failure. Verify new Gemini editorial review, 9:16 final MP4, lip/audio sync, visual story continuity and QA before any delivery. no_send remains true.",
   "no_clips": true,
   "visual_policy": "character_only",
   "no_memes": true,
