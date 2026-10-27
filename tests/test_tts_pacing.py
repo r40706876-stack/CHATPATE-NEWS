@@ -1,7 +1,7 @@
 """Regression tests for the TTS fallback that previously blocked a render."""
 import unittest
 import numpy as np
-from tts import SR, TEMPO, audio_length_issues
+from tts import SR, TEMPO, audio_length_issues, trim_boundary_silence
 
 
 class TTSPacingTests(unittest.TestCase):
@@ -20,6 +20,23 @@ class TTSPacingTests(unittest.TestCase):
         line = {"say": "अ" * 55}
         audio = np.zeros(round(8.8 * SR), dtype=np.float32)
         self.assertTrue(audio_length_issues([line], [audio], "gemini"))
+
+    def test_gemini_separator_pause_is_not_counted_as_speech(self):
+        # 27 Oct: a 45-character line got 8s including a long generated pause.
+        # Only remove silence at the boundaries, preserving the spoken waveform.
+        lead = np.zeros(round(0.8 * SR), dtype=np.float32)
+        speech = np.full(round(6.1 * SR), 0.10, dtype=np.float32)
+        tail = np.zeros(round(1.1 * SR), dtype=np.float32)
+        cleaned = trim_boundary_silence(np.concatenate([lead, speech, tail]))
+        self.assertLess(len(cleaned) / SR, 6.4)
+        self.assertGreater(len(cleaned) / SR, 6.1)
+        self.assertEqual(audio_length_issues([{"say": "अ" * 45}], [cleaned], "gemini"), [])
+
+    def test_gemini_sustained_speech_is_not_trimmed(self):
+        raw = np.full(round(8.8 * SR), 0.1, dtype=np.float32)
+        cleaned = trim_boundary_silence(raw)
+        self.assertEqual(len(cleaned), len(raw))
+        self.assertTrue(audio_length_issues([{"say": "अ" * 55}], [cleaned], "gemini"))
 
     def test_edge_unusually_long_line_still_rejected(self):
         line = {"say": "अ" * 56}
