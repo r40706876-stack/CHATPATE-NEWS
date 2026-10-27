@@ -30,19 +30,19 @@
     },
     {
       "who": "chacha",
-      "say": "अरे लड्डू माँगे थे! डिलीवरी वाला रिमोट क्यों पकड़ा रहा?",
-      "big": "लड्डू माँगे, रिमोट मिला!",
+      "say": "लड्डू का डिब्बा माँगा था, ये टीवी के डिब्बे पर OTP माँग रहा!",
+      "big": "लड्डू की जगह टीवी का डिब्बा?!",
       "expr": "hairan",
       "punch": true,
       "visuals": [
-        "cartoon Chacha holding empty sweets box while delivery worker offers a TV remote, absurd confused reaction, TV and fridge boxes in background"
+        "cartoon Chacha holding an empty sweets box; delivery worker holds a giant TV carton and asks for OTP, Pinky reacts with disbelief"
       ],
       "scene": "laddoo_hdmi"
     },
     {
       "who": "pinky",
-      "say": "बिल पर लिखा है COD—कैश कहाँ है, चाचा?",
-      "big": "COD बिल—कैश कहाँ है?",
+      "say": "चाचा, OTP बाद में—पहले COD के पैसे दिखाओ!",
+      "big": "OTP नहीं, COD का बिल!",
       "expr": "tanz",
       "visuals": [
         "cartoon Pinky points to giant ₹1.69 lakh COD bill, Chacha looks at empty wallet, lively contrasting reaction"
@@ -51,12 +51,12 @@
     },
     {
       "who": "dadi",
-      "say": "कैश होता तो ये फ्री मिठाई के लिए पता बाँटते?",
-      "big": "कैश होता तो फ्री क्यों माँगते?!",
+      "say": "इनकी जेब में तो रिमोट की बैटरी भी उधार आती है!",
+      "big": "रिमोट की बैटरी भी उधार!",
       "expr": "gussa",
       "punch": true,
       "visuals": [
-        "cartoon Dadi roasts Chacha pointing at his empty wallet, Chacha embarrassed, delivery worker holding COD invoice and parcels, big expressive character reactions"
+        "cartoon Dadi roasts embarrassed Chacha with empty wallet; delivery worker holds an unpaid COD invoice and TV carton, lively comic reactions"
       ],
       "scene": "delivery"
     }
@@ -68,7 +68,7 @@
   "fictional_satire": true,
   "source_url": "https://www.indiatoday.in/amp/trending-news/story/madurai-mans-diwali-wish-goes-wrong-tvs-fridges-and-lakhs-in-cod-orders-pour-in-3016108-2026-10-13",
   "no_send": true,
-  "qa_note": "2026-10-27: revised after independent Gemini review criticized weak character banter and confusing punch. Now 5 short beats with direct Pinky-Chacha-Dadi conflict, no misleading claim COD was paid. Recheck Gemini, complete 9:16 MP4 and audio/visual QA. no_send remains true.",
+  "qa_note": "2026-10-27: Gemini criticized unnatural third line; replaced with concrete TV-carton OTP confusion and Dadi battery-on-credit roast. Private preview only, no_send true. Editorial >=8.5 still required for any delivery. Verify final MP4/audio/visual QA.",
   "no_clips": true,
   "visual_policy": "character_only",
   "no_memes": true,
