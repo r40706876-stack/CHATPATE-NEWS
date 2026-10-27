@@ -252,10 +252,32 @@ def frames(line, episode, talk, n, cut, seed=0):
                 _character(im,courier,550-int(45*progress),720-int(310*progress),int(110+370*progress))
             else:
                 _worker(ImageDraw.Draw(im),520,650-int(230*progress),int(25*math.sin(progress*6)))
-        if scene in ("freight","bill","house"):
-            _character(im,courier,70+int(9*math.sin(t/7)),810,575)
-        _character(im,supporting,5+int(9*math.sin(t/8)),1120+int(5*math.sin(t/10)),610,flip=True)
-        _character(im,sp,600+int(8*math.sin(t/6)),990+int(7*math.sin(t/9)),760)
+        # Choreograph bodies around the actual joke, not just floating prop icons.
+        # Use eased entrances and clear recoil / exchange movements.
+        progress = min(1.0, t / max(1, n - 1))
+        ease = progress * progress * (3 - 2 * progress)
+        say = str(line.get("say", ""))
+        courier_x = 70 + int(9 * math.sin(t / 7))
+        if scene in ("freight", "bill", "house"):
+            if "पैसे" in say or "बिल" in say:
+                courier_x = int(-300 + 370 * ease)
+            _character(im, courier, courier_x, 810, 575)
+        supporter_x = 5 + int(9 * math.sin(t / 8))
+        speaker_x = 600 + int(8 * math.sin(t / 6))
+        speaker_y = 990 + int(7 * math.sin(t / 9))
+        if scene == "sweets":
+            speaker_x = int(950 - 350 * ease)
+        if "लड्डू" in say or "ससुराल" in say:
+            speaker_x += int(110 * ease)  # Chacha backs away from the huge delivery
+        if "दरवाज़ा" in say:
+            speaker_x -= int(95 * ease)  # Pull attention toward the door gag
+        if "एक्सचेंज" in say:
+            supporter_x += int(165 * ease)  # Dadi physically pushes Chacha toward carton
+        if "रोटी" in say:
+            supporter_x += int(60 * ease)
+            speaker_y -= int(28 * math.sin(progress * math.pi * 3) ** 2)
+        _character(im, supporting, supporter_x, 1120 + int(5 * math.sin(t / 10)), 610, flip=True)
+        _character(im, sp, speaker_x, speaker_y, 760)
         d=ImageDraw.Draw(im)
         if scene=="house" and who=="dadi" and ("एक्सचेंज" in str(line.get("say","")) or "वापसी" in str(line.get("say",""))) and t>=int(n*.40):
             # Physical payoff: Dadi has packed Chacha, not merely flashed a RETURN icon.
