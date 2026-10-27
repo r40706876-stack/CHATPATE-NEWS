@@ -184,9 +184,21 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
-          run_id="$(gh run list --repo "${{ github.repository }}" --workflow bakra-blender-3d.yml --branch "${{ github.ref_name }}" --status success --limit 1 --json databaseId --jq '.[0].databaseId // empty')"
+          # Never use an old low-quality COD proof after its Blender scene code
+          # changes. Match the exact Git blob of blender_cod_scene.py at the
+          # successful proof run to the checked-out source of this episode.
+          local_blob="$(git hash-object blender_cod_scene.py)"
+          run_id=""
+          while read -r candidate_id candidate_sha; do
+            [ -n "$candidate_id" ] || continue
+            proof_blob="$(gh api "repos/${{ github.repository }}/contents/blender_cod_scene.py?ref=$candidate_sha" --jq '.sha')"
+            if [ "$proof_blob" = "$local_blob" ]; then
+              run_id="$candidate_id"
+              break
+            fi
+          done < <(gh run list --repo "${{ github.repository }}" --workflow bakra-blender-3d.yml --branch "${{ github.ref_name }}" --status success --limit 20 --json databaseId,headSha --jq '.[] | "\\(.databaseId) \\(.headSha)"')
           if [ -z "$run_id" ]; then
-            echo "::error::No successful Blender COD proof artifact; integrated render must not silently use a static replacement"
+            echo "::error::No successful Blender COD proof for the exact current scene source; refusing stale footage"
             exit 1
           fi
           mkdir -p blender_output
