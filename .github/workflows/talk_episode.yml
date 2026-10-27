@@ -168,6 +168,9 @@ jobs:
           ffmpeg -version | head -1
       - uses: actions/download-artifact@v4
         with: {name: st_in, path: st_in}
+      - name: Retrieve same-run Gemini editorial verdict for delivery gate
+        uses: actions/download-artifact@v4
+        with: {name: comedy-editorial-review, path: .}
       - uses: actions/download-artifact@v4
         continue-on-error: true
         with: {pattern: "clip-*", path: st_out, merge-multiple: true}
