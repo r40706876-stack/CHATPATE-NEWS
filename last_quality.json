@@ -1,6 +1,6 @@
 {
  "voice": "gemini",
- "voice_err": "",
+ "voice_err": "gemini: Unusually long TTS line(s), possible extra speech: line 1: 8.7s raw, 8.7s effective for 52 chars (limit 7.0s)",
  "lines": 5,
  "real_visual_lines": 0,
  "set_lines": 5,
