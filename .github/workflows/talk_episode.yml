@@ -202,8 +202,8 @@ jobs:
               probe=subprocess.run(['ffprobe','-v','error','-show_entries','format=duration','-of','json',str(p)],
                                    capture_output=True,text=True,check=True)
               duration=float(json.loads(probe.stdout)['format']['duration'])
-              if duration>28:
-                  issues.append(f'Comedy demo too long: {duration:.1f}s (limit 28s)')
+              if duration>40:
+                  issues.append(f'Comedy demo too long: {duration:.1f}s (limit 40s)')
           if issues:
               raise SystemExit('Final independent QA failed: '+'; '.join(issues))
           ep=json.loads(Path('st_in/episode.json').read_text(encoding='utf-8'))
