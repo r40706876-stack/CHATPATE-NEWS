@@ -27,13 +27,23 @@ def main():
         raise SystemExit("Story-stage preflight: external clips/images must remain disabled")
     if any(x.get("shot")!="story" for x in lines):
         raise SystemExit("Story-stage preflight: each line must use full-frame story shot")
-    base=story_stage._house_base()
+    # The old preflight used one base for every scene and could report PASS
+    # while the actual episode repeated the same village background throughout.
+    backgrounds={scene:story_stage._house_base(scene) for scene in REQUIRED}
+    signatures={scene:np.asarray(img.resize((36,64)),dtype=np.float32)
+                for scene,img in backgrounds.items()}
+    distinct=[]
+    for scene,sig in signatures.items():
+        if all(float(np.abs(sig-other).mean()) >= 5.0 for other in distinct):
+            distinct.append(sig)
+    if len(distinct)<4:
+        raise SystemExit(f"Story-stage preflight: only {len(distinct)} visually distinct backgrounds; need at least 4")
     tiles=[]
     report=[]
     for i,scene in enumerate(scenes):
         samples=[]
         for t in (0,35):
-            im=base.copy()
+            im=backgrounds[scene].copy()
             story_stage._scene_action(im,scene,t,60,line=lines[i])
             samples.append(im)
         a=np.asarray(samples[0].resize((180,320)),dtype=np.float32)
