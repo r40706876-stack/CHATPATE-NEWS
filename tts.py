@@ -327,13 +327,14 @@ def audio_length_issues(lines, audios, engine="gemini"):
     Edge is spoken exactly from the supplied text, and the pipeline applies
     TEMPO here plus 1.1x in talk_episode.tighten. Rejecting its raw 7.2s line
     at a 7s limit previously aborted the whole workflow even though the
-    published audio would be ~6.2s. Keep Gemini's strict raw-duration gate.
+    published audio would be ~6.2s. For Gemini, keep a raw-duration\n    sanity check scaled to actual characters: 7.3s for 50 Hindi chars is\n    plausible speech, while 8.8s for 55 chars still flags extra narration.
     """
     issues = []
     for i, (line, audio) in enumerate(zip(lines, audios)):
         raw_seconds = len(audio) / SR
         effective_seconds = raw_seconds / (TEMPO * 1.1) if engine == "edge" else raw_seconds
-        limit = max(7.0, 0.11 * len(line.get("say", "")))
+        chars = len(line.get("say", ""))
+        limit = max(7.0, 0.11 * chars) if engine == "edge" else max(4.0, 0.15 * chars)
         if effective_seconds > limit:
             issues.append(
                 f"line {i + 1}: {raw_seconds:.1f}s raw, {effective_seconds:.1f}s effective "

@@ -135,12 +135,18 @@ def _scene_action(im, scene, t, n, line=None):
         d.text((750,1130),"₹1,69,000",font=tt.font(76),fill=RED,anchor="mm")
         d.rounded_rectangle((540,1210,965,1270),12,fill=YELLOW)
         d.text((752,1240),"इतना बड़ा बिल!",font=tt.font(44),fill=INK,anchor="mm")
-        if "घर बेच" in str((line or {}).get("say", "")):
-            # Chacha cannot pay for the TV without selling the house,
-            # but then there is nowhere to put it.
-            sign_x=int(1100-430*q)
-            d.rounded_rectangle((sign_x,440,sign_x+320,565),18,fill=(255,245,207),outline=RED,width=9)
-            d.text((sign_x+160,500),"घर बिकाऊ!",font=tt.font(53),fill=RED,anchor="mm")
+        if "बैंक ऐप" in str((line or {}).get("say", "")):
+            # Bank-app rejection is a literal acted-out visual gag.
+            # Move the phone into frame and shake it when the bank blocks Chacha.
+            phone_x = int(1080 - 545 * min(1, q * 2.0))
+            if q > 0.55:
+                phone_x += int(13 * math.sin(t * 1.8))
+            d.rounded_rectangle((phone_x,425,phone_x+325,900),35,fill=INK,outline=YELLOW,width=13)
+            d.rounded_rectangle((phone_x+24,470,phone_x+301,850),16,fill=(244,250,251))
+            d.text((phone_x+162,545),"बैंक ऐप",font=tt.font(53),fill=INK,anchor="mm")
+            d.rounded_rectangle((phone_x+45,625,phone_x+280,765),18,fill=RED)
+            d.text((phone_x+162,675),"चाचा",font=tt.font(53),fill="white",anchor="mm")
+            d.text((phone_x+162,731),"ब्लॉक!",font=tt.font(57),fill="white",anchor="mm")
     elif scene=="house":
         # Visual punchlines are acted out as objects; no giant explanation cards.
         say=str((line or {}).get("say",""))
@@ -266,7 +272,7 @@ def frames(line, episode, talk, n, cut, seed=0):
         speaker_x = 600 + int(8 * math.sin(t / 6))
         speaker_y = 990 + int(7 * math.sin(t / 9))
         if scene == "sweets":
-            speaker_x = int(950 - 350 * ease)
+            speaker_x = int(575 - 40 * ease)  # Reporter visible from frame one; no empty hook shot
         if "लड्डू" in say or "ससुराल" in say:
             speaker_x += int(110 * ease)  # Chacha backs away from the huge delivery
         if "दरवाज़ा" in say:
@@ -279,7 +285,7 @@ def frames(line, episode, talk, n, cut, seed=0):
         _character(im, supporting, supporter_x, 1120 + int(5 * math.sin(t / 10)), 610, flip=True)
         _character(im, sp, speaker_x, speaker_y, 760)
         d=ImageDraw.Draw(im)
-        if scene=="house" and who=="dadi" and ("एक्सचेंज" in str(line.get("say","")) or "वापसी" in str(line.get("say",""))) and t>=int(n*.40):
+        if scene=="house" and who=="dadi" and ("एक्सचेंज" in str(line.get("say","")) or "वापसी" in str(line.get("say","")) or "रोटी" in str(line.get("say",""))) and t>=int(n*.40):
             # Physical payoff: Dadi has packed Chacha, not merely flashed a RETURN icon.
             # Leave his face visible; the carton covers his torso and stays attached to him.
             d.rounded_rectangle((12,1390,430,1730),20,fill=(201,146,92),outline=(108,69,44),width=14)

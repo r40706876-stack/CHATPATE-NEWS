@@ -11,6 +11,11 @@ class TTSPacingTests(unittest.TestCase):
         audio = np.zeros(round(7.2 * SR), dtype=np.float32)
         self.assertEqual(audio_length_issues([line], [audio], "edge"), [])
 
+    def test_gemini_normal_fifty_char_line_not_rejected_as_hallucination(self):
+        line = {"say": "अ" * 50}
+        audio = np.zeros(round(7.3 * SR), dtype=np.float32)
+        self.assertEqual(audio_length_issues([line], [audio], "gemini"), [])
+
     def test_gemini_extra_speech_is_still_rejected(self):
         line = {"say": "अ" * 55}
         audio = np.zeros(round(8.8 * SR), dtype=np.float32)
