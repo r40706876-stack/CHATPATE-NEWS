@@ -34,14 +34,14 @@
     },
     {
       "who": "pinky",
-      "say": "चाचा, पहले टीवी चलाकर देखो!",
-      "big": "टीवी चालू करो!",
+      "say": "चाचा, मिठाई नहीं मिली? टीवी पर लड्डू देख लो!",
+      "big": "टीवी पर लड्डू देख लो!",
       "scene": "arrival",
       "expr": "tanz",
       "shot": "story",
       "punch": false,
       "visuals": [
-        "Pinky points at television and teases Chacha"
+        "Pinky points to a laddoo visible on the new TV screen while Chacha searches the empty sweets box"
       ]
     },
     {
@@ -124,7 +124,7 @@
   "fictional_satire": true,
   "source_url": "https://www.indiatoday.in/amp/trending-news/story/madurai-mans-diwali-wish-goes-wrong-tvs-fridges-and-lakhs-in-cod-orders-pour-in-3016108-2026-10-13",
   "no_send": true,
-  "qa_note": "2026-10-27: Replaced static split-screen with full-frame local character+prop stage, five sequential story actions, and coherent house-registry escalation. Private draft; independent Gemini score and real video visual QA required. no_send remains true. No Instagram retention claims. 2026-10-27: tightened to pass <=10-word hook and <=55-word script gate after real workflow failure. 2026-10-27: second editorial iteration; shock-first hook, freight threat instead of repeated OTP, Dadi's Chacha-return roast. Still private until Gemini and visual approval. 2026-10-27: latest real render was 22.6s despite 13–18s target; trimmed dialogue from 52 to 40 words while retaining story escalation, corrected freight caption. Voice still fallback due to Gemini TTS 429; do not mark upload-ready. 2026-10-27: independent Gemini critique found prior draft weak (hook 3, laugh density 2, shareability 3). Replaced stale house-registry beat with direct Pinky-Chacha exchange conflict and Dadi packaging punch. Real editorial and final visual/audio QA required; no_send true. 2026-10-27: Gemini audit (hook 4, laugh density 3) motivated a new 47-word draft: shock-first hook, UPI freeze, no-mute exchange and wrong-address Dadi payoff. Story-stage props updated in d1ad323; independent rerender/review still required. Keep no_send true. 2026-10-27: New five-beat comedy revision: absurd COD hook, showroom escalation, powerless-house self-roast, Chacha-as-appliance exchange, Dadi no-return warranty payoff. Not independently scored or rendered yet; no_send true. 2026-10-27: Rebuilt full 9-beat coherent delivery-to-exchange story per user request. Viewer-first pacing; deliberately exceeds old short-script gate. Requires editorial gate adjustment and fresh QA. 2026-10-27: nine coherent beats condensed from 103 to 76 words; scene preflight now supports 5-9 beats and COD/exchange props match dialogue. Private QA only.",
+  "qa_note": "2026-10-27: Replaced static split-screen with full-frame local character+prop stage, five sequential story actions, and coherent house-registry escalation. Private draft; independent Gemini score and real video visual QA required. no_send remains true. No Instagram retention claims. 2026-10-27: tightened to pass <=10-word hook and <=55-word script gate after real workflow failure. 2026-10-27: second editorial iteration; shock-first hook, freight threat instead of repeated OTP, Dadi's Chacha-return roast. Still private until Gemini and visual approval. 2026-10-27: latest real render was 22.6s despite 13–18s target; trimmed dialogue from 52 to 40 words while retaining story escalation, corrected freight caption. Voice still fallback due to Gemini TTS 429; do not mark upload-ready. 2026-10-27: independent Gemini critique found prior draft weak (hook 3, laugh density 2, shareability 3). Replaced stale house-registry beat with direct Pinky-Chacha exchange conflict and Dadi packaging punch. Real editorial and final visual/audio QA required; no_send true. 2026-10-27: Gemini audit (hook 4, laugh density 3) motivated a new 47-word draft: shock-first hook, UPI freeze, no-mute exchange and wrong-address Dadi payoff. Story-stage props updated in d1ad323; independent rerender/review still required. Keep no_send true. 2026-10-27: New five-beat comedy revision: absurd COD hook, showroom escalation, powerless-house self-roast, Chacha-as-appliance exchange, Dadi no-return warranty payoff. Not independently scored or rendered yet; no_send true. 2026-10-27: Rebuilt full 9-beat coherent delivery-to-exchange story per user request. Viewer-first pacing; deliberately exceeds old short-script gate. Requires editorial gate adjustment and fresh QA. 2026-10-27: nine coherent beats condensed from 103 to 76 words; scene preflight now supports 5-9 beats and COD/exchange props match dialogue. Private QA only. 2026-10-27: Independent Gemini found Pinky's old line filler; changed it to a visual laddoo joke. Story-stage now uses moving props instead of oversized house explanation cards. Pending fresh visual/audio QA.",
   "no_clips": true,
   "visual_policy": "character_only",
   "no_memes": true,
