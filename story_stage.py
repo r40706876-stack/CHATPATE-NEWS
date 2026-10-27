@@ -126,43 +126,38 @@ def _scene_action(im, scene, t, n):
             d.line((400,780,940,920),fill=RED,width=20)
 
 
-    # A second/third physical action in the upper story area prevents the
-    # previous 3-5s frozen-icon problem. These are line-specific objects,
-    # not arbitrary symbols or text-only flashes.
-    beat=(t//32)%3
-    if beat==1:
-        if scene=="sweets":
-            _box(d,430,465,440,285,"COD")
-        elif scene=="arrival":
-            d.rounded_rectangle((445,450,705,800),22,fill=(218,234,239),outline=INK,width=9)
-            d.line((445,620,705,620),fill=INK,width=7)
-        elif scene=="freight":
-            d.rounded_rectangle((420,405,990,770),35,fill=INK)
-            d.rounded_rectangle((460,450,950,720),18,fill=(134,217,236))
-            d.text((705,580),"बिल देखते ही!",font=tt.font(64),fill=INK,anchor="mm")
-        elif scene=="bill":
-            d.rounded_rectangle((420,440,1020,810),22,fill="white",outline=RED,width=15)
-            d.text((720,540),"COD",font=tt.font(90),fill=RED,anchor="mm")
-            d.text((720,685),"₹1,69,000",font=tt.font(78),fill=INK,anchor="mm")
-        elif scene=="house":
-            d.rounded_rectangle((430,460,980,760),25,fill=YELLOW,outline=RED,width=14)
-            d.text((705,605),"चाचा एक्सचेंज!",font=tt.font(95),fill=RED,anchor="mm")
-    elif beat==2:
-        if scene=="sweets":
-            _tv(d,445,480,470,325)
-        elif scene=="arrival":
-            _tv(d,405,465,360,260)
-            _box(d,740,500,225,180,"COD")
-        elif scene=="freight":
-            _box(d,460,465,460,290,"COD")
-        elif scene=="bill":
-            d.rounded_rectangle((420,445,1020,805),25,fill=(252,225,217),outline=RED,width=12)
-            d.text((720,550),"एक्सचेंज?",font=tt.font(91),fill=RED,anchor="mm")
-            d.text((720,700),"₹1,69,000",font=tt.font(71),fill=INK,anchor="mm")
-        elif scene=="house":
-            d.rounded_rectangle((430,450,990,790),20,fill=(255,248,227),outline=RED,width=16)
-            d.text((710,555),"पता गलत!",font=tt.font(100),fill=RED,anchor="mm")
-            d.text((710,690),"वापस मत भेजना!",font=tt.font(63),fill=INK,anchor="mm")
+    # Story-first action overlays. Do not cycle giant text cards every 1.3s:
+    # those used to cover the actual gag and made the scene look like a slideshow.
+    phase=t/max(1,n-1)
+    if scene=="sweets":
+        # The COD carton slides across the sweets: the promised gift is replaced.
+        if phase>0.34:
+            x=int(50+min(1,(phase-.34)/.35)*190)
+            _box(d,x,545,290,240,"COD")
+    elif scene=="arrival":
+        # Delivery stack keeps growing instead of alternating unrelated cards.
+        if phase>.38:
+            _box(d,int(930-400*min(1,(phase-.38)/.4)),735,200,145,"COD")
+    elif scene=="freight":
+        # Visible impact: a lightning crack travels down the failed UPI phone.
+        if phase>.20:
+            yy=int(785+min(1,(phase-.2)/.6)*190)
+            d.line([(850,yy-60),(790,yy-5),(835,yy+5),(765,yy+90)],
+                   fill=(236,72,64),width=20,joint="curve")
+    elif scene=="bill":
+        # An exchange arrow connects the expensive TV to the person being offered.
+        x=int(450-65*math.sin(phase*math.pi))
+        d.line([(x,820),(x-170,820)],fill=YELLOW,width=24)
+        d.polygon([(x-195,820),(x-145,786),(x-145,854)],fill=YELLOW)
+    elif scene=="house":
+        # A red return stamp lands on the COD parcel as Dadi finishes the punch.
+        if phase>.48:
+            scale=min(1,(phase-.48)/.26)
+            cx,cy=765,1090
+            r=int(125*scale)
+            if r>5:
+                d.ellipse((cx-r,cy-r,cx+r,cy+r),outline=RED,width=18)
+                d.line((cx-r//2,cy-r//2,cx+r//2,cy+r//2),fill=RED,width=15)
 
 
 def frames(line, episode, talk, n, cut, seed=0):
@@ -189,8 +184,8 @@ def frames(line, episode, talk, n, cut, seed=0):
         _scene_action(im,scene,t,n)
         if scene in ("freight","bill","house"):
             _character(im,courier,70+int(9*math.sin(t/7)),810,575)
-        _character(im,supporting,5,1120,610,flip=True)
-        _character(im,sp,600,990,760)
+        _character(im,supporting,5+int(9*math.sin(t/8)),1120+int(5*math.sin(t/10)),610,flip=True)
+        _character(im,sp,600+int(8*math.sin(t/6)),990+int(7*math.sin(t/9)),760)
         d=ImageDraw.Draw(im)
         if scene=="house" and t>=int(n*.40):
             # Physical payoff: Dadi has packed Chacha, not merely flashed a RETURN icon.
