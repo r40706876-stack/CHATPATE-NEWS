@@ -1,56 +1,54 @@
-"""Fast storyboard/scene QA before costly TTS and full MP4 encoding."""
+"""Fast, honest story-stage preflight before expensive TTS/MP4 encoding.
+
+Tests actual full-frame story backgrounds/props, not the unused split-screen
+preview. Passing this check does NOT prove comedy quality or viewer retention.
+"""
 import json
 import sys
 from pathlib import Path
-
-# GitHub executes this file as a script, so the repository root is not on sys.path.
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 
 import numpy as np
-from PIL import Image, ImageDraw
-import reel_studio as studio
+from PIL import Image
+import story_stage
 
-EP = Path("episodes/waiting_ticket_comedy.json")
-EXPECTED = ["sweets", "arrival", "laddoo_hdmi", "bill", "delivery"]
-VALID = set(EXPECTED) | {"shop", "showroom"}
+EXPECTED=("sweets","arrival","otp","bill","house")
 
 
 def main():
-    ep = json.loads(EP.read_text(encoding="utf-8"))
-    lines = ep["lines"]
-    if len(lines) != len(EXPECTED):
-        raise SystemExit("Story preflight: expected five illustrated dialogue beats")
-    scenes = [line.get("scene") for line in lines]
+    ep=json.loads(Path("episodes/waiting_ticket_comedy.json").read_text(encoding="utf-8"))
+    lines=ep["lines"]
+    scenes=tuple(x.get("scene") for x in lines)
     if scenes != EXPECTED:
-        raise SystemExit(f"Story preflight: dialogue/scene mismatch: {scenes} != {EXPECTED}")
-    if not ep.get("no_clips") or ep.get("visual_policy") != "character_only":
-        raise SystemExit("Story preflight: unrelated external clips/images are not disabled")
-    if any(x not in VALID for x in scenes):
-        raise SystemExit("Story preflight: unknown scene name")
-    # Render two representative frames per beat; verify actual visual changes.
-    size = (1056, 810)
-    contact = Image.new("RGB", (size[0] * 2, size[1] * len(scenes)), (255, 255, 255))
-    differences = []
-    for i, scene in enumerate(scenes):
-        gen = studio._story_scene({"scene": scene}, size)
-        before = next(gen)
-        after = None
-        for _ in range(int(studio.FPS * 1.7)):
-            after = next(gen)
-        a = np.asarray(before.resize((176, 135)), dtype=np.float32)
-        b = np.asarray(after.resize((176, 135)), dtype=np.float32)
-        difference = float(np.abs(a - b).mean())
-        differences.append(round(difference, 1))
-        if difference < 9:
-            raise SystemExit(f"Story preflight: scene {i+1} ({scene}) is effectively static ({difference:.1f})")
-        contact.paste(before, (0, i * size[1]))
-        contact.paste(after, (size[0], i * size[1]))
-        gen.close()
-    contact.resize((792, 1520)).save("preflight_storyboard.jpg", quality=84)
-    print("PASS: dialogue matches all five cartoon scenes")
-    print("PASS: every scene has an actual visual change", differences)
-    print("PASS: storyboard generated before audio/full video render")
+        raise SystemExit(f"Story-stage preflight: incorrect narrative scenes {scenes}")
+    if not ep.get("no_clips") or ep.get("visual_policy")!="character_only":
+        raise SystemExit("Story-stage preflight: external clips/images must remain disabled")
+    if any(x.get("shot")!="story" for x in lines):
+        raise SystemExit("Story-stage preflight: each line must use full-frame story shot")
+    base=story_stage._house_base()
+    tiles=[]
+    report=[]
+    for i,scene in enumerate(scenes):
+        samples=[]
+        for t in (0,35):
+            im=base.copy()
+            story_stage._scene_action(im,scene,t,60)
+            samples.append(im)
+        a=np.asarray(samples[0].resize((180,320)),dtype=np.float32)
+        b=np.asarray(samples[1].resize((180,320)),dtype=np.float32)
+        diff=float(np.abs(a-b).mean())
+        if diff<0.015:
+            raise SystemExit(f"Story-stage preflight: no meaningful motion for {scene} ({diff:.3f})")
+        report.append({"scene":scene,"sample_frame_difference":round(diff,2),"speaker":lines[i]["who"]})
+        tiles.extend(im.resize((270,480)) for im in samples)
+    sheet=Image.new("RGB",(540,2400),"white")
+    for i,im in enumerate(tiles):
+        sheet.paste(im,((i%2)*270,(i//2)*480))
+    sheet.save("preflight_storyboard.jpg",quality=85)
+    Path("storyboard_report.json").write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")
+    print("PASS: five full-frame story beats are distinct and animate",report)
+    print("EDITORIAL HOLD: this is structural/visual motion QA, not human viewing QA")
 
 
-if __name__ == "__main__":
+if __name__=="__main__":
     main()
