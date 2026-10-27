@@ -44,14 +44,19 @@ jobs:
     outputs: {lines: "${{ steps.p.outputs.lines }}"}
     steps:
       - uses: actions/checkout@v4
-      - name: ffmpeg (apt अटके तो static build)
-        timeout-minutes: 12
+      - name: FFmpeg — reuse runner binaries; download only if absent
+        timeout-minutes: 6
         run: |
-          timeout 240 sudo apt-get install -y -qq --no-install-recommends ffmpeg libraqm0 \
-            || (timeout 180 sudo apt-get update -qq && timeout 240 sudo apt-get install -y -qq --no-install-recommends ffmpeg libraqm0) \
-            || (curl -sL --max-time 120 https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz | tar -xJ -C /tmp && sudo cp /tmp/ffmpeg-master-latest-linux64-gpl/bin/ff* /usr/local/bin/) \
-            || (curl -sL --max-time 120 https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz | tar -xJ -C /tmp && sudo cp /tmp/ffmpeg-*-static/ff* /usr/local/bin/)
+          if command -v ffmpeg >/dev/null 2>&1 && command -v ffprobe >/dev/null 2>&1; then
+            echo "Using runner FFmpeg and FFprobe; skipping slow Ubuntu mirror"
+          else
+            curl -fLsS --retry 2 --max-time 150 https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz -o /tmp/ffmpeg.tar.xz
+            mkdir -p /tmp/ffmpeg-bin
+            tar -xJf /tmp/ffmpeg.tar.xz -C /tmp/ffmpeg-bin
+            sudo cp /tmp/ffmpeg-bin/ffmpeg-*-static/ffmpeg /tmp/ffmpeg-bin/ffmpeg-*-static/ffprobe /usr/local/bin/
+          fi
           ffmpeg -version | head -1
+          ffprobe -version | head -1
       - id: p
         run: |
           set -o pipefail
@@ -158,14 +163,19 @@ jobs:
     permissions: {contents: write}
     steps:
       - uses: actions/checkout@v4
-      - name: ffmpeg (apt अटके तो static build)
-        timeout-minutes: 12
+      - name: FFmpeg — reuse runner binaries; download only if absent
+        timeout-minutes: 6
         run: |
-          timeout 240 sudo apt-get install -y -qq --no-install-recommends ffmpeg libraqm0 \
-            || (timeout 180 sudo apt-get update -qq && timeout 240 sudo apt-get install -y -qq --no-install-recommends ffmpeg libraqm0) \
-            || (curl -sL --max-time 120 https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz | tar -xJ -C /tmp && sudo cp /tmp/ffmpeg-master-latest-linux64-gpl/bin/ff* /usr/local/bin/) \
-            || (curl -sL --max-time 120 https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz | tar -xJ -C /tmp && sudo cp /tmp/ffmpeg-*-static/ff* /usr/local/bin/)
+          if command -v ffmpeg >/dev/null 2>&1 && command -v ffprobe >/dev/null 2>&1; then
+            echo "Using runner FFmpeg and FFprobe; skipping slow Ubuntu mirror"
+          else
+            curl -fLsS --retry 2 --max-time 150 https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz -o /tmp/ffmpeg.tar.xz
+            mkdir -p /tmp/ffmpeg-bin
+            tar -xJf /tmp/ffmpeg.tar.xz -C /tmp/ffmpeg-bin
+            sudo cp /tmp/ffmpeg-bin/ffmpeg-*-static/ffmpeg /tmp/ffmpeg-bin/ffmpeg-*-static/ffprobe /usr/local/bin/
+          fi
           ffmpeg -version | head -1
+          ffprobe -version | head -1
       - uses: actions/download-artifact@v4
         with: {name: st_in, path: st_in}
       - name: Retrieve same-run Gemini editorial verdict for delivery gate
