@@ -93,8 +93,10 @@ def _scene_action(im, scene, t, n, line=None):
         for j in range(3):
             _box(d, int(1100-350*min(1,(t-j*7)/17))-j*175, 910-j*120+wobble, 240,160)
         _tv(d,485,570+wobble,360,265)
-        d.rounded_rectangle((435,455,920,535),18,fill=INK)
-        d.text((677,495),"घर बना शोरूम!",font=tt.font(58),fill="white",anchor="mm")
+        # The TV displays the laddoo Chacha asked for: a visual gag, not a title card.
+        d.ellipse((610,630,740,760),fill=(242,162,52),outline=(166,96,38),width=9)
+        for dx,dy in ((-27,-15),(12,-23),(-8,23),(30,15)):
+            d.ellipse((675+dx-8,690+dy-8,675+dx+8,690+dy+8),fill=(255,218,125))
     elif scene=="freight":
         d.rounded_rectangle((415,710,925,1120),42,fill=(34,52,73),outline=YELLOW,width=13)
         d.rounded_rectangle((450,745,890,1070),26,fill=(243,249,252))
@@ -114,26 +116,38 @@ def _scene_action(im, scene, t, n, line=None):
         d.rounded_rectangle((540,1210,965,1270),12,fill=YELLOW)
         d.text((752,1240),"इतना बड़ा बिल!",font=tt.font(44),fill=INK,anchor="mm")
     elif scene=="house":
-        # The courier is an existing 3D-style Ramesh sprite, composited below.
-        d.rounded_rectangle((375,520,1000,870),25,fill=(250,241,214),outline=RED,width=16)
-        say = str((line or {}).get("say", ""))
+        # Visual punchlines are acted out as objects; no giant explanation cards.
+        say=str((line or {}).get("say",""))
         if "दरवाज़ा" in say:
-            title, detail = "दरवाज़ा भी ले जाओ!", "अगला पार्सल बंद!"
+            # Chacha tries to send the door back with the television.
+            x=int(600+220*q)
+            d.rounded_rectangle((x,540,x+190,980),16,fill=(139,86,53),outline=(70,45,33),width=13)
+            d.ellipse((x+155,755,x+177,777),fill=YELLOW)
+            d.line((x-80,750,x-10,750),fill=RED,width=22)
+            d.polygon([(x+5,750),(x-40,718),(x-40,782)],fill=RED)
         elif "रिमोट" in say:
-            title, detail = "रिमोट कहाँ है?", "चाचा बिना रिमोट!"
+            # Pinky searches for a remote and finds none.
+            d.rounded_rectangle((580,585,760,1000),36,fill=INK,outline=YELLOW,width=10)
+            for j in range(4):
+                d.ellipse((620+(j%2)*80,670+(j//2)*105,665+(j%2)*80,715+(j//2)*105),fill=(229,234,239))
+            d.line((555,565,790,1020),fill=RED,width=23)
+            d.ellipse((760,515,875,630),outline=RED,width=14)
         elif "रोटी" in say:
-            title, detail = "दो रोटी डालो!", "दिनभर बकबक!"
+            # Two rotis power the nonstop talking Chacha; sound waves keep growing.
+            for j in range(2):
+                x=int(510+j*180+22*math.sin(q*math.pi*2+j))
+                y=int(620+j*55-45*q)
+                d.ellipse((x,y,x+150,y+150),fill=(222,170,91),outline=(153,102,51),width=10)
+                for k in range(3):
+                    d.ellipse((x+30+k*30,y+45,x+42+k*30,y+57),fill=(174,118,65))
+            for j in range(3):
+                d.arc((775-j*40,680-j*40,875+j*40,900+j*40),-80,80,fill=RED,width=12)
         else:
-            title, detail = "चाचा एक्सचेंज!", "टीवी के बदले चाचा!"
-        d.text((685,635),title,font=tt.font(66),fill=RED,anchor="mm")
-        d.text((685,755),detail,font=tt.font(43),fill=INK,anchor="mm")
-        for j in range(3):
-            x=530+j*150
-            _box(d,x,950+j*32+wobble,145,120,"COD")
-        if t>int(n*.48) and "एक्सचेंज" in str((line or {}).get("say","")):
-            d.line((350,860,975,860),fill=RED,width=22)
-            d.line((400,780,940,920),fill=RED,width=20)
-
+            # Dadi offers Chacha in exchange for the television.
+            _tv(d,510,540,300,220)
+            d.line((790,875,530,875),fill=YELLOW,width=23)
+            d.polygon([(505,875),(560,835),(560,915)],fill=YELLOW)
+            _box(d,int(665+90*q),1000,250,180,"COD")
 
     # Story-first action overlays. Do not cycle giant text cards every 1.3s:
     # those used to cover the actual gag and made the scene look like a slideshow.
@@ -148,11 +162,12 @@ def _scene_action(im, scene, t, n, line=None):
         if phase>.38:
             _box(d,int(930-400*min(1,(phase-.38)/.4)),735,200,145,"COD")
     elif scene=="freight":
-        # Visible impact: a lightning crack travels down the failed UPI phone.
+        # The courier presents the COD invoice; never depict an unrelated UPI error.
         if phase>.20:
-            yy=int(785+min(1,(phase-.2)/.6)*190)
-            d.line([(850,yy-60),(790,yy-5),(835,yy+5),(765,yy+90)],
-                   fill=(236,72,64),width=20,joint="curve")
+            x=int(970-130*min(1,(phase-.20)/.65))
+            d.rounded_rectangle((x,1030,x+150,1250),12,fill=(255,250,232),outline=RED,width=9)
+            d.text((x+75,1100),"COD",font=tt.font(46),fill=RED,anchor="mm")
+            d.text((x+75,1180),"₹",font=tt.font(63),fill=INK,anchor="mm")
     elif scene=="bill":
         # An exchange arrow connects the expensive TV to the person being offered.
         x=int(450-65*math.sin(phase*math.pi))
