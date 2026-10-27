@@ -280,7 +280,15 @@ def frames(line, episode, talk, n, cut, seed=0):
                         d.rounded_rectangle((x-12, y-12, x+insert.width+12, y+insert.height+12),
                                             16, fill=(255,255,255), outline=INK, width=8)
                         im.paste(insert, (x,y))
-                        d.text((x+12,y+insert.height+18), "संदर्भ चित्र", font=tt.font(31), fill=INK)
+                        # Display source/creator on the actual video, not only in metadata.
+                        # Keep the label legible within the safe area.
+                        credit = "चित्र: " + str(entry["author"]).strip()[:34]
+                        source = "स्रोत: " + str(entry["source"]).strip()[:43]
+                        credit_y = y + insert.height + 13
+                        d.rounded_rectangle((x-8, credit_y-5, min(1060, x+insert.width+16), credit_y+88),
+                                            8, fill=(255,250,233), outline=INK, width=3)
+                        d.text((x+5,credit_y+5), credit, font=tt.font(27), fill=INK)
+                        d.text((x+5,credit_y+44), source, font=tt.font(24), fill=INK)
         except (OSError, ValueError, TypeError, KeyError):
             pass
         if scene=="arrival" and any(k in str(line.get("say","")) for k in ("वसूली", "बैंक मैनेजर")):
