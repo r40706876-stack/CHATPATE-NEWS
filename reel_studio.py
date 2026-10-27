@@ -835,7 +835,7 @@ def mix_studio(voices, events, tail, out, moods=None):
     # A hard clip produced inter-sample AAC peaks above 0 dBFS in the
     # independently decoded 34.72s episode. Use a gentle peak-safe limiter
     # before PCM encoding; leave headroom for AAC reconstruction overshoot.
-    mix = 0.78 * np.tanh(mix[:total] * 1.25) / np.tanh(1.25)
+    mix = 0.62 * np.tanh(mix[:total] * 1.25) / np.tanh(1.25)
     import wave
     with wave.open(str(out), "wb") as w:
         w.setnchannels(1)
