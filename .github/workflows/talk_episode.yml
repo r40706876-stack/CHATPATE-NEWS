@@ -17,6 +17,7 @@ on:
       - 'story_stage.py'
       - 'reel_studio.py'
       - 'talk_episode.py'
+      - 'memes.py'
       - 'qa.py'
       - 'tts.py'
       - 'comedy_review.py'
