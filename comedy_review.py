@@ -29,7 +29,7 @@ def review(path):
     report = {"status": "unavailable", "episode": str(path), "editorial_only": True}
     try:
         import gemini
-        data = gemini.json_from(gemini.ask(prompt, json_mode=True, temperature=0.2, patient=False))
+        data = gemini.json_from(gemini.ask(prompt, json_mode=True, temperature=0.2, patient=False, fast=True))
         dims = ("hook", "character_clash", "surprise", "shareability")
         ratings = {k: float(data[k]) for k in dims}
         if any(not (0 <= value <= 10) for value in ratings.values()):
