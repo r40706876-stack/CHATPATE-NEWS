@@ -195,4 +195,11 @@ def frames(line, episode, talk, n, cut, seed=0):
             d.rounded_rectangle((45,1490,398,1635),14,fill=(255,250,233),outline=RED,width=8)
             d.text((221,1535),"पता गलत!",font=tt.font(57),fill=RED,anchor="mm")
             d.text((221,1594),"चाचा पैक!",font=tt.font(42),fill=INK,anchor="mm")
+        # Alternate full-scene camera framing during long dialogue. This is a
+        # real visual cut across props and characters, not a subtitle flicker.
+        # Keep the original wide composition for the first beat and payoff.
+        if (t // 18) % 2 == 1 and t < n - 6:
+            w, h = im.size
+            margin_x, margin_y = int(w * .105), int(h * .105)
+            im = im.crop((margin_x, margin_y, w - margin_x, h - margin_y)).resize((w, h), Image.Resampling.BICUBIC)
         yield im
