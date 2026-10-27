@@ -233,13 +233,27 @@ def quality(ep):
     real = {p.name.split("_")[0] for p in files if "_set" not in p.name}
     sets = {p.name.split("_")[0] for p in files if "_set" in p.name}
     clips_n = sum("clip" in p.name for p in files)
+    # Licensed Commons illustrations are composited by story_stage, not broll.
+    # Count them separately: they are NOT footage of the real news incident.
+    licensed_scenes = set()
+    manifest = ROOT / "assets/licensed/manifest.json"
+    if manifest.is_file():
+        try:
+            for scene,entry in json.loads(manifest.read_text(encoding="utf-8")).items():
+                media = ROOT / "assets/licensed" / Path(entry.get("path","")).name
+                if media.is_file() and all(entry.get(k) for k in ("author","license","source")):
+                    licensed_scenes.add(scene)
+        except (OSError,ValueError,TypeError):
+            pass
+    licensed_lines = sum(ln.get("scene") in licensed_scenes for ln in ep["lines"])
     v, err = ep.get("_voice") or "?", str(ep.get("_voice_err") or "")
     json.dump({"voice": v, "voice_err": err, "lines": n, "real_visual_lines": len(real), "set_lines": len(sets),
-               "clips": clips_n, "format": ep.get("format", "")}, open(ROOT / "last_quality.json", "w", encoding="utf-8"),
+               "clips": clips_n, "licensed_illustrative_lines": licensed_lines, "format": ep.get("format", "")}, open(ROOT / "last_quality.json", "w", encoding="utf-8"),
               ensure_ascii=False, indent=1)
     msg = (f"📋 Video जाँच — आवाज़: {'Gemini ✅' if v == 'gemini' else v + ' (backup) ⚠️'}"
            + (f"\n   Gemini आवाज़ क्यों नहीं: {err[:160]}" if v != "gemini" and err else "")
            + f"\n🖼 असली तस्वीर/clip वाली lines: {len(real)}/{n} (YouTube clip: {clips_n})"
+           + f"\n🖼 Licensed illustrative Commons photos: {licensed_lines}/{n} (not actual event footage)"
            + (f", अपनी AI तस्वीर: {len(sets)}" if sets else ""))
     # Animated character-only episodes intentionally use no external clips.
     cartoon = ep.get("visual_policy") == "character_only"
@@ -249,7 +263,7 @@ def quality(ep):
     if v != "gemini":
         msg += "\n⚠️ Gemini voice unavailable; backup voice used. Listen before publishing."
     if not cartoon and len(real) * 2 < n:
-        msg += "\n⚠️ Real-image/clip coverage below half; inspect visuals manually."
+        msg += "\n⚠️ Actual event footage not verified; inspect animated/illustrative visuals manually."
     msg += "\n⚠️ Automated checks cannot establish comedy quality or Instagram retention."
     return msg
 
