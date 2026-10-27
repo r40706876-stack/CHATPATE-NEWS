@@ -291,7 +291,7 @@ jobs:
 
   launch-final-demo:
     needs: [regression, godot-render, blender-render, remotion-render]
-    if: github.event_name == 'push' && contains(github.event.head_commit.message, '[render-demo]')
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[render-demo]'))
     runs-on: ubuntu-latest
     permissions:
       actions: write
