@@ -136,6 +136,10 @@ def person(name,x,shirt,elder=False):
     sphere(name+" head",(0,.12,2.40),.33,skin,parent=root)
     sphere(name+" left eye",(-.13,-.16,2.45),.044,dark,parent=root)
     sphere(name+" right eye",(.13,-.16,2.45),.044,dark,parent=root)
+    # Eyes and expressive mouth must remain readable in a portrait phone crop.
+    cube(name+" left eyebrow",(-.13,-.21,2.57),(.18,.055,.055),dark,parent=root)
+    cube(name+" right eyebrow",(.13,-.21,2.57),(.18,.055,.055),dark,parent=root)
+    cube(name+" surprised mouth",(0,-.205,2.17),(.15,.055,.11),dark,parent=root)
     for side in (-1,1):
         cube(name+" arm "+str(side),(.48*side,.20,1.52),(.20,.30,.90),shirt,parent=root)
         cube(name+" leg "+str(side),(.18*side,.23,.50),(.23,.33,.95),dark,parent=root)
@@ -151,6 +155,7 @@ def person(name,x,shirt,elder=False):
 
 courier=person("courier",-1.85,blue)
 chacha=person("Chacha",1.78,white,elder=True)
+lettering("PAY COD",(.28,.185,1.46),.22,red,"TV payment demand")
 lettering("COD",(-.30,-1.79,.73),.27,white,"COD parcel text")
 lettering("1.69 LAKH",(0,-.25,3.30),.43,red,"large COD amount")
 lettering("TV DELIVERY",(0,-.25,3.76),.28,dark,"delivery headline")
@@ -169,6 +174,25 @@ for frame,px,cx,rx,tz in [
     for ob in (parcel,courier,chacha):
         ob.keyframe_insert(data_path="location",frame=frame)
     chacha.keyframe_insert(data_path="rotation_euler",frame=frame)
+
+# Physical acting timed to the four-second delivery gag: the courier
+# presents the box, Chacha throws up both arms, and the parcel wobbles.
+for frame, gesture, panic, wobble in [
+    (1,0.0,0.0,0.0),
+    (22,-0.45,0.25,-0.04),
+    (45,-0.80,0.75,0.08),
+    (70,-0.20,1.10,-0.06),
+    (96,-0.65,0.85,0.0),
+]:
+    courier_arm=bpy.data.objects["courier arm 1"]
+    courier_arm.rotation_euler[1]=gesture
+    courier_arm.keyframe_insert(data_path="rotation_euler",frame=frame)
+    for side in (-1,1):
+        chacha_arm=bpy.data.objects["Chacha arm "+str(side)]
+        chacha_arm.rotation_euler[1]=panic * side
+        chacha_arm.keyframe_insert(data_path="rotation_euler",frame=frame)
+    parcel.rotation_euler[1]=wobble
+    parcel.keyframe_insert(data_path="rotation_euler",frame=frame)
 
 for frame,z in [(1,0),(48,.14),(96,.04)]:
     tv.rotation_euler[2]=z
