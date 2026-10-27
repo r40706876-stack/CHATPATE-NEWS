@@ -8,6 +8,7 @@
 """
 import subprocess
 import sys
+import re
 
 import numpy as np
 
@@ -105,6 +106,15 @@ def check_media(video):
             rms = float(np.sqrt(np.mean(samples ** 2)))
             if rms < 90:
                 issues.append("शुरुआती 3 सेकंड में आवाज़ बहुत कम/गायब")
+        # Sample-peak checks miss AAC inter-sample overshoot. Measure the
+        # decoded true peak so a technically valid but clipping reel is held.
+        meter = subprocess.run(
+            ["ffmpeg", "-hide_banner", "-nostats", "-i", str(p),
+             "-vn", "-af", "ebur128=peak=true", "-f", "null", "-"],
+            capture_output=True, text=True, check=True)
+        peaks = re.findall(r"True peak:\\s*Peak:\\s*(-?\\d+(?:\\.\\d+)?)\\s*dBFS", meter.stderr)
+        if peaks and float(peaks[-1]) >= 0.0:
+            issues.append(f"AAC true peak {peaks[-1]} dBFS: clipping risk")
         return issues
     except (OSError, ValueError, subprocess.CalledProcessError) as exc:
         return ["ऑडियो/वीडियो जाँच नहीं चली: " + type(exc).__name__]
