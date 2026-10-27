@@ -45,7 +45,10 @@ def review(path):
     OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2), encoding="utf-8")
     print("Independent comedy editorial review:", json.dumps(report, ensure_ascii=False))
     if report["status"] == "reviewed" and report["score"] < MIN_EDITORIAL_SCORE:
-        raise SystemExit("Comedy editorial gate failed; improve the script before delivery")
+        if ep.get("no_send") is True:
+            print("EDITORIAL HOLD: below 8.5/10; private draft render permitted, Telegram blocked by no_send")
+        else:
+            raise SystemExit("Comedy editorial gate failed; improve the script before delivery")
 
 
 if __name__ == "__main__":
