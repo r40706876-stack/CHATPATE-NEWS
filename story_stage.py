@@ -278,6 +278,24 @@ def frames(line, episode, talk, n, cut, seed=0):
             raise RuntimeError("Original Blender COD proof missing: cannot render integrated 3D arrival")
         from reel_studio import _vid_frames
         cod_frames=_vid_frames(cod_path, 1080, 1920)
+    # Load and verify each licensed illustration ONCE, not once per video frame.
+    # A failed/missing Commons download must never be misrepresented as footage.
+    licensed_entry, licensed_insert = None, None
+    try:
+        import json
+        manifest_path = Path("assets/licensed/manifest.json")
+        if manifest_path.is_file():
+            entries = json.loads(manifest_path.read_text(encoding="utf-8"))
+            entry = entries.get(scene, {})
+            if all(entry.get(k) for k in ("path", "author", "source", "license")):
+                media = Path("assets/licensed") / Path(entry["path"]).name
+                if media.is_file() and media.suffix.lower() in (".png", ".jpg", ".jpeg", ".webp"):
+                    with Image.open(media) as picture:
+                        licensed_insert = picture.convert("RGB")
+                    licensed_insert.thumbnail((550, 430), Image.Resampling.LANCZOS)
+                    licensed_entry = entry
+    except (OSError, ValueError, TypeError, KeyError):
+        licensed_entry, licensed_insert = None, None
     for t,sp in enumerate(talking):
         im=base.copy()
         _scene_action(im,scene,t,n,line=line)
@@ -307,37 +325,24 @@ def frames(line, episode, talk, n, cut, seed=0):
                 d.rectangle((x, y+765, x+430, y+809), fill=INK)
                 d.text((x+215, y+786), "3D रीक्रिएशन", font=tt.font(29),
                        fill="white", anchor="mm")
-        # Optional licensed documentary insert: explicitly curated media only.
-        # Never download arbitrary news/YouTube footage and imply it is the event.
-        # assets/licensed/manifest.json entries require path, author, source, license.
-        try:
-            import json
-            manifest_path = Path("assets/licensed/manifest.json")
-            if manifest_path.is_file():
-                entries = json.loads(manifest_path.read_text(encoding="utf-8"))
-                entry = entries.get(scene, {})
-                if all(entry.get(k) for k in ("path", "author", "source", "license")):
-                    media = Path("assets/licensed") / Path(entry["path"]).name
-                    if media.is_file() and media.suffix.lower() in (".png", ".jpg", ".jpeg", ".webp"):
-                        insert = Image.open(media).convert("RGB")
-                        insert.thumbnail((550, 430), Image.Resampling.LANCZOS)
-                        pan = int(35 * math.sin(t / max(1, n - 1) * math.pi))
-                        x, y = 460 + pan, 380
-                        d = ImageDraw.Draw(im)
-                        d.rounded_rectangle((x-12, y-12, x+insert.width+12, y+insert.height+12),
-                                            16, fill=(255,255,255), outline=INK, width=8)
-                        im.paste(insert, (x,y))
-                        # Display source/creator on the actual video, not only in metadata.
-                        # Keep the label legible within the safe area.
-                        credit = "चित्र: " + str(entry["author"]).strip()[:34]
-                        source = "स्रोत: " + str(entry["source"]).strip()[:43]
-                        credit_y = y + insert.height + 13
-                        d.rounded_rectangle((x-8, credit_y-5, min(1060, x+insert.width+16), credit_y+88),
-                                            8, fill=(255,250,233), outline=INK, width=3)
-                        d.text((x+5,credit_y+5), credit, font=tt.font(27), fill=INK)
-                        d.text((x+5,credit_y+44), source, font=tt.font(24), fill=INK)
-        except (OSError, ValueError, TypeError, KeyError):
-            pass
+        # Clearly labelled *illustrative* Commons photo, not claimed event footage.
+        # On the Blender delivery reveal, let the original 3D fill the screen first.
+        if licensed_insert is not None and not (cod_insert and t < min(33, max(1, n // 2))):
+            pan = int(35 * math.sin(t / max(1, n - 1) * math.pi))
+            x, y = 460 + pan, 380
+            d = ImageDraw.Draw(im)
+            d.rounded_rectangle((x-12, y-12, x+licensed_insert.width+12, y+licensed_insert.height+12),
+                                16, fill=(255,255,255), outline=INK, width=8)
+            im.paste(licensed_insert, (x,y))
+            credit_y = y + licensed_insert.height + 13
+            d.rounded_rectangle((x-8, credit_y-5, min(1060, x+licensed_insert.width+16), credit_y+115),
+                                8, fill=(255,250,233), outline=INK, width=3)
+            d.text((x+5,credit_y+4), "चित्र: " + str(licensed_entry["author"])[:29],
+                   font=tt.font(26), fill=INK)
+            d.text((x+5,credit_y+42), "Wikimedia Commons | " + str(licensed_entry["license"])[:20],
+                   font=tt.font(24), fill=INK)
+            d.text((x+5,credit_y+80), "उदाहरण चित्र — असली घटना नहीं",
+                   font=tt.font(23), fill=RED)
         if scene=="arrival" and any(k in str(line.get("say","")) for k in ("वसूली", "बैंक मैनेजर")):
             # Existing courier character literally emerges from the television.
             # Start small and move upward instead of showing another static icon.
