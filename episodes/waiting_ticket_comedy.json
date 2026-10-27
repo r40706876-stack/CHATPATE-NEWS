@@ -1,7 +1,7 @@
 {
   "title": "मिठाई माँगी, ₹1.69 लाख का टीवी ऑर्डर!",
   "topic": "मदुरै के क्रिएटर वीरमणि ने दिवाली की मिठाई माँगी; उनके पते पर अनचाहे COD टीवी-फ्रिज ऑर्डर आने लगे",
-  "hook": "₹1.69 लाख का टीवी! माँगे थे सिर्फ़ लड्डू!",
+  "hook": "मिठाई माँगी—₹1.69 लाख का COD टीवी आ गया!",
   "poll": {
     "q": "फ्री गिफ्ट पर COD बिल आए तो?",
     "a": "वापस करूँगा",
@@ -10,7 +10,7 @@
   "lines": [
     {
       "who": "bablu",
-      "say": "₹1.69 लाख का टीवी! माँगे थे सिर्फ़ लड्डू!",
+      "say": "मिठाई माँगी—₹1.69 लाख का COD टीवी आ गया!",
       "big": "मिठाई के बदले ₹1.69 लाख का टीवी!",
       "scene": "sweets",
       "expr": "hairan",
@@ -22,50 +22,50 @@
     },
     {
       "who": "pinky",
-      "say": "चाचा, मिठाई माँगी—घर के बाहर शोरूम खुल गया!",
-      "big": "घर के बाहर शोरूम!",
+      "say": "चाचा, पता भेजा था या शोरूम की फ्रेंचाइज़ी ली?",
+      "big": "पता दिया या शोरूम खोल दिया?!",
       "scene": "arrival",
       "expr": "tanz",
       "shot": "story",
       "punch": false,
       "visuals": [
-        "three parcels become showroom outside house"
+        "courier piles COD TV boxes at Chacha house while Pinky roasts"
       ]
     },
     {
       "who": "chacha",
-      "say": "टीवी लौटाऊँ? डिलीवरी वाला लड्डू का भाड़ा माँगे!",
+      "say": "लड्डू माँगे थे! डिलीवरी वाला भाड़ा भी माँग रहा!",
       "big": "लड्डू का भी भाड़ा?!",
       "scene": "freight",
       "expr": "hairan",
       "shot": "story",
       "punch": true,
       "visuals": [
-        "courier demands laddoo freight for refused TV"
+        "courier hands Chacha COD freight bill for laddoo"
       ]
     },
     {
       "who": "pinky",
-      "say": "कैश नहीं? घर की रजिस्ट्री स्कैन करूँ?",
-      "big": "टीवी के बदले घर की रजिस्ट्री?!",
+      "say": "कैश नहीं? चाचा को एक्सचेंज में ले जा!",
+      "big": "कैश नहीं? चाचा एक्सचेंज!",
       "scene": "bill",
       "expr": "tanz",
       "shot": "story",
       "punch": true,
       "visuals": [
-        "delivery worker holds 169000 COD invoice and asks for house papers"
+        "Pinky points at COD bill and offers Chacha in exchange to courier"
       ]
     },
     {
       "who": "dadi",
-      "say": "रजिस्ट्री छोड़! चाचा को रिटर्न करो—बिना वारंटी का माल!",
-      "big": "घर भी रिटर्न पार्सल?!",
+      "say": "ले जा बेटा! डिब्बा मत खोलना—बोलता बहुत है!",
+      "big": "चाचा पैक! डिब्बा मत खोलना!",
       "scene": "house",
       "expr": "gussa",
       "shot": "story",
       "punch": true,
       "visuals": [
-        "Dadi slaps return sticker on Chacha instead of paying COD"
+        "Dadi packs Chacha into a return carton labelled NO RETURN"
       ]
     }
   ],
@@ -76,7 +76,7 @@
   "fictional_satire": true,
   "source_url": "https://www.indiatoday.in/amp/trending-news/story/madurai-mans-diwali-wish-goes-wrong-tvs-fridges-and-lakhs-in-cod-orders-pour-in-3016108-2026-10-13",
   "no_send": true,
-  "qa_note": "2026-10-27: Replaced static split-screen with full-frame local character+prop stage, five sequential story actions, and coherent house-registry escalation. Private draft; independent Gemini score and real video visual QA required. no_send remains true. No Instagram retention claims. 2026-10-27: tightened to pass <=10-word hook and <=55-word script gate after real workflow failure. 2026-10-27: second editorial iteration; shock-first hook, freight threat instead of repeated OTP, Dadi's Chacha-return roast. Still private until Gemini and visual approval. 2026-10-27: latest real render was 22.6s despite 13–18s target; trimmed dialogue from 52 to 40 words while retaining story escalation, corrected freight caption. Voice still fallback due to Gemini TTS 429; do not mark upload-ready.",
+  "qa_note": "2026-10-27: Replaced static split-screen with full-frame local character+prop stage, five sequential story actions, and coherent house-registry escalation. Private draft; independent Gemini score and real video visual QA required. no_send remains true. No Instagram retention claims. 2026-10-27: tightened to pass <=10-word hook and <=55-word script gate after real workflow failure. 2026-10-27: second editorial iteration; shock-first hook, freight threat instead of repeated OTP, Dadi's Chacha-return roast. Still private until Gemini and visual approval. 2026-10-27: latest real render was 22.6s despite 13–18s target; trimmed dialogue from 52 to 40 words while retaining story escalation, corrected freight caption. Voice still fallback due to Gemini TTS 429; do not mark upload-ready. 2026-10-27: independent Gemini critique found prior draft weak (hook 3, laugh density 2, shareability 3). Replaced stale house-registry beat with direct Pinky-Chacha exchange conflict and Dadi packaging punch. Real editorial and final visual/audio QA required; no_send true.",
   "no_clips": true,
   "visual_policy": "character_only",
   "no_memes": true,

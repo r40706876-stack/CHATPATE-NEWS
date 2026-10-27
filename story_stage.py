@@ -109,12 +109,12 @@ def _scene_action(im, scene, t, n):
         d.text((750,1010),"COD बिल",font=tt.font(71),fill=INK,anchor="mm")
         d.text((750,1130),"₹1,69,000",font=tt.font(76),fill=RED,anchor="mm")
         d.rounded_rectangle((540,1210,965,1270),12,fill=YELLOW)
-        d.text((752,1240),"घर की रजिस्ट्री?!",font=tt.font(44),fill=INK,anchor="mm")
+        d.text((752,1240),"चाचा एक्सचेंज?!",font=tt.font(44),fill=INK,anchor="mm")
     elif scene=="house":
         # The courier is an existing 3D-style Ramesh sprite, composited below.
         d.rounded_rectangle((375,520,1000,870),25,fill=(250,241,214),outline=RED,width=16)
-        d.text((685,635),"चाचा RETURN?!",font=tt.font(85),fill=RED,anchor="mm")
-        d.text((685,755),"RETURN TO SENDER",font=tt.font(39),fill=INK,anchor="mm")
+        d.text((685,635),"चाचा एक्सचेंज!",font=tt.font(85),fill=RED,anchor="mm")
+        d.text((685,755),"NO RETURN",font=tt.font(39),fill=INK,anchor="mm")
         for j in range(3):
             x=530+j*150
             _box(d,x,950+j*32+wobble,145,120,"COD")
@@ -143,7 +143,7 @@ def _scene_action(im, scene, t, n):
             d.text((720,685),"₹1,69,000",font=tt.font(78),fill=INK,anchor="mm")
         elif scene=="house":
             d.rounded_rectangle((430,460,980,760),25,fill=YELLOW,outline=RED,width=14)
-            d.text((705,605),"चाचा RETURN?!",font=tt.font(95),fill=RED,anchor="mm")
+            d.text((705,605),"चाचा एक्सचेंज!",font=tt.font(95),fill=RED,anchor="mm")
     elif beat==2:
         if scene=="sweets":
             _tv(d,445,480,470,325)
@@ -154,12 +154,12 @@ def _scene_action(im, scene, t, n):
             _box(d,460,465,460,290,"SWEETS COD")
         elif scene=="bill":
             d.rounded_rectangle((420,445,1020,805),25,fill=(252,225,217),outline=RED,width=12)
-            d.text((720,550),"रजिस्ट्री?",font=tt.font(91),fill=RED,anchor="mm")
+            d.text((720,550),"एक्सचेंज?",font=tt.font(91),fill=RED,anchor="mm")
             d.text((720,700),"₹1,69,000",font=tt.font(71),fill=INK,anchor="mm")
         elif scene=="house":
             d.rounded_rectangle((430,450,990,790),20,fill=(255,248,227),outline=RED,width=16)
-            d.text((710,555),"RETURN",font=tt.font(100),fill=RED,anchor="mm")
-            d.text((710,690),"चाचा भी पार्सल!",font=tt.font(63),fill=INK,anchor="mm")
+            d.text((710,555),"NO RETURN",font=tt.font(100),fill=RED,anchor="mm")
+            d.text((710,690),"डिब्बा मत खोलना!",font=tt.font(63),fill=INK,anchor="mm")
 
 
 def frames(line, episode, talk, n, cut, seed=0):
@@ -190,6 +190,11 @@ def frames(line, episode, talk, n, cut, seed=0):
         _character(im,sp,600,990,760)
         d=ImageDraw.Draw(im)
         if scene=="house" and t>=int(n*.40):
-            d.rounded_rectangle((25,1390,435,1545),18,fill=(255,246,221),outline=RED,width=13)
-            d.text((230,1465),"RETURN चाचा!",font=tt.font(57),fill=RED,anchor="mm")
+            # Physical payoff: Dadi has packed Chacha, not merely flashed a RETURN icon.
+            # Leave his face visible; the carton covers his torso and stays attached to him.
+            d.rounded_rectangle((12,1390,430,1730),20,fill=(201,146,92),outline=(108,69,44),width=14)
+            d.rectangle((200,1390,242,1730),fill=(246,212,150))
+            d.rounded_rectangle((45,1490,398,1635),14,fill=(255,250,233),outline=RED,width=8)
+            d.text((221,1535),"NO RETURN",font=tt.font(57),fill=RED,anchor="mm")
+            d.text((221,1594),"चाचा पैक!",font=tt.font(42),fill=INK,anchor="mm")
         yield im
