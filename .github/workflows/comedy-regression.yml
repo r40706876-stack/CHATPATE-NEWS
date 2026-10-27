@@ -6,6 +6,9 @@ on:
       - 'news_writer.py'
       - 'visuals.py'
       - 'talk_episode.py'
+      - 'story_stage.py'
+      - 'blender_cod_scene.py'
+      - 'fetch_licensed_news_visuals.py'
       - 'episodes/bijli.json'
       - 'run_daily.py'
       - 'tests/**'
@@ -217,26 +220,43 @@ jobs:
 
   blender-render:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
-      - name: Install Blender binary without slow Ubuntu package mirror
+      - name: Install Blender binary with bounded alternate-mirror fallback
+        timeout-minutes: 24
+        shell: bash
         run: |
-          set -e
+          set -euo pipefail
+          # Same proven portable-first strategy as Animation-special-.
           if ! command -v blender >/dev/null 2>&1; then
-            curl -fL --retry 2 --connect-timeout 15 --max-time 420 \
-              https://download.blender.org/release/Blender4.2/blender-4.2.0-linux-x64.tar.xz \
-              -o /tmp/blender.tar.xz
-            tar -xJf /tmp/blender.tar.xz -C /tmp
-            echo /tmp/blender-4.2.0-linux-x64 >> "$GITHUB_PATH"
-            export PATH="/tmp/blender-4.2.0-linux-x64:$PATH"
+            mkdir -p "$RUNNER_TEMP/blender"
+            if timeout --signal=TERM --kill-after=15s 600s curl -fL --retry 3 --retry-delay 3 --connect-timeout 25 \
+              -o "$RUNNER_TEMP/blender.tar.xz" \
+              "https://download.blender.org/release/Blender4.2/blender-4.2.0-linux-x64.tar.xz" &&
+              tar -xJf "$RUNNER_TEMP/blender.tar.xz" -C "$RUNNER_TEMP/blender" --strip-components=1 &&
+              test -x "$RUNNER_TEMP/blender/blender"; then
+              echo "$RUNNER_TEMP/blender" >> "$GITHUB_PATH"
+              export PATH="$RUNNER_TEMP/blender:$PATH"
+            else
+              echo "::warning::Portable Blender unavailable; trying bounded apt fallback"
+              sudo sed -i 's@azure.archive.ubuntu.com@archive.ubuntu.com@g' /etc/apt/sources.list.d/ubuntu.sources 2>/dev/null || true
+              timeout 180s sudo apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=25 update -qq
+              timeout 720s sudo env DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=25 install -y --no-install-recommends blender
+            fi
           fi
-          if ! ldconfig -p | grep 'libEGL.so.1' >/dev/null; then
-            timeout 120 sudo apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=20 \
-              install -y --no-install-recommends libegl1 libgl1 libopengl0
+          if ! ldconfig -p | grep -q 'libEGL.so.1'; then
+            sudo sed -i 's@azure.archive.ubuntu.com@archive.ubuntu.com@g' /etc/apt/sources.list.d/ubuntu.sources 2>/dev/null || true
+            timeout 180s sudo apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=25 update -qq
+            timeout 300s sudo env DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=25 install -y --no-install-recommends libegl1 libgl1 libopengl0
+          fi
+          if ldd "$(command -v blender)" | grep 'not found'; then
+            echo "::error::Blender runtime libraries missing"
+            exit 1
           fi
           blender --version | head -1
       - name: Render 3D parcel
+        timeout-minutes: 5
         run: |
           mkdir -p scene_outputs/blender
           BLENDER_OUT="$PWD/scene_outputs/blender/frame_" blender -b -t 2 --python production/blender_shot.py
