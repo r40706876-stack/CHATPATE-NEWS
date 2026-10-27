@@ -161,7 +161,7 @@ jobs:
     needs: [prep, face]
     if: always() && needs.prep.result == 'success'
     runs-on: ubuntu-latest
-    permissions: {contents: write}
+    permissions: {contents: write, actions: read}
     steps:
       - uses: actions/checkout@v4
       - name: FFmpeg — reuse runner binaries; download only if absent
@@ -179,6 +179,21 @@ jobs:
           ffprobe -version | head -1
       - uses: actions/download-artifact@v4
         with: {name: st_in, path: st_in}
+      - name: Integrate proven original Blender COD animation
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          run_id="$(gh run list --repo "${{ github.repository }}" --workflow bakra-blender-3d.yml --branch "${{ github.ref_name }}" --status success --limit 1 --json databaseId --jq '.[0].databaseId // empty')"
+          if [ -z "$run_id" ]; then
+            echo "::error::No successful Blender COD proof artifact; integrated render must not silently use a static replacement"
+            exit 1
+          fi
+          mkdir -p blender_output
+          gh run download "$run_id" --repo "${{ github.repository }}" -n bakra-original-blender-cod-3d -D blender_output
+          test -s blender_output/bakra_cod_3d.mp4
+          ffmpeg -v error -xerror -i blender_output/bakra_cod_3d.mp4 -f null -
+          echo "Original 3D COD proof from run $run_id ready for story-stage compositing"
       - name: Retrieve same-run Gemini editorial verdict for delivery gate
         uses: actions/download-artifact@v4
         with: {name: comedy-editorial-review, path: .}
