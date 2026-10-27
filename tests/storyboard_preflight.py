@@ -23,8 +23,13 @@ def main():
         raise SystemExit(f"Story-stage preflight: missing or incoherent narrative progression {scenes}")
     if any(story_stage.scene_for(line) != scene for line, scene in zip(lines, scenes)):
         raise SystemExit("Story-stage preflight: unknown scene silently replaced by fallback")
-    if not ep.get("no_clips") or ep.get("visual_policy")!="character_only":
-        raise SystemExit("Story-stage preflight: external clips/images must remain disabled")
+    # Hybrid news visuals are allowed; validate the declared policy rather than
+    # rejecting licensed footage before any render can begin.
+    policy=ep.get("visual_policy", "character_only")
+    if policy not in {"character_only", "hybrid", "news_hybrid", "news_images_clips"}:
+        raise SystemExit(f"Story-stage preflight: unsupported visual policy {policy!r}")
+    if policy == "character_only" and not ep.get("no_clips", False):
+        raise SystemExit("Story-stage preflight: character-only policy conflicts with enabled clips")
     if any(x.get("shot")!="story" for x in lines):
         raise SystemExit("Story-stage preflight: each line must use full-frame story shot")
     # The old preflight used one base for every scene and could report PASS
