@@ -1,7 +1,7 @@
 {
   "title": "मिठाई माँगी, ₹1.69 लाख का टीवी ऑर्डर!",
   "topic": "मदुरै के क्रिएटर वीरमणि ने दिवाली की मिठाई माँगी; उनके पते पर अनचाहे COD टीवी-फ्रिज ऑर्डर आने लगे",
-  "hook": "फ्री मिठाई माँगी… और दरवाज़े पर ₹1.69 लाख का टीवी! वो भी COD!",
+  "hook": "मिठाई माँगी… ₹1.69 लाख का COD टीवी पहुँच गया!",
   "poll": {
     "q": "फ्री गिफ्ट पर COD बिल आए तो?",
     "a": "वापस करूँगा",
@@ -10,7 +10,7 @@
   "lines": [
     {
       "who": "bablu",
-      "say": "फ्री मिठाई माँगी… और दरवाज़े पर ₹1.69 लाख का टीवी! वो भी COD!",
+      "say": "मिठाई माँगी… ₹1.69 लाख का COD टीवी पहुँच गया!",
       "big": "मिठाई के बदले ₹1.69 लाख का टीवी!",
       "scene": "sweets",
       "expr": "hairan",
@@ -22,7 +22,7 @@
     },
     {
       "who": "pinky",
-      "say": "चाचा, आपने पता भेजा था या शोरूम की फ्रेंचाइज़ी माँगी थी?",
+      "say": "चाचा, पता भेजा था या शोरूम की फ्रेंचाइज़ी माँगी?",
       "big": "घर के बाहर शोरूम!",
       "scene": "arrival",
       "expr": "tanz",
@@ -34,7 +34,7 @@
     },
     {
       "who": "chacha",
-      "say": "मैंने तो लड्डू माँगे थे! ये डिलीवरी वाला टीवी का OTP माँग रहा है!",
+      "say": "लड्डू माँगे थे! डिलीवरी वाला टीवी का OTP माँग रहा!",
       "big": "लड्डू नहीं, टीवी का OTP!",
       "scene": "otp",
       "expr": "hairan",
@@ -46,7 +46,7 @@
     },
     {
       "who": "pinky",
-      "say": "चाचा, बिल देखकर डिलीवरी वाला बोला—कैश नहीं? घर की रजिस्ट्री स्कैन कर दूँ?",
+      "say": "बिल देखकर बोला—कैश नहीं? घर की रजिस्ट्री स्कैन करूँ?",
       "big": "टीवी के बदले घर की रजिस्ट्री?!",
       "scene": "bill",
       "expr": "tanz",
@@ -58,7 +58,7 @@
     },
     {
       "who": "dadi",
-      "say": "रजिस्ट्री छिपा ले! अगली बार ये तेरा घर ही रिटर्न पार्सल बना देंगे!",
+      "say": "रजिस्ट्री छिपा! कल तेरा घर भी रिटर्न पार्सल बनेगा!",
       "big": "घर भी रिटर्न पार्सल?!",
       "scene": "house",
       "expr": "gussa",
@@ -76,7 +76,7 @@
   "fictional_satire": true,
   "source_url": "https://www.indiatoday.in/amp/trending-news/story/madurai-mans-diwali-wish-goes-wrong-tvs-fridges-and-lakhs-in-cod-orders-pour-in-3016108-2026-10-13",
   "no_send": true,
-  "qa_note": "2026-10-27: Replaced static split-screen with full-frame local character+prop stage, five sequential story actions, and coherent house-registry escalation. Private draft; independent Gemini score and real video visual QA required. no_send remains true. No Instagram retention claims.",
+  "qa_note": "2026-10-27: Replaced static split-screen with full-frame local character+prop stage, five sequential story actions, and coherent house-registry escalation. Private draft; independent Gemini score and real video visual QA required. no_send remains true. No Instagram retention claims. 2026-10-27: tightened to pass <=10-word hook and <=55-word script gate after real workflow failure.",
   "no_clips": true,
   "visual_policy": "character_only",
   "no_memes": true,
