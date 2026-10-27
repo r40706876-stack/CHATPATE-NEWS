@@ -10,7 +10,7 @@
   "lines": [
     {
       "who": "bablu",
-      "say": "ब्रेकिंग न्यूज़! दिवाली पर मिठाई माँगी, और घर पहुँच गया एक लाख उनहत्तर हज़ार का टीवी!",
+      "say": "मिठाई माँगी, एक लाख उनहत्तर हज़ार का टीवी आया!",
       "big": "मिठाई के बदले ₹1.69 लाख का टीवी!",
       "scene": "sweets",
       "expr": "hairan",
@@ -22,7 +22,7 @@
     },
     {
       "who": "chacha",
-      "say": "अरे मैंने दो लड्डू माँगे थे! ये पूरा ससुराल किसने भेज दिया?",
+      "say": "मैंने दो लड्डू माँगे थे! ये टीवी किसने भेजा?",
       "big": "दो लड्डू माँगे थे!",
       "scene": "arrival",
       "expr": "hairan",
@@ -34,7 +34,7 @@
     },
     {
       "who": "pinky",
-      "say": "चाचा, टीवी चालू करके देखो ना!",
+      "say": "चाचा, पहले टीवी चलाकर देखो!",
       "big": "टीवी चालू करो!",
       "scene": "arrival",
       "expr": "tanz",
@@ -46,7 +46,7 @@
     },
     {
       "who": "chacha",
-      "say": "पहले बिल देख! इतनी रकम में मेरी सात पुश्तें रिमोट ढूँढती रह जाएँगी!",
+      "say": "बिल देख! सात पुश्तें रिमोट ढूँढती रह जाएँगी!",
       "big": "सात पुश्तें रिमोट ढूँढेंगी!",
       "scene": "bill",
       "expr": "hairan",
@@ -70,7 +70,7 @@
     },
     {
       "who": "chacha",
-      "say": "बोलो टीवी वापस ले जाए... और जाते-जाते दरवाज़ा भी! अगला पार्सल अंदर नहीं आना चाहिए!",
+      "say": "टीवी वापस ले जा! दरवाज़ा भी, अगला पार्सल नहीं चाहिए!",
       "big": "दरवाज़ा भी ले जाओ!",
       "scene": "house",
       "expr": "gussa",
@@ -82,7 +82,7 @@
     },
     {
       "who": "dadi",
-      "say": "टीवी क्यों लौटाते हो? चाचा को एक्सचेंज कर दो!",
+      "say": "टीवी क्यों लौटाते हो? चाचा को एक्सचेंज करो!",
       "big": "चाचा एक्सचेंज!",
       "scene": "house",
       "expr": "gussa",
@@ -94,7 +94,7 @@
     },
     {
       "who": "pinky",
-      "say": "लेकिन दादी, चाचा के साथ रिमोट तो है नहीं!",
+      "say": "लेकिन दादी, चाचा के साथ रिमोट तो नहीं है!",
       "big": "चाचा का रिमोट कहाँ?",
       "scene": "house",
       "expr": "tanz",
@@ -106,7 +106,7 @@
     },
     {
       "who": "dadi",
-      "say": "रिमोट की ज़रूरत क्या है? दो रोटी डालो, सुबह से रात तक अपने आप बकते हैं!",
+      "say": "दो रोटी डालो, सुबह से रात तक अपने आप बकते हैं!",
       "big": "दो रोटी, दिनभर बकबक!",
       "scene": "house",
       "expr": "gussa",
@@ -124,7 +124,7 @@
   "fictional_satire": true,
   "source_url": "https://www.indiatoday.in/amp/trending-news/story/madurai-mans-diwali-wish-goes-wrong-tvs-fridges-and-lakhs-in-cod-orders-pour-in-3016108-2026-10-13",
   "no_send": true,
-  "qa_note": "2026-10-27: Replaced static split-screen with full-frame local character+prop stage, five sequential story actions, and coherent house-registry escalation. Private draft; independent Gemini score and real video visual QA required. no_send remains true. No Instagram retention claims. 2026-10-27: tightened to pass <=10-word hook and <=55-word script gate after real workflow failure. 2026-10-27: second editorial iteration; shock-first hook, freight threat instead of repeated OTP, Dadi's Chacha-return roast. Still private until Gemini and visual approval. 2026-10-27: latest real render was 22.6s despite 13–18s target; trimmed dialogue from 52 to 40 words while retaining story escalation, corrected freight caption. Voice still fallback due to Gemini TTS 429; do not mark upload-ready. 2026-10-27: independent Gemini critique found prior draft weak (hook 3, laugh density 2, shareability 3). Replaced stale house-registry beat with direct Pinky-Chacha exchange conflict and Dadi packaging punch. Real editorial and final visual/audio QA required; no_send true. 2026-10-27: Gemini audit (hook 4, laugh density 3) motivated a new 47-word draft: shock-first hook, UPI freeze, no-mute exchange and wrong-address Dadi payoff. Story-stage props updated in d1ad323; independent rerender/review still required. Keep no_send true. 2026-10-27: New five-beat comedy revision: absurd COD hook, showroom escalation, powerless-house self-roast, Chacha-as-appliance exchange, Dadi no-return warranty payoff. Not independently scored or rendered yet; no_send true. 2026-10-27: Rebuilt full 9-beat coherent delivery-to-exchange story per user request. Viewer-first pacing; deliberately exceeds old short-script gate. Requires editorial gate adjustment and fresh QA.",
+  "qa_note": "2026-10-27: Replaced static split-screen with full-frame local character+prop stage, five sequential story actions, and coherent house-registry escalation. Private draft; independent Gemini score and real video visual QA required. no_send remains true. No Instagram retention claims. 2026-10-27: tightened to pass <=10-word hook and <=55-word script gate after real workflow failure. 2026-10-27: second editorial iteration; shock-first hook, freight threat instead of repeated OTP, Dadi's Chacha-return roast. Still private until Gemini and visual approval. 2026-10-27: latest real render was 22.6s despite 13–18s target; trimmed dialogue from 52 to 40 words while retaining story escalation, corrected freight caption. Voice still fallback due to Gemini TTS 429; do not mark upload-ready. 2026-10-27: independent Gemini critique found prior draft weak (hook 3, laugh density 2, shareability 3). Replaced stale house-registry beat with direct Pinky-Chacha exchange conflict and Dadi packaging punch. Real editorial and final visual/audio QA required; no_send true. 2026-10-27: Gemini audit (hook 4, laugh density 3) motivated a new 47-word draft: shock-first hook, UPI freeze, no-mute exchange and wrong-address Dadi payoff. Story-stage props updated in d1ad323; independent rerender/review still required. Keep no_send true. 2026-10-27: New five-beat comedy revision: absurd COD hook, showroom escalation, powerless-house self-roast, Chacha-as-appliance exchange, Dadi no-return warranty payoff. Not independently scored or rendered yet; no_send true. 2026-10-27: Rebuilt full 9-beat coherent delivery-to-exchange story per user request. Viewer-first pacing; deliberately exceeds old short-script gate. Requires editorial gate adjustment and fresh QA. 2026-10-27: nine coherent beats condensed from 103 to 76 words; scene preflight now supports 5-9 beats and COD/exchange props match dialogue. Private QA only.",
   "no_clips": true,
   "visual_policy": "character_only",
   "no_memes": true,
