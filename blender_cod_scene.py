@@ -10,7 +10,16 @@ from mathutils import Vector
 bpy.ops.object.select_all(action="SELECT")
 bpy.ops.object.delete(use_global=False)
 sc=bpy.context.scene
-sc.render.engine="BLENDER_EEVEE_NEXT" if bpy.app.version >= (4,2,0) else "BLENDER_EEVEE"
+# Fast original 3D geometry render on CPU-only GitHub runners.
+# Eevee was taking ~39 seconds per frame and timed out before 96 frames.
+# Workbench keeps genuine animated 3D geometry, material colors and camera.
+sc.render.engine="BLENDER_WORKBENCH"
+sc.display.shading.light="STUDIO"
+sc.display.shading.color_type="MATERIAL"
+sc.display.shading.show_shadows=True
+sc.display.shading.show_cavity=True
+sc.display.shading.cavity_type="BOTH"
+sc.render.image_settings.color_mode="RGB"
 sc.render.resolution_x=540
 sc.render.resolution_y=960
 sc.render.resolution_percentage=100
