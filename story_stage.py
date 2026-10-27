@@ -78,13 +78,18 @@ def _house_base(scene="house"):
     return im
 
 
-def _character(im, sprite, x, y, height, flip=False):
+def _character(im, sprite, x, y, height, flip=False, tilt=0):
     if sprite is None:
         return
     w=int(sprite.width*height/max(1,sprite.height))
     sp=sprite.resize((w,height),Image.Resampling.LANCZOS)
     if flip:
         sp=sp.transpose(Image.Transpose.FLIP_LEFT_RIGHT)
+    if tilt:
+        old_w, old_h = sp.size
+        sp = sp.rotate(tilt, resample=Image.Resampling.BICUBIC, expand=True)
+        x -= (sp.width - old_w) // 2
+        y -= (sp.height - old_h) // 2
     im.paste(sp,(int(x),int(y)),sp)
 
 
@@ -253,7 +258,8 @@ def frames(line, episode, talk, n, cut, seed=0):
     talking=sprite_talk.frames(folder,expr,talk["wav"],n,cut,seed)
     supporting=None
     if supporter in episode.get("sprite",{}):
-        supporting=cut(pose_file(episode["sprite"][supporter],"hairan"))
+        reaction = "hairan" if who in ("bablu", "chacha") else "hasi"
+        supporting=cut(pose_file(episode["sprite"][supporter],reaction))
     courier=None
     if "ramesh" in episode.get("sprite",{}):
         courier=cut(pose_file(episode["sprite"]["ramesh"],"neutral"))
@@ -267,7 +273,7 @@ def frames(line, episode, talk, n, cut, seed=0):
         if not cod_path.is_file():
             raise RuntimeError("Original Blender COD proof missing: cannot render integrated 3D arrival")
         from reel_studio import _vid_frames
-        cod_frames=_vid_frames(cod_path, 320, 568)
+        cod_frames=_vid_frames(cod_path, 1080, 1920)
     for t,sp in enumerate(talking):
         im=base.copy()
         _scene_action(im,scene,t,n,line=line)
@@ -275,19 +281,28 @@ def frames(line, episode, talk, n, cut, seed=0):
             frame=next(cod_frames, None)
             if frame is None:
                 from reel_studio import _vid_frames
-                cod_frames=_vid_frames(cod_path, 320, 568)
+                cod_frames=_vid_frames(cod_path, 1080, 1920)
                 frame=next(cod_frames, None)
             if frame is None:
                 raise RuntimeError("Blender COD proof video contains no decodable frames")
-            x,y=710,300
-            d=ImageDraw.Draw(im)
-            d.rounded_rectangle((x-10,y-10,x+330,y+622),18,
-                                fill=(250,246,234),outline=INK,width=8)
-            im.paste(frame,(x,y))
-            d=ImageDraw.Draw(im)
-            d.rectangle((x,y+568,x+320,y+611),fill=INK)
-            d.text((x+160,y+590),"3D रीक्रिएशन",font=tt.font(29),
-                   fill="white",anchor="mm")
+            # Show the actual Blender delivery at readable scale, then return
+            # to the illustrated village. The inset continues the same motion.
+            if t < min(33, max(1, n // 2)):
+                im = frame.crop((0, 130, 1080, 1790)).resize(SIZE, Image.Resampling.BICUBIC)
+                d = ImageDraw.Draw(im)
+                d.rounded_rectangle((28, 225, 370, 292), 12, fill=INK)
+                d.text((199, 258), "3D रीक्रिएशन", font=tt.font(37),
+                       fill="white", anchor="mm")
+            else:
+                inset = frame.resize((430, 765), Image.Resampling.BICUBIC)
+                x, y = 605, 265
+                d = ImageDraw.Draw(im)
+                d.rounded_rectangle((x-10, y-10, x+440, y+816), 18,
+                                    fill=(250, 246, 234), outline=INK, width=8)
+                im.paste(inset, (x, y))
+                d.rectangle((x, y+765, x+430, y+809), fill=INK)
+                d.text((x+215, y+786), "3D रीक्रिएशन", font=tt.font(29),
+                       fill="white", anchor="mm")
         # Optional licensed documentary insert: explicitly curated media only.
         # Never download arbitrary news/YouTube footage and imply it is the event.
         # assets/licensed/manifest.json entries require path, author, source, license.
@@ -351,8 +366,14 @@ def frames(line, episode, talk, n, cut, seed=0):
         if "रोटी" in say:
             supporter_x += int(60 * ease)
             speaker_y -= int(28 * math.sin(progress * math.pi * 3) ** 2)
-        _character(im, supporting, supporter_x, 1120 + int(5 * math.sin(t / 10)), 610, flip=True)
-        _character(im, sp, speaker_x, speaker_y, 760)
+        # Dialogue-timed acting: Chacha recoils, Pinky leans into the remote
+        # gag, and Dadi punctuates the final roti-powered exchange.
+        acting = 8 if any(k in say for k in ("लड्डू", "दरवाज़ा", "रिमोट", "रोटी")) else 4
+        speaker_tilt = acting * math.sin(progress * math.pi * 1.3)
+        supporter_tilt = -3 * math.sin(progress * math.pi * 1.6)
+        _character(im, supporting, supporter_x, 1120 + int(5 * math.sin(t / 10)),
+                   610, flip=True, tilt=supporter_tilt)
+        _character(im, sp, speaker_x, speaker_y, 760, tilt=speaker_tilt)
         d=ImageDraw.Draw(im)
         if scene=="house" and who=="dadi" and ("एक्सचेंज" in str(line.get("say","")) or "वापसी" in str(line.get("say","")) or "रोटी" in str(line.get("say",""))) and t>=int(n*.40):
             # Physical payoff: Dadi has packed Chacha, not merely flashed a RETURN icon.
