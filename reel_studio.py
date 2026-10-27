@@ -885,10 +885,11 @@ def render(ep, segs, chars, out, preview):
     wr = subprocess.Popen(["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}",
                            "-r", str(FPS), "-i", "-", "-i", str(out.with_suffix(".wav")), "-c:v", "libx264", "-crf", "20",
                            "-preset", "veryfast", "-pix_fmt", "yuv420p",
-                           # Speech must be audible on phones without AAC inter-sample clipping.
-                           # Verified on the 33.1s COD MP4: -23.25 -> -17.8 LUFS,
-                           # while true peak stayed at -1.7 dBTP after AAC encoding.
-                           "-af", "loudnorm=I=-16:TP=-1.8:LRA=11", "-c:a", "aac", "-b:a", "160k", "-shortest", str(out)],
+                           # AAC reconstruction can overshoot FFmpeg loudnorm's input TP target.
+                           # A newer 2026-10-27 render measured -1.0 dBTP and failed QA
+                           # despite TP=-1.8. Reserve extra margin; still independently
+                           # measure final decoded AAC (do not waive the QA gate).
+                           "-af", "loudnorm=I=-16:TP=-3.0:LRA=11", "-c:a", "aac", "-b:a", "160k", "-shortest", str(out)],
                           stdin=subprocess.PIPE)
     bases = _bases()
     headline = ep.get("breaking") or ep.get("title") or ""
