@@ -28,4 +28,14 @@ bpy.context.object.data.energy=1200
 scene.world.color=(0.3,0.3,0.3)
 scene.render.image_settings.file_format='PNG'
 scene.render.filepath=os.environ.get('BLENDER_OUT','/tmp/bakra_blender_')
-bpy.ops.render.render(animation=True)
+# The regression job is a scene-motion smoke test, not the full production film.
+# Render three keyframes to avoid 25 costly EEVEE frames exceeding CI's 5-min cap.
+# Full animation is still available when BLENDER_SMOKE is not set.
+if os.environ.get("BLENDER_SMOKE") == "1":
+    prefix = scene.render.filepath
+    for frame in (1, 13, 25):
+        scene.frame_set(frame)
+        scene.render.filepath = f"{prefix}{frame:04d}.png"
+        bpy.ops.render.render(write_still=True)
+else:
+    bpy.ops.render.render(animation=True)
