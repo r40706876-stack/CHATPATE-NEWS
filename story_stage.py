@@ -78,7 +78,7 @@ def _character(im, sprite, x, y, height, flip=False):
     im.paste(sp,(int(x),int(y)),sp)
 
 
-def _scene_action(im, scene, t, n):
+def _scene_action(im, scene, t, n, line=None):
     d=ImageDraw.Draw(im)
     q=min(1.0,t/max(1,n-1))
     wobble=int(12*math.sin(t/5))
@@ -98,11 +98,11 @@ def _scene_action(im, scene, t, n):
     elif scene=="freight":
         d.rounded_rectangle((415,710,925,1120),42,fill=(34,52,73),outline=YELLOW,width=13)
         d.rounded_rectangle((450,745,890,1070),26,fill=(243,249,252))
-        d.text((670,835),"UPI",font=tt.font(105),fill=INK,anchor="mm")
-        d.text((670,955),"FAILED",font=tt.font(83),fill=RED,anchor="mm")
+        d.text((670,835),"COD",font=tt.font(105),fill=INK,anchor="mm")
+        d.text((670,955),"पैसे दो!",font=tt.font(74),fill=RED,anchor="mm")
         # The courier is an existing 3D-style Ramesh sprite, composited below.
         d.rounded_rectangle((555,480,930,670),25,fill=(44,60,83))
-        d.text((742,570),"UPI बेहोश!",font=tt.font(118),fill=YELLOW,anchor="mm")
+        d.text((742,570),"बिल बाकी!",font=tt.font(90),fill=YELLOW,anchor="mm")
         d.ellipse((740,1090,930,1280),fill=(247,193,99),outline=INK,width=7)
         d.text((835,1185),"?",font=tt.font(140),fill=INK,anchor="mm")
     elif scene=="bill":
@@ -112,16 +112,25 @@ def _scene_action(im, scene, t, n):
         d.text((750,1010),"COD बिल",font=tt.font(71),fill=INK,anchor="mm")
         d.text((750,1130),"₹1,69,000",font=tt.font(76),fill=RED,anchor="mm")
         d.rounded_rectangle((540,1210,965,1270),12,fill=YELLOW)
-        d.text((752,1240),"चाचा एक्सचेंज?!",font=tt.font(44),fill=INK,anchor="mm")
+        d.text((752,1240),"इतना बड़ा बिल!",font=tt.font(44),fill=INK,anchor="mm")
     elif scene=="house":
         # The courier is an existing 3D-style Ramesh sprite, composited below.
         d.rounded_rectangle((375,520,1000,870),25,fill=(250,241,214),outline=RED,width=16)
-        d.text((685,635),"चाचा एक्सचेंज!",font=tt.font(85),fill=RED,anchor="mm")
-        d.text((685,755),"पता गलत!",font=tt.font(39),fill=INK,anchor="mm")
+        say = str((line or {}).get("say", ""))
+        if "दरवाज़ा" in say:
+            title, detail = "दरवाज़ा भी ले जाओ!", "अगला पार्सल बंद!"
+        elif "रिमोट" in say:
+            title, detail = "रिमोट कहाँ है?", "चाचा बिना रिमोट!"
+        elif "रोटी" in say:
+            title, detail = "दो रोटी डालो!", "दिनभर बकबक!"
+        else:
+            title, detail = "चाचा एक्सचेंज!", "टीवी के बदले चाचा!"
+        d.text((685,635),title,font=tt.font(66),fill=RED,anchor="mm")
+        d.text((685,755),detail,font=tt.font(43),fill=INK,anchor="mm")
         for j in range(3):
             x=530+j*150
             _box(d,x,950+j*32+wobble,145,120,"COD")
-        if t>int(n*.48):
+        if t>int(n*.48) and "एक्सचेंज" in str((line or {}).get("say","")):
             d.line((350,860,975,860),fill=RED,width=22)
             d.line((400,780,940,920),fill=RED,width=20)
 
@@ -151,7 +160,7 @@ def _scene_action(im, scene, t, n):
         d.polygon([(x-195,820),(x-145,786),(x-145,854)],fill=YELLOW)
     elif scene=="house":
         # A red return stamp lands on the COD parcel as Dadi finishes the punch.
-        if phase>.48:
+        if phase>.48 and "एक्सचेंज" in str((line or {}).get("say","")):
             scale=min(1,(phase-.48)/.26)
             cx,cy=765,1090
             r=int(125*scale)
@@ -181,19 +190,19 @@ def frames(line, episode, talk, n, cut, seed=0):
         courier=cut(pose_file(episode["sprite"]["ramesh"],"neutral"))
     for t,sp in enumerate(talking):
         im=base.copy()
-        _scene_action(im,scene,t,n)
+        _scene_action(im,scene,t,n,line=line)
         if scene in ("freight","bill","house"):
             _character(im,courier,70+int(9*math.sin(t/7)),810,575)
         _character(im,supporting,5+int(9*math.sin(t/8)),1120+int(5*math.sin(t/10)),610,flip=True)
         _character(im,sp,600+int(8*math.sin(t/6)),990+int(7*math.sin(t/9)),760)
         d=ImageDraw.Draw(im)
-        if scene=="house" and t>=int(n*.40):
+        if scene=="house" and who=="dadi" and "एक्सचेंज" in str(line.get("say","")) and t>=int(n*.40):
             # Physical payoff: Dadi has packed Chacha, not merely flashed a RETURN icon.
             # Leave his face visible; the carton covers his torso and stays attached to him.
             d.rounded_rectangle((12,1390,430,1730),20,fill=(201,146,92),outline=(108,69,44),width=14)
             d.rectangle((200,1390,242,1730),fill=(246,212,150))
             d.rounded_rectangle((45,1490,398,1635),14,fill=(255,250,233),outline=RED,width=8)
-            d.text((221,1535),"पता गलत!",font=tt.font(57),fill=RED,anchor="mm")
+            d.text((221,1535),"एक्सचेंज!",font=tt.font(54),fill=RED,anchor="mm")
             d.text((221,1594),"चाचा पैक!",font=tt.font(42),fill=INK,anchor="mm")
         # Alternate full-scene camera framing during long dialogue. This is a
         # real visual cut across props and characters, not a subtitle flicker.
