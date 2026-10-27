@@ -126,12 +126,13 @@ def _scene_action(im, scene, t, n, line=None):
             d.line((x-80,750,x-10,750),fill=RED,width=22)
             d.polygon([(x+5,750),(x-40,718),(x-40,782)],fill=RED)
         elif "रिमोट" in say:
-            # Pinky searches for a remote and finds none.
-            d.rounded_rectangle((580,585,760,1000),36,fill=INK,outline=YELLOW,width=10)
+            # Pinky shakes an oversized remote and finds no matching Chacha controls.
+            rx=int(580+65*math.sin(q*math.pi*2))
+            d.rounded_rectangle((rx,585,rx+180,1000),36,fill=INK,outline=YELLOW,width=10)
             for j in range(4):
-                d.ellipse((620+(j%2)*80,670+(j//2)*105,665+(j%2)*80,715+(j//2)*105),fill=(229,234,239))
-            d.line((555,565,790,1020),fill=RED,width=23)
-            d.ellipse((760,515,875,630),outline=RED,width=14)
+                d.ellipse((rx+40+(j%2)*80,670+(j//2)*105,rx+85+(j%2)*80,715+(j//2)*105),fill=(229,234,239))
+            d.line((rx-25,565,rx+210,1020),fill=RED,width=23)
+            d.ellipse((rx+180,515,rx+295,630),outline=RED,width=14)
         elif "रोटी" in say:
             # Two rotis power the nonstop talking Chacha; sound waves keep growing.
             for j in range(2):
