@@ -10,6 +10,16 @@ def episode():
     return {'topic': 'दुकान', 'lines': [dict(who=['chacha','bablu','chacha','pinky','dadi'][i], say=t, caption=t, tag=i==3) for i,t in enumerate(texts)]}
 
 class Gates(unittest.TestCase):
+    def test_story_locations_are_distinct_existing_sets(self):
+        from pathlib import Path
+        import story_stage
+        root = Path(__file__).resolve().parents[1]
+        scenes = ("sweets", "arrival", "freight", "bill", "house")
+        sets = [story_stage.SCENE_SETS[scene] for scene in scenes]
+        self.assertGreaterEqual(len(set(sets)), 4)
+        for name in sets:
+            self.assertTrue((root / "assets" / "sets" / (name + ".png")).is_file(), name)
+
     def test_valid_structure(self):
         self.assertEqual(len(nw.finish(episode())['lines']),5)
     def test_does_not_cut_context(self):
