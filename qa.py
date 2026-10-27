@@ -15,6 +15,12 @@ import numpy as np
 W, H, FPS = 132, 101, 10          # ऊपर वाली screen छोटी करके (तेज़)
 
 
+def _true_peak_dbfs(log):
+    """Extract FFmpeg ebur128 true peak, including its multi-line summary."""
+    values = re.findall(r"True peak:\s*Peak:\s*(-?\d+(?:\.\d+)?)\s*dBFS", log)
+    return float(values[-1]) if values else None
+
+
 def _frames(video, crop="1056:810:12:130"):
     raw = subprocess.run(["ffmpeg", "-loglevel", "quiet", "-i", str(video), "-vf",
                           f"crop={crop},scale={W}:{H},fps={FPS}", "-f", "rawvideo", "-pix_fmt", "gray", "-"],
@@ -112,9 +118,11 @@ def check_media(video):
             ["ffmpeg", "-hide_banner", "-nostats", "-i", str(p),
              "-vn", "-af", "ebur128=peak=true", "-f", "null", "-"],
             capture_output=True, text=True, check=True)
-        peaks = re.findall(r"True peak:\\s*Peak:\\s*(-?\\d+(?:\\.\\d+)?)\\s*dBFS", meter.stderr)
-        if peaks and float(peaks[-1]) >= 0.0:
-            issues.append(f"AAC true peak {peaks[-1]} dBFS: clipping risk")
+        true_peak = _true_peak_dbfs(meter.stderr)
+        if true_peak is None:
+            issues.append("AAC true-peak meter output could not be parsed")
+        elif true_peak >= -1.0:
+            issues.append(f"AAC true peak {true_peak:.1f} dBFS: less than 1 dBTP safety headroom")
         return issues
     except (OSError, ValueError, subprocess.CalledProcessError) as exc:
         return ["ऑडियो/वीडियो जाँच नहीं चली: " + type(exc).__name__]
