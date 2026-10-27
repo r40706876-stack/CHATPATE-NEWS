@@ -119,7 +119,11 @@ def prep(script_path):
         # intro/outro जैसी lines (न खोज, न खबर) पर नई तस्वीर नहीं — पिछली चलती रहती है (वरना बेमेल फ़ोटो आती थी)
     if ep["lines"]:                                            # पहली line (hook) पर हमेशा तस्वीर — पहला सेकंड ही सब तय करता है
         ep["lines"][0]["_need_vis"] = ep["lines"][0].get("shot") != "close"
-    if not ep.get("no_clips"):                                 # असली खबर के छोटे video clips (पहले सेकंड में हरकत)
+    # Full-frame story shots source only explicitly licensed inserts from
+    # assets/licensed/manifest.json in story_stage. Do not waste minutes
+    # downloading arbitrary YouTube clips that the story renderer never uses.
+    story_only = all(ln.get("shot") == "story" for ln in ep["lines"])
+    if not ep.get("no_clips") and not story_only:               # legacy split/full news footage path
         try:
             import clips
             topic = ep.get("topic") or ep.get("breaking", "")
@@ -161,7 +165,7 @@ def prep(script_path):
                    for i, ln in enumerate(ep["lines"])]
     # Cartoon-only episodes must not silently download unrelated news photos.
     # Their story-specific animated cards are rendered by reel_studio instead.
-    got = ({} if ep.get("visual_policy") == "character_only" else
+    got = ({} if story_only or ep.get("visual_policy") == "character_only" else
            visuals.pick_for_lines(photo_lines, topic=ep.get("breaking") or ep.get("topic", ""),
                                   strict=True))
     for i, paths in got.items():
@@ -186,6 +190,11 @@ def pick_shot(ep, i, ln):
         m = re.match(r"\s*(हर [^…,।!?]{2,30} में एक [^…,।!?]{2,25})", ln.get("say", ""))
         if m:
             ln["tag_text"] = m.group(1) + "…"
+    # A visual sourcing policy must never replace the actual full-frame acting stage.
+    # news_hybrid enables vetted inserts *inside* story_stage; it does not
+    # switch this episode back to the old split-screen photo template.
+    if ln.get("shot") == "story" and ln.get("scene"):
+        return "story"
     if ep.get("visual_policy") == "character_only" and ln.get("scene"):
         return "story"
     if style == "nochar":
