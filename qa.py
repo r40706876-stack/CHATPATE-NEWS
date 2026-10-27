@@ -23,7 +23,7 @@ def _true_peak_dbfs(log):
 
 def _integrated_lufs(log):
     """Read the final integrated loudness summary, not transient momentary values."""
-    values = re.findall(r"Integrated loudness:\\s*I:\\s*(-?\\d+(?:\\.\\d+)?)\\s*LUFS", log)
+    values = re.findall(r"Integrated loudness:\s*I:\s*(-?\d+(?:\.\d+)?)\s*LUFS", log)
     return float(values[-1]) if values else None
 
 
