@@ -101,7 +101,9 @@ def _scene_action(im, scene, t, n, line=None):
         d.rounded_rectangle((80,560,470,830),20,fill=(255,237,176),outline=(171,112,58),width=10)
         for j in range(3):
             d.ellipse((125+j*100,625,210+j*100,710),fill=(235,159,57),outline=(163,96,37),width=5)
-        _tv(d, int(1110-570*min(1,t/14)), 600+wobble, 390,285)
+        # Start with the absurdly expensive TV already in frame, not an empty hook.
+        # It rolls toward Bablu during the first 0.6s as the COD price lands.
+        _tv(d, int(640-170*min(1,t/15)), 550+wobble, 505,365)
         d.rounded_rectangle((565,925,1000,1045),20,fill=RED)
         d.text((782,982),"₹1,69,000",font=tt.font(77),fill="white",anchor="mm")
     elif scene=="arrival":
