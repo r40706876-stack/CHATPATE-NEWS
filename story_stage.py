@@ -97,8 +97,12 @@ def _scene_action(im, scene, t, n, line=None):
         d.ellipse((610,630,740,760),fill=(242,162,52),outline=(166,96,38),width=9)
         for dx,dy in ((-27,-15),(12,-23),(-8,23),(30,15)):
             d.ellipse((675+dx-8,690+dy-8,675+dx+8,690+dy+8),fill=(255,218,125))
-        if "पैसे" in str((line or {}).get("say", "")):
-            # The TV itself demands money: visible joke matching Pinky's line.
+        if "वसूली" in str((line or {}).get("say", "")):
+            # Pinky's actual joke: an agent is about to climb out of the TV.
+            # A speech bubble makes the threat legible even without narration.
+            d.rounded_rectangle((500,490,840,570),18,fill=(255,247,215),outline=RED,width=8)
+            d.text((670,530),"किस्त कहाँ है?",font=tt.font(48),fill=RED,anchor="mm")
+        elif "पैसे" in str((line or {}).get("say", "")):
             d.rounded_rectangle((535,620,815,800),18,fill=(253,247,221),outline=RED,width=10)
             d.text((675,665),"PAY NOW",font=tt.font(49),fill=RED,anchor="mm")
             d.text((675,737),"₹1,69,000",font=tt.font(45),fill=INK,anchor="mm")
@@ -131,6 +135,12 @@ def _scene_action(im, scene, t, n, line=None):
         d.text((750,1130),"₹1,69,000",font=tt.font(76),fill=RED,anchor="mm")
         d.rounded_rectangle((540,1210,965,1270),12,fill=YELLOW)
         d.text((752,1240),"इतना बड़ा बिल!",font=tt.font(44),fill=INK,anchor="mm")
+        if "घर बेच" in str((line or {}).get("say", "")):
+            # Chacha cannot pay for the TV without selling the house,
+            # but then there is nowhere to put it.
+            sign_x=int(1100-430*q)
+            d.rounded_rectangle((sign_x,440,sign_x+320,565),18,fill=(255,245,207),outline=RED,width=9)
+            d.text((sign_x+160,500),"घर बिकाऊ!",font=tt.font(53),fill=RED,anchor="mm")
     elif scene=="house":
         # Visual punchlines are acted out as objects; no giant explanation cards.
         say=str((line or {}).get("say",""))
@@ -234,6 +244,14 @@ def frames(line, episode, talk, n, cut, seed=0):
     for t,sp in enumerate(talking):
         im=base.copy()
         _scene_action(im,scene,t,n,line=line)
+        if scene=="arrival" and "वसूली" in str(line.get("say","")):
+            # Existing courier character literally emerges from the television.
+            # Start small and move upward instead of showing another static icon.
+            progress=min(1.0,t/max(1,n-1))
+            if courier is not None:
+                _character(im,courier,550-int(45*progress),720-int(310*progress),int(110+370*progress))
+            else:
+                _worker(ImageDraw.Draw(im),520,650-int(230*progress),int(25*math.sin(progress*6)))
         if scene in ("freight","bill","house"):
             _character(im,courier,70+int(9*math.sin(t/7)),810,575)
         _character(im,supporting,5+int(9*math.sin(t/8)),1120+int(5*math.sin(t/10)),610,flip=True)
