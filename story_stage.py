@@ -97,16 +97,32 @@ def _scene_action(im, scene, t, n, line=None):
         d.ellipse((610,630,740,760),fill=(242,162,52),outline=(166,96,38),width=9)
         for dx,dy in ((-27,-15),(12,-23),(-8,23),(30,15)):
             d.ellipse((675+dx-8,690+dy-8,675+dx+8,690+dy+8),fill=(255,218,125))
+        if "पैसे" in str((line or {}).get("say", "")):
+            # The TV itself demands money: visible joke matching Pinky's line.
+            d.rounded_rectangle((535,620,815,800),18,fill=(253,247,221),outline=RED,width=10)
+            d.text((675,665),"PAY NOW",font=tt.font(49),fill=RED,anchor="mm")
+            d.text((675,737),"₹1,69,000",font=tt.font(45),fill=INK,anchor="mm")
     elif scene=="freight":
-        d.rounded_rectangle((415,710,925,1120),42,fill=(34,52,73),outline=YELLOW,width=13)
-        d.rounded_rectangle((450,745,890,1070),26,fill=(243,249,252))
-        d.text((670,835),"COD",font=tt.font(105),fill=INK,anchor="mm")
-        d.text((670,955),"पैसे दो!",font=tt.font(74),fill=RED,anchor="mm")
-        # The courier is an existing 3D-style Ramesh sprite, composited below.
-        d.rounded_rectangle((555,480,930,670),25,fill=(44,60,83))
-        d.text((742,570),"बिल बाकी!",font=tt.font(90),fill=YELLOW,anchor="mm")
-        d.ellipse((740,1090,930,1280),fill=(247,193,99),outline=INK,width=7)
-        d.text((835,1185),"?",font=tt.font(140),fill=INK,anchor="mm")
+        if "फ्रिज" in str((line or {}).get("say", "")):
+            # A SECOND appliance rolls in, escalating the COD nightmare.
+            x=int(1050-480*q)
+            d.rounded_rectangle((x,505,x+325,1095),24,fill=(226,238,241),outline=INK,width=17)
+            d.line((x+12,805,x+313,805),fill=INK,width=9)
+            d.rounded_rectangle((x+30,645,x+58,780),9,fill=(106,121,138))
+            d.rounded_rectangle((x+30,865,x+58,1020),9,fill=(106,121,138))
+            d.rounded_rectangle((x+60,570,x+275,630),10,fill=(255,250,231),outline=RED,width=5)
+            d.text((x+168,600),"COD फ्रिज",font=tt.font(41),fill=RED,anchor="mm")
+            for wheel in (x+60,x+265):
+                d.ellipse((wheel-24,1090,wheel+24,1138),fill=INK)
+        else:
+            d.rounded_rectangle((415,710,925,1120),42,fill=(34,52,73),outline=YELLOW,width=13)
+            d.rounded_rectangle((450,745,890,1070),26,fill=(243,249,252))
+            d.text((670,835),"COD",font=tt.font(105),fill=INK,anchor="mm")
+            d.text((670,955),"पैसे दो!",font=tt.font(74),fill=RED,anchor="mm")
+            d.rounded_rectangle((555,480,930,670),25,fill=(44,60,83))
+            d.text((742,570),"बिल बाकी!",font=tt.font(90),fill=YELLOW,anchor="mm")
+            d.ellipse((740,1090,930,1280),fill=(247,193,99),outline=INK,width=7)
+            d.text((835,1185),"?",font=tt.font(140),fill=INK,anchor="mm")
     elif scene=="bill":
         _tv(d,500,590+wobble,365,265)
         # The courier is an existing 3D-style Ramesh sprite, composited below.
@@ -133,6 +149,13 @@ def _scene_action(im, scene, t, n, line=None):
                 d.ellipse((rx+40+(j%2)*80,670+(j//2)*105,rx+85+(j%2)*80,715+(j//2)*105),fill=(229,234,239))
             d.line((rx-25,565,rx+210,1020),fill=RED,width=23)
             d.ellipse((rx+180,515,rx+295,630),outline=RED,width=14)
+        elif "वापसी" in say:
+            # The delivery box is sealed NO RETURN while Chacha keeps talking.
+            _box(d,575,710,360,330,"COD")
+            d.rounded_rectangle((605,890,905,1005),16,fill=(255,249,232),outline=RED,width=9)
+            d.text((755,945),"NO RETURN",font=tt.font(45),fill=RED,anchor="mm")
+            for j in range(3):
+                d.arc((460-j*28,650-j*30,580+j*28,910+j*30),-80,80,fill=RED,width=9)
         elif "रोटी" in say:
             # Two rotis power the nonstop talking Chacha; sound waves keep growing.
             for j in range(2):
@@ -212,13 +235,14 @@ def frames(line, episode, talk, n, cut, seed=0):
         _character(im,supporting,5+int(9*math.sin(t/8)),1120+int(5*math.sin(t/10)),610,flip=True)
         _character(im,sp,600+int(8*math.sin(t/6)),990+int(7*math.sin(t/9)),760)
         d=ImageDraw.Draw(im)
-        if scene=="house" and who=="dadi" and "एक्सचेंज" in str(line.get("say","")) and t>=int(n*.40):
+        if scene=="house" and who=="dadi" and ("एक्सचेंज" in str(line.get("say","")) or "वापसी" in str(line.get("say",""))) and t>=int(n*.40):
             # Physical payoff: Dadi has packed Chacha, not merely flashed a RETURN icon.
             # Leave his face visible; the carton covers his torso and stays attached to him.
             d.rounded_rectangle((12,1390,430,1730),20,fill=(201,146,92),outline=(108,69,44),width=14)
             d.rectangle((200,1390,242,1730),fill=(246,212,150))
             d.rounded_rectangle((45,1490,398,1635),14,fill=(255,250,233),outline=RED,width=8)
-            d.text((221,1535),"एक्सचेंज!",font=tt.font(54),fill=RED,anchor="mm")
+            label="वापसी बंद!" if "वापसी" in str(line.get("say","")) else "एक्सचेंज!"
+            d.text((221,1535),label,font=tt.font(50),fill=RED,anchor="mm")
             d.text((221,1594),"चाचा पैक!",font=tt.font(42),fill=INK,anchor="mm")
         # Alternate full-scene camera framing during long dialogue. This is a
         # real visual cut across props and characters, not a subtitle flicker.
