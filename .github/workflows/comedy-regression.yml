@@ -53,6 +53,8 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_comedy_gate.py' -v
       - name: Hybrid visual mapping tests
         run: python -m unittest discover -s tests -p 'test_visual_strategy.py' -v
+      - name: Ensure hybrid media preserves character story shots
+        run: python -m unittest discover -s tests -p 'test_story_shot_policy.py' -v
       - name: Verify actual full-frame story-stage storyboard
         run: python tests/storyboard_preflight.py
       - name: Render hybrid storyboard frames and verify visual beats
