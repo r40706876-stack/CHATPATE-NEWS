@@ -196,7 +196,7 @@ jobs:
               run_id="$candidate_id"
               break
             fi
-          done < <(gh run list --repo "${{ github.repository }}" --workflow bakra-blender-3d.yml --branch "${{ github.ref_name }}" --status success --limit 20 --json databaseId,headSha --jq '.[] | "\\(.databaseId) \\(.headSha)"')
+          done < <(gh run list --repo "${{ github.repository }}" --workflow bakra-blender-3d.yml --branch "${{ github.ref_name }}" --status success --limit 20 --json databaseId,headSha --jq '.[] | [.databaseId, .headSha] | @tsv')
           if [ -z "$run_id" ]; then
             echo "::error::No successful Blender COD proof for the exact current scene source; refusing stale footage"
             exit 1
