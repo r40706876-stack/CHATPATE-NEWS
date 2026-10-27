@@ -6,6 +6,7 @@ on:
       - 'news_writer.py'
       - 'visuals.py'
       - 'talk_episode.py'
+      - 'memes.py'
       - 'story_stage.py'
       - 'blender_cod_scene.py'
       - 'fetch_licensed_news_visuals.py'
@@ -36,7 +37,7 @@ jobs:
         with:
           python-version: '3.11'
       - name: Python syntax checks
-        run: python -m py_compile bakra_rules.py news_writer.py visuals.py run_daily.py talk_episode.py reel_studio.py visual_strategy.py hybrid_stage.py story_stage.py fetch_licensed_news_visuals.py
+        run: python -m py_compile bakra_rules.py news_writer.py visuals.py run_daily.py talk_episode.py memes.py reel_studio.py visual_strategy.py hybrid_stage.py story_stage.py fetch_licensed_news_visuals.py
       - name: Check every missing visual has safe set/card fallback
         run: |
           pip -q install pillow numpy scipy requests
