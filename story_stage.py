@@ -48,11 +48,21 @@ def _worker(d, x, y, arm=0):
     d.line((x+170,y+405,x+190,y+540),fill=INK,width=36)
 
 
-def _house_base():
-    # Use the existing high-quality 3D-style village set, not a flat geometric house.
+SCENE_SETS = {
+    "sweets": "mandi",      # Chacha's promised sweets: start at the market
+    "arrival": "road",      # Courier arrives outside the house
+    "freight": "road",      # Oversized COD goods block the street
+    "bill": "aangan",       # The invoice is opened in the courtyard
+    "house": "room",        # Family reactions and Dadi's final payoff indoors
+}
+
+
+def _house_base(scene="house"):
+    # Distinct existing 3D sets give each narrative location a visible identity.
+    # Previously every line reused the same village photo regardless of scene.
     try:
         from reel_studio import set_img
-        return ImageEnhance.Brightness(set_img("village",*SIZE).filter(ImageFilter.GaussianBlur(1.2))).enhance(0.88)
+        return ImageEnhance.Brightness(set_img(SCENE_SETS.get(scene, "village"), *SIZE).filter(ImageFilter.GaussianBlur(1.2))).enhance(0.88)
     except (OSError, KeyError, ValueError):
         pass
     im=Image.new("RGB",SIZE,(232,245,252))
@@ -233,7 +243,7 @@ def frames(line, episode, talk, n, cut, seed=0):
     import sprite_talk
     from reel_studio import EXPR, pose_file
     scene=scene_for(line)
-    base=_house_base()
+    base=_house_base(scene)
     who=line.get("who","bablu")
     supporter="chacha" if who!="chacha" else "pinky"
     if who=="chacha":
