@@ -18,5 +18,43 @@ class TruePeakQATests(unittest.TestCase):
     def test_missing_meter_fails_closed(self):
         self.assertIsNone(_true_peak_dbfs("audio finished but no true peak"))
 
+    @unittest.skipUnless(__import__("shutil").which("ffmpeg"), "ffmpeg unavailable")
+    def test_sfx_overlay_keeps_decoded_aac_peak_and_loudness_safe(self):
+        """Catch clipping added AFTER the main reel's loudnorm pass."""
+        import subprocess
+        import tempfile
+        from pathlib import Path
+        from unittest.mock import patch
+        import memes
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            base, sfx, out = (root / x for x in ("base.mp4", "boom.wav", "mixed.mp4"))
+            subprocess.run([
+                "ffmpeg", "-v", "error", "-y",
+                "-f", "lavfi", "-i", "color=c=blue:s=160x288:r=12:d=4",
+                "-f", "lavfi", "-i", "sine=frequency=440:duration=4:sample_rate=44100",
+                "-af", "volume=0.65", "-c:v", "mpeg4", "-c:a", "aac",
+                "-shortest", str(base)
+            ], check=True)
+            subprocess.run([
+                "ffmpeg", "-v", "error", "-y", "-f", "lavfi",
+                "-i", "sine=frequency=120:duration=0.5:sample_rate=44100",
+                "-af", "volume=8", "-c:a", "pcm_s16le", str(sfx)
+            ], check=True)
+            with patch.object(memes, "_sfx_ok", return_value=sfx):
+                self.assertEqual(memes.overlay_sfx(base, [(1.0, "sfx_vine_boom")], out), out)
+            meter = subprocess.run([
+                "ffmpeg", "-hide_banner", "-nostats", "-i", str(out), "-vn",
+                "-af", "ebur128=peak=true", "-f", "null", "-"
+            ], capture_output=True, text=True, check=True)
+            peak = _true_peak_dbfs(meter.stderr)
+            loudness = _integrated_lufs(meter.stderr)
+            self.assertIsNotNone(peak)
+            self.assertIsNotNone(loudness)
+            self.assertLess(peak, -1.0, f"AAC true peak: {peak} dBTP")
+            self.assertGreaterEqual(loudness, -21.0)
+            self.assertLessEqual(loudness, -12.0)
+
 if __name__ == "__main__":
     unittest.main()
