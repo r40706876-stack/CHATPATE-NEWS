@@ -12,8 +12,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install Blender and FFmpeg
+        timeout-minutes: 28
+        shell: bash
         run: |
           set -euo pipefail
+          # Match the working portable Blender setup from Animation-special-.
           if ! command -v blender >/dev/null; then
             mkdir -p "$RUNNER_TEMP/blender"
             if timeout --signal=TERM --kill-after=15s 600s curl -fL --retry 3 --retry-delay 3 --connect-timeout 25 \
@@ -24,23 +27,32 @@ jobs:
               echo "$RUNNER_TEMP/blender" >> "$GITHUB_PATH"
               export PATH="$RUNNER_TEMP/blender:$PATH"
             else
-              sudo apt-get update -qq
-              sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends blender
+              echo "::warning::Portable Blender unavailable; use bounded Ubuntu fallback"
+              sudo sed -i 's@azure.archive.ubuntu.com@archive.ubuntu.com@g' /etc/apt/sources.list.d/ubuntu.sources 2>/dev/null || true
+              timeout 180s sudo apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=25 update -qq
+              timeout 720s sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends blender
             fi
           fi
           if ! command -v xvfb-run >/dev/null || ! ldconfig -p | grep -q 'libEGL.so.1'; then
-            sudo apt-get update -qq
-            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends xvfb libegl1 libgl1
+            sudo sed -i 's@azure.archive.ubuntu.com@archive.ubuntu.com@g' /etc/apt/sources.list.d/ubuntu.sources 2>/dev/null || true
+            timeout 180s sudo apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=25 update -qq
+            timeout 300s sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends xvfb libegl1 libgl1 libopengl0
+          fi
+          if ldd "$(command -v blender)" | grep 'not found'; then
+            echo "::error::Blender runtime libraries missing"
+            exit 1
           fi
           if ! command -v ffmpeg >/dev/null; then
-            sudo apt-get update -qq
-            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ffmpeg
+            timeout 300s sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ffmpeg
           fi
           blender --version | head -n 2
+          ffmpeg -version | head -n 1
       - name: Render actual 3D COD animation
+        timeout-minutes: 25
         run: |
+          set -o pipefail
           mkdir -p blender_output
-          BLENDER_OUTPUT="$PWD/blender_output/bakra_cod_3d.mp4" xvfb-run -a blender -b -t 2 --python blender_cod_scene.py
+          BLENDER_OUTPUT="$PWD/blender_output/bakra_cod_3d.mp4" xvfb-run -a blender -b -t 2 --python blender_cod_scene.py 2>&1 | tee blender_output/blender_render.log
           test -s blender_output/bakra_cod_3d.mp4
           ffmpeg -v error -xerror -i blender_output/bakra_cod_3d.mp4 -f null -
           ffmpeg -y -loglevel error -ss 2 -i blender_output/bakra_cod_3d.mp4 -frames:v 1 blender_output/preview.jpg
