@@ -885,8 +885,8 @@ def render(ep, segs, chars, out, preview):
     wr = subprocess.Popen(["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}",
                            "-r", str(FPS), "-i", "-", "-i", str(out.with_suffix(".wav")), "-c:v", "libx264", "-crf", "20",
                            "-preset", "veryfast", "-pix_fmt", "yuv420p",
-                           # Leave AAC true-peak headroom after encoding; unattenuated SFX reached -0.5 dBTP.
-                           "-af", "volume=0.72", "-c:a", "aac", "-b:a", "160k", "-shortest", str(out)],
+                           # Preserve >1 dBTP margin on the latest rejected AAC render (-0.5 dBTP at 0.72).
+                           "-af", "volume=0.56", "-c:a", "aac", "-b:a", "160k", "-shortest", str(out)],
                           stdin=subprocess.PIPE)
     bases = _bases()
     headline = ep.get("breaking") or ep.get("title") or ""
