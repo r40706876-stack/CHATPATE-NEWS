@@ -97,11 +97,11 @@ def _scene_action(im, scene, t, n, line=None):
         d.ellipse((610,630,740,760),fill=(242,162,52),outline=(166,96,38),width=9)
         for dx,dy in ((-27,-15),(12,-23),(-8,23),(30,15)):
             d.ellipse((675+dx-8,690+dy-8,675+dx+8,690+dy+8),fill=(255,218,125))
-        if "वसूली" in str((line or {}).get("say", "")):
+        if any(k in str((line or {}).get("say", "")) for k in ("वसूली", "बैंक मैनेजर")):
             # Pinky's actual joke: an agent is about to climb out of the TV.
             # A speech bubble makes the threat legible even without narration.
             d.rounded_rectangle((500,490,840,570),18,fill=(255,247,215),outline=RED,width=8)
-            d.text((670,530),"किस्त कहाँ है?",font=tt.font(48),fill=RED,anchor="mm")
+            d.text((670,530),"किश्त अभी दो!",font=tt.font(48),fill=RED,anchor="mm")
         elif "पैसे" in str((line or {}).get("say", "")):
             d.rounded_rectangle((535,620,815,800),18,fill=(253,247,221),outline=RED,width=10)
             d.text((675,665),"PAY NOW",font=tt.font(49),fill=RED,anchor="mm")
@@ -250,7 +250,7 @@ def frames(line, episode, talk, n, cut, seed=0):
     for t,sp in enumerate(talking):
         im=base.copy()
         _scene_action(im,scene,t,n,line=line)
-        if scene=="arrival" and "वसूली" in str(line.get("say","")):
+        if scene=="arrival" and any(k in str(line.get("say","")) for k in ("वसूली", "बैंक मैनेजर")):
             # Existing courier character literally emerges from the television.
             # Start small and move upward instead of showing another static icon.
             progress=min(1.0,t/max(1,n-1))
