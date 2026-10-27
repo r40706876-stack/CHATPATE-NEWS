@@ -1,3 +1,6 @@
+import '@fontsource/noto-sans-devanagari/400.css';
+import '@fontsource/noto-sans-devanagari/700.css';
+import '@fontsource/noto-sans-devanagari/900.css';
 import React from 'react';
 import {AbsoluteFill, Composition, interpolate, registerRoot, useCurrentFrame} from 'remotion';
 
