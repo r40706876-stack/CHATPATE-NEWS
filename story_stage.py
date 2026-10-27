@@ -152,8 +152,12 @@ def _scene_action(im, scene, t, n, line=None):
         elif "वापसी" in say:
             # The delivery box is sealed NO RETURN while Chacha keeps talking.
             _box(d,575,710,360,330,"COD")
-            d.rounded_rectangle((605,890,905,1005),16,fill=(255,249,232),outline=RED,width=9)
-            d.text((755,945),"NO RETURN",font=tt.font(45),fill=RED,anchor="mm")
+            # The no-return seal visibly SLIDES onto the parcel; the previous
+            # fixed stamp produced identical frames at t=0 and t=35 and
+            # correctly failed the full-frame storyboard motion preflight.
+            seal_x=int(1080-475*min(1.0,t/35.0))
+            d.rounded_rectangle((seal_x,890,seal_x+300,1005),16,fill=(255,249,232),outline=RED,width=9)
+            d.text((seal_x+150,945),"वापसी बंद!",font=tt.font(43),fill=RED,anchor="mm")
             for j in range(3):
                 d.arc((460-j*28,650-j*30,580+j*28,910+j*30),-80,80,fill=RED,width=9)
         elif "रोटी" in say:
