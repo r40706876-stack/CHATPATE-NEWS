@@ -13,6 +13,12 @@ on:
   push:
     branches:
       - 'feature/retention-comedy-quality-gate-20261025'
+    # Renderer-generated previews are artifacts, not source changes. Avoid
+    # spurious action_required runs and repeated expensive 3D smoke renders.
+    paths-ignore:
+      - 'last_episode.mp4'
+      - 'last_quality.json'
+      - 'preview_episode.jpg'
   workflow_dispatch:
 concurrency:
   group: comedy-regression-${{ github.ref }}

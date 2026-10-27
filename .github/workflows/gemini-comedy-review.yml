@@ -17,7 +17,7 @@ jobs:
       - name: Review Hindi comedy script using Gemini free API
         run: |
           python3 - <<'PY'
-          import json, os, urllib.request, urllib.error
+          import json, os, socket, urllib.request, urllib.error
           from pathlib import Path
           episode=json.loads(Path("episodes/waiting_ticket_comedy.json").read_text())
           key=os.getenv("GEMINI_API_KEY","")
@@ -27,7 +27,7 @@ jobs:
           prompt=("You are a strict Hindi viral comedy script editor. Review this fictional Bakra News dialogue for Instagram Reels. "
                   "Evaluate 0-10 for first 2 second hook, escalating situational comedy, novelty, character banter, laugh density, "
                   "last-line shareability. Avoid empty praise and fake certainty about viral performance. "
-                  "Propose a fully rewritten 25-35 second Hindi script using the same available characters, no new visuals requiring complex animation. "
+                  "Propose a fully rewritten 15-22 second Hindi script of at most 55 spoken words using the same available characters and the five existing story scenes; avoid unfilmable gags. "
                   "Return concise Hindi critique with concrete line-level changes.\n"+json.dumps(episode,ensure_ascii=False))
           data=json.dumps({"contents":[{"parts":[{"text":prompt}]}],"generationConfig":{"temperature":0.85}},ensure_ascii=False).encode()
           errors=[]
@@ -40,8 +40,9 @@ jobs:
                   catalog=json.load(response)
               models=[m["name"].removeprefix("models/") for m in catalog.get("models",[])
                       if "generateContent" in m.get("supportedGenerationMethods",[])
-                      and "gemini" in m.get("name","")]
-              models=sorted(models,key=lambda m: (not ("flash" in m and "lite" not in m),not "flash" in m,m))
+                      and "gemini" in m.get("name","") and "tts" not in m["name"].lower()
+                      and "image" not in m["name"].lower() and "omni" not in m["name"].lower()]
+              models=sorted(models,key=lambda m: (not ("flash" in m and "lite" not in m),not "flash" in m,m))[:4]
               print("Available generateContent models:",models[:15])
           except urllib.error.HTTPError as e:
               errors.append("model discovery HTTP "+str(e.code)+": "+e.read(300).decode("utf-8","replace"))
@@ -53,14 +54,14 @@ jobs:
               url="https://generativelanguage.googleapis.com/v1beta/models/"+model+":generateContent"
               req=urllib.request.Request(url,data=data,headers={"Content-Type":"application/json","x-goog-api-key":key})
               try:
-                  with urllib.request.urlopen(req,timeout=90) as response:
+                  with urllib.request.urlopen(req,timeout=25) as response:
                       body=json.load(response)
                   result="\n".join(p.get("text","") for c in body.get("candidates",[]) for p in c.get("content",{}).get("parts",[]))
                   if not result.strip(): raise ValueError("Empty model response")
                   Path("gemini_comedy_review.md").write_text("# Gemini comedy review ("+model+")\n\n"+result+"\n")
                   print("Gemini review completed using",model)
                   break
-              except (urllib.error.HTTPError,urllib.error.URLError,ValueError) as e:
+              except (urllib.error.HTTPError,urllib.error.URLError,ValueError,TimeoutError,socket.timeout) as e:
                   detail=e.read(300).decode("utf-8","replace") if isinstance(e,urllib.error.HTTPError) else str(e)
                   errors.append(model+": "+str(getattr(e,"code",e))+" "+detail[:300])
           else:
