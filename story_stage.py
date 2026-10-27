@@ -292,9 +292,22 @@ def frames(line, episode, talk, n, cut, seed=0):
             if all(entry.get(k) for k in ("path", "author", "source", "license")):
                 media = Path("assets/licensed") / Path(entry["path"]).name
                 if media.is_file() and media.suffix.lower() in (".png", ".jpg", ".jpeg", ".webp"):
+                    # Keep the entire documentary illustration visible, but make
+                    # it large enough to read on a 9:16 phone. Blurred edge-fill
+                    # preserves the original photo without cropping its subject.
+                    from PIL import ImageOps
                     with Image.open(media) as picture:
-                        licensed_insert = picture.convert("RGB")
-                    licensed_insert.thumbnail((550, 430), Image.Resampling.LANCZOS)
+                        original = picture.convert("RGB")
+                    photo_size = (850, 530)
+                    background = ImageOps.fit(original, photo_size,
+                                              method=Image.Resampling.LANCZOS).filter(
+                                                  ImageFilter.GaussianBlur(22))
+                    foreground = ImageOps.contain(original, photo_size,
+                                                  method=Image.Resampling.LANCZOS)
+                    background.paste(foreground,
+                                     ((photo_size[0] - foreground.width) // 2,
+                                      (photo_size[1] - foreground.height) // 2))
+                    licensed_insert = background
                     licensed_entry = entry
     except (OSError, ValueError, TypeError, KeyError):
         licensed_entry, licensed_insert = None, None
@@ -331,7 +344,7 @@ def frames(line, episode, talk, n, cut, seed=0):
         # On the Blender delivery reveal, let the original 3D fill the screen first.
         if licensed_insert is not None and not (cod_insert and t < min(33, max(1, n // 2))):
             pan = int(35 * math.sin(t / max(1, n - 1) * math.pi))
-            x, y = 460 + pan, 380
+            x, y = 105 + pan, 245
             d = ImageDraw.Draw(im)
             d.rounded_rectangle((x-12, y-12, x+licensed_insert.width+12, y+licensed_insert.height+12),
                                 16, fill=(255,255,255), outline=INK, width=8)
