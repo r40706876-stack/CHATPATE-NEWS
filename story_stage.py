@@ -97,21 +97,21 @@ def _scene_action(im, scene, t, n):
         d.text((677,495),"घर बना शोरूम!",font=tt.font(58),fill="white",anchor="mm")
     elif scene=="freight":
         _box(d,380,730,500,345,"TV / COD")
-        _worker(d,65,800,int(18*math.sin(t/6)))
+        # The courier is an existing 3D-style Ramesh sprite, composited below.
         d.rounded_rectangle((555,480,930,670),25,fill=(44,60,83))
         d.text((742,570),"भाड़ा?!",font=tt.font(118),fill=YELLOW,anchor="mm")
         d.ellipse((740,1090,930,1280),fill=(247,193,99),outline=INK,width=7)
         d.text((835,1185),"?",font=tt.font(140),fill=INK,anchor="mm")
     elif scene=="bill":
         _tv(d,500,590+wobble,365,265)
-        _worker(d,55,795,int(25*math.sin(t/5)))
+        # The courier is an existing 3D-style Ramesh sprite, composited below.
         d.rounded_rectangle((470,930,1030,1290),20,fill="white",outline=RED,width=14)
         d.text((750,1010),"COD बिल",font=tt.font(71),fill=INK,anchor="mm")
         d.text((750,1130),"₹1,69,000",font=tt.font(76),fill=RED,anchor="mm")
         d.rounded_rectangle((540,1210,965,1270),12,fill=YELLOW)
         d.text((752,1240),"घर की रजिस्ट्री?!",font=tt.font(44),fill=INK,anchor="mm")
     elif scene=="house":
-        _worker(d,65,790,int(20*math.sin(t/5)))
+        # The courier is an existing 3D-style Ramesh sprite, composited below.
         d.rounded_rectangle((375,520,1000,870),25,fill=(250,241,214),outline=RED,width=16)
         d.text((685,635),"चाचा RETURN?!",font=tt.font(85),fill=RED,anchor="mm")
         d.text((685,755),"RETURN TO SENDER",font=tt.font(39),fill=INK,anchor="mm")
@@ -178,9 +178,14 @@ def frames(line, episode, talk, n, cut, seed=0):
     supporting=None
     if supporter in episode.get("sprite",{}):
         supporting=cut(pose_file(episode["sprite"][supporter],"hairan"))
+    courier=None
+    if "ramesh" in episode.get("sprite",{}):
+        courier=cut(pose_file(episode["sprite"]["ramesh"],"neutral"))
     for t,sp in enumerate(talking):
         im=base.copy()
         _scene_action(im,scene,t,n)
+        if scene in ("freight","bill","house"):
+            _character(im,courier,70+int(9*math.sin(t/7)),810,575)
         _character(im,supporting,5,1120,610,flip=True)
         _character(im,sp,600,990,760)
         d=ImageDraw.Draw(im)
