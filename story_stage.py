@@ -6,7 +6,7 @@ unverified external images or generated 'news footage' are represented as real.
 """
 import math
 from pathlib import Path
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageEnhance, ImageFilter
 import talk_test as tt
 
 SIZE = (1080, 1920)
@@ -17,7 +17,7 @@ YELLOW = (255, 214, 79)
 
 def scene_for(line):
     scene = str(line.get("scene") or "")
-    return scene if scene in ("sweets", "arrival", "otp", "bill", "house") else "sweets"
+    return scene if scene in ("sweets", "arrival", "freight", "bill", "house") else "sweets"
 
 
 def _box(d, x, y, w=230, h=160, label="COD"):
@@ -49,6 +49,12 @@ def _worker(d, x, y, arm=0):
 
 
 def _house_base():
+    # Use the existing high-quality 3D-style village set, not a flat geometric house.
+    try:
+        from reel_studio import set_img
+        return ImageEnhance.Brightness(set_img("village",*SIZE).filter(ImageFilter.GaussianBlur(1.2))).enhance(0.88)
+    except (OSError, KeyError, ValueError):
+        pass
     im=Image.new("RGB",SIZE,(232,245,252))
     d=ImageDraw.Draw(im)
     d.rectangle((0,1320,1080,1920),fill=(193,212,207))
@@ -89,11 +95,11 @@ def _scene_action(im, scene, t, n):
         _tv(d,485,570+wobble,360,265)
         d.rounded_rectangle((435,455,920,535),18,fill=INK)
         d.text((677,495),"घर बना शोरूम!",font=tt.font(58),fill="white",anchor="mm")
-    elif scene=="otp":
+    elif scene=="freight":
         _box(d,380,730,500,345,"TV / COD")
         _worker(d,65,800,int(18*math.sin(t/6)))
         d.rounded_rectangle((555,480,930,670),25,fill=(44,60,83))
-        d.text((742,570),"OTP?",font=tt.font(118),fill=YELLOW,anchor="mm")
+        d.text((742,570),"भाड़ा?!",font=tt.font(118),fill=YELLOW,anchor="mm")
         d.ellipse((740,1090,930,1280),fill=(247,193,99),outline=INK,width=7)
         d.text((835,1185),"?",font=tt.font(140),fill=INK,anchor="mm")
     elif scene=="bill":
@@ -107,7 +113,7 @@ def _scene_action(im, scene, t, n):
     elif scene=="house":
         _worker(d,65,790,int(20*math.sin(t/5)))
         d.rounded_rectangle((375,520,1000,870),25,fill=(250,241,214),outline=RED,width=16)
-        d.text((685,635),"घर भी COD?!",font=tt.font(85),fill=RED,anchor="mm")
+        d.text((685,635),"चाचा RETURN?!",font=tt.font(85),fill=RED,anchor="mm")
         d.text((685,755),"RETURN TO SENDER",font=tt.font(39),fill=INK,anchor="mm")
         for j in range(3):
             x=530+j*150
@@ -127,25 +133,25 @@ def _scene_action(im, scene, t, n):
         elif scene=="arrival":
             d.rounded_rectangle((445,450,705,800),22,fill=(218,234,239),outline=INK,width=9)
             d.line((445,620,705,620),fill=INK,width=7)
-        elif scene=="otp":
+        elif scene=="freight":
             d.rounded_rectangle((420,405,990,770),35,fill=INK)
             d.rounded_rectangle((460,450,950,720),18,fill=(134,217,236))
-            d.text((705,580),"OTP  • • • •",font=tt.font(64),fill=INK,anchor="mm")
+            d.text((705,580),"लड्डू का भाड़ा!",font=tt.font(64),fill=INK,anchor="mm")
         elif scene=="bill":
             d.rounded_rectangle((420,440,1020,810),22,fill="white",outline=RED,width=15)
             d.text((720,540),"COD",font=tt.font(90),fill=RED,anchor="mm")
             d.text((720,685),"₹1,69,000",font=tt.font(78),fill=INK,anchor="mm")
         elif scene=="house":
             d.rounded_rectangle((430,460,980,760),25,fill=YELLOW,outline=RED,width=14)
-            d.text((705,605),"COD घर?!",font=tt.font(95),fill=RED,anchor="mm")
+            d.text((705,605),"चाचा RETURN?!",font=tt.font(95),fill=RED,anchor="mm")
     elif beat==2:
         if scene=="sweets":
             _tv(d,445,480,470,325)
         elif scene=="arrival":
             _tv(d,405,465,360,260)
             _box(d,740,500,225,180,"COD")
-        elif scene=="otp":
-            _box(d,460,465,460,290,"TV OTP")
+        elif scene=="freight":
+            _box(d,460,465,460,290,"SWEETS COD")
         elif scene=="bill":
             d.rounded_rectangle((420,445,1020,805),25,fill=(252,225,217),outline=RED,width=12)
             d.text((720,550),"रजिस्ट्री?",font=tt.font(91),fill=RED,anchor="mm")
@@ -153,7 +159,7 @@ def _scene_action(im, scene, t, n):
         elif scene=="house":
             d.rounded_rectangle((430,450,990,790),20,fill=(255,248,227),outline=RED,width=16)
             d.text((710,555),"RETURN",font=tt.font(100),fill=RED,anchor="mm")
-            d.text((710,690),"घर भी पार्सल!",font=tt.font(63),fill=INK,anchor="mm")
+            d.text((710,690),"चाचा भी पार्सल!",font=tt.font(63),fill=INK,anchor="mm")
 
 
 def frames(line, episode, talk, n, cut, seed=0):
@@ -178,7 +184,7 @@ def frames(line, episode, talk, n, cut, seed=0):
         _character(im,supporting,5,1120,610,flip=True)
         _character(im,sp,600,990,760)
         d=ImageDraw.Draw(im)
-        d.rounded_rectangle((25,1480,450,1546),18,fill=INK)
-        d.text((237,1513),{"bablu":"बबलू","pinky":"पिंकी","chacha":"चाचा","dadi":"दादी"}.get(who,who),
-               font=tt.font(42),fill="white",anchor="mm")
+        if scene=="house" and t>=int(n*.40):
+            d.rounded_rectangle((25,1390,435,1545),18,fill=(255,246,221),outline=RED,width=13)
+            d.text((230,1465),"RETURN चाचा!",font=tt.font(57),fill=RED,anchor="mm")
         yield im
