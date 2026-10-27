@@ -189,6 +189,12 @@ jobs:
           ffmpeg -hide_banner -loglevel error -y -i scene_outputs/godot/parcel.avi -frames:v 1 scene_outputs/godot/preview.png
           ffmpeg -hide_banner -loglevel error -y -i scene_outputs/godot/parcel.avi -c:v libx264 -preset veryfast -crf 28 -pix_fmt yuv420p scene_outputs/godot/parcel.mp4
           test -s scene_outputs/godot/parcel.mp4
+          # A technically valid movie can still freeze halfway through.
+          # Require visible frame changes across the whole 3-second scene.
+          for second in 0.2 1.5 2.7; do
+            ffmpeg -hide_banner -loglevel error -y -ss "$second" -i scene_outputs/godot/parcel.mp4 -frames:v 1 "scene_outputs/godot/beat-${second}.png"
+          done
+          test "$(sha256sum scene_outputs/godot/beat-*.png | awk '{print $1}' | sort -u | wc -l)" -eq 3
           rm scene_outputs/godot/parcel.avi
       - uses: actions/upload-artifact@v4
         if: always()
