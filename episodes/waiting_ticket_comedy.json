@@ -10,8 +10,8 @@
   "lines": [
     {
       "who": "bablu",
-      "say": "₹1.69 लाख का टीवी! भाई ने माँगी थी मिठाई!",
-      "big": "₹1.69 लाख का टीवी!",
+      "say": "मिठाई माँगी, ₹1.69 लाख का COD टीवी पहुँच गया!",
+      "big": "मिठाई माँगी, ₹1.69 लाख का टीवी!",
       "expr": "hairan",
       "visuals": [
         "Madurai news report delivery parcels and TV COD"
@@ -20,8 +20,8 @@
     },
     {
       "who": "pinky",
-      "say": "चाचा, मिठाई के पते पर टीवी-फ्रिज पहुँचे—घर शोरूम बन गया!",
-      "big": "मिठाई का पता, टीवी का शोरूम!",
+      "say": "चाचा, फ्री सुनते ही पता भेजा? बाहर पूरा शोरूम खड़ा है!",
+      "big": "फ्री सुनते ही पता भेजा?!",
       "expr": "tanz",
       "visuals": [
         "fast cartoon parcel pile grows into TV-fridge showroom at home doorway; delivery worker points at showroom sign and Pinky teases Chacha"
@@ -30,33 +30,33 @@
     },
     {
       "who": "chacha",
-      "say": "शोरूम? लड्डू में HDMI लगाऊँ? चाशनी 4K में दिखाऊँ?",
-      "big": "चाशनी 4K में?!",
+      "say": "अरे लड्डू माँगे थे! डिलीवरी वाला रिमोट क्यों पकड़ा रहा?",
+      "big": "लड्डू माँगे, रिमोट मिला!",
       "expr": "hairan",
       "punch": true,
       "visuals": [
-        "cartoon ladoo next to HDMI cable television fridge"
+        "cartoon Chacha holding empty sweets box while delivery worker offers a TV remote, absurd confused reaction, TV and fridge boxes in background"
       ],
       "scene": "laddoo_hdmi"
     },
     {
       "who": "pinky",
-      "say": "चाचा, रिटर्न फॉर्म में लिखूँ—मुँह मीठा करना था, मकान गिरवी नहीं!",
-      "big": "मुँह मीठा, मकान गिरवी?!",
+      "say": "बिल पर लिखा है COD—कैश कहाँ है, चाचा?",
+      "big": "COD बिल—कैश कहाँ है?",
       "expr": "tanz",
       "visuals": [
-        "cartoon COD return form next to television invoice ₹1.69 lakh, exaggerated funny return reason: मिठाई चाहिए थी, मकान गिरवी नहीं"
+        "cartoon Pinky points to giant ₹1.69 lakh COD bill, Chacha looks at empty wallet, lively contrasting reaction"
       ],
       "scene": "bill"
     },
     {
       "who": "dadi",
-      "say": "टीवी उठा ले! COD में दो लड्डू हैं—एक अभी, दूसरा EMI पर!",
-      "big": "एक लड्डू अभी, दूसरा EMI पर!",
+      "say": "कैश होता तो ये फ्री मिठाई के लिए पता बाँटते?",
+      "big": "कैश होता तो फ्री क्यों माँगते?!",
       "expr": "gussa",
       "punch": true,
       "visuals": [
-        "cartoon delivery worker at door holding ₹1.69 lakh COD bill, angry Dadi offering two ladoos as payment, one ladoo labeled अभी and the other EMI; exaggerated character reactions"
+        "cartoon Dadi roasts Chacha pointing at his empty wallet, Chacha embarrassed, delivery worker holding COD invoice and parcels, big expressive character reactions"
       ],
       "scene": "delivery"
     }
@@ -68,7 +68,7 @@
   "fictional_satire": true,
   "source_url": "https://www.indiatoday.in/amp/trending-news/story/madurai-mans-diwali-wish-goes-wrong-tvs-fridges-and-lakhs-in-cod-orders-pour-in-3016108-2026-10-13",
   "no_send": true,
-  "qa_note": "2026-10-27: revised all five Hindi dialogue beats after independent Gemini 5.5/10 and fixed 56>55 word failure. Verify new Gemini editorial review, 9:16 final MP4, lip/audio sync, visual story continuity and QA before any delivery. no_send remains true.",
+  "qa_note": "2026-10-27: revised after independent Gemini review criticized weak character banter and confusing punch. Now 5 short beats with direct Pinky-Chacha-Dadi conflict, no misleading claim COD was paid. Recheck Gemini, complete 9:16 MP4 and audio/visual QA. no_send remains true.",
   "no_clips": true,
   "visual_policy": "character_only",
   "no_memes": true,
