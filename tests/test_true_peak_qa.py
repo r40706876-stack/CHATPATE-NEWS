@@ -9,7 +9,7 @@ class TruePeakQATests(unittest.TestCase):
     def test_safe_headroom(self):
         self.assertEqual(_true_peak_dbfs("True peak:\n Peak: -1.8 dBFS"), -1.8)
     def test_integrated_loudness_summary(self):
-        log = "Integrated loudness:\\n    I: -17.8 LUFS\\n    Threshold: -28.3 LUFS"
+        log = "Integrated loudness:\n    I: -17.8 LUFS\n    Threshold: -28.3 LUFS"
         self.assertEqual(_integrated_lufs(log), -17.8)
 
     def test_integrated_loudness_missing_fails_closed(self):
