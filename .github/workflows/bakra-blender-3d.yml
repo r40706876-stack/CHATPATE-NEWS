@@ -5,6 +5,9 @@ on:
     paths:
       - blender_cod_scene.py
       - .github/workflows/bakra-blender-3d.yml
+permissions:
+  contents: read
+  actions: write
 jobs:
   render:
     runs-on: ubuntu-latest
@@ -61,3 +64,12 @@ jobs:
           name: bakra-original-blender-cod-3d
           path: blender_output/
           if-no-files-found: error
+
+      - name: Queue integrated Bakra News episode after verified 3D render
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          gh workflow run talk_episode.yml --repo "${{ github.repository }}" --ref "${{ github.ref_name }}" -f script=episodes/waiting_ticket_comedy.json
+          echo "3D proof verified and integrated comedy episode queued"
