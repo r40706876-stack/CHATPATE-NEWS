@@ -13,8 +13,30 @@ jobs:
       - uses: actions/checkout@v4
       - name: Install Blender and FFmpeg
         run: |
-          sudo apt-get update -qq
-          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends blender ffmpeg xvfb libegl1 libgl1
+          set -euo pipefail
+          if ! command -v blender >/dev/null; then
+            mkdir -p "$RUNNER_TEMP/blender"
+            if timeout --signal=TERM --kill-after=15s 600s curl -fL --retry 3 --retry-delay 3 --connect-timeout 25 \
+              -o "$RUNNER_TEMP/blender.tar.xz" \
+              "https://download.blender.org/release/Blender4.2/blender-4.2.0-linux-x64.tar.xz" &&
+              tar -xJf "$RUNNER_TEMP/blender.tar.xz" -C "$RUNNER_TEMP/blender" --strip-components=1 &&
+              test -x "$RUNNER_TEMP/blender/blender"; then
+              echo "$RUNNER_TEMP/blender" >> "$GITHUB_PATH"
+              export PATH="$RUNNER_TEMP/blender:$PATH"
+            else
+              sudo apt-get update -qq
+              sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends blender
+            fi
+          fi
+          if ! command -v xvfb-run >/dev/null || ! ldconfig -p | grep -q 'libEGL.so.1'; then
+            sudo apt-get update -qq
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends xvfb libegl1 libgl1
+          fi
+          if ! command -v ffmpeg >/dev/null; then
+            sudo apt-get update -qq
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ffmpeg
+          fi
+          blender --version | head -n 2
       - name: Render actual 3D COD animation
         run: |
           mkdir -p blender_output
