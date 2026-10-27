@@ -16,7 +16,10 @@
       "visuals": [
         "Madurai news report delivery parcels and TV COD"
       ],
-      "scene": "sweets"
+      "scene": "sweets",
+      "shot": "close",
+      "react_pose": "hairan",
+      "tag_text": "मिठाई माँगी, ₹1.69 लाख का टीवी!"
     },
     {
       "who": "pinky",
@@ -26,7 +29,10 @@
       "visuals": [
         "fast cartoon parcel pile grows into TV-fridge showroom at home doorway; delivery worker points at showroom sign and Pinky teases Chacha"
       ],
-      "scene": "arrival"
+      "scene": "arrival",
+      "shot": "close",
+      "react_pose": "tanz",
+      "tag_text": "फ्री सुनते ही पता भेजा?!"
     },
     {
       "who": "chacha",
@@ -37,7 +43,10 @@
       "visuals": [
         "cartoon Chacha holding an empty sweets box; delivery worker holds a giant TV carton and asks for OTP, Pinky reacts with disbelief"
       ],
-      "scene": "laddoo_hdmi"
+      "scene": "laddoo_hdmi",
+      "shot": "close",
+      "react_pose": "hairan",
+      "tag_text": "लड्डू की जगह टीवी का डिब्बा?!"
     },
     {
       "who": "pinky",
@@ -47,7 +56,10 @@
       "visuals": [
         "cartoon delivery worker sees giant ₹1.69 lakh COD invoice and, instead of collecting money, offers Chacha ₹50 out of pity; Pinky laughs; unpaid TV carton at door"
       ],
-      "scene": "bill"
+      "scene": "bill",
+      "shot": "close",
+      "react_pose": "tanz",
+      "tag_text": "बिल देखकर डिलीवरी वाला ₹50 दे गया!"
     },
     {
       "who": "dadi",
@@ -58,17 +70,20 @@
       "visuals": [
         "cartoon Dadi stops delivery worker from handing Chacha ₹50 and points at his house as Chacha excitedly reaches for another free offer; TV carton and unpaid COD invoice remain visible"
       ],
-      "scene": "delivery"
+      "scene": "delivery",
+      "shot": "close",
+      "react_pose": "gussa",
+      "tag_text": "मुफ्त में तेरा घर भी मँगवा लेंगे!"
     }
   ],
   "comedy_format": "character_clash",
   "style": "v2",
-  "react": false,
+  "react": true,
   "tag_who": "उस दोस्त को जो फ्री सुनते ही पता भेज देता है",
   "fictional_satire": true,
   "source_url": "https://www.indiatoday.in/amp/trending-news/story/madurai-mans-diwali-wish-goes-wrong-tvs-fridges-and-lakhs-in-cod-orders-pour-in-3016108-2026-10-13",
   "no_send": true,
-  "qa_note": "2026-10-27: Gemini independent critique rated prior draft 6.25/10 and identified stale wallet-return line 4. Replaced it with delivery-worker ₹50 reversal and Dadi's escalating free-house callback. Private preview only; no_send true. Recheck Gemini and full render QA; do not infer viewer retention from offline tests.",
+  "qa_note": "2026-10-27: Gemini independent critique rated prior draft 6.25/10 and identified stale wallet-return line 4. Replaced it with delivery-worker ₹50 reversal and Dadi's escalating free-house callback. Private preview only; no_send true. Recheck Gemini and full render QA; do not infer viewer retention from offline tests. Visual revision: force expressive close-up for every speaker and reaction poses; retain character-only policy and no_send until verified.",
   "no_clips": true,
   "visual_policy": "character_only",
   "no_memes": true,
