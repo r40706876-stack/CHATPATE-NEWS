@@ -18,10 +18,10 @@ def keys():
     return list(dict.fromkeys(k for k in ks if k))
 
 
-def _get(url, key, body=None):
+def _get(url, key, body=None, timeout=90):
     req = urllib.request.Request(url, json.dumps(body).encode() if body else None,
                                  {"Content-Type": "application/json", "x-goog-api-key": key})
-    with urllib.request.urlopen(req, timeout=90) as r:
+    with urllib.request.urlopen(req, timeout=timeout) as r:
         return json.load(r)
 
 
@@ -56,16 +56,16 @@ class QuotaOver(RuntimeError):
     """आज का free कोटा ख़त्म — दोबारा कोशिश बेकार."""
 
 
-def ask(prompt, search=False, json_mode=False, temperature=0.9, prefer=None, patient=True):
+def ask(prompt, search=False, json_mode=False, temperature=0.9, prefer=None, patient=True, fast=False):
     """पहली key से; उसका आज का कोटा ख़त्म हो तो अगली key से."""
-    ks = keys()
+    ks = keys()[:1] if fast else keys()
     if not ks:
         raise RuntimeError("GEMINI_API_KEY नहीं मिली")
     for n, key in enumerate(ks, 1):
         if key in _dead:                              # इस run में पहले ही ख़त्म मिली — सीधे अगली
             continue
         try:
-            return _ask(key, prompt, search, json_mode, temperature, prefer, patient)
+            return _ask(key, prompt, search, json_mode, temperature, prefer, patient, fast)
         except QuotaOver:
             _dead.add(key)
             if n < len(ks):
@@ -83,7 +83,7 @@ class Blocked(RuntimeError):
     """Gemini ने prompt ही रोक दिया (कोई खबर safety filter में अटकी)."""
 
 
-def _ask(key, prompt, search, json_mode, temperature, prefer, patient=True):
+def _ask(key, prompt, search, json_mode, temperature, prefer, patient=True, fast=False):
     parts = prompt if isinstance(prompt, list) else [{"text": prompt}]     # list = text + तस्वीरें (inline_data)
     body = {"contents": [{"parts": parts}], "generationConfig": {"temperature": temperature},
             "safetySettings": [{"category": f"HARM_CATEGORY_{c}", "threshold": "BLOCK_ONLY_HIGH"}     # खबरों में अपराध/हादसे
@@ -93,7 +93,8 @@ def _ask(key, prompt, search, json_mode, temperature, prefer, patient=True):
     elif json_mode:
         body["generationConfig"]["responseMimeType"] = "application/json"
     errors = []
-    order = [m for m in models(key) if m not in _gone]
+    order = ([m for m in ("gemini-3-flash-preview", "gemini-2.5-flash") if m not in _gone]
+             if fast else [m for m in models(key) if m not in _gone])
     if prefer:                                        # जैसे "pro": पहले वो, फिर बाक़ी
         order = [m for m in order if prefer in m] + [m for m in order if prefer not in m]
     for rnd in range(2 if patient else 1):            # सीमा लगे तो रुको नहीं, अगला model; सब पर लगे तभी एक बार रुको
@@ -101,7 +102,7 @@ def _ask(key, prompt, search, json_mode, temperature, prefer, patient=True):
         for model in order:
             try:
                 t0 = time.time()
-                data = _get(f"{BASE}/models/{model}:generateContent", key, body)
+                data = _get(f"{BASE}/models/{model}:generateContent", key, body, timeout=25 if fast else 90)
                 print(f"    Gemini {model}: {time.time() - t0:.0f}s")
                 if not data.get("candidates"):
                     raise Blocked(str(data.get("promptFeedback") or data)[:300])
