@@ -41,11 +41,11 @@
     },
     {
       "who": "pinky",
-      "say": "चाचा, OTP बाद में—पहले COD के पैसे दिखाओ!",
-      "big": "OTP नहीं, COD का बिल!",
+      "say": "चाचा, बिल देखकर आपका बटुआ बोला—मुझे भी रिटर्न कर दो!",
+      "big": "बटुआ बोला: मुझे भी रिटर्न करो!",
       "expr": "tanz",
       "visuals": [
-        "cartoon Pinky points to giant ₹1.69 lakh COD bill, Chacha looks at empty wallet, lively contrasting reaction"
+        "cartoon Pinky holds giant unpaid ₹1.69 lakh COD invoice; Chacha opens empty wallet with funny RETURN label; Chacha shocked, Pinky laughing; TV carton remains at doorway"
       ],
       "scene": "bill"
     },
@@ -68,7 +68,7 @@
   "fictional_satire": true,
   "source_url": "https://www.indiatoday.in/amp/trending-news/story/madurai-mans-diwali-wish-goes-wrong-tvs-fridges-and-lakhs-in-cod-orders-pour-in-3016108-2026-10-13",
   "no_send": true,
-  "qa_note": "2026-10-27: Gemini criticized unnatural third line; replaced with concrete TV-carton OTP confusion and Dadi battery-on-credit roast. Private preview only, no_send true. Editorial >=8.5 still required for any delivery. Verify final MP4/audio/visual QA.",
+  "qa_note": "2026-10-27: Gemini 6.75/10 flagged flat fourth line. Replaced repeated COD-money demand with wallet-return punch and matching reaction visual. Private preview only; no_send true. Require fresh Gemini >=8.5, full MP4 and audio/visual QA before any Telegram delivery.",
   "no_clips": true,
   "visual_policy": "character_only",
   "no_memes": true,
