@@ -20,18 +20,18 @@
     },
     {
       "who": "pinky",
-      "say": "वीरमणि ने पता डाला, जनता ने घर को COD गोदाम बना दिया!",
-      "big": "पता दिया, गोदाम बन गया!",
+      "say": "चाचा, मिठाई के लिए पता दिया था—डिलीवरी वाला पूछ रहा, शोरूम का मालिक कौन?",
+      "big": "मिठाई माँगी, शोरूम खुल गया!",
       "expr": "tanz",
       "visuals": [
-        "animated address tag parcels television refrigerator COD bill"
+        "fast cartoon parcel pile grows into TV-fridge showroom at home doorway; delivery worker points at showroom sign and Pinky teases Chacha"
       ],
       "scene": "arrival"
     },
     {
       "who": "chacha",
-      "say": "अरे लड्डू में HDMI लगाऊँ? चाशनी 4K में दिखेगी क्या!",
-      "big": "लड्डू की चाशनी 4K में?",
+      "say": "शोरूम? अरे लड्डू में HDMI लगाऊँ? चाशनी 4K में दिखेगी क्या!",
+      "big": "लड्डू की चाशनी 4K में?!",
       "expr": "hairan",
       "punch": true,
       "visuals": [
@@ -68,7 +68,7 @@
   "fictional_satire": true,
   "source_url": "https://www.indiatoday.in/amp/trending-news/story/madurai-mans-diwali-wish-goes-wrong-tvs-fridges-and-lakhs-in-cod-orders-pour-in-3016108-2026-10-13",
   "no_send": true,
-  "qa_note": "Telegram hold until independent Gemini review >=8.5, final rendered MP4, audio/visual QA and editorial approval; no_send remains true.",
+  "qa_note": "Revised line 2 to an absurd delivery-worker showroom punch and line 3 to answer it. Hold Telegram until independent Gemini >=8.5, final MP4 and audio/visual QA plus editorial approval; no_send remains true.",
   "no_clips": true,
   "visual_policy": "character_only",
   "no_memes": true,
