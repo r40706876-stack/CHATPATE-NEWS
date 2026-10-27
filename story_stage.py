@@ -314,39 +314,27 @@ def frames(line, episode, talk, n, cut, seed=0):
     for t,sp in enumerate(talking):
         im=base.copy()
         _scene_action(im,scene,t,n,line=line)
-        if cod_frames is not None:
+        # The COD Blender proof is a schematic, not convincing event footage.
+        # Limit it to a fast 0.6s establishing cutaway; a long full-screen
+        # low-detail 3D scene was hiding the actual licensed photo and acting.
+        # Afterwards, use the village stage and attributed documentary illustration.
+        cod_reveal_frames = min(15, max(1, n // 4))
+        if cod_frames is not None and t < cod_reveal_frames:
             frame=next(cod_frames, None)
             if frame is None:
-                from reel_studio import _vid_frames
-                cod_frames=_vid_frames(cod_path, 1080, 1920)
-                frame=next(cod_frames, None)
-            if frame is None:
                 raise RuntimeError("Blender COD proof video contains no decodable frames")
-            # Show the actual Blender delivery at readable scale, then return
-            # to the illustrated village. The inset continues the same motion.
-            if t < min(33, max(1, n // 2)):
-                im = frame.crop((0, 130, 1080, 1790)).resize(SIZE, Image.Resampling.BICUBIC)
-                d = ImageDraw.Draw(im)
-                d.rounded_rectangle((28, 225, 370, 292), 12, fill=INK)
-                d.text((199, 258), "3D रीक्रिएशन", font=tt.font(37),
-                       fill="white", anchor="mm")
-            else:
-                inset = frame.resize((430, 765), Image.Resampling.BICUBIC)
-                x, y = 605, 265
-                d = ImageDraw.Draw(im)
-                d.rounded_rectangle((x-10, y-10, x+440, y+816), 18,
-                                    fill=(250, 246, 234), outline=INK, width=8)
-                im.paste(inset, (x, y))
-                d.rectangle((x, y+765, x+430, y+809), fill=INK)
-                d.text((x+215, y+786), "3D रीक्रिएशन", font=tt.font(29),
-                       fill="white", anchor="mm")
+            im = frame.crop((0, 130, 1080, 1790)).resize(SIZE, Image.Resampling.BICUBIC)
+            d = ImageDraw.Draw(im)
+            d.rounded_rectangle((28, 225, 370, 292), 12, fill=INK)
+            d.text((199, 258), "3D रीक्रिएशन", font=tt.font(37),
+                   fill="white", anchor="mm")
         # Clearly labelled *illustrative* Commons photo, not claimed event footage.
         # On the Blender delivery reveal, let the original 3D fill the screen first.
         # News illustration is supporting evidence, not a 4-second static wallpaper.
         # Show it briefly with readable attribution, then reveal the moving
         # actors and gag props for the majority of the spoken line.
         # On the COD 3D reveal, do not cover the opening full-screen Blender shot.
-        illustration_start = min(33, max(1, n // 2)) if cod_insert else 0
+        illustration_start = cod_reveal_frames if cod_insert else 0
         illustration_end = min(n, illustration_start + 42)  # 1.68s at 25 fps
         if licensed_insert is not None and illustration_start <= t < illustration_end:
             pan = int(35 * math.sin(t / max(1, n - 1) * math.pi))
