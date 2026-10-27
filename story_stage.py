@@ -191,16 +191,20 @@ def _scene_action(im, scene, t, n, line=None):
             d.text((seal_x+150,945),"वापसी बंद!",font=tt.font(43),fill=RED,anchor="mm")
             for j in range(3):
                 d.arc((460-j*28,650-j*30,580+j*28,910+j*30),-80,80,fill=RED,width=9)
-        elif "रोटी" in say:
-            # Two rotis power the nonstop talking Chacha; sound waves keep growing.
-            for j in range(2):
-                x=int(510+j*180+22*math.sin(q*math.pi*2+j))
-                y=int(620+j*55-45*q)
-                d.ellipse((x,y,x+150,y+150),fill=(222,170,91),outline=(153,102,51),width=10)
-                for k in range(3):
-                    d.ellipse((x+30+k*30,y+45,x+42+k*30,y+57),fill=(174,118,65))
+        elif "मुफ्त सलाह" in say:
+            # The final roast is physical: Dadi slaps a FREE ADVICE label on
+            # Chacha's exchange carton, and the courier runs out of frame.
+            _box(d, 535, 645, 405, 420, "")
+            label_x = int(1150 - 540 * min(1, q * 2.0))
+            d.rounded_rectangle((label_x, 740, label_x+300, 925), 17,
+                                fill=(255, 247, 215), outline=RED, width=12)
+            d.text((label_x+150, 802), "मुफ्त सलाह", font=tt.font(59),
+                   fill=RED, anchor="mm")
+            d.text((label_x+150, 873), "COD चाचा", font=tt.font(46),
+                   fill=INK, anchor="mm")
             for j in range(3):
-                d.arc((775-j*40,680-j*40,875+j*40,900+j*40),-80,80,fill=RED,width=12)
+                d.arc((780-j*35, 490-j*32, 910+j*35, 700+j*32),
+                      -85, 75, fill=RED, width=11)
         else:
             # Dadi offers Chacha in exchange for the television.
             _tv(d,510,540,300,220)
@@ -349,7 +353,9 @@ def frames(line, episode, talk, n, cut, seed=0):
         say = str(line.get("say", ""))
         courier_x = 70 + int(9 * math.sin(t / 7))
         if scene in ("freight", "bill", "house"):
-            if "पैसे" in say or "बिल" in say:
+            if "मुफ्त सलाह" in say:
+                courier_x = int(70 - 480 * ease)  # courier visibly flees the unsolicited advice
+            elif "पैसे" in say or "बिल" in say:
                 courier_x = int(-300 + 370 * ease)
             _character(im, courier, courier_x, 810, 575)
         supporter_x = 5 + int(9 * math.sin(t / 8))
@@ -363,25 +369,26 @@ def frames(line, episode, talk, n, cut, seed=0):
             speaker_x -= int(95 * ease)  # Pull attention toward the door gag
         if "एक्सचेंज" in say:
             supporter_x += int(165 * ease)  # Dadi physically pushes Chacha toward carton
-        if "रोटी" in say:
-            supporter_x += int(60 * ease)
-            speaker_y -= int(28 * math.sin(progress * math.pi * 3) ** 2)
+        if "मुफ्त सलाह" in say:
+            supporter_x += int(70 * ease)
+            speaker_y -= int(30 * math.sin(progress * math.pi * 3) ** 2)
         # Dialogue-timed acting: Chacha recoils, Pinky leans into the remote
         # gag, and Dadi punctuates the final roti-powered exchange.
-        acting = 8 if any(k in say for k in ("लड्डू", "दरवाज़ा", "रिमोट", "रोटी")) else 4
+        acting = 8 if any(k in say for k in ("लड्डू", "दरवाज़ा", "रिमोट", "मुफ्त सलाह")) else 4
         speaker_tilt = acting * math.sin(progress * math.pi * 1.3)
         supporter_tilt = -3 * math.sin(progress * math.pi * 1.6)
         _character(im, supporting, supporter_x, 1120 + int(5 * math.sin(t / 10)),
                    610, flip=True, tilt=supporter_tilt)
         _character(im, sp, speaker_x, speaker_y, 760, tilt=speaker_tilt)
         d=ImageDraw.Draw(im)
-        if scene=="house" and who=="dadi" and ("एक्सचेंज" in str(line.get("say","")) or "वापसी" in str(line.get("say","")) or "रोटी" in str(line.get("say",""))) and t>=int(n*.40):
+        if scene=="house" and who=="dadi" and ("एक्सचेंज" in str(line.get("say","")) or "वापसी" in str(line.get("say","")) or "मुफ्त सलाह" in str(line.get("say",""))) and t>=int(n*.40):
             # Physical payoff: Dadi has packed Chacha, not merely flashed a RETURN icon.
             # Leave his face visible; the carton covers his torso and stays attached to him.
             d.rounded_rectangle((12,1390,430,1730),20,fill=(201,146,92),outline=(108,69,44),width=14)
             d.rectangle((200,1390,242,1730),fill=(246,212,150))
             d.rounded_rectangle((45,1490,398,1635),14,fill=(255,250,233),outline=RED,width=8)
-            label="वापसी बंद!" if "वापसी" in str(line.get("say","")) else "एक्सचेंज!"
+            label=("मुफ्त सलाह!" if "मुफ्त सलाह" in str(line.get("say",""))
+                   else ("वापसी बंद!" if "वापसी" in str(line.get("say","")) else "एक्सचेंज!"))
             d.text((221,1535),label,font=tt.font(50),fill=RED,anchor="mm")
             d.text((221,1594),"चाचा पैक!",font=tt.font(42),fill=INK,anchor="mm")
         # Alternate full-scene camera framing during long dialogue. This is a
