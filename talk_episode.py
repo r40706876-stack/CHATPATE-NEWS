@@ -186,6 +186,8 @@ def pick_shot(ep, i, ln):
         m = re.match(r"\s*(हर [^…,।!?]{2,30} में एक [^…,।!?]{2,25})", ln.get("say", ""))
         if m:
             ln["tag_text"] = m.group(1) + "…"
+    if ep.get("visual_policy") == "character_only" and ln.get("scene"):
+        return "story"
     if style == "nochar":
         return "full"
     return reel_studio.shot_v2(i, ln) if style == "v2" else reel_studio.shot_for(i, ln)
