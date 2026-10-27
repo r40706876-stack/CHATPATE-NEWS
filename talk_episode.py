@@ -232,8 +232,16 @@ def quality(ep):
            + (f"\n   Gemini आवाज़ क्यों नहीं: {err[:160]}" if v != "gemini" and err else "")
            + f"\n🖼 असली तस्वीर/clip वाली lines: {len(real)}/{n} (YouTube clip: {clips_n})"
            + (f", अपनी AI तस्वीर: {len(sets)}" if sets else ""))
-    if v != "gemini" or len(real) * 2 < n:
-        msg += "\n⚠️ ये video पूरी quality का नहीं — Gemini का कोटा दोपहर 12:30 के बाद नया होता है, तब दोबारा बनवाना बेहतर।"
+    # Animated character-only episodes intentionally use no external clips.
+    cartoon = ep.get("visual_policy") == "character_only"
+    if cartoon:
+        animated = sum(bool(ln.get("scene")) for ln in ep["lines"])
+        msg += f"\n🎬 Animated story scenes: {animated}/{n}; external clips intentionally disabled"
+    if v != "gemini":
+        msg += "\n⚠️ Gemini voice unavailable; backup voice used. Listen before publishing."
+    if not cartoon and len(real) * 2 < n:
+        msg += "\n⚠️ Real-image/clip coverage below half; inspect visuals manually."
+    msg += "\n⚠️ Automated checks cannot establish comedy quality or Instagram retention."
     return msg
 
 
