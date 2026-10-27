@@ -36,8 +36,12 @@ def violations(ep):
         out.append(f"एक पंच लंबा ({words} शब्द, सीमा 24)")
     elif ep.get("format") == "rant" and not (70 <= words <= 100):
         out.append(f"बकरा बहस की लंबाई {words} शब्द (70-100 चाहिए)")
-    elif ep.get("format") != "rant" and ep.get("kind") != "punch" and words > 55:
-        out.append(f"script लंबी ({words} शब्द, सीमा 55)")
+    elif ep.get("format") != "rant" and ep.get("kind") != "punch":
+        # Full character-clash episodes need enough dialogue for a coherent
+        # setup, escalation and payoff. Keep the shorter 55-word news limit.
+        limit = 80 if ep.get("comedy_format") == "character_clash" and 7 <= len(lines) <= 9 else 55
+        if words > limit:
+            out.append(f"script लंबी ({words} शब्द, सीमा {limit})")
     # News format experiments: preserve the existing formats while validating labels.
     comedy_format = ep.get("comedy_format")
     if comedy_format and comedy_format not in ("news_roast", "character_clash", "reverse_punch"):
