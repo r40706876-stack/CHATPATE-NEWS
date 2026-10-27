@@ -21,6 +21,12 @@ def _true_peak_dbfs(log):
     return float(values[-1]) if values else None
 
 
+def _integrated_lufs(log):
+    """Read the final integrated loudness summary, not transient momentary values."""
+    values = re.findall(r"Integrated loudness:\\s*I:\\s*(-?\\d+(?:\\.\\d+)?)\\s*LUFS", log)
+    return float(values[-1]) if values else None
+
+
 def _frames(video, crop="1056:810:12:130"):
     raw = subprocess.run(["ffmpeg", "-loglevel", "quiet", "-i", str(video), "-vf",
                           f"crop={crop},scale={W}:{H},fps={FPS}", "-f", "rawvideo", "-pix_fmt", "gray", "-"],
@@ -123,6 +129,13 @@ def check_media(video):
             issues.append("AAC true-peak meter output could not be parsed")
         elif true_peak >= -1.0:
             issues.append(f"AAC true peak {true_peak:.1f} dBFS: less than 1 dBTP safety headroom")
+        # Passing a peak test alone is not enough: the previous COD MP4 was
+        # -23.25 LUFS, too quiet for speech-led mobile reels.
+        loudness = _integrated_lufs(meter.stderr)
+        if loudness is None:
+            issues.append("Integrated audio loudness could not be measured")
+        elif loudness < -21.0 or loudness > -12.0:
+            issues.append(f"Speech mix {loudness:.1f} LUFS outside -21 to -12 LUFS delivery range")
         return issues
     except (OSError, ValueError, subprocess.CalledProcessError) as exc:
         return ["ऑडियो/वीडियो जाँच नहीं चली: " + type(exc).__name__]
