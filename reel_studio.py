@@ -1053,7 +1053,9 @@ def render(ep, segs, chars, out, preview):
                 d.rounded_rectangle((30, BAND_Y + 380, 560, BAND_Y + 456), 20, fill=RED)
                 d.text((58, BAND_Y + 418), f"{name} का रिएक्शन", font=tt.font(44), fill="white", anchor="lm")
             else:
-                hooking = si == 0 and ep.get("hook")              # पहली line: वही बात बड़े पीले hook में (जो सुनाई दे, वही दिखे)
+                # Keep the headline for the opening 1.8s only. The old full-line
+                # yellow card obscured the action for ~4.5s and looked static.
+                hooking = si == 0 and bool(ep.get("hook")) and t < int(FPS * 1.8)
                 cy = 1685 if shot == "story" else (1150 if (v2 and shot == "full") else BAND_Y + 460)
                 if first_seen and t < FPS * 2.5 and shot != "close" and not hooking and not (v2 and shot == "full"):
                     rv.name_strap(d, (BAND_Y + 84) if shot == "split" else 1130, name, role)
