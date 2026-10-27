@@ -25,6 +25,8 @@ on:
       - 'tests/test_visual_strategy.py'
       - 'tests/test_hybrid_stage.py'
       - 'tests/test_tts_pacing.py'
+      - 'tests/test_true_peak_qa.py'
+      - 'fetch_licensed_news_visuals.py'
       - '.github/workflows/talk_episode.yml'
 # Only the newest branch render may consume expensive TTS/render time.
 concurrency:
@@ -75,6 +77,7 @@ jobs:
           python3 -m unittest discover -s tests -p test_visual_strategy.py -q
           python3 -m unittest discover -s tests -p test_hybrid_stage.py -q
           python3 -m unittest discover -s tests -p test_tts_pacing.py -q
+          python3 -m unittest discover -s tests -p test_true_peak_qa.py -q
           python3 - <<'PY'
           import tts
           assert tts.speakable("WL-48 से WL-47") == "डब्ल्यूएल 48 से डब्ल्यूएल 47"
@@ -94,6 +97,9 @@ jobs:
           # Independent Gemini critique is editorial, not a claim about real viewers.
           # If Gemini is quota-limited it records 'unavailable'; a low reviewed score blocks render.
           python3 comedy_review.py "episodes/waiting_ticket_comedy.json"
+          # Curated Commons photographs, clearly credited as illustrations.
+          # A Commons outage cannot block original animation, but no unlicensed fallback is allowed.
+          python3 fetch_licensed_news_visuals.py || echo "::warning::Licensed Commons imagery unavailable; original animation only"
           /usr/bin/python3 talk_episode.py prep "${{ inputs.script || 'episodes/waiting_ticket_comedy.json' }}" | tee prep.log
           echo "lines=$(tail -1 prep.log)" >> $GITHUB_OUTPUT
       - name: Upload independent comedy editorial review
@@ -109,6 +115,13 @@ jobs:
         with:
           name: cartoon-storyboard-preflight
           path: preflight_storyboard.jpg
+          if-no-files-found: ignore
+      - name: Upload Commons imagery, creator and license credits
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: licensed-news-visuals
+          path: assets/licensed/
           if-no-files-found: ignore
       - uses: actions/upload-artifact@v4
         with:
@@ -215,6 +228,10 @@ jobs:
       - name: Retrieve same-run Gemini editorial verdict for delivery gate
         uses: actions/download-artifact@v4
         with: {name: comedy-editorial-review, path: .}
+      - name: Restore same-run licensed Commons illustrations and credits
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with: {name: licensed-news-visuals, path: assets/licensed}
       - uses: actions/download-artifact@v4
         continue-on-error: true
         with: {pattern: "clip-*", path: st_out, merge-multiple: true}
