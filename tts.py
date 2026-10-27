@@ -169,7 +169,12 @@ def edge_line(text, who, tmp, beat=""):
     voice, pitch, rate = EDGE.get(who, EDGE["bablu"])
     volume = "+0%"
     if beat in EDGE_BEAT:
-        rate, pitch, volume = EDGE_BEAT[beat]
+        # Keep each character's vocal identity while applying dramatic beat changes.
+        # Previously beat presets replaced pitch/rate entirely, making Bablu and
+        # Chacha (or Pinky and Dadi) sound nearly identical during punchlines.
+        beat_rate, beat_pitch, volume = EDGE_BEAT[beat]
+        rate = f"{max(-45, min(45, int(rate.rstrip('%')) + int(beat_rate.rstrip('%')))):+d}%"
+        pitch = f"{max(-40, min(40, int(pitch.removesuffix('Hz')) + int(beat_pitch.removesuffix('Hz')))):+d}Hz"
     mp3 = Path(tmp).with_suffix(".mp3")
 
     async def go():
