@@ -1,0 +1,29 @@
+name: Bakra Blender 3D COD proof
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - blender_cod_scene.py
+      - .github/workflows/bakra-blender-3d.yml
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Blender and FFmpeg
+        run: |
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends blender ffmpeg xvfb libegl1 libgl1
+      - name: Render actual 3D COD animation
+        run: |
+          mkdir -p blender_output
+          BLENDER_OUTPUT="$PWD/blender_output/bakra_cod_3d.mp4" xvfb-run -a blender -b -t 2 --python blender_cod_scene.py
+          test -s blender_output/bakra_cod_3d.mp4
+          ffmpeg -v error -xerror -i blender_output/bakra_cod_3d.mp4 -f null -
+          ffmpeg -y -loglevel error -ss 2 -i blender_output/bakra_cod_3d.mp4 -frames:v 1 blender_output/preview.jpg
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bakra-original-blender-cod-3d
+          path: blender_output/
+          if-no-files-found: error
