@@ -257,9 +257,37 @@ def frames(line, episode, talk, n, cut, seed=0):
     courier=None
     if "ramesh" in episode.get("sprite",{}):
         courier=cut(pose_file(episode["sprite"]["ramesh"],"neutral"))
+    # Original Blender 3D COD reconstruction, not documentary news footage.
+    # Only the delivery-arrival gag uses this insert; the bank-manager and
+    # refrigerator beats keep their distinct, dialogue-specific animations.
+    cod_path=Path("blender_output/bakra_cod_3d.mp4")
+    cod_insert=(scene=="arrival" and "लड्डू" in str(line.get("say","")))
+    cod_frames=None
+    if cod_insert:
+        if not cod_path.is_file():
+            raise RuntimeError("Original Blender COD proof missing: cannot render integrated 3D arrival")
+        from reel_studio import _vid_frames
+        cod_frames=_vid_frames(cod_path, 320, 568)
     for t,sp in enumerate(talking):
         im=base.copy()
         _scene_action(im,scene,t,n,line=line)
+        if cod_frames is not None:
+            frame=next(cod_frames, None)
+            if frame is None:
+                from reel_studio import _vid_frames
+                cod_frames=_vid_frames(cod_path, 320, 568)
+                frame=next(cod_frames, None)
+            if frame is None:
+                raise RuntimeError("Blender COD proof video contains no decodable frames")
+            x,y=710,300
+            d=ImageDraw.Draw(im)
+            d.rounded_rectangle((x-10,y-10,x+330,y+622),18,
+                                fill=(250,246,234),outline=INK,width=8)
+            im.paste(frame,(x,y))
+            d=ImageDraw.Draw(im)
+            d.rectangle((x,y+568,x+320,y+611),fill=INK)
+            d.text((x+160,y+590),"3D रीक्रिएशन",font=tt.font(29),
+                   fill="white",anchor="mm")
         # Optional licensed documentary insert: explicitly curated media only.
         # Never download arbitrary news/YouTube footage and imply it is the event.
         # assets/licensed/manifest.json entries require path, author, source, license.
