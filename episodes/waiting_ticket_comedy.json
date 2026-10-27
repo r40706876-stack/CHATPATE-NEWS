@@ -1,7 +1,7 @@
 {
   "title": "मिठाई माँगी, ₹1.69 लाख का टीवी ऑर्डर!",
   "topic": "मदुरै के क्रिएटर वीरमणि ने दिवाली की मिठाई माँगी; उनके पते पर अनचाहे COD टीवी-फ्रिज ऑर्डर आने लगे",
-  "hook": "₹1.69 लाख का COD टीवी! माँगे थे सिर्फ़ लड्डू!",
+  "hook": "₹1.69 लाख का टीवी! माँगे थे सिर्फ़ लड्डू!",
   "poll": {
     "q": "फ्री गिफ्ट पर COD बिल आए तो?",
     "a": "वापस करूँगा",
@@ -10,7 +10,7 @@
   "lines": [
     {
       "who": "bablu",
-      "say": "₹1.69 लाख का COD टीवी! माँगे थे सिर्फ़ लड्डू!",
+      "say": "₹1.69 लाख का टीवी! माँगे थे सिर्फ़ लड्डू!",
       "big": "मिठाई के बदले ₹1.69 लाख का टीवी!",
       "scene": "sweets",
       "expr": "hairan",
@@ -22,7 +22,7 @@
     },
     {
       "who": "pinky",
-      "say": "चाचा, फ्री सुनते ही पता दिया? अब गली में शोरूम खुल गया!",
+      "say": "चाचा, मिठाई माँगी—घर के बाहर शोरूम खुल गया!",
       "big": "घर के बाहर शोरूम!",
       "scene": "arrival",
       "expr": "tanz",
@@ -34,8 +34,8 @@
     },
     {
       "who": "chacha",
-      "say": "डिलीवरी वाला बोला—टीवी लौटाया तो लड्डू का भी भाड़ा लगेगा!",
-      "big": "लड्डू नहीं, टीवी का OTP!",
+      "say": "टीवी लौटाऊँ? डिलीवरी वाला लड्डू का भाड़ा माँगे!",
+      "big": "लड्डू का भी भाड़ा?!",
       "scene": "freight",
       "expr": "hairan",
       "shot": "story",
@@ -46,7 +46,7 @@
     },
     {
       "who": "pinky",
-      "say": "बिल देखकर बोला—कैश नहीं? घर की रजिस्ट्री स्कैन करूँ?",
+      "say": "कैश नहीं? घर की रजिस्ट्री स्कैन करूँ?",
       "big": "टीवी के बदले घर की रजिस्ट्री?!",
       "scene": "bill",
       "expr": "tanz",
@@ -58,7 +58,7 @@
     },
     {
       "who": "dadi",
-      "say": "रजिस्ट्री छोड़! चाचा को ही रिटर्न कर दो—बिना वारंटी का माल है!",
+      "say": "रजिस्ट्री छोड़! चाचा को रिटर्न करो—बिना वारंटी का माल!",
       "big": "घर भी रिटर्न पार्सल?!",
       "scene": "house",
       "expr": "gussa",
@@ -76,7 +76,7 @@
   "fictional_satire": true,
   "source_url": "https://www.indiatoday.in/amp/trending-news/story/madurai-mans-diwali-wish-goes-wrong-tvs-fridges-and-lakhs-in-cod-orders-pour-in-3016108-2026-10-13",
   "no_send": true,
-  "qa_note": "2026-10-27: Replaced static split-screen with full-frame local character+prop stage, five sequential story actions, and coherent house-registry escalation. Private draft; independent Gemini score and real video visual QA required. no_send remains true. No Instagram retention claims. 2026-10-27: tightened to pass <=10-word hook and <=55-word script gate after real workflow failure. 2026-10-27: second editorial iteration; shock-first hook, freight threat instead of repeated OTP, Dadi's Chacha-return roast. Still private until Gemini and visual approval.",
+  "qa_note": "2026-10-27: Replaced static split-screen with full-frame local character+prop stage, five sequential story actions, and coherent house-registry escalation. Private draft; independent Gemini score and real video visual QA required. no_send remains true. No Instagram retention claims. 2026-10-27: tightened to pass <=10-word hook and <=55-word script gate after real workflow failure. 2026-10-27: second editorial iteration; shock-first hook, freight threat instead of repeated OTP, Dadi's Chacha-return roast. Still private until Gemini and visual approval. 2026-10-27: latest real render was 22.6s despite 13–18s target; trimmed dialogue from 52 to 40 words while retaining story escalation, corrected freight caption. Voice still fallback due to Gemini TTS 429; do not mark upload-ready.",
   "no_clips": true,
   "visual_policy": "character_only",
   "no_memes": true,
