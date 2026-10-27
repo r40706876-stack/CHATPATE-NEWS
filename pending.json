@@ -1,319 +1,194 @@
 {
-  "sent_at": 1793002689,
+  "sent_at": 1793089763,
   "eps": [
     {
-      "topic": "एफडी पर बढ़ी ब्याज दरें",
-      "breaking": "एफडी पर अब आठ दशमलव पाँच प्रतिशत तक ब्याज",
-      "source": "Business Standard, ABP News",
-      "hook_screen": "8.5% ब्याज का मज़ा!",
-      "tag_who": "वो दोस्त जो FD तोड़कर शेयर बाज़ार में पैसे लगाने वाला था",
-      "lines": [
-        {
-          "who": "bablu",
-          "say": "रातों-रात अमीर बनिए... गारंटी!",
-          "caption": "रातों-रात अमीर बनिए... गारंटी!",
-          "expr": "hasi",
-          "visuals": [
-            "gold coins falling background",
-            "excited salesman holding money"
-          ],
-          "photo_hi": [
-            "सोने के सिक्के गिरते हुए",
-            "उत्साहित विक्रेता हाथ में पैसे लिए"
-          ],
-          "tvshop": true,
-          "set": "studio",
-          "topic": "एफडी पर बढ़ी ब्याज दरें"
-        },
-        {
-          "who": "bablu",
-          "say": "सीनियर सिटीजन को साढ़े आठ प्रतिशत तक ब्याज!",
-          "caption": "वरिष्ठ नागरिकों को 8.5% तक का रिटर्न!",
-          "expr": "hasi",
-          "visuals": [
-            "happy senior citizen smiling",
-            "bank investment graph line up"
-          ],
-          "photo_hi": [
-            "खुश बुजुर्ग व्यक्ति",
-            "बैंक में पैसे बढ़ने का ग्राफ"
-          ],
-          "tvshop": true,
-          "set": "studio",
-          "topic": "एफडी पर बढ़ी ब्याज दरें"
-        },
-        {
-          "who": "bablu",
-          "say": "बजाज फाइनेंस में आठ दशमलव पच्चीस प्रतिशत का फायदा!",
-          "caption": "बजाज फाइनेंस में 8.25% ब्याज का मौका!",
-          "expr": "hasi",
-          "visuals": [
-            "glowing calculator showing big returns",
-            "money stack"
-          ],
-          "photo_hi": [
-            "चमकता हुआ कैलकुलेटर",
-            "रुपयों की गड्डी"
-          ],
-          "tvshop": true,
-          "set": "studio",
-          "topic": "एफडी पर बढ़ी ब्याज दरें"
-        },
-        {
-          "who": "bablu",
-          "say": "आरबीआई के फैसले से कई बैंकों ने एफडी की दरें बढ़ाई हैं।",
-          "caption": "RBI फैसले के बाद बैंकों और कंपनियों ने FD दरें बढ़ाईं।",
-          "expr": "gambhir",
-          "news": true,
-          "visuals": [
-            "official bank building",
-            "rbi reserve bank concept photo"
-          ],
-          "photo_hi": [
-            "सरकारी बैंक की इमारत",
-            "रिजर्व बैंक का चिन्ह"
-          ],
-          "tvshop": false,
-          "set": "studio",
-          "topic": "एफडी पर बढ़ी ब्याज दरें"
-        },
-        {
-          "who": "chacha",
-          "say": "बेटा, जब एफडी का पैसा दोगुना होगा, दूध तीन गुना महंगा हो चुका होगा।",
-          "caption": "बेटा, जब एफडी दोगुनी होगी, दूध तीन गुना महंगा हो चुका होगा।",
-          "expr": "tanz",
-          "punch": true,
-          "stamp": "महंगाई की जीत",
-          "visuals": [
-            "old man drinking tea thoughtfully",
-            "empty wallet background"
-          ],
-          "photo_hi": [
-            "चाय पीते हुए ताना मारते बुजुर्ग",
-            "खाली पर्स का चित्र"
-          ],
-          "tvshop": false,
-          "set": "village",
-          "topic": "एफडी पर बढ़ी ब्याज दरें"
-        },
-        {
-          "who": "bablu",
-          "say": "तो तुरंत लगाइए पैसे... गारंटी!",
-          "caption": "तो तुरंत लगाइए पैसे... गारंटी!",
-          "expr": "hasi",
-          "visuals": [
-            "fast flashing offer text",
-            "bank passbook image"
-          ],
-          "photo_hi": [
-            "ऑफर टेक्स्ट चमकता हुआ",
-            "बैंक पासबुक की तस्वीर"
-          ],
-          "tvshop": true,
-          "set": "studio",
-          "topic": "एफडी पर बढ़ी ब्याज दरें"
-        }
-      ],
-      "caption_post": "रातों-रात अमीर बनने की गारंटी स्कीम! आपकी FD का क्या प्लान है? कमेंट में बताओ। स्रोत: Business Standard, ABP News #FD #InterestRates #BakraNews #FinanceHumor #Investment (AI से बने किरदार)",
-      "format": "explain",
-      "kind": "tvshop",
-      "label": "नकली ऐड",
-      "hook": "रातों-रात अमीर बनिए... गारंटी!",
-      "hook_text": "रातों-रात अमीर बनिए... गारंटी!",
-      "hook_short": "8.5% ब्याज का मज़ा!",
-      "hasi": "📺 52 शब्द (~19 सेकंड) | टैग: वो दोस्त जो FD तोड़कर शेयर बाज़ार में पैसे लगाने वाला था",
-      "trend": {
-        "score": 7,
-        "why": "11 अख़बार/चैनल 2 दिन में, 42 खबरें 7 दिन में, Google Trends में: ब्याज दर"
-      },
-      "category": "[Trends]"
-    },
-    {
-      "topic": "UPSSSC PET परीक्षा और स्पेशल ट्रेनें",
-      "breaking": "PET परीक्षार्थियों के लिए अनारक्षित स्पेशल ट्रेनें",
+      "topic": "दूल्हा हेलीकॉप्टर से दुल्हन लेने पहुँचा",
+      "breaking": "20 किमी का सफ़र हेलीकॉप्टर से",
       "source": "Amar Ujala, Dainik Bhaskar",
-      "hook_screen": "PET परीक्षा पर स्पेशल ट्रेनें",
-      "tag_who": "वो दोस्त जो ट्रेन के धक्के खाकर परीक्षा देने जाता है",
-      "lines": [
-        {
-          "who": "bablu",
-          "say": "पीईटी परीक्षा के लिए रेलवे चलाएगा अनारक्षित स्पेशल ट्रेनें।",
-          "caption": "PET परीक्षा के लिए रेलवे चलाएगा अनारक्षित स्पेशल ट्रेनें।",
-          "expr": "gambhir",
-          "visuals": [
-            "crowded railway station platform",
-            "passengers trying to board train"
-          ],
-          "photo_hi": [
-            "रेलवे स्टेशन पर परीक्षार्थियों की भीड़",
-            "अनारक्षित ट्रेन का डिब्बा"
-          ],
-          "set": "studio",
-          "topic": "UPSSSC PET परीक्षा और स्पेशल ट्रेनें"
-        },
-        {
-          "who": "chacha",
-          "say": "विभाग ने कहा है ट्रेनें स्पेशल हैं। अनारक्षित सिर्फ आपकी सीट और पीईटी परीक्षा है।",
-          "caption": "विभाग ने कहा है ट्रेनें स्पेशल हैं। अनारक्षित सिर्फ आपकी सीट और PET परीक्षा है।",
-          "expr": "tanz",
-          "punch": true,
-          "stamp": "स्पेशल ट्रेनें अनारक्ष",
-          "visuals": [
-            "overcrowded train compartment inside view"
-          ],
-          "photo_hi": [
-            "ट्रेन के अंदर भारी भीड़"
-          ],
-          "set": "school",
-          "topic": "UPSSSC PET परीक्षा और स्पेशल ट्रेनें"
-        }
-      ],
-      "caption_post": "PET परीक्षा के लिए चलीं स्पेशल ट्रेनें। आप किस स्टेशन पर अटके हैं? स्रोत: Amar Ujala, Dainik Bhaskar #UPSSSCPET #IndianRailways #SpecialTrain (AI से बने किरदार)",
-      "format": "explain",
-      "kind": "punch",
-      "label": "एक पंच",
-      "hook": "पीईटी परीक्षा के लिए रेलवे चलाएगा अनारक्षित स्पेशल ट्रेनें।",
-      "hook_text": "पीईटी परीक्षा के लिए रेलवे चलाएगा अनारक्षित स्पेशल ट्रेनें।",
-      "hook_short": "PET परीक्षा पर स्पेशल ट्रेनें",
-      "hasi": "⚡ 24 शब्द (~9 सेकंड) | टैग: वो दोस्त जो ट्रेन के धक्के खाकर परीक्षा देने जाता है",
-      "trend": {
-        "score": 4,
-        "why": "3 अख़बार/चैनल 2 दिन में, 11 खबरें 7 दिन में"
-      },
-      "category": "[सफ़र-जुगाड़]"
-    },
-    {
-      "topic": "एशिया कप राइजिंग स्टार्स 2026: भारत-पाकिस्तान मैच",
-      "category": "[फ़िल्म-क्रिकेट फैन]",
-      "breaking": "कतर में बाईस नवंबर को भारत-पाकिस्तान मुकाबला",
-      "hook_text": "कतर में मैच है... या टीवी टूटने का मुहूर्त?",
-      "hook_screen": "टीवी टूटने का मुहूर्त?",
-      "ask": "क्या आप २२ नवंबर का मैच लाइव देखेंगे?",
-      "source": "Jansatta, Lokmat News Hindi, Navbharat Times, India TV Hindi",
-      "poll": [
-        "भारत जीतेगा",
-        "पाकिस्तान जीतेगा"
-      ],
-      "ticker": [
-        "एशिया कप राइजिंग स्टार्स टूर्नामेंट कतर में आयोजित होगा",
-        "भारत और पाकिस्तान के बीच महामुकाबला २२ नवंबर को",
-        "प्रशंसकों में मैच को लेकर भारी उत्साह"
-      ],
-      "cast_why": "रमेश की टीवी वाली चिंता पर चाचा का पुराना दौर और पिंकी का ताना",
-      "tag_who": "उस दोस्त को जो पहला विकेट गिरते ही टीवी बंद कर देता है",
+      "hook_screen": "20 किमी का सफ़र हेलीकॉप्टर से!",
+      "tag_who": "उस दोस्त को भेजो जिसकी बारात गड्ढों में फँस गई थी",
       "lines": [
         {
           "who": "ramesh",
-          "say": "कतर में मैच है... या टीवी टूटने का मुहूर्त?",
-          "caption": "कतर में मैच है... या टीवी टूटने का मुहूर्त?",
-          "expr": "hairan",
-          "set": "bank",
+          "say": "दूल्हा बीस किलोमीटर दूर दुल्हन लेने हेलीकॉप्टर से पहुँचा।",
+          "caption": "दूल्हा 20 किलोमीटर दूर दुल्हन लेने हेलीकॉप्टर से पहुँचा।",
+          "expr": "gambhir",
           "visuals": [
-            "cricket stadium crowd cheering",
-            "television screen sports match",
-            "man shocked looking at tv"
+            "groom in helicopter arrival in village",
+            "curious village crowd looking at helicopter"
           ],
           "photo_hi": [
-            "भारत पाकिस्तान क्रिकेट",
-            "कतर क्रिकेट स्टेडियम"
+            "दूल्हा हेलीकॉप्टर से उतरा",
+            "हेलीकॉप्टर देखती गाँव की भीड़"
           ],
-          "visual": "cricket stadium crowd cheering",
+          "set": "village",
+          "topic": "दूल्हा हेलीकॉप्टर से दुल्हन लेने पहुँचा"
+        },
+        {
+          "who": "chacha",
+          "say": "सड़क से जाते तो विदाई के बजाय सालगिरह की तारीख़ आ जाती… बीस किलोमीटर में।",
+          "caption": "सड़क से जाते तो विदाई के बजाय सालगिरह की तारीख़ आ जाती… 20 किलोमीटर में।",
+          "expr": "tanz",
+          "punch": true,
+          "stamp": "सालगिरह की तारीख़ आ जा",
+          "visuals": [
+            "broken indian road full of potholes",
+            "satirical old man shaking head"
+          ],
+          "photo_hi": [
+            "गड्ढों से भरी टूटी सड़क",
+            "सिर हिलाते व्यंग्यात्मक बुज़ुर्ग"
+          ],
+          "set": "road",
+          "topic": "दूल्हा हेलीकॉप्टर से दुल्हन लेने पहुँचा"
+        }
+      ],
+      "caption_post": "बीस किलोमीटर के लिए हेलीकॉप्टर लेना प्यार था या सड़क का ख़ौफ़? अपनी राय कमेंट करें! स्रोत: Amar Ujala, Dainik Bhaskar #SaharanpurGroom #HelicopterWedding #BakraNews #IndianRoads",
+      "format": "explain",
+      "kind": "punch",
+      "label": "एक पंच",
+      "hook": "दूल्हा बीस किलोमीटर दूर दुल्हन लेने हेलीकॉप्टर से पहुँचा।",
+      "hook_text": "दूल्हा बीस किलोमीटर दूर दुल्हन लेने हेलीकॉप्टर से पहुँचा।",
+      "hook_short": "20 किमी का सफ़र हेलीकॉप्टर",
+      "hasi": "⚡ 24 शब्द (~9 सेकंड) | टैग: उस दोस्त को भेजो जिसकी बारात गड्ढों में फँस गई थी",
+      "trend": {
+        "score": 6,
+        "why": "11 अख़बार/चैनल 2 दिन में, 28 खबरें 7 दिन में"
+      },
+      "category": "[त्योहार-ट्रेंड]"
+    },
+    {
+      "topic": "शाहरुख खान की 'किंग' का नया पोस्टर जारी",
+      "category": "[Trends]",
+      "breaking": "किंग का नया पोस्टर: हाथ में बंदूक, मुँह में गुलाब",
+      "hook_text": "आशिक के हाथ में बंदूक... बजट बदला क्या?",
+      "hook_screen": "आशिक के हाथ में बंदूक?",
+      "ask": "क्या आशिक के हाथ में बंदूक होनी चाहिए?",
+      "source": "Navbharat Live, AajTak, Amar Ujala, ETV Bharat, Jansatta, News18 Hindi",
+      "poll": [
+        "फ़िल्म सुपरहिट",
+        "फ़िल्म फ्लॉप"
+      ],
+      "ticker": [
+        "किंग फ़िल्म का नया पोस्टर 27 अक्टूबर 2026 को जारी हुआ।",
+        "पोस्टर में शाहरुख खान के हाथ में पिस्तौल और मुँह में गुलाब है।",
+        "संवाद 'कातिल नहीं, आशिक हूं' दर्शकों के बीच चर्चा में।"
+      ],
+      "cast_why": "रमेश की फ़िल्मी सनक बनाम चाचा का पुराना नज़रिया",
+      "tag_who": "उस दोस्त को जो प्यार में सीधे गुंडा बनने का नाटक करता है",
+      "lines": [
+        {
+          "who": "ramesh",
+          "say": "आशिक के हाथ में बंदूक... बजट बदला क्या?",
+          "caption": "आशिक के हाथ में बंदूक... बजट बदला क्या?",
+          "expr": "hairan",
+          "set": "village",
+          "visuals": [
+            "action movie poster wall",
+            "man looking at smartphone confused",
+            "red rose on cinematic background"
+          ],
+          "photo_hi": [
+            "शाहरुख खान किंग पोस्टर",
+            "किंग फ़िल्म पोस्टर"
+          ],
+          "visual": "action movie poster wall",
           "scene": "studio",
           "punch": false,
           "insta": ""
         },
         {
           "who": "bablu",
-          "say": "बाईस नवंबर दो हज़ार छब्बीस को कतर में भारत-पाकिस्तान मुकाबला होगा।",
-          "caption": "22 नवंबर 2026 को कतर में भारत-पाकिस्तान मुकाबला होगा।",
+          "say": "सत्ताईस अक्टूबर दो हज़ार छब्बीस को किंग पोस्टर आया... बंदूक और गुलाब संग!",
+          "caption": "27 अक्टूबर 2026 को किंग पोस्टर आया... बंदूक और गुलाब संग!",
           "expr": "gambhir",
           "set": "studio",
           "visuals": [
-            "qatar sports stadium exterior",
-            "cricket ball hit pitch",
-            "india vs pakistan match graphics"
+            "news studio reporter setup",
+            "film camera filming close up",
+            "movie teaser premiere screen"
           ],
           "photo_hi": [
-            "एशिया कप राइजिंग स्टार्स",
-            "कतर मैच शेड्यूल"
+            "शाहरुख खान पोस्टर लाल गुलाब",
+            "शाहरुख पिस्तौल हाथ में"
           ],
           "card": {
-            "tag": "मैच शेड्यूल",
-            "big": "22 नवंबर 2026",
-            "sub": "कतर में महामुकाबला",
-            "icon": "calendar"
+            "tag": "फ़िल्म अपडेट",
+            "big": "किंग का नया पोस्टर जारी",
+            "sub": "27 अक्टूबर 2026",
+            "icon": "check"
           },
-          "visual": "qatar sports stadium exterior",
+          "visual": "news studio reporter setup",
           "scene": "card",
           "punch": false,
           "insta": ""
         },
         {
-          "who": "chacha",
-          "say": "हमारे ज़माने में स्कोर पूछने पर पड़ोसी चाय पिलाता था।",
-          "caption": "हमारे ज़माने में स्कोर पूछने पर पड़ोसी चाय पिलाता था।",
+          "who": "pinky",
+          "say": "मुँह में गुलाब दबाने से प्यार नहीं... काँटा चुभता है!",
+          "caption": "मुँह में गुलाब दबाने से प्यार नहीं... काँटा चुभता है!",
           "expr": "tanz",
-          "set": "bank",
+          "set": "village",
           "visuals": [
-            "old indian man drinking tea",
-            "vintage radio listening crowd",
-            "rural indian village porch"
+            "girl scrolling mobile phone disappointed",
+            "close up red rose thorns",
+            "cinematic poster review video"
           ],
           "photo_hi": [
-            "क्रिकेट दर्शक चाय",
-            "रेडियो पर क्रिकेट"
+            "कातिल नहीं आशिक हूँ",
+            "शाहरुख खान डायलॉग"
           ],
-          "visual": "old indian man drinking tea",
-          "scene": "chacha",
+          "visual": "girl scrolling mobile phone disappointed",
+          "scene": "pinky",
           "punch": false,
           "insta": ""
         },
         {
-          "who": "pinky",
-          "say": "वो दोस्त जो पहला विकेट गिरते ही टीवी बंद करता है!",
-          "caption": "वो दोस्त जो पहला विकेट गिरते ही टीवी बंद करता है!",
-          "expr": "hasi",
-          "set": "bank",
+          "who": "chacha",
+          "say": "हमारे ज़माने में बंदूक देखकर आशिक नहीं... पुलिस भागती थी!",
+          "caption": "हमारे ज़माने में बंदूक देखकर आशिक नहीं... पुलिस भागती थी!",
+          "expr": "tanz",
+          "set": "thana",
           "visuals": [
-            "young girl holding tv remote",
-            "switching off tv frustrated",
-            "friends watching match together"
+            "indian old man sitting on charpoy",
+            "vintage bollywood poster wall",
+            "village courtyard background"
           ],
           "photo_hi": [
-            "क्रिकेट टीवी रिमोट",
-            "मैच देखते दोस्त"
+            "शाहरुख खान नया लुक",
+            "किंग मूवी पोस्टर जारी"
           ],
           "tag": true,
-          "tag_screen": "पहला विकेट गिरते ही टीवी बंद",
-          "visual": "young girl holding tv remote",
-          "scene": "pinky",
+          "tag_screen": "वो दोस्त जो प्यार में गुंडा बने",
+          "visual": "indian old man sitting on charpoy",
+          "scene": "chacha",
           "punch": false,
           "insta": "",
-          "tag_text": "पहला विकेट गिरते ही टीवी बंद"
+          "tag_text": "वो दोस्त जो प्यार में गुंडा"
         },
         {
           "who": "bablu",
-          "say": "मैच कतर में होगा... पर टीवी यहाँ फूटेगा!",
-          "caption": "मैच कतर में होगा... पर टीवी यहाँ फूटेगा!",
+          "say": "मेकर्स ने कहा, आशिक हैं... बजट फिर भी कातिलाना है!",
+          "caption": "मेकर्स ने कहा, आशिक हैं... बजट फिर भी कातिलाना है!",
           "expr": "gambhir",
           "set": "studio",
           "visuals": [
-            "broken television screen studio",
-            "cricket match excitement crowd",
-            "tv remote control close up"
+            "movie box office money graphics",
+            "film producer talking microphone",
+            "cinema hall crowd watching film"
           ],
           "photo_hi": [
-            "टीवी क्रिकेट मैच",
-            "कतर स्टेडियम"
+            "शाहरुख खान किंग फ़िल्म",
+            "किंग रिलीज़ डेट"
           ],
           "punch": true,
-          "stamp": "टीवी… यहाँ फूटेगा!",
-          "visual": "broken television screen studio",
+          "stamp": "बजट… कातिलाना!",
+          "visual": "movie box office money graphics",
           "scene": "studio_end",
           "insta": ""
         }
       ],
-      "caption_post": "कतर में मैच है... या टीवी टूटने का मुहूर्त? Tag करो उसको जो पहला विकेट गिरते ही टीवी बंद कर देता है! क्या आप २२ नवंबर का मैच लाइव देखेंगे? स्रोत: Jansatta, Lokmat News Hindi, Navbharat Times, India TV Hindi #AsiaCup #IndVsPak #RisingStars #Cricket2026 #BakraNews (AI से बने किरदार)",
+      "caption_post": "आशिक के हाथ में बंदूक... बजट बदला क्या? Tag करो उसको जो प्यार में गुंडा बनता है! क्या आशिक के हाथ में बंदूक होनी चाहिए? स्रोत: Navbharat Live, AajTak, Amar Ujala #ShahRukhKhan #KingPoster #BollywoodNews #BakraNews #Satire",
       "format": "explain",
       "label": "काम की खबर",
       "key_word": "",
@@ -322,146 +197,146 @@
         "NEWS",
         "%"
       ],
-      "hook": "कतर में मैच है... या टीवी टूटने का मुहूर्त?",
-      "hook_short": "टीवी टूटने का मुहूर्त?",
+      "hook": "आशिक के हाथ में बंदूक... बजट बदला क्या?",
+      "hook_short": "आशिक के हाथ में बंदूक?",
       "trend": {
         "score": 7,
-        "why": "21 अख़बार/चैनल 2 दिन में, 51 खबरें 7 दिन में"
+        "why": "16 अख़बार/चैनल 2 दिन में, 16 खबरें 7 दिन में"
       },
       "review_status": "structure_only"
     },
     {
-      "topic": "ब्लिंकिट के साइकिल डिलीवरी एजेंट को अनंत अंबानी ने दिया स्कूटर",
+      "topic": "पैरालिसिस का नाटक कर भीख मांग रहे व्यक्ति का वीडियो वायरल",
       "category": "[वायरल]",
-      "breaking": "साइकिल डिलीवरी एजेंट को मिला स्कूटर उपहार",
-      "hook_text": "दस मिनट में डिलीवरी... या साइकिल से रेस?",
-      "hook_screen": "साइकिल से रेस?",
-      "ask": "क्या आपकी डिलीवरी समय पर आती है?",
-      "source": "Jagran, AajTak, Jansatta, Asianet News Hindi, Moneycontrol Hindi",
+      "breaking": "इलाज सुनते ही तेज़ी से भागा नकली पैरालिसिस मरीज़",
+      "hook_text": "सुई देखते ही नकली बीमार... ओलंपिक भागने लगा!",
+      "hook_screen": "सुई देखते ही बीमार भागा!",
+      "ask": "क्या आपने भी कभी ऐसा ढोंगी भिखारी देखा है?",
+      "source": "ABP News, Amar Ujala, R.Bharat, TV9 Hindi, India Daily",
       "poll": [
-        "हां, हमेशा",
-        "नहीं, देर होती है"
+        "हाँ, देखा है",
+        "नहीं, कभी नहीं"
       ],
       "ticker": [
-        "साइकिल से डिलीवरी करने वाले एजेंट को मिला तोहफ़ा",
-        "अनंत अंबानी फ़ाउंडेशन ने स्कूटर दिया उपहार",
-        "सोशल मीडिया पर एजेंट की कहानी हुई चर्चित"
+        "पैरालिसिस का नाटक कर भीख माँगने वाले का वीडियो वायरल।",
+        "27 अक्टूबर 2026 को इलाज का प्रस्ताव मिलते ही भिखारी भागा।",
+        "स्थानीय पुलिस और सामाजिक कल्याण विभाग को सूचना देने की सलाह।"
       ],
-      "cast_why": "डिलीवरी की रफ़्तार पर रमेश का सवाल और पिंकी का दोस्तों पर तंज़",
-      "tag_who": "उस दोस्त को जो 10 मिनट वाली डिलीवरी 5 मिनट में खोजता है",
+      "cast_why": "रमेश का गुस्सा बनाम दादी की घरवाली सीख",
+      "tag_who": "उस भाई को जो काम का नाम सुनते ही तुरंत बीमार पड़ जाता है",
       "lines": [
         {
           "who": "ramesh",
-          "say": "दस मिनट में डिलीवरी... या साइकिल से रेस?",
-          "caption": "10 मिनट में डिलीवरी... या साइकिल से रेस?",
+          "say": "सुई देखते ही नकली बीमार... ओलंपिक भागने लगा!",
+          "caption": "सुई देखते ही नकली बीमार... ओलंपिक भागने लगा!",
           "expr": "hairan",
-          "set": "thana",
+          "set": "village",
           "visuals": [
-            "delivery guy riding bicycle fast",
-            "traffic on indian street",
-            "holding delivery bag courier"
+            "man running fast on street",
+            "syringe injection close up shot",
+            "street beggar running away"
           ],
           "photo_hi": [
-            "ब्लिंकिट साइकिल डिलीवरी",
-            "डिलीवरी एजेंट सड़क"
+            "भिखारी का नाटक वायरल",
+            "नकली बीमारी भीख वीडियो"
           ],
-          "visual": "delivery guy riding bicycle fast",
+          "visual": "man running fast on street",
           "scene": "studio",
           "punch": false,
           "insta": ""
         },
         {
           "who": "bablu",
-          "say": "साइकिल वाले ब्लिंकिट एजेंट को अनंत अंबानी ने स्कूटर उपहार में दिया।",
-          "caption": "साइकिल वाले ब्लिंकिट एजेंट को अनंत अंबानी ने स्कूटर उपहार में दिया।",
+          "say": "सत्ताईस अक्टूबर दो हज़ार छब्बीस को इंजेक्शन से डरकर भीख माँगता बंदा भागा!",
+          "caption": "27 अक्टूबर 2026 को इंजेक्शन से डरकर भीख माँगता बंदा भागा!",
           "expr": "gambhir",
           "set": "studio",
           "visuals": [
-            "new electric scooter gift",
-            "delivery boy with scooter",
-            "gift handover moment"
+            "viral news report screen",
+            "doctor holding injection syringe",
+            "cctv footage street scene"
           ],
           "photo_hi": [
-            "अनंत अंबानी स्कूटर उपहार",
-            "ब्लिंकिट डिलीवरी एजेंट स्कूटर"
+            "भिखारी इंजेक्शन भागा",
+            "पैरालिसिस नाटक वीडियो"
           ],
           "card": {
-            "tag": "उपहार",
-            "big": "स्कूटर मिला",
-            "sub": "अनंत अंबानी फ़ाउंडेशन",
-            "icon": "gift"
+            "tag": "वायरल सच",
+            "big": "इलाज के डर से भागा भिखारी",
+            "sub": "27 अक्टूबर 2026",
+            "icon": "alert"
           },
-          "visual": "new electric scooter gift",
+          "visual": "viral news report screen",
           "scene": "card",
           "punch": false,
           "insta": ""
         },
         {
           "who": "chacha",
-          "say": "हमारे ज़माने में साइकिल चलाने पर तारीफ़ मिलती थी... यहाँ चाबी!",
-          "caption": "हमारे ज़माने में साइकिल चलाने पर तारीफ़ मिलती थी... यहाँ चाबी!",
+          "say": "पेंशन की फ़ाइल भी ऐसे ही सुई से भागती!",
+          "caption": "पेंशन की फ़ाइल भी ऐसे ही सुई से भागती!",
           "expr": "tanz",
-          "set": "thana",
+          "set": "office",
           "visuals": [
-            "old man riding vintage bicycle",
-            "holding scooter key shiny",
-            "surprised village elder"
+            "government office file stack",
+            "old man talking outside office",
+            "bureaucratic work slow motion"
           ],
           "photo_hi": [
-            "पुरानी साइकिल भारत",
-            "स्कूटर चाबी"
+            "भिखारी भागने का वीडियो",
+            "वायरल वीडियो 27 अक्टूबर"
           ],
-          "visual": "old man riding vintage bicycle",
+          "visual": "government office file stack",
           "scene": "chacha",
           "punch": false,
           "insta": ""
         },
         {
-          "who": "pinky",
-          "say": "वो दोस्त जो दस मिनट वाली डिलीवरी पाँच मिनट में खोजता है!",
-          "caption": "वो दोस्त जो 10 मिनट वाली डिलीवरी 5 मिनट में खोजता है!",
-          "expr": "hasi",
-          "set": "thana",
+          "who": "dadi",
+          "say": "वो भाई जो काम का नाम सुनते ही पैरालाइज़ हो जाए!",
+          "caption": "वो भाई जो काम का नाम सुनते ही पैरालाइज़ हो जाए!",
+          "expr": "tanz",
+          "set": "village",
           "visuals": [
-            "girl looking at smartphone app timer",
-            "waiting impatiently for order delivery",
-            "fast food delivery box"
+            "lazy boy sleeping on couch",
+            "grandmother scolding at home",
+            "indian family living room"
           ],
           "photo_hi": [
-            "ऑनलाइन डिलीवरी ऐप",
-            "इंतज़ार डिलीवरी"
+            "नकली बीमारी भीख मामला",
+            "भीख मांगने का नाटक"
           ],
           "tag": true,
-          "tag_screen": "10 मिनट वाली डिलीवरी 5 मिनट में",
-          "visual": "girl looking at smartphone app timer",
-          "scene": "pinky",
+          "tag_screen": "काम सुनते ही बीमार होने वाला भाई",
+          "visual": "lazy boy sleeping on couch",
+          "scene": "dadi_call",
           "punch": false,
           "insta": "",
-          "tag_text": "10 मिनट वाली डिलीवरी 5 मिनट"
+          "tag_text": "काम सुनते ही बीमार होने वाला"
         },
         {
           "who": "bablu",
-          "say": "साइकिल से सफ़र शुरू हुआ था... ख़त्म पेट्रोल पंप पर होगा!",
-          "caption": "साइकिल से सफ़र शुरू हुआ था... ख़त्म पेट्रोल पंप पर होगा!",
+          "say": "पुलिस ने कहा, इलाज जारी है... मरीज़ फ़िलहाल भाग रहा है!",
+          "caption": "पुलिस ने कहा, इलाज जारी है... मरीज़ फ़िलहाल भाग रहा है!",
           "expr": "gambhir",
           "set": "studio",
           "visuals": [
-            "petrol pump station india",
-            "scooter refueling at station",
-            "delivery agent driving scooter"
+            "police jeep siren flashing",
+            "running shoes sprinting fast",
+            "news anchor desk broadcast"
           ],
           "photo_hi": [
-            "पेट्रोल पंप स्कूटर",
-            "ब्लिंकिट स्कूटर"
+            "पुलिस भिखारी मामला",
+            "इलाज का प्रस्ताव भिखारी"
           ],
           "punch": true,
-          "stamp": "ख़त्म… पेट्रोल पंप पर!",
-          "visual": "petrol pump station india",
+          "stamp": "मरीज़… भाग रहा है!",
+          "visual": "police jeep siren flashing",
           "scene": "studio_end",
           "insta": ""
         }
       ],
-      "caption_post": "दस मिनट में डिलीवरी... या साइकिल से रेस? Tag करो उसको जो 10 मिनट वाली डिलीवरी 5 मिनट में खोजता है! क्या आपकी डिलीवरी समय पर आती है? स्रोत: Jagran, AajTak, Jansatta, Asianet News Hindi, Moneycontrol Hindi #Blinkit #AnantAmbani #DeliveryAgent #ScooterGift #BakraNews (AI से बने किरदार)",
+      "caption_post": "सुई देखते ही नकली बीमार... ओलंपिक भागने लगा! Tag करो उस भाई को जो काम के नाम पर बीमार पड़ जाता है! क्या आपने ऐसा ढोंगी देखा है? स्रोत: ABP News, Amar Ujala #ViralVideo #BeggarExposed #BakraNews #Satire",
       "format": "explain",
       "label": "काम की खबर",
       "key_word": "",
@@ -470,8 +345,8 @@
         "NEWS",
         "%"
       ],
-      "hook": "दस मिनट में डिलीवरी... या साइकिल से रेस?",
-      "hook_short": "साइकिल से रेस?",
+      "hook": "सुई देखते ही नकली बीमार... ओलंपिक भागने लगा!",
+      "hook_short": "सुई देखते ही बीमार भागा!",
       "trend": {
         "score": 4,
         "why": "5 अख़बार/चैनल 2 दिन में, 5 खबरें 7 दिन में"
