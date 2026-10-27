@@ -98,9 +98,22 @@ jobs:
           # Independent Gemini critique is editorial, not a claim about real viewers.
           # If Gemini is quota-limited it records 'unavailable'; a low reviewed score blocks render.
           python3 comedy_review.py "episodes/waiting_ticket_comedy.json"
-          # Curated Commons photographs, clearly credited as illustrations.
-          # A Commons outage cannot block original animation, but no unlicensed fallback is allowed.
-          python3 fetch_licensed_news_visuals.py || echo "::warning::Licensed Commons imagery unavailable; original animation only"
+          # This COD episode explicitly requires REAL, rights-verified photos.
+          # Fail closed instead of producing another cartoon-only MP4 labelled QA passed.
+          python3 fetch_licensed_news_visuals.py
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          entries=json.loads(Path('assets/licensed/manifest.json').read_text(encoding='utf-8'))
+          for scene in ('arrival','freight'):
+              entry=entries.get(scene)
+              if not entry or not all(entry.get(k) for k in ('author','source','license','source_url')):
+                  raise SystemExit('Missing licensed news illustration for scene: '+scene)
+              photo=Path('assets/licensed')/entry['path']
+              if not photo.is_file() or photo.stat().st_size < 10000:
+                  raise SystemExit('Missing verified real photograph: '+str(photo))
+          print('PASS: both rights-verified real photographs and attribution are present')
+          PY
           /usr/bin/python3 talk_episode.py prep "${{ inputs.script || 'episodes/waiting_ticket_comedy.json' }}" | tee prep.log
           echo "lines=$(tail -1 prep.log)" >> $GITHUB_OUTPUT
       - name: Upload independent comedy editorial review
