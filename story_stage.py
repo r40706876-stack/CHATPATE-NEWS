@@ -250,6 +250,29 @@ def frames(line, episode, talk, n, cut, seed=0):
     for t,sp in enumerate(talking):
         im=base.copy()
         _scene_action(im,scene,t,n,line=line)
+        # Optional licensed documentary insert: explicitly curated media only.
+        # Never download arbitrary news/YouTube footage and imply it is the event.
+        # assets/licensed/manifest.json entries require path, author, source, license.
+        try:
+            import json
+            manifest_path = Path("assets/licensed/manifest.json")
+            if manifest_path.is_file():
+                entries = json.loads(manifest_path.read_text(encoding="utf-8"))
+                entry = entries.get(scene, {})
+                if all(entry.get(k) for k in ("path", "author", "source", "license")):
+                    media = Path("assets/licensed") / Path(entry["path"]).name
+                    if media.is_file() and media.suffix.lower() in (".png", ".jpg", ".jpeg", ".webp"):
+                        insert = Image.open(media).convert("RGB")
+                        insert.thumbnail((550, 430), Image.Resampling.LANCZOS)
+                        pan = int(35 * math.sin(t / max(1, n - 1) * math.pi))
+                        x, y = 460 + pan, 380
+                        d = ImageDraw.Draw(im)
+                        d.rounded_rectangle((x-12, y-12, x+insert.width+12, y+insert.height+12),
+                                            16, fill=(255,255,255), outline=INK, width=8)
+                        im.paste(insert, (x,y))
+                        d.text((x+12,y+insert.height+18), "संदर्भ चित्र", font=tt.font(31), fill=INK)
+        except (OSError, ValueError, TypeError, KeyError):
+            pass
         if scene=="arrival" and any(k in str(line.get("say","")) for k in ("वसूली", "बैंक मैनेजर")):
             # Existing courier character literally emerges from the television.
             # Start small and move upward instead of showing another static icon.
