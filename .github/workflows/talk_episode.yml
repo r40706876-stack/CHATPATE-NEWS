@@ -62,7 +62,13 @@ jobs:
         run: |
           set -o pipefail
           /usr/bin/python3 -m pip install -q --break-system-packages numpy scipy pillow edge-tts rembg onnxruntime "yt-dlp[default]"
-          curl -fsSL https://deno.land/install.sh | sh -s -- -y >/dev/null 2>&1; export PATH=$HOME/.deno/bin:$PATH   # YouTube के JS challenge के लिए
+          # Deno is optional for yt-dlp JS challenges; CDN TLS failures must not abort the whole episode.
+          if timeout 90s bash -c 'curl -fLsS --retry 2 --connect-timeout 10 --max-time 60 https://deno.land/install.sh | sh -s -- -y' >/dev/null 2>&1; then
+            echo "Optional Deno runtime installed"
+          else
+            echo "::warning::Optional Deno install unavailable; continuing with yt-dlp fallback and original 3D visuals"
+          fi
+          export PATH="$HOME/.deno/bin:$PATH"
           # Fast visual/scene validation BEFORE paying the TTS and MP4 render cost.
           python3 tests/storyboard_preflight.py
           python3 -m unittest discover -s tests -p test_comedy_gate.py -q
