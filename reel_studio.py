@@ -897,7 +897,7 @@ def render(ep, segs, chars, out, preview):
         ln, react = s["ln"], s.get("react")
         shot = s.get("shot") or "split"
         _, name, role = chars[ln["who"]]
-        size = (W, H) if shot == "full" else (SW_, SH_)
+        size = (W, H) if shot in ("full", "story") else (SW_, SH_)
         vis = list(s.get("vis") or [])
         if ln.get("big") and vis and not react and shot in ("split", "full"):   # माँग वाली line: पहले बड़े अक्षर, फिर तस्वीर
             card = [{"big": ln["big"], "sub": ln.get("sub", ""), "color": ln.get("card_color")}]
@@ -954,8 +954,13 @@ def render(ep, segs, chars, out, preview):
                     break
                 if e_ not in vis:
                     vis.insert(1 if len(vis) == 1 else len(vis), e_)
+        story_gen = None
+        if shot == "story" and s.get("talk") and not react:
+            import story_stage
+            story_gen = story_stage.frames(ln, ep, s["talk"], n, _cut_cached, si)
+            print(f"VISUAL_AUDIT line={si+1} speaker={ln.get('who')} strategy=full-story:{ln.get('scene')}")
         face = None
-        if s.get("talk"):                                       # हमारी 3 मुँह वाली फ़ोटो से बोलना (साफ़ 3D चेहरा)
+        if s.get("talk") and shot != "story":                                       # हमारी 3 मुँह वाली फ़ोटो से बोलना (साफ़ 3D चेहरा)
             face = talk_frames(s["talk"], shot, n, si)
         elif s.get("face"):
             face = _vid_frames(s["face"], W, H) if shot == "close" else _vid_frames(s["face"], W, BAND_H)
@@ -987,7 +992,9 @@ def render(ep, segs, chars, out, preview):
             else:
                 fr = still
             punchy = shot == "close" and not react
-            if shot == "close":
+            if shot == "story":
+                im = next(story_gen)
+            elif shot == "close":
                 if punchy:
                     # Long punch lines need a real camera change, not an almost-static face.
                     # A modest jump cut every ~1.6s preserves lip sync and the same character.
@@ -1027,7 +1034,7 @@ def render(ep, segs, chars, out, preview):
                 im.paste(_zoomr(fr, zb), (dx, BAND_Y))
                 clean = im.copy()                                # बिना लिखाई वाला frame (आख़िरी poll के पीछे)
             d = ImageDraw.Draw(im)
-            if k >= FPS * 2:                                 # vidIQ + virality skill: पहले 2 सेकंड कोई logo/पट्टी नहीं (हर style में) — सिर्फ़ तस्वीर + 4 शब्द
+            if k >= FPS * 2 and shot != "story":                                 # vidIQ + virality skill: पहले 2 सेकंड कोई logo/पट्टी नहीं (हर style में) — सिर्फ़ तस्वीर + 4 शब्द
                 chrome_safe(d, k)
             if shot == "split":
                 badge = f"खबर {ln['item']}/{ln['items_total']}" if ln.get("item") else "ब्रेकिंग"
@@ -1047,13 +1054,17 @@ def render(ep, segs, chars, out, preview):
                 d.text((58, BAND_Y + 418), f"{name} का रिएक्शन", font=tt.font(44), fill="white", anchor="lm")
             else:
                 hooking = si == 0 and ep.get("hook")              # पहली line: वही बात बड़े पीले hook में (जो सुनाई दे, वही दिखे)
-                cy = 1150 if (v2 and shot == "full") else BAND_Y + 460
+                cy = 1685 if shot == "story" else (1150 if (v2 and shot == "full") else BAND_Y + 460)
                 if first_seen and t < FPS * 2.5 and shot != "close" and not hooking and not (v2 and shot == "full"):
                     rv.name_strap(d, (BAND_Y + 84) if shot == "split" else 1130, name, role)
                 if nochar:                                        # हर line ऊपर बड़े अक्षरों में (meme reel जैसा)
                     _hook(d, ep["hook"] if hooking else cap_text, 330)
                 elif hooking and ep.get("hook_short") and not v2:           # पहले 3 सेकंड: 3 lines पढ़नी पड़ती थीं (skip 46%) — अब ≤6 शब्द, बड़े
                     _hook_big(d, re.sub(r"[\U0001F000-\U0001FFFF\u2600-\u27BF\uFE0F]", "", ep["hook_short"]).strip(), 360)
+                    if wtimes:
+                        karaoke_timed(d, cap_text, t / FPS, wtimes, cy)
+                elif hooking and v2 and shot == "story":
+                    _hook(d, ep.get("hook_short") or ep["hook"], 190)
                     if wtimes:
                         karaoke_timed(d, cap_text, t / FPS, wtimes, cy)
                 elif hooking and v2:
@@ -1068,7 +1079,7 @@ def render(ep, segs, chars, out, preview):
                     # Do not overlay a second giant yellow tag over the same visual.
                     kinetic_story = shot == "split" and vis and all(
                         isinstance(v, dict) and "big" in v for v in vis)
-                    if ln.get("tag_text") and not kinetic_story:
+                    if ln.get("tag_text") and not kinetic_story and shot != "story":
                         _hook(d, ln["tag_text"], 330)
                     if wtimes:
                         karaoke_timed(d, cap_text, t / FPS, wtimes, cy)
@@ -1080,7 +1091,7 @@ def render(ep, segs, chars, out, preview):
                 st_text = ln.get("stamp") or STAMP_OF.get(ln.get("react_pose"), "")
                 st_t = 0
             asking = False                                      # सवाल अब सिर्फ़ अंत में (पंच line साफ़ सुनाई-दिखाई दे)
-            if st_text and not asking:                          # सवाल वाले पल ठप्पा नहीं (ऊपर एक-दूसरे पर चढ़ते थे)
+            if st_text and not asking and shot != "story":                          # सवाल वाले पल ठप्पा नहीं (ऊपर एक-दूसरे पर चढ़ते थे)
                 if si == 0:                                     # hook का ठप्पा: hook के बड़े अक्षरों के नीचे, बीच में
                     _stamp(im, st_text, st_t, W / 2, 640 if shot != "split" else SCR[2] - 160, 48)
                 elif shot == "close":
