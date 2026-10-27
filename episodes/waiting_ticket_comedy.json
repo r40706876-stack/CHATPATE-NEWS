@@ -1,7 +1,7 @@
 {
   "title": "मिठाई माँगी, ₹1.69 लाख का टीवी ऑर्डर!",
   "topic": "मदुरै के क्रिएटर वीरमणि ने दिवाली की मिठाई माँगी; उनके पते पर अनचाहे COD टीवी-फ्रिज ऑर्डर आने लगे",
-  "hook": "₹1.69 लाख का टीवी! भाई ने माँगी थी बस मिठाई!",
+  "hook": "फ्री मिठाई माँगी… और दरवाज़े पर ₹1.69 लाख का टीवी! वो भी COD!",
   "poll": {
     "q": "फ्री गिफ्ट पर COD बिल आए तो?",
     "a": "वापस करूँगा",
@@ -10,80 +10,73 @@
   "lines": [
     {
       "who": "bablu",
-      "say": "मिठाई माँगी, ₹1.69 लाख का COD टीवी पहुँच गया!",
-      "big": "मिठाई माँगी, ₹1.69 लाख का टीवी!",
-      "expr": "hairan",
-      "visuals": [
-        "Madurai news report delivery parcels and TV COD"
-      ],
+      "say": "फ्री मिठाई माँगी… और दरवाज़े पर ₹1.69 लाख का टीवी! वो भी COD!",
+      "big": "मिठाई के बदले ₹1.69 लाख का टीवी!",
       "scene": "sweets",
-      "shot": "close",
-      "react_pose": "hairan",
-      "tag_text": "मिठाई माँगी, ₹1.69 लाख का टीवी!"
+      "expr": "hairan",
+      "shot": "story",
+      "punch": false,
+      "visuals": [
+        "sweet box replaced by COD TV"
+      ]
     },
     {
       "who": "pinky",
-      "say": "चाचा, फ्री सुनते ही पता भेजा? बाहर पूरा शोरूम खड़ा है!",
-      "big": "फ्री सुनते ही पता भेजा?!",
-      "expr": "tanz",
-      "visuals": [
-        "fast cartoon parcel pile grows into TV-fridge showroom at home doorway; delivery worker points at showroom sign and Pinky teases Chacha"
-      ],
+      "say": "चाचा, आपने पता भेजा था या शोरूम की फ्रेंचाइज़ी माँगी थी?",
+      "big": "घर के बाहर शोरूम!",
       "scene": "arrival",
-      "shot": "close",
-      "react_pose": "tanz",
-      "tag_text": "फ्री सुनते ही पता भेजा?!"
+      "expr": "tanz",
+      "shot": "story",
+      "punch": false,
+      "visuals": [
+        "three parcels become showroom outside house"
+      ]
     },
     {
       "who": "chacha",
-      "say": "लड्डू का डिब्बा माँगा था, ये टीवी के डिब्बे पर OTP माँग रहा!",
-      "big": "लड्डू की जगह टीवी का डिब्बा?!",
+      "say": "मैंने तो लड्डू माँगे थे! ये डिलीवरी वाला टीवी का OTP माँग रहा है!",
+      "big": "लड्डू नहीं, टीवी का OTP!",
+      "scene": "otp",
       "expr": "hairan",
+      "shot": "story",
       "punch": true,
       "visuals": [
-        "cartoon Chacha holding an empty sweets box; delivery worker holds a giant TV carton and asks for OTP, Pinky reacts with disbelief"
-      ],
-      "scene": "laddoo_hdmi",
-      "shot": "close",
-      "react_pose": "hairan",
-      "tag_text": "लड्डू की जगह टीवी का डिब्बा?!"
+        "delivery worker demands TV OTP instead of laddoo"
+      ]
     },
     {
       "who": "pinky",
-      "say": "चाचा, बिल देख डिलीवरी वाला ₹50 थमाकर बोला—चाय पी लेना!",
-      "big": "बिल देखकर डिलीवरी वाला ₹50 दे गया!",
-      "expr": "tanz",
-      "visuals": [
-        "cartoon delivery worker sees giant ₹1.69 lakh COD invoice and, instead of collecting money, offers Chacha ₹50 out of pity; Pinky laughs; unpaid TV carton at door"
-      ],
+      "say": "चाचा, बिल देखकर डिलीवरी वाला बोला—कैश नहीं? घर की रजिस्ट्री स्कैन कर दूँ?",
+      "big": "टीवी के बदले घर की रजिस्ट्री?!",
       "scene": "bill",
-      "shot": "close",
-      "react_pose": "tanz",
-      "tag_text": "बिल देखकर डिलीवरी वाला ₹50 दे गया!"
+      "expr": "tanz",
+      "shot": "story",
+      "punch": true,
+      "visuals": [
+        "delivery worker holds 169000 COD invoice and asks for house papers"
+      ]
     },
     {
       "who": "dadi",
-      "say": "₹50 मत दे, ये मुफ्त में तेरा घर भी मँगवा लेंगे!",
-      "big": "मुफ्त में तेरा घर भी मँगवा लेंगे!",
+      "say": "रजिस्ट्री छिपा ले! अगली बार ये तेरा घर ही रिटर्न पार्सल बना देंगे!",
+      "big": "घर भी रिटर्न पार्सल?!",
+      "scene": "house",
       "expr": "gussa",
+      "shot": "story",
       "punch": true,
       "visuals": [
-        "cartoon Dadi stops delivery worker from handing Chacha ₹50 and points at his house as Chacha excitedly reaches for another free offer; TV carton and unpaid COD invoice remain visible"
-      ],
-      "scene": "delivery",
-      "shot": "close",
-      "react_pose": "gussa",
-      "tag_text": "मुफ्त में तेरा घर भी मँगवा लेंगे!"
+        "COD return label appears on house"
+      ]
     }
   ],
   "comedy_format": "character_clash",
   "style": "v2",
-  "react": true,
+  "react": false,
   "tag_who": "उस दोस्त को जो फ्री सुनते ही पता भेज देता है",
   "fictional_satire": true,
   "source_url": "https://www.indiatoday.in/amp/trending-news/story/madurai-mans-diwali-wish-goes-wrong-tvs-fridges-and-lakhs-in-cod-orders-pour-in-3016108-2026-10-13",
   "no_send": true,
-  "qa_note": "2026-10-27: Gemini independent critique rated prior draft 6.25/10 and identified stale wallet-return line 4. Replaced it with delivery-worker ₹50 reversal and Dadi's escalating free-house callback. Private preview only; no_send true. Recheck Gemini and full render QA; do not infer viewer retention from offline tests. Visual revision: force expressive close-up for every speaker and reaction poses; retain character-only policy and no_send until verified.",
+  "qa_note": "2026-10-27: Replaced static split-screen with full-frame local character+prop stage, five sequential story actions, and coherent house-registry escalation. Private draft; independent Gemini score and real video visual QA required. no_send remains true. No Instagram retention claims.",
   "no_clips": true,
   "visual_policy": "character_only",
   "no_memes": true,
