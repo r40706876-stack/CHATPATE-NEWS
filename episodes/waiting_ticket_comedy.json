@@ -41,22 +41,22 @@
     },
     {
       "who": "pinky",
-      "say": "चाचा, बिल देखकर आपका बटुआ बोला—मुझे भी रिटर्न कर दो!",
-      "big": "बटुआ बोला: मुझे भी रिटर्न करो!",
+      "say": "चाचा, बिल देख डिलीवरी वाला ₹50 थमाकर बोला—चाय पी लेना!",
+      "big": "बिल देखकर डिलीवरी वाला ₹50 दे गया!",
       "expr": "tanz",
       "visuals": [
-        "cartoon Pinky holds giant unpaid ₹1.69 lakh COD invoice; Chacha opens empty wallet with funny RETURN label; Chacha shocked, Pinky laughing; TV carton remains at doorway"
+        "cartoon delivery worker sees giant ₹1.69 lakh COD invoice and, instead of collecting money, offers Chacha ₹50 out of pity; Pinky laughs; unpaid TV carton at door"
       ],
       "scene": "bill"
     },
     {
       "who": "dadi",
-      "say": "इनकी जेब में तो रिमोट की बैटरी भी उधार आती है!",
-      "big": "रिमोट की बैटरी भी उधार!",
+      "say": "₹50 मत दे, ये मुफ्त में तेरा घर भी मँगवा लेंगे!",
+      "big": "मुफ्त में तेरा घर भी मँगवा लेंगे!",
       "expr": "gussa",
       "punch": true,
       "visuals": [
-        "cartoon Dadi roasts embarrassed Chacha with empty wallet; delivery worker holds an unpaid COD invoice and TV carton, lively comic reactions"
+        "cartoon Dadi stops delivery worker from handing Chacha ₹50 and points at his house as Chacha excitedly reaches for another free offer; TV carton and unpaid COD invoice remain visible"
       ],
       "scene": "delivery"
     }
@@ -68,7 +68,7 @@
   "fictional_satire": true,
   "source_url": "https://www.indiatoday.in/amp/trending-news/story/madurai-mans-diwali-wish-goes-wrong-tvs-fridges-and-lakhs-in-cod-orders-pour-in-3016108-2026-10-13",
   "no_send": true,
-  "qa_note": "2026-10-27: Gemini 6.75/10 flagged flat fourth line. Replaced repeated COD-money demand with wallet-return punch and matching reaction visual. Private preview only; no_send true. Require fresh Gemini >=8.5, full MP4 and audio/visual QA before any Telegram delivery.",
+  "qa_note": "2026-10-27: Gemini independent critique rated prior draft 6.25/10 and identified stale wallet-return line 4. Replaced it with delivery-worker ₹50 reversal and Dadi's escalating free-house callback. Private preview only; no_send true. Recheck Gemini and full render QA; do not infer viewer retention from offline tests.",
   "no_clips": true,
   "visual_policy": "character_only",
   "no_memes": true,
