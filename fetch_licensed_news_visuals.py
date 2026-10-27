@@ -33,8 +33,8 @@ for scene,title in FILES.items():
         print(scene,"downloaded",len(payload),license_name)
     except Exception as e: print(scene,"SKIPPED",str(e))
 (ROOT/"manifest.json").write_text(json.dumps(out,ensure_ascii=False,indent=2),encoding="utf-8")
-(ROOT/"CREDITS.txt").write_text("\\n".join(
+(ROOT/"CREDITS.txt").write_text("\n".join(
     f"{scene}: {entry['author']} | {entry['license']} | {entry['source_url']} | "
     f"{entry['license_url']} | {entry['modified']}"
-    for scene,entry in out.items())+"\\n",encoding="utf-8")
+    for scene,entry in out.items())+"\n",encoding="utf-8")
 if not out: raise SystemExit("No verified openly licensed imagery downloaded")
