@@ -342,7 +342,13 @@ def frames(line, episode, talk, n, cut, seed=0):
                        fill="white", anchor="mm")
         # Clearly labelled *illustrative* Commons photo, not claimed event footage.
         # On the Blender delivery reveal, let the original 3D fill the screen first.
-        if licensed_insert is not None and not (cod_insert and t < min(33, max(1, n // 2))):
+        # News illustration is supporting evidence, not a 4-second static wallpaper.
+        # Show it briefly with readable attribution, then reveal the moving
+        # actors and gag props for the majority of the spoken line.
+        # On the COD 3D reveal, do not cover the opening full-screen Blender shot.
+        illustration_start = min(33, max(1, n // 2)) if cod_insert else 0
+        illustration_end = min(n, illustration_start + 42)  # 1.68s at 25 fps
+        if licensed_insert is not None and illustration_start <= t < illustration_end:
             pan = int(35 * math.sin(t / max(1, n - 1) * math.pi))
             x, y = 105 + pan, 245
             d = ImageDraw.Draw(im)
@@ -353,11 +359,11 @@ def frames(line, episode, talk, n, cut, seed=0):
             d.rounded_rectangle((x-8, credit_y-5, min(1060, x+licensed_insert.width+16), credit_y+115),
                                 8, fill=(255,250,233), outline=INK, width=3)
             d.text((x+5,credit_y+4), "चित्र: " + str(licensed_entry["author"])[:29],
-                   font=tt.font(26), fill=INK)
+                   font=tt.font(31), fill=INK)
             d.text((x+5,credit_y+42), "Wikimedia Commons | " + str(licensed_entry["license"])[:20],
-                   font=tt.font(24), fill=INK)
+                   font=tt.font(29), fill=INK)
             d.text((x+5,credit_y+80), "उदाहरण चित्र — असली घटना नहीं",
-                   font=tt.font(23), fill=RED)
+                   font=tt.font(28), fill=RED)
         if scene=="arrival" and any(k in str(line.get("say","")) for k in ("वसूली", "बैंक मैनेजर")):
             # Existing courier character literally emerges from the television.
             # Start small and move upward instead of showing another static icon.
