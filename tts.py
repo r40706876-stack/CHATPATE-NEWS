@@ -45,7 +45,7 @@ BASE = "https://generativelanguage.googleapis.com/v1beta"
 def _post(url, body, key):
     req = urllib.request.Request(url, json.dumps(body).encode(),
                                  {"Content-Type": "application/json", "x-goog-api-key": key})
-    with urllib.request.urlopen(req, timeout=120) as r:
+    with urllib.request.urlopen(req, timeout=35) as r:
         return json.load(r)
 
 
@@ -105,7 +105,7 @@ def gemini_line(text, who, expr, key, base=None):
     # बाकी models भी (हर model का अपना कोटा). पहले सिर्फ़ वही एक आज़माते थे → सीधे backup आवाज़ पर गिर जाते थे.
     dead = _gem_ok.setdefault("dead_models", set())
     models = [m for m in dict.fromkeys(([_gem_ok["model"]] if _gem_ok["model"] else []) + TTS_MODELS)
-              if (key[-6:], m) not in dead]
+              if (key[-6:], m) not in dead][:2]
     for model in models:
         bodies = [
             ("interactions", f"{BASE}/interactions", {
@@ -137,9 +137,9 @@ def gemini_line(text, who, expr, key, base=None):
                     if e.code == 429 and ("per day" in msg.lower() or "limit: 0" in msg):
                         dead.add((key[-6:], model))       # आज का कोटा ख़त्म — इस key पर ये model दोबारा नहीं
                         break
-                    if e.code == 429 and attempt == 0:
-                        time.sleep(25)
-                        continue
+                    if e.code == 429:
+                        dead.add((key[-6:], model))
+                        break
                     break
                 except Exception as e:                    # noqa: BLE001
                     errors.append(f"{model}/{name}: {e!r}")
@@ -349,7 +349,7 @@ def speak_script(script, out):
     import gemini as _g
     gkeys = _g.keys()                                  # पहली key की आवाज़ का कोटा ख़त्म हो तो दूसरी
     key = gkeys[0] if gkeys else None
-    order = (["gemini"] * len(gkeys)) + ["edge", "kokoro"]
+    order = (["gemini"] * min(2, len(gkeys))) + ["edge", "kokoro"]
     if os.getenv("TTS_ENGINE") in order:
         order = order[order.index(os.getenv("TTS_ENGINE")):]
     last, gi = None, 0
