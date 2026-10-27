@@ -1,6 +1,6 @@
 {
- "voice": "gemini",
- "voice_err": "gemini: gemini-2.5-flash-preview-tts/interactions: 400 {\"error\":{\"message\":\"Speech annotations are not supported for model 'gemini-2.5-flash-preview-tts'.\",\"code\":\"invalid_request\"}} | gemini-2.5-flash-preview-tts/generateContent: 429 {\n  \"error\": {\n    \"cod",
+ "voice": "edge",
+ "voice_err": "gemini: gemini-3.8-flash-lite-tts/interactions: 429 {\"error\":{\"message\":\"Rate limit exceeded for model gemini-3.8-flash-lite-tts (limit: 10 requests per day on Free Tier). Please retry in 2h8m6s or upgrade your t | gemini-3.1-flash-tts-preview/interactions: ",
  "lines": 5,
  "real_visual_lines": 0,
  "set_lines": 5,
