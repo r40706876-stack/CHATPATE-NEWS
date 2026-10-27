@@ -12,7 +12,7 @@ import numpy as np
 from PIL import Image
 import story_stage
 
-EXPECTED=("sweets","arrival","otp","bill","house")
+EXPECTED=("sweets","arrival","freight","bill","house")
 
 
 def main():
