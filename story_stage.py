@@ -96,10 +96,13 @@ def _scene_action(im, scene, t, n):
         d.rounded_rectangle((435,455,920,535),18,fill=INK)
         d.text((677,495),"घर बना शोरूम!",font=tt.font(58),fill="white",anchor="mm")
     elif scene=="freight":
-        _box(d,380,730,500,345,"TV / COD")
+        d.rounded_rectangle((415,710,925,1120),42,fill=(34,52,73),outline=YELLOW,width=13)
+        d.rounded_rectangle((450,745,890,1070),26,fill=(243,249,252))
+        d.text((670,835),"UPI",font=tt.font(105),fill=INK,anchor="mm")
+        d.text((670,955),"FAILED",font=tt.font(83),fill=RED,anchor="mm")
         # The courier is an existing 3D-style Ramesh sprite, composited below.
         d.rounded_rectangle((555,480,930,670),25,fill=(44,60,83))
-        d.text((742,570),"भाड़ा?!",font=tt.font(118),fill=YELLOW,anchor="mm")
+        d.text((742,570),"UPI बेहोश!",font=tt.font(118),fill=YELLOW,anchor="mm")
         d.ellipse((740,1090,930,1280),fill=(247,193,99),outline=INK,width=7)
         d.text((835,1185),"?",font=tt.font(140),fill=INK,anchor="mm")
     elif scene=="bill":
@@ -114,7 +117,7 @@ def _scene_action(im, scene, t, n):
         # The courier is an existing 3D-style Ramesh sprite, composited below.
         d.rounded_rectangle((375,520,1000,870),25,fill=(250,241,214),outline=RED,width=16)
         d.text((685,635),"चाचा एक्सचेंज!",font=tt.font(85),fill=RED,anchor="mm")
-        d.text((685,755),"NO RETURN",font=tt.font(39),fill=INK,anchor="mm")
+        d.text((685,755),"पता गलत!",font=tt.font(39),fill=INK,anchor="mm")
         for j in range(3):
             x=530+j*150
             _box(d,x,950+j*32+wobble,145,120,"COD")
@@ -136,7 +139,7 @@ def _scene_action(im, scene, t, n):
         elif scene=="freight":
             d.rounded_rectangle((420,405,990,770),35,fill=INK)
             d.rounded_rectangle((460,450,950,720),18,fill=(134,217,236))
-            d.text((705,580),"लड्डू का भाड़ा!",font=tt.font(64),fill=INK,anchor="mm")
+            d.text((705,580),"बिल देखते ही!",font=tt.font(64),fill=INK,anchor="mm")
         elif scene=="bill":
             d.rounded_rectangle((420,440,1020,810),22,fill="white",outline=RED,width=15)
             d.text((720,540),"COD",font=tt.font(90),fill=RED,anchor="mm")
@@ -151,15 +154,15 @@ def _scene_action(im, scene, t, n):
             _tv(d,405,465,360,260)
             _box(d,740,500,225,180,"COD")
         elif scene=="freight":
-            _box(d,460,465,460,290,"SWEETS COD")
+            _box(d,460,465,460,290,"COD")
         elif scene=="bill":
             d.rounded_rectangle((420,445,1020,805),25,fill=(252,225,217),outline=RED,width=12)
             d.text((720,550),"एक्सचेंज?",font=tt.font(91),fill=RED,anchor="mm")
             d.text((720,700),"₹1,69,000",font=tt.font(71),fill=INK,anchor="mm")
         elif scene=="house":
             d.rounded_rectangle((430,450,990,790),20,fill=(255,248,227),outline=RED,width=16)
-            d.text((710,555),"NO RETURN",font=tt.font(100),fill=RED,anchor="mm")
-            d.text((710,690),"डिब्बा मत खोलना!",font=tt.font(63),fill=INK,anchor="mm")
+            d.text((710,555),"पता गलत!",font=tt.font(100),fill=RED,anchor="mm")
+            d.text((710,690),"वापस मत भेजना!",font=tt.font(63),fill=INK,anchor="mm")
 
 
 def frames(line, episode, talk, n, cut, seed=0):
@@ -195,6 +198,6 @@ def frames(line, episode, talk, n, cut, seed=0):
             d.rounded_rectangle((12,1390,430,1730),20,fill=(201,146,92),outline=(108,69,44),width=14)
             d.rectangle((200,1390,242,1730),fill=(246,212,150))
             d.rounded_rectangle((45,1490,398,1635),14,fill=(255,250,233),outline=RED,width=8)
-            d.text((221,1535),"NO RETURN",font=tt.font(57),fill=RED,anchor="mm")
+            d.text((221,1535),"पता गलत!",font=tt.font(57),fill=RED,anchor="mm")
             d.text((221,1594),"चाचा पैक!",font=tt.font(42),fill=INK,anchor="mm")
         yield im
