@@ -120,13 +120,21 @@ def prep(script_path):
             shutil.copy(path, IN / f"broll/{i}_{j}{Path(path).suffix}")
             if Path(path).with_suffix(".txt").exists():          # photo वाले का नाम (CC license)
                 shutil.copy(Path(path).with_suffix(".txt"), IN / f"broll/{i}_{j}.txt")
+    try:                                                       # writer का cold open (फ़ोन/WhatsApp/बिल/नोटिस/दाम-बोर्ड) → पहली lines के दृश्य
+        import cold_open
+        made = cold_open.for_episode(ep, IN / "cold")
+        if made:
+            print("  🥶 cold open:", ep["cold_open"].get("kind"))
+    except Exception as e:                                     # noqa: BLE001
+        print("  cold open नहीं बना:", repr(e)[:150])
     for i, ln in enumerate(ep["lines"]):                       # script का अपना बना दृश्य (cold open: पहला second ही joke दिखाए)
         if ln.get("visual_files"):                             # अपना दृश्य हो तो उस line पर सिर्फ़ वही (search वाली फ़ोटो हटाओ)
             for old in (IN / "broll").glob(f"{i}_*"):
                 old.unlink()
         for k, vf in enumerate(ln.get("visual_files") or []):
-            if (ROOT / vf).exists():
-                shutil.copy(ROOT / vf, IN / f"broll/{i}_0own{k}{Path(vf).suffix}")
+            src = Path(vf) if Path(vf).is_absolute() else ROOT / vf
+            if src.exists():
+                shutil.copy(src, IN / f"broll/{i}_0own{k}{src.suffix}")
     add_props(ep)                                              # Blender के अपने 3D clips (सिक्के/टॉफी/नोट) — बात से सीधे जुड़े
     if not ep.get("no_clips"):                                 # असली खबर के छोटे video clips (पहले सेकंड में हरकत)
         try:
