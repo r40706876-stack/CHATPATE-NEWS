@@ -52,7 +52,51 @@ def trend(query):
     hit = next((t for t, _ in google_trends_today() if len(q & _words(t)) >= 1 and len(_words(t)) <= 6), None)
     s += 2 if hit else 0
     why = f"{len(src2)} अख़बार/चैनल 2 दिन में, {len(h7)} खबरें 7 दिन में" + (f", Google Trends में: {hit}" if hit else "")
+    yt_b, yt_why = youtube_watch(query)
+    s += yt_b
+    why += yt_why
     return min(10, s), why, h7[:10]
+
+
+# "लोग सच में देख रहे हैं?" — Last30Days/Agent Reach वाला idea: अख़बार क्या छाप रहे हैं, उससे ज़्यादा ज़रूरी कि लोग क्या देख रहे हैं.
+# YouTube पर आज की videos, सबसे ज़्यादा views वाली पहले (sp=CAMSAggC). YouTube रोके तो बाक़ी run में बंद, नंबर पहले जैसा.
+YT_SP = "CAMSAggC"
+_yt_off = False
+
+
+def youtube_views_today(query, n=5):
+    """[(views, title)] आज upload हुई videos में से सबसे ज़्यादा देखी गईं; न मिले तो []."""
+    global _yt_off
+    if _yt_off:
+        return []
+    import json as _json
+    import subprocess
+    import urllib.parse
+    try:
+        import clips
+        url = f"https://www.youtube.com/results?search_query={urllib.parse.quote(query)}&sp={YT_SP}"
+        cmd = clips._ytdlp() + ["--flat-playlist", "-J", "--no-warnings", "--playlist-end", str(n), url] + clips._cookies("YT_COOKIES")
+        r = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
+        ents = (_json.loads(r.stdout or "{}") or {}).get("entries") or []
+        out = [(int(e.get("view_count") or 0), e.get("title") or "") for e in ents]
+        if not ents:
+            raise RuntimeError((r.stderr or "ख़ाली")[-150:])
+        return sorted(out, reverse=True)
+    except Exception as e:                                # noqa: BLE001
+        print("  YouTube views नहीं मिले (आज के run में बंद):", repr(e)[:150])
+        _yt_off = True
+        return []
+
+
+def youtube_watch(query):
+    """(bonus 0-2, कारण) — आज की top video ≥1 लाख views = +2, ≥20 हज़ार = +1."""
+    v = youtube_views_today(query)
+    if not v:
+        return 0, ""
+    top, tot = v[0][0], sum(x for x, _ in v)
+    b = 2 if top >= 100_000 or tot >= 300_000 else 1 if top >= 20_000 else 0
+    k = lambda x: f"{x / 100_000:.1f} लाख" if x >= 100_000 else f"{x // 1000} हज़ार"   # noqa: E731
+    return b, f", YouTube आज: top {k(top)} views"
 
 
 RUBRIC = """नियम (हमारे page के 19 reels के असली आँकड़ों से: मज़ाक से शुरू होने वाली reels पर skip 26-40% और 900-2.7K views;
