@@ -33,7 +33,7 @@ def fake(prompt, **kw):
              "lines": LINES}
         return json.dumps([{"topic": "SBI डेटा लीक", "versions": [v, dict(v, premise="y")]}])
     if "22 साल" in p:
-        allok = {k: {"ok": True, "kyon": "x"} for k in ("pura", "hasi", "share", "daily", "follow", "like", "save")}
+        allok = {k: {"ok": True, "kyon": "x"} for k in ("pura", "hasi", "share", "daily", "follow", "like", "save", "ant")}
         if p.count('"topic"') == 1:                                # punch-up के बाद दोबारा जाँच
             return json.dumps([{"id": 0, "score": 9, "jaanch": allok}])
         return json.dumps([{"id": 0, "score": 9, "kamzor": [3], "jaanch": dict(allok, share={"ok": False, "kyon": "किसे?"})},
@@ -58,10 +58,20 @@ class PsychWriter(unittest.TestCase):
         self.assertEqual(eps[0]["connect"]["score"], 9)
         self.assertTrue(all(v["ok"] for v in eps[0]["jaanch"].values()))
         import run_daily
-        self.assertIn("🧪 जाँच 7/7", run_daily.preview(eps))
+        self.assertIn("🧪 जाँच 8/8", run_daily.preview(eps))
         self.assertTrue(eps[0]["lines"][0]["say"].startswith("SBI"))
         self.assertTrue(any(l.get("tag_text") for l in eps[0]["lines"]))
 
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class Fragments(unittest.TestCase):
+    def test_fragment_fails_ending(self):
+        import psych_writer as pw
+        c = {"ep": {"lines": [{"say": "बॉलर डरा नहीं पाए."}, {"say": "जितना बलिया की चाची ने डरा दिया."}]},
+             "vote": {"jaanch": {"ant": {"ok": True}}}}
+        pw._code_check(c)
+        self.assertIn("ant", pw._fails(c["vote"]))
+        self.assertIn(1, c["vote"]["kamzor"])

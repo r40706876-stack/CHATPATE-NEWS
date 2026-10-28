@@ -8,6 +8,7 @@
   4. punch-up: जीती script की सिर्फ़ कमज़ोर lines दोबारा
 """
 import json
+import re
 
 import gemini
 
@@ -35,8 +36,9 @@ QUESTIONS = [
     ("follow", "follow क्यों करे? (इस page से आगे क्या मिलेगा जो कहीं और नहीं — किरदार, अंदाज़)"),
     ("like", "like क्यों करे? (किस बात पर दिल कहे 'बिल्कुल सही बोला')"),
     ("save", "save क्यों करे? (कोई काम की बात/बचाव का तरीका/बाद में दिखाने लायक line)"),
+    ("ant", "आख़िरी 2 lines पहली बार सुनकर समझ आईं? असर छोड़ा? hook का सवाल बंद हुआ? (सबसे बड़ा वार आख़िर में)"),
 ]
-CORE = ("pura", "hasi", "share", "daily")               # इनमें से एक भी फ़ेल = script दोबारा
+CORE = ("pura", "hasi", "share", "daily", "ant")               # इनमें से एक भी फ़ेल = script दोबारा
 QTEXT = "\n".join(f"{i}. {k}: {q}" for i, (k, q) in enumerate(QUESTIONS))
 
 EXAMPLES = """तरीका दिखाने वाले नमूने (शब्द/पंच कॉपी नहीं — हर खबर के अपने):
@@ -91,6 +93,17 @@ def prompt_scripts(chosen, fields, casting):
   ✗ "सत्ताईस अक्टूबर से रेलवे काउंटर टिकट पर दस लाख का बीमा मिलेगा." (headline पढ़ी, अँगूठा चलता रहा)
   ✓ "रेलवे दस लाख का बीमा दे रहा है… पैंतालीस पैसे में. खुल्ले हैं?" (विरोधाभास + सवाल, जवाब आख़िर में)
   ✗ "सोशल मीडिया पर डिलीवरी बॉय का नोट वायरल हुआ."   ✓ "डिलीवरी बॉय ने ग्राहक से भीख नहीं माँगी… अर्ज़ी लिखी."
+अंत (मालिक, 28 Oct: "शुरुआत अच्छी थी पर आख़िरी 2 lines समझ नहीं आईं, फ़र्क नहीं छोड़ा"):
+  • हर line अपने आप में पूरा वाक्य. कोई किरदार दूसरे का वाक्य पूरा नहीं करता — "जब…", "जितना…", "क्योंकि…" से
+    शुरू होने वाली अधूरी line नहीं (reel में आवाज़ और cut बदलते हैं, टूटा वाक्य दो अधूरी बातें लगता है).
+  • पंच के बीच कोई छुपा कदम नहीं: "टॉफी आधी काटकर बीमा" तभी चलेगा जब पहले साफ़ बोला गया हो कि बाबू खुल्ले की
+    जगह टॉफी देता है. दर्शक को ख़ुद जोड़ना पड़े = हँसी नहीं, उलझन.
+  • आख़िरी line = सबसे बड़ा वार + hook का सवाल बंद + hook का कोई शब्द. उससे पहले वाली line उसे सेट करे. आख़िरी line
+    आम सलाह ("मम्मी डाँटेगी", "ये हैक सेव करो") नहीं — सिस्टम पर सबसे तीखी, सबसे ठोस बात.
+  ✗ रमेश: "अगली बार टॉफी आधी काटकर पैंतालीस पैसे का बीमा कराऊँगा."
+  ✓ बबलू: "दस लाख का बीमा मिल जाएगा. बस पैंतालीस पैसे का खुल्ला… किसी के पास नहीं होगा."
+  ✗ चाचा: "जितना बलिया की चाची ने गर्म पानी बोलकर डरा दिया बेटा."
+  ✓ चाचा: "न्यूज़ीलैंड के बॉलर जो नहीं कर पाए… बलिया की दीदी ने एक line में कर दिया. ठंडा पानी बंद."
 हर line में कुछ हो — सिर्फ़ जानकारी वाली line (बिना मोड़ के) दर्शक को भगाती है; तथ्य को भी मोड़ के साथ बोलो.
 
 लिखने से पहले हर script के लिए ये 7 सवाल ख़ुद से पूछो — script में हर एक की वजह मौजूद हो (वरना वो script मत लिखो):
@@ -124,6 +137,8 @@ def prompt_audience(cands):
 ज़्यादा share = score 8. तुम्हारा औसत 5 के आसपास होना चाहिए; 8+ बहुत कम scripts को.
 पक्के नियम: पहली line सिर्फ़ खबर बताती है (कौन/क्या/कहाँ) और उसमें कोई विरोधाभास, सवाल या मज़ाक नहीं → "pura" और "hasi"
 दोनों false, score ≤ 4. कोई line जिसमें न नई बात न हँसी → उसे "kamzor" में डालो. पंच का तर्क समझ न आए → hasa 0.
+आख़िरी 2 lines अलग से कड़ाई से जाँचो ("ant"): अधूरा वाक्य ("जब…/जितना…" से शुरू), बिना बताए कदम वाला पंच, या आख़िरी line
+पिछली से कमज़ोर/आम सलाह → "ant" false, वो lines "kamzor" में, score ≤ 5.
 
 हर line पर: "ruka" (रुके रहे?), "hasa" (0 / 1 मुस्कान / 2 ज़ोर से), "kyon" (5-8 शब्द).
 फिर ये 7 सवाल — दर्शक बनकर, script के शब्दों से जवाब दो. जवाब script में नहीं मिलता तो "ok": false (अंदाज़े से पास मत करो):
@@ -132,8 +147,23 @@ def prompt_audience(cands):
 "kamzor" = सबसे कमज़ोर lines के index (0 से).
 सिर्फ़ JSON: [{{"id": 0, "lines": [{{"ruka": true, "hasa": 1, "kyon": "..."}}],
 "jaanch": {{"pura": {{"ok": true, "kyon": "..."}}, "hasi": {{"ok": true, "kyon": "line 1, ~2 सेकंड"}}, "share": {{"ok": true, "kyon": "पापा को, पासबुक वाली line"}},
-"daily": {{"ok": true, "kyon": "..."}}, "follow": {{"ok": false, "kyon": "..."}}, "like": {{"ok": true, "kyon": "..."}}, "save": {{"ok": false, "kyon": "..."}}}},
+"daily": {{"ok": true, "kyon": "..."}}, "follow": {{"ok": false, "kyon": "..."}}, "like": {{"ok": true, "kyon": "..."}}, "save": {{"ok": false, "kyon": "..."}},
+"ant": {{"ok": true, "kyon": "..."}}}},
 "score": 0, "kamzor": [2, 4]}}]"""
+
+
+FRAG = re.compile(r"^\s*(जब|जितना|जितनी|क्योंकि|जिससे|जिसकी|जिसका|कि|और तभी|वरना)(?=[\s,…।]|$)")
+
+
+def _code_check(c):
+    """Gemini-जज के ऊपर पक्की जाँच: दूसरे का वाक्य पूरा करती अधूरी line = अंत फ़ेल (मालिक की 28 Oct शिकायत)."""
+    lines = c["ep"].get("lines") or []
+    bad = [i for i, l in enumerate(lines) if FRAG.search(str(l.get("say", "")))]
+    if bad:
+        v = c.setdefault("vote", {})
+        j = v.setdefault("jaanch", {})
+        j["ant"] = {"ok": False, "kyon": f"line {bad[0] + 1} अधूरा वाक्य (दूसरे की बात पूरी कर रही)"}
+        v["kamzor"] = sorted(set((v.get("kamzor") or []) + bad))
 
 
 def _fails(vote):
@@ -144,13 +174,14 @@ def _fails(vote):
 def _rank(vote):
     """पहले core सवाल पास, फिर कुल पास, फिर score."""
     f = _fails(vote)
-    return (sum(k in CORE for k in f) == 0, 7 - len(f), float((vote or {}).get("score", 0) or 0))
+    return (sum(k in CORE for k in f) == 0, len(QUESTIONS) - len(f), float((vote or {}).get("score", 0) or 0))
 
 
 def prompt_punchup(items):
     return f"""तुम "बकरा न्यूज़" के punch-up writer हो. नीचे की scripts में दर्शक ने कुछ lines कमज़ोर बताईं (वजह साथ है)
 और "fail" में वो सवाल हैं जिनका जवाब script नहीं देती:
 {QTEXT}
+अगर "ant" fail है: पहले आख़िरी 2 lines के 3 अलग अंत मन में लिखो, फिर सबसे तीखा-साफ़ चुनो.
 कमज़ोर lines दोबारा लिखो और fail सवालों का जवाब script में डालो (ज़रूरत हो तो 1 line जोड़ सकते हो, कुल 8 तक) —
 तथ्य, किरदार वही; बाकी अच्छी lines जस की तस. हर नई line पिछली से ज़्यादा
 ठोस, ज़्यादा अनपेक्षित, और सीढ़ी में सही जगह. loop और आख़िरी वार न टूटे.
@@ -197,6 +228,9 @@ def write(packs, n, fields, casting):
         raise
     except Exception as e:                                  # noqa: BLE001
         print("  दर्शक-जज नहीं चला:", repr(e)[:100])
+    for c in cands:
+        _code_check(c)
+
     def pick_best():
         best = {}
         for c in cands:                                     # हर खबर का A या B — 7 सवालों में जो ज़्यादा पास
@@ -227,6 +261,8 @@ def write(packs, n, fields, casting):
                 votes = _ask(prompt_audience([c for _, c in redo]), 0.2)
                 for (k, c), vt in zip(redo, votes if isinstance(votes, list) else []):
                     c["vote"] = vt
+                    _code_check(c)
+                    vt = c["vote"]
                     if _rank(vt) > _rank(winners[k].get("vote")):
                         winners[k] = c
                         print(f"  🥊 punch-up जीता: {c['topic']} (फ़ेल अब: {_fails(vt) or 'कोई नहीं'})")
@@ -239,7 +275,7 @@ def write(packs, n, fields, casting):
         ep, v = c["ep"], c.get("vote") or {}
         fails = _fails(v)
         ep["jaanch"] = {k: (v.get("jaanch") or {}).get(k) or {"ok": False, "kyon": "जज ने नहीं बताया"} for k, _ in QUESTIONS}
-        ep["connect"] = {"score": v.get("score", "?"), "why": f"7 में से {7 - len(fails)} सवाल पास", "weak": "", "fix": ""}
+        ep["connect"] = {"score": v.get("score", "?"), "why": f"{len(QUESTIONS)} में से {len(QUESTIONS) - len(fails)} सवाल पास", "weak": "", "fix": ""}
         if any(k in CORE for k in fails):
             ep["_loose"] = True                             # Telegram पर ⚠️ और सबसे नीचे
         ep["writer"] = "psych" + ("+punchup" if c.get("punched") else "")
