@@ -1,0 +1,131 @@
+{
+ "topic": "AI फीचर्स के नाम पर 15 नवंबर से महंगे होंगे स्मार्टफोन",
+ "breaking": "15 नवंबर से स्मार्टफोन महंगे, वजह AI फीचर्स",
+ "source": "Hindustan, Gadgets 360 Hindi, Dainik Bhaskar",
+ "format": "explain",
+ "writer": "psych",
+ "no_memes": true,
+ "production": true,
+ "title": "AI वाला फ़ोन — 15 नवंबर",
+ "lines": [
+  {
+   "who": "bablu",
+   "say": "पंद्रह नवंबर से स्मार्टफोन महंगे होंगे. वजह बताई गई है — फ़ोन अब पहले से ज़्यादा समझदार है.",
+   "caption": "15 नवंबर से स्मार्टफोन महंगे… क्योंकि फ़ोन अब ज़्यादा समझदार है",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "smartphone store india display",
+    "new smartphones price tag india"
+   ],
+   "photo_hi": [
+    "स्मार्टफोन महंगे 15 नवंबर",
+    "AI फीचर्स स्मार्टफोन दाम"
+   ]
+  },
+  {
+   "who": "ramesh",
+   "say": "फ़ोन समझदार हो गया. मैं EMI भरते-भरते समझदार हो गया.",
+   "caption": "फ़ोन समझदार हो गया… मैं EMI भरते-भरते",
+   "expr": "gussa",
+   "set": "room",
+   "visuals": [
+    "young man paying phone emi"
+   ],
+   "photo_hi": [
+    "मोबाइल EMI"
+   ],
+   "tag": true,
+   "tag_screen": "वो दोस्त जिसकी EMI फ़ोन से लंबी है"
+  },
+  {
+   "who": "dadi",
+   "say": "मेरे फ़ोन में भी AI आया है. अब वो बताता है कि बैटरी कम है. पहले भी बताता था.",
+   "caption": "मेरे फ़ोन में भी AI… अब बताता है बैटरी कम है. पहले भी बताता था",
+   "expr": "tanz",
+   "set": "aangan",
+   "visuals": [
+    "old indian woman looking at phone low battery"
+   ],
+   "photo_hi": [
+    "बुज़ुर्ग स्मार्टफोन"
+   ],
+   "punch": true,
+   "stamp": "पहले भी बताता था"
+  },
+  {
+   "who": "bablu",
+   "say": "आपने AI वाला फ़ोन लिया?",
+   "caption": "आपने AI वाला फ़ोन लिया?",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "smartphone ai feature screen"
+   ],
+   "photo_hi": [
+    "AI स्मार्टफोन"
+   ]
+  },
+  {
+   "who": "chacha",
+   "say": "लिया. पहला सवाल पूछा — EMI कब ख़त्म होगी. बोला — गणना जारी है.",
+   "caption": "पहला सवाल: EMI कब ख़त्म होगी? जवाब: गणना जारी है",
+   "expr": "tanz",
+   "set": "village",
+   "visuals": [
+    "old man holding smartphone confused"
+   ],
+   "photo_hi": [
+    "मोबाइल EMI किस्त"
+   ],
+   "punch": true,
+   "stamp": "गणना जारी है"
+  },
+  {
+   "who": "bablu",
+   "say": "यानी AI चलाना ज़रूरी नहीं है. उसके पैसे देना ज़रूरी है.",
+   "caption": "AI चलाना ज़रूरी नहीं… उसके पैसे देना ज़रूरी है",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "rupee notes smartphone"
+   ],
+   "photo_hi": [
+    "स्मार्टफोन कीमत बढ़ी"
+   ],
+   "card": {
+    "tag": "15 नवंबर से",
+    "big": "AI: ज़रूरी नहीं",
+    "sub": "दाम: ज़रूरी",
+    "icon": "phone"
+   },
+   "prop": "notes"
+  },
+  {
+   "who": "bablu",
+   "say": "फ़िलहाल पुराना फ़ोन संभालकर रखें. उसकी समझदारी… पंद्रह नवंबर तक मुफ़्त है.",
+   "caption": "पुराना फ़ोन संभालकर रखें… उसकी समझदारी 15 नवंबर तक मुफ़्त है",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "old smartphone cracked screen in hand"
+   ],
+   "photo_hi": [
+    "पुराना स्मार्टफोन"
+   ],
+   "punch": true,
+   "stamp": "15 नवंबर तक मुफ़्त"
+  }
+ ],
+ "tag_who": "वो दोस्त जिसकी फ़ोन की EMI फ़ोन से ज़्यादा चलती है",
+ "ask": "आपका फ़ोन कितना समझदार है?",
+ "caption_post": "15 नवंबर से स्मार्टफोन महंगे, वजह AI 📱 Tag करो उस दोस्त को जिसकी फ़ोन की EMI फ़ोन से ज़्यादा चलती है! आपके फ़ोन का AI अब तक क्या काम आया? स्रोत: Hindustan, Gadgets 360 Hindi #Smartphone #AI #BakraNews #DesiComedy #EMI (AI से बने किरदार)",
+ "sprite": {
+  "dadi": "assets/toon/dadi",
+  "ramesh": "assets/toon/ramesh",
+  "chacha": "assets/toon/chacha",
+  "bablu": "assets/toon/bablu"
+ },
+ "hook": "",
+ "hook_short": "15 नवंबर से फ़ोन महंगे"
+}
