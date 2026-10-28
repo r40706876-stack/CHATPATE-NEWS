@@ -12,7 +12,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).parent
 FILE, LAST = ROOT / "reel_results.json", ROOT / "last_delivered.json"
-DATA_MSG = re.compile(r"^\s*(डेटा|data|डाटा)\b", re.I)
+DATA_MSG = re.compile(r"^\s*(डेटा|data|डाटा)(?=[\s:,-]|$)", re.I)
 
 
 def _load():
