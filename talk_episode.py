@@ -119,6 +119,7 @@ def prep(script_path):
             shutil.copy(path, IN / f"broll/{i}_{j}{Path(path).suffix}")
             if Path(path).with_suffix(".txt").exists():          # photo वाले का नाम (CC license)
                 shutil.copy(Path(path).with_suffix(".txt"), IN / f"broll/{i}_{j}.txt")
+    add_props(ep)                                              # Blender के अपने 3D clips (सिक्के/टॉफी/नोट) — बात से सीधे जुड़े
     if not ep.get("no_clips"):                                 # असली खबर के छोटे video clips (पहले सेकंड में हरकत)
         try:
             import clips
@@ -152,6 +153,28 @@ def prep(script_path):
     json.dump(ep, open(IN / "episode.json", "w", encoding="utf-8"), ensure_ascii=False)
     sprite_lips = ep.get("sprite") and ep.get("lips", "sadtalker") == "sprite"
     print(json.dumps([] if sprite_lips else list(range(len(ep["lines"])))))   # sprite वाले होंठ = SadTalker की ज़रूरत नहीं
+
+
+PROP_WORDS = {"coins": r"छुट्टा|छुट्टे|खुल्ल|सिक्क|चिल्लर|पैसे का", "toffee": r"टॉफी|टाफी", "notes": r"लाख|करोड़"}
+
+
+def add_props(ep):
+    """line में पैसे/छुट्टा/टॉफी/लाख की बात हो (या script ने "prop" बताया) तो assets/fx/props/<prop>.mp4 उसी line पर सबसे पहले.
+    हर prop एक episode में एक ही बार (वरना फिर "same same")."""
+    import shutil
+    used = set()
+    for i, ln in enumerate(ep["lines"]):
+        if ln.get("shot") == "close":
+            continue
+        prop = ln.get("prop")
+        if not prop:
+            prop = next((k for k, pat in PROP_WORDS.items() if re.search(pat, ln.get("say", ""))), None)
+        src = ROOT / f"assets/fx/props/{prop}.mp4" if prop else None
+        if not src or prop in used or not src.exists():
+            continue
+        used.add(prop)
+        shutil.copy(src, IN / f"broll/{i}_clip_prop_{prop}.mp4")
+        print(f"  🧊 3D prop → line {i + 1}: {prop}")
 
 
 def pick_shot(ep, i, ln):

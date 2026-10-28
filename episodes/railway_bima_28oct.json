@@ -1,0 +1,193 @@
+{
+ "premise": "45 पैसे का बीमा लेने के लिए फूफाजी ने काउंटर वाले से 50 पैसे के छुट्टे माँगकर 20 मिनट बहस की।",
+ "category": "[नियम/नौकरी]",
+ "category_type": "travel",
+ "breaking": "45 पैसे का बीमा लेने में स्टेशन पर हुआ बखेड़ा",
+ "hook_screen": "5 पैसे का छुट्टा!",
+ "source": "News18 Hindi, ETV Bharat",
+ "tag_who": "अपने उस कंजूस फूफाजी या अंकल को जो हर छोटी बात पर हिसाब मांगते हैं",
+ "ask": "क्या आपके परिवार में भी कोई 5 पैसे का हिसाब मांगता है?",
+ "loop_word": "छुट्टा",
+ "jawab": {
+  "pura": "5 पैसे के छुट्टे के चक्कर में क्या हुआ यह जानने के लिए अंत तक रुकेंगे।",
+  "hasi": "फूफाजी की बहस सुनते ही 2 सेकंड में हँसी छूटेगी।",
+  "share": "लोग अपने कंजूस रिश्तेदारों को चिढ़ाने के लिए तुरंत शेयर करेंगे।",
+  "daily": "काउंटर पर छुट्टे पैसे न होने की रोज़ की चिकचिक से जुड़ा है।",
+  "follow": "रिश्तेदारों के अजीब स्वभाव पर सटीक व्यंग्य देखने के लिए फॉलो करेंगे।",
+  "like": "पाँच पैसे के छुट्टे वाली ज़िद्द पर लोग सहमति से लाइक करेंगे।",
+  "save": "काउंटर टिकट खरीदते समय छुट्टे रखने की चेतावनी याद रखने के लिए सेव करेंगे।"
+ },
+ "lines": [
+  {
+   "who": "ramesh",
+   "say": "पैंतालीस पैसे के बीमा के चक्कर में… अब स्टेशन पर पुलिस बुलानी पड़ेगी.",
+   "caption": "45 पैसे के बीमा के चक्कर में… अब स्टेशन पर पुलिस बुलानी पड़ेगी",
+   "expr": "gussa",
+   "set": "station",
+   "visuals": [
+    "railway ticket line dispute",
+    "indian railway booking counter",
+    "passengers arguing in queue"
+   ],
+   "photo_hi": [
+    "रेलवे स्टेशन विवाद",
+    "टिकट काउंटर भीड़"
+   ],
+   "visual": "railway ticket line dispute",
+   "scene": "studio",
+   "punch": false,
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "say": "रेलवे काउंटर पर पैंतालीस पैसे में दस लाख का यात्रा बीमा शुरू हुआ है.",
+   "caption": "रेलवे काउंटर पर 45 पैसे में 10 लाख का यात्रा बीमा शुरू हुआ है.",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "railway clerk behind glass window",
+    "passenger taking paper ticket",
+    "indian railway counter board"
+   ],
+   "photo_hi": [
+    "काउंटर टिकट बीमा",
+    "रेलवे टिकट नियम"
+   ],
+   "visual": "railway clerk behind glass window",
+   "scene": "chacha",
+   "punch": false,
+   "insta": "",
+   "prop": "notes"
+  },
+  {
+   "who": "ramesh",
+   "say": "फूफाजी पचास पैसे देकर बाबू से पाँच पैसे का छुट्टा माँगने लगे.",
+   "caption": "फूफाजी 50 पैसे देकर बाबू से 5 पैसे का छुट्टा माँगने लगे.",
+   "expr": "hairan",
+   "set": "station",
+   "visuals": [
+    "indian uncle arguing ticket counter",
+    "holding 50 paise coin hand",
+    "angry clerk inside booking window"
+   ],
+   "photo_hi": [
+    "फूफाजी स्टेशन विवाद",
+    "टिकट बाबू बहस"
+   ],
+   "visual": "indian uncle arguing ticket counter",
+   "scene": "chacha",
+   "punch": false,
+   "insta": "",
+   "prop": "coins"
+  },
+  {
+   "who": "chacha",
+   "say": "बाबू ने टॉफी देनी चाही… तो फूफाजी बोले टॉफी से बीमा नहीं होता.",
+   "caption": "बाबू ने टॉफी देनी चाही… तो फूफाजी बोले टॉफी से बीमा नहीं होता.",
+   "expr": "tanz",
+   "set": "station",
+   "punch": true,
+   "stamp": "पाँच पैसे का छुट्टा",
+   "visuals": [
+    "candy on cash counter table",
+    "old man refusing to accept candy",
+    "railway queue passengers frustrated"
+   ],
+   "photo_hi": [
+    "छुट्टे में टॉफी बहस",
+    "रेलवे काउंटर लाईन"
+   ],
+   "visual": "candy on cash counter table",
+   "scene": "chacha",
+   "insta": "",
+   "prop": "toffee"
+  },
+  {
+   "who": "ramesh",
+   "say": "पाँच पैसे का छुट्टा लिए बिना फूफाजी डिब्बे में चढ़ने को तैयार नहीं थे.",
+   "caption": "5 पैसे का छुट्टा लिए बिना फूफाजी डिब्बे में चढ़ने को तैयार नहीं थे.",
+   "expr": "udaas",
+   "set": "station",
+   "punch": true,
+   "stamp": "फूफा जी की जिद",
+   "visuals": [
+    "train standing on platform ready to move",
+    "man arguing near train door",
+    "railway police officer walking"
+   ],
+   "photo_hi": [
+    "रेलवे पुलिस पैसेंजर",
+    "ट्रेन प्लेटफॉर्म बोगी"
+   ],
+   "visual": "train standing on platform ready to move",
+   "scene": "studio_end",
+   "insta": ""
+  }
+ ],
+ "caption_post": "45 पैसे के बीमा के चक्कर में अब स्टेशन पर पुलिस बुलानी पड़ेगी. Tag करो उस कंजूस दोस्त या रिश्तेदार को जो 5 पैसे का छुट्टा कभी नहीं छोड़ता! (स्रोत: News18 Hindi, ETV Bharat) #RailwayRules #FufaJi #TicketCounter #BakraNews #IndianRailways (AI से बने किरदार)",
+ "topic": "रेलवे काउंटर टिकट पर नया नियम और बीमा सुविधा",
+ "jaanch": {
+  "pura": {
+   "ok": true,
+   "kyon": "पुलिस क्यों बुलाई, जानने की उत्सुकता"
+  },
+  "hasi": {
+   "ok": true,
+   "kyon": "line 0, ~2 सेकंड"
+  },
+  "share": {
+   "ok": true,
+   "kyon": "कज़न को, फूफाजी की आदत की वजह से"
+  },
+  "daily": {
+   "ok": true,
+   "kyon": "खुल्ले पैसों पर स्टेशन पर चिकचिक"
+  },
+  "follow": {
+   "ok": true,
+   "kyon": "फूफाजी के किरदार का देसी मज़ाक"
+  },
+  "like": {
+   "ok": true,
+   "kyon": "टॉफी थमाने वाली सरकारी आदत सच"
+  },
+  "save": {
+   "ok": false,
+   "kyon": "दोबारा देखने लायक काम की बात नहीं"
+  },
+  "ant": {
+   "ok": true,
+   "kyon": "फूफाजी की ज़िद से पंच पूरा हुआ"
+  }
+ },
+ "connect": {
+  "score": 7,
+  "why": "8 में से 7 सवाल पास",
+  "weak": "",
+  "fix": ""
+ },
+ "writer": "psych",
+ "format": "explain",
+ "label": "काम की खबर",
+ "key_word": "",
+ "icons": [
+  "₹",
+  "NEWS",
+  "%"
+ ],
+ "ticker": [],
+ "hook": "पैंतालीस पैसे के बीमा के चक्कर में… अब स्टेशन पर पुलिस बुलानी पड़ेगी.",
+ "hook_text": "पैंतालीस पैसे के बीमा के चक्कर में… अब स्टेशन पर पुलिस बुलानी पड़ेगी.",
+ "hook_short": "5 पैसे का छुट्टा!",
+ "trend": {
+  "score": 6,
+  "why": "10 अख़बार/चैनल 2 दिन में, 15 खबरें 7 दिन में"
+ },
+ "review_status": "audience_sim",
+ "sprite": {
+  "ramesh": "assets/toon/ramesh",
+  "bablu": "assets/toon/bablu",
+  "chacha": "assets/toon/chacha"
+ },
+ "production": true
+}
