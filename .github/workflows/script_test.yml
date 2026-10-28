@@ -4,7 +4,7 @@ on:
   workflow_dispatch: {}
   push:
     branches: [claude/visual-upgrade]
-    paths: [script_test.py, psych_writer.py, .github/workflows/script_test.yml]
+    paths: [script_test.py]
 permissions: {contents: write}
 env:
   GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
