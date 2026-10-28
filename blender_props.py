@@ -91,7 +91,8 @@ light((-4, -4, 6), 1500, 5)
 light((5, -2, 4), 600, 3, (1, 0.8, 0.6))
 world = bpy.data.worlds.new("w")
 world.use_nodes = True
-world.node_tree.nodes["Background"].inputs[1].default_value = 0.2
+world.node_tree.nodes["Background"].inputs[0].default_value = (1.0, 0.86, 0.68, 1)   # गर्म रोशनी — धातु काली नहीं दिखे
+world.node_tree.nodes["Background"].inputs[1].default_value = 1.1
 sc.world = world
 
 
@@ -107,15 +108,15 @@ def drop(obj, x, y, z0, f0, rot, bounce=0.25):
 
 
 if WHICH == "coins":
-    gold = mat("coin", (0.85, 0.72, 0.42, 1), metal=1.0, rough=0.22)
-    silver = mat("coin2", (0.8, 0.8, 0.82, 1), metal=1.0, rough=0.25)
+    gold = mat("coin", (0.95, 0.76, 0.38, 1), metal=0.85, rough=0.32)
+    silver = mat("coin2", (0.86, 0.86, 0.88, 1), metal=0.85, rough=0.35)
     for k in range(9):
         bpy.ops.mesh.primitive_cylinder_add(radius=0.42, depth=0.07, vertices=64)
         c = bpy.context.active_object
         bev = c.modifiers.new("b", "BEVEL")
         bev.width, bev.segments = 0.02, 3
         c.data.materials.append(gold if k % 3 else silver)
-        drop(c, random.uniform(-1.6, 1.6), random.uniform(-0.8, 0.9), 5.5, 1 + k * 6, random.uniform(2, 5), 0.18)
+        drop(c, random.uniform(-1.6, 1.6), random.uniform(-0.8, 0.9), 3.2, -4 + k * 5, random.uniform(2, 5), 0.18)
 elif WHICH == "toffee":
     wrap = mat("wrap", image="assets/fx/toffee_tex.png", rough=0.15)
     wrap.node_tree.nodes["Principled BSDF"].inputs["Coat Weight"].default_value = 1.0
@@ -132,7 +133,7 @@ elif WHICH == "toffee":
             t.data.materials.append(wrap)
             t.parent = body
             t.location = (side * 0.95, 0, 0)
-        drop(body, x, y, 5, 1 + k * 18, random.uniform(3, 6), 0.3)
+        drop(body, x, y, 3.4, -4 + k * 14, random.uniform(3, 6), 0.3)
         body.keyframe_insert("rotation_euler", frame=1 + k * 18 + 30)
 else:                                                     # notes: गड्डी ऊपर तक चढ़े
     note = mat("note", image="assets/fx/note_tex.png", rough=0.55)
@@ -140,11 +141,11 @@ else:                                                     # notes: गड्ड�
     for k in range(14):
         bpy.ops.mesh.primitive_cube_add(size=1)
         n = bpy.context.active_object
-        n.scale = (1.6, 0.75, 0.06)
+        n.scale = (2.4, 1.12, 0.07)
         n.data.materials.append(note)
-        z = 0.06 + k * 0.125
-        f0 = 1 + k * 5
-        for f, zz, rz in ((f0, 6, random.uniform(-1, 1)), (f0 + 9, z, random.uniform(-0.08, 0.08))):
+        z = 0.07 + k * 0.14
+        f0 = -3 + k * 5
+        for f, zz, rz in ((f0, 4, random.uniform(-1, 1)), (f0 + 9, z, random.uniform(-0.08, 0.08))):
             n.location = (random.uniform(-0.05, 0.05), 0, zz)
             n.rotation_euler = (0, 0, rz)
             n.keyframe_insert("location", frame=f)
@@ -155,7 +156,10 @@ else:                                                     # notes: गड्ड�
             b.scale = (0.25, 0.78, 0.065)
             b.data.materials.append(band)
             b.parent = n
-    target.location = (0, 0, 1.0)
+    target.location = (0, 0, 0.9)
+    for f, loc in ((1, (0, -6.0, 2.8)), (FPS * SECS, (1.0, -4.8, 2.4))):    # गड्डी के पास कैमरा
+        cam.location = loc
+        cam.keyframe_insert("location", frame=f)
 
 out_dir = os.path.join(ROOT, "assets", "fx", "props", WHICH + "_frames")
 os.makedirs(out_dir, exist_ok=True)
