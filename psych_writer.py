@@ -128,8 +128,18 @@ premise = खबर में छिपी वो बेतुकी सच्�
 "payoff": "आख़िरी वार", "pehchaan": "किस जाने-पहचाने इंसान/आदत पर", "hasi": 0, "pehchaan_score": 0, "hook_score": 0}}]}}]"""
 
 
+def _lessons():
+    try:
+        import results
+        return results.lessons()
+    except Exception:                                      # noqa: BLE001
+        return ""
+
+
 def prompt_scripts(chosen, fields, casting):
-    return f"""तुम "बकरा न्यूज़" के head writer हो. हर खबर के लिए चुने 2 premise पर 2 अलग scripts लिखो (A और B).
+    return f"""{_lessons()}
+
+तुम "बकरा न्यूज़" के head writer हो. हर खबर के लिए चुने 2 premise पर 2 अलग scripts लिखो (A और B).
 {json.dumps(chosen, ensure_ascii=False, indent=1)}
 
 {PSYCH}

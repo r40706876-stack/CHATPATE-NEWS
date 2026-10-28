@@ -222,14 +222,22 @@ def pick(text, n):
 
 
 def do_check():
+    import results
     import telegram
+    msgs = []
+    for when, text in replies():                      # "डेटा skip 57 watch 6.2" = post हुई reel का असली data (हमेशा पढ़ो)
+        ans = results.record(text)
+        if ans:
+            telegram.send_text(ans)
+        else:
+            msgs.append((when, text))
     if not PENDING.exists():
         print("  कोई script इंतज़ार में नहीं")
         return
     p = json.load(open(PENDING, encoding="utf-8"))
     n = len(p["eps"])
     k = None
-    for when, text in replies():
+    for when, text in msgs:
         if when + 60 < p["sent_at"]:                  # scripts भेजने से पहले के पुराने messages नहीं
             continue
         got = pick(text, n)

@@ -441,10 +441,16 @@ def post_studio(ep):
         print("  (no_send) Telegram पर नहीं भेजा")
         return
     telegram.send_video(out, cap or ep.get("breaking", ""))
+    try:                                                  # data बाद में इसी से जुड़ेगा ("डेटा skip 57 watch 6.2")
+        import results
+        results.delivered(ep, secs)
+    except Exception as e:                                # noqa: BLE001
+        print("  delivered याद नहीं रखा:", repr(e)[:100])
     if issues:
         report += "\n❌ 2 बार ठीक करने के बाद भी कमी बची — इसे post मत करना:\n• " + "\n• ".join(issues)
     else:
         report += "\n✅ अपने-आप जाँच पास" + (f" ({tries} बार ख़ुद ठीक किया)" if tries else "") + " — post कर सकते हो"
+    report += "\n\n📊 Post करने के 1 दिन बाद Instagram insights देखकर यहाँ भेजो: डेटा skip 57 watch 6.2 share 0"
     telegram.send_text(report)
 
 
