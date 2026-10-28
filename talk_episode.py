@@ -149,6 +149,11 @@ def prep(script_path):
                 print(f"  🎬 clip → line {li + 1}: {title[:50]}")
         except Exception as e:                                 # noqa: BLE001
             print("  clips वाला हिस्सा छोड़ा:", repr(e)[:150])
+    try:                                                       # कल्पना/पंच वाली lines पर अपना AI दृश्य ("same same" नहीं)
+        import scene_images
+        scene_images.for_episode(ep, IN / "broll")
+    except Exception as e:                                     # noqa: BLE001
+        print("  AI दृश्य वाला हिस्सा छोड़ा:", repr(e)[:150])
     fill_sets(ep)
     json.dump(ep, open(IN / "episode.json", "w", encoding="utf-8"), ensure_ascii=False)
     sprite_lips = ep.get("sprite") and ep.get("lips", "sadtalker") == "sprite"

@@ -122,7 +122,8 @@ follow के लिए: हमारे किरदारों का अप�
   "ask": "≤ 9 शब्द comment सवाल", "loop_word": "पहली और आख़िरी line का साझा शब्द",
   "jawab": {{"pura": "...", "hasi": "...", "share": "...", "daily": "...", "follow": "...", "like": "...", "save": "..."}},
   "lines": [{{"who": "bablu", "say": "...", "caption": "...", "expr": "gambhir", "set": "studio",
-             "visuals": ["...", "...", "..."], "photo_hi": ["...", "..."]}}],
+             "visuals": ["...", "...", "..."], "photo_hi": ["...", "..."],
+             "scene_en": "English में इस line का एक ठोस दृश्य (कौन, कहाँ, क्या कर रहा) — AI तस्वीर इसी से बनेगी; हर line का अलग"}}],
   "caption_post": "पहली line + 'Tag करो उसको जो…' + सवाल + स्रोत + 4-5 hashtags + (AI से बने किरदार)"}}]}}]"""
 
 

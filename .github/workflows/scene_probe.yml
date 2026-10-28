@@ -1,0 +1,26 @@
+# हर line की AI तस्वीर: Gemini image / Pollinations चलते हैं या नहीं — दो नमूने बनाकर repo में (probe_scene_*.png)
+name: scene-probe
+on:
+  workflow_dispatch:
+  push:
+    branches: [claude/visual-upgrade]
+    paths: [scene_images.py, .github/workflows/scene_probe.yml]
+permissions: {contents: write}
+env:
+  GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+  GEMINI_API_KEY2: ${{ secrets.GEMINI_API_KEY2 }}
+  GEMINI_API_KEY3: ${{ secrets.GEMINI_API_KEY3 }}
+jobs:
+  probe:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 scene_images.py probe 2>&1 | tee scene_probe.log
+      - if: always()
+        run: |
+          git config user.name Claude && git config user.email noreply@anthropic.com
+          git add -f probe_scene_*.png scene_probe.log 2>/dev/null || true
+          git diff --cached --quiet && exit 0
+          git commit -m "scene probe"
+          for i in 1 2 3; do git pull --rebase -X theirs && git push && break; sleep 5; done
