@@ -119,9 +119,9 @@ def _scene_action(im, scene, t, n, line=None):
             # A speech bubble makes the threat legible even without narration.
             d.rounded_rectangle((500,490,840,570),18,fill=(255,247,215),outline=RED,width=8)
             d.text((670,530),"किश्त अभी दो!",font=tt.font(48),fill=RED,anchor="mm")
-        elif "पैसे" in str((line or {}).get("say", "")):
+        elif any(k in str((line or {}).get("say", "")) for k in ("पैसे", "अंगूठा")):
             d.rounded_rectangle((535,620,815,800),18,fill=(253,247,221),outline=RED,width=10)
-            d.text((675,665),"PAY NOW",font=tt.font(49),fill=RED,anchor="mm")
+            d.text((675,665),"अंगूठा?" if "अंगूठा" in str((line or {}).get("say", "")) else "PAY NOW",font=tt.font(49),fill=RED,anchor="mm")
             d.text((675,737),"₹1,69,000",font=tt.font(45),fill=INK,anchor="mm")
     elif scene=="freight":
         if "फ्रिज" in str((line or {}).get("say", "")):
@@ -345,8 +345,8 @@ def frames(line, episode, talk, n, cut, seed=0):
         manifest_path = Path("assets/licensed/manifest.json")
         if manifest_path.is_file():
             entries = json.loads(manifest_path.read_text(encoding="utf-8"))
-            # Lead with the verified parcel photograph during the first hook,
-            # rather than spending the highest-drop-off seconds on a generic TV icon.
+            # Use the verified parcel photo AFTER the opening animated TV/COD reveal.
+            # The first half-second must communicate motion, not a static photo.
             # This is illustrative Commons photography, NEVER the Madurai event.
             # Reuse the arrival asset so its creator/license attribution is preserved.
             entry = entries.get("arrival" if scene == "sweets" else scene, {})
@@ -395,8 +395,8 @@ def frames(line, episode, talk, n, cut, seed=0):
         # Show it briefly with readable attribution, then reveal the moving
         # actors and gag props for the majority of the spoken line.
         # On the COD 3D reveal, do not cover the opening full-screen Blender shot.
-        illustration_start = cod_reveal_frames if cod_insert else 0
-        illustration_end = min(n, illustration_start + 27)  # 1.08s at 25 fps: leave room for acting
+        illustration_start = cod_reveal_frames if cod_insert else (14 if scene == "sweets" else 0)
+        illustration_end = min(n, illustration_start + 25)  # ~1s, after the animated hook reveal
         if licensed_insert is not None and illustration_start <= t < illustration_end:
             pan = int(35 * math.sin(t / max(1, n - 1) * math.pi))
             # News photo enters and exits with the joke instead of sitting still
@@ -412,11 +412,11 @@ def frames(line, episode, talk, n, cut, seed=0):
             d.rounded_rectangle((x-8, credit_y-5, min(1060, x+licensed_insert.width+16), credit_y+115),
                                 8, fill=(255,250,233), outline=INK, width=3)
             d.text((x+5,credit_y+4), "चित्र: " + str(licensed_entry["author"])[:29],
-                   font=tt.font(31), fill=INK)
+                   font=tt.font(37), fill=INK)
             d.text((x+5,credit_y+42), "Wikimedia Commons | " + str(licensed_entry["license"])[:20],
-                   font=tt.font(29), fill=INK)
+                   font=tt.font(35), fill=INK)
             d.text((x+5,credit_y+80), "उदाहरण चित्र — असली घटना नहीं",
-                   font=tt.font(28), fill=RED)
+                   font=tt.font(34), fill=RED)
         if scene=="arrival" and any(k in str(line.get("say","")) for k in ("वसूली", "बैंक मैनेजर")):
             # Existing courier character literally emerges from the television.
             # Start small and move upward instead of showing another static icon.
