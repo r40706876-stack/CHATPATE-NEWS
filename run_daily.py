@@ -72,7 +72,7 @@ def preview(eps):
         if ep.get("jaanch"):                                   # मालिक की 7-सवाल जाँच (दर्शक बनकर Gemini ने जवाब दिए)
             NAMES = {"pura": "पूरा क्यों देखे", "hasi": "पहली हँसी", "share": "share क्यों", "daily": "रोज़ की ज़िंदगी",
                      "follow": "follow क्यों", "like": "like क्यों", "save": "save क्यों",
-                     "ant": "आख़िरी 2 lines"}
+                     "ant": "आख़िरी 2 lines", "khabar": "पूरी खबर", "dhaga": "lines जुड़ी हैं"}
             ok = sum(bool((ep["jaanch"].get(k) or {}).get("ok")) for k in NAMES)
             out.append(f"🧪 जाँच {ok}/{len(NAMES)}:")
             for k, name in NAMES.items():
