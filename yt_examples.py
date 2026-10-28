@@ -96,6 +96,18 @@ def from_channels(names):
     """चुने channels के ज़्यादा देखे गए videos की script → yt_examples_more.json"""
     got = []
     for name in names:
+        if name.startswith("search:"):                     # search:<खोज>|<channel में ज़रूरी शब्द> (handle पता न हो तब)
+            q, must = name[7:].split("|", 1)
+            ents = [e for e in search(q.replace("_", " "), 30)
+                    if must.lower() in str(e.get("channel") or e.get("uploader") or "").lower()]
+            ents = sorted(ents, key=lambda e: -(e.get("view_count") or 0))[:8]
+            for e in ents:
+                t = subs(f"https://www.youtube.com/watch?v={e['id']}", e["id"])
+                if len(t) >= 80:
+                    got.append({"channel": e.get("channel"), "id": e["id"], "title": e.get("title", ""),
+                                "views": e.get("view_count") or 0, "secs": e.get("duration") or 0, "text": t})
+                    print(f"  {e.get('channel')}: {(e.get('view_count') or 0):,} | {e.get('title', '')[:60]}")
+            continue
         url = name if name.startswith("http") else f"https://www.youtube.com/{name}"
         for tab in ("/shorts", "/videos"):
             cmd = clips._ytdlp() + ["-J", "--flat-playlist", "--playlist-end", "40", url + tab] + clips._cookies("YT_COOKIES")
@@ -112,6 +124,9 @@ def from_channels(names):
                     got.append({"channel": name, "id": vid, "title": e.get("title", ""), "views": e.get("view_count") or 0,
                                 "secs": e.get("duration") or 0, "text": t})
                     print(f"  {name}{tab}: {(e.get('view_count') or 0):,} | {e.get('title', '')[:60]}")
+    old = json.load(open(ROOT / "yt_examples_more.json", encoding="utf-8")) if (ROOT / "yt_examples_more.json").exists() else []
+    seen = {v["id"] for v in got}
+    got += [v for v in old if v["id"] not in seen]          # पहले वाले नमूने भी रहें (सबसे सीखना है, एक से नहीं)
     json.dump(got, open(ROOT / "yt_examples_more.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 
 
