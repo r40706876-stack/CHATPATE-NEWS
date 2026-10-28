@@ -17,6 +17,8 @@ import talk_test as tt
 
 ROOT = Path(__file__).parent
 W, H, FPS = 1080, 1920, 25
+# Last-stage limiter prevents decoded AAC inter-sample peaks from breaching QA.
+STUDIO_AUDIO_FILTER = "loudnorm=I=-16:TP=-3.0:LRA=11,alimiter=limit=0.65:level=0"
 SW, SH = 720, 1280                     # SadTalker के लिए source (9:16)
 # "tanz" पर भी सीधा देखने वाला गंभीर चेहरा: smug वाली photos में आँखें बग़ल में हैं (बोलते वक़्त अजीब लगता था) —
 # वो सिर्फ़ reaction pose "smug" में.
@@ -893,7 +895,7 @@ def render(ep, segs, chars, out, preview):
                            # loudnorm TP=-3. The final alimiter sets a hard PCM
                            # ceiling without auto makeup gain; QA still measures
                            # the independently decoded AAC true peak.
-                           "-af", "loudnorm=I=-16:TP=-3.0:LRA=11,alimiter=limit=0.65:level=0", "-c:a", "aac", "-b:a", "160k", "-shortest", str(out)],
+                           "-af", STUDIO_AUDIO_FILTER, "-c:a", "aac", "-b:a", "160k", "-shortest", str(out)],
                           stdin=subprocess.PIPE)
     bases = _bases()
     headline = ep.get("breaking") or ep.get("title") or ""
