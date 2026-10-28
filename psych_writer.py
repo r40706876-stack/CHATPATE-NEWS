@@ -113,6 +113,8 @@ follow के लिए: हमारे किरदारों का अप�
 
 लंबाई: 5-8 lines, कुल 45-90 शब्द. लंबाई पैमाना नहीं — हर line का इनाम पैमाना है. तथ्य सिर्फ़ ऊपर वाले, अंक हूबहू;
 कल्पना वाली line कल्पना की तरह (किसी असली नेता/इंसान के मुँह में नकली बात नहीं).
+गढ़ी हुई घटना को खबर की तरह मत बोलो: ✗ "पैंतालीस पैसे के बीमा के चक्कर में आज स्टेशन पर पुलिस बुलानी पड़ गई." (ऐसा हुआ
+ही नहीं — ये झूठी खबर है). कल्पना हो तो साफ़ कल्पना/अंदाज़े की तरह: "अब देखना, फूफाजी पाँच पैसे का छुट्टा माँगेंगे."
 {fields}
 सिर्फ़ JSON — हर खबर का [A, B] (episode ढाँचा):
 [{{"topic": "...", "versions": [{{"premise": "...", "category": "money/rules/bank/jobs/scheme/tech/travel/civic/other",
@@ -139,6 +141,7 @@ def prompt_audience(cands):
 दोनों false, score ≤ 4. कोई line जिसमें न नई बात न हँसी → उसे "kamzor" में डालो. पंच का तर्क समझ न आए → hasa 0.
 आख़िरी 2 lines अलग से कड़ाई से जाँचो ("ant"): अधूरा वाक्य ("जब…/जितना…" से शुरू), बिना बताए कदम वाला पंच, या आख़िरी line
 पिछली से कमज़ोर/आम सलाह → "ant" false, वो lines "kamzor" में, score ≤ 5.
+कोई गढ़ी हुई घटना खबर की तरह बोली गई (जो तथ्यों में नहीं — "आज पुलिस बुलानी पड़ी") → "pura" false, score ≤ 3 (झूठी खबर).
 
 हर line पर: "ruka" (रुके रहे?), "hasa" (0 / 1 मुस्कान / 2 ज़ोर से), "kyon" (5-8 शब्द).
 फिर ये 7 सवाल — दर्शक बनकर, script के शब्दों से जवाब दो. जवाब script में नहीं मिलता तो "ok": false (अंदाज़े से पास मत करो):
@@ -182,7 +185,8 @@ def prompt_punchup(items):
 और "fail" में वो सवाल हैं जिनका जवाब script नहीं देती:
 {QTEXT}
 अगर "ant" fail है: पहले आख़िरी 2 lines के 3 अलग अंत मन में लिखो, फिर सबसे तीखा-साफ़ चुनो.
-कमज़ोर lines दोबारा लिखो और fail सवालों का जवाब script में डालो (ज़रूरत हो तो 1 line जोड़ सकते हो, कुल 8 तक) —
+कमज़ोर lines दोबारा लिखो और fail सवालों का जवाब script में डालो (ज़रूरत हो तो 1 line जोड़ सकते हो; कुल 5 से 8 lines —
+5 से कम कभी नहीं) —
 तथ्य, किरदार वही; बाकी अच्छी lines जस की तस. हर नई line पिछली से ज़्यादा
 ठोस, ज़्यादा अनपेक्षित, और सीढ़ी में सही जगह. loop और आख़िरी वार न टूटे.
 {json.dumps(items, ensure_ascii=False, indent=1)}
@@ -253,7 +257,7 @@ def write(packs, n, fields, casting):
             for f in fixed if isinstance(fixed, list) else []:
                 k = f.get("id")
                 if isinstance(k, int) and 0 <= k < len(winners) and isinstance(f.get("lines"), list) and \
-                        len(f["lines"]) >= 4:
+                        len(f["lines"]) >= 5:
                     old_c = winners[k]
                     new_ep = dict(old_c["ep"], lines=f["lines"])
                     redo.append((k, {"topic": old_c["topic"], "ep": new_ep, "punched": True}))
