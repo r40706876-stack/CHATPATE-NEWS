@@ -14,6 +14,7 @@ import writer
 
 ROOT = Path(__file__).parent
 ICONS = {"cylinder", "calendar", "rupee", "bank", "phone", "train", "percent", "check", "alert", "gift"}
+PSYCH = os.getenv("PSYCH", "1") == "1"   # 1 = psych_writer (28 Oct); 0 = पुराना पंच-बैंक वाला
 LEAN = os.getenv("LEAN", "0") == "1"   # 0 (28 Oct): पंच-बैंक → script → जज → तीखा पूरा चले; LEAN=1 = पुराना 1-call (कम मज़ेदार)                      # 1 = कम Gemini calls (free कोटा: एक run में ~4 text calls)
 GOLDS = [ROOT / "examples_news_lpg.json", ROOT / "examples_news_rbi.json"]   # मालिक को पसंद आए नमूने
 
@@ -451,8 +452,8 @@ def finish(ep, strict=True):
             c["big"], c["tag"], c["sub"] = str(c["big"])[:40], str(c.get("tag", ""))[:28], str(c.get("sub", ""))[:70]
     if strict and not 5 <= len(ep["lines"]) <= 6:
         raise ValueError("script में 5-6 lines चाहिए; बीच का संवाद काटना सुरक्षित नहीं")
-    if not strict and len(ep["lines"]) > 6:                                # virality skill: reel 13-18 सेकंड — ज़्यादा से ज़्यादा 6 lines (आख़िरी = loop)
-        ep["lines"] = ep["lines"][:5] + ep["lines"][-1:]
+    if not strict and len(ep["lines"]) > 8:                                # virality skill: reel 13-18 सेकंड — ज़्यादा से ज़्यादा 6 lines (आख़िरी = loop)
+        ep["lines"] = ep["lines"][:7] + ep["lines"][-1:]
     ep = writer.clean(ep, strict=False)
     first = ep["lines"][0]["say"].strip()
     ep["hook"] = ep["hook_text"] = first if nwords(first) <= 12 else " ".join(first.split()[:10]) + "…"
@@ -560,10 +561,44 @@ def write_options(c, n=3):
     return write_from(c, packs, picks, n)
 
 
+def _write_psych(c, packs, picks, n):
+    import psych_writer
+    eps = []
+    for ep in psych_writer.write(packs, n, FIELDS, CASTING):
+        try:
+            conn = ep.get("connect")
+            fe = finish(json.loads(json.dumps(ep)), strict=False)
+            fe["connect"] = conn
+            first = fe["lines"][0]["say"]
+            assert nwords(first) <= 16, f"hook बहुत लंबा ({nwords(first)})"
+            assert not bookish(fe["lines"]), "किताबी शब्द"
+            assert not any(SEND.search(l["say"]) for l in fe["lines"]), "'वीडियो भेजो' वाली line"
+            assert len({l["who"] for l in fe["lines"]}) <= 4, "किरदार बहुत"
+            eps.append(fe)
+        except Exception as e:                              # noqa: BLE001
+            print("  psych episode रद्द:", ep.get("topic"), "—", e)
+    if not eps:
+        raise RuntimeError("psych: एक भी script पास नहीं")
+    for ep in eps:
+        w = set(str(ep.get("topic", "")).split())
+        best = max(picks, key=lambda p: len(w & set(str(p.get("topic", "")).split())))
+        ep["trend"] = best["trend"]
+        ep["category"] = best.get("cat") or ep.get("category", "other")
+        ep["review_status"] = "audience_sim"
+    return eps
+
+
 def write_from(c, packs, picks, n=3):
     """पक्के तथ्यों (gather) से "वायरल खबर" वाली n scripts — पंच-बैंक → script → जज → तीखा."""
     import viral_check as vc
     c.setdefault("rejected", [])
+    if PSYCH:                                               # 28 Oct: दिमाग़ के हिसाब से (premise → 2 scripts → दर्शक-जज → punch-up)
+        try:
+            return _write_psych(c, packs, picks, n)
+        except gemini.QuotaOver:
+            raise
+        except Exception as e:                              # noqa: BLE001  नया तरीका न चले तो पुराना
+            print("  नया (psych) writer नहीं चला, पुराना तरीका:", repr(e)[:150])
     bank = None                                             # पंच-बैंक: पहले ढेर सारे hooks/पंच, फिर सबसे तेज़ से script
     try:
         bank = None if LEAN else gemini.json_from(gemini.ask(prompt_punches(packs), json_mode=True, temperature=0.95))

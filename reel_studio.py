@@ -764,6 +764,7 @@ def render(ep, segs, chars, out, preview):
     v2 = ep.get("style") in ("v2", "nochar")
     nochar = ep.get("style") == "nochar"                 # बिना किरदार: सिर्फ़ तस्वीर/clip + बड़े अक्षर + आवाज़
     k, seed, last_screen, prev_im, last_vis, carry = 0, 0, None, None, [], 0
+    shown_ever = set()
     cur, credit, clean = None, "", None
     st_text, st_t, seen = "", 0, set()
     im = bases[True]
@@ -809,12 +810,22 @@ def render(ep, segs, chars, out, preview):
             key = key_phrase(ln) if isinstance(vis[0], Path) else ""
             if key:
                 extra.append({"big": key})
-            extra += [p for p in pool if p not in vis and p not in last_vis] + [p for p in pool if p not in vis]
+            # दूसरी lines की फ़ोटो वापस लाना = "same same" (28 Oct, मालिक) — सिर्फ़ वो जो अब तक कभी नहीं दिखीं
+            extra += [p for p in pool if p not in vis and p not in last_vis and p not in shown_ever]
             for e_ in extra:
                 if len(vis) >= need:
                     break
                 if e_ not in vis:
                     vis.insert(1 if len(vis) == 1 else len(vis), e_)
+        if vis and shot != "close" and not react and len(vis) * chunk < n:
+            # तस्वीरें कम, line लंबी: A-B-A-B घुमाने की जगह हर तस्वीर ज़्यादा देर (3.4 सेकंड तक, अलग zoom/कोण से),
+            # फिर भी बचे तो line की मुख्य बात वाला card — एक ही फ़ोटो दोबारा लौटकर नहीं आती
+            chunk = min(int(3.4 * FPS), math.ceil(n / len(vis)))
+            if len(vis) * chunk < n and not any(isinstance(v, dict) for v in vis):
+                key = key_phrase(ln)
+                if key:
+                    vis.append({"big": key})
+        shown_ever.update(v for v in vis if isinstance(v, Path))
         if ln.get("tag_text") and not nochar:
             # tag_text ऊपर बड़े पीले डिब्बे में आता है — उसी जगह card के बड़े अक्षर भी थे, दोनों एक-दूसरे पर चढ़ते थे
             # ("वो दोस्त जो YouTube…" के नीचे "करोड़पति बनिए" आधा कटा). अब इस line पर card सिर्फ़ धुंधली पृष्ठभूमि.

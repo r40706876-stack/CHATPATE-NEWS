@@ -1,0 +1,25 @@
+# नया script तरीका (psych_writer) आज़माना: scripts Telegram पर सिर्फ़ पढ़ने को. video नहीं बनता, जवाब का इंतज़ार नहीं.
+name: script-test
+on: {workflow_dispatch: {}}
+permissions: {contents: write}
+env:
+  GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+  GEMINI_API_KEY2: ${{ secrets.GEMINI_API_KEY2 }}
+  GEMINI_API_KEY3: ${{ secrets.GEMINI_API_KEY3 }}
+  TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+  TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+jobs:
+  write:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - run: pip install -q numpy scipy pillow
+      - run: python script_test.py 2>&1 | tee script_test.log
+      - if: always()
+        run: |
+          git config user.name bot && git config user.email bot@users.noreply.github.com
+          git add -f script_test.json script_test.log 2>/dev/null || true
+          git diff --cached --quiet && exit 0
+          git commit -m "script test"
+          for i in 1 2 3; do git pull --rebase -X theirs && git push && break; sleep 5; done
