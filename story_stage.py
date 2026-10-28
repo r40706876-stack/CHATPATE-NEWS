@@ -174,6 +174,18 @@ def _scene_action(im, scene, t, n, line=None):
             d.ellipse((x+155,755,x+177,777),fill=YELLOW)
             d.line((x-80,750,x-10,750),fill=RED,width=22)
             d.polygon([(x+5,750),(x-40,718),(x-40,782)],fill=RED)
+        elif "रिटर्न" in say:
+            # Editorially motivated physical gag: Chacha offers to return himself.
+            # Move the self-return carton in during his line so the visual sets up
+            # Dadi offering Chacha as the exchange in the next beat.
+            bx = int(1030 - 350 * q)
+            _box(d, bx, 660, 310, 325, "")
+            d.rounded_rectangle((bx+20, 770, bx+290, 900), 12,
+                                fill=(255, 250, 233), outline=RED, width=8)
+            d.text((bx+155, 811), "SELF RETURN", font=tt.font(39),
+                   fill=RED, anchor="mm")
+            d.text((bx+155, 864), "चाचा", font=tt.font(53),
+                   fill=INK, anchor="mm")
         elif "रिमोट" in say:
             # Pinky shakes an oversized remote and finds no matching Chacha controls.
             rx=int(580+65*math.sin(q*math.pi*2))
@@ -385,6 +397,9 @@ def frames(line, episode, talk, n, cut, seed=0):
             speaker_x += int(110 * ease)  # Chacha backs away from the huge delivery
         if "दरवाज़ा" in say:
             speaker_x -= int(95 * ease)  # Pull attention toward the door gag
+        if "रिटर्न" in say:
+            speaker_x += int(90 * ease)  # Chacha shuffles into his return carton
+            speaker_y += int(45 * ease)
         if "एक्सचेंज" in say:
             supporter_x += int(165 * ease)  # Dadi physically pushes Chacha toward carton
         if "मुफ्त सलाह" in say:
@@ -392,7 +407,7 @@ def frames(line, episode, talk, n, cut, seed=0):
             speaker_y -= int(30 * math.sin(progress * math.pi * 3) ** 2)
         # Dialogue-timed acting: Chacha recoils, Pinky leans into the remote
         # gag, and Dadi punctuates the final roti-powered exchange.
-        acting = 8 if any(k in say for k in ("लड्डू", "दरवाज़ा", "रिमोट", "मुफ्त सलाह")) else 4
+        acting = 8 if any(k in say for k in ("लड्डू", "दरवाज़ा", "रिटर्न", "रिमोट", "मुफ्त सलाह")) else 4
         speaker_tilt = acting * math.sin(progress * math.pi * 1.3)
         supporter_tilt = -3 * math.sin(progress * math.pi * 1.6)
         _character(im, supporting, supporter_x, 1120 + int(5 * math.sin(t / 10)),

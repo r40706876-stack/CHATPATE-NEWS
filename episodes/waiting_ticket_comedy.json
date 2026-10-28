@@ -1,7 +1,7 @@
 {
   "title": "मिठाई माँगी, ₹1.69 लाख का टीवी ऑर्डर!",
   "topic": "मदुरै के क्रिएटर वीरमणि ने दिवाली की मिठाई माँगी; उनके पते पर अनचाहे COD टीवी-फ्रिज ऑर्डर आने लगे",
-  "hook": "मदुरै में मिठाई माँगी, ₹1.69 लाख का टीवी आया!",
+  "hook": "मिठाई माँगी, कूरियर ने ₹1.69 लाख का बिल थमा दिया!",
   "poll": {
     "q": "फ्री गिफ्ट पर COD बिल आए तो?",
     "a": "वापस करूँगा",
@@ -10,7 +10,7 @@
   "lines": [
     {
       "who": "bablu",
-      "say": "मदुरै में मिठाई माँगी, ₹1.69 लाख का टीवी आया!",
+      "say": "मिठाई माँगी, कूरियर ने ₹1.69 लाख का बिल थमा दिया!",
       "big": "मिठाई के बदले ₹1.69 लाख COD!",
       "scene": "sweets",
       "expr": "hairan",
@@ -70,14 +70,14 @@
     },
     {
       "who": "chacha",
-      "say": "दरवाज़ा ले जा! अगला पार्सल अंदर नहीं घुसेगा!",
-      "big": "दरवाज़ा ही निकाल दो!",
+      "say": "अगला पार्सल आया, तो मैं खुद को रिटर्न करूँगा!",
+      "big": "चाचा खुद को रिटर्न करेंगे!",
       "scene": "house",
       "expr": "gussa",
       "shot": "story",
       "punch": false,
       "visuals": [
-        "Chacha attempts to remove door to block another delivery"
+        "Chacha recoils from the next COD delivery and steps toward a self-return shipping carton; the carton is a clearly fictional comedy prop"
       ]
     },
     {
