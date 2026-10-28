@@ -114,7 +114,7 @@ if WHICH == "coins":
     gold = mat("coin", (0.95, 0.76, 0.38, 1), metal=0.85, rough=0.32)
     silver = mat("coin2", (0.86, 0.86, 0.88, 1), metal=0.85, rough=0.35)
     for k in range(9):
-        bpy.ops.mesh.primitive_cylinder_add(radius=0.42, depth=0.07, vertices=64)
+        bpy.ops.mesh.primitive_cylinder_add(radius=0.42, depth=0.07, vertices=64, end_fill_type='TRIFAN')  # NGON+bevel = काला ढक्कन
         c = bpy.context.active_object
         bev = c.modifiers.new("b", "BEVEL")
         bev.width, bev.segments = 0.02, 3
