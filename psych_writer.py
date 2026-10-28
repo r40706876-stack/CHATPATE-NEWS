@@ -46,7 +46,7 @@ QTEXT = "\n".join(f"{i}. {k}: {q}" for i, (k, q) in enumerate(QUESTIONS))
 # Prakash Bharati (Anurag Tiwari) के 13 episodes पढ़कर (28 Oct, 1.5 लाख-9.5 लाख views) — हर वाक्य अपने आप में जोक.
 # उनकी lines कॉपी नहीं; उनके औज़ार, हमारे अपने उदाहरणों के साथ.
 DEVICES = """deadpan व्यंग्य का व्याकरण (Prakash Bharati के 8 episodes शब्द-दर-शब्द पढ़कर — उनका तरीका, पर हर उदाहरण हमारा अपना;
-नमूनों के शब्द/जोक कभी दोहराने नहीं, हर खबर पर नया):
+किसी reference की 1 line हूबहू तभी, जब हमारी खबर में बिल्कुल फ़िट बैठे; बाकी सब इस खबर पर नया):
 
 ढाँचा (reel छोटी है, तो उनका पूरा episode 6-8 lines में):
  1. ठंडी शुरुआत — "नमस्कार" से पहले 1 सवाल-जवाब, जवाब ही पंच ("बिजली कब से नहीं है?" "बिल आने तक थी.")
@@ -253,7 +253,9 @@ def _code_check(c):
     """Gemini-जज के ऊपर पक्की जाँच: दूसरे का वाक्य पूरा करती अधूरी line = अंत फ़ेल (मालिक की 28 Oct शिकायत)."""
     lines = c["ep"].get("lines") or []
     cp = copied_ext(lines)
-    if cp:                                                  # किसी और की line उठाई = हमारी नहीं, फेंको/दोबारा लिखो
+    c["ep"]["ref_lines"] = [lines[i].get("say", "") for i in cp]
+    cp = cp[1:]                                             # मालिक (29 Oct): reference की 1 line चल सकती है (खबर में फ़िट हो); ज़्यादा = दोबारा
+    if cp:
         v = c.setdefault("vote", {})
         v.setdefault("jaanch", {})["hasi"] = {"ok": False, "kyon": f"line {cp[0] + 1} दूसरे creator की line जैसी"}
         v["kamzor"] = sorted(set((v.get("kamzor") or []) + cp))

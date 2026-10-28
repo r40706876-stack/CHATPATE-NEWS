@@ -78,6 +78,8 @@ def preview(eps):
             for k, name in NAMES.items():
                 j = ep["jaanch"].get(k) or {}
                 out.append(f"   {'✅' if j.get('ok') else '❌'} {name}: {str(j.get('kyon', ''))[:70]}")
+        for rl in ep.get("ref_lines") or []:                   # किसी दूसरे creator की line (1 तक की इजाज़त) — मालिक को पता रहे
+            out.append(f"📎 reference line: {rl[:70]}")
         if ep.get("source"):
             out.append(f"🔎 स्रोत: {ep['source']}  ← तथ्य एक बार ज़रूर जाँच लेना")
         for ln in ep.get("lines", []):
