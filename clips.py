@@ -150,6 +150,29 @@ def indian(title, ch):
     return bool(re.search(r"[\u0900-\u097F]", title)) or any(k in f" {ch.lower()}" for k in INDIAN)
 
 
+def _anchor_face(tiles):
+    """OpenCV: 3 में से 2+ frames में बड़ा सामने वाला चेहरा (frame का 4%+) = कोई कैमरे से बात कर रहा है."""
+    try:
+        import cv2
+        import numpy as np
+    except ImportError:
+        subprocess.run([sys.executable, "-m", "pip", "install", "-q", "--break-system-packages", "opencv-python-headless"],
+                       capture_output=True)
+        try:
+            import cv2
+            import numpy as np
+        except ImportError:
+            return True                                   # जाँच ही नहीं हो सकती = सुरक्षित पक्ष: clip नहीं
+    det = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
+    hits = 0
+    for t in tiles:
+        g = cv2.cvtColor(np.array(t), cv2.COLOR_RGB2GRAY)
+        faces = det.detectMultiScale(g, 1.1, 5, minSize=(24, 24))
+        if any(w * h >= 0.04 * g.shape[0] * g.shape[1] for (_, _, w, h) in faces):
+            hits += 1
+    return hits >= 2
+
+
 def vision_ok(path, topic):
     """clip में असल में क्या दिखता है — 3 frames Gemini को: anchor का बोलता चेहरा, दूसरे चैनल का बैनर/'FOLLOW US',
     सिर्फ़ लिखाई, या ख़बर से अलग दृश्य = नहीं (Jaipur demo: बोलती anchor पर Bablu की आवाज़ = होंठ बेमेल लगे)."""
@@ -185,10 +208,10 @@ def vision_ok(path, topic):
         print(f"  👁 clip जाँच: {'✅' if r.get('ok') else '❌'} {str(r.get('why', ''))[:80]}")
         return bool(r.get("ok"))
     except Exception as e:                                # noqa: BLE001
-        # Gemini का कोटा ख़त्म: पहले clip फेंक देते थे (= कभी clip नहीं). अब title पहले ही खबर से मिला है और
-        # cut_best ने हरकत वाला हिस्सा चुना है — इसलिए चलने दो.
-        print("  clip जाँच नहीं हुई (Gemini), हरकत वाला हिस्सा मानकर रखा:", repr(e)[:80])
-        return True
+        # Gemini नहीं चला: अपनी जाँच — बड़ा सामने वाला चेहरा (anchor/रिपोर्टर) = नहीं (28 Oct: चाचा की line पर anchor आ गई)
+        ok = not _anchor_face(tiles)
+        print(f"  clip जाँच Gemini से नहीं हुई — चेहरा-जाँच: {'✅ घटना' if ok else '❌ anchor/चेहरा'}", repr(e)[:60])
+        return ok
 
 
 def for_topic(topic, queries=(), want=2):

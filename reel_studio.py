@@ -818,9 +818,9 @@ def render(ep, segs, chars, out, preview):
                 if e_ not in vis:
                     vis.insert(1 if len(vis) == 1 else len(vis), e_)
         if vis and shot != "close" and not react and len(vis) * chunk < n:
-            # तस्वीरें कम, line लंबी: A-B-A-B घुमाने की जगह हर तस्वीर ज़्यादा देर (3.4 सेकंड तक, अलग zoom/कोण से),
+            # तस्वीरें कम, line लंबी: A-B-A-B घुमाने की जगह हर तस्वीर ज़्यादा देर (2.8 सेकंड तक, अलग zoom/कोण से),
             # फिर भी बचे तो line की मुख्य बात वाला card — एक ही फ़ोटो दोबारा लौटकर नहीं आती
-            chunk = min(int(3.4 * FPS), math.ceil(n / len(vis)))
+            chunk = min(int(2.8 * FPS), math.ceil(n / len(vis)))   # QA: 3 सेकंड से ज़्यादा एक तस्वीर = रद्द
             if len(vis) * chunk < n and not any(isinstance(v, dict) for v in vis):
                 key = key_phrase(ln)
                 if key:
