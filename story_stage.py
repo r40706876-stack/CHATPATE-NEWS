@@ -125,6 +125,17 @@ def _scene_action(im, scene, t, n, line=None):
             d.text((675,737),"₹1,69,000",font=tt.font(45),fill=INK,anchor="mm")
     elif scene=="freight":
         if "फ्रिज" in str((line or {}).get("say", "")):
+            # Fictional EMI collection tent is the visual punch, not a real news claim.
+            # Keep the tent behind the moving refrigerator so both beats remain legible.
+            tent_y = int(320 + 12 * math.sin(q * math.pi))
+            d.polygon([(445,tent_y+175),(742,tent_y),(1035,tent_y+175)],
+                      fill=(220,85,72),outline=INK)
+            d.rectangle((478,tent_y+175,1002,tent_y+240),
+                        fill=(255,235,174),outline=INK,width=7)
+            d.text((740,tent_y+205),"EMI वसूली टेंट",font=tt.font(47),
+                   fill=INK,anchor="mm")
+            d.text((741,tent_y+265),"काल्पनिक मज़ाक",font=tt.font(29),
+                   fill=INK,anchor="mm")
             # A SECOND appliance rolls in, escalating the COD nightmare.
             x=int(1050-480*q)
             d.rounded_rectangle((x,505,x+325,1095),24,fill=(226,238,241),outline=INK,width=17)
