@@ -1,133 +1,152 @@
 [
  {
-  "premise": "45 पैसे का बीमा लेने के लिए फूफाजी ने काउंटर वाले से 50 पैसे के छुट्टे माँगकर 20 मिनट बहस की।",
-  "category": "[नियम/नौकरी]",
-  "category_type": "travel",
-  "breaking": "45 पैसे का बीमा लेने में स्टेशन पर हुआ बखेड़ा",
-  "hook_screen": "5 पैसे का छुट्टा!",
-  "source": "News18 Hindi, ETV Bharat",
-  "tag_who": "अपने उस कंजूस फूफाजी या अंकल को जो हर छोटी बात पर हिसाब मांगते हैं",
-  "ask": "क्या आपके परिवार में भी कोई 5 पैसे का हिसाब मांगता है?",
-  "loop_word": "छुट्टा",
+  "premise": "काम रुका पड़ा था पर साहब की पारले-जी बिस्कुट चाय में डुबोने की टाइमिंग एकदम सटीक थी.",
+  "category": "[वायरल वीडियो]",
+  "breaking": "तहसीलदार साहब फाइल छोड़ चाय-बिस्कुट खाने में रहे व्यस्त, वीडियो वायरल",
+  "hook_screen": "फाइल बाद में, बिस्कुट पहले!",
+  "source": "News18 Hindi",
+  "tag_who": "उस सुस्त दोस्त को टैग करो जो काम छोड़कर चाय ब्रेक लेता है",
+  "ask": "क्या सरकारी दफ़्तर में आपके साथ भी ऐसा चाय ब्रेक हुआ है?",
+  "loop_word": "फाइल",
   "jawab": {
-   "pura": "5 पैसे के छुट्टे के चक्कर में क्या हुआ यह जानने के लिए अंत तक रुकेंगे।",
-   "hasi": "फूफाजी की बहस सुनते ही 2 सेकंड में हँसी छूटेगी।",
-   "share": "लोग अपने कंजूस रिश्तेदारों को चिढ़ाने के लिए तुरंत शेयर करेंगे।",
-   "daily": "काउंटर पर छुट्टे पैसे न होने की रोज़ की चिकचिक से जुड़ा है।",
-   "follow": "रिश्तेदारों के अजीब स्वभाव पर सटीक व्यंग्य देखने के लिए फॉलो करेंगे।",
-   "like": "पाँच पैसे के छुट्टे वाली ज़िद्द पर लोग सहमति से लाइक करेंगे।",
-   "save": "काउंटर टिकट खरीदते समय छुट्टे रखने की चेतावनी याद रखने के लिए सेव करेंगे।"
+   "pura": "साहब की चाय और पारले-जी बिस्कुट के बीच फँसी फाइल कब आगे बढ़ेगी?",
+   "hasi": "2 सेकंड में बिस्कुट को चाय में डूबने से बचाने की तगड़ी टाइमिंग.",
+   "share": "सरकारी दफ़्तरों में चक्कर काट-काट कर परेशान आम नागरिकों को भेजेंगे.",
+   "daily": "सरकारी दफ्तरों का अंतहीन 'चाय-बिस्कुट ब्रेक' और काम में ढिलाई.",
+   "follow": "सरकारी लालफीताशाही और ढीले तंत्र पर तीखे प्रहार देखने के लिए.",
+   "like": "सरकारी कर्मचारियों के चाय टाइमिंग के कड़वे अनुभव पर.",
+   "save": "सरकारी अधिकारियों की लापरवाही की शिकायत प्रक्रिया जानने के लिए."
   },
   "lines": [
    {
-    "who": "ramesh",
-    "say": "पैंतालीस पैसे के बीमा के चक्कर में आज स्टेशन पर पुलिस बुलानी पड़ गई.",
-    "caption": "45 पैसे के बीमा के चक्कर में आज स्टेशन पर पुलिस बुलानी पड़ गई.",
-    "expr": "gussa",
-    "set": "station",
+    "who": "bablu",
+    "say": "सरकारी दफ़्तर में महिला रोती रही, और साहब का पूरा ध्यान बिस्कुट बचाने में लगा रहा!",
+    "caption": "सरकारी दफ़्तर में महिला रोती रही, और साहब का पूरा ध्यान बिस्कुट बचाने में लगा रहा!",
+    "expr": "hairan",
+    "set": "studio",
     "visuals": [
-     "railway ticket line dispute",
-     "indian railway booking counter",
-     "passengers arguing in queue"
+     "government office desk officer tea biscuit close up",
+     "helpless woman crying near official counter",
+     "news presenter holding viral news banner"
     ],
     "photo_hi": [
-     "रेलवे स्टेशन विवाद",
-     "टिकट काउंटर भीड़"
+     "himachal tehsildar office tea biscuit viral clip",
+     "government office pending file woman crying"
     ],
-    "visual": "railway ticket line dispute",
+    "punch": true,
+    "stamp": "ध्यान बिस्कुट बचाने मे",
+    "visual": "government office desk officer tea biscuit close up",
     "scene": "studio",
+    "insta": ""
+   },
+   {
+    "who": "ramesh",
+    "say": "जनता का काम रुका पड़ा था, पर साहब का पूरा ध्यान इस पर था कि बिस्कुट चाय में टूटकर न गिरे.",
+    "caption": "जनता का काम रुका पड़ा था, पर साहब का पूरा ध्यान इस पर था कि बिस्कुट चाय में टूटकर न गिरे.",
+    "expr": "tanz",
+    "set": "office",
+    "visuals": [
+     "biscuit dipping in tea cup close up",
+     "government officer sitting relaxed chair",
+     "office files stacked dusty table"
+    ],
+    "photo_hi": [
+     "biscuit dipping tea government office",
+     "naib tehsildar office viral clip"
+    ],
+    "punch": true,
+    "stamp": "बिस्कुट चाय में न गिरे",
+    "visual": "biscuit dipping in tea cup close up",
+    "scene": "chacha",
+    "insta": ""
+   },
+   {
+    "who": "chacha",
+    "say": "सरकारी दफ़्तर में फाइल आगे बढ़े न बढ़े, पर साहब का बिस्कुट कभी चाय में नहीं डूबता बेटा.",
+    "caption": "सरकारी दफ़्तर में फाइल आगे बढ़े न बढ़े, पर साहब का बिस्कुट कभी चाय में नहीं डूबता बेटा.",
+    "expr": "tanz",
+    "set": "office",
+    "visuals": [
+     "elderly villager sitting holding stick",
+     "government office file stack dusty",
+     "tea glass standing on office wooden table"
+    ],
+    "photo_hi": [
+     "government office dusty files pending",
+     "tehsildar office tea biscuit video"
+    ],
+    "visual": "elderly villager sitting holding stick",
+    "scene": "chacha",
     "punch": false,
     "insta": ""
    },
    {
     "who": "bablu",
-    "say": "रेलवे काउंटर पर पैंतालीस पैसे में दस लाख का यात्रा बीमा शुरू हुआ है.",
-    "caption": "रेलवे काउंटर पर 45 पैसे में 10 लाख का यात्रा बीमा शुरू हुआ है.",
+    "say": "सेव कर लो हेल्पलाइन: अगर कोई अफ़सर रिश्वत या टालमटोल करे तो शिकायत एंटी-करप्शन 1064 पर करें.",
+    "caption": "सेव कर लो: सरकारी काम में टालमटोल पर शिकायत Anti-Corruption नंबर 1064 पर करें.",
     "expr": "gambhir",
     "set": "studio",
     "visuals": [
-     "railway clerk behind glass window",
-     "passenger taking paper ticket",
-     "indian railway counter board"
+     "anti corruption helpline number 1064 screen graphic",
+     "government seal emblem vector artwork",
+     "news anchor pointing at helpline poster"
     ],
     "photo_hi": [
-     "काउंटर टिकट बीमा",
-     "रेलवे टिकट नियम"
+     "anti corruption helpline number india news",
+     "himachal pradesh public grievance portal"
     ],
-    "visual": "railway clerk behind glass window",
+    "visual": "anti corruption helpline number 1064 screen graphic",
     "scene": "chacha",
     "punch": false,
     "insta": ""
    },
    {
     "who": "ramesh",
-    "say": "फूफाजी पचास पैसे देकर बाबू से पाँच पैसे का छुट्टा माँगने लगे.",
-    "caption": "फूफाजी 50 पैसे देकर बाबू से 5 पैसे का छुट्टा माँगने लगे.",
-    "expr": "hairan",
-    "set": "station",
+    "say": "अगर ऐसी ही टाइमिंग ओलंपिक में होती, तो बिस्कुट डुबोने में साहब गोल्ड मेडल ले आते.",
+    "caption": "अगर ऐसी ही टाइमिंग ओलंपिक में होती, तो बिस्कुट डुबोने में साहब गोल्ड मेडल ले आते.",
+    "expr": "hasi",
+    "set": "office",
     "visuals": [
-     "indian uncle arguing ticket counter",
-     "holding 50 paise coin hand",
-     "angry clerk inside booking window"
+     "gold medal trophy funny graphics desk",
+     "man smiling standing near government office",
+     "tea glass and biscuit plate office table"
     ],
     "photo_hi": [
-     "फूफाजी स्टेशन विवाद",
-     "टिकट बाबू बहस"
+     "government office tea biscuit viral",
+     "tehsildar office himachal news"
     ],
-    "visual": "indian uncle arguing ticket counter",
+    "visual": "gold medal trophy funny graphics desk",
     "scene": "chacha",
     "punch": false,
     "insta": ""
    },
    {
     "who": "chacha",
-    "say": "बाबू ने टॉफी देनी चाही… तो फूफाजी बोले टॉफी से बीमा नहीं होता.",
-    "caption": "बाबू ने टॉफी देनी चाही… तो फूफाजी बोले टॉफी से बीमा नहीं होता.",
+    "say": "और अगर बिस्कुट गल्ती से चाय में डूब जाता, तो फाइल उसी चाय में छानकर निकाली जाती!",
+    "caption": "और अगर बिस्कुट चाय में डूब जाता, तो फाइल उसी चाय में छानकर निकाली जाती!",
     "expr": "tanz",
-    "set": "station",
-    "punch": true,
-    "stamp": "पाँच पैसे का छुट्टा",
+    "set": "office",
     "visuals": [
-     "candy on cash counter table",
-     "old man refusing to accept candy",
-     "railway queue passengers frustrated"
+     "tea strainer filter close up funny visual",
+     "dusty government file stained with tea graphic",
+     "old man laughing sarcasm face close up"
     ],
     "photo_hi": [
-     "छुट्टे में टॉफी बहस",
-     "रेलवे काउंटर लाईन"
+     "government office file tea stain funny",
+     "himachal tehsildar tea biscuit video viral"
     ],
-    "visual": "candy on cash counter table",
-    "scene": "chacha",
-    "insta": ""
-   },
-   {
-    "who": "ramesh",
-    "say": "पाँच पैसे का छुट्टा लिए बिना फूफाजी डिब्बे में चढ़ने को तैयार नहीं थे.",
-    "caption": "5 पैसे का छुट्टा लिए बिना फूफाजी डिब्बे में चढ़ने को तैयार नहीं थे.",
-    "expr": "udaas",
-    "set": "station",
-    "punch": true,
-    "stamp": "फूफा जी की जिद",
-    "visuals": [
-     "train standing on platform ready to move",
-     "man arguing near train door",
-     "railway police officer walking"
-    ],
-    "photo_hi": [
-     "रेलवे पुलिस पैसेंजर",
-     "ट्रेन प्लेटफॉर्म बोगी"
-    ],
-    "visual": "train standing on platform ready to move",
+    "visual": "tea strainer filter close up funny visual",
     "scene": "studio_end",
+    "punch": false,
     "insta": ""
    }
   ],
-  "caption_post": "45 पैसे के बीमा के चक्कर में आज स्टेशन पर पुलिस बुलानी पड़ गई. Tag करो उस कंजूस दोस्त या रिश्तेदार को जो 5 पैसे का छुट्टा कभी नहीं छोड़ता! (स्रोत: News18 Hindi, ETV Bharat) #RailwayRules #FufaJi #TicketCounter #BakraNews #IndianRailways (AI से बने किरदार)",
-  "topic": "रेलवे काउंटर टिकट पर नया नियम और बीमा सुविधा",
+  "caption_post": "हिमाचल के सरकारी दफ़्तर में फाइल माँगती रही महिला, साहब चाय-बिस्कुट में रहे व्यस्त... Tag करो उस दोस्त को जो काम छोड़कर हमेशा चाय ब्रेक पर रहता है! क्या सरकारी दफ़्तर में आपके साथ भी ऐसा चाय ब्रेक हुआ है? (स्रोत: News18 Hindi) #Bakranews #GovernmentOffice #TeaBreak #SarkariBabu #HimachalNews (AI से बने किरदार)",
+  "topic": "सरकारी दफ़्तर में फाइल मांगने पर साहब चाय-बिस्कुट के मजे लेते रहे",
   "jaanch": {
    "pura": {
     "ok": true,
-    "kyon": "पुलिस क्यों बुलाई, जानने की उत्सुकता"
+    "kyon": "सरकारी बाबू के बिस्कुट वाले ड्रामे के कारण."
    },
    "hasi": {
     "ok": true,
@@ -135,218 +154,36 @@
    },
    "share": {
     "ok": true,
-    "kyon": "कज़न को, फूफाजी की आदत की वजह से"
+    "kyon": "दोस्तों को, सरकारी दफ्तर के काम के रोस्ट के लिए"
    },
    "daily": {
     "ok": true,
-    "kyon": "खुल्ले पैसों पर स्टेशन पर चिकचिक"
+    "kyon": "सरकारी दफ्तरों में काम अटकना और बाबू के नखरे."
    },
    "follow": {
-    "ok": true,
-    "kyon": "फूफाजी के किरदार का देसी मज़ाक"
-   },
-   "like": {
-    "ok": true,
-    "kyon": "टॉफी थमाने वाली सरकारी आदत सच"
-   },
-   "save": {
     "ok": false,
-    "kyon": "दोबारा देखने लायक काम की बात नहीं"
-   },
-   "ant": {
-    "ok": true,
-    "kyon": "फूफाजी की ज़िद से पंच पूरा हुआ"
-   }
-  },
-  "connect": {
-   "score": 7,
-   "why": "8 में से 7 सवाल पास",
-   "weak": "",
-   "fix": ""
-  },
-  "writer": "psych",
-  "format": "explain",
-  "label": "काम की खबर",
-  "key_word": "",
-  "icons": [
-   "₹",
-   "NEWS",
-   "%"
-  ],
-  "ticker": [],
-  "hook": "पैंतालीस पैसे के बीमा के चक्कर में आज स्टेशन पर…",
-  "hook_text": "पैंतालीस पैसे के बीमा के चक्कर में आज स्टेशन पर…",
-  "hook_short": "5 पैसे का छुट्टा!",
-  "trend": {
-   "score": 6,
-   "why": "10 अख़बार/चैनल 2 दिन में, 15 खबरें 7 दिन में"
-  },
-  "review_status": "audience_sim"
- },
- {
-  "premise": "अब मम्मी ताना मारेंगी कि AI दूसरों की खोई चीज़ें ढूंढ रहा है और तू घर में चश्मा नहीं ढूंढ पाता।",
-  "category": "[वायरल]",
-  "breaking": "चैट-जीपीटी ने पत्थरों के बीच खोया इयरबड ढूंढ निकाला",
-  "hook_screen": "चाबी फिर नहीं मिली!",
-  "source": "India TV Hindi, News18 Hindi",
-  "tag_who": "उस भुलक्कड़ दोस्त को जो अपनी चीज़ें खोकर मम्मी से डांट खाता है",
-  "ask": "क्या आपकी मम्मी भी बात-बात पर एआई का ताना देती हैं?",
-  "loop_word": "चाबी",
-  "jawab": {
-   "pura": "मम्मी एआई का इस्तेमाल कैसे करेंगी यह जानने के लिए पूरा वीडियो देखेंगे।",
-   "hasi": "मम्मी के ताने वाली लाइन पर 3 सेकंड के अंदर हँसी आएगी।",
-   "share": "घर में सामान खोने वाले हर इंसान अपने दोस्तों को भेजेंगे।",
-   "daily": "घर में चश्मा, चाबी या रिमोट न मिलने की रोज़मर्रा की परेशानी है।",
-   "follow": "मम्मी और देसी परिवारों के मज़ेदार तंज के लिए फॉलो करेंगे।",
-   "like": "मम्मी की डांट से रिलेट करके हर बच्चा लाइक बटन दबाएगा।",
-   "save": "एआई से सामान खोजने वाला आइडिया याद रखने के लिए सेव करेंगे।"
-  },
-  "lines": [
-   {
-    "who": "ramesh",
-    "say": "चैट-जीपीटी ने पत्थरों में इयरबड ढूंढा… पर मेरी घर में चाबी फिर नहीं मिली.",
-    "caption": "ChatGPT ने पत्थरों में इयरबड ढूंढा… पर मेरी घर में चाबी फिर नहीं मिली.",
-    "expr": "hairan",
-    "set": "aangan",
-    "visuals": [
-     "young man searching keys room",
-     "messy sofa cushions search",
-     "smartphone screen running AI app"
-    ],
-    "photo_hi": [
-     "चैट जीपीटी इयरबड",
-     "सामान खोना घर"
-    ],
-    "visual": "young man searching keys room",
-    "scene": "studio",
-    "punch": false,
-    "insta": ""
-   },
-   {
-    "who": "bablu",
-    "say": "ChatGPT पर फोटो अपलोड करके इमेज सर्च फीचर से आप खोई चीज ढूंढ सकते हैं.",
-    "caption": "ChatGPT पर फोटो अपलोड करके इमेज सर्च फीचर से आप खोई चीज ढूंढ सकते हैं.",
-    "expr": "gambhir",
-    "set": "studio",
-    "visuals": [
-     "white earbud lying on white pebbles",
-     "person holding phone taking photo pebbles",
-     "AI image scanning interface screen"
-    ],
-    "photo_hi": [
-     "इयरबड पत्थरों में खोया",
-     "एआई इमेज एनालिसिस"
-    ],
-    "visual": "white earbud lying on white pebbles",
-    "scene": "dadi_call",
-    "punch": false,
-    "insta": ""
-   },
-   {
-    "who": "dadi",
-    "say": "एआई दुनिया के खोए इयरबड खोज रहा है… तू घर में चश्मा नहीं ढूंढ पाता.",
-    "caption": "AI दुनिया के खोए इयरबड खोज रहा है… तू घर में चश्मा नहीं ढूंढ पाता.",
-    "expr": "tanz",
-    "set": "aangan",
-    "punch": true,
-    "stamp": "मम्मी का ताना",
-    "visuals": [
-     "old mother scolding son living room",
-     "pointing finger at lazy guy",
-     "spectacles lying on table unseen"
-    ],
-    "photo_hi": [
-     "माँ का ताना",
-     "घर में चश्मा खोना"
-    ],
-    "visual": "old mother scolding son living room",
-    "scene": "dadi_call",
-    "insta": ""
-   },
-   {
-    "who": "ramesh",
-    "say": "मम्मी ने एआई की फोटो दिखाकर मुझे कमरे की सफाई पर लगा दिया.",
-    "caption": "मम्मी ने AI की फोटो दिखाकर मुझे कमरे की सफाई पर लगा दिया.",
-    "expr": "udaas",
-    "set": "aangan",
-    "visuals": [
-     "mother showing phone photo son",
-     "boy holding broom messy room",
-     "scattered clothes on bed"
-    ],
-    "photo_hi": [
-     "कमरे की सफाई",
-     "देसी मम्मी डांट"
-    ],
-    "visual": "mother showing phone photo son",
-    "scene": "chacha",
-    "punch": false,
-    "insta": ""
-   },
-   {
-    "who": "dadi",
-    "say": "अब चैट-जीपीटी ही बताएगा कि सोफे के नीचे तेरी चाबी कहाँ पड़ी है.",
-    "caption": "अब ChatGPT ही बताएगा कि सोफे के नीचे तेरी चाबी कहाँ पड़ी है.",
-    "expr": "hasi",
-    "set": "village",
-    "punch": true,
-    "stamp": "सोफे के नीचे चाबी",
-    "visuals": [
-     "grandmother looking under sofa",
-     "key lying under furniture dust",
-     "young man holding phone smiling"
-    ],
-    "photo_hi": [
-     "सोफे के नीचे चाबी",
-     "एआई ताना मम्मी"
-    ],
-    "visual": "grandmother looking under sofa",
-    "scene": "studio_end",
-    "insta": ""
-   }
-  ],
-  "caption_post": "ChatGPT ने पत्थरों में इयरबड ढूंढा… पर मेरी घर में चाबी फिर नहीं मिली! Tag करो उस भुलक्कड़ दोस्त को जो दिन में 4 बार चश्मा खोता है! (स्रोत: India TV Hindi, News18 Hindi) #ChatGPT #AITechnology #EarbudsFound #BakraNews #DesiMoms (AI से बने किरदार)",
-  "topic": "ChatGPT ने पत्थरों के बीच खोया इयरबड ढूंढा",
-  "jaanch": {
-   "pura": {
-    "ok": true,
-    "kyon": "आखिरकार चाबी मिली या नहीं यह जानने के लिए."
-   },
-   "hasi": {
-    "ok": true,
-    "kyon": "line 0, ~2 सेकंड में चाबी खोने की बात पर."
-   },
-   "share": {
-    "ok": true,
-    "kyon": "भाइयों को, line 3 और 4 के तानों की वजह से."
-   },
-   "daily": {
-    "ok": true,
-    "kyon": "घर में चाबी खोना और ताने सुनना रोज़ का काम है."
-   },
-   "follow": {
-    "ok": true,
-    "kyon": "दादी और पोते की ऐसी मस्त जुगलबंदी रोज़ देखने के लिए."
+    "kyon": "एक ही बात बार-बार बोलने से बोरियत हुई."
    },
    "like": {
     "ok": true,
-    "kyon": "मम्मी के सफ़ाई पर लगाने वाले ट्विस्ट पर तुरंत लाइक किया."
+    "kyon": "बाबू का ध्यान काम से ज्यादा चाय-बिस्कुट पर रहने वाली बात."
    },
    "save": {
     "ok": true,
-    "kyon": "ChatGPT से फोटो ढूंढने की ट्रिक बाद में इस्तेमाल करने को."
+    "kyon": "एंटी करप्शन हेल्पलाइन 1064 सेव करने के लिए"
    },
    "ant": {
-    "ok": true,
-    "kyon": "आखरी दोनों लाइनों ने बात पूरी की और ज़बरदस्त पंच दिया."
+    "ok": false,
+    "kyon": "आखरी लाइन में जबरदस्ती का पंच बनाया गया जो समझ नहीं आया."
    }
   },
   "connect": {
-   "score": 7,
-   "why": "8 में से 8 सवाल पास",
+   "score": 4,
+   "why": "8 में से 6 सवाल पास",
    "weak": "",
    "fix": ""
   },
+  "_loose": true,
   "writer": "psych+punchup",
   "format": "explain",
   "label": "काम की खबर",
@@ -357,12 +194,12 @@
    "%"
   ],
   "ticker": [],
-  "hook": "चैट-जीपीटी ने पत्थरों में इयरबड ढूंढा… पर मेरी घर में…",
-  "hook_text": "चैट-जीपीटी ने पत्थरों में इयरबड ढूंढा… पर मेरी घर में…",
-  "hook_short": "चाबी फिर नहीं मिली!",
+  "hook": "सरकारी दफ़्तर में महिला रोती रही, और साहब का पूरा…",
+  "hook_text": "सरकारी दफ़्तर में महिला रोती रही, और साहब का पूरा…",
+  "hook_short": "फाइल बाद में, बिस्कुट पहले!",
   "trend": {
-   "score": 5,
-   "why": "6 अख़बार/चैनल 2 दिन में, 6 खबरें 7 दिन में"
+   "score": 3,
+   "why": "2 अख़बार/चैनल 2 दिन में, 6 खबरें 7 दिन में"
   },
   "review_status": "audience_sim"
  }
