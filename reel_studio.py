@@ -889,7 +889,11 @@ def render(ep, segs, chars, out, preview):
                            # A newer 2026-10-27 render measured -1.0 dBTP and failed QA
                            # despite TP=-1.8. Reserve extra margin; still independently
                            # measure final decoded AAC (do not waive the QA gate).
-                           "-af", "loudnorm=I=-16:TP=-3.0:LRA=11", "-c:a", "aac", "-b:a", "160k", "-shortest", str(out)],
+                           # AAC overshot to -0.5 dBTP on run 40642352663 despite
+                           # loudnorm TP=-3. The final alimiter sets a hard PCM
+                           # ceiling without auto makeup gain; QA still measures
+                           # the independently decoded AAC true peak.
+                           "-af", "loudnorm=I=-16:TP=-3.0:LRA=11,alimiter=limit=0.65:level=0", "-c:a", "aac", "-b:a", "160k", "-shortest", str(out)],
                           stdin=subprocess.PIPE)
     bases = _bases()
     headline = ep.get("breaking") or ep.get("title") or ""
