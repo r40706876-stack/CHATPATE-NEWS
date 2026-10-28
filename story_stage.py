@@ -288,7 +288,11 @@ def frames(line, episode, talk, n, cut, seed=0):
         manifest_path = Path("assets/licensed/manifest.json")
         if manifest_path.is_file():
             entries = json.loads(manifest_path.read_text(encoding="utf-8"))
-            entry = entries.get(scene, {})
+            # Lead with the verified parcel photograph during the first hook,
+            # rather than spending the highest-drop-off seconds on a generic TV icon.
+            # This is illustrative Commons photography, NEVER the Madurai event.
+            # Reuse the arrival asset so its creator/license attribution is preserved.
+            entry = entries.get("arrival" if scene == "sweets" else scene, {})
             if all(entry.get(k) for k in ("path", "author", "source", "license")):
                 media = Path("assets/licensed") / Path(entry["path"]).name
                 if media.is_file() and media.suffix.lower() in (".png", ".jpg", ".jpeg", ".webp"):
