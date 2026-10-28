@@ -8,7 +8,7 @@ import topics
 
 news = topics.collect_news(None)
 c = nw._safe(news)
-packs, picks = nw.gather(c, 4)
+packs, picks = nw.gather(c, 4)   # 28 Oct शाम: नया video
 eps = nw._write_psych(c, packs, picks, 4)
 json.dump(eps, open("script_test.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
 telegram.send_text("🧪 नया script तरीका (दिमाग़ के हिसाब से) — सिर्फ़ पढ़ने के लिए, इन पर नंबर मत भेजना.\n"
