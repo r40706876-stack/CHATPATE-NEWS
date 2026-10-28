@@ -75,3 +75,14 @@ class Fragments(unittest.TestCase):
         pw._code_check(c)
         self.assertIn("ant", pw._fails(c["vote"]))
         self.assertIn(1, c["vote"]["kamzor"])
+
+
+class Copy(unittest.TestCase):
+    def test_external_copy_flagged(self):
+        import psych_writer as pw
+        pw._EXT = ["वन विभाग ने मगरमच्छ होने से इंकार किया है"]
+        c = {"ep": {"lines": [{"say": "वन विभाग ने मगरमच्छ होने से इनकार किया है."}, {"say": "हमारी अपनी line है ये."}]},
+             "vote": {"jaanch": {"hasi": {"ok": True}}}}
+        pw._code_check(c)
+        self.assertIn("hasi", pw._fails(c["vote"]))
+        pw._EXT = None
