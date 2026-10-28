@@ -173,7 +173,7 @@ def prep(script_path):
     fill_sets(ep)
     json.dump(ep, open(IN / "episode.json", "w", encoding="utf-8"), ensure_ascii=False)
     sprite_lips = ep.get("sprite") and ep.get("lips", "sadtalker") == "sprite"
-    print(json.dumps([] if sprite_lips else list(range(len(ep["lines"])))))   # sprite वाले होंठ = SadTalker की ज़रूरत नहीं
+    print(json.dumps([] if sprite_lips else [i for i, ln in enumerate(ep["lines"]) if not voice_only(ep, ln)]))   # sprite वाले होंठ = SadTalker की ज़रूरत नहीं
 
 
 PROP_WORDS = {"coins": r"छुट्टा|छुट्टे|खुल्ल|सिक्क|चिल्लर|पैसे का", "toffee": r"टॉफी|टाफी", "notes": r"लाख|करोड़"}
@@ -200,6 +200,16 @@ def add_props(ep):
         print(f"  🧊 3D prop → line {i + 1}: {prop}")
 
 
+def voice_only(ep, ln):
+    """29 Oct (मालिक: "बबलू की सूरत video skip करवा देती है"): ऐसे किरदार screen पर नहीं आते — सिर्फ़ उनकी Gemini आवाज़,
+    पूरी screen पर मज़ाक/खबर का visual. VOICE_ONLY env (कॉमा से) या ep["voice_only"]; "" = सब दिखें."""
+    who = ep.get("voice_only")
+    if who is None:
+        who = os.getenv("VOICE_ONLY", "bablu")
+    who = who.split(",") if isinstance(who, str) else who
+    return ln.get("who") in [w.strip() for w in who if w.strip()]
+
+
 def pick_shot(ep, i, ln):
     """style: v2 = पूरी screen तस्वीर/close-up/split बदलते रहें; nochar = बिना किरदार (सिर्फ़ तस्वीर/clip + बड़े अक्षर);
     बाकी = पुराना हमेशा split."""
@@ -210,6 +220,8 @@ def pick_shot(ep, i, ln):
         if m:
             ln["tag_text"] = m.group(1) + "…"
     if style == "nochar":
+        return "full"
+    if voice_only(ep, ln):
         return "full"
     return reel_studio.shot_v2(i, ln) if style == "v2" else reel_studio.shot_for(i, ln)
 
@@ -387,14 +399,14 @@ def post_studio(ep):
         still = Image.open(IN / f"{i}/still.png").convert("RGB")
         vis = sorted((p for p in (IN / "broll").glob(f"{i}_*") if p.suffix != ".txt"),   # असली clip सबसे पहले
                      key=lambda p: ("clip" not in p.name and "own" not in p.name, p.name)) if (IN / "broll").exists() else []
-        shot = ln.get("shot") or pick_shot(ep, i, ln)
+        shot = "full" if voice_only(ep, ln) else (ln.get("shot") or pick_shot(ep, i, ln))
         talk = None
         sprite = (ep.get("sprite") or {}).get(ln["who"])
         if sprite and ep.get("lips", "sadtalker") == "sprite":
             talk = {"folder": sprite, "expr": ln.get("expr", ""), "wav": IN / f"audio/{i:02d}.wav",
                     "set": ln.get("set") or ("studio" if ln["who"] == "bablu" else "village")}
         segs.append({"ln": ln, "wav": IN / f"audio/{i:02d}.wav", "face": None if talk else (clips[-1] if clips else None),
-                     "talk": talk, "still": still, "vis": vis, "shot": shot})
+                     "talk": talk, "still": still, "vis": vis, "shot": shot, "voice": voice_only(ep, ln)})
         if ep.get("react") and (IN / f"react_{i}.png").exists():
             rw = IN / f"audio/{i:02d}_r.wav"
             dur = "0.7"                                       # छोटा reaction, साथ में मज़ेदार आवाज़ (सन्नाटा नहीं)

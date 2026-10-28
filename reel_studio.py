@@ -886,7 +886,7 @@ def render(ep, segs, chars, out, preview):
                 sf = next(cur)
                 last_screen = sf
                 im = sf.copy()
-                if not nochar:
+                if not nochar and not s.get("voice"):            # voice-only किरदार (बबलू): कोने में चेहरा भी नहीं
                     _pip(im, fr, t, ln.get("set", "studio"), left=v2)
             else:
                 sf = next(cur) if cur is not None else Image.new("RGB", size)
@@ -924,7 +924,7 @@ def render(ep, segs, chars, out, preview):
             else:
                 hooking = si == 0 and ep.get("hook")              # पहली line: वही बात बड़े पीले hook में (जो सुनाई दे, वही दिखे)
                 cy = 1150 if (v2 and shot == "full") else BAND_Y + 460
-                if first_seen and t < FPS * 2.5 and shot != "close" and not hooking and not (v2 and shot == "full"):
+                if first_seen and not s.get("voice") and t < FPS * 2.5 and shot != "close" and not hooking and not (v2 and shot == "full"):
                     rv.name_strap(d, (BAND_Y + 84) if shot == "split" else 1130, name, role)
                 if nochar:                                        # हर line ऊपर बड़े अक्षरों में (meme reel जैसा)
                     _hook(d, ep["hook"] if hooking else cap_text, 330)
