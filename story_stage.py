@@ -359,7 +359,7 @@ def frames(line, episode, talk, n, cut, seed=0):
                     from PIL import ImageOps
                     with Image.open(media) as picture:
                         original = picture.convert("RGB")
-                    photo_size = (850, 530)
+                    photo_size = (690, 425)
                     background = ImageOps.fit(original, photo_size,
                                               method=Image.Resampling.LANCZOS).filter(
                                                   ImageFilter.GaussianBlur(22))
@@ -375,13 +375,16 @@ def frames(line, episode, talk, n, cut, seed=0):
     for t,sp in enumerate(talking):
         im=base.copy()
         _scene_action(im,scene,t,n,line=line)
-        # The COD Blender proof is a schematic, not convincing event footage.
-        # Limit it to a fast 0.6s establishing cutaway; a long full-screen
-        # low-detail 3D scene was hiding the actual licensed photo and acting.
-        # Afterwards, use the village stage and attributed documentary illustration.
-        cod_reveal_frames = min(15, max(1, n // 4))
+        # The original 0.6s 3D insert barely registered in real MP4 frame review.
+        # Give the animated courier and Chacha ~0.8-1.2s, but preserve the
+        # remaining dialogue for character acting on the main village stage.
+        cod_reveal_frames = min(n, max(20, min(30, n // 3)))
         if cod_frames is not None and t < cod_reveal_frames:
+            # Play the 24fps Blender action at ~2x so the hand-off and recoil
+            # actually occur within the short comedy cutaway.
             frame=next(cod_frames, None)
+            if frame is not None:
+                frame=next(cod_frames, frame)
             if frame is None:
                 raise RuntimeError("Blender COD proof video contains no decodable frames")
             im = frame.crop((0, 130, 1080, 1790)).resize(SIZE, Image.Resampling.BICUBIC)
@@ -395,15 +398,18 @@ def frames(line, episode, talk, n, cut, seed=0):
         # Show it briefly with readable attribution, then reveal the moving
         # actors and gag props for the majority of the spoken line.
         # On the COD 3D reveal, do not cover the opening full-screen Blender shot.
-        illustration_start = cod_reveal_frames if cod_insert else (14 if scene == "sweets" else 0)
-        illustration_end = min(n, illustration_start + 25)  # ~1s, after the animated hook reveal
+        # The opening COD price and moving TV must be seen before the photo.
+        # Arrival already has an original Blender cutaway: do not stack a
+        # second photo over its physical hand-off and character reactions.
+        illustration_start = n if cod_insert else (27 if scene == "sweets" else 0)
+        illustration_end = min(n, illustration_start + 23)  # ~0.9s, credited illustrative photo
         if licensed_insert is not None and illustration_start <= t < illustration_end:
             pan = int(35 * math.sin(t / max(1, n - 1) * math.pi))
             # News photo enters and exits with the joke instead of sitting still
             # over the critical opening second; credits move with the photo.
             enter = int(560 * max(0.0, 1.0 - (t - illustration_start) / 5.0))
             exit_ = int(560 * max(0.0, 1.0 - (illustration_end - 1 - t) / 5.0))
-            x, y = 105 + pan + enter - exit_, 245
+            x, y = 155 + pan + enter - exit_, 290
             d = ImageDraw.Draw(im)
             d.rounded_rectangle((x-12, y-12, x+licensed_insert.width+12, y+licensed_insert.height+12),
                                 16, fill=(255,255,255), outline=INK, width=8)
