@@ -73,6 +73,13 @@ def tighten(wav):
 
 def prep(script_path):
     ep = json.load(open(ROOT / script_path, encoding="utf-8"))
+    # Default to the current expressive 3D character library, not legacy photo faces.
+    # Use sprite lip-sync so a SadTalker job cannot silently substitute old faces.
+    if not ep.get("legacy_faces"):
+        ep["sprite"] = {who: f"assets/toon/{who}" for who in CHARS}
+        ep["lips"] = "sprite"
+        ep.setdefault("style", "v2")
+        print("  3D sprite characters enabled:", ", ".join(ep["sprite"]))
     import tts
     ep["_voice"] = tts.speak_script(ep, IN / "audio")             # कौन-सी आवाज़ लगी (gemini / edge / kokoro)
     ep["_voice_err"] = tts.LAST_ERR[:300]
@@ -112,35 +119,62 @@ def prep(script_path):
         # intro/outro जैसी lines (न खोज, न खबर) पर नई तस्वीर नहीं — पिछली चलती रहती है (वरना बेमेल फ़ोटो आती थी)
     if ep["lines"]:                                            # पहली line (hook) पर हमेशा तस्वीर — पहला सेकंड ही सब तय करता है
         ep["lines"][0]["_need_vis"] = ep["lines"][0].get("shot") != "close"
-    got = visuals.pick_for_lines(ep["lines"], topic=ep.get("breaking") or ep.get("topic", ""),
-                                 strict=True)                    # बिना AI जाँच कोई तस्वीर नहीं (cartoon/model वाली ग़लती)
-    for i, paths in got.items():
-        for j, path in enumerate(paths):
-            shutil.copy(path, IN / f"broll/{i}_{j}{Path(path).suffix}")
-            if Path(path).with_suffix(".txt").exists():          # photo वाले का नाम (CC license)
-                shutil.copy(Path(path).with_suffix(".txt"), IN / f"broll/{i}_{j}.txt")
-    if not ep.get("no_clips"):                                 # असली खबर के छोटे video clips (पहले सेकंड में हरकत)
+    # Full-frame story shots source only explicitly licensed inserts from
+    # assets/licensed/manifest.json in story_stage. Do not waste minutes
+    # downloading arbitrary YouTube clips that the story renderer never uses.
+    story_only = all(ln.get("shot") == "story" for ln in ep["lines"])
+    if not ep.get("no_clips") and not story_only:               # legacy split/full news footage path
         try:
             import clips
-            qs = [q for ln in ep["lines"] for q in (ln.get("photo_hi") or [])][:6]
-            got_c = clips.for_topic(ep.get("topic") or ep.get("breaking", ""), qs, want=3)
-            for k, (cp, _, title) in enumerate(got_c):        # हर clip उसी line पर जिसकी बात उसके title से मिले
-                tw = visuals._stems(title)
-
-                def fit(i):
-                    ln = ep["lines"][i]
-                    return len(tw & visuals._stems(ln.get("say", "") + " " + " ".join(ln.get("photo_hi") or [])))
-                free = [i for i in range(len(ep["lines"])) if not list((IN / "broll").glob(f"{i}_clip*"))]
-                if not free:
+            topic = ep.get("topic") or ep.get("breaking", "")
+            # YouTube is the first-choice visual for every dialogue.
+            # Keep the search bounded; clips.for_topic checks video frames with
+            # Gemini and rejects clips it cannot visually verify.
+            missing = [i for i, ln in enumerate(ep["lines"]) if ln.get("_need_vis", True)]
+            used_titles = set()
+            for i in missing:
+                ln = ep["lines"][i]
+                hints = list(ln.get("photo_hi") or [])
+                queries = hints[:2] or [ln.get("say", "")[:65]]
+                try:
+                    candidates = clips.for_topic(topic, queries, want=1)
+                except Exception as err:
+                    print(f"  YouTube line {i + 1} unavailable: {str(err)[:90]}")
+                    continue
+                for cp, _, title in candidates:
+                    if title in used_titles:
+                        continue
+                    tw = visuals._stems(title)
+                    spoken = visuals._stems(ln.get("say", "") + " " + " ".join(hints))
+                    story = visuals._stems(topic)
+                    if not (tw & spoken) or len(tw & story) < (2 if len(story) >= 3 else 1):
+                        print(f"  YouTube clip rejected for line {i + 1}: title mismatch")
+                        continue
+                    used_titles.add(title)
+                    shutil.copy(cp, IN / f"broll/{i}_clip0.mp4")
+                    credit = cp.with_suffix(".txt")
+                    if credit.exists():
+                        shutil.copy(credit, IN / f"broll/{i}_clip0.txt")
+                    print(f"  YouTube verified fallback -> line {i + 1}: {title[:65]}")
                     break
-                li = max(free, key=lambda i: (fit(i), -i))
-                if fit(li) == 0:
-                    continue  # No matching dialogue: do not force an unrelated opening clip.
-                shutil.copy(cp, IN / f"broll/{li}_clip{k}.mp4")
-                shutil.copy(cp.with_suffix(".txt"), IN / f"broll/{li}_clip{k}.txt")
-                print(f"  🎬 clip → line {li + 1}: {title[:50]}")
         except Exception as e:                                 # noqa: BLE001
             print("  clips वाला हिस्सा छोड़ा:", repr(e)[:150])
+    # Second choice: only visually reviewed news images for lines without clips.
+    photo_lines = [dict(ln, _need_vis=ln.get("_need_vis", True) and
+                        not any((IN / "broll").glob(f"{i}_clip*.mp4")))
+                   for i, ln in enumerate(ep["lines"])]
+    # Cartoon-only episodes must not silently download unrelated news photos.
+    # Their story-specific animated cards are rendered by reel_studio instead.
+    got = ({} if story_only or ep.get("visual_policy") == "character_only" else
+           visuals.pick_for_lines(photo_lines, topic=ep.get("breaking") or ep.get("topic", ""),
+                                  strict=True))
+    for i, paths in got.items():
+        if any((IN / "broll").glob(f"{i}_clip*.mp4")):
+            continue
+        for j, path in enumerate(paths):
+            shutil.copy(path, IN / f"broll/{i}_{j}{Path(path).suffix}")
+            if Path(path).with_suffix(".txt").exists():
+                shutil.copy(Path(path).with_suffix(".txt"), IN / f"broll/{i}_{j}.txt")
     fill_sets(ep)
     json.dump(ep, open(IN / "episode.json", "w", encoding="utf-8"), ensure_ascii=False)
     sprite_lips = ep.get("sprite") and ep.get("lips", "sadtalker") == "sprite"
@@ -156,24 +190,40 @@ def pick_shot(ep, i, ln):
         m = re.match(r"\s*(हर [^…,।!?]{2,30} में एक [^…,।!?]{2,25})", ln.get("say", ""))
         if m:
             ln["tag_text"] = m.group(1) + "…"
+    # A visual sourcing policy must never replace the actual full-frame acting stage.
+    # news_hybrid enables vetted inserts *inside* story_stage; it does not
+    # switch this episode back to the old split-screen photo template.
+    if ln.get("shot") == "story" and ln.get("scene"):
+        return "story"
+    if ep.get("visual_policy") == "character_only" and ln.get("scene"):
+        return "story"
     if style == "nochar":
         return "full"
     return reel_studio.shot_v2(i, ln) if style == "v2" else reel_studio.shot_for(i, ln)
 
 
 def fill_sets(ep):
-    """जिस line को न जाँची हुई तस्वीर मिली न clip: उसकी बात वाली अपनी AI तस्वीर (आँगन, रसोई, स्टेशन, बैंक…).
-    बेमेल फ़ोटो कभी नहीं; ठीक न बैठे (गाँव/studio) तो कुछ नहीं — screen पर उस line का card चलेगा."""
+    """No unrelated news photos: use existing sets or a dialogue-specific card.
+
+    Every dialogue gets a visual treatment, even when news search fails.
+    A card is rendered by reel_studio from the line's 'big' text.
+    """
     import shutil
     import news_writer as nw
     topic = str(ep.get("topic") or ep.get("breaking") or "")
     for i, ln in enumerate(ep["lines"]):
-        if list((IN / "broll").glob(f"{i}_*")):
+        if any(p.suffix.lower() in (".mp4", ".jpg", ".jpeg", ".png", ".webp")
+               for p in (IN / "broll").glob(f"{i}_*")):
             continue
         scene = nw.pick_set("x", ln.get("say", ""), topic)
         src = ROOT / f"assets/sets/{scene}.png"
-        if scene not in ("village", "studio") and src.exists():
+        if src.exists():
             shutil.copy(src, IN / f"broll/{i}_set.png")
+        if not ln.get("big"):
+            words = str(ln.get("say", "")).replace("।", " ").split()
+            ln["big"] = " ".join(words[-min(7, len(words)):]) if words else topic
+        ln.setdefault("card_color", "yellow")
+        print(f"  line {i + 1}: safe set/card fallback (no unverified news image)")
 
 
 def quality(ep):
@@ -183,16 +233,38 @@ def quality(ep):
     real = {p.name.split("_")[0] for p in files if "_set" not in p.name}
     sets = {p.name.split("_")[0] for p in files if "_set" in p.name}
     clips_n = sum("clip" in p.name for p in files)
+    # Licensed Commons illustrations are composited by story_stage, not broll.
+    # Count them separately: they are NOT footage of the real news incident.
+    licensed_scenes = set()
+    manifest = ROOT / "assets/licensed/manifest.json"
+    if manifest.is_file():
+        try:
+            for scene,entry in json.loads(manifest.read_text(encoding="utf-8")).items():
+                media = ROOT / "assets/licensed" / Path(entry.get("path","")).name
+                if media.is_file() and all(entry.get(k) for k in ("author","license","source")):
+                    licensed_scenes.add(scene)
+        except (OSError,ValueError,TypeError):
+            pass
+    licensed_lines = sum(ln.get("scene") in licensed_scenes for ln in ep["lines"])
     v, err = ep.get("_voice") or "?", str(ep.get("_voice_err") or "")
     json.dump({"voice": v, "voice_err": err, "lines": n, "real_visual_lines": len(real), "set_lines": len(sets),
-               "clips": clips_n, "format": ep.get("format", "")}, open(ROOT / "last_quality.json", "w", encoding="utf-8"),
+               "clips": clips_n, "licensed_illustrative_lines": licensed_lines, "format": ep.get("format", "")}, open(ROOT / "last_quality.json", "w", encoding="utf-8"),
               ensure_ascii=False, indent=1)
     msg = (f"📋 Video जाँच — आवाज़: {'Gemini ✅' if v == 'gemini' else v + ' (backup) ⚠️'}"
            + (f"\n   Gemini आवाज़ क्यों नहीं: {err[:160]}" if v != "gemini" and err else "")
            + f"\n🖼 असली तस्वीर/clip वाली lines: {len(real)}/{n} (YouTube clip: {clips_n})"
+           + f"\n🖼 Licensed illustrative Commons photos: {licensed_lines}/{n} (not actual event footage)"
            + (f", अपनी AI तस्वीर: {len(sets)}" if sets else ""))
-    if v != "gemini" or len(real) * 2 < n:
-        msg += "\n⚠️ ये video पूरी quality का नहीं — Gemini का कोटा दोपहर 12:30 के बाद नया होता है, तब दोबारा बनवाना बेहतर।"
+    # Animated character-only episodes intentionally use no external clips.
+    cartoon = ep.get("visual_policy") == "character_only"
+    if cartoon:
+        animated = sum(bool(ln.get("scene")) for ln in ep["lines"])
+        msg += f"\n🎬 Animated story scenes: {animated}/{n}; external clips intentionally disabled"
+    if v != "gemini":
+        msg += "\n⚠️ Gemini voice unavailable; backup voice used. Listen before publishing."
+    if not cartoon and len(real) * 2 < n:
+        msg += "\n⚠️ Actual event footage not verified; inspect animated/illustrative visuals manually."
+    msg += "\n⚠️ Automated checks cannot establish comedy quality or Instagram retention."
     return msg
 
 
@@ -324,6 +396,28 @@ def chrome(ep, ln, k, total, broll):
     return o
 
 
+def require_editorial_approval(ep):
+    """A valid MP4 is not permission to deliver an unreviewed comedy script.
+
+    The Gemini report is created during prep and downloaded into the join job
+    from the SAME workflow run. A missing/quota-limited/low-scored report must
+    never be silently treated as editorial approval.
+    """
+    report_path = ROOT / "comedy_review.json"
+    if not report_path.is_file():
+        raise RuntimeError("Telegram blocked: independent Gemini editorial review artifact missing")
+    try:
+        report = json.loads(report_path.read_text(encoding="utf-8"))
+        score = float(report.get("score", -1))
+    except (ValueError, TypeError, OSError, json.JSONDecodeError) as exc:
+        raise RuntimeError("Telegram blocked: invalid Gemini editorial review") from exc
+    if report.get("status") != "reviewed" or score < 8.5:
+        raise RuntimeError(f"Telegram blocked: Gemini editorial approval missing or below 8.5/10 ({score})")
+    if not ep.get("title") or not ep.get("lines"):
+        raise RuntimeError("Telegram blocked: incomplete episode metadata")
+    print(f"PASS: independent editorial approval {score}/10; viewer retention not inferred")
+
+
 def post_studio(ep):
     import reel_studio
     segs = []
@@ -351,13 +445,13 @@ def post_studio(ep):
     import qa
     import telegram
     issues, tries = None, 0
-    for tries in range(3):                                # बनाओ → जाँचो → कमी हो तो ख़ुद ठीक करके दोबारा (2 बार तक)
+    for tries in range(1):                                # Render once: fail fast rather than repeating a costly unchanged MP4
         if tries:
             ep["_fix"] = tries                            # reel_studio: तस्वीरें और जल्दी बदलें, card ज़्यादा
             print(f"  ♻️ कमी मिली ({'; '.join(issues)}) — ठीक करके दोबारा बना रहे ({tries}/2)")
         secs = reel_studio.render(ep, segs, CHARS, out, ROOT / "preview_episode.jpg")
         try:
-            issues = qa.check(out)
+            issues = qa.check(out) + qa.check_media(out)
         except Exception as e:                            # noqa: BLE001
             print("  जाँच नहीं हुई:", repr(e)[:100])
             issues = ["QA जाँच नहीं चल पाई: " + type(e).__name__]
@@ -369,7 +463,7 @@ def post_studio(ep):
     import memes                                          # पंच के बाद मशहूर meme (अपनी आवाज़ के साथ)
     used = memes.add(ep, segs, out)
     # Validate the final file, including any inserted meme clips.
-    issues = qa.check(out)
+    issues = qa.check(out) + qa.check_media(out)
     if issues:
         raise RuntimeError("Final video QA failed; delivery blocked: " + "; ".join(issues))
     report = quality(ep)
@@ -385,7 +479,9 @@ def post_studio(ep):
     if ep.get("no_send"):                                 # जाँच वाला video: Telegram पर नहीं, सिर्फ़ repo में
         print("  (no_send) Telegram पर नहीं भेजा")
         return
-    telegram.send_video(out, cap or ep.get("breaking", ""))
+    require_editorial_approval(ep)
+    if not telegram.send_video(out, cap or ep.get("breaking", "")):
+        raise RuntimeError("Telegram delivery unavailable or failed; video retained as episode.mp4")
     if issues:
         report += "\n❌ 2 बार ठीक करने के बाद भी कमी बची — इसे post मत करना:\n• " + "\n• ".join(issues)
     else:
@@ -406,12 +502,26 @@ def post():
         clips = sorted((OUT / str(i)).rglob("*.mp4"))
         faces.append(_frames(clips[-1]) if clips else None)
         stills.append(Image.open(IN / f"{i}/source.png").convert("RGB"))
-        vis.append(sorted((IN / "broll").glob(f"{i}_*")) if (IN / "broll").exists() else [])
+        vis.append(sorted((p for p in (IN / "broll").glob(f"{i}_*") if p.suffix.lower() in (".mp4", ".png", ".jpg", ".jpeg", ".webp")), key=lambda p: (p.suffix.lower() != ".mp4", p.name)) if (IN / "broll").exists() else [])
     out = ROOT / "episode.mp4"
     secs = reel_v3.render(ep, lens, faces, stills, vis, CHARS, out, ROOT / "preview_episode.jpg", audio)
     print(f"बन गया: {out} ({secs:.1f}s)")
+    import qa
+    # Visual motion alone is not enough: a valid MP4 needs an audible audio stream.
+    issues = qa.check(out) + qa.check_media(out)
+    if issues:
+        raise RuntimeError("v3 video/audio QA failed; delivery blocked: " + "; ".join(issues))
+    try:
+        print(qa.targets(out, audio[0] if audio else None))
+    except Exception as exc:
+        print("Virality diagnostics unavailable:", type(exc).__name__)
+    if ep.get("no_send"):
+        print("  (no_send) render QA passed; editorial comedy approval still pending, Telegram blocked")
+        return
     import telegram
-    telegram.send_video(out, f"🎬 v3 test: {ep.get('title', '')} — हर 2-3 सेकंड नया नज़ारा, poll के साथ")
+    require_editorial_approval(ep)
+    if not telegram.send_video(out, f"🎬 बकरा न्यूज़: {ep.get('title', '')}"):
+        raise RuntimeError("Telegram delivery failed; QA-approved MP4 retained as episode.mp4")
 
 
 _cc = {}

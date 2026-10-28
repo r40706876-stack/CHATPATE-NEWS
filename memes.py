@@ -297,7 +297,7 @@ def sheet():
 
 def pick(ep, lens):
     """[(बाद_में_सेकंड, meme_path, id)] — पंच वाली lines (पहली line नहीं, hook न टूटे) और आख़िरी line, ज़्यादा से ज़्यादा 2."""
-    if not DIR.exists() or ep.get("no_memes"):
+    if not DIR.exists() or ep.get("no_memes") or ep.get("no_clips"):
         return []
     lines = [s for s in ep["_segs_ln"]]
     ends, t = [], 0.0
@@ -363,9 +363,15 @@ def overlay_sfx(video, hits, out):
     for j, (t, p) in enumerate(hits, 1):
         ins += ["-i", str(p)]
         ms = int(max(0, t) * 1000)
-        fc.append(f"[{j}:a]adelay={ms}|{ms},volume=0.9[s{j}]")
+        # SFX should punctuate the joke, not overwhelm speech or defeat AAC peak QA.
+        fc.append(f"[{j}:a]adelay={ms}|{ms},volume=0.55[s{j}]")
         labels.append(f"[s{j}]")
-    fc.append("".join(labels) + f"amix=inputs={len(labels)}:duration=first:normalize=0[a]")
+    # The earlier loudnorm in reel_studio happens BEFORE these SFX are mixed.
+    # A later 2026-10-27 render measured -0.5 dBTP and was correctly rejected.
+    # Normalize the FINAL mixed signal and limit peaks with margin for AAC overshoot.
+    fc.append("".join(labels) + f"amix=inputs={len(labels)}:duration=first:normalize=0,"
+              "loudnorm=I=-16:TP=-3.5:LRA=11,"
+              "alimiter=limit=0.62:attack=5:release=80:level=false[a]")
     r = subprocess.run(["ffmpeg", "-y", "-loglevel", "error", *ins, "-filter_complex", ";".join(fc), "-map", "0:v",
                         "-map", "[a]", "-c:v", "copy", "-c:a", "aac", "-b:a", "160k", str(out)], capture_output=True, text=True)
     return out if r.returncode == 0 and Path(out).exists() else None

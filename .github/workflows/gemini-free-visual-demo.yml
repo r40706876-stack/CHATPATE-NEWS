@@ -1,0 +1,38 @@
+name: Gemini-free visual demo
+on:
+  push:
+    branches: [feature/retention-comedy-quality-gate-20261025]
+    paths: ['.github/workflows/gemini-free-visual-demo.yml']
+  workflow_dispatch:
+jobs:
+  visual-demo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    env:
+      GEMINI_API_KEY: ''
+      GEMINI_API_KEY2: ''
+      GEMINI_API_KEY3: ''
+      PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install pillow numpy requests
+      - name: Test news visual matching with Gemini disabled
+        run: |
+          python - <<'PY'
+          import json, visuals
+          ep=json.load(open('episodes/bijli.json',encoding='utf-8'))
+          ep['topic']='बिजली कटौती'
+          result=visuals.pick_for_lines(ep['lines'],topic=ep['topic'],strict=True)
+          print('Matched visuals:',{str(k):[str(p) for p in v] for k,v in result.items()})
+          json.dump({'topic':ep['topic'],'lines':len(ep['lines']),'matched':{str(k):[str(p) for p in v] for k,v in result.items()}},open('visual_demo_report.json','w'),ensure_ascii=False,indent=2)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: gemini-free-visual-report
+          path: |
+            visual_demo_report.json
+            visuals_cache/

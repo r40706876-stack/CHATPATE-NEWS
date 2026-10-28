@@ -1,0 +1,332 @@
+name: Comedy regression checks
+on:
+  pull_request:
+    paths:
+      - 'bakra_rules.py'
+      - 'news_writer.py'
+      - 'visuals.py'
+      - 'talk_episode.py'
+      - 'memes.py'
+      - 'story_stage.py'
+      - 'blender_cod_scene.py'
+      - 'fetch_licensed_news_visuals.py'
+      - 'episodes/bijli.json'
+      - 'run_daily.py'
+      - 'tests/**'
+      - '.github/workflows/comedy-regression.yml'
+  push:
+    branches:
+      - 'feature/retention-comedy-quality-gate-20261025'
+    # Renderer-generated previews are artifacts, not source changes. Avoid
+    # spurious action_required runs and repeated expensive 3D smoke renders.
+    paths-ignore:
+      - 'last_episode.mp4'
+      - 'last_quality.json'
+      - 'preview_episode.jpg'
+  workflow_dispatch:
+concurrency:
+  group: comedy-regression-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Python syntax checks
+        run: python -m py_compile bakra_rules.py news_writer.py visuals.py run_daily.py talk_episode.py memes.py reel_studio.py visual_strategy.py hybrid_stage.py story_stage.py fetch_licensed_news_visuals.py
+      - name: Check every missing visual has safe set/card fallback
+        run: |
+          pip -q install pillow numpy scipy requests
+          python - <<'PY'
+          import json, tempfile
+          from pathlib import Path
+          import talk_episode as te
+          ep=json.load(open('episodes/bijli.json',encoding='utf-8'))
+          with tempfile.TemporaryDirectory() as d:
+              te.IN=Path(d)
+              (te.IN/'broll').mkdir()
+              te.fill_sets(ep)
+              assert all(any((te.IN/'broll').glob(f'{i}_*')) or ln.get('big') for i,ln in enumerate(ep['lines']))
+          print('PASS: each line has a safe set or card')
+          PY
+      - name: Offline script quality tests
+        run: python -m unittest discover -s tests -p 'test_comedy_gate.py' -v
+      - name: Real decoded AAC true-peak regression
+        run: python -m unittest discover -s tests -p 'test_true_peak_qa.py' -v
+      - name: Hybrid visual mapping tests
+        run: python -m unittest discover -s tests -p 'test_visual_strategy.py' -v
+      - name: Ensure hybrid media preserves character story shots
+        run: python -m unittest discover -s tests -p 'test_story_shot_policy.py' -v
+      - name: Verify actual full-frame story-stage storyboard
+        run: python tests/storyboard_preflight.py
+      - name: Render hybrid storyboard frames and verify visual beats
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          from hybrid_stage import stage_frames
+          from visual_strategy import select_visual
+          ep=json.loads(Path("episodes/waiting_ticket_comedy.json").read_text(encoding="utf-8"))
+          out=Path("hybrid_preview")
+          out.mkdir(exist_ok=True)
+          report=[]
+          for i,line in enumerate(ep["lines"]):
+              cards,reason=select_visual(line,ep,i)
+              gen=stage_frames(cards[0],(720,550),25)
+              frames=[]
+              for n in range(43):
+                  frame=next(gen)
+                  if n in (0,18,40):
+                      path=out/f"line_{i+1:02d}_beat_{n:02d}.png"
+                      frame.save(path)
+                      frames.append((n,frame.tobytes()))
+              distinct=len({data for _,data in frames})
+              if distinct < 2:
+                  raise AssertionError(f"line {i+1}: static visual")
+              report.append({"line":i+1,"reason":reason,"beats":cards[0]["beats"],"distinct_sampled_frames":distinct})
+          (out/"report.json").write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")
+          print(json.dumps(report,ensure_ascii=False,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: hybrid-storyboard-preview
+          path: hybrid_preview/
+          if-no-files-found: ignore
+      - name: Verify YouTube first then image then card order
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          s=Path('talk_episode.py').read_text(encoding='utf-8')
+          start=s.index('def prep(')
+          end=s.index('def pick_shot(', start)
+          p=s[start:end]
+          assert p.index('clips.for_topic(') < p.index('visuals.pick_for_lines(') < p.index('fill_sets(ep)')
+          assert 'not any((IN / "broll").glob(f"{i}_clip*.mp4"))' in p
+          print('PASS: YouTube > verified images > set/card priority')
+          PY
+      - name: YouTube live search smoke test
+        continue-on-error: true
+        timeout-minutes: 3
+        run: |
+          pip -q install 'yt-dlp[default]'
+          python - <<'PY'
+          import json
+          import clips
+          results=clips.search('भारत बिजली कटौती समाचार', n=3)
+          report={'search_works':bool(results),'titles':[x[1] for x in results[:3]]}
+          open('youtube_smoke.json','w').write(json.dumps(report,ensure_ascii=False,indent=2))
+          print(json.dumps(report,ensure_ascii=False))
+          PY
+      - name: Live visual retrieval with Gemini disabled
+        env:
+          GEMINI_API_KEY: ''
+          GEMINI_API_KEY2: ''
+          GEMINI_API_KEY3: ''
+          PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+        run: |
+          pip -q install pillow numpy requests
+          python - <<'PY'
+          import json, traceback
+          report={'gemini_disabled':True,'topic':'बिजली कटौती','success':False}
+          try:
+              import visuals
+              ep=json.load(open('episodes/bijli.json',encoding='utf-8'))
+              matches=visuals.pick_for_lines(ep['lines'],topic=report['topic'],strict=True)
+              report['matched']={str(k):[str(p) for p in v] for k,v in matches.items()}
+              report['matched_lines']=sum(bool(v) for v in matches.values())
+              report['total_lines']=len(ep['lines'])
+              report['success']=True
+          except Exception as exc:
+              report['error']=repr(exc)
+              traceback.print_exc()
+          finally:
+              with open('live_visual_report.json','w') as f: json.dump(report,f,ensure_ascii=False,indent=2)
+              print(json.dumps(report,ensure_ascii=False))
+          if not report['success']: raise SystemExit(1)
+          if report['matched_lines'] < report['total_lines']:
+              print('Coverage incomplete; see report for missing lines')
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: live-visual-retrieval
+          path: |
+            live_visual_report.json
+            youtube_smoke.json
+            visuals_cache/
+
+  godot-render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Godot 4 headless
+        run: |
+          curl -fL --retry 3 --connect-timeout 15 --max-time 180 -o /tmp/godot.zip https://github.com/godotengine/godot/releases/download/4.3-stable/Godot_v4.3-stable_linux.x86_64.zip
+          unzip -q /tmp/godot.zip -d /tmp
+          sudo install -m 755 /tmp/Godot_v4.3-stable_linux.x86_64 /usr/local/bin/godot4
+      - name: Verify preinstalled virtual display and video tools
+        run: |
+          set -e
+          # Some PR runners lack ffmpeg; the Ubuntu mirror has repeatedly timed out.
+          # Prefer a prebuilt static ffmpeg+ffprobe pair rather than 87 apt dependencies.
+          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
+            echo 'Runner ffmpeg missing; trying static release before apt fallback'
+            (curl -fL --retry 2 --connect-timeout 12 --max-time 120 \
+              https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz \
+              -o /tmp/ffmpeg-static.tar.xz &&
+             mkdir -p /tmp/ffmpeg-static &&
+             tar -xJf /tmp/ffmpeg-static.tar.xz -C /tmp/ffmpeg-static &&
+             sudo install -m 755 /tmp/ffmpeg-static/ffmpeg-*-amd64-static/ffmpeg /usr/local/bin/ffmpeg &&
+             sudo install -m 755 /tmp/ffmpeg-static/ffmpeg-*-amd64-static/ffprobe /usr/local/bin/ffprobe) || true
+          fi
+          if ! command -v ffmpeg >/dev/null 2>&1 || ! command -v ffprobe >/dev/null 2>&1; then
+            timeout 150 sudo apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=20 install -y --no-install-recommends ffmpeg
+          fi
+          if ! command -v Xvfb >/dev/null 2>&1; then
+            timeout 120 sudo apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=20 install -y --no-install-recommends xvfb
+          fi
+          command -v Xvfb
+          command -v ffmpeg
+          command -v ffprobe
+      - name: Render Godot animation
+        env:
+          LIBGL_ALWAYS_SOFTWARE: '1'
+        run: |
+          mkdir -p scene_outputs/godot
+          xvfb-run -a -s '-screen 0 720x1280x24' godot4 --rendering-driver opengl3 --path production/godot --write-movie "$PWD/scene_outputs/godot/parcel.avi" --fixed-fps 30 --quit-after 90
+          test -s scene_outputs/godot/parcel.avi
+          ffprobe -v error -show_entries stream=width,height,duration -of default=nw=1 scene_outputs/godot/parcel.avi
+          ffmpeg -hide_banner -loglevel error -y -i scene_outputs/godot/parcel.avi -frames:v 1 scene_outputs/godot/preview.png
+          ffmpeg -hide_banner -loglevel error -y -i scene_outputs/godot/parcel.avi -c:v libx264 -preset veryfast -crf 28 -pix_fmt yuv420p scene_outputs/godot/parcel.mp4
+          test -s scene_outputs/godot/parcel.mp4
+          # A technically valid movie can still freeze halfway through.
+          # Require visible frame changes across the whole 3-second scene.
+          for second in 0.2 1.5 2.7; do
+            ffmpeg -hide_banner -loglevel error -y -ss "$second" -i scene_outputs/godot/parcel.mp4 -frames:v 1 "scene_outputs/godot/beat-${second}.png"
+          done
+          test "$(sha256sum scene_outputs/godot/beat-*.png | awk '{print $1}' | sort -u | wc -l)" -eq 3
+          rm scene_outputs/godot/parcel.avi
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: godot-real-render
+          path: scene_outputs/godot/
+          if-no-files-found: warn
+
+  blender-render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Blender binary with bounded alternate-mirror fallback
+        timeout-minutes: 24
+        shell: bash
+        run: |
+          set -euo pipefail
+          # Same proven portable-first strategy as Animation-special-.
+          if ! command -v blender >/dev/null 2>&1; then
+            mkdir -p "$RUNNER_TEMP/blender"
+            if timeout --signal=TERM --kill-after=15s 600s curl -fL --retry 3 --retry-delay 3 --connect-timeout 25 \
+              -o "$RUNNER_TEMP/blender.tar.xz" \
+              "https://download.blender.org/release/Blender4.2/blender-4.2.0-linux-x64.tar.xz" &&
+              tar -xJf "$RUNNER_TEMP/blender.tar.xz" -C "$RUNNER_TEMP/blender" --strip-components=1 &&
+              test -x "$RUNNER_TEMP/blender/blender"; then
+              echo "$RUNNER_TEMP/blender" >> "$GITHUB_PATH"
+              export PATH="$RUNNER_TEMP/blender:$PATH"
+            else
+              echo "::warning::Portable Blender unavailable; trying bounded apt fallback"
+              sudo sed -i 's@azure.archive.ubuntu.com@archive.ubuntu.com@g' /etc/apt/sources.list.d/ubuntu.sources 2>/dev/null || true
+              timeout 180s sudo apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=25 update -qq
+              timeout 720s sudo env DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=25 install -y --no-install-recommends blender
+            fi
+          fi
+          if ! ldconfig -p | grep -q 'libEGL.so.1'; then
+            sudo sed -i 's@azure.archive.ubuntu.com@archive.ubuntu.com@g' /etc/apt/sources.list.d/ubuntu.sources 2>/dev/null || true
+            timeout 180s sudo apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=25 update -qq
+            timeout 300s sudo env DEBIAN_FRONTEND=noninteractive apt-get -o Acquire::Retries=1 -o Acquire::http::Timeout=25 install -y --no-install-recommends libegl1 libgl1 libopengl0
+          fi
+          if ldd "$(command -v blender)" | grep 'not found'; then
+            echo "::error::Blender runtime libraries missing"
+            exit 1
+          fi
+          blender --version | head -1
+      - name: Render 3D parcel
+        timeout-minutes: 5
+        run: |
+          mkdir -p scene_outputs/blender
+          BLENDER_SMOKE=1 BLENDER_OUT="$PWD/scene_outputs/blender/frame_" blender -b -t 2 --python production/blender_shot.py
+          test "$(find scene_outputs/blender -name '*.png' | wc -l)" -eq 3
+          # Each keyframe must differ, proving motion rather than three duplicate stills.
+          test "$(sha256sum scene_outputs/blender/frame_*.png | awk '{print $1}' | sort -u | wc -l)" -eq 3
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: blender-real-render
+          path: scene_outputs/blender/
+          if-no-files-found: warn
+
+  remotion-render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Check available video inspection tools (no slow apt mirror)
+        run: |
+          command -v ffprobe || echo 'ffprobe unavailable: MP4 header and size will be verified instead'
+      - name: Install and render motion graphics
+        working-directory: production/remotion
+        run: |
+          npm install --no-audit --no-fund
+          npx remotion browser ensure
+          npm run render
+          test -s out/news-card.mp4
+          # Size alone is not a quality metric: a valid 3-second H264 card can be under 100 KB.
+          if command -v ffprobe >/dev/null 2>&1; then
+            ffprobe -v error -show_entries stream=width,height,duration -of default=nw=1 out/news-card.mp4
+          else
+            node - <<'JS'
+          const fs = require('fs');
+          const b = fs.readFileSync('out/news-card.mp4');
+          const boxes = ['ftyp', 'moov', 'mdat'];
+          if (b.length < 20000 || b.toString('ascii', 4, 8) !== 'ftyp' ||
+              !boxes.every(k => b.includes(Buffer.from(k)))) {
+            throw new Error('Invalid or incomplete MP4 container');
+          }
+          console.log('MP4 container validated, bytes:', b.length);
+          JS
+          fi
+          # Sample frames at three different moments; a static card must fail.
+          npx remotion still src/index.jsx NewsCard out/beat-00.png --frame=0
+          npx remotion still src/index.jsx NewsCard out/beat-35.png --frame=35
+          npx remotion still src/index.jsx NewsCard out/beat-65.png --frame=65
+          test "$(sha256sum out/beat-*.png | awk '{print $1}' | sort -u | wc -l)" -eq 3
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: remotion-real-render
+          path: production/remotion/out/
+          if-no-files-found: warn
+
+  launch-final-demo:
+    needs: [regression, godot-render, blender-render, remotion-render]
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && contains(github.event.head_commit.message, '[render-demo]'))
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: read
+    steps:
+      - name: Dispatch full comedy episode render
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run talk_episode.yml --repo "${{ github.repository }}" --ref "${{ github.ref_name }}" -f script=episodes/waiting_ticket_comedy.json
+          echo "Full episode render requested; editorial no_send remains active until approved."

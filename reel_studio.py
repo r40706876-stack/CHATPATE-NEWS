@@ -17,6 +17,8 @@ import talk_test as tt
 
 ROOT = Path(__file__).parent
 W, H, FPS = 1080, 1920, 25
+# Last-stage limiter prevents decoded AAC inter-sample peaks from breaching QA.
+STUDIO_AUDIO_FILTER = "loudnorm=I=-16:TP=-3.0:LRA=11,alimiter=limit=0.65:level=0"
 SW, SH = 720, 1280                     # SadTalker के लिए source (9:16)
 # "tanz" पर भी सीधा देखने वाला गंभीर चेहरा: smug वाली photos में आँखें बग़ल में हैं (बोलते वक़्त अजीब लगता था) —
 # वो सिर्फ़ reaction pose "smug" में.
@@ -205,8 +207,8 @@ def shot_v2(i, ln):
     पंच/tag वाली line = किरदार का बड़ा close-up, बाकी split — हर line पर नज़ारा बदले, template जैसा न लगे."""
     if i == 0 or (ln.get("who") == "bablu" and not ln.get("punch")):
         return "full"
-    if ln.get("punch") or ln.get("tag_text"):
-        return "close"
+    # Keep the speaking character small even on punch lines: close-ups reveal
+    # synthetic mouth movement. Split screen lets visuals carry the story.
     return "split"
 
 
@@ -412,12 +414,38 @@ def _bases():
     return out
 
 
+def _card_rgb(color):
+    """Normalize script card colors (CSS names/hex or RGB) before NumPy math."""
+    from PIL import ImageColor
+    if isinstance(color, str):
+        try:
+            return ImageColor.getrgb(color)[:3]
+        except ValueError:
+            return (60, 40, 100)
+    try:
+        values = tuple(max(0, min(255, int(v))) for v in color)
+        return values[:3] if len(values) >= 3 else (60, 40, 100)
+    except (TypeError, ValueError):
+        return (60, 40, 100)
+
+
 def _kinetic(card, bg, t, size):
     """भूरे कार्ड की जगह: पिछली तस्वीर धुंधली करके उस पर उछलते बड़े अक्षर (अंक हो तो 0 से गिनती चढ़े)."""
     import re
     w, h = size
     if card.get("color"):                                         # "बकरा बहस" beat card: साफ़ रंगीन पट्टी, पीछे धुंधली परछाईं नहीं
         c = card["color"]
+        # Card colors may arrive as CSS hex or named strings from Gemini.
+        # Normalize before NumPy arithmetic and PIL drawing.
+        from PIL import ImageColor
+        if isinstance(c, str):
+            try:
+                c = ImageColor.getrgb(c)
+            except ValueError:
+                c = (45, 35, 90)
+        if not isinstance(c, (tuple, list)) or len(c) < 3:
+            c = (45, 35, 90)
+        c = tuple(max(0, min(255, int(v))) for v in c[:3])
         y = np.linspace(0, 1, h)[:, None, None]
         g = np.array(c)[None, None] * (1 - 0.55 * y)
         im = Image.fromarray(np.repeat(g, w, axis=1).astype(np.uint8))
@@ -449,10 +477,125 @@ def _kinetic(card, bg, t, size):
     return im
 
 
+def _story_scene(card, size):
+    """Looping illustrated news props; no random internet media."""
+    w,h=size
+    base_scene=card.get("scene","delivery")
+    sequence={"sweets":["sweets","arrival","showroom"],"arrival":["arrival","showroom","arrival"],"showroom":["arrival","showroom","laddoo_hdmi"],"laddoo_hdmi":["laddoo_hdmi","laddoo_connected","showroom"],"bill":["bill","bill_shock","delivery"],"shop":["shop","sweets","arrival"],"delivery":["delivery","delivery_overload","arrival"]}.get(base_scene,[base_scene,"arrival"])
+    t=0
+    while True:
+        scene=sequence[(t//max(1,int(FPS*1.35)))%len(sequence)]
+        im=Image.new("RGB",(w,h),(235,245,252))
+        d=ImageDraw.Draw(im)
+        d.rectangle((0,int(h*.79),w,h),fill=(198,220,232))
+        title={"sweets":"मिठाई माँगी!","arrival":"घर पर COD पार्सल!","showroom":"टीवी-फ्रिज आ गए!","laddoo_hdmi":"लड्डू में HDMI?!","laddoo_connected":"लड्डू से टीवी चालू!","bill":"COD बिल ₹1.69 लाख","bill_shock":"इतना बड़ा COD बिल!","shop":"मिठाई की दुकान!","delivery":"डिलीवरी वाले परेशान!","delivery_overload":"पार्सलों का पहाड़!"}.get(scene,"COD खबर")
+        d.rounded_rectangle((15,20,w-15,110),radius=20,fill=(31,55,90))
+        ft=tt.font(54)
+        while ft.getlength(title)>w-55 and ft.size>25:ft=tt.font(ft.size-2)
+        d.text((w//2,65),title,font=ft,anchor="mm",fill="white")
+        bounce=int(35*abs(np.sin(t*.12)))
+        def parcel(x,y,ww=215,hh=150):
+            d.rounded_rectangle((x,y,x+ww,y+hh),radius=12,fill=(212,156,91),outline=(88,61,43),width=6)
+            d.line((x+ww//2,y,x+ww//2,y+hh),fill=(245,216,154),width=12)
+        def tv(x,y):
+            d.rounded_rectangle((x,y,x+330,y+245),radius=20,fill=(31,45,65),outline=(82,105,124),width=7)
+            d.rectangle((x+22,y+22,x+308,y+206),fill=(83,184,216))
+            d.ellipse((x+90,y+55,x+210,y+175),fill=(245,209,98))
+        def fridge(x,y):
+            d.rounded_rectangle((x,y,x+175,y+350),radius=20,fill=(219,234,239),outline=(79,105,121),width=7)
+            d.line((x,y+150,x+175,y+150),fill=(79,105,121),width=7)
+            d.line((x+145,y+50,x+145,y+125),fill=(79,105,121),width=10)
+        if scene=="sweets":
+            parcel(85,int(h*.53),300,170)
+            for j in range(3):d.ellipse((115+j*85,int(h*.56),180+j*85,int(h*.65)),fill=(248,204,101))
+            if t>8:tv(w-450,int(h*.40)-bounce)
+        elif scene=="arrival":
+            # Parcel enters the door scene from the right instead of reusing the showroom.
+            door_x=100
+            d.rounded_rectangle((door_x,int(h*.28),door_x+270,int(h*.78)),radius=14,fill=(124,79,59),outline=(70,48,41),width=9)
+            d.ellipse((door_x+225,int(h*.54),door_x+246,int(h*.57)),fill=(247,210,112))
+            slide=int((1-min(1,(t%max(1,int(FPS*1.35)))/(FPS*.65)))*360)
+            parcel(w-400+slide,int(h*.59)-bounce,310,175)
+            d.text((w-250,int(h*.44)),"COD",font=tt.font(88),anchor="mm",fill=(195,60,60))
+        elif scene=="showroom":
+            tv(100,int(h*.43)-bounce)
+            fridge(w-305,int(h*.36))
+        elif scene in ("laddoo_hdmi","laddoo_connected"):
+            # Visual joke: HDMI cable slides into the laddoo, then the TV powers on.
+            phase=1.0 if scene=="laddoo_connected" else (t%max(1,int(FPS*1.35)))/max(1,int(FPS*1.35))
+            lad_x=145
+            lad_y=int(h*.40)
+            d.ellipse((lad_x,lad_y,lad_x+355,lad_y+355),fill=(247,177,55),outline=(157,92,27),width=10)
+            for xx,yy in ((210,.49),(340,.54),(265,.66),(415,.68)):
+                d.ellipse((xx,int(h*yy),xx+22,int(h*yy)+22),fill=(209,123,34))
+            plug_x=int(840-310*min(1,phase*2.1))
+            cable_y=int(h*.59)
+            d.line((plug_x+65,cable_y,980,cable_y,1010,cable_y+85),fill=(39,48,63),width=24)
+            d.rounded_rectangle((plug_x,cable_y-36,plug_x+85,cable_y+36),radius=10,fill=(54,62,76))
+            d.rectangle((plug_x-30,cable_y-20,plug_x,cable_y+20),fill=(176,180,183),outline=(45,49,55),width=4)
+            if phase>.42:
+                d.rounded_rectangle((580,int(h*.32),w-35,int(h*.54)),radius=16,fill=(28,50,71),outline=(83,110,130),width=7)
+                d.rectangle((596,int(h*.34),w-51,int(h*.51)),fill=(84,210,139))
+                d.text(((580+w-35)//2,int(h*.43)),"CONNECTED!",font=tt.font(53),anchor="mm",fill=(22,56,39))
+                for j in range(3):
+                    sx=480+j*45
+                    d.line((sx,int(h*.36),sx+24,int(h*.32)),fill=(242,198,49),width=9)
+            else:
+                d.text((w//2,int(h*.27)),"लड्डू में HDMI?",font=tt.font(67),anchor="mm",fill=(193,55,56))
+        elif scene in ("bill","bill_shock"):
+            if scene=="bill_shock":
+                d.rectangle((0,115,w,int(h*.79)),fill=(255,224,219))
+                d.rounded_rectangle((120,int(h*.27),w-120,int(h*.75)),radius=22,fill="white",outline=(200,58,58),width=16)
+                d.text((w//2,int(h*.38)),"COD बिल!",font=tt.font(95),anchor="mm",fill=(200,58,58))
+                d.text((w//2,int(h*.58)),"₹1,69,000",font=tt.font(120),anchor="mm",fill=(38,53,79))
+                yield im
+                t+=1
+                continue
+            tv(50,int(h*.43)-bounce)
+            d.rounded_rectangle((450,int(h*.32),w-40,int(h*.76)),radius=20,fill="white",outline=(68,79,99),width=8)
+            d.text((w-300,int(h*.46)),"COD",font=tt.font(95),anchor="mm",fill=(199,66,65))
+            bill_size=int(63+12*abs(np.sin(t*.16)))
+            d.text((w-300,int(h*.59)),"₹1,69,000",font=tt.font(bill_size),anchor="mm",fill=(34,53,77))
+        elif scene=="shop":
+            d.rectangle((110,int(h*.40),w-110,int(h*.77)),fill=(249,216,159),outline=(103,74,53),width=8)
+            d.polygon([(80,int(h*.40)),(w//2,int(h*.21)),(w-80,int(h*.40))],fill=(203,82,75))
+            parcel(w//2-150,int(h*.52)-bounce,300,160)
+        else:
+            if scene=="delivery_overload":
+                d.rectangle((0,115,w,int(h*.79)),fill=(244,232,211))
+                for j in range(9):
+                    parcel(45+(j%4)*245,int(h*.72)-(j//4)*190,215,160)
+                d.ellipse((w-190,int(h*.23),w-80,int(h*.38)),fill=(238,183,135),outline=(79,57,48),width=6)
+                d.text((w//2,int(h*.18)),"इतने पार्सल?!",font=tt.font(76),anchor="mm",fill=(179,59,55))
+                yield im
+                t+=1
+                continue
+            # The delivery-worker silhouette and increasing parcel stack are the punchline.
+            d.ellipse((w-220,int(h*.37),w-120,int(h*.49)),fill=(238,183,135),outline=(79,57,48),width=5)
+            d.line((w-170,int(h*.49),w-170,int(h*.70)),fill=(55,94,151),width=40)
+            d.line((w-170,int(h*.55),w-285,int(h*.61)),fill=(55,94,151),width=22)
+            d.line((w-170,int(h*.55),w-60,int(h*.62)),fill=(55,94,151),width=22)
+            d.line((w-170,int(h*.70),w-230,int(h*.79)),fill=(52,58,69),width=23)
+            d.line((w-170,int(h*.70),w-95,int(h*.79)),fill=(52,58,69),width=23)
+            for j in range(5):
+                if t<j*5:continue
+                parcel(45+(j%3)*230,int(h*.68)-(j//3)*180-(bounce if j==4 else 0),205,140)
+            d.text((w//2,int(h*.28)),"COD",font=tt.font(110),anchor="mm",fill=(204,66,60))
+        yield im
+        t+=1
+
+
 def _screen_gen(src, seed, size, bg=None, hero=False):
     """तस्वीर/clip/कार्ड के frames (size के हिसाब से), ख़त्म नहीं होते.
     hero=True (reel का पहला frame): तेज़ "झटके वाला" zoom — पहले 2 सेकंड में हरकत (graph: 3-5 सेकंड पर आधे लोग जाते थे)."""
     w, h = size
+    if isinstance(src, dict) and src.get("hybrid_stage"):
+        from hybrid_stage import stage_frames
+        yield from stage_frames(src, size, FPS)
+        return
+    if isinstance(src, dict) and src.get('scene'):
+        yield from _story_scene(src, size)
+        return
     if isinstance(src, Path) and src.suffix == ".mp4":
         got = False
         for f in rv._video_frames(src, w, h):
@@ -691,7 +834,10 @@ def mix_studio(voices, events, tail, out, moods=None):
         s = rv.sfx(kind)
         i = int(t * rv.SR)
         mix[i:i + len(s)] += s[:len(mix) - i]
-    mix = np.clip(mix[:total], -1, 1)
+    # A hard clip produced inter-sample AAC peaks above 0 dBFS in the
+    # independently decoded 34.72s episode. Use a gentle peak-safe limiter
+    # before PCM encoding; leave headroom for AAC reconstruction overshoot.
+    mix = 0.62 * np.tanh(mix[:total] * 1.25) / np.tanh(1.25)
     import wave
     with wave.open(str(out), "wb") as w:
         w.setnchannels(1)
@@ -740,7 +886,16 @@ def render(ep, segs, chars, out, preview):
     mix_studio([rv._read(s["wav"]) for s in segs], events, tail, out.with_suffix(".wav"), moods)
     wr = subprocess.Popen(["ffmpeg", "-y", "-loglevel", "error", "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}",
                            "-r", str(FPS), "-i", "-", "-i", str(out.with_suffix(".wav")), "-c:v", "libx264", "-crf", "20",
-                           "-preset", "veryfast", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "160k", "-shortest", str(out)],
+                           "-preset", "veryfast", "-pix_fmt", "yuv420p",
+                           # AAC reconstruction can overshoot FFmpeg loudnorm's input TP target.
+                           # A newer 2026-10-27 render measured -1.0 dBTP and failed QA
+                           # despite TP=-1.8. Reserve extra margin; still independently
+                           # measure final decoded AAC (do not waive the QA gate).
+                           # AAC overshot to -0.5 dBTP on run 40642352663 despite
+                           # loudnorm TP=-3. The final alimiter sets a hard PCM
+                           # ceiling without auto makeup gain; QA still measures
+                           # the independently decoded AAC true peak.
+                           "-af", STUDIO_AUDIO_FILTER, "-c:a", "aac", "-b:a", "160k", "-shortest", str(out)],
                           stdin=subprocess.PIPE)
     bases = _bases()
     headline = ep.get("breaking") or ep.get("title") or ""
@@ -756,7 +911,7 @@ def render(ep, segs, chars, out, preview):
         ln, react = s["ln"], s.get("react")
         shot = s.get("shot") or "split"
         _, name, role = chars[ln["who"]]
-        size = (W, H) if shot == "full" else (SW_, SH_)
+        size = (W, H) if shot in ("full", "story") else (SW_, SH_)
         vis = list(s.get("vis") or [])
         if ln.get("big") and vis and not react and shot in ("split", "full"):   # माँग वाली line: पहले बड़े अक्षर, फिर तस्वीर
             card = [{"big": ln["big"], "sub": ln.get("sub", ""), "color": ln.get("card_color")}]
@@ -782,12 +937,25 @@ def render(ep, segs, chars, out, preview):
             last_vis = vis
         if list(s.get("vis") or []):
             carry = 0                                           # इस line की अपनी तस्वीर मिली
+        # Never recycle an old photo for a line without its own verified visual.
+        # Keep the speaker SMALL in split screen; alternate story-specific cards.
+        # A generated *_set.png is only a room backdrop, NOT a news visual.
+        # Never show it in the upper story panel as if it illustrated the line.
+        own_verified = any(isinstance(v, Path) and v.exists() and not v.stem.endswith("_set")
+                           for v in (s.get("vis") or []))
+        if shot in ("split", "full") and not own_verified:
+            shot, size = "split", (SW_, SH_)
+            from visual_strategy import select_visual
+            vis, visual_reason = select_visual(ln, ep, si)
+            print(f"VISUAL_AUDIT line={si+1} speaker={ln.get('who')} strategy={visual_reason} verified_media=False")
+        elif shot in ("split", "full"):
+            print(f"VISUAL_AUDIT line={si+1} speaker={ln.get('who')} strategy=verified-media verified_media=True")
         if shot == "full" and not vis:
             shot, size = "split", (SW_, SH_)
         cut_s = CUT - 0.4 * int(ep.get("_fix") or 0)            # जाँच में कमी मिली = दोबारा बनाते वक़्त और जल्दी बदलें
         chunk = max(1, int(cut_s * FPS))                        # हर 2 सेकंड नया नज़ारा
         need = math.ceil(n / chunk) + int(ep.get("_fix") or 0)
-        if shot != "close" and not react and vis and len(vis) < need:
+        if shot != "close" and not react and vis and len(vis) < need and own_verified:
             # सिर्फ़ zoom बदलने से वही तस्वीर 5 सेकंड "रुकी" दिखती थी (छठ वाली video) — कमी हो तो: line की मुख्य बात
             # वाला card, फिर इसी खबर की दूसरी असली तस्वीरें (जो अभी इस line में नहीं)
             extra = []
@@ -800,8 +968,13 @@ def render(ep, segs, chars, out, preview):
                     break
                 if e_ not in vis:
                     vis.insert(1 if len(vis) == 1 else len(vis), e_)
+        story_gen = None
+        if shot == "story" and s.get("talk") and not react:
+            import story_stage
+            story_gen = story_stage.frames(ln, ep, s["talk"], n, _cut_cached, si)
+            print(f"VISUAL_AUDIT line={si+1} speaker={ln.get('who')} strategy=full-story:{ln.get('scene')}")
         face = None
-        if s.get("talk"):                                       # हमारी 3 मुँह वाली फ़ोटो से बोलना (साफ़ 3D चेहरा)
+        if s.get("talk") and shot != "story":                                       # हमारी 3 मुँह वाली फ़ोटो से बोलना (साफ़ 3D चेहरा)
             face = talk_frames(s["talk"], shot, n, si)
         elif s.get("face"):
             face = _vid_frames(s["face"], W, H) if shot == "close" else _vid_frames(s["face"], W, BAND_H)
@@ -833,12 +1006,29 @@ def render(ep, segs, chars, out, preview):
             else:
                 fr = still
             punchy = shot == "close" and not react
-            if shot == "close":
+            if shot == "story":
+                im = next(story_gen)
+            elif shot == "close":
                 if punchy:
-                    z = 1.0 + 0.03 * min(1, t / 8)                # हल्का — ज़्यादा zoom पर 3D चेहरे की कमी दिखती थी
+                    # Long punch lines need a real camera change, not an almost-static face.
+                    # A modest jump cut every ~1.6s preserves lip sync and the same character.
+                    # This also makes _fix retries meaningful for close shots.
+                    jump_frames = max(18, int((1.6 - 0.2 * int(ep.get("_fix") or 0)) * FPS))
+                    angle = (t // jump_frames) % 2 if n > int(2.8 * FPS) else 0
+                    z = (1.04 if angle == 0 else 1.23) + 0.012 * min(1, (t % jump_frames) / 8)
+                    fy = 0.30 if angle == 0 else 0.24
                 else:                                     # reaction: ज़िंदा लगे — धीरे-धीरे पास आना + हल्की साँस
                     z = 1.04 + 0.05 * t / n + 0.006 * math.sin(t / 3)
-                im = _zoomr(fr, z, 0.3).copy()
+                    fy = 0.30
+                im = _zoomr(fr, z, fy).copy()
+                # Real full-frame visual interruption, not merely a tiny face zoom.
+                # Older reels kept the same portrait for 3-5s and failed visual QA.
+                if ln.get("big") and n > int(2.9 * FPS):
+                    flash_cycle = max(18, int((1.8 - 0.2 * int(ep.get("_fix") or 0)) * FPS))
+                    flash_len = max(6, int(0.42 * FPS))
+                    if t >= flash_cycle and t % flash_cycle < flash_len:
+                        im = _kinetic({"big": ln["big"], "color": ln.get("card_color") or "#4328A5"},
+                                      None, t % flash_cycle, (W, H))
             elif shot == "full":
                 sf = next(cur)
                 last_screen = sf
@@ -851,16 +1041,14 @@ def render(ep, segs, chars, out, preview):
                 strap = bool(ep.get("bulletin") and ln.get("headline"))   # headline पट्टी सिर्फ़ bulletin में (पहले 4 परतें लिखाई की थीं)
                 im = bases[strap].copy()
                 im.paste(sf, (SCR[0], SCR[1]))
-                zb = (1.0 + 0.10 * min(1, t / 8)) if (ln.get("punch") and not react) else (1.05 if react else 1.0 + 0.03 * t / n)
-                dx = 0
-                if ln.get("beat") == "dhamki" and not react:     # धमकी: धीरे-धीरे चेहरे के बहुत पास (suspense)
-                    zb = 1.0 + 0.24 * t / max(1, n)
-                elif ln.get("beat") in ("twist", "takiya") and not react and t < 8:   # धमाका: हल्का झटका
-                    dx = int(16 * math.sin(t * 2.6) * (1 - t / 8))
+                # Keep cinematic motion, but cap the speaker zoom so fake lip-sync never fills the frame.
+                # Story visuals above remain free to pan, zoom and animate.
+                zb = 1.0 + (0.035 if ln.get("punch") else 0.022) * min(1.0, t / max(1, n))
+                dx = int(7 * math.sin(t * 0.16)) if ln.get("beat") in ("twist", "takiya") else 0
                 im.paste(_zoomr(fr, zb), (dx, BAND_Y))
                 clean = im.copy()                                # बिना लिखाई वाला frame (आख़िरी poll के पीछे)
             d = ImageDraw.Draw(im)
-            if k >= FPS * 2:                                 # vidIQ + virality skill: पहले 2 सेकंड कोई logo/पट्टी नहीं (हर style में) — सिर्फ़ तस्वीर + 4 शब्द
+            if k >= FPS * 2 and shot != "story":                                 # vidIQ + virality skill: पहले 2 सेकंड कोई logo/पट्टी नहीं (हर style में) — सिर्फ़ तस्वीर + 4 शब्द
                 chrome_safe(d, k)
             if shot == "split":
                 badge = f"खबर {ln['item']}/{ln['items_total']}" if ln.get("item") else "ब्रेकिंग"
@@ -879,22 +1067,35 @@ def render(ep, segs, chars, out, preview):
                 d.rounded_rectangle((30, BAND_Y + 380, 560, BAND_Y + 456), 20, fill=RED)
                 d.text((58, BAND_Y + 418), f"{name} का रिएक्शन", font=tt.font(44), fill="white", anchor="lm")
             else:
-                hooking = si == 0 and ep.get("hook")              # पहली line: वही बात बड़े पीले hook में (जो सुनाई दे, वही दिखे)
-                cy = 1150 if (v2 and shot == "full") else BAND_Y + 460
+                # Keep the headline for the opening 1.8s only. The old full-line
+                # yellow card obscured the action for ~4.5s and looked static.
+                hooking = si == 0 and bool(ep.get("hook")) and t < int(FPS * 1.1)
+                cy = 1685 if shot == "story" else (1150 if (v2 and shot == "full") else BAND_Y + 460)
                 if first_seen and t < FPS * 2.5 and shot != "close" and not hooking and not (v2 and shot == "full"):
                     rv.name_strap(d, (BAND_Y + 84) if shot == "split" else 1130, name, role)
                 if nochar:                                        # हर line ऊपर बड़े अक्षरों में (meme reel जैसा)
                     _hook(d, ep["hook"] if hooking else cap_text, 330)
-                elif hooking and ep.get("hook_short"):           # पहले 3 सेकंड: 3 lines पढ़नी पड़ती थीं (skip 46%) — अब ≤6 शब्द, बड़े
+                elif hooking and ep.get("hook_short") and not v2:           # पहले 3 सेकंड: 3 lines पढ़नी पड़ती थीं (skip 46%) — अब ≤6 शब्द, बड़े
                     _hook_big(d, re.sub(r"[\U0001F000-\U0001FFFF\u2600-\u27BF\uFE0F]", "", ep["hook_short"]).strip(), 360)
                     if wtimes:
                         karaoke_timed(d, cap_text, t / FPS, wtimes, cy)
-                elif hooking and v2:                                # v2: झटका ऊपर बड़े अक्षरों में (नीचे Instagram के buttons)
-                    _hook(d, ep["hook"], 330)
+                elif hooking and v2 and shot == "story":
+                    _hook(d, ep.get("hook_short") or ep["hook"], 190)
+                    if wtimes:
+                        karaoke_timed(d, cap_text, t / FPS, wtimes, cy)
+                elif hooking and v2:
+                    # Do not cover the animated news story with a huge 3-line
+                    # yellow card. Put the hook on the desk BELOW the speaker;
+                    # the COD delivery and TV must remain visible immediately.
+                    hook_low(d, ep.get("hook_short") or ep["hook"])
                 elif hooking:
                     hook_low(d, ep["hook"])
                 else:
-                    if ln.get("tag_text"):                        # पहचान वाली line ऊपर बड़ी — यही share/tag करवाती है
+                    # A kinetic story card already displays the line's key text.
+                    # Do not overlay a second giant yellow tag over the same visual.
+                    kinetic_story = shot == "split" and vis and all(
+                        isinstance(v, dict) and "big" in v for v in vis)
+                    if ln.get("tag_text") and not kinetic_story and shot != "story":
                         _hook(d, ln["tag_text"], 330)
                     if wtimes:
                         karaoke_timed(d, cap_text, t / FPS, wtimes, cy)
@@ -906,11 +1107,11 @@ def render(ep, segs, chars, out, preview):
                 st_text = ln.get("stamp") or STAMP_OF.get(ln.get("react_pose"), "")
                 st_t = 0
             asking = False                                      # सवाल अब सिर्फ़ अंत में (पंच line साफ़ सुनाई-दिखाई दे)
-            if st_text and not asking:                          # सवाल वाले पल ठप्पा नहीं (ऊपर एक-दूसरे पर चढ़ते थे)
+            if st_text and not asking and shot != "story":                          # सवाल वाले पल ठप्पा नहीं (ऊपर एक-दूसरे पर चढ़ते थे)
                 if si == 0:                                     # hook का ठप्पा: hook के बड़े अक्षरों के नीचे, बीच में
-                    _stamp(im, st_text, st_t, W / 2, 640 if shot != "split" else SCR[3] - 130, 84)
+                    _stamp(im, st_text, st_t, W / 2, 640 if shot != "split" else SCR[2] - 160, 48)
                 elif shot == "close":
-                    _stamp(im, st_text, st_t, W / 2 + 60, 330, 78)
+                    _stamp(im, st_text, st_t, W / 2 + 60, 1080, 62)  # chest, never across face
                 else:
                     _stamp(im, st_text, st_t, SCR[2] - 200, SCR[1] + 120)
                 st_t += 1

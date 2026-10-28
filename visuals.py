@@ -241,8 +241,10 @@ def pick_checked(items):
     try:
         picks = gemini.json_from(gemini.ask(parts, json_mode=True, temperature=0.1)).get("picks", [])
     except Exception as e:                                # noqa: BLE001  Gemini न चले: सिर्फ़ पक्के tag-मेल वाले
-        print("  AI जाँच नहीं हुई, सिर्फ़ भारत वाली + पक्के मेल वाली ले रहे:", repr(e)[:120])
-        picks = [next((j for j, c in enumerate(cs) if c.get("india") and c["match"] >= 1), -1) for cs in cands]
+        print("  AI visual review unavailable: reject all unverified external photos:", repr(e)[:120])
+        # Keyword/India tags are not visual proof. Wrong crowd/religious photos
+        # are worse than a dialogue-specific card; fail closed on quota errors.
+        picks = [-1 for _ in cands]
     out = []
     CACHE.mkdir(exist_ok=True)
     for i, cs in enumerate(cands):
@@ -341,6 +343,30 @@ def _ahash(path):
         return None
 
 
+def safe_story_indices(candidates_, topic, limit=3, line=None):
+    """Only use same-story photos whose headline supports the dialogue.
+
+    With Gemini unavailable, a title cannot verify the visible contents.
+    Prefer explicit line search hints and reject unrelated news photos.
+    """
+    tw = _stems(str(topic))
+    if not tw:
+        return []
+    need = 2 if len(tw) >= 2 else 1
+    spoken = _stems((line or {}).get("say", "")) - tw
+    intent = _stems(" ".join((line or {}).get("visuals") or []) + " " + " ".join((line or {}).get("photo_hi") or []))
+    eligible = []
+    for j, c in enumerate(candidates_):
+        tags = _stems(c.get("tags", ""))
+        if not c.get("same_story") or c.get("stock") or len(tw & tags) < need:
+            continue
+        if line is not None and not ((spoken | intent) & tags):
+            continue
+        score = 3 * len(intent & tags) + 2 * len(spoken & tags)
+        eligible.append((score, j))
+    return [j for _, j in sorted(eligible, key=lambda x: (-x[0], x[1]))[:limit]]
+
+
 def pick_for_lines(lines, per_line=3, pool=9, topic="", strict=False):   # 3 तक: एक तस्वीर पर देर तक न अटके
     # strict=True ("बकरा बहस"): AI ने देखकर पास न की हो तो कोई तस्वीर नहीं — पहले बिना जाँच वाली cartoon/model फ़ोटो 30 सेकंड अटकी रही
     """{line_index: [path, ...]} — हर line की सारी खोजों का एक pool, AI एक बार में देखकर हर line के लिए 2 तक चुनता है
@@ -397,6 +423,8 @@ def pick_for_lines(lines, per_line=3, pool=9, topic="", strict=False):   # 3 त
             ml, mt = len(lw & tt_), len(tw & tt_)
             if not c.get("same_story") and (ml == 0 or mt == 0):       # line-खोज वाली फ़ोटो: line और खबर दोनों से मेल ज़रूरी
                 continue
+            if not c.get("stock") and ml >= 1 and mt >= (2 if len(tw) >= 3 else 1):
+                c["same_story"] = True
             c["score"] = c["match"] + 2.5 + 1.5 * ml + 0.5 * mt
             kept.append(c)
         news = kept
@@ -446,8 +474,10 @@ def pick_for_lines(lines, per_line=3, pool=9, topic="", strict=False):   # 3 त
         for attempt in range(1):
             try:
                 res = gemini.json_from(gemini.ask(parts, json_mode=True, temperature=0.1, patient=False))
-                got = res.get("picks", [])
-                hr = res.get("hero") or {}
+                got = res.get("picks", []) if isinstance(res, dict) else None
+                if not isinstance(got, list):
+                    got = None
+                hr = (res.get("hero") or {}) if isinstance(res, dict) else {}
                 try:
                     hl, hp, hs = int(hr.get("line", 0)) - 1, int(hr.get("pick", -1)), float(hr.get("score", 0))
                     if 0 <= hl < len(batch) and 0 <= hp < len(batch[hl][2]):
@@ -459,14 +489,26 @@ def pick_for_lines(lines, per_line=3, pool=9, topic="", strict=False):   # 3 त
                 break
             except Exception as e:                        # noqa: BLE001
                 print("  AI जाँच में गड़बड़, दोबारा:", repr(e)[:100])
-        if got is None and strict:                        # बिना जाँच कुछ नहीं (screen पर beat वाला card चलेगा)
-            print("  AI जाँच नहीं हुई — strict: इन lines पर कोई तस्वीर नहीं")
-            got = [[] for _ in batch]
-        if got is None:                                   # AI नहीं चला: बिना देखे कुछ नहीं लगाते — सिर्फ़ भारत वाली पक्की photo
-            print("  AI जाँच नहीं हुई — खबर/search वाली असली फ़ोटो (search engine का मेल), वरना भारत वाली पक्की photo")
-            got = [[j for j, c in enumerate(cs) if c.get("news") and not c.get("stock")
-                    and len(_stems(lines[i].get("topic") or topic) & _stems(c.get("tags", ""))) >= 2][:per_line]
-                   for i, _, cs in batch]
+        if got is None or (not any(isinstance(row, list) and row for row in got) and any(cs for _, _, cs in batch)):
+            # Gemini free tier can exhaust quota, ignore instructions or return bad JSON.
+            # Strict mode must not turn this into 0 visuals automatically: use only
+            # article images whose headline matches this exact story (never stock).
+            print("  Gemini photo review unavailable: verified story-title fallback")
+            got = []
+            for i, _, cs in batch:
+                got.append(safe_story_indices(cs, lines[i].get("topic") or topic, per_line, lines[i]))
+        # Never trust AI-provided indices without checking their type and bounds.
+        clean = []
+        for n, (_, _, cs) in enumerate(batch):
+            chosen = got[n] if isinstance(got, list) and n < len(got) else []
+            if not isinstance(chosen, list):
+                chosen = []
+            valid = [j for j in chosen if type(j) is int and 0 <= j < len(cs)]
+            if chosen and not valid:
+                # Gemini returned out-of-range or non-integer picks.
+                valid = safe_story_indices(cs, lines[batch[n][0]].get("topic") or topic, per_line, lines[batch[n][0]])
+            clean.append(valid[:per_line])
+        got = clean
         picks += [got[n] if n < len(got) else [] for n in range(len(batch))]
     CACHE.mkdir(exist_ok=True)
     out, where = {}, {}
@@ -474,7 +516,7 @@ def pick_for_lines(lines, per_line=3, pool=9, topic="", strict=False):   # 3 त
         got = []
         sel = picks[n] if n < len(picks) and isinstance(picks[n], list) else []
         for j in sel[:per_line]:
-            if not isinstance(j, int) or not 0 <= j < len(cs) or cs[j]["id"] in _used:
+            if type(j) is not int or not 0 <= j < len(cs) or cs[j]["id"] in _used:
                 continue
             c = cs[j]
             ext = ".mp4" if c["id"].startswith("v") else ".jpg"

@@ -1,9 +1,14 @@
-# repo में रखा आख़िरी video (last_episode.mp4) Telegram पर भेजो
+# Manual re-send of an already QA-approved last_episode.mp4.
+# The talk-episode join job handles automatic Telegram delivery after QA.
+# GitHub's GITHUB_TOKEN pushes do not trigger new push workflows.
 name: send-last
 on:
   workflow_dispatch:
     inputs:
-      caption: {description: "caption", default: "📰 दिन भर की खबरें • बकरा अंदाज़ में"}
+      caption: {description: "caption", default: "🐐 बकरा न्यूज़ • QA-पास डेमो (पोस्ट करने से पहले देखें)"}
+concurrency:
+  group: send-last-${{ github.ref }}
+  cancel-in-progress: false
 env:
   TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
   TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -12,4 +17,42 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: /usr/bin/python3 -c "import telegram, pathlib, sys; telegram.send_video(pathlib.Path('last_episode.mp4'), sys.argv[1])" "${{ inputs.caption }}"
+      - name: Install independent media QA dependencies
+        run: |
+          command -v ffmpeg && command -v ffprobe
+          /usr/bin/python3 -m pip install -q --break-system-packages numpy
+      - name: Independently verify MP4 and deliver demo
+        run: |
+          /usr/bin/python3 - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          import qa, telegram
+          # A manually dispatched resend must never bypass the episode's
+          # private editorial hold or the independent same-episode review.
+          ep_path=Path('episodes/waiting_ticket_comedy.json')
+          if not ep_path.is_file():
+              raise SystemExit('Telegram blocked: episode metadata missing')
+          ep=json.loads(ep_path.read_text(encoding='utf-8'))
+          if ep.get('no_send', True):
+              raise SystemExit('Telegram blocked: no_send editorial hold is active')
+          review_path=Path('comedy_review.json')
+          if not review_path.is_file():
+              raise SystemExit('Telegram blocked: approved independent editorial report missing')
+          review=json.loads(review_path.read_text(encoding='utf-8'))
+          if review.get('status') != 'reviewed' or float(review.get('score',-1)) < 8.5:
+              raise SystemExit('Telegram blocked: independent editorial score below 8.5 or unavailable')
+          p=Path('last_episode.mp4')
+          issues=qa.check(p)+qa.check_media(p)
+          if p.exists():
+              probe=subprocess.run(['ffprobe','-v','error','-show_entries','format=duration','-of','json',str(p)],
+                                   capture_output=True,text=True,check=True)
+              duration=float(json.loads(probe.stdout)['format']['duration'])
+              if duration>40:
+                  issues.append(f'Overlong comedy demo: {duration:.1f}s (limit 40s)')
+          if issues:
+              raise SystemExit('Telegram blocked by independent QA: '+'; '.join(issues))
+          caption='🐐 बकरा न्यूज़ • QA-पास डेमो (पोस्ट करने से पहले देखें)'
+          if not telegram.send_video(p,caption):
+              raise SystemExit('Telegram credentials unavailable or delivery rejected')
+          print('PASS: verified MP4 delivered to Telegram')
+          PY

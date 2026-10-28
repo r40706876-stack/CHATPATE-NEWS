@@ -9,6 +9,31 @@ on:
       still: {description: "सिर स्थिर (yes = सिर्फ़ होंठ/आँख/चेहरा, शांत anchor जैसा)", default: "yes"}
       expr: {description: "चेहरे/होंठ के हिलने की ताकत (3D किरदार पर 1.5 अच्छा)", default: "1.5"}
       size: {description: "SadTalker model: 512 = साफ़ चेहरा (धीमा), 256 = तेज़", default: "256"}
+  push:
+    branches: ['feature/retention-comedy-quality-gate-20261025']
+    paths:
+      - 'episodes/waiting_ticket_comedy.json'
+      - 'reel_studio.py'
+      - 'story_stage.py'
+      - 'reel_studio.py'
+      - 'talk_episode.py'
+      - 'memes.py'
+      - 'qa.py'
+      - 'tts.py'
+      - 'comedy_review.py'
+      - 'visual_strategy.py'
+      - 'hybrid_stage.py'
+      - 'tests/storyboard_preflight.py'
+      - 'tests/test_visual_strategy.py'
+      - 'tests/test_hybrid_stage.py'
+      - 'tests/test_tts_pacing.py'
+      - 'tests/test_true_peak_qa.py'
+      - 'fetch_licensed_news_visuals.py'
+      - '.github/workflows/talk_episode.yml'
+# Only the newest branch render may consume expensive TTS/render time.
+concurrency:
+  group: talk-episode-${{ github.ref }}
+  cancel-in-progress: true
 env:
   GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
   GEMINI_API_KEY2: ${{ secrets.GEMINI_API_KEY2 }}
@@ -24,22 +49,100 @@ jobs:
     outputs: {lines: "${{ steps.p.outputs.lines }}"}
     steps:
       - uses: actions/checkout@v4
-      - name: ffmpeg (apt अटके तो static build)
-        timeout-minutes: 12
+      - name: FFmpeg — reuse runner binaries; download only if absent
+        timeout-minutes: 6
         run: |
-          timeout 240 sudo apt-get install -y -qq --no-install-recommends ffmpeg libraqm0 \
-            || (timeout 180 sudo apt-get update -qq && timeout 240 sudo apt-get install -y -qq --no-install-recommends ffmpeg libraqm0) \
-            || (curl -sL --max-time 120 https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz | tar -xJ -C /tmp && sudo cp /tmp/ffmpeg-master-latest-linux64-gpl/bin/ff* /usr/local/bin/) \
-            || (curl -sL --max-time 120 https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz | tar -xJ -C /tmp && sudo cp /tmp/ffmpeg-*-static/ff* /usr/local/bin/)
+          if command -v ffmpeg >/dev/null 2>&1 && command -v ffprobe >/dev/null 2>&1; then
+            echo "Using runner FFmpeg and FFprobe; skipping slow Ubuntu mirror"
+          else
+            curl -fLsS --retry 2 --max-time 150 https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz -o /tmp/ffmpeg.tar.xz
+            mkdir -p /tmp/ffmpeg-bin
+            tar -xJf /tmp/ffmpeg.tar.xz -C /tmp/ffmpeg-bin
+            sudo cp /tmp/ffmpeg-bin/ffmpeg-*-static/ffmpeg /tmp/ffmpeg-bin/ffmpeg-*-static/ffprobe /usr/local/bin/
+          fi
           ffmpeg -version | head -1
+          ffprobe -version | head -1
       - id: p
         run: |
+          set -o pipefail
           /usr/bin/python3 -m pip install -q --break-system-packages numpy scipy pillow edge-tts rembg onnxruntime "yt-dlp[default]"
-          curl -fsSL https://deno.land/install.sh | sh -s -- -y >/dev/null 2>&1; export PATH=$HOME/.deno/bin:$PATH   # YouTube के JS challenge के लिए
-          /usr/bin/python3 talk_episode.py prep "${{ inputs.script }}" | tee prep.log
+          # Deno is optional for yt-dlp JS challenges; CDN TLS failures must not abort the whole episode.
+          if timeout 90s bash -c 'curl -fLsS --retry 2 --connect-timeout 10 --max-time 60 https://deno.land/install.sh | sh -s -- -y' >/dev/null 2>&1; then
+            echo "Optional Deno runtime installed"
+          else
+            echo "::warning::Optional Deno install unavailable; continuing with yt-dlp fallback and original 3D visuals"
+          fi
+          export PATH="$HOME/.deno/bin:$PATH"
+          # Fast visual/scene validation BEFORE paying the TTS and MP4 render cost.
+          python3 tests/storyboard_preflight.py
+          python3 -m unittest discover -s tests -p test_comedy_gate.py -q
+          python3 -m unittest discover -s tests -p test_visual_strategy.py -q
+          python3 -m unittest discover -s tests -p test_hybrid_stage.py -q
+          python3 -m unittest discover -s tests -p test_tts_pacing.py -q
+          python3 -m unittest discover -s tests -p test_true_peak_qa.py -q
+          python3 - <<'PY'
+          import tts
+          assert tts.speakable("WL-48 से WL-47") == "डब्ल्यूएल 48 से डब्ल्यूएल 47"
+          assert tts.speakable("EMI और wi-fi") == "ईएमआई और वाईफ़ाई"
+          print("PASS: TTS acronyms, hyphens and railway waitlist codes")
+          PY
+          python3 - <<'PY'
+          import json, bakra_rules
+          ep=json.load(open("episodes/waiting_ticket_comedy.json",encoding="utf-8"))
+          violations=bakra_rules.violations(ep)
+          if violations:
+              raise SystemExit("Script quality gate failed: "+str(violations))
+          if len(ep["lines"]) < 5 or len(ep["lines"]) > 9:
+              raise SystemExit("Expected 5-9 comedy dialogue beats")
+          print("PASS: comedy script structural checks")
+          PY
+          # Independent Gemini critique is editorial, not a claim about real viewers.
+          # If Gemini is quota-limited it records 'unavailable'; a low reviewed score blocks render.
+          python3 comedy_review.py "episodes/waiting_ticket_comedy.json"
+          # This COD episode explicitly requires REAL, rights-verified photos.
+          # Fail closed instead of producing another cartoon-only MP4 labelled QA passed.
+          python3 fetch_licensed_news_visuals.py
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          entries=json.loads(Path('assets/licensed/manifest.json').read_text(encoding='utf-8'))
+          for scene in ('arrival','freight'):
+              entry=entries.get(scene)
+              if not entry or not all(entry.get(k) for k in ('author','source','license','source_url')):
+                  raise SystemExit('Missing licensed news illustration for scene: '+scene)
+              photo=Path('assets/licensed')/entry['path']
+              if not photo.is_file() or photo.stat().st_size < 10000:
+                  raise SystemExit('Missing verified real photograph: '+str(photo))
+          print('PASS: both rights-verified real photographs and attribution are present')
+          PY
+          /usr/bin/python3 talk_episode.py prep "${{ inputs.script || 'episodes/waiting_ticket_comedy.json' }}" | tee prep.log
           echo "lines=$(tail -1 prep.log)" >> $GITHUB_OUTPUT
+      - name: Upload independent comedy editorial review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: comedy-editorial-review
+          path: comedy_review.json
+          if-no-files-found: ignore
+      - name: Upload fast storyboard preview
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cartoon-storyboard-preflight
+          path: preflight_storyboard.jpg
+          if-no-files-found: ignore
+      - name: Upload Commons imagery, creator and license credits
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: licensed-news-visuals
+          path: assets/licensed/
+          if-no-files-found: ignore
       - uses: actions/upload-artifact@v4
-        with: {name: st_in, path: st_in}
+        with:
+          name: st_in
+          path: st_in
+          if-no-files-found: error
 
   face:
     needs: prep
@@ -56,7 +159,7 @@ jobs:
       - uses: actions/setup-python@v5
         with: {python-version: "3.10"}
       - uses: actions/cache@v4
-        with: {path: st_models, key: "sadtalker-${{ inputs.size }}-v1"}
+        with: {path: st_models, key: "sadtalker-${{ inputs.size || '256' }}-v1"}
       - uses: actions/cache@v4
         with: {path: ~/.cache/pip, key: sadtalker-pip-v1}
       - name: SadTalker install
@@ -65,7 +168,7 @@ jobs:
           git clone -q --depth 1 https://github.com/OpenTalker/SadTalker st
           mkdir -p st_models/checkpoints st_models/gfpgan/weights
           cd st_models/checkpoints
-          for f in mapping_00109-model.pth.tar mapping_00229-model.pth.tar SadTalker_V0.0.2_${{ inputs.size }}.safetensors; do
+          for f in mapping_00109-model.pth.tar mapping_00229-model.pth.tar SadTalker_V0.0.2_${{ inputs.size || '256' }}.safetensors; do
             test -s $f || wget -q https://github.com/OpenTalker/SadTalker/releases/download/v0.0.2-rc/$f; done
           cd ../gfpgan/weights
           test -s alignment_WFLW_4HG.pth || wget -q https://github.com/xinntao/facexlib/releases/download/v0.1.0/alignment_WFLW_4HG.pth
@@ -83,8 +186,8 @@ jobs:
           cd st
           time python inference.py --driven_audio ../st_in/${{ matrix.line }}/talk.wav \
             --source_image ../st_in/${{ matrix.line }}/source.png --result_dir ../st_out/${{ matrix.line }} \
-            --preprocess ${{ inputs.prep }} --pose_style ${{ inputs.pose }} --expression_scale ${{ inputs.expr }} --size ${{ inputs.size }} --cpu --batch_size 4 \
-            $( [ "${{ inputs.still }}" = "yes" ] && echo --still )
+            --preprocess ${{ inputs.prep || 'full' }} --pose_style ${{ inputs.pose || '0' }} --expression_scale ${{ inputs.expr || '1.5' }} --size ${{ inputs.size || '256' }} --cpu --batch_size 4 \
+            $( [ "${{ inputs.still || 'yes' }}" = "yes" ] && echo --still )
       - uses: actions/upload-artifact@v4
         with: {name: "clip-${{ matrix.line }}", path: st_out}
 
@@ -92,32 +195,105 @@ jobs:
     needs: [prep, face]
     if: always() && needs.prep.result == 'success'
     runs-on: ubuntu-latest
-    permissions: {contents: write}
+    permissions: {contents: write, actions: read}
     steps:
       - uses: actions/checkout@v4
-      - name: ffmpeg (apt अटके तो static build)
-        timeout-minutes: 12
+      - name: FFmpeg — reuse runner binaries; download only if absent
+        timeout-minutes: 6
         run: |
-          timeout 240 sudo apt-get install -y -qq --no-install-recommends ffmpeg libraqm0 \
-            || (timeout 180 sudo apt-get update -qq && timeout 240 sudo apt-get install -y -qq --no-install-recommends ffmpeg libraqm0) \
-            || (curl -sL --max-time 120 https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz | tar -xJ -C /tmp && sudo cp /tmp/ffmpeg-master-latest-linux64-gpl/bin/ff* /usr/local/bin/) \
-            || (curl -sL --max-time 120 https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz | tar -xJ -C /tmp && sudo cp /tmp/ffmpeg-*-static/ff* /usr/local/bin/)
+          if command -v ffmpeg >/dev/null 2>&1 && command -v ffprobe >/dev/null 2>&1; then
+            echo "Using runner FFmpeg and FFprobe; skipping slow Ubuntu mirror"
+          else
+            curl -fLsS --retry 2 --max-time 150 https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz -o /tmp/ffmpeg.tar.xz
+            mkdir -p /tmp/ffmpeg-bin
+            tar -xJf /tmp/ffmpeg.tar.xz -C /tmp/ffmpeg-bin
+            sudo cp /tmp/ffmpeg-bin/ffmpeg-*-static/ffmpeg /tmp/ffmpeg-bin/ffmpeg-*-static/ffprobe /usr/local/bin/
+          fi
           ffmpeg -version | head -1
+          ffprobe -version | head -1
       - uses: actions/download-artifact@v4
         with: {name: st_in, path: st_in}
+      - name: Integrate proven original Blender COD animation
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          # Never use an old low-quality COD proof after its Blender scene code
+          # changes. Match the exact Git blob of blender_cod_scene.py at the
+          # successful proof run to the checked-out source of this episode.
+          local_blob="$(git hash-object blender_cod_scene.py)"
+          run_id=""
+          while read -r candidate_id candidate_sha; do
+            [ -n "$candidate_id" ] || continue
+            proof_blob="$(gh api "repos/${{ github.repository }}/contents/blender_cod_scene.py?ref=$candidate_sha" --jq '.sha')"
+            if [ "$proof_blob" = "$local_blob" ]; then
+              run_id="$candidate_id"
+              break
+            fi
+          done < <(gh run list --repo "${{ github.repository }}" --workflow bakra-blender-3d.yml --branch "${{ github.ref_name }}" --status success --limit 20 --json databaseId,headSha --jq '.[] | [.databaseId, .headSha] | @tsv')
+          if [ -z "$run_id" ]; then
+            echo "::error::No successful Blender COD proof for the exact current scene source; refusing stale footage"
+            exit 1
+          fi
+          mkdir -p blender_output
+          gh run download "$run_id" --repo "${{ github.repository }}" -n bakra-original-blender-cod-3d -D blender_output
+          test -s blender_output/bakra_cod_3d.mp4
+          ffmpeg -v error -xerror -i blender_output/bakra_cod_3d.mp4 -f null -
+          echo "Original 3D COD proof from run $run_id ready for story-stage compositing"
+      - name: Retrieve same-run Gemini editorial verdict for delivery gate
+        uses: actions/download-artifact@v4
+        with: {name: comedy-editorial-review, path: .}
+      - name: Restore same-run licensed Commons illustrations and credits
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with: {name: licensed-news-visuals, path: assets/licensed}
       - uses: actions/download-artifact@v4
         continue-on-error: true
         with: {pattern: "clip-*", path: st_out, merge-multiple: true}
       - run: |
-          ls -R st_out 2>/dev/null | head -40
+          if [ -d st_out ]; then find st_out -maxdepth 2 -type f | head -40; else echo '3D sprite mode: SadTalker clips correctly skipped'; fi
           /usr/bin/python3 -m pip install -q --break-system-packages numpy scipy pillow rembg onnxruntime
           /usr/bin/python3 talk_episode.py post
+      - name: Independent final MP4 QA (respect editorial hold)
+        if: success()
+        run: |
+          /usr/bin/python3 - <<'PY'
+          import json, subprocess
+          from pathlib import Path
+          import qa
+          p=Path('episode.mp4')
+          issues=qa.check(p)+qa.check_media(p)
+          if p.exists():
+              probe=subprocess.run(['ffprobe','-v','error','-show_entries','format=duration','-of','json',str(p)],
+                                   capture_output=True,text=True,check=True)
+              duration=float(json.loads(probe.stdout)['format']['duration'])
+              if duration>40:
+                  issues.append(f'Comedy demo too long: {duration:.1f}s (limit 40s)')
+          if issues:
+              raise SystemExit('Final independent QA failed: '+'; '.join(issues))
+          ep=json.loads(Path('st_in/episode.json').read_text(encoding='utf-8'))
+          if ep.get('no_send'):
+              print('PASS: final MP4 QA; Telegram held by no_send editorial flag')
+          else:
+              print('PASS: final MP4 QA; talk_episode.py post handles single Telegram delivery')
+          PY
+      - name: Preserve rendered MP4 for independent visual and audio review
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ job.status == 'success' && 'render-qa-passed' || 'qa-rejected-video' }}
+          path: |
+            episode.mp4
+            preview_episode.jpg
+          if-no-files-found: ignore
+          retention-days: 14
       - name: झलक सेव
         if: always()
         run: |
           git config user.name bot && git config user.email bot@users.noreply.github.com
           git add -f preview_episode.jpg last_quality.json 2>/dev/null || true
-          if [ -f episode.mp4 ] && [ $(stat -c%s episode.mp4) -lt 45000000 ]; then cp episode.mp4 last_episode.mp4; git add -f last_episode.mp4; fi
+          # Never publish a rejected render as the latest successful episode.
+          if [ "${{ job.status }}" = "success" ] && [ -f episode.mp4 ] && [ $(stat -c%s episode.mp4) -lt 45000000 ]; then cp episode.mp4 last_episode.mp4; git add -f last_episode.mp4; fi
           git diff --cached --quiet && exit 0
           git commit -m "episode preview"
           for i in 1 2 3; do git pull --rebase -X theirs && git push && break; sleep 5; done

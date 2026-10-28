@@ -318,8 +318,23 @@ def render(ep, lens, faces, stills, visuals, chars, out, preview, audio_paths):
                 if t < 6 and not react:
                     f = f.transform(f.size, Image.AFFINE, (1, 0, (6 - t) * 6 * (-1) ** t, 0, 1, 0))
                 im.paste(f, (0, 0))
+                # Long punch/reaction shots otherwise leave the upper screen
+                # almost unchanged and fail the retention QA. Rotate a real
+                # dialogue-specific kinetic headline every ~1.5 seconds.
+                if n > FPS * 3 and (t // max(1, int(FPS * 1.5))) % 2 == 1:
+                    beat = card_frame({"big": ln.get("big") or ln.get("say", ""),
+                                       "sub": ln.get("sub", "")}, t % max(1, int(FPS * 1.5)), i + t // FPS)
+                    im.paste(beat, (0, 0))
             else:
-                im.paste(next(vgen, None) or Image.new("RGB", (W, TOP)), (0, 0))
+                upper = next(vgen, None) or Image.new("RGB", (W, TOP))
+                # A still image or paused source must never occupy the upper
+                # screen for an entire long line. Interleave a contextual
+                # kinetic card on a fixed 1.2s beat, even without `big`.
+                beat_len = max(1, int(FPS * 1.2))
+                if n > beat_len * 2 and (t // beat_len) % 2 == 1:
+                    upper = card_frame({"big": ln.get("big") or ln.get("say", ""),
+                                        "sub": ln.get("sub", "")}, t % beat_len, i * 7 + t // beat_len)
+                im.paste(upper, (0, 0))
                 im.paste(face_frame(fr, W, BOT, 1.0 + 0.04 * t / n, 0.04), (0, TOP))
             d = ImageDraw.Draw(im)
             chrome(d, k)

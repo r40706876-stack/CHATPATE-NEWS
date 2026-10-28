@@ -45,7 +45,7 @@ BASE = "https://generativelanguage.googleapis.com/v1beta"
 def _post(url, body, key):
     req = urllib.request.Request(url, json.dumps(body).encode(),
                                  {"Content-Type": "application/json", "x-goog-api-key": key})
-    with urllib.request.urlopen(req, timeout=120) as r:
+    with urllib.request.urlopen(req, timeout=35) as r:
         return json.load(r)
 
 
@@ -105,7 +105,7 @@ def gemini_line(text, who, expr, key, base=None):
     # बाकी models भी (हर model का अपना कोटा). पहले सिर्फ़ वही एक आज़माते थे → सीधे backup आवाज़ पर गिर जाते थे.
     dead = _gem_ok.setdefault("dead_models", set())
     models = [m for m in dict.fromkeys(([_gem_ok["model"]] if _gem_ok["model"] else []) + TTS_MODELS)
-              if (key[-6:], m) not in dead]
+              if (key[-6:], m) not in dead][:2]
     for model in models:
         bodies = [
             ("interactions", f"{BASE}/interactions", {
@@ -137,9 +137,9 @@ def gemini_line(text, who, expr, key, base=None):
                     if e.code == 429 and ("per day" in msg.lower() or "limit: 0" in msg):
                         dead.add((key[-6:], model))       # आज का कोटा ख़त्म — इस key पर ये model दोबारा नहीं
                         break
-                    if e.code == 429 and attempt == 0:
-                        time.sleep(25)
-                        continue
+                    if e.code == 429:
+                        dead.add((key[-6:], model))
+                        break
                     break
                 except Exception as e:                    # noqa: BLE001
                     errors.append(f"{model}/{name}: {e!r}")
@@ -169,7 +169,12 @@ def edge_line(text, who, tmp, beat=""):
     voice, pitch, rate = EDGE.get(who, EDGE["bablu"])
     volume = "+0%"
     if beat in EDGE_BEAT:
-        rate, pitch, volume = EDGE_BEAT[beat]
+        # Keep each character's vocal identity while applying dramatic beat changes.
+        # Previously beat presets replaced pitch/rate entirely, making Bablu and
+        # Chacha (or Pinky and Dadi) sound nearly identical during punchlines.
+        beat_rate, beat_pitch, volume = EDGE_BEAT[beat]
+        rate = f"{max(-45, min(45, int(rate.rstrip('%')) + int(beat_rate.rstrip('%')))):+d}%"
+        pitch = f"{max(-40, min(40, int(pitch.removesuffix('Hz')) + int(beat_pitch.removesuffix('Hz')))):+d}Hz"
     mp3 = Path(tmp).with_suffix(".mp3")
 
     async def go():
@@ -255,14 +260,35 @@ def split_by_silence(a, n):
     return [a[pts[k]:pts[k + 1]] for k in range(n)]
 
 
+def trim_boundary_silence(audio, padding=0.08):
+    """Remove generated inter-line pauses before duration QA, never cut speech mid-line.
+
+    Gemini's multi-line output can assign half a long separator to each clip.
+    Counting that silence as spoken words falsely triggers the hallucination gate.
+    """
+    if len(audio) < SR // 5:
+        return audio
+    hop = max(1, SR // 100)
+    count = len(audio) // hop
+    rms = np.sqrt(np.mean(audio[:count * hop].reshape(count, hop) ** 2, axis=1))
+    threshold = max(0.005, float(rms.max()) * 0.035)
+    active = np.flatnonzero(rms > threshold)
+    if len(active) == 0:
+        return audio  # Invalid/quiet audio remains visible to downstream checks.
+    pad = int(padding * SR)
+    lo = max(0, int(active[0]) * hop - pad)
+    hi = min(len(audio), (int(active[-1]) + 1) * hop + pad)
+    return audio[lo:hi]
+
+
 def gemini_character(lines, who, key):
     """एक किरदार की सारी lines एक ही call में — आवाज़ हर line में एक जैसी."""
     rant = any(l.get("delivery") for l in lines)
     base = RANT.get(who) if rant else None
     if len(lines) == 1:
-        return [gemini_line(lines[0]["say"], who, lines[0].get("delivery") or lines[0].get("expr", ""), key, base)]
+        return [trim_boundary_silence(gemini_line(lines[0]["say"], who, lines[0].get("delivery") or lines[0].get("expr", ""), key, base))]
     joined = "\n\n".join(l["say"] for l in lines)
-    how = "हर लाइन के बाद पूरा एक सेकंड रुकना"
+    how = "हर दो लाइनों के बीच 0.4 सेकंड रुकना; आखिरी लाइन के बाद कोई अतिरिक्त ठहराव नहीं"
     if rant:                                              # line-दर-line अंदाज़ (बोलना नहीं, सिर्फ़ निर्देश)
         how = ("लाइनें क्रम से, हर एक का अंदाज़ — " + "; ".join(f"{k + 1}) {l.get('delivery', '')}" for k, l in enumerate(lines))
                + ". ऊर्जा शुरू से आख़िर तक बढ़ती जाए. " + how)
@@ -273,10 +299,10 @@ def gemini_character(lines, who, key):
             exp = len(l["say"]) * 0.06
             if not (0.3 * exp < len(p) / SR < 3.0 * exp):
                 raise ValueError("हिस्से की लंबाई गड़बड़")
-        return parts
+        return [trim_boundary_silence(p) for p in parts]
     except ValueError as e:                               # काटना ठीक न बैठे → line-line, पर वही voice
         print(f"  {who}: एक साथ वाली आवाज़ काट नहीं पाए ({e}), line-line बना रहे हैं")
-        return [gemini_line(l["say"], who, l.get("delivery") or l.get("expr", ""), key, base) for l in lines]
+        return [trim_boundary_silence(gemini_line(l["say"], who, l.get("delivery") or l.get("expr", ""), key, base)) for l in lines]
 
 
 def make_all(script, engine, out, key):
@@ -310,12 +336,37 @@ def speakable(text):
         w = m.group(0)
         if w.lower() in WORDS:
             return WORDS[w.lower()]
-        if w.isupper() and 2 <= len(w) <= 6:                       # RBI, EMI, LPG, UPI, ATM
-            return "".join(LETTER[c] for c in w)
+        if w.isalpha() and w.isupper() and 2 <= len(w) <= 6:       # RBI, EMI, WL; never index a hyphen
+            return "".join(LETTER.get(c, c) for c in w)
         return w
-    text = re.sub(r"[A-Za-z][A-Za-z-]*", word, text)
+    # Railway waitlist codes such as WL-48 must be spoken as letters + number,
+    # not passed to the acronym letter lookup with a '-' (KeyError).
+    text = re.sub(r"\b([A-Z]{2,6})-(\d+)\b", r"\1 \2", text)
+    text = re.sub(r"[A-Za-z]+(?:-[A-Za-z]+)*", word, text)
     text = re.sub(r"₹\s*([\d,]+)", lambda m: m.group(1).replace(",", "") + " रुपये", text)
     return re.sub(r"(\d+)\s*%", r"\1 परसेंट", text)
+
+
+def audio_length_issues(lines, audios, engine="gemini"):
+    """Reject hallucinated Gemini speech; assess deterministic Edge at final speed.
+
+    Edge is spoken exactly from the supplied text, and the pipeline applies
+    TEMPO here plus 1.1x in talk_episode.tighten. Rejecting its raw 7.2s line
+    at a 7s limit previously aborted the whole workflow even though the
+    published audio would be ~6.2s. For Gemini, keep a raw-duration\n    sanity check scaled to actual characters: 7.3s for 50 Hindi chars is\n    plausible speech, while 8.8s for 55 chars still flags extra narration.
+    """
+    issues = []
+    for i, (line, audio) in enumerate(zip(lines, audios)):
+        raw_seconds = len(audio) / SR
+        effective_seconds = raw_seconds / (TEMPO * 1.1) if engine == "edge" else raw_seconds
+        chars = len(line.get("say", ""))
+        limit = max(7.0, 0.11 * chars) if engine == "edge" else max(4.0, 0.15 * chars)
+        if effective_seconds > limit:
+            issues.append(
+                f"line {i + 1}: {raw_seconds:.1f}s raw, {effective_seconds:.1f}s effective "
+                f"for {len(line.get('say', ''))} chars (limit {limit:.1f}s)"
+            )
+    return issues
 
 
 def speak_script(script, out):
@@ -325,7 +376,7 @@ def speak_script(script, out):
     import gemini as _g
     gkeys = _g.keys()                                  # पहली key की आवाज़ का कोटा ख़त्म हो तो दूसरी
     key = gkeys[0] if gkeys else None
-    order = (["gemini"] * len(gkeys)) + ["edge", "kokoro"]
+    order = (["gemini"] * min(2, len(gkeys))) + ["edge", "kokoro"]
     if os.getenv("TTS_ENGINE") in order:
         order = order[order.index(os.getenv("TTS_ENGINE")):]
     last, gi = None, 0
@@ -334,6 +385,9 @@ def speak_script(script, out):
             key, gi = gkeys[gi], gi + 1
         try:
             audios = make_all(script, engine, out, key)
+            length_issues = audio_length_issues(script["lines"], audios, engine)
+            if length_issues:
+                raise ValueError("Unusually long TTS line(s), possible extra speech: " + "; ".join(length_issues))
             break
         except Exception as e:                            # noqa: BLE001
             last = e

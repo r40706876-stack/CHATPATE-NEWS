@@ -36,8 +36,18 @@ def violations(ep):
         out.append(f"एक पंच लंबा ({words} शब्द, सीमा 24)")
     elif ep.get("format") == "rant" and not (70 <= words <= 100):
         out.append(f"बकरा बहस की लंबाई {words} शब्द (70-100 चाहिए)")
-    elif ep.get("format") != "rant" and ep.get("kind") != "punch" and words > 55:
-        out.append(f"script लंबी ({words} शब्द, सीमा 55)")
+    elif ep.get("format") != "rant" and ep.get("kind") != "punch":
+        # Full character-clash episodes need enough dialogue for a coherent
+        # setup, escalation and payoff. Keep the shorter 55-word news limit.
+        limit = 80 if ep.get("comedy_format") == "character_clash" and 7 <= len(lines) <= 9 else 55
+        if words > limit:
+            out.append(f"script लंबी ({words} शब्द, सीमा {limit})")
+    # News format experiments: preserve the existing formats while validating labels.
+    comedy_format = ep.get("comedy_format")
+    if comedy_format and comedy_format not in ("news_roast", "character_clash", "reverse_punch"):
+        out.append("अनजान comedy_format")
+    if lines and re.match(r"^\s*(नमस्कार|आज की खबर|हेलो दोस्तों|दोस्तों)", lines[0], re.I):
+        out.append("धीमा introduction hook")
     # पहचान/tag: share की वजह — punch और rant में ख़ाली हो तो रद्द (news में writer पहले से रोकता है)
     if ep.get("kind") in ("punch", "tvshop") or ep.get("format") == "rant":
         if not str(ep.get("tag_who", "")).strip():
@@ -49,4 +59,31 @@ def violations(ep):
             out.append("किताबी/सरकारी शब्द")
     except Exception:
         pass
+
+    # Reject news scripts that are just a bulletin plus generic reactions.
+    # This is a structural filter, NOT a prediction of audience laughter.
+    if ep.get("kind") not in ("punch",) and ep.get("format") != "rant":
+        dialogue = [str(l.get("say", "")).strip() for l in ep.get("lines", [])]
+        if len(dialogue) >= 4 and sum(bool(l.get("news")) for l in ep.get("lines", [])) >= 3:
+            out.append("खबर पढ़ना ज़्यादा, किरदारों का टकराव कम")
+    # Financial promises and quoted rates must be fact-checked upstream.
+    # A generic disclaimer cannot rescue a misleading financial claim.
+    finance = bool(re.search(r"एफडी|फिक्स्ड डिपॉजिट|ब्याज दर|FD\\b", blob, re.I))
+    if finance and re.search(r"रातों.?रात अमीर|गारंटी.{0,12}अमीर|पैसा दोगुना.{0,12}गारंटी", blob):
+        out.append("वित्तीय कमाई की भ्रामक गारंटी")
+    if finance and re.search(r"बजाज.{0,65}(आठ दशमलव पच्चीस|8\\.25)", blob, re.I) and not re.search(r"रिन्यू|renew|नवीनीकरण", blob, re.I):
+        out.append("8.25% की रिन्यूअल शर्त गायब")
+    # Reject obvious generic filler in character payoffs. Human review is still required.
+    weak = ("हमारे ज़माने में", "हमारे जमाने में", "वो दोस्त जो", "फिर क्या हुआ", "देखते रहिए")
+    for ln in ep.get("lines", [])[1:]:
+        if ln.get("who") in ("chacha", "pinky", "dadi", "ramesh") and any(p in str(ln.get("say", "")) for p in weak):
+            out.append("किरदार का कमजोर/घिसा-पिटा डायलॉग")
+            break
+    # Catch the specific stale Telegram formats: a news-reading hook and a non-joke payoff.
+    if ep.get("kind") == "punch" and len(lines) >= 2:
+        if re.match(r"^(पीईटी|रेलवे|विभाग|बैंक|आरबीआई).{0,45}(चलाएगा|बढ़ाएगा|होगा|कहा है)", lines[0]):
+            out.append("पंच की शुरुआत न्यूज़ बुलेटिन जैसी")
+    if ep.get("kind") == "tvshop":
+        if len(lines) < 5 or not any(l.get("news") for l in ep.get("lines", [])):
+            out.append("नकली ऐड में असली खबर का स्पष्ट मोड़ नहीं")
     return out
