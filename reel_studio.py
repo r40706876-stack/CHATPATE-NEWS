@@ -786,8 +786,11 @@ def render(ep, segs, chars, out, preview):
             vis = [last_vis[0]] if last_vis and shown_n.get(last_vis[0], 0) < 2 else []   # एक फ़ोटो पूरे video में 2 बार तक
             carry += 1                                          # एक ही तस्वीर 2 lines से ज़्यादा नहीं (पहले 30 सेकंड अटकी रही)
         if shot in ("split", "full") and not vis and not react:
+            kp = key_phrase(ln) or str(ln.get("stamp") or "")
             if ln.get("big"):
                 vis = [{"big": ln["big"], "sub": ln.get("sub", ""), "color": ln.get("card_color")}]
+            elif kp and not ln.get("tag_text"):                 # तस्वीर नहीं: इसी line की मुख्य बात बड़े अक्षरों में (ख़ाली कमरा/धुंधलापन नहीं)
+                vis = [{"big": kp}]
             elif cur is None and not (si == 0 and ep.get("hook")):
                 vis = [{"big": headline}]
             elif last_screen is None or not last_vis:           # एक भी तस्वीर नहीं मिली: काली screen नहीं, headline के अक्षर

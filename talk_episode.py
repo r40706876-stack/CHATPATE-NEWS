@@ -202,12 +202,14 @@ def fill_sets(ep):
     import shutil
     import news_writer as nw
     topic = str(ep.get("topic") or ep.get("breaking") or "")
-    for i, ln in enumerate(ep["lines"]):
+    used = set()                                               # 28 Oct: एक ही "कमरा" 5 lines पर 10 बार = same same.
+    for i, ln in enumerate(ep["lines"]):                       # हर set पूरे video में एक ही बार; बाकी lines पर बात वाला card
         if list((IN / "broll").glob(f"{i}_*")):
             continue
         scene = nw.pick_set("x", ln.get("say", ""), topic)
         src = ROOT / f"assets/sets/{scene}.png"
-        if scene not in ("village", "studio") and src.exists():
+        if scene not in ("village", "studio") and src.exists() and scene not in used and scene != ln.get("set"):
+            used.add(scene)                                    # (नीचे किरदार उसी set में खड़ा हो तो ऊपर वही दोहराना बेकार)
             shutil.copy(src, IN / f"broll/{i}_set.png")
 
 
