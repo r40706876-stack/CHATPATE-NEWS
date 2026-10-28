@@ -4,6 +4,7 @@
     python talk_episode.py post                   → episode.mp4 (+ preview_episode.jpg, Telegram)
 """
 import json
+import os
 import re
 import subprocess
 import sys
@@ -174,6 +175,8 @@ def add_props(ep):
         prop = ln.get("prop")
         if not prop:
             prop = next((k for k, pat in PROP_WORDS.items() if re.search(pat, ln.get("say", ""))), None)
+        if prop and prop not in os.getenv("PROPS_OK", "toffee").split(","):
+            continue                                           # 28 Oct: सिक्के सफ़ेद धब्बे, नोट हरे पत्थर जैसे दिखे — सुधरने तक बंद
         src = ROOT / f"assets/fx/props/{prop}.mp4" if prop else None
         if not src or prop in used or not src.exists():
             continue
