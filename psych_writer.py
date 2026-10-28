@@ -58,8 +58,8 @@ bablu: SBI की अपील है — अपना डेटा किसी
 (पहचान: पासबुक की लाइन, दादी का OTP. आख़िरी शब्द "जो बचा है" सबसे बड़ा वार.)"""
 
 
-def _ask(prompt, temp):
-    return gemini.json_from(gemini.ask(prompt, json_mode=True, temperature=temp))
+def _ask(prompt, temp, prefer=None):
+    return gemini.json_from(gemini.ask(prompt, json_mode=True, temperature=temp, prefer=prefer))
 
 
 def prompt_premises(packs):
@@ -87,6 +87,12 @@ def prompt_scripts(chosen, fields, casting):
 
 {EXAMPLES}
 
+पहली line सबसे ज़रूरी: premise वाला "hook" ही (या उससे तेज़). खबर बताना hook नहीं है —
+  ✗ "सत्ताईस अक्टूबर से रेलवे काउंटर टिकट पर दस लाख का बीमा मिलेगा." (headline पढ़ी, अँगूठा चलता रहा)
+  ✓ "रेलवे दस लाख का बीमा दे रहा है… पैंतालीस पैसे में. खुल्ले हैं?" (विरोधाभास + सवाल, जवाब आख़िर में)
+  ✗ "सोशल मीडिया पर डिलीवरी बॉय का नोट वायरल हुआ."   ✓ "डिलीवरी बॉय ने ग्राहक से भीख नहीं माँगी… अर्ज़ी लिखी."
+हर line में कुछ हो — सिर्फ़ जानकारी वाली line (बिना मोड़ के) दर्शक को भगाती है; तथ्य को भी मोड़ के साथ बोलो.
+
 लिखने से पहले हर script के लिए ये 7 सवाल ख़ुद से पूछो — script में हर एक की वजह मौजूद हो (वरना वो script मत लिखो):
 {QTEXT}
 save के लिए: एक छोटी काम की बात भी हो सकती है (जैसे ठगी से बचने का 1 तरीका) — पर मज़ाक के अंदाज़ में, भाषण नहीं.
@@ -112,6 +118,12 @@ def prompt_audience(cands):
 ज़्यादातर reels 2 सेकंड में छोड़ देते हो. हर script को line-by-line ईमानदारी से पढ़ो, जैसे reel चल रही हो
 (बोलने की रफ़्तार ~2.7 शब्द/सेकंड).
 {json.dumps(slim, ensure_ascii=False, indent=1)}
+
+पैमाना असली आँकड़ों से (हमारा page): "टिकट कन्फ़र्म… पर सपने में" (pun) — 65% लोग 3 सेकंड में भागे = score 2.
+"बंदा उड़कर दफ़्तर पहुँचा" (खबर पढ़ना) — 52% भागे = score 3. "भैया थोड़ा खिसक जाओ… पूरी सीट पर कब्ज़ा" (पहचान) — सबसे
+ज़्यादा share = score 8. तुम्हारा औसत 5 के आसपास होना चाहिए; 8+ बहुत कम scripts को.
+पक्के नियम: पहली line सिर्फ़ खबर बताती है (कौन/क्या/कहाँ) और उसमें कोई विरोधाभास, सवाल या मज़ाक नहीं → "pura" और "hasi"
+दोनों false, score ≤ 4. कोई line जिसमें न नई बात न हँसी → उसे "kamzor" में डालो. पंच का तर्क समझ न आए → hasa 0.
 
 हर line पर: "ruka" (रुके रहे?), "hasa" (0 / 1 मुस्कान / 2 ज़ोर से), "kyon" (5-8 शब्द).
 फिर ये 7 सवाल — दर्शक बनकर, script के शब्दों से जवाब दो. जवाब script में नहीं मिलता तो "ok": false (अंदाज़े से पास मत करो):
@@ -166,7 +178,7 @@ def write(packs, n, fields, casting):
     if not chosen:
         raise RuntimeError("एक भी premise नहीं बना")
     chosen = chosen[:n + 1]
-    raw = _ask(prompt_scripts(chosen, fields, casting), 0.9)
+    raw = _ask(prompt_scripts(chosen, fields, casting), 0.9, prefer="pro")   # लिखना = सबसे ताक़तवर model
     cands = []
     for t in raw if isinstance(raw, list) else []:
         for v in (t.get("versions") or [])[:2]:
@@ -202,7 +214,7 @@ def write(packs, n, fields, casting):
                            for q in _fails(c.get("vote"))},
                   "darshak": [ln.get("kyon") for ln in (c.get("vote") or {}).get("lines", [])]} for k, c in weak]
         try:
-            fixed = _ask(prompt_punchup(items), 0.9)
+            fixed = _ask(prompt_punchup(items), 0.9, prefer="pro")
             redo = []
             for f in fixed if isinstance(fixed, list) else []:
                 k = f.get("id")
