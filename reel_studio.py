@@ -791,6 +791,12 @@ def render(ep, segs, chars, out, preview):
                 vis = [{"big": ln["big"], "sub": ln.get("sub", ""), "color": ln.get("card_color")}]
             elif kp and not ln.get("tag_text"):                 # तस्वीर नहीं: इसी line की मुख्य बात बड़े अक्षरों में (ख़ाली कमरा/धुंधलापन नहीं)
                 vis = [{"big": kp}]
+                if n > 2.8 * FPS:                                # लंबी line पर एक ही card 6.8 सेकंड रुका (QA ने रोका) —
+                    parts = [x.strip(" ।.!?") for x in re.split(r"…|\.|।|,|—|\?", str(ln.get("caption") or ln.get("say") or ""))]
+                    parts = [x for x in parts if 2 <= len(x.split()) <= 7][:3]    # caption के 2-3 टुकड़े, बारी-बारी
+                    if len(parts) >= 2:                          # हर टुकड़ा अलग रंग (एक रंग पर अलग अक्षर भी "वही तस्वीर" लगते)
+                        pal = [(28, 58, 140), (150, 32, 60), (18, 112, 84)]
+                        vis = [{"big": x, "color": pal[k % 3]} for k, x in enumerate(parts)]
             elif cur is None and not (si == 0 and ep.get("hook")):
                 vis = [{"big": headline}]
             elif last_screen is None or not last_vis:           # एक भी तस्वीर नहीं मिली: काली screen नहीं, headline के अक्षर
