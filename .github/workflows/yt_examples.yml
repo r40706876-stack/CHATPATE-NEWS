@@ -6,7 +6,7 @@ on:
       args: {description: "खाली = Prakash Bharati | discover | channels @handle1 @handle2", default: "discover"}
   push:
     branches: [claude/visual-upgrade]
-    paths: [yt_examples.py, .github/workflows/yt_examples.yml]
+    paths: [yt_examples.py, yt_job.txt, .github/workflows/yt_examples.yml]
 permissions: {contents: write}
 env:
   YT_COOKIES: ${{ secrets.YT_COOKIES }}
@@ -19,7 +19,8 @@ jobs:
       - run: |
           python3 -m pip install -q "yt-dlp[default]"
           curl -fsSL https://deno.land/install.sh | sh -s -- -y >/dev/null 2>&1; export PATH=$HOME/.deno/bin:$PATH
-          python3 yt_examples.py ${{ inputs.args || 'discover' }} 2>&1 | tee yt_examples.log
+          ARGS="${{ inputs.args }}"; [ -z "$ARGS" ] && ARGS="$(cat yt_job.txt 2>/dev/null || echo discover)"
+          python3 yt_examples.py $ARGS 2>&1 | tee yt_examples.log
       - if: always()
         run: |
           git config user.name Claude && git config user.email noreply@anthropic.com
