@@ -19,6 +19,36 @@ class TruePeakQATests(unittest.TestCase):
         self.assertIsNone(_true_peak_dbfs("audio finished but no true peak"))
 
     @unittest.skipUnless(__import__("shutil").which("ffmpeg"), "ffmpeg unavailable")
+    def test_studio_final_audio_filter_survives_aac_true_peak_meter(self):
+        """Run the actual production filter, encode AAC, and meter decoded true peak."""
+        import subprocess
+        import tempfile
+        from pathlib import Path
+        from reel_studio import STUDIO_AUDIO_FILTER
+
+        self.assertIn("alimiter=limit=", STUDIO_AUDIO_FILTER)
+        self.assertIn("level=0", STUDIO_AUDIO_FILTER)
+        with tempfile.TemporaryDirectory() as tmp:
+            out = Path(tmp) / "delivery.m4a"
+            subprocess.run([
+                "ffmpeg", "-v", "error", "-y", "-f", "lavfi",
+                "-i", "sine=frequency=440:duration=4:sample_rate=24000",
+                "-af", STUDIO_AUDIO_FILTER, "-c:a", "aac", "-b:a", "160k",
+                str(out)
+            ], check=True)
+            meter = subprocess.run([
+                "ffmpeg", "-hide_banner", "-nostats", "-i", str(out), "-vn",
+                "-af", "ebur128=peak=true", "-f", "null", "-"
+            ], capture_output=True, text=True, check=True)
+            peak = _true_peak_dbfs(meter.stderr)
+            loudness = _integrated_lufs(meter.stderr)
+            self.assertIsNotNone(peak)
+            self.assertIsNotNone(loudness)
+            self.assertLess(peak, -1.0, f"Decoded AAC true peak: {peak} dBTP")
+            self.assertGreaterEqual(loudness, -21.0)
+            self.assertLessEqual(loudness, -12.0)
+
+    @unittest.skipUnless(__import__("shutil").which("ffmpeg"), "ffmpeg unavailable")
     def test_sfx_overlay_keeps_decoded_aac_peak_and_loudness_safe(self):
         """Catch clipping added AFTER the main reel's loudnorm pass."""
         import subprocess
