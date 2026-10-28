@@ -1,0 +1,718 @@
+[
+ {
+  "premise": "10 लाख रुपये के cover के लिए रेलवे ने 45 पैसे मांगे हैं, जो काउंटर वाले के पास खुले भी नहीं होते.",
+  "category": "[नियम/नौकरी]",
+  "breaking": "रेलवे काउंटर टिकट पर मिलेगा 10 लाख का बीमा",
+  "hook_screen": "45 पैसे का बीमा?",
+  "source": "ABP News",
+  "tag_who": "ट्रेन में टॉफी से चेंज लेने वाले दोस्तों को शेयर करें",
+  "ask": "क्या आपको काउंटर पर कभी 45 पैसे वापस मिले हैं?",
+  "loop_word": "बीमा",
+  "jawab": {
+   "pura": "पैंतालीस पैसे का चेंज कैसे मिलेगा यह जानने के लिए",
+   "hasi": "चेंज के बदले टॉफी थमाने वाले जोक पर",
+   "share": "हर बार टॉफी पाने वाले रेल यात्रियों को भेजें",
+   "daily": "काउंटर पर खुले पैसे न मिलने का रोजाना का झंझट",
+   "follow": "सरकारी नियमों की सही और मजेदार खबर के लिए",
+   "like": "अलपेनलीबे टॉफी वाली बात पर जोरदार सहमत",
+   "save": "पैंतालीस पैसे में दस लाख के बीमे की सही जानकारी के लिए"
+  },
+  "lines": [
+   {
+    "who": "bablu",
+    "say": "सत्ताईस अक्टूबर से रेलवे काउंटर टिकट पर दस लाख का बीमा मिलेगा.",
+    "caption": "27 अक्टूबर से रेलवे काउंटर टिकट पर 10 लाख का बीमा मिलेगा.",
+    "expr": "gambhir",
+    "set": "studio",
+    "visuals": [
+     "indian railway ticket counter",
+     "railway clerk stamping ticket",
+     "passenger at ticket window"
+    ],
+    "photo_hi": [
+     "रेलवे काउंटर टिकट",
+     "रेलवे यात्रा बीमा"
+    ],
+    "visual": "indian railway ticket counter",
+    "scene": "studio",
+    "punch": false,
+    "insta": ""
+   },
+   {
+    "who": "bablu",
+    "say": "इस बीमा कवर के लिए यात्रियों से सिर्फ पैंतालीस पैसे लिए जाएंगे.",
+    "caption": "इस बीमा कवर के लिए यात्रियों से सिर्फ 45 पैसे लिए जाएंगे.",
+    "expr": "gambhir",
+    "set": "studio",
+    "visuals": [
+     "coins in hand close",
+     "railway reservation form",
+     "train ticket close up"
+    ],
+    "photo_hi": [
+     "पैंतालीस पैसे बीमा",
+     "दस लाख का कवर"
+    ],
+    "visual": "coins in hand close",
+    "scene": "chacha",
+    "punch": false,
+    "insta": ""
+   },
+   {
+    "who": "ramesh",
+    "say": "बात बहुत बढ़िया है लेकिन काउंटर पर पैंतालीस पैसे दूँगा कैसे.",
+    "caption": "बात बहुत बढ़िया है लेकिन काउंटर पर 45 पैसे दूँगा कैसे.",
+    "expr": "hairan",
+    "set": "station",
+    "visuals": [
+     "man searching pocket money",
+     "railway ticket queue crowd",
+     "glass window ticket clerk"
+    ],
+    "photo_hi": [
+     "रेलवे काउंटर भीड़",
+     "खुले पैसे की समस्या"
+    ],
+    "punch": true,
+    "stamp": "पैसे खुले... कहाँ से ल",
+    "visual": "man searching pocket money",
+    "scene": "chacha",
+    "insta": ""
+   },
+   {
+    "who": "chacha",
+    "say": "जब एक रुपया माँगने पर बाबू हाथ में टॉफी थमा देता है.",
+    "caption": "जब 1 रुपया माँगने पर बाबू हाथ में टॉफी थमा देता है.",
+    "expr": "tanz",
+    "set": "station",
+    "visuals": [
+     "candy in hand at counter",
+     "railway counter steel grill",
+     "old man smiling sarcastically"
+    ],
+    "photo_hi": [
+     "टॉफी चेंज रेलवे",
+     "काउंटर टॉफी"
+    ],
+    "punch": true,
+    "stamp": "चेंज नहीं... टॉफी लो!",
+    "visual": "candy in hand at counter",
+    "scene": "chacha",
+    "insta": ""
+   },
+   {
+    "who": "ramesh",
+    "say": "अगली बार टॉफी आधी काटकर पैंतालीस पैसे का बीमा कराऊँगा.",
+    "caption": "अगली बार टॉफी आधी काटकर 45 पैसे का बीमा कराऊँगा.",
+    "expr": "hasi",
+    "set": "station",
+    "visuals": [
+     "broken candy on counter",
+     "train leaving station background",
+     "passenger holding ticket"
+    ],
+    "photo_hi": [
+     "रेलवे टिकट नियम",
+     "ट्रेन यात्रा बीमा"
+    ],
+    "visual": "broken candy on counter",
+    "scene": "studio_end",
+    "punch": false,
+    "insta": ""
+   }
+  ],
+  "caption_post": "27 अक्टूबर से रेलवे काउंटर टिकट पर 10 लाख का बीमा मिलेगा. Tag करो उसको जो टॉफी से चेंज लेता है! क्या आपको काउंटर पर कभी 45 पैसे वापस मिले हैं? स्रोत: ABP News #IndianRailways #TicketBooking #TravelInsurance #BakraNews (AI से बने किरदार)",
+  "topic": "रेलवे काउंटर टिकट बुकिंग के नए नियम लागू",
+  "jaanch": {
+   "pura": {
+    "ok": true,
+    "kyon": "पैंतालीस पैसे कैसे कटेंगे यह जानने की उत्सुकता रही."
+   },
+   "hasi": {
+    "ok": true,
+    "kyon": "लाइन 1 पर लगभग 3 सेकंड में पहली मुस्कान आई."
+   },
+   "share": {
+    "ok": true,
+    "kyon": "कॉलेज ग्रुप में, आधी टॉफी काटकर बीमा कराने वाली लाइन."
+   },
+   "daily": {
+    "ok": true,
+    "kyon": "रेलवे काउंटर पर खुले पैसे के बदले टॉफी मिलना."
+   },
+   "follow": {
+    "ok": true,
+    "kyon": "सरकारी नियमों पर इतना तगड़ा देसी व्यंग्य कहीं नहीं."
+   },
+   "like": {
+    "ok": true,
+    "kyon": "बाबू द्वारा टॉफी थमाने का दर्द सौ फीसदी सच है."
+   },
+   "save": {
+    "ok": true,
+    "kyon": "रेलवे के पैंतालीस पैसे वाले दस लाख बीमा नियम हेतु."
+   }
+  },
+  "connect": {
+   "score": 9,
+   "why": "7 में से 7 सवाल पास",
+   "weak": "",
+   "fix": ""
+  },
+  "writer": "psych",
+  "format": "explain",
+  "label": "काम की खबर",
+  "key_word": "",
+  "icons": [
+   "₹",
+   "NEWS",
+   "%"
+  ],
+  "ticker": [],
+  "hook": "सत्ताईस अक्टूबर से रेलवे काउंटर टिकट पर दस लाख का बीमा मिलेगा.",
+  "hook_text": "सत्ताईस अक्टूबर से रेलवे काउंटर टिकट पर दस लाख का बीमा मिलेगा.",
+  "hook_short": "45 पैसे का बीमा?",
+  "trend": {
+   "score": 6,
+   "why": "10 अख़बार/चैनल 2 दिन में, 20 खबरें 7 दिन में"
+  },
+  "review_status": "audience_sim"
+ },
+ {
+  "premise": "15 साल का लड़का विदेश में छक्के मार रहा है, पर देसी आंटी को चिंता है कि गला खराब न हो जाए.",
+  "category": "[फ़िल्म-क्रिकेट फैन]",
+  "breaking": "न्यूजीलैंड में 15 साल के क्रिकेटर वैभव को मिली देसी सलाह",
+  "hook_screen": "ठंडा पानी मत पीना!",
+  "source": "Amar Ujala",
+  "tag_who": "अपनी मम्मी या चाची को टैग करें जो हमेशा उबला पानी पिलाती हैं",
+  "ask": "क्या आपकी मम्मी भी सफर में ठंडा पानी पीने से रोकती हैं?",
+  "loop_word": "पानी",
+  "jawab": {
+   "pura": "बलिया वाली आंटी की सलाह का असली वीडियो सच देखने के लिए",
+   "hasi": "छक्के मारने वाले को गर्म पानी की सलाह मिलने पर",
+   "share": "हर वक्त गर्म पानी की सलाह देने वाली मम्मियों को भेजें",
+   "daily": "विदेशी ठंड में भी देसी नुस्खे लागू करने की घर-घर की आदत",
+   "follow": "वायरल घटनाओं पर देसी हास्य और तीखी बात सुनने के लिए",
+   "like": "देसी माँ-चाची की ममता पर तुरंत लाइक",
+   "save": "सेहत का देसी ध्यान रखने की सलाह के लिए"
+  },
+  "lines": [
+   {
+    "who": "bablu",
+    "say": "न्यूजीलैंड में पंद्रह साल के भारतीय क्रिकेटर वैभव सूर्यवंशी को फैन ने दी सलाह.",
+    "caption": "न्यूजीलैंड में 15 साल के भारतीय क्रिकेटर वैभव सूर्यवंशी को फैन ने दी सलाह.",
+    "expr": "gambhir",
+    "set": "studio",
+    "visuals": [
+     "cricket stadium ground view",
+     "young cricketer holding bat",
+     "fan interaction cricket stadium"
+    ],
+    "photo_hi": [
+     "वैभव सूर्यवंशी न्यूजीलैंड",
+     "बलिया महिला फैन"
+    ],
+    "visual": "cricket stadium ground view",
+    "scene": "studio",
+    "punch": false,
+    "insta": ""
+   },
+   {
+    "who": "bablu",
+    "say": "बलिया की महिला फैन ने कहा ठंडा पानी मत पीना सिर्फ गर्म पानी पीना.",
+    "caption": "बलिया की महिला फैन ने कहा ठंडा पानी मत पीना सिर्फ गर्म पानी पीना.",
+    "expr": "gambhir",
+    "set": "studio",
+    "visuals": [
+     "water bottle stadium fence",
+     "hot water thermos flask",
+     "viral video fan cricketer"
+    ],
+    "photo_hi": [
+     "ठंडा पानी मत पीना",
+     "गर्म पानी सलाह वायरल"
+    ],
+    "visual": "water bottle stadium fence",
+    "scene": "pinky",
+    "punch": false,
+    "insta": ""
+   },
+   {
+    "who": "pinky",
+    "say": "न्यूजीलैंड के बॉलर पंद्रह साल के लड़के को डरा नहीं पाए.",
+    "caption": "न्यूजीलैंड के बॉलर 15 साल के लड़के को डरा नहीं पाए.",
+    "expr": "hairan",
+    "set": "village",
+    "visuals": [
+     "fast bowler running cricket",
+     "six hit cricket match",
+     "young batsman playing shot"
+    ],
+    "photo_hi": [
+     "वैभव सूर्यवंशी छक्के",
+     "न्यूजीलैंड क्रिकेट मैच"
+    ],
+    "visual": "fast bowler running cricket",
+    "scene": "pinky",
+    "punch": false,
+    "insta": ""
+   },
+   {
+    "who": "chacha",
+    "say": "जितना बलिया की चाची ने गर्म पानी बोलकर डरा दिया बेटा.",
+    "caption": "जितना बलिया की चाची ने गर्म पानी बोलकर डरा दिया बेटा.",
+    "expr": "hasi",
+    "set": "village",
+    "visuals": [
+     "steaming water mug close",
+     "desi aunty speaking lively",
+     "cricket player listening smiling"
+    ],
+    "photo_hi": [
+     "देसी आंटी सलाह",
+     "गर्म पानी नुस्खा"
+    ],
+    "punch": true,
+    "stamp": "बॉलिंग से डर नहीं... ग",
+    "visual": "steaming water mug close",
+    "scene": "chacha",
+    "insta": ""
+   },
+   {
+    "who": "ramesh",
+    "say": "चाहे बंदा शतक मार दे पर गला खराब हुआ तो मम्मी डांटेगी.",
+    "caption": "चाहे बंदा शतक मार दे पर गला खराब हुआ तो मम्मी डांटेगी.",
+    "expr": "tanz",
+    "set": "aangan",
+    "visuals": [
+     "mother scolding young son",
+     "cricket century celebration",
+     "cough syrup bottle desk"
+    ],
+    "photo_hi": [
+     "देसी मम्मी डांट",
+     "क्रिकेटर सेहत सलाह"
+    ],
+    "punch": true,
+    "stamp": "शतक ठीक है... गला मत स",
+    "visual": "mother scolding young son",
+    "scene": "studio_end",
+    "insta": ""
+   }
+  ],
+  "caption_post": "न्यूजीलैंड में 15 साल के भारतीय क्रिकेटर वैभव सूर्यवंशी को फैन ने दी सलाह. Tag करो उस दोस्त को जिसकी मम्मी हर मौसम में गर्म पानी पिलाती हैं! क्या आपकी मम्मी भी सफर में ठंडा पानी पीने से रोकती हैं? स्रोत: Amar Ujala #VaibhavSuryavanshi #CricketViral #DesiMom #BakraNews (AI से बने किरदार)",
+  "topic": "न्यूजीलैंड में वैभव सूर्यवंशी को भारतीय महिला फैन की सलाह",
+  "jaanch": {
+   "pura": {
+    "ok": true,
+    "kyon": "फैन की देसी सलाह आगे क्या रंग लाएगी देखने रुका."
+   },
+   "hasi": {
+    "ok": true,
+    "kyon": "लाइन 1 पर ठीक 3 सेकंड में मुस्कान आ गई."
+   },
+   "share": {
+    "ok": true,
+    "kyon": "मम्मी को, गला खराब हुआ तो मम्मी डांटेगी वाली लाइन."
+   },
+   "daily": {
+    "ok": true,
+    "kyon": "कहीं भी जाओ मां-चाची का गर्म पानी पीने का टोकना."
+   },
+   "follow": {
+    "ok": true,
+    "kyon": "क्रिकेट न्यूज को घरेलू हंसी से जोड़ने का गजब अंदाज."
+   },
+   "like": {
+    "ok": true,
+    "kyon": "सफलता चाहे जो मिले, घर की चिंता सेहत ही होती."
+   },
+   "save": {
+    "ok": false,
+    "kyon": "कोई जरूरी जानकारी नहीं जिसे बाद के लिए रखूं."
+   }
+  },
+  "connect": {
+   "score": 8,
+   "why": "7 में से 6 सवाल पास",
+   "weak": "",
+   "fix": ""
+  },
+  "writer": "psych",
+  "format": "explain",
+  "label": "काम की खबर",
+  "key_word": "",
+  "icons": [
+   "₹",
+   "NEWS",
+   "%"
+  ],
+  "ticker": [],
+  "hook": "न्यूजीलैंड में पंद्रह साल के भारतीय क्रिकेटर वैभव सूर्यवंशी को…",
+  "hook_text": "न्यूजीलैंड में पंद्रह साल के भारतीय क्रिकेटर वैभव सूर्यवंशी को…",
+  "hook_short": "ठंडा पानी मत पीना!",
+  "trend": {
+   "score": 6,
+   "why": "12 अख़बार/चैनल 2 दिन में, 13 खबरें 7 दिन में"
+  },
+  "review_status": "audience_sim"
+ },
+ {
+  "premise": "सामने बैठी सीट वाला यात्री चुपचाप दुबक गया कि कहीं फोन गलती से उसकी खोपड़ी पर न गिर जाए.",
+  "category": "[सफ़र-जुगाड़]",
+  "breaking": "एसी डिब्बे में महिला ने टीटीई को दी फोन फेंकने की धमकी",
+  "hook_screen": "खोपड़ी पर गिरेगा फोन!",
+  "source": "Amar Ujala",
+  "tag_who": "लड़ाई के वक्त खिड़की से बाहर देखने वाले शांत दोस्तों को भेजें",
+  "ask": "अगर आपकी बोगी में लड़ाई हो तो आप क्या करेंगे?",
+  "loop_word": "एसी",
+  "jawab": {
+   "pura": "साइड लोअर वाले यात्री की हनुमान चालीसा का सच जानने के लिए",
+   "hasi": "फोन फेंकने की धमकी पर यात्री के पसीने छूटने वाले सीन पर",
+   "share": "दूसरों के झगड़े में छिपने वाले दोस्तों को चिढ़ाने के लिए",
+   "daily": "ट्रेन में अचानक शुरू हुए झगड़े से बचने की बेचैनी",
+   "follow": "आम यात्रियों के डर और मीम्स जैसे रिएक्शन देखने के लिए",
+   "like": "शांत बैठे सह-यात्रियों की हालत पर तुरंत सहमत होकर लाइक",
+   "save": "ट्रेन में विवाद से दूरी बनाने की समझदारी के लिए"
+  },
+  "lines": [
+   {
+    "who": "bablu",
+    "say": "एसी कोच में बिना टिकट महिला ने टीटीई को फोन फेंकने की धमकी दी.",
+    "caption": "एसी कोच में बिना टिकट महिला ने टीटीई को फोन फेंकने की धमकी दी.",
+    "expr": "gambhir",
+    "set": "studio",
+    "visuals": [
+     "smartphone raised in anger",
+     "ac train compartment berth",
+     "tte confrontation train"
+    ],
+    "photo_hi": [
+     "एसी कोच फोन धमकी",
+     "टीटीई महिला विवाद"
+    ],
+    "visual": "smartphone raised in anger",
+    "scene": "studio",
+    "punch": false,
+    "insta": ""
+   },
+   {
+    "who": "ramesh",
+    "say": "कोच में एसी तो चल रहा था पर साइड लोअर वाले को पसीने आ रहे थे.",
+    "caption": "कोच में एसी तो चल रहा था पर साइड लोअर वाले को पसीने आ रहे थे.",
+    "expr": "hairan",
+    "set": "station",
+    "visuals": [
+     "sweating man lower berth train",
+     "scared passenger ducking down",
+     "ac vent inside train"
+    ],
+    "photo_hi": [
+     "साइड लोअर यात्री डर",
+     "ट्रेन पसीना एसी"
+    ],
+    "punch": true,
+    "stamp": "एसी फुल... पसीना चालू!",
+    "visual": "sweating man lower berth train",
+    "scene": "chacha",
+    "insta": ""
+   },
+   {
+    "who": "ramesh",
+    "say": "बंदा चुपचाप दुबक गया कि कहीं फोन उसकी खोपड़ी पर न गिर जाए.",
+    "caption": "बंदा चुपचाप दुबक गया कि कहीं फोन उसकी खोपड़ी पर न गिर जाए.",
+    "expr": "hasi",
+    "set": "station",
+    "visuals": [
+     "man covering head with pillow",
+     "flying smartphone impact visual",
+     "passenger staring window away"
+    ],
+    "photo_hi": [
+     "फोन खोपड़ी पर",
+     "यात्री डर का माहौल"
+    ],
+    "punch": true,
+    "stamp": "खोपड़ी बचाओ... सीट छोड",
+    "visual": "man covering head with pillow",
+    "scene": "chacha",
+    "insta": ""
+   },
+   {
+    "who": "chacha",
+    "say": "बेचारा यात्री चादर ओढ़कर मन ही मन हनुमान चालीसा पढ़ रहा था.",
+    "caption": "बेचारा यात्री चादर ओढ़कर मन ही मन हनुमान चालीसा पढ़ रहा था.",
+    "expr": "tanz",
+    "set": "station",
+    "visuals": [
+     "man wrapped in train blanket",
+     "folded hands under sheet",
+     "train compartment interior night"
+    ],
+    "photo_hi": [
+     "ट्रेन चादर हनुमान चालीसा",
+     "यात्री बचाव"
+    ],
+    "visual": "man wrapped in train blanket",
+    "scene": "chacha",
+    "punch": false,
+    "insta": ""
+   },
+   {
+    "who": "bablu",
+    "say": "ट्रेन में क्लेश होते ही 139 डायल करने और खोपड़ी बचाने का ये हैक तुरंत सेव करो.",
+    "caption": "ट्रेन में क्लेश पर 139 डायल करने और खोपड़ी बचाने का हैक सेव करो.",
+    "expr": "gambhir",
+    "set": "studio",
+    "visuals": [
+     "railway helpline number 139 screen",
+     "train compartment conflict",
+     "man covering head pillow"
+    ],
+    "photo_hi": [
+     "हेल्पलाइन 139",
+     "ट्रेन सुरक्षा हैक"
+    ],
+    "visual": "railway helpline number 139 screen",
+    "scene": "studio_end",
+    "punch": false,
+    "insta": ""
+   }
+  ],
+  "caption_post": "एसी कोच में बिना टिकट महिला ने टीटीई को फोन फेंकने की धमकी दी. Tag करो उस दोस्त को जो ट्रेन में लड़ाई होते ही छिप जाता है! अगर आपकी बोगी में लड़ाई हो तो आप क्या करेंगे? स्रोत: Amar Ujala #TrainDrama #ACCoach #PassengerStory #BakraNews (AI से बने किरदार)",
+  "topic": "ट्रेन के एसी कोच में बेटिकट महिला का टीटीई से विवाद",
+  "jaanch": {
+   "pura": {
+    "ok": true,
+    "kyon": "क्लेश में आगे क्या हुआ यह जानने रुका"
+   },
+   "hasi": {
+    "ok": true,
+    "kyon": "line 0, ~2 सेकंड में मज़ा आ गया"
+   },
+   "share": {
+    "ok": true,
+    "kyon": "ट्रेन में सफर करने वाले दोस्तों को, line 3"
+   },
+   "daily": {
+    "ok": true,
+    "kyon": "ट्रेन यात्रा में होने वाले अचानक वाले क्लेश"
+   },
+   "follow": {
+    "ok": true,
+    "kyon": "ट्रेन क्लेश पर मस्त और मजेदार कमेंट्री मिलती"
+   },
+   "like": {
+    "ok": true,
+    "kyon": "हनुमान चालीसा पढ़ने वाली बात सच है भाई"
+   },
+   "save": {
+    "ok": true,
+    "kyon": "139 नंबर इमरजेंसी में इस्तेमाल करने के लिए"
+   }
+  },
+  "connect": {
+   "score": 8,
+   "why": "7 में से 7 सवाल पास",
+   "weak": "",
+   "fix": ""
+  },
+  "writer": "psych+punchup",
+  "format": "explain",
+  "label": "काम की खबर",
+  "key_word": "",
+  "icons": [
+   "₹",
+   "NEWS",
+   "%"
+  ],
+  "ticker": [],
+  "hook": "एसी कोच में बिना टिकट महिला ने टीटीई को फोन…",
+  "hook_text": "एसी कोच में बिना टिकट महिला ने टीटीई को फोन…",
+  "hook_short": "खोपड़ी पर गिरेगा फोन!",
+  "trend": {
+   "score": 4,
+   "why": "5 अख़बार/चैनल 2 दिन में, 7 खबरें 7 दिन में"
+  },
+  "review_status": "audience_sim"
+ },
+ {
+  "premise": "200 रुपये की टी-शर्ट का साइज छोटा था, लेकिन नोट पढ़कर लगा जैसे रिटर्न किया तो देश का नुकसान होगा.",
+  "category": "[shopping-आदत]",
+  "breaking": "डिलीवरी बॉय का इमोशनल नोट, ग्राहक ने वापस नहीं किया सामान",
+  "hook_screen": "प्लीज रिटर्न मत करना!",
+  "source": "Amar Ujala",
+  "tag_who": "ऑनलाइन सामान रिटर्न कराने वाले किफ़ायती दोस्तों को शेयर करें",
+  "ask": "क्या आपने ऐसा भावुक नोट पढ़कर रिटर्न कैंसिल किया है?",
+  "loop_word": "नोट",
+  "jawab": {
+   "pura": "डिलीवरी वाले के भावुक पर्चे में क्या लिखा था यह जानने के लिए",
+   "hasi": "टी-शर्ट टाइट होने पर भी खुद डाइटिंग करने वाले जोक पर",
+   "share": "दिलदार और भावुक दोस्तों को टैग करने के लिए",
+   "daily": "कपड़ा गलत साइज आने पर भी रख लेने का भोलापन",
+   "follow": "ऑनलाइन डिलीवरी के नए-नए मजेदार किस्से जानने के लिए",
+   "like": "डिलीवरी बॉय की मेहनत और मजबूरी के सम्मान में लाइक",
+   "save": "रिटर्न पॉलिसी और डिलीवरी पार्टनर्स की मदद की सोच के लिए"
+  },
+  "lines": [
+   {
+    "who": "bablu",
+    "say": "सोशल मीडिया पर डिलीवरी बॉय का ग्राहक को लिखा इमोशनल नोट वायरल हुआ.",
+    "caption": "सोशल मीडिया पर डिलीवरी बॉय का ग्राहक को लिखा इमोशनल नोट वायरल हुआ.",
+    "expr": "gambhir",
+    "set": "studio",
+    "visuals": [
+     "delivery executive cardboard box",
+     "handwritten note on package",
+     "viral social media post photo"
+    ],
+    "photo_hi": [
+     "डिलीवरी बॉय इमोशनल नोट",
+     "रिटर्न मत करना नोट"
+    ],
+    "visual": "delivery executive cardboard box",
+    "scene": "studio",
+    "punch": false,
+    "insta": ""
+   },
+   {
+    "who": "bablu",
+    "say": "नोट में लिखा था कि सर प्लीज सामान रिटर्न मत करना नुकसान हो जाएगा.",
+    "caption": "नोट में लिखा था कि सर प्लीज सामान रिटर्न मत करना नुकसान हो जाएगा.",
+    "expr": "gambhir",
+    "set": "studio",
+    "visuals": [
+     "handwriting paper close up",
+     "delivery boy holding parcel",
+     "e commerce package box"
+    ],
+    "photo_hi": [
+     "सर प्लीज रिटर्न मत करना",
+     "डिलीवरी बॉय पर्चा"
+    ],
+    "visual": "handwriting paper close up",
+    "scene": "chacha",
+    "punch": false,
+    "insta": ""
+   },
+   {
+    "who": "ramesh",
+    "say": "दो सौ की टी-शर्ट छोटी थी पर नोट पढ़कर लगा रिटर्न किया तो देश डूबेगा.",
+    "caption": "200 की टी-शर्ट छोटी थी पर नोट पढ़कर लगा रिटर्न किया तो देश डूबेगा.",
+    "expr": "tanz",
+    "set": "village",
+    "visuals": [
+     "man holding small t shirt",
+     "reading handwritten paper emotional",
+     "cardboard parcel open room"
+    ],
+    "photo_hi": [
+     "टी शर्ट साइज छोटा",
+     "इमोशनल ग्राहक"
+    ],
+    "punch": true,
+    "stamp": "टी-शर्ट टाइट... दिल बड",
+    "visual": "man holding small t shirt",
+    "scene": "chacha",
+    "insta": ""
+   },
+   {
+    "who": "pinky",
+    "say": "कपड़ा भले ही टाइट हो पर बंदे ने खुद डाइटिंग शुरू कर दी.",
+    "caption": "कपड़ा भले ही टाइट हो पर बंदे ने खुद डाइटिंग शुरू कर दी.",
+    "expr": "hasi",
+    "set": "village",
+    "visuals": [
+     "person standing on weight scale",
+     "tight clothes fit mirror",
+     "salad bowl on table"
+    ],
+    "photo_hi": [
+     "डाइटिंग टी शर्ट",
+     "रिटर्न कैंसिल फैसला"
+    ],
+    "punch": true,
+    "stamp": "रिटर्न कैंसिल... डाइटि",
+    "visual": "person standing on weight scale",
+    "scene": "pinky",
+    "insta": ""
+   },
+   {
+    "who": "chacha",
+    "say": "भैया डिलीवरी वालों की मेहनत देखकर इंसान का पिघलना जायज है.",
+    "caption": "भैया डिलीवरी वालों की मेहनत देखकर इंसान का पिघलना जायज है.",
+    "expr": "udaas",
+    "set": "village",
+    "visuals": [
+     "delivery agent riding bike rain",
+     "heavy delivery bag shoulders",
+     "sweaty delivery boy smiling"
+    ],
+    "photo_hi": [
+     "डिलीवरी बॉय मेहनत",
+     "ऑनलाइन शॉपिंग भावुक"
+    ],
+    "visual": "delivery agent riding bike rain",
+    "scene": "studio_end",
+    "punch": false,
+    "insta": ""
+   }
+  ],
+  "caption_post": "सोशल मीडिया पर डिलीवरी बॉय का ग्राहक को लिखा इमोशनल नोट वायरल हुआ. Tag करो उस दोस्त को जो गलत साइज भी पहन लेता है! क्या आपने ऐसा भावुक नोट पढ़कर रिटर्न कैंसिल किया है? स्रोत: Amar Ujala #DeliveryBoy #EmotionalNote #OnlineShopping #BakraNews (AI से बने किरदार)",
+  "topic": "ग्राहक को डिलीवरी बॉय का इमोशनल नोट वायरल",
+  "jaanch": {
+   "pura": {
+    "ok": true,
+    "kyon": "नोट पढ़कर ग्राहक ने क्या अजीब किया जानने की उत्सुकता."
+   },
+   "hasi": {
+    "ok": true,
+    "kyon": "लाइन 2 पर लगभग 5 सेकंड में जबरदस्त हंसी आई."
+   },
+   "share": {
+    "ok": true,
+    "kyon": "ऑनलाइन शॉपिंग करने वाली बहन को, डाइटिंग वाली लाइन."
+   },
+   "daily": {
+    "ok": true,
+    "kyon": "ऑनलाइन कपड़े मंगाने पर साइज गलत आना आम बात."
+   },
+   "follow": {
+    "ok": true,
+    "kyon": "इमोशन और कॉमेडी का ऐसा सटीक तालमेल रोज चाहिए."
+   },
+   "like": {
+    "ok": true,
+    "kyon": "डिलीवरी बॉय की मेहनत के प्रति सच्ची हमदर्दी दिखाई."
+   },
+   "save": {
+    "ok": false,
+    "kyon": "याद रखने लायक या दोबारा काम आने वाली बात नहीं."
+   }
+  },
+  "connect": {
+   "score": 8,
+   "why": "7 में से 6 सवाल पास",
+   "weak": "",
+   "fix": ""
+  },
+  "writer": "psych",
+  "format": "explain",
+  "label": "काम की खबर",
+  "key_word": "",
+  "icons": [
+   "₹",
+   "NEWS",
+   "%"
+  ],
+  "ticker": [],
+  "hook": "सोशल मीडिया पर डिलीवरी बॉय का ग्राहक को लिखा इमोशनल…",
+  "hook_text": "सोशल मीडिया पर डिलीवरी बॉय का ग्राहक को लिखा इमोशनल…",
+  "hook_short": "प्लीज रिटर्न मत करना!",
+  "trend": {
+   "score": 4,
+   "why": "3 अख़बार/चैनल 2 दिन में, 10 खबरें 7 दिन में"
+  },
+  "review_status": "audience_sim"
+ }
+]
