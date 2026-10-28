@@ -443,7 +443,7 @@ def _kinetic(card, bg, t, size):
     d = ImageDraw.Draw(im)
     big, sub = str(card.get("big", "")), str(card.get("sub", ""))
     m = re.search(r"\d[\d,]*", big)
-    if m and t < 20 and int(m.group().replace(",", "")) >= 10:     # "1 नवंबर" जैसी तारीख़ नहीं गिनते
+    if m and t < 20 and int(m.group().replace(",", "")) >= 100:    # छोटे अंक नहीं गिनते ("45 पैसे" पहले "44" दिखा — ग़लती लगी)
         n = int(m.group().replace(",", ""))
         big = big.replace(m.group(), f"{int(n * (1 - (1 - t / 20) ** 3)):,}")
     words = big.split()
@@ -764,7 +764,7 @@ def render(ep, segs, chars, out, preview):
     v2 = ep.get("style") in ("v2", "nochar")
     nochar = ep.get("style") == "nochar"                 # बिना किरदार: सिर्फ़ तस्वीर/clip + बड़े अक्षर + आवाज़
     k, seed, last_screen, prev_im, last_vis, carry = 0, 0, None, None, [], 0
-    shown_ever = set()
+    shown_ever, shown_n = set(), {}
     cur, credit, clean = None, "", None
     st_text, st_t, seen = "", 0, set()
     im = bases[True]
@@ -783,7 +783,7 @@ def render(ep, segs, chars, out, preview):
             # पहले यहाँ दूसरी lines की फ़ोटो लगती थीं — बोल कुछ और, screen पर कुछ और (मालिक: "mismatch न हो").
             # अब: पिछली line वाली तस्वीर ही चलती रहे (बात उसी से जुड़ी होती है), हर 2 सेकंड नए zoom/कोण से.
             # line के आख़िरी शब्द बड़े अक्षरों में नहीं — वो बोलने से पहले दिखकर punch बिगाड़ते थे और टूटे टुकड़े ("में? मम्मी के!") बनते थे
-            vis = [last_vis[0]] if last_vis else []
+            vis = [last_vis[0]] if last_vis and shown_n.get(last_vis[0], 0) < 2 else []   # एक फ़ोटो पूरे video में 2 बार तक
             carry += 1                                          # एक ही तस्वीर 2 lines से ज़्यादा नहीं (पहले 30 सेकंड अटकी रही)
         if shot in ("split", "full") and not vis and not react:
             if ln.get("big"):
@@ -826,6 +826,9 @@ def render(ep, segs, chars, out, preview):
                 if key:
                     vis.append({"big": key})
         shown_ever.update(v for v in vis if isinstance(v, Path))
+        for v in vis:
+            if isinstance(v, Path):
+                shown_n[v] = shown_n.get(v, 0) + 1
         if ln.get("tag_text") and not nochar:
             # tag_text ऊपर बड़े पीले डिब्बे में आता है — उसी जगह card के बड़े अक्षर भी थे, दोनों एक-दूसरे पर चढ़ते थे
             # ("वो दोस्त जो YouTube…" के नीचे "करोड़पति बनिए" आधा कटा). अब इस line पर card सिर्फ़ धुंधली पृष्ठभूमि.

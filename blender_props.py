@@ -111,8 +111,8 @@ def drop(obj, x, y, z0, f0, rot, bounce=0.25):
 
 
 if WHICH == "coins":
-    gold = mat("coin", (0.95, 0.76, 0.38, 1), metal=0.85, rough=0.32)
-    silver = mat("coin2", (0.86, 0.86, 0.88, 1), metal=0.85, rough=0.35)
+    gold = mat("coin", (0.95, 0.76, 0.38, 1), metal=0.45, rough=0.38)     # ज़्यादा metal = पीछे की गहरी दीवार
+    silver = mat("coin2", (0.86, 0.86, 0.88, 1), metal=0.45, rough=0.4)   # का अक्स = सिक्कों पर काले धब्बे
     for k in range(9):
         bpy.ops.mesh.primitive_cylinder_add(radius=0.42, depth=0.07, vertices=64, end_fill_type='TRIFAN')  # NGON+bevel = काला ढक्कन
         c = bpy.context.active_object
@@ -160,7 +160,7 @@ else:                                                     # notes: गड्ड�
             b.data.materials.append(band)
             b.parent = n
     target.location = (0, 0, 0.9)
-    for f, loc in ((1, (0, -6.0, 2.8)), (FPS * SECS, (1.0, -4.8, 2.4))):    # गड्डी के पास कैमरा
+    for f, loc in ((1, (0, -8.0, 3.4)), (FPS * SECS, (1.0, -5.6, 2.6))):    # पहला frame दूर से (गड्डी पहचान में आए), फिर पास
         cam.location = loc
         cam.keyframe_insert("location", frame=f)
 
