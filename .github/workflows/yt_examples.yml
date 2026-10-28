@@ -2,6 +2,8 @@
 name: yt-examples
 on:
   workflow_dispatch:
+    inputs:
+      args: {description: "खाली = Prakash Bharati | discover | channels @handle1 @handle2", default: "discover"}
   push:
     branches: [claude/visual-upgrade]
     paths: [yt_examples.py, .github/workflows/yt_examples.yml]
@@ -17,11 +19,11 @@ jobs:
       - run: |
           python3 -m pip install -q "yt-dlp[default]"
           curl -fsSL https://deno.land/install.sh | sh -s -- -y >/dev/null 2>&1; export PATH=$HOME/.deno/bin:$PATH
-          python3 yt_examples.py 2>&1 | tee yt_examples.log
+          python3 yt_examples.py ${{ inputs.args || 'discover' }} 2>&1 | tee yt_examples.log
       - if: always()
         run: |
           git config user.name Claude && git config user.email noreply@anthropic.com
-          git add -f yt_examples.json yt_examples.log 2>/dev/null || true
+          git add -f yt_examples.json yt_examples_more.json yt_channels.json yt_examples.log 2>/dev/null || true
           git diff --cached --quiet && exit 0
           git commit -m "YouTube satire examples"
           for i in 1 2 3; do git pull --rebase -X theirs && git push && break; sleep 5; done

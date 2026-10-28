@@ -69,5 +69,56 @@ def main():
     print("subtitle वाले:", len(top))
 
 
+DISCOVER = ["satirical news hindi", "व्यंग्य समाचार", "hindi news parody show", "sarcastic news hindi comedy",
+            "fake news show hindi satire", "सरकारी विभाग व्यंग्य", "हिंदी व्यंग्य शो", "deadpan comedy hindi",
+            "mock documentary hindi comedy", "desi news anchor parody", "प्रशासन पर व्यंग्य", "system pe vyang"]
+
+
+def discover():
+    """Prakash Bharati जैसे और channel ढूँढो: हर खोज के channel, कुल/सबसे ज़्यादा views, नमूना titles → yt_channels.json"""
+    ch = {}
+    for q in DISCOVER:
+        for e in search(q, 30):
+            c = e.get("channel") or e.get("uploader")
+            if not c or POLITICS.search(str(e.get("title", ""))):
+                continue
+            d = ch.setdefault(c, {"channel": c, "url": e.get("channel_url") or "", "hits": 0, "max_views": 0, "titles": []})
+            d["hits"] += 1
+            d["max_views"] = max(d["max_views"], e.get("view_count") or 0)
+            if len(d["titles"]) < 4:
+                d["titles"].append(f'{(e.get("view_count") or 0):,} | {e.get("duration") or 0}s | {e.get("title", "")[:70]}')
+        print(f"  {q}: {len(ch)} channels")
+    out = sorted(ch.values(), key=lambda d: (-d["hits"], -d["max_views"]))[:60]
+    json.dump(out, open(ROOT / "yt_channels.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+
+
+def from_channels(names):
+    """चुने channels के ज़्यादा देखे गए videos की script → yt_examples_more.json"""
+    got = []
+    for name in names:
+        url = name if name.startswith("http") else f"https://www.youtube.com/{name}"
+        for tab in ("/shorts", "/videos"):
+            cmd = clips._ytdlp() + ["-J", "--flat-playlist", "--playlist-end", "40", url + tab] + clips._cookies("YT_COOKIES")
+            try:
+                r = subprocess.run(cmd, capture_output=True, text=True, timeout=240)
+                ents = (json.loads(r.stdout or "{}") or {}).get("entries") or []
+            except Exception:                             # noqa: BLE001
+                ents = []
+            ents = sorted((e for e in ents if e.get("id")), key=lambda e: -(e.get("view_count") or 0))[:6]
+            for e in ents:
+                vid = e["id"]
+                t = subs(f"https://www.youtube.com/watch?v={vid}", vid)
+                if len(t) >= 80:
+                    got.append({"channel": name, "id": vid, "title": e.get("title", ""), "views": e.get("view_count") or 0,
+                                "secs": e.get("duration") or 0, "text": t})
+                    print(f"  {name}{tab}: {(e.get('view_count') or 0):,} | {e.get('title', '')[:60]}")
+    json.dump(got, open(ROOT / "yt_examples_more.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+
+
 if __name__ == "__main__":
-    sys.exit(main())
+    if sys.argv[1:2] == ["discover"]:
+        discover()
+    elif sys.argv[1:2] == ["channels"]:
+        from_channels(sys.argv[2:])
+    else:
+        sys.exit(main())
