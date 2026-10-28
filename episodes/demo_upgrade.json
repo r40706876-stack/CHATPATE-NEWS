@@ -1,0 +1,167 @@
+{
+ "topic": "सड़क पर गड्ढे बरकरार पर ट्रैफिक नियमों के नाम पर दनादन चालान",
+ "category": "शहर-कस्बा",
+ "breaking": "बिहार में 10 दिन में 15.5 करोड़ का चालान",
+ "hook_text": "सड़क में गड्ढा, चालान आसमान से",
+ "ask": "आपके शहर में सड़क सही है या चालान?",
+ "source": "Dainik Bhaskar, Jagran, Amar Ujala",
+ "poll": {
+  "q": "आपके शहर में सड़क सही है या चालान?",
+  "a": "चालान से सुधार",
+  "b": "सड़क पहले बनाओ"
+ },
+ "ticker": [
+  "बिहार में 10 दिन में 16 हज़ार चालान कटे",
+  "ट्रैफिक पुलिस ने वसूले 15.50 करोड़ रुपये",
+  "दशहरा तक जारी रहेगा विशेष चालान अभियान"
+ ],
+ "cast_why": "बबलू वसूली के कड़े सरकारी आंकड़े रखेगा और चाचा गड्ढे वाली सड़क पर चलने का दर्द बयां करेंगे।",
+ "lines": [
+  {
+   "who": "bablu",
+   "say": "बिहार में चलाए जा रहे विशेष ट्रैफिक अभियान के दस दिनों में सोलह हज़ार से अधिक ई-चालान काटे गए हैं। चालान की गति डिजिटल है, सड़क की दशा पाषाण काल जैसी।",
+   "caption": "बिहार ट्रैफिक अभियान के 10 दिनों में 16,000 से अधिक ई-चालान काटे गए। चालान डिजिटल है, सड़क पाषाण काल जैसी।",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "traffic police holding handheld e challan machine",
+    "bihar police traffic checking vehicles",
+    "pothole on indian asphalt road"
+   ],
+   "card": {
+    "tag": "बिहार ट्रैफिक अभियान",
+    "big": "16,000+ चालान",
+    "sub": "10 दिनों की कार्रवाई",
+    "icon": "alert"
+   },
+   "visual": "traffic police holding handheld e challan machine",
+   "scene": "studio",
+   "punch": false,
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "say": "बिहार ट्रैफिक पुलिस ने इन दस दिनों के दौरान साढ़े पंद्रह करोड़ रुपये का जुर्माना वसूला है। पुलिस का ख़ज़ाना भर गया, सड़क का गड्ढा वहीं का वहीं है।",
+   "caption": "ट्रैफिक पुलिस ने 10 दिनों में ₹15.50 करोड़ जुर्माना वसूला। ख़ज़ाना भर गया, गड्ढा वहीं का वहीं है।",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "indian rupee currency notes bundle",
+    "cctv traffic camera on pole",
+    "motorcyclist dodging road pothole"
+   ],
+   "punch": true,
+   "react_pose": "eyeroll",
+   "stamp": "गड्ढा वहीं है!",
+   "visual": "indian rupee currency notes bundle",
+   "scene": "chacha",
+   "insta": ""
+  },
+  {
+   "who": "chacha",
+   "say": "हमारे ज़माने में गड्ढे देखकर गाड़ी धीमी की जाती थी। अब गाड़ी गड्ढे में गिरती है और चालान मोबाइल पर पहले गिर जाता है।",
+   "caption": "हमारे ज़माने में गड्ढा देख गाड़ी धीमी करते थे। अब गाड़ी गड्ढे में गिरती है, चालान मोबाइल पर गिरता है।",
+   "expr": "tanz",
+   "set": "village",
+   "visuals": [
+    "scooter falling into deep road pothole",
+    "elderly indian man checking sms on phone",
+    "broken village road with stones"
+   ],
+   "punch": true,
+   "react_pose": "facepalm",
+   "stamp": "सीधा चालान!",
+   "visual": "scooter falling into deep road pothole",
+   "scene": "chacha",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "say": "प्रशासन ने साफ़ किया है कि यह चेकिंग अभियान बीस अक्टूबर दशहरा तक जारी रहेगा। त्योहार घर में मनेगा, और उपहार चालान पोर्टल पर कटेगा।",
+   "caption": "चेकिंग अभियान 20 अक्टूबर / दशहरा तक जारी रहेगा। त्योहार घर में मनेगा, उपहार पोर्टल पर कटेगा।",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "calendar page 20 october marker",
+    "police barricade checkpoint night bihar",
+    "vehicles queued at traffic signal"
+   ],
+   "card": {
+    "tag": "अभियान की मियाद",
+    "big": "20 अक्टूबर तक",
+    "sub": "दशहरा तक विशेष चेकिंग",
+    "icon": "calendar"
+   },
+   "visual": "calendar page 20 october marker",
+   "scene": "card",
+   "punch": false,
+   "insta": ""
+  },
+  {
+   "who": "chacha",
+   "say": "चालान की स्थिति परिवहन विभाग के पोर्टल से पता करें। सड़क के गड्ढे की स्थिति… कमर का एक्स-रे करवा कर पता करें।",
+   "caption": "चालान की स्थिति परिवहन पोर्टल से पता करें। गड्ढे की स्थिति कमर के एक्स-रे से पता करें।",
+   "expr": "gambhir",
+   "set": "village",
+   "visuals": [
+    "parivahan sewa portal on smartphone screen",
+    "spine x ray film in clinic",
+    "auto rickshaw tilted in deep muddy pothole"
+   ],
+   "visual": "parivahan sewa portal on smartphone screen",
+   "scene": "chacha",
+   "punch": false,
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "say": "ये वीडियो उसको भेजो, जो सड़क के गड्ढे से बचकर निकला और कैमरे ने हेलमेट के नाम पर धर लिया।",
+   "caption": "ये वीडियो उसको भेजो, जो गड्ढे से बचकर निकला और कैमरे ने चालान काट दिया।",
+   "expr": "tanz",
+   "set": "studio",
+   "visuals": [
+    "traffic surveillance camera zoom lens",
+    "two wheeler driver riding on bumpy street",
+    "challan receipt printed slip"
+   ],
+   "visual": "traffic surveillance camera zoom lens",
+   "scene": "studio_end",
+   "punch": false,
+   "insta": ""
+  }
+ ],
+ "caption_post": "सड़क पर गड्ढा ढूंढना नहीं पड़ता, पर चालान आपको ढूंढ लेता है! 🕳️🛵 क्या आपके शहर में भी सड़क से तेज़ चालान कट रहा है? Family group में भेजो। स्रोत: Dainik Bhaskar, Jagran #BiharTraffic #EChallan #Potholes #Bakranews #TrafficRules (AI से बने किरदार)",
+ "format": "explain",
+ "label": "काम की खबर",
+ "key_word": "",
+ "icons": [
+  "₹",
+  "NEWS",
+  "%"
+ ],
+ "hook": "सड़क में गड्ढा, चालान आसमान से",
+ "trend": {
+  "score": 7,
+  "why": "15 अख़बार/चैनल 2 दिन में, 47 खबरें 7 दिन में"
+ },
+ "connect": {
+  "score": 9,
+  "why": "खराब सड़क पर हिचकोले और दनादन कटते चालान का अंतर्विरोध सीधे आम बाइक सवार के गुस्से और बटुए पर चोट करता है।",
+  "weak": "हुक सिर्फ तुकबंदी जैसा लगता है, उसमें 3 सेकंड का सीधा झटका या ख़ास सवाल कमज़ोर है।",
+  "fix": "हुक को सीधा और तीखा बनाओ: 'गड्ढे से जान बची तो आगे 2000 का चालान!'",
+  "parts": {
+   "A": 3,
+   "B": 2,
+   "C": 1,
+   "D": 1,
+   "E": 1,
+   "F": 1
+  }
+ },
+ "sprite": {
+  "chacha": "assets/toon/chacha",
+  "bablu": "assets/toon/bablu"
+ },
+ "production": false,
+ "title": "नया visual demo (बिहार चालान)"
+}
