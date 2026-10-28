@@ -33,11 +33,13 @@ def fake(prompt, **kw):
              "lines": LINES}
         return json.dumps([{"topic": "SBI डेटा लीक", "versions": [v, dict(v, premise="y")]}])
     if "22 साल" in p:
-        return json.dumps([{"id": 0, "score": 6, "kamzor": [3], "share_kisko": "पापा", "skip_sec": "पूरा देखा",
-                            "lines": [{"ruka": True, "hasa": 1, "kyon": "ok"}] * 5},
-                           {"id": 1, "score": 8, "kamzor": [], "share_kisko": "दोस्त", "skip_sec": "पूरा देखा"}])
+        allok = {k: {"ok": True, "kyon": "x"} for k in ("pura", "hasi", "share", "daily", "follow", "like", "save")}
+        if p.count('"topic"') == 1:                                # punch-up के बाद दोबारा जाँच
+            return json.dumps([{"id": 0, "score": 9, "jaanch": allok}])
+        return json.dumps([{"id": 0, "score": 9, "kamzor": [3], "jaanch": dict(allok, share={"ok": False, "kyon": "किसे?"})},
+                           {"id": 1, "score": 8, "kamzor": [], "jaanch": dict(allok, save={"ok": False, "kyon": ""})}])
     if "punch-up" in p:
-        return json.dumps([])
+        return json.dumps([{"id": 0, "lines": LINES}])
     raise AssertionError("अनजाना prompt")
 
 
@@ -47,12 +49,16 @@ class PsychWriter(unittest.TestCase):
         gemini.ask = fake
         try:
             packs = [{"topic": "SBI डेटा लीक", "facts": ["4000 ग्राहक"], "source": "NDTV"}]
-            picks = [{"topic": "SBI डेटा लीक", "trend": {"score": 6}, "cat": "bank"}]
+            picks = [{"topic": "SBI डेटा लीक", "trend": {"score": 6, "why": "6 अख़बार"}, "cat": "bank"}]
             eps = nw._write_psych({}, packs, picks, 3)
         finally:
             gemini.ask = old
         self.assertEqual(len(eps), 1)
-        self.assertEqual(eps[0]["connect"]["score"], 8)          # दर्शक ने B को ज़्यादा नंबर दिए
+        # B जीता (core पास), फिर punch-up के बाद 7/7 → बदला गया
+        self.assertEqual(eps[0]["connect"]["score"], 9)
+        self.assertTrue(all(v["ok"] for v in eps[0]["jaanch"].values()))
+        import run_daily
+        self.assertIn("🧪 जाँच 7/7", run_daily.preview(eps))
         self.assertTrue(eps[0]["lines"][0]["say"].startswith("SBI"))
         self.assertTrue(any(l.get("tag_text") for l in eps[0]["lines"]))
 

@@ -26,6 +26,19 @@ PSYCH = """देखने वाले का दिमाग़ — इन्�
 9. बोलचाल: एक line = एक बात, ज़्यादा से ज़्यादा 14 शब्द, चाय की दुकान वाली भाषा. किताबी शब्द (द्वारा, उपभोक्ता, अनिवार्य) नहीं.
 10. आँख भी: हर line की तस्वीर अलग ठोस चीज़ दिखाए (एक ही फ़ोटो बार-बार = "same same" लगता है)."""
 
+# मालिक की 7-सवाल जाँच (28 Oct 2026): हर script इन सबका जवाब दे — जो न दे, वो दोबारा लिखी जाए.
+QUESTIONS = [
+    ("pura", "कोई पूरा video क्यों देखे? (कौन-सा खुला सवाल/वादा आख़िर तक रोकता है)"),
+    ("hasi", "पहली हँसी आई? किस line पर, कितने सेकंड में (3 सेकंड के अंदर चाहिए)"),
+    ("share", "कोई share क्यों करेगा? किसे भेजेगा (रिश्ता/दोस्त का नाम) और किस line की वजह से"),
+    ("daily", "हमारी रोज़ की ज़िंदगी से कैसे जुड़ा? (कौन-सी आम परेशानी/आदत)"),
+    ("follow", "follow क्यों करे? (इस page से आगे क्या मिलेगा जो कहीं और नहीं — किरदार, अंदाज़)"),
+    ("like", "like क्यों करे? (किस बात पर दिल कहे 'बिल्कुल सही बोला')"),
+    ("save", "save क्यों करे? (कोई काम की बात/बचाव का तरीका/बाद में दिखाने लायक line)"),
+]
+CORE = ("pura", "hasi", "share", "daily")               # इनमें से एक भी फ़ेल = script दोबारा
+QTEXT = "\n".join(f"{i}. {k}: {q}" for i, (k, q) in enumerate(QUESTIONS))
+
 EXAMPLES = """तरीका दिखाने वाले नमूने (शब्द/पंच कॉपी नहीं — हर खबर के अपने):
 [फौजी फर्श पर, AI दुल्हन]
 bablu: आज रेलवे के दो वीडियो वायरल हुए. एक नकली था.
@@ -74,6 +87,11 @@ def prompt_scripts(chosen, fields, casting):
 
 {EXAMPLES}
 
+लिखने से पहले हर script के लिए ये 7 सवाल ख़ुद से पूछो — script में हर एक की वजह मौजूद हो (वरना वो script मत लिखो):
+{QTEXT}
+save के लिए: एक छोटी काम की बात भी हो सकती है (जैसे ठगी से बचने का 1 तरीका) — पर मज़ाक के अंदाज़ में, भाषण नहीं.
+follow के लिए: हमारे किरदारों का अपना पहचाना अंदाज़ (बबलू की गंभीर मुहर, चाचा का काला तंज़) साफ़ दिखे.
+
 लंबाई: 5-8 lines, कुल 45-90 शब्द. लंबाई पैमाना नहीं — हर line का इनाम पैमाना है. तथ्य सिर्फ़ ऊपर वाले, अंक हूबहू;
 कल्पना वाली line कल्पना की तरह (किसी असली नेता/इंसान के मुँह में नकली बात नहीं).
 {fields}
@@ -81,6 +99,7 @@ def prompt_scripts(chosen, fields, casting):
 [{{"topic": "...", "versions": [{{"premise": "...", "category": "money/rules/bank/jobs/scheme/tech/travel/civic/other",
   "breaking": "6-9 शब्द सच्ची headline", "hook_screen": "≤ 5 शब्द", "source": "प्रकाशक", "tag_who": "कौन किसे भेजेगा और क्यों",
   "ask": "≤ 9 शब्द comment सवाल", "loop_word": "पहली और आख़िरी line का साझा शब्द",
+  "jawab": {{"pura": "...", "hasi": "...", "share": "...", "daily": "...", "follow": "...", "like": "...", "save": "..."}},
   "lines": [{{"who": "bablu", "say": "...", "caption": "...", "expr": "gambhir", "set": "studio",
              "visuals": ["...", "...", "..."], "photo_hi": ["...", "..."]}}],
   "caption_post": "पहली line + 'Tag करो उसको जो…' + सवाल + स्रोत + 4-5 hashtags + (AI से बने किरदार)"}}]}}]"""
@@ -90,21 +109,38 @@ def prompt_audience(cands):
     slim = [{"id": i, "topic": c["topic"], "lines": [f'{l["who"]}: {l["say"]}' for l in c["ep"]["lines"]]}
             for i, c in enumerate(cands)]
     return f"""तुम 22 साल के हो, कस्बे में रहते हो, Instagram reels तेज़ी से scroll करते हो. तुम्हें मनाना मुश्किल है —
-ज़्यादातर reels 2 सेकंड में छोड़ देते हो. हर script को line-by-line ईमानदारी से पढ़ो, जैसे reel चल रही हो.
+ज़्यादातर reels 2 सेकंड में छोड़ देते हो. हर script को line-by-line ईमानदारी से पढ़ो, जैसे reel चल रही हो
+(बोलने की रफ़्तार ~2.7 शब्द/सेकंड).
 {json.dumps(slim, ensure_ascii=False, indent=1)}
 
-हर line पर बताओ: "ruka" (रुके रहे?), "hasa" (हँसी आई? 0 / 1 मुस्कान / 2 ज़ोर से), "kyon" (5-8 शब्द).
-पहली line पर अगर अँगूठा चलता रहता, तो ruka=false और बाकी पढ़ो ही मत (score कम).
-फिर: "share_kisko" (किसे भेजोगे — नाम-रिश्ता, या "किसी को नहीं"), "skip_sec" (किस सेकंड पर जाते, या "पूरा देखा"),
-"score" 0-10 (10 = पूरा देखा, दोबारा देखा, भेजा), "kamzor" (सबसे कमज़ोर lines के index, 0 से).
-खुद को नरम मत रखो — 7 से ऊपर तभी, जब सच में भेजोगे.
-सिर्फ़ JSON: [{{"id": 0, "lines": [{{"ruka": true, "hasa": 1, "kyon": "..."}}], "share_kisko": "...", "skip_sec": "...",
+हर line पर: "ruka" (रुके रहे?), "hasa" (0 / 1 मुस्कान / 2 ज़ोर से), "kyon" (5-8 शब्द).
+फिर ये 7 सवाल — दर्शक बनकर, script के शब्दों से जवाब दो. जवाब script में नहीं मिलता तो "ok": false (अंदाज़े से पास मत करो):
+{QTEXT}
+"score" 0-10 (10 = पूरा देखा, दोबारा देखा, भेजा, save किया). 7 से ऊपर तभी जब सच में भेजोगे.
+"kamzor" = सबसे कमज़ोर lines के index (0 से).
+सिर्फ़ JSON: [{{"id": 0, "lines": [{{"ruka": true, "hasa": 1, "kyon": "..."}}],
+"jaanch": {{"pura": {{"ok": true, "kyon": "..."}}, "hasi": {{"ok": true, "kyon": "line 1, ~2 सेकंड"}}, "share": {{"ok": true, "kyon": "पापा को, पासबुक वाली line"}},
+"daily": {{"ok": true, "kyon": "..."}}, "follow": {{"ok": false, "kyon": "..."}}, "like": {{"ok": true, "kyon": "..."}}, "save": {{"ok": false, "kyon": "..."}}}},
 "score": 0, "kamzor": [2, 4]}}]"""
 
 
+def _fails(vote):
+    j = (vote or {}).get("jaanch") or {}
+    return [k for k, _ in QUESTIONS if not (j.get(k) or {}).get("ok")]
+
+
+def _rank(vote):
+    """पहले core सवाल पास, फिर कुल पास, फिर score."""
+    f = _fails(vote)
+    return (sum(k in CORE for k in f) == 0, 7 - len(f), float((vote or {}).get("score", 0) or 0))
+
+
 def prompt_punchup(items):
-    return f"""तुम "बकरा न्यूज़" के punch-up writer हो. नीचे की scripts में दर्शक ने कुछ lines कमज़ोर बताईं (उसकी वजह साथ है).
-सिर्फ़ उन्हीं lines को दोबारा लिखो — तथ्य, किरदार, क्रम वही; बाकी lines जस की तस. हर नई line पिछली से ज़्यादा
+    return f"""तुम "बकरा न्यूज़" के punch-up writer हो. नीचे की scripts में दर्शक ने कुछ lines कमज़ोर बताईं (वजह साथ है)
+और "fail" में वो सवाल हैं जिनका जवाब script नहीं देती:
+{QTEXT}
+कमज़ोर lines दोबारा लिखो और fail सवालों का जवाब script में डालो (ज़रूरत हो तो 1 line जोड़ सकते हो, कुल 8 तक) —
+तथ्य, किरदार वही; बाकी अच्छी lines जस की तस. हर नई line पिछली से ज़्यादा
 ठोस, ज़्यादा अनपेक्षित, और सीढ़ी में सही जगह. loop और आख़िरी वार न टूटे.
 {json.dumps(items, ensure_ascii=False, indent=1)}
 
@@ -149,26 +185,39 @@ def write(packs, n, fields, casting):
         raise
     except Exception as e:                                  # noqa: BLE001
         print("  दर्शक-जज नहीं चला:", repr(e)[:100])
-    best = {}
-    for c in cands:                                         # हर खबर का A या B — जिसे दर्शक ने ज़्यादा नंबर दिए
-        s = float((c.get("vote") or {}).get("score", 0) or 0)
-        if c["topic"] not in best or s > best[c["topic"]][0]:
-            best[c["topic"]] = (s, c)
-    winners = [c for _, c in sorted(best.values(), key=lambda x: -x[0])][:n]
-    weak = [(k, c) for k, c in enumerate(winners) if (c.get("vote") or {}).get("kamzor") and
-            float(c["vote"].get("score", 0) or 0) < 9]
+    def pick_best():
+        best = {}
+        for c in cands:                                     # हर खबर का A या B — 7 सवालों में जो ज़्यादा पास
+            r = _rank(c.get("vote"))
+            if c["topic"] not in best or r > best[c["topic"]][0]:
+                best[c["topic"]] = (r, c)
+        return [c for _, c in sorted(best.values(), key=lambda x: x[0], reverse=True)][:n]
+
+    winners = pick_best()
+    weak = [(k, c) for k, c in enumerate(winners) if _fails(c.get("vote")) or
+            float((c.get("vote") or {}).get("score", 0) or 0) < 8]
     if weak:
-        items = [{"id": k, "lines": c["ep"]["lines"], "kamzor": c["vote"]["kamzor"],
-                  "darshak": [ln.get("kyon") for ln in c["vote"].get("lines", [])]} for k, c in weak]
+        items = [{"id": k, "lines": c["ep"]["lines"], "kamzor": (c.get("vote") or {}).get("kamzor", []),
+                  "fail": {q: ((c.get("vote") or {}).get("jaanch") or {}).get(q, {}).get("kyon", "")
+                           for q in _fails(c.get("vote"))},
+                  "darshak": [ln.get("kyon") for ln in (c.get("vote") or {}).get("lines", [])]} for k, c in weak]
         try:
             fixed = _ask(prompt_punchup(items), 0.9)
+            redo = []
             for f in fixed if isinstance(fixed, list) else []:
                 k = f.get("id")
                 if isinstance(k, int) and 0 <= k < len(winners) and isinstance(f.get("lines"), list) and \
                         len(f["lines"]) >= 4:
-                    winners[k]["ep"]["lines"] = f["lines"]
-                    winners[k]["punched"] = True
-                    print(f"  🥊 punch-up: {winners[k]['topic']}")
+                    old_c = winners[k]
+                    new_ep = dict(old_c["ep"], lines=f["lines"])
+                    redo.append((k, {"topic": old_c["topic"], "ep": new_ep, "punched": True}))
+            if redo:                                        # सुधरी script दोबारा उसी दर्शक को — बेहतर हो तभी बदलो
+                votes = _ask(prompt_audience([c for _, c in redo]), 0.2)
+                for (k, c), vt in zip(redo, votes if isinstance(votes, list) else []):
+                    c["vote"] = vt
+                    if _rank(vt) > _rank(winners[k].get("vote")):
+                        winners[k] = c
+                        print(f"  🥊 punch-up जीता: {c['topic']} (फ़ेल अब: {_fails(vt) or 'कोई नहीं'})")
         except gemini.QuotaOver:
             raise
         except Exception as e:                              # noqa: BLE001
@@ -176,9 +225,13 @@ def write(packs, n, fields, casting):
     out = []
     for c in winners:
         ep, v = c["ep"], c.get("vote") or {}
-        ep["connect"] = {"score": v.get("score", "?"), "why": f"भेजेगा: {v.get('share_kisko', '?')} | जाता: {v.get('skip_sec', '?')}",
-                         "weak": "", "fix": ""}
+        fails = _fails(v)
+        ep["jaanch"] = {k: (v.get("jaanch") or {}).get(k) or {"ok": False, "kyon": "जज ने नहीं बताया"} for k, _ in QUESTIONS}
+        ep["connect"] = {"score": v.get("score", "?"), "why": f"7 में से {7 - len(fails)} सवाल पास", "weak": "", "fix": ""}
+        if any(k in CORE for k in fails):
+            ep["_loose"] = True                             # Telegram पर ⚠️ और सबसे नीचे
         ep["writer"] = "psych" + ("+punchup" if c.get("punched") else "")
         out.append(ep)
-        print(f"  👀 दर्शक {v.get('score', '?')}/10 — {c['topic']} | भेजेगा: {v.get('share_kisko', '?')}")
+        print(f"  👀 {c['topic']}: {v.get('score', '?')}/10, फ़ेल: {fails or 'कोई नहीं'}")
+    out.sort(key=lambda e: bool(e.get("_loose")))
     return out

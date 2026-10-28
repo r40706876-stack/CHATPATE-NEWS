@@ -69,6 +69,14 @@ def preview(eps):
         import viral_check
         if viral_check.line(ep):
             out.append(viral_check.line(ep))
+        if ep.get("jaanch"):                                   # मालिक की 7-सवाल जाँच (दर्शक बनकर Gemini ने जवाब दिए)
+            NAMES = {"pura": "पूरा क्यों देखे", "hasi": "पहली हँसी", "share": "share क्यों", "daily": "रोज़ की ज़िंदगी",
+                     "follow": "follow क्यों", "like": "like क्यों", "save": "save क्यों"}
+            ok = sum(bool((ep["jaanch"].get(k) or {}).get("ok")) for k in NAMES)
+            out.append(f"🧪 जाँच {ok}/7:")
+            for k, name in NAMES.items():
+                j = ep["jaanch"].get(k) or {}
+                out.append(f"   {'✅' if j.get('ok') else '❌'} {name}: {str(j.get('kyon', ''))[:70]}")
         if ep.get("source"):
             out.append(f"🔎 स्रोत: {ep['source']}  ← तथ्य एक बार ज़रूर जाँच लेना")
         for ln in ep.get("lines", []):
