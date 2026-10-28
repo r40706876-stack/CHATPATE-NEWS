@@ -1,0 +1,27 @@
+# YouTube के viral Hindi व्यंग्य Shorts की असली script (subtitles) → yt_examples.json (Gemini के नमूने). मुफ़्त, yt-dlp से.
+name: yt-examples
+on:
+  workflow_dispatch:
+  push:
+    branches: [claude/visual-upgrade]
+    paths: [yt_examples.py, .github/workflows/yt_examples.yml]
+permissions: {contents: write}
+env:
+  YT_COOKIES: ${{ secrets.YT_COOKIES }}
+jobs:
+  fetch:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          python3 -m pip install -q "yt-dlp[default]"
+          curl -fsSL https://deno.land/install.sh | sh -s -- -y >/dev/null 2>&1; export PATH=$HOME/.deno/bin:$PATH
+          python3 yt_examples.py 2>&1 | tee yt_examples.log
+      - if: always()
+        run: |
+          git config user.name Claude && git config user.email noreply@anthropic.com
+          git add -f yt_examples.json yt_examples.log 2>/dev/null || true
+          git diff --cached --quiet && exit 0
+          git commit -m "YouTube satire examples"
+          for i in 1 2 3; do git pull --rebase -X theirs && git push && break; sleep 5; done
