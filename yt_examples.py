@@ -10,9 +10,11 @@ from pathlib import Path
 import clips
 
 ROOT = Path(__file__).parent
-QUERIES = ["सरकारी सिस्टम पर व्यंग्य shorts", "desi satire comedy shorts hindi", "आम आदमी की परेशानी comedy shorts",
-           "महंगाई पर कॉमेडी shorts", "रेलवे पर व्यंग्य comedy shorts", "बैंक वाले comedy shorts", "middle class comedy shorts hindi",
-           "प्रकाश भारती shorts", "news parody hindi shorts", "sarkari daftar comedy shorts"]
+# आम खोज (28 Oct) बेकार निकली — फ़िल्मी scene, trailer, गाने. अब सिर्फ़ जाने-माने deadpan व्यंग्य वाले channel (मालिक की पसंद:
+# Anurag Tiwari का "प्रकाश भारती"), और channel का नाम मिलना ज़रूरी.
+QUERIES = [("Prakash Bharati Anurag Tiwari", "anurag tiwari"), ("प्रकाश भारती विशेष रिपोर्ट", "anurag tiwari"),
+           ("Anurag Tiwari shorts", "anurag tiwari"), ("Prakash Bharati news", "anurag tiwari"),
+           ("Prakash Bharati prasaran", "anurag tiwari")]
 POLITICS = re.compile(r"मोदी|राहुल|बीजेपी|भाजपा|कांग्रेस|चुनाव|modi|rahul|bjp|congress|election", re.I)
 
 
@@ -47,11 +49,13 @@ def subs(url, vid):
 
 def main():
     got = {}
-    for q in QUERIES:
+    for q, must in QUERIES:
         for e in search(q):
+            if must not in (str(e.get("channel") or "") + " " + str(e.get("uploader") or "")).lower():
+                continue
             vid, dur, views = e.get("id"), e.get("duration") or 0, e.get("view_count") or 0
             title = e.get("title") or ""
-            if not vid or vid in got or not (8 <= dur <= 180) or views < 20000 or POLITICS.search(title):
+            if not vid or vid in got or not (8 <= dur <= 240) or views < 2000 or POLITICS.search(title):
                 continue
             got[vid] = {"id": vid, "title": title, "channel": e.get("channel") or "", "views": views, "secs": dur,
                         "url": f"https://www.youtube.com/shorts/{vid}", "query": q}
