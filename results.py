@@ -30,8 +30,8 @@ def delivered(ep, secs):
 
 
 def _num(key, text):
-    m = re.search(key + r"\D{0,8}?(\d+(?:\.\d+)?)", text, re.I)
-    return float(m.group(1)) if m else None
+    m = re.search("(?:" + key + r")\D{0,8}?(?P<n>\d+(?:\.\d+)?)", text, re.I)
+    return float(m.group("n")) if m else None
 
 
 def record(text):
