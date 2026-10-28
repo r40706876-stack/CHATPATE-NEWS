@@ -68,8 +68,7 @@ def make(scene, out, seed=None):
     seed = seed if seed is not None else random.randint(1, 10 ** 6)
     if os.getenv("SCENE_GEMINI", "1") == "1" and _gemini(prompt, out):
         return "gemini"
-    if _pollinations(prompt, out, seed):
-        return "pollinations"
+    # Pollinations बंद (28 Oct probe: धुंधली, अजीब चेहरा, watermark, उल्टी-सीधी लिखाई; दूसरी बार 402) — बेकार तस्वीर से अच्छा कुछ नहीं
     return None
 
 
@@ -80,6 +79,8 @@ def scene_text(ln, topic=""):
 
 
 def for_episode(ep, broll_dir, max_n=4):
+    if os.getenv("SCENES", "0") != "1":                    # Gemini image का free कोटा नहीं मिला (429) — चालू करना हो तो SCENES=1
+        return 0
     """कल्पना/पंच वाली lines (बबलू के तथ्य वाली नहीं) पर {i}_scene.png. पहले से clip वाली line छोड़ो."""
     broll_dir = Path(broll_dir)
     done = 0

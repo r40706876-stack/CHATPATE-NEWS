@@ -24,13 +24,18 @@ jobs:
           sudo apt-get install -y -qq libxi6 libxkbcommon0 libsm6 libxrender1 libxxf86vm1 libxfixes3 libgl1 libegl1 >/dev/null || true
       - name: render ${{ matrix.prop }}
         run: |
-          "$RUNNER_TEMP/blender/blender" -b -P blender_props.py -- ${{ matrix.prop }} 2>&1 | grep -E "rendered|Error|Traceback" || true
+          mkdir -p assets/fx/props
+          command -v ffmpeg || { sudo apt-get install -y -qq ffmpeg >/dev/null 2>&1 || true; }
+          command -v ffmpeg || { python3 -m pip install -q imageio-ffmpeg && sudo ln -sf "$(python3 -c 'import imageio_ffmpeg;print(imageio_ffmpeg.get_ffmpeg_exe())')" /usr/local/bin/ffmpeg; }
+          "$RUNNER_TEMP/blender/blender" -b -P blender_props.py -- ${{ matrix.prop }} > assets/fx/props/blender_${{ matrix.prop }}.log 2>&1 || true
+          grep -E "rendered|Error|Traceback|line [0-9]" assets/fx/props/blender_${{ matrix.prop }}.log | tail -20
           d=assets/fx/props/${{ matrix.prop }}_frames
           ls $d | wc -l
           ffmpeg -y -loglevel error -framerate 25 -pattern_type glob -i "$d/*.jpg" -c:v libx264 -preset slow -crf 20 -pix_fmt yuv420p assets/fx/props/${{ matrix.prop }}.mp4
           test -s assets/fx/props/${{ matrix.prop }}.mp4
       - uses: actions/upload-artifact@v4
-        with: {name: "prop-${{ matrix.prop }}", path: "assets/fx/props/${{ matrix.prop }}.mp4"}
+        if: always()
+        with: {name: "prop-${{ matrix.prop }}", path: "assets/fx/props/${{ matrix.prop }}.mp4\nassets/fx/props/blender_${{ matrix.prop }}.log"}
   save:
     needs: render
     if: always()
@@ -42,7 +47,8 @@ jobs:
       - run: |
           ls -la assets/fx/props
           git config user.name Claude && git config user.email noreply@anthropic.com
-          git add -f assets/fx/props/*.mp4
+          mkdir -p logs && mv assets/fx/props/blender_*.log logs/ 2>/dev/null || true
+          git add -f assets/fx/props/*.mp4 logs/blender_*.log 2>/dev/null || true
           git diff --cached --quiet && exit 0
           git commit -m "Blender: 3D money props"
           for i in 1 2 3; do git pull --rebase -X theirs && git push && break; sleep 5; done

@@ -16,7 +16,7 @@ QUERIES = ["सरकारी सिस्टम पर व्यंग्य s
 POLITICS = re.compile(r"मोदी|राहुल|बीजेपी|भाजपा|कांग्रेस|चुनाव|modi|rahul|bjp|congress|election", re.I)
 
 
-def search(q, n=15):
+def search(q, n=25):
     cmd = clips._ytdlp() + ["-J", "--no-warnings", "--skip-download", f"ytsearch{n}:{q}"] + clips._cookies("YT_COOKIES")
     try:
         r = subprocess.run(cmd, capture_output=True, text=True, timeout=240)
@@ -51,7 +51,7 @@ def main():
         for e in search(q):
             vid, dur, views = e.get("id"), e.get("duration") or 0, e.get("view_count") or 0
             title = e.get("title") or ""
-            if not vid or vid in got or not (8 <= dur <= 90) or views < 100000 or POLITICS.search(title):
+            if not vid or vid in got or not (8 <= dur <= 180) or views < 20000 or POLITICS.search(title):
                 continue
             got[vid] = {"id": vid, "title": title, "channel": e.get("channel") or "", "views": views, "secs": dur,
                         "url": f"https://www.youtube.com/shorts/{vid}", "query": q}
