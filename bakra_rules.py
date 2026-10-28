@@ -28,16 +28,17 @@ def violations(ep):
         out.append("नेता/राजनीति")
     if lines and YESNO_HOOK.search(lines[0]):
         out.append("हाँ/ना सवाल वाला hook")
-    if lines and len(lines[0].split()) > 10:
-        out.append("hook लंबा (>10 शब्द)")
+    if lines and len(lines[0].split()) > 14:             # मालिक (28 Oct): लंबाई नहीं, मज़ा पैमाना — सिर्फ़ बहुत लंबा hook रोको
+        out.append("hook लंबा (>14 शब्द)")
     # bakra-script skill + retention लक्ष्य: news reel छोटी (~12–18 sec ≈ 55 शब्द तक); बकरा बहस (rant) अलग लंबाई रखती है
     words = sum(len(s.split()) for s in lines)
-    if ep.get("kind") == "punch" and words > 24:
-        out.append(f"एक पंच लंबा ({words} शब्द, सीमा 24)")
-    elif ep.get("format") == "rant" and not (70 <= words <= 100):
-        out.append(f"बकरा बहस की लंबाई {words} शब्द (70-100 चाहिए)")
-    elif ep.get("format") != "rant" and ep.get("kind") != "punch" and words > 55:
-        out.append(f"script लंबी ({words} शब्द, सीमा 55)")
+    # मालिक (28 Oct): "video भले लंबी बने, script बहुत अच्छी हो" — सीमाएँ सिर्फ़ बेकाबू लंबाई रोकने को
+    if ep.get("kind") == "punch" and words > 32:
+        out.append(f"एक पंच लंबा ({words} शब्द, सीमा 32)")
+    elif ep.get("format") == "rant" and not (55 <= words <= 120):
+        out.append(f"बकरा बहस की लंबाई {words} शब्द (55-120 चाहिए)")
+    elif ep.get("format") != "rant" and ep.get("kind") != "punch" and words > 110:
+        out.append(f"script लंबी ({words} शब्द, सीमा 110)")
     # पहचान/tag: share की वजह — punch और rant में ख़ाली हो तो रद्द (news में writer पहले से रोकता है)
     if ep.get("kind") in ("punch", "tvshop") or ep.get("format") == "rant":
         if not str(ep.get("tag_who", "")).strip():

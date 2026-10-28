@@ -104,6 +104,21 @@ def _ok(mid):
     return p if p.exists() and p.stat().st_size > 30000 and (_status().get(mid) or {}).get("verified") else None
 
 
+def _cropbox(src, a, n):
+    """ffmpeg cropdetect से meme video की असली तस्वीर का हिस्सा ("crop=w:h:x:y," या "")."""
+    try:
+        r = subprocess.run(["ffmpeg", "-hide_banner", "-ss", f"{a:.2f}", "-t", f"{max(0.5, n):.2f}", "-i", str(src),
+                            "-vf", "cropdetect=limit=24:round=2:reset=0", "-an", "-f", "null", "-"],
+                           capture_output=True, text=True, timeout=60)
+        boxes = re.findall(r"crop=(\d+):(\d+):(\d+):(\d+)", r.stderr)
+        if not boxes:
+            return ""
+        w, h, x, y = map(int, boxes[-1])
+        return f"crop={w}:{h}:{x}:{y}," if w >= 120 and h >= 120 else ""
+    except Exception:                                     # noqa: BLE001
+        return ""
+
+
 def _probe_len(p):
     r = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(p)],
                        capture_output=True, text=True)
@@ -201,8 +216,10 @@ def _one(item, status):
         a, b, heard = win
         n = b - a
         out = DIR / f"{mid}.mp4"
-        vf = (f"[0:v]split[a][b];[a]scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},boxblur=30:5,"
-              f"eq=brightness=-0.15[bg];[b]scale={W}:-2[fg];[bg][fg]overlay=0:(H-h)/2,fps={FPS},setsar=1,format=yuv420p[v];"
+        cb = _cropbox(got, a, n)                              # template की अपनी काली पट्टियाँ हटाओ (वरना चेहरा छोटा, screen ख़ाली)
+        vf = (f"[0:v]{cb}split[a][b];[a]scale={W}:{H}:force_original_aspect_ratio=increase,crop={W}:{H},boxblur=30:5,"
+              f"eq=brightness=-0.15[bg];[b]scale=w='if(gt(ih,iw*1.2),{W},trunc({W}*1.3/2)*2)':h=-2,"
+              f"crop='min(iw,{W})':'min(ih,{H})'[fg];[bg][fg]overlay=(W-w)/2:(H-h)/2,fps={FPS},setsar=1,format=yuv420p[v];"
               f"[0:a]afade=t=in:d=0.04,afade=t=out:st={max(0.0, n - 0.12):.2f}:d=0.12[ma]")
         r = subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{a:.2f}", "-i", str(got), "-t", f"{n:.2f}",
                             "-filter_complex", vf, "-map", "[v]", "-map", "[ma]",

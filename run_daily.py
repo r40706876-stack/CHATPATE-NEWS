@@ -428,8 +428,8 @@ def script_warnings(ep):
     blob = " ".join(l["say"] for l in lines)
     if first > 12:
         w.append(f"पहली line {first} शब्द की है — 10 शब्द तक का मज़ाक वाला hook हो तो 3 सेकंड में कम लोग भागते हैं")
-    if words > 78:
-        w.append(f"script {words} शब्द की है (~{words // 3} सेकंड) — 50-70 शब्द पर पूरा देखने वाले बढ़ते हैं")
+    if words > 120:
+        w.append(f"script {words} शब्द की है (~{words // 3} सेकंड) — हर line में मज़ा न हो तो बीच में लोग जाते हैं")
     if POLITICS.search(blob):
         w.append("राजनीति/नेता वाली बात है — Instagram ऐसी reels अनजान लोगों को कम दिखाता है (मुख्यमंत्री वाली reel = 10 views)")
     if topics.recently_used(ep.get("topic", "") + " " + blob[:200]):

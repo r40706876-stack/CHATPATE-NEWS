@@ -1,0 +1,35 @@
+# एक बार: Blender से 3D "बकरा न्यूज़" transition के पारदर्शी frames बनाकर repo में (assets/fx/wipe). रोज़ के run में Blender नहीं चलता.
+name: blender-fx
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, claude/visual-upgrade]
+    paths: [blender_fx.py, .github/workflows/blender_fx.yml]
+permissions: {contents: write}
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 50
+    steps:
+      - uses: actions/checkout@v4
+      - name: Blender 4.2 (portable)
+        timeout-minutes: 15
+        run: |
+          mkdir -p "$RUNNER_TEMP/blender"
+          curl -fsL --retry 3 -o "$RUNNER_TEMP/b.tar.xz" https://download.blender.org/release/Blender4.2/blender-4.2.0-linux-x64.tar.xz
+          tar -xJf "$RUNNER_TEMP/b.tar.xz" -C "$RUNNER_TEMP/blender" --strip-components=1
+          sudo apt-get install -y -qq libxi6 libxkbcommon0 libsm6 libxrender1 libxxf86vm1 libxfixes3 libgl1 libegl1 >/dev/null || true
+          "$RUNNER_TEMP/blender/blender" --version | head -1
+      - name: transition render
+        run: |
+          rm -rf assets/fx/wipe
+          "$RUNNER_TEMP/blender/blender" -b -P blender_fx.py 2>&1 | tail -20
+          ls assets/fx/wipe | wc -l
+          test -s assets/fx/wipe/0006.png
+      - name: repo में रखो
+        run: |
+          git config user.name bot && git config user.email bot@users.noreply.github.com
+          git add -f assets/fx/wipe
+          git diff --cached --quiet && exit 0
+          git commit -m "Blender: 3D transition frames"
+          for i in 1 2 3; do git pull --rebase -X theirs && git push && break; sleep 5; done

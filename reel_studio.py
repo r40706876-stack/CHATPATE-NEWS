@@ -412,6 +412,19 @@ def _bases():
     return out
 
 
+_COUNTED = set()
+_WIPE = None
+
+
+def _wipe():
+    """assets/fx/wipe/*.png (blender_fx.py से एक बार बने) — न हों तो ख़ाली (कुछ नहीं चिपकता)."""
+    global _WIPE
+    if _WIPE is None:
+        files = sorted((ROOT / "assets/fx/wipe").glob("*.png")) if (ROOT / "assets/fx/wipe").exists() else []
+        _WIPE = [Image.open(f).convert("RGBA").resize((W, H)) for f in files]
+    return _WIPE
+
+
 def _kinetic(card, bg, t, size):
     """भूरे कार्ड की जगह: पिछली तस्वीर धुंधली करके उस पर उछलते बड़े अक्षर (अंक हो तो 0 से गिनती चढ़े)."""
     import re
@@ -482,7 +495,9 @@ def _screen_gen(src, seed, size, bg=None, hero=False):
                 x = int(w * 0.2 * p)
                 yield big.crop((x, int(h * 0.1), x + w, int(h * 0.1) + h))
             t += 1
-    t = 0
+    big = str((src or {}).get("big", ""))
+    t = 20 if big and big in _COUNTED else 0              # वही card दोबारा आए: अंक फिर 0 से नहीं गिनते (₹991→₹983→₹999 झिलमिल)
+    _COUNTED.add(big)
     while True:
         yield _kinetic(src or {}, bg, t, size)
         t += 1
@@ -800,8 +815,12 @@ def render(ep, segs, chars, out, preview):
                     break
                 if e_ not in vis:
                     vis.insert(1 if len(vis) == 1 else len(vis), e_)
+        if ln.get("tag_text") and not nochar:
+            # tag_text ऊपर बड़े पीले डिब्बे में आता है — उसी जगह card के बड़े अक्षर भी थे, दोनों एक-दूसरे पर चढ़ते थे
+            # ("वो दोस्त जो YouTube…" के नीचे "करोड़पति बनिए" आधा कटा). अब इस line पर card सिर्फ़ धुंधली पृष्ठभूमि.
+            vis = [dict(v, big="", sub="") if isinstance(v, dict) else v for v in vis]
         face = None
-        if s.get("talk"):                                       # हमारी 3 मुँह वाली फ़ोटो से बोलना (साफ़ 3D चेहरा)
+        if s.get("talk"):                                     # हमारी 3 मुँह वाली फ़ोटो से बोलना (साफ़ 3D चेहरा)
             face = talk_frames(s["talk"], shot, n, si)
         elif s.get("face"):
             face = _vid_frames(s["face"], W, H) if shot == "close" else _vid_frames(s["face"], W, BAND_H)
@@ -814,6 +833,7 @@ def render(ep, segs, chars, out, preview):
         last = None                                              # cur/credit पिछली line से चलते रहते हैं (reaction पर भी)
         if shot != "close" and not vis and cur is None:
             cur = _screen_gen({"big": headline}, seed, size, last_screen)
+        wipe_on = si > 0 and not react and ln["who"] != segs[si - 1]["ln"]["who"] and not segs[si - 1].get("react")
         first_seen = ln["who"] not in seen and not react
         seen.add(ln["who"])
         for t in range(n):
@@ -919,6 +939,10 @@ def render(ep, segs, chars, out, preview):
                 _ask(d, ep["ask"], t, 300 if shot == "split" else 1040)
             if shot == "split" and not react:
                 pass                                             # नीचे की पट्टी Instagram caption के नीचे छिपती थी — हटाई
+            if wipe_on and t < len(_wipe()):                  # Blender वाला 3D झटका: किरदार बदला (TV channel जैसा cut)
+                wf = _wipe()[t]
+                im.paste(wf, (0, 0), wf)
+                d = ImageDraw.Draw(im)
             d.rectangle((0, H - 12, int(W * k / total), H), fill=YEL)
             if react and t < 5 and prev_im is not None:        # बोलने से reaction में झटके से नहीं, घुलकर
                 im = Image.blend(prev_im, im, (t + 1) / 6)

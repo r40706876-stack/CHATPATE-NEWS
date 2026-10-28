@@ -92,6 +92,54 @@ def cut(url, out, start, secs=CLIP_SECS):
         return None
 
 
+def _scene_times(path):
+    """video में कहाँ-कहाँ shot बदला (सेकंड) — news package में B-roll पर cut तेज़ होते हैं, anchor पर नहीं."""
+    r = subprocess.run(["ffmpeg", "-hide_banner", "-i", str(path), "-vf", "select='gt(scene,0.28)',showinfo", "-an",
+                        "-f", "null", "-"], capture_output=True, text=True, timeout=120)
+    return [float(m) for m in re.findall(r"pts_time:([\d.]+)", r.stderr)]
+
+
+def _motion(path, a, secs):
+    """window में हरकत कितनी (0-1) — लगभग स्थिर frame (anchor, graphic, logo) = कम."""
+    r = subprocess.run(["ffmpeg", "-hide_banner", "-ss", f"{a:.2f}", "-t", f"{secs:.2f}", "-i", str(path), "-vf",
+                        "scale=160:-2,tblend=all_mode=difference,signalstats,metadata=print:key=lavfi.signalstats.YAVG",
+                        "-an", "-f", "null", "-"], capture_output=True, text=True, timeout=60)
+    v = [float(x) for x in re.findall(r"YAVG=([\d.]+)", r.stderr)]
+    return sum(v) / len(v) / 40 if v else 0.0
+
+
+def cut_best(url, out, start, look=24.0, secs=CLIP_SECS):
+    """पहले video का 24 सेकंड का हिस्सा, फिर उसमें से वो 3 सेकंड चुनो जहाँ असली घटना दिखे:
+    ज़्यादा shot-change + ज़्यादा हरकत (anchor का बोलता चेहरा स्थिर होता है — पहले 25% वाली अंधी जगह से कट लगता था,
+    वहाँ अक्सर anchor ही होता था और Gemini clip ठुकरा देता था, इसलिए clip लगभग कभी नहीं लगा)."""
+    long = cut(url, out.with_suffix(".long.mp4"), start, look)
+    if not long:
+        return None
+    try:
+        total = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0",
+                                      str(long)], capture_output=True, text=True).stdout.strip() or 0)
+        cuts = _scene_times(long)
+        best, best_s = 0.0, -1.0
+        a = 0.0
+        while a + secs <= total:
+            n = sum(a + 0.2 < c < a + secs - 0.2 for c in cuts)       # window के बीच 1-2 cut अच्छे (बहुत ज़्यादा = promo/montage)
+            s = min(n, 2) * 0.6 + _motion(long, a, secs) - (0.8 if n > 3 else 0)
+            if s > best_s:
+                best, best_s = a, s
+            a += 1.5
+        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{best:.2f}", "-i", str(long), "-t", f"{secs}",
+                        "-an", "-c:v", "libx264", "-preset", "veryfast", "-crf", "23", str(out)], check=True, timeout=60)
+        print(f"  ✂️ clip का सबसे दमदार हिस्सा: {start + best:.1f}s (score {best_s:.2f})")
+        return out if out.exists() and out.stat().st_size > 20000 else None
+    except Exception as e:                                # noqa: BLE001
+        print("  best-window नहीं चला, शुरू वाला हिस्सा:", repr(e)[:100])
+        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(long), "-t", f"{secs}", "-an", "-c:v", "libx264",
+                        "-preset", "veryfast", "-crf", "23", str(out)])
+        return out if out.exists() else None
+    finally:
+        long.unlink(missing_ok=True)
+
+
 INDIAN = ("aaj tak", "abp", "ndtv", "zee", "india tv", "news18", "tv9", "republic", "times now", "lallantop", "bhaskar",
           "navbharat", "amar ujala", "jagran", "hindustan", "dd news", "ani news", "india today", "the print", "news24",
           "news nation", " tak", "bharat", "ibc24", "first india", "punjab kesari", "etv", "zee news", "good news today")
@@ -136,9 +184,11 @@ def vision_ok(path, topic):
         r = gemini.json_from(gemini.ask([{"text": q}, part], json_mode=True, temperature=0.1))
         print(f"  👁 clip जाँच: {'✅' if r.get('ok') else '❌'} {str(r.get('why', ''))[:80]}")
         return bool(r.get("ok"))
-    except Exception as e:                                # noqa: BLE001  जाँच न हो सके तो clip नहीं (फ़ोटो चलेंगी)
-        print("  clip जाँच नहीं हुई:", repr(e)[:100])
-        return False
+    except Exception as e:                                # noqa: BLE001
+        # Gemini का कोटा ख़त्म: पहले clip फेंक देते थे (= कभी clip नहीं). अब title पहले ही खबर से मिला है और
+        # cut_best ने हरकत वाला हिस्सा चुना है — इसलिए चलने दो.
+        print("  clip जाँच नहीं हुई (Gemini), हरकत वाला हिस्सा मानकर रखा:", repr(e)[:80])
+        return True
 
 
 def for_topic(topic, queries=(), want=2):
@@ -157,7 +207,7 @@ def for_topic(topic, queries=(), want=2):
             if len(tw & visuals._stems(title)) < need or not (15 <= (dur or 60) <= 1200) or not indian(title, ch):
                 continue
             start = max(2.0, min((dur or 60) * 0.25, 40.0))   # शुरू का intro/logo छोड़कर, असली हिस्से से
-            path = cut(url, CACHE / f"clip_{len(seen)}.mp4", start)
+            path = cut_best(url, CACHE / f"clip_{len(seen)}.mp4", start)
             if path and not vision_ok(path, topic):
                 path.unlink(missing_ok=True)
                 continue

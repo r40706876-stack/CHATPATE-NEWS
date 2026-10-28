@@ -19,7 +19,7 @@ import writer
 
 ROOT = Path(__file__).parent
 GOLD = ROOT / "episodes/samples_rant.json"
-LEAN = os.getenv("LEAN", "1") == "1"                      # 1 = एक ही Gemini call में rant (free कोटा बचे)
+LEAN = os.getenv("LEAN", "0") == "1"   # 0 (28 Oct): पंच-बैंक → script → जज → तीखा पूरा चले; LEAN=1 = पुराना 1-call (कम मज़ेदार)                      # 1 = एक ही Gemini call में rant (free कोटा बचे)
 BEATS = ("hook", "tathya", "saboot", "maang", "dhamki", "twist", "takiya")
 
 # beat → (expr, sfx जब line शुरू हो, background मूड, आवाज़ का अंदाज़, line के बाद ठहराव सेकंड)
@@ -109,7 +109,7 @@ def prompt_write(chosen, k=0):
  7. takiya (≤ 5 शब्द): मुद्दे का तकिया-कलाम, चिल्लाकर.
 हर line अपने-आप में मज़ा दे — एक भी ख़ाली/समझाने वाली line नहीं. बोलचाल की देसी हिंदी, देवनागरी में; आम English शब्द
 (फ़ोन, रील, ग्रुप) चलेंगे.
-लौटाने से पहले हर script ख़ुद जाँचो, कमी हो तो वहीं सुधारो: (1) शब्द गिनो — 50-70; (2) twist पढ़कर पहले से अंदाज़ा लग
+लौटाने से पहले हर script ख़ुद जाँचो, कमी हो तो वहीं सुधारो: (1) शब्द गिनो — 70-100 (हर शब्द में मज़ा हो, भराव नहीं); (2) twist पढ़कर पहले से अंदाज़ा लग
 जाता है, या "धरना देंगे/सोशल मीडिया पर डाल देंगे" जैसा सीधा है? → बदलो, किसी की छोटी पोल चाहिए; (3) सुनकर कोई अपने
 किसी दोस्त/रिश्तेदार को tag करेगा? नहीं → मुद्दा बदलो; (4) कोई line सिर्फ़ जानकारी है? → उसमें पंच डालो या हटाओ.
 {RULES}
@@ -160,7 +160,7 @@ def prompt_sharpen(weak):
 {json.dumps(slim, ensure_ascii=False, indent=1)}
 {RUBRIC}
 {RULES}
-तथ्य, अंक, स्रोत वही. beat का क्रम वही (hook, saboot/tathya, saboot, maang, dhamki, twist, takiya), 18-24 सेकंड = 50-70 शब्द. सबसे ज़्यादा ध्यान twist पर —
+तथ्य, अंक, स्रोत वही. beat का क्रम वही (hook, saboot/tathya, saboot, maang, dhamki, twist, takiya), 25-35 सेकंड = 70-100 शब्द. सबसे ज़्यादा ध्यान twist पर —
 वो छोटा, घटिया, पहचाना और चौंकाने वाला हो. सिर्फ़ JSON list लौटाओ — उतने ही episodes, उसी क्रम में, वही fields."""
 
 
@@ -264,9 +264,9 @@ def finish(ep, strict=True):
     ep["cast_why"] = f"समाज: {ep.get('samaj', '')} | माँग: {ep.get('maang', '')}"
     words = sum(nw.nwords(l["say"]) for l in lines)
     if strict:
-        assert 6 <= len(lines) <= 8, f"lines {len(lines)} (6-7 चाहिए)"
+        assert 6 <= len(lines) <= 10, f"lines {len(lines)} (6-10 चाहिए)"
         assert nw.nwords(first) <= 14, f"hook लंबा ({nw.nwords(first)} शब्द)"
-        assert 45 <= words <= 75, f"लंबाई {words} शब्द (18-24 सेकंड = 50-70 चाहिए)"
+        assert 55 <= words <= 120, f"लंबाई {words} शब्द (55-120 चाहिए)"
         assert not re.match(r"\s*(नमस्कार|आज की खबर)", first), "नमस्कार से शुरुआत"
         assert any(l["beat"] == "twist" for l in lines), "twist वाली line नहीं"
         assert lines[-1]["beat"] == "takiya", "आख़िर में तकिया-कलाम नहीं"

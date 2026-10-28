@@ -10,7 +10,7 @@ import re
 import gemini
 import news_writer as nw
 
-MAX_WORDS = 55
+MAX_WORDS = 85
 
 SAMPLE = """नमूना (स्तर और ढाँचा समझो — शब्द, ऑफ़र, दाम बिल्कुल मत दोहराओ):
 खबर: SEBI ने एक शेयर-मार्केट "गुरु" पर निवेशकों को गुमराह करने पर कार्रवाई की.
@@ -78,7 +78,7 @@ def finish(ep):
     first, last = lines[0]["say"].strip(), lines[-1]["say"].strip()
     assert lines[0]["who"] == "bablu" and lines[-1]["who"] == "bablu", "hook और loop bablu के"
     assert any(l["who"] == "chacha" for l in lines), "chacha की चोट नहीं"
-    assert nw.nwords(first) <= 10, f"hook लंबा ({nw.nwords(first)} शब्द)"
+    assert nw.nwords(first) <= 14, f"hook लंबा ({nw.nwords(first)} शब्द)"
     assert words <= MAX_WORDS, f"लंबा: {words} शब्द ({MAX_WORDS} तक)"
     assert _words(first) & _words(last), "loop नहीं — आख़िरी line में hook का कोई शब्द नहीं"
     assert str(ep.get("tag_who", "")).strip(), "tag_who नहीं"

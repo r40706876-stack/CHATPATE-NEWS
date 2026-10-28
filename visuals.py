@@ -459,10 +459,15 @@ def pick_for_lines(lines, per_line=3, pool=9, topic="", strict=False):   # 3 त
                 break
             except Exception as e:                        # noqa: BLE001
                 print("  AI जाँच में गड़बड़, दोबारा:", repr(e)[:100])
-        if got is None and strict:                        # बिना जाँच कुछ नहीं (screen पर beat वाला card चलेगा)
-            print("  AI जाँच नहीं हुई — strict: इन lines पर कोई तस्वीर नहीं")
-            got = [[] for _ in batch]
-        if got is None:                                   # AI नहीं चला: बिना देखे कुछ नहीं लगाते — सिर्फ़ भारत वाली पक्की photo
+        if got is None and strict:
+            # पहले: Gemini का कोटा ख़त्म = कोई तस्वीर नहीं = ऊपर पूरी video काला text-card (28 Oct: real_visual_lines 0).
+            # अब: इसी खबर के अख़बार-लेख की अपनी मुख्य फ़ोटो (same_story, title में खबर के 2+ शब्द) बिना AI जाँच भी चलेगी —
+            # वो उसी घटना की असली फ़ोटो होती है. stock फ़ोटो अब भी बिना जाँच कभी नहीं.
+            print("  AI जाँच नहीं हुई — strict: सिर्फ़ इसी खबर के लेखों की असली फ़ोटो")
+            got = [[j for j, c in enumerate(cs) if c.get("same_story") and not c.get("stock")
+                    and len(_stems(lines[i].get("topic") or topic) & _stems(c.get("tags", ""))) >= 2][:per_line]
+                   for i, _, cs in batch]
+        if got is None:                                 # AI नहीं चला: बिना देखे कुछ नहीं लगाते — सिर्फ़ भारत वाली पक्की photo
             print("  AI जाँच नहीं हुई — खबर/search वाली असली फ़ोटो (search engine का मेल), वरना भारत वाली पक्की photo")
             got = [[j for j, c in enumerate(cs) if c.get("news") and not c.get("stock")
                     and len(_stems(lines[i].get("topic") or topic) & _stems(c.get("tags", ""))) >= 2][:per_line]

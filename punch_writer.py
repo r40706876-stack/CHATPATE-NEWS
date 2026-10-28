@@ -10,7 +10,7 @@ import re
 import gemini
 import news_writer as nw
 
-MAX_WORDS = 24          # ~8-10 सेकंड (बोलने की रफ़्तार ~2.5 शब्द/सेकंड + studio का हल्का तेज़)
+MAX_WORDS = 32          # एक पंच: ~10-12 सेकंड तक ठीक (मालिक 28 Oct: लंबाई नहीं, मज़ा पैमाना)
 
 
 def prompt_write(packs, n):
@@ -53,7 +53,7 @@ def finish(ep):
         ln["topic"] = topic
     words = sum(nw.nwords(l["say"]) for l in lines)
     first = lines[0]["say"].strip()
-    assert nw.nwords(first) <= 10, f"hook लंबा ({nw.nwords(first)} शब्द)"
+    assert nw.nwords(first) <= 14, f"hook लंबा ({nw.nwords(first)} शब्द)"
     assert words <= MAX_WORDS, f"लंबा: {words} शब्द (8-10 सेकंड = {MAX_WORDS} तक)"
     assert not re.match(r"\s*(नमस्कार|आज की खबर)", first), "नमस्कार से शुरुआत"
     assert not nw.bookish(lines), "किताबी शब्द"

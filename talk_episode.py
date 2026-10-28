@@ -135,7 +135,14 @@ def prep(script_path):
                     break
                 li = max(free, key=lambda i: (fit(i), -i))
                 if fit(li) == 0:
-                    continue  # No matching dialogue: do not force an unrelated opening clip.
+                    # title Hindi line के शब्दों से नहीं मिला, पर clip इसी खबर का है (for_topic ने title को खबर से मिलाया).
+                    # पहले इसे फेंक देते थे = लगभग कभी clip नहीं लगा. अब: hook/तथ्य वाली line (खबर बताने वाली) पर,
+                    # punch/twist वाली line पर कभी नहीं (वहाँ बात खबर से हटकर हमारी ज़िंदगी पर होती है).
+                    news_lines = [i for i in free if not ep["lines"][i].get("punch")
+                                  and ep["lines"][i].get("beat") not in ("twist", "takiya", "dhamki", "maang")]
+                    if not news_lines:
+                        continue
+                    li = min(news_lines)
                 shutil.copy(cp, IN / f"broll/{li}_clip{k}.mp4")
                 shutil.copy(cp.with_suffix(".txt"), IN / f"broll/{li}_clip{k}.txt")
                 print(f"  🎬 clip → line {li + 1}: {title[:50]}")

@@ -14,7 +14,7 @@ import writer
 
 ROOT = Path(__file__).parent
 ICONS = {"cylinder", "calendar", "rupee", "bank", "phone", "train", "percent", "check", "alert", "gift"}
-LEAN = os.getenv("LEAN", "1") == "1"                      # 1 = कम Gemini calls (free कोटा: एक run में ~4 text calls)
+LEAN = os.getenv("LEAN", "0") == "1"   # 0 (28 Oct): पंच-बैंक → script → जज → तीखा पूरा चले; LEAN=1 = पुराना 1-call (कम मज़ेदार)                      # 1 = कम Gemini calls (free कोटा: एक run में ~4 text calls)
 GOLDS = [ROOT / "examples_news_lpg.json", ROOT / "examples_news_rbi.json"]   # मालिक को पसंद आए नमूने
 
 ALLOWED = """कौन-सी खबर लें: वो जिस पर आज लोग WhatsApp/Instagram/चाय की दुकान पर बात कर रहे हों — थोड़ी viral, थोड़ी बेतुकी,
@@ -631,10 +631,14 @@ def write_from(c, packs, picks, n=3):
     for e in eps:
         e["review_status"] = "structure_only" if LEAN else "model_reviewed"
     good = [e for e in eps if not e.get("_loose") and
-            (LEAN or (e.get("connect") or {}).get("score", 0) >= vc.CONNECT_MIN)]
+            (LEAN or not e.get("connect")                   # जज नहीं चला (Gemini busy) = script फेंको मत, मालिक चुने
+             or (e.get("connect") or {}).get("score", 0) >= vc.CONNECT_MIN)]
     for e in eps:
         print(f"  {'✅' if e in good else '❌'} connect {(e.get('connect') or {}).get('score', '?')}/10: {e.get('topic')}")
     c["rejected"] += [e for e in eps if e not in good]
+    if not good and eps:                                    # सब कमज़ोर: कुछ न भेजने से अच्छा सबसे ऊँचे 2 (Telegram पर नंबर दिखेगा)
+        good = sorted((e for e in eps if not e.get("_loose")),
+                      key=lambda e: -(e.get("connect") or {}).get("score", 0))[:2]
     if not good:
         raise NoViral(c["rejected"])
     if LEAN:                                                # सबसे चर्चित खबर पहले
