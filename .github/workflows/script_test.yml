@@ -1,6 +1,10 @@
 # नया script तरीका (psych_writer) आज़माना: scripts Telegram पर सिर्फ़ पढ़ने को. video नहीं बनता, जवाब का इंतज़ार नहीं.
 name: script-test
-on: {workflow_dispatch: {}}
+on:
+  workflow_dispatch: {}
+  push:
+    branches: [claude/visual-upgrade]
+    paths: [script_test.py, psych_writer.py, .github/workflows/script_test.yml]
 permissions: {contents: write}
 env:
   GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
