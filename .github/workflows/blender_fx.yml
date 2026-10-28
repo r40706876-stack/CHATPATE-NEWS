@@ -28,7 +28,7 @@ jobs:
           test -s assets/fx/wipe/0006.png
       - name: repo में रखो
         run: |
-          git config user.name bot && git config user.email bot@users.noreply.github.com
+          git config user.name Claude && git config user.email noreply@anthropic.com
           git add -f assets/fx/wipe
           git diff --cached --quiet && exit 0
           git commit -m "Blender: 3D transition frames"

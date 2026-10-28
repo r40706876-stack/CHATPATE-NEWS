@@ -41,7 +41,7 @@ jobs:
         with: {pattern: "prop-*", path: assets/fx/props, merge-multiple: true}
       - run: |
           ls -la assets/fx/props
-          git config user.name bot && git config user.email bot@users.noreply.github.com
+          git config user.name Claude && git config user.email noreply@anthropic.com
           git add -f assets/fx/props/*.mp4
           git diff --cached --quiet && exit 0
           git commit -m "Blender: 3D money props"

@@ -22,7 +22,7 @@ jobs:
       - run: python script_test.py 2>&1 | tee script_test.log
       - if: always()
         run: |
-          git config user.name bot && git config user.email bot@users.noreply.github.com
+          git config user.name Claude && git config user.email noreply@anthropic.com
           git add -f script_test.json script_test.log 2>/dev/null || true
           git diff --cached --quiet && exit 0
           git commit -m "script test"

@@ -115,7 +115,7 @@ jobs:
       - name: झलक सेव
         if: always()
         run: |
-          git config user.name bot && git config user.email bot@users.noreply.github.com
+          git config user.name Claude && git config user.email noreply@anthropic.com
           git add -f preview_episode.jpg last_quality.json 2>/dev/null || true
           if [ -f episode.mp4 ] && [ $(stat -c%s episode.mp4) -lt 45000000 ]; then cp episode.mp4 last_episode.mp4; git add -f last_episode.mp4; fi
           git diff --cached --quiet && exit 0
