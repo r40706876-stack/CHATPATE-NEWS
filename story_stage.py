@@ -399,7 +399,11 @@ def frames(line, episode, talk, n, cut, seed=0):
         illustration_end = min(n, illustration_start + 27)  # 1.08s at 25 fps: leave room for acting
         if licensed_insert is not None and illustration_start <= t < illustration_end:
             pan = int(35 * math.sin(t / max(1, n - 1) * math.pi))
-            x, y = 105 + pan, 245
+            # News photo enters and exits with the joke instead of sitting still
+            # over the critical opening second; credits move with the photo.
+            enter = int(560 * max(0.0, 1.0 - (t - illustration_start) / 5.0))
+            exit_ = int(560 * max(0.0, 1.0 - (illustration_end - 1 - t) / 5.0))
+            x, y = 105 + pan + enter - exit_, 245
             d = ImageDraw.Draw(im)
             d.rounded_rectangle((x-12, y-12, x+licensed_insert.width+12, y+licensed_insert.height+12),
                                 16, fill=(255,255,255), outline=INK, width=8)
@@ -437,7 +441,8 @@ def frames(line, episode, talk, n, cut, seed=0):
         speaker_x = 600 + int(8 * math.sin(t / 6))
         speaker_y = 990 + int(7 * math.sin(t / 9))
         if scene == "sweets":
-            speaker_x = int(575 - 40 * ease)  # Reporter visible from frame one; no empty hook shot
+            speaker_x = int(575 - 95 * ease)  # Reporter tracks the COD bill as it enters
+            speaker_y -= int(28 * math.sin(progress * math.pi))
         if "लड्डू" in say or "ससुराल" in say:
             speaker_x += int(110 * ease)  # Chacha backs away from the huge delivery
         if "दरवाज़ा" in say:
@@ -447,6 +452,14 @@ def frames(line, episode, talk, n, cut, seed=0):
             speaker_y += int(45 * ease)
         if "एक्सचेंज" in say:
             supporter_x += int(165 * ease)  # Dadi physically pushes Chacha toward carton
+        if who == "dadi" and "डिब्बे में" in say:
+            # Chacha now moves INTO the carton; it no longer materializes over
+            # an otherwise stationary character.
+            supporter_x += int(140 * ease)
+        if who == "dadi" and "वापस लाया" in say:
+            supporter_x += int(20 * math.sin(progress * math.pi * 5))
+        if who == "pinky" and "कीमत" in say:
+            speaker_x -= int(110 * ease)  # Pinky inspects the price tag
         if "मुफ्त सलाह" in say:
             supporter_x += int(70 * ease)
             speaker_y -= int(30 * math.sin(progress * math.pi * 3) ** 2)
@@ -454,8 +467,9 @@ def frames(line, episode, talk, n, cut, seed=0):
         # gag, and Dadi punctuates the final roti-powered exchange.
         acting = 10 if any(k in say for k in ("लड्डू", "दरवाज़ा", "डिब्बे में", "कीमत", "वापस लाया")) else 5
         speaker_tilt = acting * math.sin(progress * math.pi * 1.3)
-        supporter_tilt = -3 * math.sin(progress * math.pi * 1.6)
-        _character(im, supporting, supporter_x, 1120 + int(5 * math.sin(t / 10)),
+        supporter_tilt = (-14 if who == "dadi" and "डिब्बे में" in say else -3) * math.sin(progress * math.pi * 1.6)
+        supporter_y = 1120 - int(65 * ease) if who == "dadi" and "डिब्बे में" in say else 1120
+        _character(im, supporting, supporter_x, supporter_y + int(5 * math.sin(t / 10)),
                    610, flip=True, tilt=supporter_tilt)
         _character(im, sp, speaker_x, speaker_y, 760, tilt=speaker_tilt)
         d=ImageDraw.Draw(im)
