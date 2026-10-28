@@ -1,0 +1,118 @@
+{
+ "topic": "AI फीचर्स के नाम पर महंगे हुए स्मार्टफोन",
+ "breaking": "बजट फ़ोन ₹7,699 से ₹11,999 तक, वजह AI फ़ीचर",
+ "source": "Navbharat Live",
+ "format": "explain",
+ "writer": "psych",
+ "no_memes": true,
+ "production": true,
+ "title": "AI वाला फ़ोन v2",
+ "lines": [
+  {
+   "who": "bablu",
+   "say": "जो फ़ोन सात हज़ार सात सौ का आया था, वो अब बारह हज़ार के क़रीब है.",
+   "caption": "जो फ़ोन ₹7,699 का आया था… अब ₹11,999 का",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "budget smartphone price tag india",
+    "smartphone shop india"
+   ],
+   "photo_hi": [
+    "स्मार्टफोन कीमत बढ़ी",
+    "बजट फोन महंगा"
+   ],
+   "card": {
+    "tag": "वही फ़ोन",
+    "big": "₹7,699 → ₹11,999",
+    "sub": "लॉन्च से अब तक",
+    "icon": "phone"
+   }
+  },
+  {
+   "who": "bablu",
+   "say": "कंपनियों के मुताबिक वजह है — फ़ोन में नए AI फ़ीचर.",
+   "caption": "वजह: फ़ोन में नए AI फ़ीचर",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "smartphone ai features screen"
+   ],
+   "photo_hi": [
+    "AI फीचर्स स्मार्टफोन"
+   ]
+  },
+  {
+   "who": "ramesh",
+   "say": "चार हज़ार तीन सौ ज़्यादा दिए. AI से पहला काम पूछा.",
+   "caption": "₹4,300 ज़्यादा दिए… AI से पहला काम पूछा",
+   "expr": "gussa",
+   "set": "room",
+   "visuals": [
+    "young man counting money buying phone"
+   ],
+   "photo_hi": [
+    "मोबाइल खरीदारी"
+   ],
+   "prop": "notes"
+  },
+  {
+   "who": "ramesh",
+   "say": "बोला — बैटरी बचानी है, तो AI बंद कर दो.",
+   "caption": "AI बोला: बैटरी बचानी है तो AI बंद कर दो",
+   "expr": "hairan",
+   "set": "room",
+   "visuals": [
+    "phone low battery warning"
+   ],
+   "photo_hi": [
+    "फोन बैटरी कम"
+   ],
+   "punch": true,
+   "stamp": "AI बंद कर दो",
+   "tag": true,
+   "tag_screen": "वो दोस्त जिसने AI वाला फ़ोन लिया"
+  },
+  {
+   "who": "chacha",
+   "say": "हमारे ज़माने में साढ़े चार हज़ार में पूरा फ़ोन आता था. अब उतने में सिर्फ़ उसकी समझदारी आती है.",
+   "caption": "हमारे ज़माने में ₹4,500 में पूरा फ़ोन… अब सिर्फ़ उसकी समझदारी",
+   "expr": "tanz",
+   "set": "village",
+   "visuals": [
+    "old keypad mobile phone"
+   ],
+   "photo_hi": [
+    "पुराना कीपैड फोन"
+   ],
+   "punch": true,
+   "stamp": "सिर्फ़ समझदारी"
+  },
+  {
+   "who": "bablu",
+   "say": "कंपनियाँ कहती हैं, AI आपका समय बचाएगा. पैसे बचाने वाला फ़ीचर… फ़िलहाल नहीं आया.",
+   "caption": "AI समय बचाएगा… पैसे बचाने वाला फ़ीचर फ़िलहाल नहीं आया",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "indian rupee wallet empty"
+   ],
+   "photo_hi": [
+    "स्मार्टफोन दाम"
+   ],
+   "punch": true,
+   "stamp": "फ़िलहाल नहीं आया",
+   "prop": "coins"
+  }
+ ],
+ "tag_who": "वो दोस्त जिसने AI वाला फ़ोन लिया और AI बंद रखता है",
+ "ask": "आपके फ़ोन का AI किस काम आया?",
+ "caption_post": "₹7,699 वाला फ़ोन अब ₹11,999 का, वजह AI 📱 Tag करो उस दोस्त को जिसने AI वाला फ़ोन लिया और बैटरी के डर से AI बंद रखता है! आपके फ़ोन का AI अब तक किस काम आया? स्रोत: Navbharat Live #Smartphone #AI #BakraNews #DesiComedy (AI से बने किरदार)",
+ "sprite": {
+  "ramesh": "assets/toon/ramesh",
+  "bablu": "assets/toon/bablu",
+  "chacha": "assets/toon/chacha"
+ },
+ "hook": "",
+ "hook_short": "₹7,699 वाला फ़ोन अब ₹11,999"
+}
