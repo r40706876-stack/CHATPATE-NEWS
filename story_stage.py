@@ -182,12 +182,19 @@ def _scene_action(im, scene, t, n, line=None):
             d.text((bx+174, 917), "पैक करो!", font=tt.font(44),
                    fill=INK,anchor="mm")
         elif "कीमत" in say:
+            # Pinky physically slides a blank price tag onto Chacha's carton.
+            # The old tag was identical at t=0 and t=35, so the real
+            # full-frame storyboard motion gate correctly rejected this beat.
             _box(d, 545, 685, 375, 360, "")
-            d.rounded_rectangle((595, 775, 880, 980), 18,
+            tag_x = int(1110 - 515 * min(1.0, q * 1.8))
+            tag_y = 775 + int(12 * math.sin(q * math.pi * 3))
+            d.line((tag_x + 22, tag_y + 30, tag_x - 36, tag_y - 22),
+                   fill=INK, width=8)
+            d.rounded_rectangle((tag_x, tag_y, tag_x + 285, tag_y + 205), 18,
                                 fill=(255,250,230),outline=RED,width=10)
-            d.text((737, 830), "कीमत?", font=tt.font(65),
+            d.text((tag_x + 142, tag_y + 55), "कीमत?", font=tt.font(65),
                    fill=INK,anchor="mm")
-            d.text((737, 922), "₹ ???", font=tt.font(65),
+            d.text((tag_x + 142, tag_y + 147), "₹ ???", font=tt.font(65),
                    fill=RED,anchor="mm")
         elif "वापस लाया" in say:
             # Callback: the delivery person would owe the same huge COD sum
