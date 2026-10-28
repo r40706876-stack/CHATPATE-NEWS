@@ -127,8 +127,11 @@ def cut_best(url, out, start, look=24.0, secs=CLIP_SECS):
             if s > best_s:
                 best, best_s = a, s
             a += 1.5
+        # news channel के clip में ऊपर-नीचे उनकी पट्टी, logo, चलती लिखाई होती है (28 Oct: "…ट लेने वालो को" कटा हुआ,
+        # @CNBCAWAAZINDIA) — सिर्फ़ बीच का 64% रखो
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{best:.2f}", "-i", str(long), "-t", f"{secs}",
-                        "-an", "-c:v", "libx264", "-preset", "veryfast", "-crf", "23", str(out)], check=True, timeout=60)
+                        "-vf", "crop=iw*0.86:ih*0.64:iw*0.07:ih*0.16", "-an", "-c:v", "libx264", "-preset", "veryfast",
+                        "-crf", "23", str(out)], check=True, timeout=60)
         print(f"  ✂️ clip का सबसे दमदार हिस्सा: {start + best:.1f}s (score {best_s:.2f})")
         return out if out.exists() and out.stat().st_size > 20000 else None
     except Exception as e:                                # noqa: BLE001

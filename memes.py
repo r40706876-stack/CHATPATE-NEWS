@@ -314,8 +314,8 @@ def sheet():
 
 def pick(ep, lens):
     """[(बाद_में_सेकंड, meme_path, id)] — पंच वाली lines (पहली line नहीं, hook न टूटे) और आख़िरी line, ज़्यादा से ज़्यादा 2."""
-    if not DIR.exists() or ep.get("no_memes"):
-        return []
+    if not DIR.exists() or ep.get("no_memes") or (str(ep.get("writer", "")).startswith("psych") and not ep.get("memes")):
+        return []                                          # deadpan script में बीच का meme अंदाज़ तोड़ता है (28 Oct)
     lines = [s for s in ep["_segs_ln"]]
     ends, t = [], 0.0
     for L in lens:
