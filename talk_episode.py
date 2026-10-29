@@ -239,6 +239,8 @@ def pick_shot(ep, i, ln):
             ln["tag_text"] = m.group(1) + "…"
     if style == "nochar":
         return "full"
+    if style == "close":                                       # A/B (29 Oct): पूरी screen किरदार का close-up, ऊपर बड़ा punch
+        return "close"
     if voice_only(ep, ln):
         return "full"
     if i == 0 and ep.get("cold_open") or ln.get("who") in MASCOT:

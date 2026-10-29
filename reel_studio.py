@@ -499,6 +499,19 @@ def _screen_gen(src, seed, size, bg=None, hero=False):
         im = Image.open(src).convert("RGB")
         t = 0
         mode = seed % 3
+        if "own" in src.name and im.width / im.height > 1.3 * w / h:
+            # अपना बना joke-दृश्य (सूचना/WhatsApp/phone) चौड़ा है और screen लंबी (meme/full): काटो मत — पूरा दिखाओ,
+            # पीछे उसी का धुंधला रूप (29 Oct A/B preview: सूचना के अक्षर दोनों तरफ़ से कटे)
+            bgi = rv._cover_img(im, w, h, 1.1, 0.5).filter(ImageFilter.GaussianBlur(18))
+            bgi = Image.blend(bgi, Image.new("RGB", (w, h)), 0.45)
+            while True:
+                z = 0.94 + 0.05 * min(1, t / (CUT * FPS))
+                fw = int(w * z)
+                fg = im.resize((fw, int(im.height * fw / im.width)), Image.LANCZOS)
+                fr = bgi.copy()
+                fr.paste(fg, ((w - fw) // 2, (h - fg.height) // 2))
+                yield fr
+                t += 1
         if hero:                                      # 1.45 से 1.08 तक 0.6 सेकंड में (झटका), फिर धीरे-धीरे अंदर
             while True:
                 q = min(1, t / (0.6 * FPS))
@@ -936,7 +949,7 @@ def render(ep, segs, chars, out, preview):
                 im.paste(_zoomr(fr, zb), (dx, BAND_Y))
                 clean = im.copy()                                # बिना लिखाई वाला frame (आख़िरी poll के पीछे)
             d = ImageDraw.Draw(im)
-            if k >= FPS * 2:                                 # vidIQ + virality skill: पहले 2 सेकंड कोई logo/पट्टी नहीं (हर style में) — सिर्फ़ तस्वीर + 4 शब्द
+            if k >= FPS * 2 and ep.get("style") not in ("nochar", "close"):   # vidIQ + virality skill (meme/close-up: कोई channel पट्टी नहीं): पहले 2 सेकंड कोई logo/पट्टी नहीं (हर style में) — सिर्फ़ तस्वीर + 4 शब्द
                 chrome_safe(d, k)
             if shot == "split":
                 badge = f"खबर {ln['item']}/{ln['items_total']}" if ln.get("item") else "ब्रेकिंग"
@@ -976,7 +989,8 @@ def render(ep, segs, chars, out, preview):
                         karaoke_timed(d, cap_text, t / FPS, wtimes, cy)
                     else:
                         karaoke_safe(d, cap_text, t / n, cy, span)
-            if si == 0 and not react and not st_text and t == int(HOOK_EVENT * FPS) and not ep.get("cold_open"):   # hook का "event" (cold open के joke को न ढके)
+            if si == 0 and not react and not st_text and t == int(HOOK_EVENT * FPS) and not ep.get("cold_open") \
+                    and ep.get("style") not in ("nochar", "close"):   # hook का "event" (cold open के joke को न ढके)
                 st_text, st_t = ep.get("hook_stamp") or "अधपकी खबर!", 0
             if bool(ln.get("punch")) and not react and not st_text and t >= n * 0.6:
                 st_text = ln.get("stamp") or STAMP_OF.get(ln.get("react_pose"), "")
