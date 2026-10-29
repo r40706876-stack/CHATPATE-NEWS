@@ -22,7 +22,7 @@ from pathlib import Path
 ROOT = Path(__file__).parent
 sys.stdout.reconfigure(line_buffering=True)            # GitHub log में हर कदम तुरंत दिखे
 PENDING, CHOICE, OFFSET = ROOT / "pending.json", ROOT / "choice.json", ROOT / "tg_offset.txt"
-NAME = {"bablu": "🎤 बबलू", "chacha": "👴 चाचा", "pinky": "📱 पिंकी", "dadi": "👵 दादी", "ramesh": "😤 रमेश"}
+NAME = {"bablu": "🎤 बबलू", "chacha": "👴 चाचा", "pinky": "📱 पिंकी", "dadi": "👵 दादी", "ramesh": "🐐 बकरा"}
 NUM = {"१": "1", "२": "2", "३": "3", "०": "0", "one": "1", "two": "2", "three": "3",
        "पहला": "1", "पहली": "1", "दूसरा": "2", "दूसरी": "2", "तीसरा": "3", "तीसरी": "3"}
 
@@ -283,7 +283,7 @@ def log_done(script):
                     f.write(line.strip() + "\n")
 
 
-TOON = {c: f"assets/toon/{c}" for c in ("bablu", "chacha", "pinky", "dadi", "ramesh")}
+TOON = {c: f"assets/toon/{c}" for c in ("bablu", "chacha", "pinky", "dadi")} | {"ramesh": "assets/toon/bakra"}   # 29 Oct: रमेश की जगह बकरा mascot
 
 
 def to_studio(script):
@@ -369,7 +369,7 @@ def do_render(script_path):
 
 
 SPEAKER = {"बबलू": "bablu", "बबलु": "bablu", "चाचा": "chacha", "पिंकी": "pinky", "पिंकि": "pinky", "दादी": "dadi",
-           "दादि": "dadi", "रमेश": "ramesh"}
+           "दादि": "dadi", "रमेश": "ramesh", "बकरा": "ramesh"}
 FEEL = {"गुस्सा": "gussa", "गुस्से": "gussa", "हँसी": "hasi", "हंसी": "hasi", "ख़ुश": "hasi", "खुश": "hasi",
         "दुखी": "udaas", "उदास": "udaas", "हैरान": "hairan", "तंज़": "tanz", "तंज": "tanz", "गंभीर": "gambhir"}
 SET_WORDS = [("thana", "ठगी|थाना|पुलिस|फ़्रॉड|फ्रॉड|साइबर|हैक|एपीके|APK|लिंक|ओटीपी|OTP"), ("road", "चालान|गड्ढ|सड़क|ट्रैफिक|पेट्रोल|हेलमेट"), ("mandi", "सब्ज़ी|सब्जी|टमाटर|प्याज़|प्याज|महँगाई|महंगाई|दाम"),
@@ -378,7 +378,7 @@ SET_WORDS = [("thana", "ठगी|थाना|पुलिस|फ़्रॉ�
              ("bijli", "बिजली|बिल|कटौती|ट्रांसफ़ॉर्मर"), ("station", "ट्रेन|रेल|स्टेशन|टिकट|किराया"),
              ("hospital", "अस्पताल|डॉक्टर|दवा|इलाज"), ("khet", "किसान|खाद|फ़सल|फसल|खेत"), ("gas", "गैस|सिलेंडर|LPG"),
              ("ration", "राशन"), ("kitchen", "रसोई|खाना"), ("room", "फ़ोन|फोन|मोबाइल|ऑनलाइन|इंस्टा|रील")]
-TOPICS_HEAD = ("# यहाँ अपनी script लिखो — हर line ऐसे: \"बबलू: ...\"  (किरदार: बबलू, चाचा, पिंकी, दादी, रमेश)\n"
+TOPICS_HEAD = ("# यहाँ अपनी script लिखो — हर line ऐसे: \"बबलू: ...\"  (किरदार: बबलू, चाचा, पिंकी, दादी, बकरा)\n"
                "# जितने किरदार चाहिए उतने ही लिखो — कोई भी छोड़ सकते हो. भाव चाहिए तो: \"चाचा (गुस्सा): ...\"\n"
                "# (भाव: गंभीर, तंज़, गुस्सा, हैरान, दुखी, ख़ुश). कम से कम 2 lines. सबसे पहले इसी पर video बनेगा.\n"
                "# या बस एक लाइन का topic/viral बात लिखो — Gemini उस पर script बनाएगा.\n")

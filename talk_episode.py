@@ -25,7 +25,7 @@ CHARS = {   # किरदार: (तस्वीर, नाम, पद) — �
     "chacha": ("assets/real/chacha.png", "चाचा", "वरिष्ठ विशेषज्ञ • 1975 से नाराज़"),
     "dadi": ("assets/real/dadi.png", "दादी", "तकनीकी सलाहकार • WhatsApp विभाग"),
     "pinky": ("assets/real/pinky.png", "पिंकी", "नई पीढ़ी • अभी-अभी 18 की"),
-    "ramesh": ("assets/real/ramesh.png", "रमेश", "आम आदमी • रोज़ का परेशान"),
+    "ramesh": ("assets/toon/bakra/neutral_closed.png", "बकरा", "आम आदमी • देश का असली बकरा"),   # 29 Oct: रमेश की जगह mascot
 }
 
 
@@ -89,7 +89,7 @@ def prep(script_path):
     for i, ln in enumerate(ep["lines"]):
         d = IN / str(i)
         d.mkdir(parents=True, exist_ok=True)
-        sprite = (ep.get("sprite") or {}).get(ln["who"])
+        sprite = sprite_of(ep, ln["who"])
         if sprite:                                             # 3D किरदार: नीले studio में, line के भाव वाली फ़ोटो
             import reel_studio
             st = ln.get("set") or ("studio" if ln["who"] == "bablu" else "village")
@@ -173,7 +173,7 @@ def prep(script_path):
     fill_sets(ep)
     json.dump(ep, open(IN / "episode.json", "w", encoding="utf-8"), ensure_ascii=False)
     sprite_lips = ep.get("sprite") and ep.get("lips", "sadtalker") == "sprite"
-    print(json.dumps([] if sprite_lips else [i for i, ln in enumerate(ep["lines"]) if not voice_only(ep, ln)]))   # sprite वाले होंठ = SadTalker की ज़रूरत नहीं
+    print(json.dumps([] if sprite_lips else [i for i, ln in enumerate(ep["lines"]) if not voice_only(ep, ln) and not mascot_lips(ep, ln)]))   # sprite वाले होंठ = SadTalker की ज़रूरत नहीं
 
 
 PROP_WORDS = {"coins": r"छुट्टा|छुट्टे|खुल्ल|सिक्क|चिल्लर|पैसे का", "toffee": r"टॉफी|टाफी", "notes": r"लाख|करोड़"}
@@ -200,12 +200,25 @@ def add_props(ep):
         print(f"  🧊 3D prop → line {i + 1}: {prop}")
 
 
+MASCOT = {"ramesh": "assets/toon/bakra"}                      # 29 Oct (मालिक): रमेश की सूरत skip करवाती थी → बकरा mascot
+
+
+def sprite_of(ep, who):
+    """किरदार का sprite folder; रमेश वाली जगह हमेशा बकरा (पुरानी episode JSON में toon/ramesh लिखा हो तब भी)."""
+    return MASCOT.get(who) or (ep.get("sprite") or {}).get(who)
+
+
+def mascot_lips(ep, ln):
+    """बकरे पर SadTalker नहीं चलता (इंसानी चेहरा ढूँढता है) — उसके होंठ हमारी 3 मुँह वाली फ़ोटो से."""
+    return ln.get("who") in MASCOT
+
+
 def voice_only(ep, ln):
     """29 Oct (मालिक: "रमेश की सूरत video skip करवा देती है", बबलू अच्छा है): ऐसे किरदार screen पर नहीं आते — सिर्फ़ उनकी Gemini आवाज़,
     पूरी screen पर मज़ाक/खबर का visual. VOICE_ONLY env (कॉमा से) या ep["voice_only"]; "" = सब दिखें."""
     who = ep.get("voice_only")
     if who is None:
-        who = os.getenv("VOICE_ONLY", "ramesh")
+        who = os.getenv("VOICE_ONLY", "")
     who = who.split(",") if isinstance(who, str) else who
     return ln.get("who") in [w.strip() for w in who if w.strip()]
 
@@ -401,8 +414,8 @@ def post_studio(ep):
                      key=lambda p: ("clip" not in p.name and "own" not in p.name, p.name)) if (IN / "broll").exists() else []
         shot = "full" if voice_only(ep, ln) else (ln.get("shot") or pick_shot(ep, i, ln))
         talk = None
-        sprite = (ep.get("sprite") or {}).get(ln["who"])
-        if sprite and ep.get("lips", "sadtalker") == "sprite":
+        sprite = sprite_of(ep, ln["who"])
+        if sprite and (ep.get("lips", "sadtalker") == "sprite" or mascot_lips(ep, ln)):
             talk = {"folder": sprite, "expr": ln.get("expr", ""), "wav": IN / f"audio/{i:02d}.wav",
                     "set": ln.get("set") or ("studio" if ln["who"] == "bablu" else "village")}
         segs.append({"ln": ln, "wav": IN / f"audio/{i:02d}.wav", "face": None if talk else (clips[-1] if clips else None),

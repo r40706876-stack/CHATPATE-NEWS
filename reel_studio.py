@@ -40,6 +40,9 @@ def studio_bg(w=W, h=H):
 
 def cutout(path):
     global _sess
+    im = Image.open(path)
+    if im.mode == "RGBA" and im.getextrema()[3][0] < 10:    # पहले से कटा हुआ (बकरा mascot): जैसा है वैसा
+        return im
     from rembg import new_session, remove
     if _sess is None:
         _sess = new_session("isnet-general-use")
