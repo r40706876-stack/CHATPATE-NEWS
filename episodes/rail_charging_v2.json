@@ -1,0 +1,107 @@
+{
+ "topic": "ट्रेन में रात 11 से सुबह 5 बजे तक मोबाइल-पावर बैंक चार्जिंग पर रोक",
+ "breaking": "रात 11 से सुबह 5 ट्रेन में चार्जिंग बंद",
+ "source": "Prabhat Khabar, AajTak, Jagran",
+ "format": "explain",
+ "writer": "psych",
+ "no_memes": true,
+ "production": true,
+ "title": "ट्रेन चार्जिंग — अंकल जी v2",
+ "tag_who": "वो अंकल जी जो ट्रेन का प्लग नहीं छोड़ते",
+ "ask": "आपके डिब्बे में प्लग किसके कब्ज़े में रहता है?",
+ "caption_post": "रात 11 से सुबह 5 ट्रेन में चार्जिंग बंद 🔌 Tag करो उन अंकल जी को जो ट्रेन में आते ही प्लग पर कब्ज़ा कर लेते हैं! आपके डिब्बे में प्लग किसके पास रहता है? स्रोत: Prabhat Khabar, AajTak #IndianRailways #Train #BakraNews #DesiComedy (AI से बने किरदार)",
+ "sprite": {
+  "ramesh": "assets/toon/bakra",
+  "bablu": "assets/toon/bablu",
+  "chacha": "assets/toon/chacha"
+ },
+ "cold_open": {
+  "kind": "notice",
+  "lines": [
+   0
+  ],
+  "data": {
+   "office": "कोच S4 • यात्री सूचना",
+   "title": "सूचना",
+   "body": "डिब्बे का इकलौता प्लग शाम 6 बजे से अंकल जी के पास है. फ़ोन 100% है. अंकल जी हटने को तैयार नहीं.",
+   "sign": "— बर्थ नंबर 32"
+  }
+ },
+ "hook": "हर डिब्बे में एक प्लग… और एक अंकल जी",
+ "lines": [
+  {
+   "who": "ramesh",
+   "say": "हर ट्रेन के डिब्बे में एक प्लग होता है. और उस प्लग पर… एक अंकल जी.",
+   "caption": "हर डिब्बे में एक प्लग… और उस पर एक अंकल जी",
+   "expr": "tanz",
+   "set": "station"
+  },
+  {
+   "who": "bablu",
+   "say": "ट्रेन में अब रात ग्यारह से सुबह पाँच तक मोबाइल और पावर बैंक चार्ज नहीं होंगे. वजह — आग से सुरक्षा.",
+   "caption": "रात 11 से सुबह 5: ट्रेन में चार्जिंग बंद (आग से सुरक्षा)",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "ट्रेन में मोबाइल चार्जिंग बंद रात",
+    "train mobile charging point night ban"
+   ],
+   "photo_hi": [
+    "ट्रेन रात चार्जिंग रोक",
+    "रेलवे चार्जिंग नियम"
+   ],
+   "headline": "रात 11 से सुबह 5 ट्रेन में चार्जिंग बंद"
+  },
+  {
+   "who": "bablu",
+   "say": "यानी रेलवे ने वो कर दिखाया, जो पूरा डिब्बा नहीं कर पाया — अंकल जी को प्लग से हटा दिया.",
+   "caption": "रेलवे ने वो कर दिखाया… अंकल जी को प्लग से हटा दिया",
+   "expr": "tanz",
+   "set": "studio",
+   "visual_files": [
+    "assets/fx/rail_hate_zoom.png",
+    "assets/fx/rail_hate.png"
+   ],
+   "punch": true,
+   "stamp": "ऐतिहासिक दिन"
+  },
+  {
+   "who": "ramesh",
+   "say": "ग्यारह बजे चार्जिंग बंद हुई. अंकल जी पहली बार प्लग से उठे… और सीधे मेरा पावर बैंक माँगने आए.",
+   "caption": "अंकल जी प्लग से उठे… और मेरा पावर बैंक माँगने आए",
+   "expr": "hairan",
+   "set": "station",
+   "visual_files": [
+    "assets/fx/rail_wa_zoom.png",
+    "assets/fx/rail_wa.png"
+   ],
+   "punch": true,
+   "tag": true,
+   "tag_screen": "वो अंकल जी जो प्लग नहीं छोड़ते"
+  },
+  {
+   "who": "chacha",
+   "say": "हमारे ज़माने में ट्रेन में फ़ोन ही नहीं था. स्टेशन कौन-सा आया, ये चायवाले की आवाज़ से पता चलता था.",
+   "caption": "हमारे ज़माने में स्टेशन चायवाले की आवाज़ से पता चलता था",
+   "expr": "hasi",
+   "set": "village",
+   "visuals": [
+    "ट्रेन में चाय वाला",
+    "train chai wala station india"
+   ]
+  },
+  {
+   "who": "ramesh",
+   "say": "सुबह पाँच बजे चार्जिंग फिर चालू हुई. पाँच बजकर एक मिनट पर प्लग पर फिर से… अंकल जी.",
+   "caption": "5:01 AM: चार्जिंग चालू… प्लग पर फिर से अंकल जी",
+   "expr": "udaas",
+   "set": "station",
+   "visual_files": [
+    "assets/fx/rail_5am_zoom.png",
+    "assets/fx/rail_5am.png"
+   ],
+   "punch": true,
+   "stamp": "फिर से अंकल जी"
+  }
+ ]
+}

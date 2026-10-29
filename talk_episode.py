@@ -147,7 +147,8 @@ def prep(script_path):
                 def fit(i):
                     ln = ep["lines"][i]
                     return len(tw & visuals._stems(ln.get("say", "") + " " + " ".join(ln.get("photo_hi") or [])))
-                free = [i for i in range(len(ep["lines"])) if not list((IN / "broll").glob(f"{i}_clip*"))]
+                free = [i for i in range(len(ep["lines"])) if not list((IN / "broll").glob(f"{i}_clip*"))
+                        and i > 0 and not ep["lines"][i].get("visual_files")]   # पहली line पर clip नहीं (29 Oct: joke 1.5s में गायब)
                 if not free:
                     break
                 li = max(free, key=lambda i: (fit(i), -i))
@@ -236,6 +237,10 @@ def pick_shot(ep, i, ln):
         return "full"
     if voice_only(ep, ln):
         return "full"
+    if i == 0 and ep.get("cold_open") or ln.get("who") in MASCOT:
+        # 29 Oct: full shot में cold open का phone दोनों तरफ़ से कटा और बकरा कोने के गोले में सिर्फ़ सींग दिखे —
+        # अब ऊपर joke पूरा, नीचे किरदार पूरा
+        return "split"
     return reel_studio.shot_v2(i, ln) if style == "v2" else reel_studio.shot_for(i, ln)
 
 

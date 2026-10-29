@@ -199,7 +199,7 @@ def for_episode(ep, out_dir):
     full, zoom = out_dir / "cold_full.png", out_dir / "cold_zoom.png"
     render(co["kind"], co.get("data") or {}, full, zoom)
     idx = [i for i in (co.get("lines") or [0, 1]) if 0 <= i < len(ep["lines"])] or [0]
-    ep["lines"][idx[0]]["visual_files"] = [str(zoom)]
+    ep["lines"][idx[0]]["visual_files"] = [str(zoom)] if len(idx) > 1 else [str(zoom), str(full)]   # अकेली line: पूरी line joke ही दिखे
     for i in idx[1:]:
         ep["lines"][i]["visual_files"] = [str(full)]
     return [zoom, full]

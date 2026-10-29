@@ -38,11 +38,29 @@ def studio_bg(w=W, h=H):
     return im.filter(ImageFilter.GaussianBlur(3 * w / W))
 
 
+def _flat_cut(im):
+    """किनारों से जुड़ा, कोने जैसे रंग वाला हिस्सा = पृष्ठभूमि (हमारे किरदार सादी सलेटी पृष्ठभूमि पर बने हैं)."""
+    from scipy import ndimage
+    a = np.asarray(im).astype(int)
+    bg = np.median(np.concatenate([a[:8, :8].reshape(-1, 3), a[:8, -8:].reshape(-1, 3)]), axis=0)
+    near = np.abs(a - bg).sum(2) < 60
+    lab, _ = ndimage.label(near)
+    edge = set(np.unique(np.concatenate([lab[0], lab[-1], lab[:, 0], lab[:, -1]]))) - {0}
+    alpha = np.where(np.isin(lab, list(edge)), 0, 255).astype(np.uint8)
+    out = im.convert("RGBA")
+    out.putalpha(Image.fromarray(alpha).filter(ImageFilter.GaussianBlur(1.2)))
+    return out
+
+
 def cutout(path):
     global _sess
     im = Image.open(path)
     if im.mode == "RGBA" and im.getextrema()[3][0] < 10:    # पहले से कटा हुआ (बकरा mascot): जैसा है वैसा
         return im
+    try:
+        import rembg  # noqa: F401
+    except ImportError:                                   # preview (बिना rembg): सलेटी सादी पृष्ठभूमि रंग से हटाओ
+        return _flat_cut(im.convert("RGB"))
     from rembg import new_session, remove
     if _sess is None:
         _sess = new_session("isnet-general-use")
@@ -763,7 +781,9 @@ def render(ep, segs, chars, out, preview):
     bases = _bases()
     headline = ep.get("breaking") or ep.get("title") or ""
     last_react = max([i for i, s in enumerate(segs) if s.get("react")], default=-1)
-    pool = list(dict.fromkeys(p for s in segs for p in (s.get("vis") or []) if isinstance(p, Path)))   # सारी असली तस्वीरें
+    # सारी असली तस्वीरें — पर किसी line का अपना बना joke-दृश्य (सूचना/WhatsApp/phone) दूसरी line पर कभी नहीं:
+    # 29 Oct preview में चाचा की line पर ही आख़िरी पंच वाला "5:01" phone दिख गया था (punch पहले ही खुल गया)
+    pool = list(dict.fromkeys(p for s in segs for p in (s.get("vis") or []) if isinstance(p, Path) and "own" not in p.name))
     v2 = ep.get("style") in ("v2", "nochar")
     nochar = ep.get("style") == "nochar"                 # बिना किरदार: सिर्फ़ तस्वीर/clip + बड़े अक्षर + आवाज़
     k, seed, last_screen, prev_im, last_vis, carry = 0, 0, None, None, [], 0
@@ -823,7 +843,8 @@ def render(ep, segs, chars, out, preview):
             if key:
                 extra.append({"big": key})
             # दूसरी lines की फ़ोटो वापस लाना = "same same" (28 Oct, मालिक) — सिर्फ़ वो जो अब तक कभी नहीं दिखीं
-            extra += [p for p in pool if p not in vis and p not in last_vis and p not in shown_ever]
+            # दूसरी lines की फ़ोटो यहाँ नहीं (29 Oct preview: बबलू की खबर पर चाचा वाली "चायवाला" फ़ोटो = बेमेल).
+            # कमी हो तो नीचे वाला खिंचाव (हर फ़ोटो 2.8s तक) + इसी line की बात वाले card
             for e_ in extra:
                 if len(vis) >= need:
                     break
@@ -835,8 +856,17 @@ def render(ep, segs, chars, out, preview):
             chunk = min(int(2.8 * FPS), math.ceil(n / len(vis)))   # QA: 3 सेकंड से ज़्यादा एक तस्वीर = रद्द
             if len(vis) * chunk < n and not any(isinstance(v, dict) for v in vis):
                 key = key_phrase(ln)
-                if key:
-                    vis.append({"big": key})
+                parts = [x.strip(" ।.!?") for x in re.split(r"…|(?<!\d)\.(?!\d)|।|(?<!\d),(?!\d)|—|\?|:",
+                                                             str(ln.get("caption") or ln.get("say") or ""))]
+                parts = [x for x in parts if 2 <= len(x.split()) <= 7]
+                wd = str(ln.get("caption") or ln.get("say") or "").split()
+                if not parts and len(wd) >= 4:                    # एक लंबा वाक्य: आधा-आधा
+                    parts = [" ".join(wd[:len(wd) // 2]), " ".join(wd[len(wd) // 2:])]
+                pal = [(28, 58, 140), (150, 32, 60), (18, 112, 84)]
+                for q, x in enumerate(([key] if key else []) + [x for x in parts if x != key]):
+                    if len(vis) * chunk >= n:
+                        break
+                    vis.append({"big": x, "color": pal[q % 3]})
         shown_ever.update(v for v in vis if isinstance(v, Path))
         for v in vis:
             if isinstance(v, Path):
@@ -946,7 +976,7 @@ def render(ep, segs, chars, out, preview):
                         karaoke_timed(d, cap_text, t / FPS, wtimes, cy)
                     else:
                         karaoke_safe(d, cap_text, t / n, cy, span)
-            if si == 0 and not react and not st_text and t == int(HOOK_EVENT * FPS):   # hook का "event"
+            if si == 0 and not react and not st_text and t == int(HOOK_EVENT * FPS) and not ep.get("cold_open"):   # hook का "event" (cold open के joke को न ढके)
                 st_text, st_t = ep.get("hook_stamp") or "अधपकी खबर!", 0
             if bool(ln.get("punch")) and not react and not st_text and t >= n * 0.6:
                 st_text = ln.get("stamp") or STAMP_OF.get(ln.get("react_pose"), "")

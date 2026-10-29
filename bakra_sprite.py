@@ -95,11 +95,11 @@ def svg(expr="neutral", state="closed", blink=False, pose=None):
   <rect y="20" width="80" height="12" fill="#fff" opacity=".45"/><rect y="56" width="80" height="12" fill="#fff" opacity=".45"/></pattern>
  <filter id="sh" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-opacity=".25"/></filter>
 </defs>
-<g filter="url(#sh)">
+<g transform="translate(0 -170)"><g filter="url(#sh)">
  <!-- शरीर: कुर्ता + हरी बंडी -->
- <path d="M150,1376 L170,860 Q190,760 300,730 L468,730 Q578,760 598,860 L618,1376Z" fill="url(#kurta)"/>
- <path d="M175,1376 L190,880 Q205,780 300,748 L352,748 L352,1376Z" fill="url(#jacket)"/>
- <path d="M593,1376 L578,880 Q563,780 468,748 L416,748 L416,1376Z" fill="url(#jacket)"/>
+ <path d="M150,1560 L170,860 Q190,760 300,730 L468,730 Q578,760 598,860 L618,1560Z" fill="url(#kurta)"/>
+ <path d="M175,1560 L190,880 Q205,780 300,748 L352,748 L352,1560Z" fill="url(#jacket)"/>
+ <path d="M593,1560 L578,880 Q563,780 468,748 L416,748 L416,1560Z" fill="url(#jacket)"/>
  <circle cx="384" cy="900" r="7" fill="#c9a24a"/><circle cx="384" cy="980" r="7" fill="#c9a24a"/><circle cx="384" cy="1060" r="7" fill="#c9a24a"/>
  <path d="M300,1000 L340,1000" stroke="#2c3f30" stroke-width="5"/>
  <!-- बाँहें + खुर -->
@@ -134,6 +134,7 @@ def svg(expr="neutral", state="closed", blink=False, pose=None):
  </g>
 </g>
 {hand}
+</g>
 </svg>'''
 
 
