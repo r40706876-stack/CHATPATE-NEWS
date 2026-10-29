@@ -886,7 +886,7 @@ def render(ep, segs, chars, out, preview):
                 sf = next(cur)
                 last_screen = sf
                 im = sf.copy()
-                if not nochar and not s.get("voice"):            # voice-only किरदार (बबलू): कोने में चेहरा भी नहीं
+                if not nochar and not s.get("voice"):            # voice-only किरदार (रमेश): कोने में चेहरा भी नहीं
                     _pip(im, fr, t, ln.get("set", "studio"), left=v2)
             else:
                 sf = next(cur) if cur is not None else Image.new("RGB", size)

@@ -201,11 +201,11 @@ def add_props(ep):
 
 
 def voice_only(ep, ln):
-    """29 Oct (मालिक: "बबलू की सूरत video skip करवा देती है"): ऐसे किरदार screen पर नहीं आते — सिर्फ़ उनकी Gemini आवाज़,
+    """29 Oct (मालिक: "रमेश की सूरत video skip करवा देती है", बबलू अच्छा है): ऐसे किरदार screen पर नहीं आते — सिर्फ़ उनकी Gemini आवाज़,
     पूरी screen पर मज़ाक/खबर का visual. VOICE_ONLY env (कॉमा से) या ep["voice_only"]; "" = सब दिखें."""
     who = ep.get("voice_only")
     if who is None:
-        who = os.getenv("VOICE_ONLY", "bablu")
+        who = os.getenv("VOICE_ONLY", "ramesh")
     who = who.split(",") if isinstance(who, str) else who
     return ln.get("who") in [w.strip() for w in who if w.strip()]
 
