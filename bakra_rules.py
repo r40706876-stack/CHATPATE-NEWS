@@ -6,6 +6,9 @@ import re
 
 POLITICS = re.compile(r"मोदी|पीएम|प्रधानमंत्री|मुख्यमंत्री|मंत्री|सांसद|विधायक|नेता|पार्टी|चुनाव|मतदान|वोट|भाजपा|कांग्रेस|"
                       r"राहुल|योगी|केजरीवाल|सरकार ने|विपक्ष|संसद|राज्यपाल|\bPM\b|\bBJP\b|Congress", re.I)
+# Humanizer वाला idea: AI की पहचान वाले घिसे वाक्य — सुनते ही लगता है "AI ने लिखा", और लोग skip करते हैं
+AI_TELL = re.compile(r"दोस्तों|आइए|आइये|आपको बता दें|बता दें कि|गौरतलब|दिलचस्प बात|क्या आप जानते|नमस्कार|तो चलिए|"
+                     r"कल्पना कीजिए|ध्यान देने वाली बात|यह न केवल|अंत में|निष्कर्ष|सोचने वाली बात")
 YESNO_HOOK = re.compile(r"^\s*क्या\b.*\?\s*$|साज़िश|साजिश")
 
 GOLD = """मालिक को जो lines सच में पसंद आईं (इसी स्तर का लिखो, शब्द मत दोहराओ):
@@ -26,6 +29,9 @@ def violations(ep):
     out = []
     if POLITICS.search(blob):
         out.append("नेता/राजनीति")
+    tells = sorted(set(AI_TELL.findall(" ".join(lines))))
+    if tells:
+        out.append("AI जैसे घिसे शब्द: " + ", ".join(tells))
     if lines and YESNO_HOOK.search(lines[0]):
         out.append("हाँ/ना सवाल वाला hook")
     if lines and len(lines[0].split()) > 14:             # मालिक (28 Oct): लंबाई नहीं, मज़ा पैमाना — सिर्फ़ बहुत लंबा hook रोको
