@@ -109,6 +109,17 @@ def write_scripts(news, n):
     fmt = os.getenv("FORMAT", "both")
     c = news_writer._safe(news)
     packs, picks = news_writer.gather(c, n)
+    if news_writer.PSYCH and fmt == "both":
+        # 29 Oct (मालिक: "जो pipeline कल रात बनाई उसी हिसाब से काम करो"): सिर्फ़ नया psych writer (cold open, 10 सवाल,
+        # असली data से सीख). पुराने rant/punch/नकली ऐड writers पहले सारा Gemini कोटा खा जाते थे और नया writer चलता ही नहीं था.
+        eps = news_writer.write_from(c, packs, picks, n)
+        import bakra_rules
+        ok = [e for e in eps if not bakra_rules.violations(e)]
+        for e in eps:
+            if bakra_rules.violations(e):
+                print("  ❌ नियम टूटा, हटाई:", e.get("topic"), bakra_rules.violations(e))
+                e["_loose"] = True
+        return ok or eps
     n_rant = n if fmt == "rant" else 0 if fmt == "news" else (n + 1) // 2
     rants, newsy = [], []
     if n_rant:
