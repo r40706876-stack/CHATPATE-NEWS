@@ -16,7 +16,9 @@ on:
         options: [auto, write, check, bulletin]
         default: auto
 concurrency:
-  group: bakra          # एक समय में एक ही run (वरना दो run एक ही जवाब पर दो video बना देते)
+  # एक समय में एक ही check (वरना दो run एक ही जवाब पर दो video बना देते). write का group अलग: 29 Oct को सुबह वाला
+  # write कतार में था और हर 15 मिनट वाले नए check ने उसे हटा दिया (GitHub एक group में बस एक run इंतज़ार में रखता है).
+  group: bakra-${{ (github.event.schedule == '55 2 * * *' || github.event.schedule == '44 13 * * *' || inputs.mode == 'write') && 'write' || 'check' }}
   cancel-in-progress: false
 env:
   MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || (github.event.schedule == '4 15 * * *' && 'bulletin' || ((github.event.schedule == '55 2 * * *' || github.event.schedule == '44 13 * * *') && 'write' || 'check')) }}
