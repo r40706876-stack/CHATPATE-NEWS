@@ -111,6 +111,9 @@ def prep(script_path):
         ln["_need_vis"] = ln.get("shot") != "close" and bool(ln.get("visuals") or ln.get("photo_hi") or ln.get("topic")
                                                             or len(ln.get("say", "").split()) >= 8)
         # intro/outro जैसी lines (न खोज, न खबर) पर नई तस्वीर नहीं — पिछली चलती रहती है (वरना बेमेल फ़ोटो आती थी)
+    for ln in ep["lines"]:
+        if ln.get("no_photo") or re.search(r"हमारे (ज़|ज)माने|हमारे समय|हमारे बचपन", ln.get("say", "")):
+            ln["_need_vis"] = False                            # 29 Oct: चाचा के "हमारे ज़माने" पर खबर की फ़ोटो (11PM-5AM घड़ी) = बेमेल
     if ep["lines"]:                                            # पहली line (hook) पर हमेशा तस्वीर — पहला सेकंड ही सब तय करता है
         ep["lines"][0]["_need_vis"] = ep["lines"][0].get("shot") != "close"
     got = visuals.pick_for_lines(ep["lines"], topic=ep.get("breaking") or ep.get("topic", ""),
@@ -156,7 +159,8 @@ def prep(script_path):
                     # title Hindi line के शब्दों से नहीं मिला, पर clip इसी खबर का है (for_topic ने title को खबर से मिलाया).
                     # पहले इसे फेंक देते थे = लगभग कभी clip नहीं लगा. अब: hook/तथ्य वाली line (खबर बताने वाली) पर,
                     # punch/twist वाली line पर कभी नहीं (वहाँ बात खबर से हटकर हमारी ज़िंदगी पर होती है).
-                    news_lines = [i for i in free if not ep["lines"][i].get("punch")
+                    news_lines = [i for i in free if not ep["lines"][i].get("punch") and ep["lines"][i].get("_need_vis", True)
+                                  and (ep["lines"][i].get("photo_hi") or ep["lines"][i].get("who") == "bablu")
                                   and ep["lines"][i].get("beat") not in ("twist", "takiya", "dhamki", "maang")]
                     if not news_lines:
                         continue
