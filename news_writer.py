@@ -7,6 +7,7 @@
 import json
 import os
 import re
+import time
 from pathlib import Path
 
 import gemini
@@ -593,12 +594,18 @@ def write_from(c, packs, picks, n=3):
     import viral_check as vc
     c.setdefault("rejected", [])
     if PSYCH:                                               # 28 Oct: दिमाग़ के हिसाब से (premise → 2 scripts → दर्शक-जज → punch-up)
-        try:
-            return _write_psych(c, packs, picks, n)
-        except gemini.QuotaOver:
-            raise
-        except Exception as e:                              # noqa: BLE001  नया तरीका न चले तो पुराना
-            print("  नया (psych) writer नहीं चला, पुराना तरीका:", repr(e)[:150])
+        for attempt in range(3):                            # 29 Oct: Gemini पल भर busy था और सीधे पुराने तरीके पर गिर गया
+            try:
+                return _write_psych(c, packs, picks, n)
+            except gemini.QuotaOver:
+                raise
+            except Exception as e:                          # noqa: BLE001
+                print(f"  नया (psych) writer नहीं चला (कोशिश {attempt + 1}/3):", repr(e)[:150])
+                if "Gemini nahi chala" not in str(e):         # सिर्फ़ Gemini के busy होने पर दोबारा; script की कमी पर नहीं
+                    break
+                if attempt < 2:
+                    time.sleep(90)
+        print("  नया writer नहीं चला — पुराना तरीका")
     bank = None                                             # पंच-बैंक: पहले ढेर सारे hooks/पंच, फिर सबसे तेज़ से script
     try:
         bank = None if LEAN else gemini.json_from(gemini.ask(prompt_punches(packs), json_mode=True, temperature=0.95))
@@ -640,7 +647,6 @@ def write_from(c, packs, picks, n=3):
                 raise
             except Exception as e:                          # noqa: BLE001  Gemini busy (503) — 1 मिनट रुककर एक बार और
                 print("  तीखा करने में Gemini busy, 60s बाद दोबारा:", repr(e)[:80])
-                import time
                 time.sleep(60)
                 again = gemini.json_from(gemini.ask(prompt_sharpen(weak), json_mode=True, temperature=0.85))
             fixed = []

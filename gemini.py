@@ -9,6 +9,7 @@ import urllib.request
 BASE = "https://generativelanguage.googleapis.com/v1beta"
 _models = {}                                      # हर key की अपनी model list
 _dead = set()
+_dead = set()                                     # (key, model) जिनका आज का कोटा ख़त्म
 _gone = set()                                     # 404 वाले (बंद हो चुके) models
 
 
@@ -93,7 +94,7 @@ def _ask(key, prompt, search, json_mode, temperature, prefer, patient=True):
     elif json_mode:
         body["generationConfig"]["responseMimeType"] = "application/json"
     errors = []
-    order = [m for m in models(key) if m not in _gone]
+    order = [m for m in models(key) if m not in _gone and (key, m) not in _dead]
     if prefer:                                        # जैसे "pro": पहले वो, फिर बाक़ी
         order = [m for m in order if prefer in m] + [m for m in order if prefer not in m]
     for rnd in range(2 if patient else 1):            # सीमा लगे तो रुको नहीं, अगला model; सब पर लगे तभी एक बार रुको
@@ -113,6 +114,8 @@ def _ask(key, prompt, search, json_mode, temperature, prefer, patient=True):
                     _gone.add(model)
                 daily = e.code == 429 and "PerMinute" not in msg       # मिनट वाली नहीं = दिन का कोटा ख़त्म
                 daily_hits += daily
+                if daily:                                 # इस model का आज का कोटा गया — इस run में दोबारा मत पूछो
+                    _dead.add((key, model))               # (29 Oct: हर call पहले pro पर 429 खाकर समय गँवाती थी)
                 busy |= e.code in (429, 503) and not daily
             except Blocked as e:                      # दूसरे model पर भी यही होगा — सीधे बताओ
                 print("    Gemini ने prompt रोका:", e)
