@@ -125,7 +125,7 @@ bablu: रेलवे के अनुसार यात्रा पूरी
 
 
 def _ask(prompt, temp, prefer=None):
-    return gemini.json_from(gemini.ask(prompt, json_mode=True, temperature=temp, prefer=prefer))
+    return gemini.ask_json(prompt, tries=2, json_mode=True, temperature=temp, prefer=prefer)
 
 
 def prompt_premises(packs):

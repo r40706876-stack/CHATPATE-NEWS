@@ -138,3 +138,17 @@ def json_from(text):
     s = m.group(1) if m else text
     start = min([i for i in (s.find("{"), s.find("[")) if i >= 0] or [0])
     return json.loads(s[start:s.rfind("}" if s[start] == "{" else "]") + 1])
+
+
+def ask_json(prompt, tries=3, **kw):
+    """ask + json_from; Gemini कभी-कभी टूटा JSON देता है (30 Oct: एक कॉमा कम = पूरी सुबह की scripts नहीं बनीं) — दोबारा पूछो."""
+    last = None
+    for k in range(tries):
+        txt = ask(prompt, **kw)
+        try:
+            return json_from(txt)
+        except (ValueError, IndexError) as e:
+            last = e
+            print(f"    टूटा JSON ({k + 1}/{tries}):", repr(e)[:80])
+    raise last
+

@@ -547,7 +547,7 @@ def gather(c, n):
     if not picks:
         raise NoViral(c["rejected"])
     evidence = {i: p.pop("_heads") for i, p in enumerate(picks)}
-    packs = gemini.json_from(gemini.ask(prompt_facts(picks, evidence), json_mode=True, temperature=0.1))
+    packs = gemini.ask_json(prompt_facts(picks, evidence), json_mode=True, temperature=0.1)
     packs = [p for p in packs if str(p.get("confidence", "")).lower() != "low" and p.get("facts")]
     for p in packs:
         print("  तथ्य:", p.get("topic"), "|", p.get("source"), "|", p.get("confidence"))
@@ -608,14 +608,14 @@ def write_from(c, packs, picks, n=3):
         print("  नया writer नहीं चला — पुराना तरीका")
     bank = None                                             # पंच-बैंक: पहले ढेर सारे hooks/पंच, फिर सबसे तेज़ से script
     try:
-        bank = None if LEAN else gemini.json_from(gemini.ask(prompt_punches(packs), json_mode=True, temperature=0.95))
+        bank = None if LEAN else gemini.ask_json(prompt_punches(packs), json_mode=True, temperature=0.95)
         bank = bank if isinstance(bank, list) and bank else None
         print("  पंच-बैंक:", sum(len(b.get("punches", [])) + len(b.get("hooks", [])) for b in bank or []), "विकल्प")
     except gemini.QuotaOver:
         raise
     except Exception as e:                                  # noqa: BLE001
         print("  पंच-बैंक नहीं बना, सीधे script:", repr(e)[:120])
-    raw = gemini.json_from(gemini.ask(prompt_write(packs, bank), json_mode=True, temperature=0.8))
+    raw = gemini.ask_json(prompt_write(packs, bank), json_mode=True, temperature=0.8)
     raw = [r for r in raw if isinstance(r, dict) and r.get("lines")]
     eps = []
     for ep in raw:
@@ -642,13 +642,13 @@ def write_from(c, packs, picks, n=3):
     if weak:                                                # कमज़ोर scripts एक बार और तीखी करो, फिर दोबारा जाँचो
         try:
             try:
-                again = gemini.json_from(gemini.ask(prompt_sharpen(weak), json_mode=True, temperature=0.85))
+                again = gemini.ask_json(prompt_sharpen(weak), json_mode=True, temperature=0.85)
             except gemini.QuotaOver:
                 raise
             except Exception as e:                          # noqa: BLE001  Gemini busy (503) — 1 मिनट रुककर एक बार और
                 print("  तीखा करने में Gemini busy, 60s बाद दोबारा:", repr(e)[:80])
                 time.sleep(60)
-                again = gemini.json_from(gemini.ask(prompt_sharpen(weak), json_mode=True, temperature=0.85))
+                again = gemini.ask_json(prompt_sharpen(weak), json_mode=True, temperature=0.85)
             fixed = []
             for old_ep, new_ep in zip(weak, again if isinstance(again, list) else []):
                 try:
@@ -795,7 +795,7 @@ def write_bulletin(c, n=4):
             break
     if not items:
         raise SystemExit("bulletin के लिए खबर नहीं मिली")
-    raw = gemini.json_from(gemini.ask(prompt_bulletin(items), json_mode=True, temperature=0.7))
+    raw = gemini.ask_json(prompt_bulletin(items), json_mode=True, temperature=0.7)
     lines = []
     intro = raw.get("intro") or {}
     if intro.get("say"):
