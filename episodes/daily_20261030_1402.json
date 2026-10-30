@@ -1,0 +1,218 @@
+{
+ "premise": "पापा ने धनतेरस पर कार की सर्विस के पैसे दिए थे, बेटे ने उसकी छत पर अनार जलाकर 100 फॉलोअर्स बढ़ा लिए।",
+ "category": "रील का शौक",
+ "breaking": "पापा के सर्विस के पैसे से अनार जलाकर रील!",
+ "hook_screen": "पीठ पर अनार जलाकर",
+ "source": "गुड न्यूज़ टुडे",
+ "tag_who": "पापा की गाड़ी से रील बनाने वाले भाइयों को",
+ "ask": "अगर आपके घर पर ऐसा होता तो क्या होता?",
+ "loop_word": "अनार",
+ "open_loop": "पापा घर पर उसकी रीच कैसे बढ़ा रहे हैं?",
+ "jawab": {
+  "pura": "अब पापा उसकी पीठ पर लाल अनार जलाकर रीच बढ़ा रहे हैं।",
+  "hasi": "घर में होने वाली सुताई और रीच बढ़ाने के अनोखे तरीके पर।",
+  "share": "पापा के डर से रील बनाने वाले हर दोस्त के पास भेजो।",
+  "daily": "पापा से पैसे किसी और काम के लेना और उड़ाना कहीं और।",
+  "follow": "देसी पारिवारिक कुटाई और रीलबाज़ों की फजीहत के लिए।",
+  "like": "पापा की सुताई सबसे प्रामाणिक भारतीय अनुभव है।",
+  "save": "सड़क सुरक्षा नियमों को सहेजने के लिए।"
+ },
+ "cold_open": {
+  "kind": "notice",
+  "data": {
+   "big": "पीठ पर जला अनार!",
+   "office": "घरेलू न्याय पंचायत",
+   "title": "रीलबाज़ी पर सुताई",
+   "body": "कार की सर्विस के पैसों से अनार जलाने पर पुत्र की तगड़ी कुटाई.",
+   "sign": "पिताजी"
+  },
+  "lines": [
+   0,
+   1
+  ]
+ },
+ "lines": [
+  {
+   "who": "bablu",
+   "say": "हापुड़ में लड़के ने कार की छत पर आतिशबाजी कर इंस्टाग्राम पर रील बनाई.",
+   "caption": "हापुड़ में लड़के ने कार की छत पर आतिशबाजी कर इंस्टाग्राम पर रील बनाई.",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "fireworks fountain cracker burning car roof",
+    "instagram account followers growth graph",
+    "car parked on road with lights"
+   ],
+   "photo_hi": [
+    "कार आतिशबाजी",
+    "इंस्टाग्राम रील"
+   ],
+   "scene_en": "Bablu displaying Instagram follower count graphics.",
+   "visual": "fireworks fountain cracker burning car roof",
+   "scene": "studio",
+   "punch": false,
+   "insta": ""
+  },
+  {
+   "who": "ramesh",
+   "say": "पापा ने धनतेरस पर कार की सर्विस के पैसे दिए थे, बेटे ने फॉलोअर्स बढ़ा लिए.",
+   "caption": "पापा ने कार की सर्विस के पैसे दिए थे, बेटे ने उसकी छत पर अनार जला लिया.",
+   "expr": "hasi",
+   "set": "room",
+   "visuals": [
+    "father hand giving money to son",
+    "young guy celebrating smartphone notification",
+    "cracking sound fireworks fountain"
+   ],
+   "photo_hi": [
+    "कार सर्विस पैसे",
+    "अनार पटाखा"
+   ],
+   "scene_en": "Ramesh acting like a clever teenager holding cash then pointing to a cracker.",
+   "visual": "father hand giving money to son",
+   "scene": "chacha",
+   "punch": false,
+   "insta": ""
+  },
+  {
+   "who": "ramesh",
+   "say": "विक्की का कहना था बिना रिस्क के इंस्टाग्राम पर रीच नहीं मिलती.",
+   "caption": "मोहल्ले के विक्की ने कहा कि बिना रिस्क के इंस्टाग्राम पर रीच नहीं मिलती.",
+   "expr": "tanz",
+   "set": "room",
+   "visuals": [
+    "young guy flexing attitude pose reels",
+    "phone camera tripod lighting",
+    "viral hashtag trends on screen"
+   ],
+   "photo_hi": [
+    "विक्की रील",
+    "इंस्टाग्राम रीच"
+   ],
+   "punch": true,
+   "stamp": "बिना रिस्क रीच नहीं!",
+   "scene_en": "Ramesh showing off a funny cool boy pose.",
+   "visual": "young guy flexing attitude pose reels",
+   "scene": "chacha",
+   "insta": ""
+  },
+  {
+   "who": "dadi",
+   "say": "अब पापा घर में उसकी पीठ पर लाल अनार जलाकर रीच बढ़ा रहे हैं.",
+   "caption": "अब पापा उसकी पीठ पर लाल अनार जलाकर रीच बढ़ा रहे हैं.",
+   "expr": "tanz",
+   "set": "aangan",
+   "visuals": [
+    "father holding flying leather slipper chappal",
+    "boy running in house crying",
+    "grandma laughing sitting on charpai"
+   ],
+   "photo_hi": [
+    "पापा कुटाई",
+    "पीठ पर अनार"
+   ],
+   "punch": true,
+   "stamp": "पीठ पर अनार!",
+   "scene_en": "Dadi clapping her hands with a bright laughing face.",
+   "visual": "father holding flying leather slipper chappal",
+   "scene": "dadi_call",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "say": "सूचना जारी है, कृपया रीच के लिए अपनी कार और पीठ दोनों सुरक्षित रखें.",
+   "caption": "सूचना जारी है, रीच के लिए अपनी कार और पीठ दोनों सुरक्षित रखें.",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "car in auto service workshop garage",
+    "police challan status check site",
+    "bakra news logo end frame"
+   ],
+   "photo_hi": [
+    "कार सर्विस",
+    "पीठ सुरक्षित अनार"
+   ],
+   "scene_en": "Bablu giving a quiet, deadpan newsroom goodbye.",
+   "visual": "car in auto service workshop garage",
+   "scene": "studio_end",
+   "punch": false,
+   "insta": ""
+  }
+ ],
+ "caption_post": "100 फॉलोअर्स के लिए कार की छत पर अनार! अब घर पर हो रही है कुटाई. Tag करो अपने रीलबाज़ दोस्त को. (स्रोत: गुड न्यूज़ टुडे) #ReelBaaz #HapurStunt #ViralVideo #BakraNews #Satire",
+ "topic": "सड़क पर चलती कार की छत से धुआंधार आतिशबाजी और रीलबाजी का स्टंट",
+ "ref_lines": [],
+ "jaanch": {
+  "pura": {
+   "ok": true,
+   "kyon": "पापा को पता चलने के बाद क्या पिटाई हुई देखने रुका."
+  },
+  "hasi": {
+   "ok": true,
+   "kyon": "लाइन 1 में सर्विस के पैसे रीच में उड़ाने पर हंसी."
+  },
+  "share": {
+   "ok": true,
+   "kyon": "पापा के पैसे उड़ाकर रील बनाने वाले दोस्तों को."
+  },
+  "daily": {
+   "ok": true,
+   "kyon": "घर वालों से छुपकर रील और रीच का चक्कर."
+  },
+  "follow": {
+   "ok": true,
+   "kyon": "देसी कुटाई और रील कल्चर का मजेदार कॉम्बिनेशन."
+  },
+  "like": {
+   "ok": true,
+   "kyon": "पीठ पर अनार जलाने वाले दादी के डायलॉग पर."
+  },
+  "save": {
+   "ok": false,
+   "kyon": "सेव करने की कोई खास वजह नहीं."
+  },
+  "ant": {
+   "ok": true,
+   "kyon": "पीठ सुरक्षित रखने वाली आखिरी लाइन बहुत मजेदार थी."
+  },
+  "khabar": {
+   "ok": true,
+   "kyon": "कार पर आतिशबाजी की रील की पूरी घटना बताई."
+  },
+  "dhaga": {
+   "ok": true,
+   "kyon": "पापा के पैसों से शुरू होकर पीठ पर अनार तक का धागा मजबूत."
+  }
+ },
+ "connect": {
+  "score": 8,
+  "why": "10 में से 9 सवाल पास",
+  "weak": "",
+  "fix": ""
+ },
+ "writer": "psych",
+ "format": "explain",
+ "label": "काम की खबर",
+ "key_word": "",
+ "icons": [
+  "₹",
+  "NEWS",
+  "%"
+ ],
+ "ticker": [],
+ "hook": "हापुड़ में लड़के ने कार की छत पर आतिशबाजी कर…",
+ "hook_text": "हापुड़ में लड़के ने कार की छत पर आतिशबाजी कर…",
+ "hook_short": "पीठ पर अनार जलाकर",
+ "trend": {
+  "score": 4,
+  "why": "5 अख़बार/चैनल 2 दिन में, 20 खबरें 7 दिन में"
+ },
+ "review_status": "audience_sim",
+ "sprite": {
+  "ramesh": "assets/toon/bakra",
+  "dadi": "assets/toon/dadi",
+  "bablu": "assets/toon/bablu"
+ },
+ "production": true
+}
