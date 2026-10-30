@@ -552,9 +552,10 @@ def _credit(src):
     return ""
 
 
-def _vid_frames(video, w, h):
+def _vid_frames(video, w, h, fy=0.5):
+    """fy: लंबे portrait से पट्टी काटनी हो तो कहाँ से (0 = ऊपर) — 30 Oct: नए रमेश का चेहरा बीच से काटने पर ऊपर कट रहा था."""
     rd = subprocess.Popen(["ffmpeg", "-loglevel", "quiet", "-i", str(video), "-vf",
-                           f"fps={FPS},scale={w}:{h}:force_original_aspect_ratio=increase,crop={w}:{h}",
+                           f"fps={FPS},scale={w}:{h}:force_original_aspect_ratio=increase,crop={w}:{h}:(iw-{w})/2:(ih-{h})*{fy}",
                            "-f", "rawvideo", "-pix_fmt", "rgb24", "-"], stdout=subprocess.PIPE)
     while True:
         raw = rd.stdout.read(w * h * 3)
@@ -887,7 +888,7 @@ def render(ep, segs, chars, out, preview):
         if s.get("talk"):                                     # हमारी 3 मुँह वाली फ़ोटो से बोलना (साफ़ 3D चेहरा)
             face = talk_frames(s["talk"], shot, n, si)
         elif s.get("face"):
-            face = _vid_frames(s["face"], W, H) if shot == "close" else _vid_frames(s["face"], W, BAND_H)
+            face = _vid_frames(s["face"], W, H) if shot == "close" else _vid_frames(s["face"], W, BAND_H, 0.12)
         still = s["still"].resize((W, H)) if shot == "close" else s["still"]
         if not react:
             st_text = ""

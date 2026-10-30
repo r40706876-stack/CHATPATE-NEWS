@@ -294,7 +294,7 @@ def log_done(script):
                     f.write(line.strip() + "\n")
 
 
-TOON = {c: f"assets/toon/{c}" for c in ("bablu", "chacha", "pinky", "dadi")} | {"ramesh": "assets/toon/ramesh"}   # 29 Oct: रमेश की जगह बकरा mascot
+TOON = {c: f"assets/toon/{c}" for c in ("bablu", "chacha", "pinky", "dadi")}   # रमेश: assets/real/ramesh.png (SadTalker)   # 29 Oct: रमेश की जगह बकरा mascot
 
 
 def to_studio(script):

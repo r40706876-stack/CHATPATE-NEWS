@@ -205,12 +205,15 @@ def add_props(ep):
         print(f"  🧊 3D prop → line {i + 1}: {prop}")
 
 
+REAL_FACE = {"ramesh"}   # 30 Oct: मालिक का भेजा नया रमेश (assets/real/ramesh.png) — sprite नहीं, उसी photo से SadTalker
 MASCOT = {}   # 30 Oct (मालिक): बकरा भी पसंद नहीं — रमेश की जगह नया चेहरा आने तक रमेश सिर्फ़ आवाज़ (VOICE_ONLY)
 _OLD_MASCOT = {"ramesh": "assets/toon/bakra"}                      # 29 Oct (मालिक): रमेश की सूरत skip करवाती थी → बकरा mascot
 
 
 def sprite_of(ep, who):
     """किरदार का sprite folder; रमेश वाली जगह हमेशा बकरा (पुरानी episode JSON में toon/ramesh लिखा हो तब भी)."""
+    if who in REAL_FACE:                                       # अपनी एक photo + SadTalker (मालिक की भेजी, 30 Oct)
+        return None
     return MASCOT.get(who) or (ep.get("sprite") or {}).get(who)
 
 
@@ -224,7 +227,7 @@ def voice_only(ep, ln):
     पूरी screen पर मज़ाक/खबर का visual. VOICE_ONLY env (कॉमा से) या ep["voice_only"]; "" = सब दिखें."""
     who = ep.get("voice_only")
     if who is None:
-        who = os.getenv("VOICE_ONLY", "ramesh")
+        who = os.getenv("VOICE_ONLY", "")
     who = who.split(",") if isinstance(who, str) else who
     return ln.get("who") in [w.strip() for w in who if w.strip()]
 
