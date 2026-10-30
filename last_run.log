@@ -1,1 +1,54 @@
-  अभी जवाब नहीं आया
+  विषय: ['shopping-आदत', 'ठगी से बचाव', 'त्योहार-ट्रेंड', 'दफ़्तर-नौकरी', 'नियम/नौकरी', 'फ़िल्म-क्रिकेट फैन', 'महँगाई', 'रील का शौक', 'वायरल वीडियो', 'शादी-रिश्ते', 'सफ़र-जुगाड़'] | हाल के विषय (अभी नहीं): []
+  topics: 33 काम की, 8 वायरल, 6 Trends, 5 त्योहार
+  Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
+    Gemini gemini-3.6-flash: 21s
+  YT_COOKIES: 22 cookies
+  ✅ trend 5/10: दिवाली बोनस में कंपनी ने कर्मचारियों को उपहार में दी नई कारें | 10 अख़बार/चैनल 2 दिन में, 25 खबरें 7 दिन में, YouTube आज: top 0 हज़ार views
+  YT_COOKIES: 22 cookies
+  ✅ trend 7/10: न्यूजीलैंड दौरे पर युवा भारतीय क्रिकेटर को मिली 'गरम पानी पीने' की देसी सलाह | 19 अख़बार/चैनल 2 दिन में, 43 खबरें 7 दिन में, YouTube आज: top 0 हज़ार views
+  YT_COOKIES: 22 cookies
+  YouTube views नहीं मिले (आज के run में बंद): RuntimeError('ख़ाली')
+  ❌ trend 3/10: फ्लाइट की खिड़की पर टेप चिपका देखकर हैरान हुए यात्री, कंपनी की सफाई वायरल | 3 अख़बार/चैनल 2 दिन में, 3 खबरें 7 दिन में
+  ❌ trend 2/10: शॉर्टकट के चक्कर में रेलवे फाटक पार करने पर कटा भारी-भरकम चालान | 2 अख़बार/चैनल 2 दिन में, 11 खबरें 7 दिन में
+  ❌ trend 2/10: पार्सल वापसी के नाम पर फर्जी कॉल से खरीदारों को बनाया जा रहा शिकार | 1 अख़बार/चैनल 2 दिन में, 3 खबरें 7 दिन में
+  ✅ trend 6/10: दिवाली से पहले घरों में सफाई और कबाड़ हटाने का मम्मी का महाअभियान शुरू | 13 अख़बार/चैनल 2 दिन में, 33 खबरें 7 दिन में
+  ❌ trend 2/10: रास्ते से गुजर रहे विदेशी पर्यटकों को मिला शादी का न्योता, दिया शगुन का लिफाफा | 1 अख़बार/चैनल 2 दिन में, 4 खबरें 7 दिन में
+  ✅ trend 4/10: गूगल पर कस्टमर केयर नंबर खोजते ही खाली हो रहे लोगों के बैंक खाते | 9 अख़बार/चैनल 2 दिन में, 28 खबरें 7 दिन में
+  ❌ trend 0/10: गुलाबी ठंड की दस्तक के साथ रजाई निकालने और नहाने से बचने का दौर शुरू | 0 अख़बार/चैनल 2 दिन में, 1 खबरें 7 दिन में
+  ✅ trend 7/10: दीपावली पर घर जाने वाली ट्रेनों में सीटें फुल, स्पेशल ट्रेनों का ही आसरा | 16 अख़बार/चैनल 2 दिन में, 41 खबरें 7 दिन में
+  ✅ trend 6/10: डेटा की खपत रिकॉर्ड स्तर पर, पर फिर महंगे हो सकते हैं मोबाइल रिचार्ज प्लान | 15 अख़बार/चैनल 2 दिन में, 53 खबरें 7 दिन में
+  ✅ trend 6/10: कैब कंपनी ने ड्राइवरों की कमाई बढ़ाने के लिए शुरू किए नए कमाई विकल्प | 5 अख़बार/चैनल 2 दिन में, 5 खबरें 7 दिन में, Google Trends में: उबर
+  ✅ trend 8/10: सरकारी नौकरी में चयन के बाद अब कैरेक्टर वेरिफिकेशन के बने कड़े नियम | 56 अख़बार/चैनल 2 दिन में, 77 खबरें 7 दिन में
+  ✅ trend 4/10: दिवाली की आहट से हलवाई दुकानों पर भीड़, मिठाइयों की बिक्री में भारी उछाल | 4 अख़बार/चैनल 2 दिन में, 16 खबरें 7 दिन में
+  ❌ trend 2/10: सहारा रिफंड आवेदन खारिज होने पर दोबारा क्लेम के लिए पोर्टल प्रक्रिया शुरू | 1 अख़बार/चैनल 2 दिन में, 1 खबरें 7 दिन में
+  चुने विषय: ['[नियम/नौकरी]', '[फ़िल्म-क्रिकेट फैन]', '[त्योहार-ट्रेंड]', '[त्योहार]', '[Trends]', '[दफ़्तर-नौकरी]', '[वायरल]']
+    key 1 का कोटा ख़त्म → key 2
+  Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
+    Gemini gemini-3.5-flash: 21s
+Traceback (most recent call last):
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/run_daily.py", line 597, in <module>
+    main()
+    ~~~~^^
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/run_daily.py", line 584, in main
+    do_write(a.feed)
+    ~~~~~~~~^^^^^^^^
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/run_daily.py", line 187, in do_write
+    eps = write_scripts(news, 6)
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/run_daily.py", line 111, in write_scripts
+    packs, picks = news_writer.gather(c, n)
+                   ~~~~~~~~~~~~~~~~~~^^^^^^
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/news_writer.py", line 550, in gather
+    packs = gemini.json_from(gemini.ask(prompt_facts(picks, evidence), json_mode=True, temperature=0.1))
+  File "/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/gemini.py", line 140, in json_from
+    return json.loads(s[start:s.rfind("}" if s[start] == "{" else "]") + 1])
+           ~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/json/__init__.py", line 352, in loads
+    return _default_decoder.decode(s)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "/usr/lib/python3.14/json/decoder.py", line 345, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.14/json/decoder.py", line 361, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ~~~~~~~~~~~~~~^^^^^^^^
+json.decoder.JSONDecodeError: Expecting ',' delimiter: line 62 column 5 (char 3515)
