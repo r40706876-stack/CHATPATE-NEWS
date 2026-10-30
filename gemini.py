@@ -125,6 +125,8 @@ def _ask(key, prompt, search, json_mode, temperature, prefer, patient=True):
         # आधे या ज़्यादा models पर दिन वाली सीमा = कोटा ख़त्म (पहले किसी एक model का 503 इसे "busy" बना देता था →
         # 40s + 4 मिनट के बेकार retry और Telegram पर ग़लत "busy" message)
         if daily_hits and (not busy or daily_hits * 2 >= len(order)):
+            for er in errors[:3]:                         # 30 Oct: reset के तुरंत बाद भी "ख़त्म" — असली वजह log में दिखे
+                print("    429:", er[:160].replace("\n", " "))
             raise QuotaOver("आज का Gemini कोटा ख़त्म")
         if not busy:
             break
