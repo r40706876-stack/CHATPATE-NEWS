@@ -262,6 +262,7 @@ def talk_frames(talk, shot, n, seed):
         yield compose_close(sp, talk["set"], W, H) if shot == "close" else compose_band(sp, talk["set"])
 
 
+BAND_Z = 1.22                                         # split में किरदार का चेहरा बड़ा (desk/खाली दीवार कम)
 EARLY_CLEAN = 8                                       # सेकंड: इतने तक कोई logo/badge/transition नहीं
 
 
@@ -515,22 +516,11 @@ def _screen_gen(src, seed, size, bg=None, hero=False):
                 fr.paste(fg, ((w - fw) // 2, (h - fg.height) // 2))
                 yield fr
                 t += 1
-        if hero:                                      # 1.45 से 1.08 तक 0.6 सेकंड में (झटका), फिर धीरे-धीरे अंदर
-            while True:
-                q = min(1, t / (0.6 * FPS))
-                z = 1.45 - 0.37 * (1 - (1 - q) ** 3) + 0.06 * max(0, t - 0.6 * FPS) / (CUT * FPS)
-                yield rv._cover_img(im, w, h, z, 0.4)
-                t += 1
-        while True:                                   # तेज़ Ken Burns: अंदर / बाहर / बग़ल
-            p = min(1, t / (CUT * FPS))
-            if mode == 0:
-                yield rv._cover_img(im, w, h, 1.0 + 0.22 * p, 0.4)
-            elif mode == 1:
-                yield rv._cover_img(im, w, h, 1.25 - 0.22 * p, 0.4)
-            else:
-                big = rv._cover_img(im, int(w * 1.2), int(h * 1.2), 1.0, 0.4)
-                x = int(w * 0.2 * p)
-                yield big.crop((x, int(h * 0.1), x + w, int(h * 0.1) + h))
+        # 30 Oct (मालिक: "कहीं zoom होते, फिर हट रहे") — अब हर तस्वीर एक ही शांत चाल: धीरे-धीरे थोड़ा पास (6%).
+        # पहले: पहला frame 1.45 का झटका, फिर बारी-बारी अंदर / बाहर / बग़ल = झूलता हुआ लगता था.
+        while True:
+            p = min(1, t / (2.4 * FPS))
+            yield rv._cover_img(im, w, h, 1.0 + 0.06 * p, 0.4)
             t += 1
     big = str((src or {}).get("big", ""))
     t = 20 if big and big in _COUNTED else 0              # वही card दोबारा आए: अंक फिर 0 से नहीं गिनते (₹991→₹983→₹999 झिलमिल)
@@ -930,15 +920,15 @@ def render(ep, segs, chars, out, preview):
             punchy = shot == "close" and not react
             if shot == "close":
                 if punchy:
-                    z = 1.0 + 0.03 * min(1, t / 8)                # हल्का — ज़्यादा zoom पर 3D चेहरे की कमी दिखती थी
+                    z = 1.0                                       # स्थिर (30 Oct: zoom अंदर-बाहर झूलता लगता था)
                 else:                                     # reaction: ज़िंदा लगे — धीरे-धीरे पास आना + हल्की साँस
-                    z = 1.04 + 0.05 * t / n + 0.006 * math.sin(t / 3)
+                    z = 1.02
                 im = _zoomr(fr, z, 0.3).copy()
             elif shot == "full":
                 sf = next(cur)
                 last_screen = sf
                 im = sf.copy()
-                if not nochar and not s.get("voice"):            # voice-only किरदार (रमेश): कोने में चेहरा भी नहीं
+                if False:                                        # 30 Oct: कोने का गोला हटाया — पूरी screen तस्वीर, आवाज़ चलती रहे
                     _pip(im, fr, t, ln.get("set", "studio"), left=v2)
             else:
                 sf = next(cur) if cur is not None else Image.new("RGB", size)
@@ -946,15 +936,8 @@ def render(ep, segs, chars, out, preview):
                 strap = bool(ep.get("bulletin") and ln.get("headline"))   # headline पट्टी सिर्फ़ bulletin में (पहले 4 परतें लिखाई की थीं)
                 im = bases[strap].copy()
                 im.paste(sf, (SCR[0], SCR[1]))
-                zb = (1.0 + 0.10 * min(1, t / 8)) if (ln.get("punch") and not react) else (1.05 if react else 1.0 + 0.03 * t / n)
-                if k < FPS * 5 and not react:                    # पहले 5 सेकंड: हर cut पर किरदार पर हल्का "punch-in" झटका
-                    zb = max(zb, 1.0 + 0.09 * max(0.0, 1 - (t % chunk) / 6))
-                dx = 0
-                if ln.get("beat") == "dhamki" and not react:     # धमकी: धीरे-धीरे चेहरे के बहुत पास (suspense)
-                    zb = 1.0 + 0.24 * t / max(1, n)
-                elif ln.get("beat") in ("twist", "takiya") and not react and t < 8:   # धमाका: हल्का झटका
-                    dx = int(16 * math.sin(t * 2.6) * (1 - t / 8))
-                im.paste(_zoomr(fr, zb), (dx, BAND_Y))
+                zb, dx = BAND_Z, 0                               # 30 Oct: किरदार स्थिर (झटके/zoom-pulse बंद), चेहरा थोड़ा बड़ा
+                im.paste(_zoomr(fr, zb, 0.18), (dx, BAND_Y))
                 clean = im.copy()                                # बिना लिखाई वाला frame (आख़िरी poll के पीछे)
             d = ImageDraw.Draw(im)
             if k >= FPS * EARLY_CLEAN and ep.get("style") not in ("nochar", "close"):   # vidIQ + virality skill (meme/close-up: कोई channel पट्टी नहीं): पहले 2 सेकंड कोई logo/पट्टी नहीं (हर style में) — सिर्फ़ तस्वीर + 4 शब्द
@@ -977,7 +960,8 @@ def render(ep, segs, chars, out, preview):
                 d.text((58, BAND_Y + 418), f"{name} का रिएक्शन", font=tt.font(44), fill="white", anchor="lm")
             else:
                 hooking = si == 0 and ep.get("hook")              # पहली line: वही बात बड़े पीले hook में (जो सुनाई दे, वही दिखे)
-                cy = 1150 if (v2 and shot == "full") else BAND_Y + 460
+                cy = 1150 if (v2 and shot == "full") else (SCR[3] + 38 if shot == "split" else BAND_Y + 460)
+                # (split: caption ऊपर-नीचे के बीच की पट्टी पर — 30 Oct, बड़ा चेहरा होने पर caption मुँह ढक रहा था)
                 if first_seen and not s.get("voice") and k >= FPS * EARLY_CLEAN and t < FPS * 2.5 and shot != "close" and not hooking and not (v2 and shot == "full"):
                     rv.name_strap(d, (BAND_Y + 84) if shot == "split" else 1130, name, role)
                 if nochar:                                        # हर line ऊपर बड़े अक्षरों में (meme reel जैसा)
