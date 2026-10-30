@@ -22,7 +22,7 @@ from pathlib import Path
 ROOT = Path(__file__).parent
 sys.stdout.reconfigure(line_buffering=True)            # GitHub log में हर कदम तुरंत दिखे
 PENDING, CHOICE, OFFSET = ROOT / "pending.json", ROOT / "choice.json", ROOT / "tg_offset.txt"
-NAME = {"bablu": "🎤 बबलू", "chacha": "👴 चाचा", "pinky": "📱 पिंकी", "dadi": "👵 दादी", "ramesh": "🐐 बकरा"}
+NAME = {"bablu": "🎤 बबलू", "chacha": "👴 चाचा", "pinky": "📱 पिंकी", "dadi": "👵 दादी", "ramesh": "😤 रमेश"}
 NUM = {"१": "1", "२": "2", "३": "3", "०": "0", "one": "1", "two": "2", "three": "3",
        "पहला": "1", "पहली": "1", "दूसरा": "2", "दूसरी": "2", "तीसरा": "3", "तीसरी": "3"}
 
@@ -294,7 +294,7 @@ def log_done(script):
                     f.write(line.strip() + "\n")
 
 
-TOON = {c: f"assets/toon/{c}" for c in ("bablu", "chacha", "pinky", "dadi")} | {"ramesh": "assets/toon/bakra"}   # 29 Oct: रमेश की जगह बकरा mascot
+TOON = {c: f"assets/toon/{c}" for c in ("bablu", "chacha", "pinky", "dadi")} | {"ramesh": "assets/toon/ramesh"}   # 29 Oct: रमेश की जगह बकरा mascot
 
 
 def to_studio(script):

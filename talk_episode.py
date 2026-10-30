@@ -25,7 +25,7 @@ CHARS = {   # किरदार: (तस्वीर, नाम, पद) — �
     "chacha": ("assets/real/chacha.png", "चाचा", "वरिष्ठ विशेषज्ञ • 1975 से नाराज़"),
     "dadi": ("assets/real/dadi.png", "दादी", "तकनीकी सलाहकार • WhatsApp विभाग"),
     "pinky": ("assets/real/pinky.png", "पिंकी", "नई पीढ़ी • अभी-अभी 18 की"),
-    "ramesh": ("assets/toon/bakra/neutral_closed.png", "बकरा", "आम आदमी • देश का असली बकरा"),   # 29 Oct: रमेश की जगह mascot
+    "ramesh": ("assets/real/ramesh.png", "रमेश", "आम आदमी • रोज़ का परेशान"),   # 29 Oct: रमेश की जगह mascot
 }
 
 
@@ -205,7 +205,8 @@ def add_props(ep):
         print(f"  🧊 3D prop → line {i + 1}: {prop}")
 
 
-MASCOT = {"ramesh": "assets/toon/bakra"}                      # 29 Oct (मालिक): रमेश की सूरत skip करवाती थी → बकरा mascot
+MASCOT = {}   # 30 Oct (मालिक): बकरा भी पसंद नहीं — रमेश की जगह नया चेहरा आने तक रमेश सिर्फ़ आवाज़ (VOICE_ONLY)
+_OLD_MASCOT = {"ramesh": "assets/toon/bakra"}                      # 29 Oct (मालिक): रमेश की सूरत skip करवाती थी → बकरा mascot
 
 
 def sprite_of(ep, who):
@@ -223,7 +224,7 @@ def voice_only(ep, ln):
     पूरी screen पर मज़ाक/खबर का visual. VOICE_ONLY env (कॉमा से) या ep["voice_only"]; "" = सब दिखें."""
     who = ep.get("voice_only")
     if who is None:
-        who = os.getenv("VOICE_ONLY", "")
+        who = os.getenv("VOICE_ONLY", "ramesh")
     who = who.split(",") if isinstance(who, str) else who
     return ln.get("who") in [w.strip() for w in who if w.strip()]
 
