@@ -243,11 +243,35 @@ def pick_shot(ep, i, ln):
         return "close"
     if voice_only(ep, ln):
         return "full"
-    if i == 0 and ep.get("cold_open") or ln.get("who") in MASCOT:
-        # 29 Oct: full shot में cold open का phone दोनों तरफ़ से कटा और बकरा कोने के गोले में सिर्फ़ सींग दिखे —
-        # अब ऊपर joke पूरा, नीचे किरदार पूरा
+    if i == 0 and ep.get("cold_open"):
+        # 29 Oct: full shot में cold open का phone दोनों तरफ़ से कटा — अब ऊपर joke पूरा, नीचे किरदार पूरा
+        return "split"
+    if style == "flow" or (not style and ep.get("writer") == "psych"):
+        return flow_shot(ep, i, ln)
+    if ln.get("who") in MASCOT:
         return "split"
     return reel_studio.shot_v2(i, ln) if style == "v2" else reel_studio.shot_for(i, ln)
+
+
+def flow_shot(ep, i, ln):
+    """30 Oct (मालिक: "हर scene split ज़रूरी नहीं, connection feel होना चाहिए") — बात के हिसाब से दृश्य:
+    तथ्य/खबर वाली line = पूरी screen पर वही तस्वीर (दर्शक खबर देखे), पंच/tag = बोलने वाले का close-up (चेहरे का भाव),
+    अपना बना joke-दृश्य (सूचना/phone) = split (joke + कहने वाला साथ), आख़िरी line = split (loop: पहले frame जैसा).
+    एक ही दृश्य लगातार 3 बार नहीं."""
+    lines = ep["lines"]
+    prev = [l.get("_flow") for l in lines[:i]][-2:]
+    if i == len(lines) - 1 or ln.get("visual_files"):
+        shot = "split"
+    elif ln.get("punch") or ln.get("tag") or ln.get("tag_text"):
+        shot = "close"
+    elif ln.get("visuals") or ln.get("photo_hi"):
+        shot = "full"
+    else:
+        shot = "split"
+    if len(prev) == 2 and prev[0] == prev[1] == shot:
+        shot = "split" if shot != "split" else ("close" if ln.get("who") else "split")
+    ln["_flow"] = shot
+    return shot
 
 
 def fill_sets(ep):
@@ -430,7 +454,8 @@ def post_studio(ep):
             talk = {"folder": sprite, "expr": ln.get("expr", ""), "wav": IN / f"audio/{i:02d}.wav",
                     "set": ln.get("set") or ("studio" if ln["who"] == "bablu" else "village")}
         segs.append({"ln": ln, "wav": IN / f"audio/{i:02d}.wav", "face": None if talk else (clips[-1] if clips else None),
-                     "talk": talk, "still": still, "vis": vis, "shot": shot, "voice": voice_only(ep, ln)})
+                     "talk": talk, "still": still, "vis": vis, "shot": shot,
+                     "voice": voice_only(ep, ln) or (shot == "full" and ln.get("who") in MASCOT)})
         if ep.get("react") and (IN / f"react_{i}.png").exists():
             rw = IN / f"audio/{i:02d}_r.wav"
             dur = "0.7"                                       # छोटा reaction, साथ में मज़ेदार आवाज़ (सन्नाटा नहीं)

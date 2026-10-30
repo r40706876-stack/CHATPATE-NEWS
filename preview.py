@@ -75,7 +75,8 @@ def run(script, out_dir):
                                "close" if shot == "close" else "band")
         talk = {"folder": sprite, "expr": ln.get("expr", ""), "wav": wav, "set": st}
         segs.append({"ln": ln, "wav": wav, "face": None, "talk": talk, "still": Image.open(still_p).convert("RGB"),
-                     "vis": vis, "shot": shot, "voice": te.voice_only(ep, ln)})
+                     "vis": vis, "shot": shot,
+                     "voice": te.voice_only(ep, ln) or (shot == "full" and ln.get("who") in te.MASCOT)})
     out = out_dir / "preview.mp4"
     secs = reel_studio.render(ep, segs, te.CHARS, out, out_dir / "first.jpg")
     for name, vf in (("open.jpg", "trim=0:5,fps=4,scale=270:-1,tile=10x2"), ("all.jpg", "fps=1,scale=180:-1,tile=10x8")):
