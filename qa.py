@@ -21,7 +21,9 @@ def _frames(video, crop="1056:810:12:130"):
     return np.frombuffer(raw, np.uint8).reshape(-1, H, W).astype(np.float32)
 
 
-def check(video, tail=0.3):
+def check(video, tail=0.3, allow=()):
+    """allow: (शुरू, अंत) सेकंड — close-up वाले हिस्से: पूरी screen बोलता किरदार है, ऊपर "तस्वीर" है ही नहीं (30 Oct:
+    दादी के 6.7 सेकंड के close-up को "एक ही तस्वीर" कहकर अच्छी video रोक दी थी)."""
     f = _frames(video)
     if len(f) < FPS * 3:
         return ["video बहुत छोटी या पढ़ी नहीं गई"]
@@ -34,7 +36,13 @@ def check(video, tail=0.3):
     tiny = [b[::8, ::8].ravel() for b in body]
     cut = np.abs(np.diff(body, axis=0)).mean(axis=(1, 2)) > 18
     longest, start, worst_at = 0, 0, 0
+    free = np.zeros(len(body), bool)
+    for a, b in allow:
+        free[int(a * FPS):int(b * FPS)] = True
     for i in range(1, len(body)):
+        if free[i]:
+            start = i
+            continue
         same = tiny[i].std() > 2 and tiny[start].std() > 2 and np.corrcoef(tiny[i], tiny[start])[0, 1] > 0.75
         if cut[i - 1] and not same:
             start = i
@@ -46,7 +54,7 @@ def check(video, tail=0.3):
     if len(dark) > FPS * 1.5:
         issues.append(f"{len(dark) / FPS:.1f} सेकंड ऊपर की screen ख़ाली/एक-रंग (पहली बार {dark[0] / FPS:.0f}वें सेकंड)")
     first = body[: FPS * 3]
-    if np.abs(first[-1] - first[0]).mean() < 4:
+    if max(np.abs(first[k] - first[0]).mean() for k in range(FPS // 2, len(first), FPS // 4)) < 4:   # बीच में भी बदला तो ठीक
         issues.append("पहले 3 सेकंड में ऊपर कोई हरकत/बदलाव नहीं")
     if np.abs(first[FPS // 2] - first[0]).mean() < 2:    # virality skill: frame 0 और 0.5 सेकंड एक जैसे = "रुका हुआ card" (skip बढ़ता)
         issues.append("पहले आधे सेकंड में कोई हरकत नहीं (frame 0 रुका हुआ)")

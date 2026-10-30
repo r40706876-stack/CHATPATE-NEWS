@@ -443,6 +443,18 @@ def chrome(ep, ln, k, total, broll):
     return o
 
 
+def _close_ranges(segs):
+    """close-up वाली lines का समय (सेकंड) — QA वहाँ "ऊपर एक ही तस्वीर" नहीं गिनता."""
+    import reel_v3 as rv
+    out, t = [], 0.0
+    for s_ in segs:
+        L = rv._read(s_["wav"]).shape[0] / rv.SR
+        if s_.get("shot") == "close":
+            out.append((t, t + L))
+        t += L
+    return out
+
+
 def post_studio(ep):
     import reel_studio
     segs = []
@@ -477,7 +489,7 @@ def post_studio(ep):
             print(f"  ♻️ कमी मिली ({'; '.join(issues)}) — ठीक करके दोबारा बना रहे ({tries}/2)")
         secs = reel_studio.render(ep, segs, CHARS, out, ROOT / "preview_episode.jpg")
         try:
-            issues = qa.check(out)
+            issues = qa.check(out, allow=_close_ranges(segs))
         except Exception as e:                            # noqa: BLE001
             print("  जाँच नहीं हुई:", repr(e)[:100])
             issues = ["QA जाँच नहीं चल पाई: " + type(e).__name__]
@@ -489,7 +501,7 @@ def post_studio(ep):
     import memes                                          # पंच के बाद मशहूर meme (अपनी आवाज़ के साथ)
     used = memes.add(ep, segs, out)
     # Validate the final file, including any inserted meme clips.
-    issues = qa.check(out)
+    issues = qa.check(out, allow=_close_ranges(segs))
     if issues:
         raise RuntimeError("Final video QA failed; delivery blocked: " + "; ".join(issues))
     report = quality(ep)
