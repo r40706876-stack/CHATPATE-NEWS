@@ -185,6 +185,20 @@ def render(kind, data, out, zoom_out=None):
         base = im.resize((W, H)).filter(ImageFilter.GaussianBlur(18))
         base = Image.blend(base, Image.new("RGB", (W, H)), 0.45)
         base.paste(z, ((W - z.width) // 2, (H - z.height) // 2))
+        if (data or {}).get("big"):
+            # 30 Oct: पहला second = एक नज़र (≤6 शब्द, बहुत बड़े). 3 line की सूचना पढ़नी पड़ी तो 2-5s में 80% गए.
+            base = Image.blend(im.resize((W, H)).filter(ImageFilter.GaussianBlur(10)), Image.new("RGB", (W, H)), 0.55)
+            dd = ImageDraw.Draw(base)
+            words = str(data["big"]).split()[:6]
+            for size in (150, 130, 112, 96, 84):
+                f = rr.font(size)
+                rows = _wrap(" ".join(words), f, W - 90)
+                if len(rows) <= 2:
+                    break
+            y = H / 2 - (len(rows) - 1) * size * 0.62
+            for r in rows:
+                dd.text((W / 2, y), r, font=f, fill=(255, 214, 0), anchor="mm", stroke_width=8, stroke_fill=(0, 0, 0))
+                y += size * 1.24
         base.save(zoom_out)
     return out
 

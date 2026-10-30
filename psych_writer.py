@@ -206,6 +206,16 @@ def prompt_scripts(chosen, fields, casting):
   notice — सरकारी नोटिस  data: {{"office","title","body","sign"}}  (जैसे "मरम्मत पूरी हो चुकी है. गड्ढे फ़िलहाल अपनी जगह पर रहेंगे.")
   price  — दाम-बोर्ड  data: {{"item","old","new","note"}}
 "lines" = जिन पहली 1-2 lines के साथ ये दिखे (पहली line इसे पढ़कर/पूछकर शुरू हो). दृश्य पर लिखा joke और बोली गई line एक-दूसरे को पूरा करें.
+"data" में "big" ज़रूर दो: ≤ 6 शब्द — वही joke जो एक नज़र (1 सेकंड) में पढ़ा जाए; पहले second में बस यही बड़े अक्षरों में दिखेगा.
+  (असली data, 29 Oct: 3 line की "सूचना" पढ़नी पड़ी तो 2-5 सेकंड में 80% लोग चले गए — पढ़ना = scroll.)
+
+पहले 5 सेकंड के पक्के नियम (हमारे graph: जो 5 सेकंड रुका, वो आख़िर तक रुका — लड़ाई सिर्फ़ यहीं है):
+  • पहली line ≤ 10 शब्द, पहले ही शब्द से बात (नमस्कार/परिचय/"आज की खबर" नहीं).
+  • पहली या दूसरी line में एक खुला सवाल/वादा जो आख़िरी line में ही खुले ("और सुबह पाँच बजे जो हुआ…",
+    "पर असली दिक्कत टिकट नहीं थी…") — "open_loop" field में वही शब्द लिखो, और आख़िरी line उसका जवाब हो.
+  • "hook_screen" ≤ 5 शब्द (screen पर पहले 3 सेकंड यही), बोली गई पहली line से मेल खाए.
+  • खबर (तथ्य) दूसरी line में — पर anchor वाली "खबर पढ़ने" की आवाज़ में नहीं, उसी मज़ाक को आगे बढ़ाते हुए.
+  • आख़िरी line पहली line के शब्द पर लौटे (loop_word) ताकि reel अपने-आप दोबारा चले.
 
 लिखने से पहले हर script के लिए ये 7 सवाल ख़ुद से पूछो — script में हर एक की वजह मौजूद हो (वरना वो script मत लिखो):
 {QTEXT}
@@ -220,9 +230,9 @@ follow के लिए: हमारे किरदारों का अप�
 सिर्फ़ JSON — हर खबर का [A, B] (episode ढाँचा):
 [{{"topic": "...", "versions": [{{"premise": "...", "category": "money/rules/bank/jobs/scheme/tech/travel/civic/other",
   "breaking": "6-9 शब्द सच्ची headline", "hook_screen": "≤ 5 शब्द", "source": "प्रकाशक", "tag_who": "कौन किसे भेजेगा और क्यों",
-  "ask": "≤ 9 शब्द comment सवाल", "loop_word": "पहली और आख़िरी line का साझा शब्द",
+  "ask": "≤ 9 शब्द comment सवाल", "loop_word": "पहली और आख़िरी line का साझा शब्द", "open_loop": "पहले 5 सेकंड का खुला सवाल",
   "jawab": {{"pura": "...", "hasi": "...", "share": "...", "daily": "...", "follow": "...", "like": "...", "save": "..."}},
-  "cold_open": {{"kind": "phone|whatsapp|bill|notice|price", "data": {{...}}, "lines": [0, 1]}},
+  "cold_open": {{"kind": "phone|whatsapp|bill|notice|price", "data": {{"big": "≤6 शब्द", ...}}, "lines": [0, 1]}},
   "lines": [{{"who": "bablu", "say": "...", "caption": "...", "expr": "gambhir", "set": "studio",
              "visuals": ["...", "...", "..."], "photo_hi": ["...", "..."],
              "scene_en": "English में इस line का एक ठोस दृश्य (कौन, कहाँ, क्या कर रहा) — AI तस्वीर इसी से बनेगी; हर line का अलग"}}],

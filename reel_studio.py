@@ -262,6 +262,9 @@ def talk_frames(talk, shot, n, seed):
         yield compose_close(sp, talk["set"], W, H) if shot == "close" else compose_band(sp, talk["set"])
 
 
+EARLY_CLEAN = 8                                       # सेकंड: इतने तक कोई logo/badge/transition नहीं
+
+
 def chrome_safe(d, k):
     """Logo/LIVE/AI पट्टी Instagram-YouTube के ऊपरी buttons से हटकर — नीचे वाले हिस्से के ऊपर बाएँ."""
     y = BAND_Y + 14
@@ -846,6 +849,8 @@ def render(ep, segs, chars, out, preview):
         if shot == "full" and not vis:
             shot, size = "split", (SW_, SH_)
         cut_s = CUT - 0.4 * int(ep.get("_fix") or 0)            # जाँच में कमी मिली = दोबारा बनाते वक़्त और जल्दी बदलें
+        if k < FPS * 5:                                         # पहले 5 सेकंड: हर 1.2 सेकंड कुछ बदले (उसके बाद रुकने वाले आख़िर तक रुके)
+            cut_s = min(cut_s, 1.2)
         chunk = max(1, int(cut_s * FPS))                        # हर 2 सेकंड नया नज़ारा
         need = math.ceil(n / chunk) + int(ep.get("_fix") or 0)
         if shot != "close" and not react and vis and len(vis) < need:
@@ -863,7 +868,7 @@ def render(ep, segs, chars, out, preview):
                     break
                 if e_ not in vis:
                     vis.insert(1 if len(vis) == 1 else len(vis), e_)
-        if vis and shot != "close" and not react and len(vis) * chunk < n:
+        if vis and shot != "close" and not react and len(vis) * chunk < n and k >= FPS * 5:   # पहले 5s: खींचो मत, A-B-A तेज़ बदलो
             # तस्वीरें कम, line लंबी: A-B-A-B घुमाने की जगह हर तस्वीर ज़्यादा देर (2.8 सेकंड तक, अलग zoom/कोण से),
             # फिर भी बचे तो line की मुख्य बात वाला card — एक ही फ़ोटो दोबारा लौटकर नहीं आती
             chunk = min(int(2.8 * FPS), math.ceil(n / len(vis)))   # QA: 3 सेकंड से ज़्यादा एक तस्वीर = रद्द
@@ -902,7 +907,8 @@ def render(ep, segs, chars, out, preview):
         last = None                                              # cur/credit पिछली line से चलते रहते हैं (reaction पर भी)
         if shot != "close" and not vis and cur is None:
             cur = _screen_gen({"big": headline}, seed, size, last_screen)
-        wipe_on = si > 0 and not react and ln["who"] != segs[si - 1]["ln"]["who"] and not segs[si - 1].get("react")
+        wipe_on = si > 0 and not react and ln["who"] != segs[si - 1]["ln"]["who"] and not segs[si - 1].get("react") \
+            and k >= FPS * EARLY_CLEAN                         # पहले 8 सेकंड कोई channel वाला transition नहीं (graph: ठीक वहीं गिरावट)
         first_seen = ln["who"] not in seen and not react
         seen.add(ln["who"])
         for t in range(n):
@@ -941,6 +947,8 @@ def render(ep, segs, chars, out, preview):
                 im = bases[strap].copy()
                 im.paste(sf, (SCR[0], SCR[1]))
                 zb = (1.0 + 0.10 * min(1, t / 8)) if (ln.get("punch") and not react) else (1.05 if react else 1.0 + 0.03 * t / n)
+                if k < FPS * 5 and not react:                    # पहले 5 सेकंड: हर cut पर किरदार पर हल्का "punch-in" झटका
+                    zb = max(zb, 1.0 + 0.09 * max(0.0, 1 - (t % chunk) / 6))
                 dx = 0
                 if ln.get("beat") == "dhamki" and not react:     # धमकी: धीरे-धीरे चेहरे के बहुत पास (suspense)
                     zb = 1.0 + 0.24 * t / max(1, n)
@@ -949,9 +957,9 @@ def render(ep, segs, chars, out, preview):
                 im.paste(_zoomr(fr, zb), (dx, BAND_Y))
                 clean = im.copy()                                # बिना लिखाई वाला frame (आख़िरी poll के पीछे)
             d = ImageDraw.Draw(im)
-            if k >= FPS * 2 and ep.get("style") not in ("nochar", "close"):   # vidIQ + virality skill (meme/close-up: कोई channel पट्टी नहीं): पहले 2 सेकंड कोई logo/पट्टी नहीं (हर style में) — सिर्फ़ तस्वीर + 4 शब्द
+            if k >= FPS * EARLY_CLEAN and ep.get("style") not in ("nochar", "close"):   # vidIQ + virality skill (meme/close-up: कोई channel पट्टी नहीं): पहले 2 सेकंड कोई logo/पट्टी नहीं (हर style में) — सिर्फ़ तस्वीर + 4 शब्द
                 chrome_safe(d, k)
-            if shot == "split":
+            if shot == "split" and k >= FPS * EARLY_CLEAN:
                 badge = f"खबर {ln['item']}/{ln['items_total']}" if ln.get("item") else "ब्रेकिंग"
                 bw = max(180, int(tt.font(34).getlength(badge)) + 40)
                 d.rounded_rectangle((SCR[0] + 16, SCR[1] + 16, SCR[0] + 16 + bw, SCR[1] + 66), 10, fill=RED)
@@ -970,17 +978,18 @@ def render(ep, segs, chars, out, preview):
             else:
                 hooking = si == 0 and ep.get("hook")              # पहली line: वही बात बड़े पीले hook में (जो सुनाई दे, वही दिखे)
                 cy = 1150 if (v2 and shot == "full") else BAND_Y + 460
-                if first_seen and not s.get("voice") and t < FPS * 2.5 and shot != "close" and not hooking and not (v2 and shot == "full"):
+                if first_seen and not s.get("voice") and k >= FPS * EARLY_CLEAN and t < FPS * 2.5 and shot != "close" and not hooking and not (v2 and shot == "full"):
                     rv.name_strap(d, (BAND_Y + 84) if shot == "split" else 1130, name, role)
                 if nochar:                                        # हर line ऊपर बड़े अक्षरों में (meme reel जैसा)
                     _hook(d, ep["hook"] if hooking else cap_text, 330)
-                elif hooking and ep.get("hook_short"):           # पहले 3 सेकंड: 3 lines पढ़नी पड़ती थीं (skip 46%) — अब ≤6 शब्द, बड़े
+                elif hooking and ep.get("hook_short") and not ((ep.get("cold_open") or {}).get("data") or {}).get("big"):
+                    # (cold open का "big" ही पहले second का बड़ा शब्द है — ऊपर दूसरा पीला डिब्बा उसे ढकता था)           # पहले 3 सेकंड: 3 lines पढ़नी पड़ती थीं (skip 46%) — अब ≤6 शब्द, बड़े
                     _hook_big(d, re.sub(r"[\U0001F000-\U0001FFFF\u2600-\u27BF\uFE0F]", "", ep["hook_short"]).strip(), 360)
                     if wtimes:
                         karaoke_timed(d, cap_text, t / FPS, wtimes, cy)
                 elif hooking and v2:                                # v2: झटका ऊपर बड़े अक्षरों में (नीचे Instagram के buttons)
                     _hook(d, ep["hook"], 330)
-                elif hooking:
+                elif hooking and not ((ep.get("cold_open") or {}).get("data") or {}).get("big"):
                     hook_low(d, ep["hook"])
                 else:
                     if ln.get("tag_text"):                        # पहचान वाली line ऊपर बड़ी — यही share/tag करवाती है
