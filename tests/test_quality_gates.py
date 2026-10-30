@@ -28,11 +28,17 @@ class Gates(unittest.TestCase):
         with self.assertRaises(Exception): qa.check('/nonexistent/bakra.mp4')
 
 class DeliveryGates(unittest.TestCase):
-    def test_failed_qa_never_sends(self):
+    def test_failed_qa_still_sends(self):
+        # 30 Oct, मालिक: हर 3 घंटे video — कमज़ोर QA रिपोर्ट होती है पर video रुकता नहीं
         import talk_episode as te
-        with patch('reel_studio.render', return_value=15), patch('qa.check', return_value=['frozen']), patch('telegram.send_video') as send:
-            with self.assertRaises(RuntimeError): te.post_studio({'lines': []})
-            send.assert_not_called()
+        with patch('reel_studio.render', return_value=15), patch('qa.check', return_value=['frozen']), \
+                patch('memes.add', return_value=[]), patch('qa.targets', return_value=''), patch('telegram.send_video') as send, \
+                patch('results.delivered'), patch('talk_episode.quality', return_value=''):
+            try:
+                te.post_studio({'lines': []})
+            except Exception:
+                pass
+            self.assertTrue(send.called)
     def test_qa_exception_never_sends(self):
         import talk_episode as te
         with patch('reel_studio.render', return_value=15), patch('qa.check', side_effect=ValueError('decode')), patch('telegram.send_video') as send:
@@ -40,7 +46,7 @@ class DeliveryGates(unittest.TestCase):
             send.assert_not_called()
     def test_final_meme_file_checked(self):
         import talk_episode as te
-        with patch('reel_studio.render', return_value=15), patch('qa.check', side_effect=[[], ['bad final']]), patch('memes.add', return_value=['meme']), patch('telegram.send_video') as send:
+        with patch('reel_studio.render', return_value=15), patch('qa.check', side_effect=[[], ValueError('decode')]), patch('memes.add', return_value=['meme']), patch('telegram.send_video') as send:
             with self.assertRaises(RuntimeError): te.post_studio({'lines': []})
             send.assert_not_called()
 

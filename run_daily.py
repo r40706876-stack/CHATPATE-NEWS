@@ -221,6 +221,38 @@ def do_write(feed=None):
     print(f"  {len(eps)} scripts Telegram पर भेजीं — जवाब का इंतज़ार")
 
 
+def do_direct(feed=None):
+    """30 Oct (मालिक): सुबह 7 से रात 9 तक हर 3 घंटे — सबसे चर्चित खबर पर व्यंग्य script ख़ुद चुनो और सीधे video बनाओ.
+    Telegram पर script नहीं, सिर्फ़ video. मज़ाक कम हो तो भी चलेगा, खबर मुख्य."""
+    import gemini
+    import topics
+    os.environ["DIRECT"] = "1"
+    try:
+        news = topics.collect_news(feed)
+        eps = write_scripts(news, 2)
+    except gemini.QuotaOver:
+        print("  आज का Gemini कोटा ख़त्म — इस बारी video नहीं")
+        return
+    except Exception as e:                             # noqa: BLE001
+        print("  script नहीं बनी:", repr(e)[:200])
+        return
+    if not eps:
+        print("  कोई script नहीं")
+        return
+    eps.sort(key=lambda e: (bool(e.get("_loose")), -((e.get("trend") or {}).get("score", 0))))
+    ep = to_studio(eps[0])
+    if not ep:
+        print("  studio episode नहीं बना")
+        return
+    name = f"episodes/auto_{ist().strftime('%Y%m%d_%H%M')}.json"
+    json.dump(ep, open(ROOT / name, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+    (ROOT / "studio_job.txt").write_text(name, encoding="utf-8")
+    log_done(eps[0])
+    with open(ROOT / "shown.txt", "a", encoding="utf-8") as f:
+        f.write(f"{ist().date().isoformat()}|{ep.get('category', 'other')}|{str(ep.get('topic', '')).replace('|', ' ')}\n")
+    print("  सीधा video job:", name, "—", ep.get("topic"))
+
+
 def pick(text, n):
     t = text.strip().lower()
     for k, v in NUM.items():
@@ -294,7 +326,7 @@ def log_done(script):
                     f.write(line.strip() + "\n")
 
 
-TOON = {c: f"assets/toon/{c}" for c in ("bablu", "chacha", "pinky", "dadi")}   # रमेश: assets/real/ramesh.png (SadTalker)   # 29 Oct: रमेश की जगह बकरा mascot
+TOON = {c: f"assets/toon/{c}" for c in ("bablu", "chacha", "pinky", "dadi", "ramesh")}   # रमेश: assets/real/ramesh.png (SadTalker)   # 29 Oct: रमेश की जगह बकरा mascot
 
 
 def to_studio(script):
@@ -564,7 +596,7 @@ def take_user_script():
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("mode", nargs="?", default="auto", choices=["write", "check", "render", "auto", "bulletin"])
+    ap.add_argument("mode", nargs="?", default="auto", choices=["write", "check", "render", "auto", "bulletin", "direct"])
     ap.add_argument("--script")
     ap.add_argument("--feed")
     a = ap.parse_args()
@@ -580,6 +612,8 @@ def main():
         mode = "check" if PENDING.exists() else "write"
     if mode == "bulletin":
         return do_bulletin(a.feed)
+    if mode == "direct":
+        return do_direct(a.feed)
     if mode == "write":
         do_write(a.feed)
     elif mode == "check":

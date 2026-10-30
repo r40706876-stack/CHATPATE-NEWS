@@ -1,9 +1,9 @@
 {
- "voice": "gemini",
+ "voice": "?",
  "voice_err": "",
- "lines": 6,
- "real_visual_lines": 6,
+ "lines": 0,
+ "real_visual_lines": 0,
  "set_lines": 0,
- "clips": 2,
- "format": "explain"
+ "clips": 0,
+ "format": ""
 }

@@ -4,8 +4,8 @@
 name: bakra-news
 on:
   schedule:
-    - cron: "55 2 * * *"     # scripts लिखो (सुबह ~8:30 IST)
-    - cron: "44 13 * * *"    # scripts लिखो (शाम ~7:15 IST)
+    # 30 Oct (मालिक): सुबह 7 से रात 9 तक हर 3 घंटे सीधा video (script Telegram पर नहीं) — IST ~6:54, 9:54, 12:54, 15:54, 18:54
+    - cron: "24 1,4,7,10,13 * * *"
     # "दिन भर की खबरें" bulletin बंद (2 bulletins = 74 और 122 views, 60-69% skip) — चाहिए तो Run workflow → mode: bulletin
     - cron: "*/15 * * * *"   # तुम्हारा जवाब देखो
   workflow_dispatch:
@@ -13,15 +13,15 @@ on:
       mode:
         description: "auto = जवाब देखो / नहीं तो नई scripts | write = अभी 3 नई scripts"
         type: choice
-        options: [auto, write, check, bulletin]
+        options: [auto, write, check, bulletin, direct]
         default: auto
 concurrency:
   # एक समय में एक ही check (वरना दो run एक ही जवाब पर दो video बना देते). write का group अलग: 29 Oct को सुबह वाला
   # write कतार में था और हर 15 मिनट वाले नए check ने उसे हटा दिया (GitHub एक group में बस एक run इंतज़ार में रखता है).
-  group: bakra-${{ (github.event.schedule == '55 2 * * *' || github.event.schedule == '44 13 * * *' || inputs.mode == 'write') && 'write' || 'check' }}
+  group: bakra-${{ (github.event.schedule == '24 1,4,7,10,13 * * *' || inputs.mode == 'write' || inputs.mode == 'direct') && 'write' || 'check' }}
   cancel-in-progress: false
 env:
-  MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || (github.event.schedule == '4 15 * * *' && 'bulletin' || ((github.event.schedule == '55 2 * * *' || github.event.schedule == '44 13 * * *') && 'write' || 'check')) }}
+  MODE: ${{ github.event_name == 'workflow_dispatch' && inputs.mode || (github.event.schedule == '4 15 * * *' && 'bulletin' || (github.event.schedule == '24 1,4,7,10,13 * * *' && 'direct' || 'check')) }}
   MODELS_DIR: models_cache
   GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
   GEMINI_API_KEY2: ${{ secrets.GEMINI_API_KEY2 }}
