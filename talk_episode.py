@@ -32,7 +32,7 @@ CHARS = {   # किरदार: (तस्वीर, नाम, पद) — �
 _cut = {}
 
 
-EXPRS = ("hasi", "hairan", "gussa", "tanz")       # assets/real/<who>_<expr>.png हो तो वही भाव वाली फ़ोटो
+EXPRS = ("hasi", "hairan", "gussa", "tanz", "udaas")       # assets/real/<who>_<expr>.png हो तो वही भाव वाली फ़ोटो
 
 
 def source_img(who, path, expr=""):
