@@ -458,7 +458,7 @@ def post_studio(ep):
             talk = {"folder": sprite, "expr": ln.get("expr", ""), "wav": IN / f"audio/{i:02d}.wav",
                     "set": ln.get("set") or ("studio" if ln["who"] == "bablu" else "village")}
         segs.append({"ln": ln, "wav": IN / f"audio/{i:02d}.wav", "face": None if talk else (clips[-1] if clips else None),
-                     "talk": talk, "still": still, "vis": vis, "shot": shot,
+                     "talk": talk, "still": still, "vis": vis, "shot": shot, "sprite_src": bool(sprite),
                      "voice": voice_only(ep, ln) or (shot == "full" and ln.get("who") in MASCOT)})
         if ep.get("react") and (IN / f"react_{i}.png").exists():
             rw = IN / f"audio/{i:02d}_r.wav"

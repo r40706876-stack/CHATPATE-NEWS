@@ -74,7 +74,7 @@
    "who": "ramesh",
    "say": "हर मोहल्ले में एक लड़का है, जो दिवाली पर फ़ॉलोअर्स गिनता है… और पापा पटाखों का बिल.",
    "caption": "हर मोहल्ले में एक लड़का… फ़ॉलोअर्स गिनता है, पापा बिल",
-   "expr": "smug",
+   "expr": "tanz",
    "set": "road",
    "tag": true,
    "tag_screen": "वो दोस्त जो दिवाली पर रील गिनता है"
@@ -162,7 +162,6 @@
  },
  "review_status": "audience_sim",
  "sprite": {
-  "ramesh": "assets/toon/bakra",
   "bablu": "assets/toon/bablu",
   "dadi": "assets/toon/dadi"
  },

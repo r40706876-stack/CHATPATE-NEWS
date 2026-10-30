@@ -71,11 +71,19 @@ def run(script, out_dir):
         sprite = te.sprite_of(ep, ln["who"])
         st = ln.get("set") or ("studio" if ln["who"] == "bablu" else "village")
         still_p = out_dir / f"still_{i}.png"
-        reel_studio.source_for(sprite, ln.get("expr", ""), out_dir / f"src_{i}.png", still_p, st,
-                               "close" if shot == "close" else "band")
-        talk = {"folder": sprite, "expr": ln.get("expr", ""), "wav": wav, "set": st}
+        if sprite:
+            reel_studio.source_for(sprite, ln.get("expr", ""), out_dir / f"src_{i}.png", still_p, st,
+                                   "close" if shot == "close" else "band")
+            talk = {"folder": sprite, "expr": ln.get("expr", ""), "wav": wav, "set": st}
+        else:                                                   # असली photo वाला किरदार (SadTalker): preview में स्थिर photo,
+            te.source_img(ln["who"], out_dir / f"src_{i}.png", ln.get("expr", ""))   # उसी फ़्रेमिंग से जैसे video में
+            src = Image.open(out_dir / f"src_{i}.png").convert("RGB")
+            fr = reel_studio.rv._cover_img(src, *((reel_studio.W, reel_studio.H) if shot == "close" else (reel_studio.W, reel_studio.BAND_H)),
+                                           1.0, 0.5 if shot == "close" else 0.12)
+            fr.save(still_p)
+            talk = None
         segs.append({"ln": ln, "wav": wav, "face": None, "talk": talk, "still": Image.open(still_p).convert("RGB"),
-                     "vis": vis, "shot": shot,
+                     "vis": vis, "shot": shot, "sprite_src": bool(sprite),
                      "voice": te.voice_only(ep, ln) or (shot == "full" and ln.get("who") in te.MASCOT)})
     out = out_dir / "preview.mp4"
     secs = reel_studio.render(ep, segs, te.CHARS, out, out_dir / "first.jpg")

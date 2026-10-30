@@ -937,7 +937,7 @@ def render(ep, segs, chars, out, preview):
                 strap = bool(ep.get("bulletin") and ln.get("headline"))   # headline पट्टी सिर्फ़ bulletin में (पहले 4 परतें लिखाई की थीं)
                 im = bases[strap].copy()
                 im.paste(sf, (SCR[0], SCR[1]))
-                zb, dx = BAND_Z, 0                               # 30 Oct: किरदार स्थिर (झटके/zoom-pulse बंद), चेहरा थोड़ा बड़ा
+                zb, dx = (BAND_Z if s.get("talk") or s.get("sprite_src") else 1.0), 0                               # 30 Oct: किरदार स्थिर (झटके/zoom-pulse बंद), चेहरा थोड़ा बड़ा
                 im.paste(_zoomr(fr, zb, 0.18), (dx, BAND_Y))
                 clean = im.copy()                                # बिना लिखाई वाला frame (आख़िरी poll के पीछे)
             d = ImageDraw.Draw(im)
