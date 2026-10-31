@@ -263,7 +263,6 @@ def do_direct(feed=None):
         ep["style"] = "dd"                             # screen पर लिखा कुछ नहीं, पुराना TV रंग, असली photo वाला रमेश
         ep.pop("cold_open", None)
         (ep.get("sprite") or {}).pop("ramesh", None)
-        ep["lips"] = "sprite"                          # कार्टून किरदारों के होंठ बिना SadTalker job — तेज़
     name = f"episodes/auto_{ist().strftime('%Y%m%d_%H%M')}.json"
     json.dump(ep, open(ROOT / name, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     (ROOT / "studio_job.txt").write_text(name, encoding="utf-8")

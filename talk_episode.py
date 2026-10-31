@@ -178,10 +178,7 @@ def prep(script_path):
     fill_sets(ep)
     json.dump(ep, open(IN / "episode.json", "w", encoding="utf-8"), ensure_ascii=False)
     sprite_lips = ep.get("sprite") and ep.get("lips", "sadtalker") == "sprite"
-    # sprite वाले होंठ हमारी 3 मुँह वाली फ़ोटो से (SadTalker job नहीं) — सिर्फ़ असली photo वाले किरदार (रमेश) को SadTalker
-    # (31 Oct: GitHub पर face jobs एक-एक करके कतार में लगे, video 1.5 घंटे देर से)
-    print(json.dumps([i for i, ln in enumerate(ep["lines"]) if not voice_only(ep, ln) and not mascot_lips(ep, ln)
-                      and not (sprite_lips and sprite_of(ep, ln["who"]))]))   # sprite वाले होंठ = SadTalker की ज़रूरत नहीं
+    print(json.dumps([] if sprite_lips else [i for i, ln in enumerate(ep["lines"]) if not voice_only(ep, ln) and not mascot_lips(ep, ln)]))   # sprite वाले होंठ = SadTalker की ज़रूरत नहीं
 
 
 PROP_WORDS = {"coins": r"छुट्टा|छुट्टे|खुल्ल|सिक्क|चिल्लर|पैसे का", "toffee": r"टॉफी|टाफी", "notes": r"लाख|करोड़"}
