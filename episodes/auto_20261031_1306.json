@@ -1,0 +1,218 @@
+{
+ "premise": "65 साल के दूल्हे ने बारात निकाली, मोहल्ले के युवाओं ने बिना नंबर के शादी करने पर शिकायत दर्ज कराई.",
+ "hook_screen": "बिना लाइन सीधी शादी!",
+ "category": "[शादी-रिश्ते]",
+ "breaking": "65 वर्षीय व्यक्ति का दूसरा विवाह, युवाओं में मची खलबली",
+ "source": "प्रभात खबर",
+ "tag_who": "उन दोस्तों को जिनकी उम्र निकली जा रही है पर शादी नहीं हो रही",
+ "ask": "क्या दूल्हे का सीनियर सिटीजन कोटा रद्द होना चाहिए?",
+ "loop_word": "शादी",
+ "open_loop": "65 साल के दूल्हे ने कौन सी लाइन तोड़ी?",
+ "jawab": {
+  "pura": "युवाओं की शिकायत का क्या नतीजा निकला, यह जानने के लिए.",
+  "hasi": "सीनियर सिटीजन कोटा वाली बात पर ठहाका.",
+  "share": "30 पार वाले कुँवारे दोस्तों के ग्रुप में भड़ास निकालने के लिए.",
+  "daily": "उम्र के साथ शादी का रिश्ता ढूँढने का भारी दबाव.",
+  "follow": "सरकारी नियम और समाज के दोगलेपन पर तंज के लिए.",
+  "like": "कुँवारों के दर्द को कॉमेडी का रूप देने पर दिल खुश होता है.",
+  "save": "खबर का अनोखा एंगल शेयर करने के लिए."
+ },
+ "cold_open": {
+  "kind": "notice",
+  "data": {
+   "big": "बिना लाइन सीधी शादी!",
+   "office": "कुँवारा कल्याण समिति",
+   "title": "आपत्ति पत्र 2026",
+   "body": "65 वर्ष के व्यक्ति ने बिना वेटिंग लिस्ट के सीधी शादी रचाई। सीनियर सिटीजन कोटा का दुरुपयोग।",
+   "sign": "अध्यक्ष (मोहल्ले के कुँवारे)"
+  },
+  "lines": [
+   0,
+   1
+  ]
+ },
+ "lines": [
+  {
+   "who": "bablu",
+   "say": "सनसनीखेज़ मामला, एक पैंसठ साल के बुज़ुर्ग ने बिना लाइन में लगे सीधी शादी रचा ली.",
+   "caption": "सनसनीखेज़ मामला, 65 साल के बुज़ुर्ग ने बिना लाइन में लगे सीधी शादी रचा ली.",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "breaking news graphics groom turban",
+    "indian wedding procession street photo",
+    "news studio bablu close up"
+   ],
+   "photo_hi": [
+    "65 साल दूल्हा बारात",
+    "यूपी शादी विवाद"
+   ],
+   "scene_en": "Bablu delivering breaking crime-style news report about elderly groom.",
+   "visual": "breaking news graphics groom turban",
+   "scene": "studio",
+   "punch": false,
+   "insta": ""
+  },
+  {
+   "who": "ramesh",
+   "say": "हम तीस की उम्र में बायोडाटा में फोटो बदल रहे हैं, और चाचा ने कोटा लगा दिया.",
+   "caption": "हम 30 की उम्र में बायोडाटा में फोटो बदल रहे हैं, और चाचा ने कोटा लगा दिया.",
+   "expr": "gussa",
+   "set": "aangan",
+   "visuals": [
+    "young indian man looking at matrimonial biodata pdf on laptop",
+    "stressed expression face close up",
+    "messy bachelor room background"
+   ],
+   "photo_hi": [
+    "मैट्रिमोनियल बायोडाटा",
+    "शादी के लिए लड़का"
+   ],
+   "scene_en": "Ramesh holding printed matrimonial biodatas feeling hopeless.",
+   "visual": "young indian man looking at matrimonial biodata pdf on laptop",
+   "scene": "chacha",
+   "punch": false,
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "say": "प्रशासन से शिकायत की गई है कि बीस साल की दुल्हन के साथ दूल्हे ने नियमों का उल्लंघन किया.",
+   "caption": "प्रशासन से शिकायत दर्ज कराई गई कि दूल्हे ने नियमों का उल्लंघन किया.",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "official complaint paper on desk",
+    "police station front view in india",
+    "bablu anchoring serious expression"
+   ],
+   "photo_hi": [
+    "65 साल दूल्हा 20 साल दुल्हन",
+    "निकाह दूसरा मामला"
+   ],
+   "scene_en": "Bablu pointing to an official complaint copy graphic on screen.",
+   "visual": "official complaint paper on desk",
+   "scene": "pinky",
+   "punch": false,
+   "insta": ""
+  },
+  {
+   "who": "pinky",
+   "say": "चाचा की तो लॉटरी निकल गई, पर मोहल्ले के लड़कों का कॉन्फ़िडेंस ज़ीरो हो गया.",
+   "caption": "चाचा की लॉटरी निकल गई, पर मोहल्ले के लड़कों का कॉन्फ़िडेंस 0 हो गया.",
+   "expr": "hasi",
+   "set": "aangan",
+   "visuals": [
+    "young girl laughing looking at phone video",
+    "street corner with young boys talking sadly",
+    "cozy home background"
+   ],
+   "photo_hi": [
+    "मोहल्ले के लड़के दुखी",
+    "शादी की उम्र चिंता"
+   ],
+   "scene_en": "Pinky smirking and making fun of bachelor boys in neighborhood.",
+   "visual": "young girl laughing looking at phone video",
+   "scene": "pinky",
+   "punch": false,
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "say": "फ़िलहाल स्थानीय युवाओं ने माँग की है कि दूल्हे का सीनियर सिटीजन कोटा तुरंत रद्द करके शादी रद्द की जाए.",
+   "caption": "फ़िलहाल युवाओं ने माँग की है कि दूल्हे का सीनियर सिटीजन कोटा तुरंत रद्द किया जाए.",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "senior citizen discount card destroyed banner",
+    "wedding hall closed locked door",
+    "bablu sitting posture studio close up"
+   ],
+   "photo_hi": [
+    "सीनियर सिटीजन कोटा",
+    "बारात शादी विरोध"
+   ],
+   "scene_en": "Bablu completing report with a straight deadpan face.",
+   "punch": true,
+   "stamp": "कोटा रद्द करो!",
+   "visual": "senior citizen discount card destroyed banner",
+   "scene": "studio_end",
+   "insta": ""
+  }
+ ],
+ "caption_post": "सनसनीखेज़ मामला — 65 साल के बुज़ुर्ग ने बिना लाइन में लगे सीधी शादी रचा ली! Tag करो अपने 30+ वाले कुँवारे दोस्तों को! स्रोत: प्रभात खबर #SeniorGroom #UPNews #BachelorProblems #MarriageViral #BakraNews",
+ "topic": "65 साल के दूल्हे और बारात की अनोखी शादी",
+ "ref_lines": [],
+ "jaanch": {
+  "pura": {
+   "ok": true,
+   "kyon": "कुँवारे लड़कों के गुस्से और चाचा की शादी का अंत देखने"
+  },
+  "hasi": {
+   "ok": true,
+   "kyon": "line 0, ~2 सेकंड, बिना लाइन में लगे शादी"
+  },
+  "share": {
+   "ok": true,
+   "kyon": "कुँवारे दोस्तों के ग्रुप में, बायोडाटा और कोटे वाली line"
+  },
+  "daily": {
+   "ok": true,
+   "kyon": "उम्र बढ़ने पर शादी न होने की आम लड़के की फ्रस्ट्रेशन"
+  },
+  "follow": {
+   "ok": true,
+   "kyon": "कुँवारों के दर्द पर ऐसी तीखी व्यंग्यात्मक टोन पसंद है"
+  },
+  "like": {
+   "ok": true,
+   "kyon": "तीस की उम्र में बायोडाटा में फोटो बदलने वाले दर्द पर"
+  },
+  "save": {
+   "ok": false,
+   "kyon": "हँसी का कंटेंट है, सेव करने लायक जानकारी नहीं"
+  },
+  "ant": {
+   "ok": true,
+   "kyon": "सीनियर सिटीजन कोटा रद्द करने वाली माँग पर जोरदार हँसी छूटी"
+  },
+  "khabar": {
+   "ok": true,
+   "kyon": "65 साल के दूल्हे और बीस साल की दुल्हन का मामला स्पष्ट है"
+  },
+  "dhaga": {
+   "ok": true,
+   "kyon": "हर line कुँवारे लड़कों की जलन और विरोध से बँधी है"
+  }
+ },
+ "connect": {
+  "score": 7,
+  "why": "10 में से 9 सवाल पास",
+  "weak": "",
+  "fix": ""
+ },
+ "writer": "psych",
+ "format": "explain",
+ "label": "काम की खबर",
+ "key_word": "",
+ "icons": [
+  "₹",
+  "NEWS",
+  "%"
+ ],
+ "ticker": [],
+ "hook": "सनसनीखेज़ मामला, एक पैंसठ साल के बुज़ुर्ग ने बिना लाइन…",
+ "hook_text": "सनसनीखेज़ मामला, एक पैंसठ साल के बुज़ुर्ग ने बिना लाइन…",
+ "hook_short": "बिना लाइन सीधी शादी!",
+ "trend": {
+  "score": 4,
+  "why": "4 अख़बार/चैनल 2 दिन में, 9 खबरें 7 दिन में"
+ },
+ "review_status": "audience_sim",
+ "_loose": true,
+ "sprite": {
+  "bablu": "assets/toon/bablu",
+  "pinky": "assets/toon/pinky",
+  "ramesh": "assets/toon/ramesh"
+ },
+ "production": true
+}
