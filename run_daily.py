@@ -221,6 +221,21 @@ def do_write(feed=None):
     print(f"  {len(eps)} scripts Telegram पर भेजीं — जवाब का इंतज़ार")
 
 
+LAST_DIRECT = ROOT / "last_direct.txt"
+
+
+def direct_due():
+    """सुबह 7 से रात 9 (IST) के बीच, पिछले सीधे video से 2.5 घंटे से ज़्यादा हो गए हों."""
+    h = ist().hour
+    if not 7 <= h < 21:
+        return False
+    try:
+        last = int(LAST_DIRECT.read_text().strip())
+    except (OSError, ValueError):
+        last = 0
+    return time.time() - last >= 2.5 * 3600
+
+
 def do_direct(feed=None):
     """30 Oct (मालिक): सुबह 7 से रात 9 तक हर 3 घंटे — सबसे चर्चित खबर पर व्यंग्य script ख़ुद चुनो और सीधे video बनाओ.
     Telegram पर script नहीं, सिर्फ़ video. मज़ाक कम हो तो भी चलेगा, खबर मुख्य."""
@@ -612,7 +627,10 @@ def main():
         mode = "check" if PENDING.exists() else "write"
     if mode == "bulletin":
         return do_bulletin(a.feed)
-    if mode == "direct":
+    if mode == "check" and direct_due():
+        mode = "direct"                                 # GitHub अपने तय समय वाले run अक्सर छोड़ देता है (31 Oct सुबह 7 वाला
+    if mode == "direct":                                # चला ही नहीं) — जो भी run आए, बारी आ गई हो तो वही video बनाए
+        LAST_DIRECT.write_text(str(int(time.time())))
         return do_direct(a.feed)
     if mode == "write":
         do_write(a.feed)
