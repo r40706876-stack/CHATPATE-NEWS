@@ -95,6 +95,10 @@ def _ask(key, prompt, search, json_mode, temperature, prefer, patient=True):
         body["generationConfig"]["responseMimeType"] = "application/json"
     errors = []
     order = [m for m in models(key) if m not in _gone and (key, m) not in _dead]
+    if os.getenv("GEMINI_PRO", "0") != "1":           # 31 Oct log: free keys पर pro हर बार 429 (कोटा 0) — उसे गिनना/पूछना बंद;
+        order = [m for m in order if "pro" not in m]  # वरना busy flash के साथ मिलकर "कोटा ख़त्म" का झूठा फ़ैसला
+    if not order:
+        raise QuotaOver("इस key पर कोई model नहीं बचा")
     if prefer:                                        # जैसे "pro": पहले वो, फिर बाक़ी
         order = [m for m in order if prefer in m] + [m for m in order if prefer not in m]
     for rnd in range(2 if patient else 1):            # सीमा लगे तो रुको नहीं, अगला model; सब पर लगे तभी एक बार रुको
