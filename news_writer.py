@@ -574,7 +574,7 @@ def _write_psych(c, packs, picks, n):
             fe = finish(json.loads(json.dumps(ep)), strict=False)
             fe["connect"] = conn
             first = fe["lines"][0]["say"]
-            assert nwords(first) <= 16, f"hook बहुत लंबा ({nwords(first)})"
+            assert nwords(first) <= 16 or os.getenv("DIRECT") == "1", f"hook बहुत लंबा ({nwords(first)})"   # सीधे video में यह पाबंदी नहीं
             assert not bookish(fe["lines"]), "किताबी शब्द"
             assert not any(SEND.search(l["say"]) for l in fe["lines"]), "'वीडियो भेजो' वाली line"
             assert len({l["who"] for l in fe["lines"]}) <= 4, "किरदार बहुत"
