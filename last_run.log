@@ -1,38 +1,36 @@
   विषय: ['shopping-आदत', 'ठगी से बचाव', 'त्योहार-ट्रेंड', 'दफ़्तर-नौकरी', 'नियम/नौकरी', 'फ़िल्म-क्रिकेट फैन', 'महँगाई', 'रील का शौक', 'वायरल वीडियो', 'शादी-रिश्ते', 'सफ़र-जुगाड़'] | हाल के विषय (अभी नहीं): ['त्योहार-ट्रेंड', 'नियम/नौकरी', 'रील का शौक', 'सफ़र-जुगाड़']
   topics: 33 काम की, 8 वायरल, 6 Trends, 5 त्योहार
   Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
-    Gemini gemini-3.5-flash: 20s
+    Gemini gemini-3.5-flash: 16s
   YT_COOKIES: 22 cookies
-  ❌ trend 1/10: ऑफिस की खिड़की से लाइव मैच देखते कर्मचारी स्टेडियम स्क्रीन पर पकड़े गए | 2 अख़बार/चैनल 2 दिन में, 12 खबरें 7 दिन में, YouTube आज: top 3 हज़ार views
+  ✅ trend 5/10: अमेरिकी महिला को भारत का हेल्थकेयर सिस्टम लगा बेस्ट, वीडियो वायरल | 3 अख़बार/चैनल 2 दिन में, 4 खबरें 7 दिन में, YouTube आज: top 1.7 लाख views
   YT_COOKIES: 22 cookies
   YouTube views नहीं मिले (आज के run में बंद): RuntimeError('ख़ाली')
-  ✅ trend 6/10: फोटोशूट के चक्कर में गुब्बारों संग हवा में उड़ी दुल्हन, फोटोग्राफर पीछे भागा | 10 अख़बार/चैनल 2 दिन में, 11 खबरें 7 दिन में
-  ✅ trend 4/10: सब्जी-राशन खरीदने गए लोग, किराना दुकान पर डीजे बजते ही शॉपिंग छोड़ नाचे | 4 अख़बार/चैनल 2 दिन में, 5 खबरें 7 दिन में
-  ✅ trend 5/10: गूगल पर कस्टमर केयर नंबर ढूंढना बना खतरनाक, एक सर्च में खाता खाली | 9 अख़बार/चैनल 2 दिन में, 32 खबरें 7 दिन में
-  ❌ trend 3/10: बिना टिकट मिले यात्री को TTE ने प्लेटफॉर्म पर घसीटकर पीटा | 3 अख़बार/चैनल 2 दिन में, 6 खबरें 7 दिन में
-  ✅ trend 5/10: अनलिमिटेड डेटा की खपत बढ़ी पर मुनाफा घटा, फिर महंगे हो सकते हैं रिचार्ज प्लान | 12 अख़बार/चैनल 2 दिन में, 52 खबरें 7 दिन में
-  ✅ trend 4/10: SIP में एक जैसा निवेश फिर भी रिटर्न अलग, डायरेक्ट प्लान के गणित पर उलझे निवेशक | 3 अख़बार/चैनल 2 दिन में, 25 खबरें 7 दिन में
-  चुने विषय: ['[शादी-रिश्ते]', '[ठगी से बचाव]', '[वायरल वीडियो]']
+  ✅ trend 4/10: ऑफिस खिड़की से स्टेडियम का लाइव क्रिकेट मैच झांकते कर्मचारी कैमरे में कैद | 5 अख़बार/चैनल 2 दिन में, 30 खबरें 7 दिन में
+  ❌ trend 2/10: पार्सल डिलीवरी मिलते ही आया फर्जी रिटर्न कॉल, ठगी का नया पैंतरा | 2 अख़बार/चैनल 2 दिन में, 5 खबरें 7 दिन में
+  ✅ trend 5/10: दिवाली की घर सफाई का बिगुल बजा, कबाड़ निकालने और मम्मी के सख्त आदेशों का दौर | 13 अख़बार/चैनल 2 दिन में, 29 खबरें 7 दिन में
+  ✅ trend 4/10: शिक्षकों के लिए लागू हुआ नया ड्रेस कोड, टी-शर्ट और जींस पहनने पर रोक | 5 अख़बार/चैनल 2 दिन में, 6 खबरें 7 दिन में
+  ✅ trend 6/10: डेटा की बेतहाशा खपत के बीच मोबाइल रिचार्ज प्लान फिर महंगे होने की आहट | 12 अख़बार/चैनल 2 दिन में, 26 खबरें 7 दिन में
+  ❌ trend 3/10: ₹10,000 के बजट में 6 राज्य घूमने का दावा, सोशल मीडिया पर वायरल हुआ वीडियो | 3 अख़बार/चैनल 2 दिन में, 3 खबरें 7 दिन में
+  चुने विषय: ['[महँगाई]', '[वायरल वीडियो]', '[त्योहार]']
     429: gemini-flash-latest: 429 {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing deta
     429: gemini-3.5-flash: 429 {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing deta
-    429: gemini-3.6-flash: 429 {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing deta
+    429: gemini-3.6-flash: 503 {   "error": {     "code": 503,     "message": "This model is currently experiencing high demand. Spikes in demand are u
     key 1 का कोटा ख़त्म → key 2
   Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
-    Gemini gemini-3.5-flash: 31s
-  तथ्य: फोटोशूट के चक्कर में गुब्बारों संग हवा में उड़ी दुल्हन, फोटोग्राफर ने बचाई जान | Navbharat Live, Jagran, AajTak, ABP News, Amar Ujala, TV9 Hindi, गुड न्यूज़ टुडे, Times Now Navbharat | high
-  तथ्य: गूगल पर कस्टमर केयर व हेल्पलाइन नंबर ढूंढने से साइबर ठगी का खतरा | ETV Bharat, Amar Ujala, Jagran, Jansatta, Dainik Bhaskar | high
-  तथ्य: अहमदाबाद के किराना स्टोर में DJ बजते ही शॉपिंग छोड़ नाचे ग्राहक | AajTak, India TV Hindi, TV9 Hindi, Head Topics | high
-    Gemini gemini-3.7-flash: 56s
-  💡 फोटोशूट के चक्कर में गुब्बारों संग हवा में उड़ी दुल्हन, फोटोग्राफर ने बचाई जान: सासू माँ ने कहा था बहू ज़मीन से जुड़ी होनी चाहिए, बहू पहली ही हवा में 
-  💡 गूगल पर कस्टमर केयर व हेल्पलाइन नंबर ढूंढने से साइबर ठगी का खतरा: पैंतीस रुपये के धनिए का रिफ़ंड माँगने गूगल पर गए थे, ठग ने पूरी खानदान
-  💡 अहमदाबाद के किराना स्टोर में DJ बजते ही शॉपिंग छोड़ नाचे ग्राहक: मम्मी दाल की एक्सपायरी चेक कर रही थीं, बेस ड्रॉप होते ही ट्रॉली को डीज
-    429: gemini-pro-latest: 429 {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing deta
+    Gemini gemini-3.5-flash: 34s
+  तथ्य: मोबाइल रिचार्ज प्लान में बदलाव और दरें | Prabhat Khabar, Jagran, Livemint, Amar Ujala, NDTV India, Navbharat Times, 91Mobiles, Gadgets 360 Hindi | high
+  तथ्य: अमेरिकी महिला द्वारा भारतीय हेल्थकेयर की सराहना | India TV Hindi, NDTV India, News18 Hindi | high
+  तथ्य: दिवाली की घर सफाई, वास्तु टिप्स और दुर्घटनाएं | Navbharat Live, News18 Hindi, AajTak, Amar Ujala, India TV Hindi, Hindustan, Prabhat Khabar, Jagran, Jansatta, Good News Today | high
+    सब models busy — 40s रुककर दोबारा
+    Gemini gemini-3.6-flash: 41s
+  💡 मोबाइल रिचार्ज प्लान में बदलाव और दरें: घर के बड़ों द्वारा डेटा की पाई-पाई वसूलने का दबाव
+  💡 अमेरिकी महिला द्वारा भारतीय हेल्थकेयर की सराहना: अमेरिका के महँगे इलाज बनाम भारत में सस्ते में हुई सर्जरी
+  💡 दिवाली की घर सफाई, वास्तु टिप्स और दुर्घटनाएं: दिवाली सफ़ाई में पुराने जाले और अतरंगी चीज़ों का हमला
     429: gemini-3.5-flash: 503 {   "error": {     "code": 503,     "message": "This model is currently experiencing high demand. Spikes in demand are u
-    429: gemini-3.6-flash: TimeoutError('The read operation timed out')
+    429: gemini-3.6-flash: 429 {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing deta
     key 2 का कोटा ख़त्म → key 3
   Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
     सब models busy — 40s रुककर दोबारा
-    429: gemini-pro-latest: 429 {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing deta
-    429: gemini-flash-latest: TimeoutError('The read operation timed out')
-    429: gemini-3.5-flash: 503 {   "error": {     "code": 503,     "message": "This model is currently experiencing high demand. Spikes in demand are u
+    सब models busy — 40s रुककर दोबारा
   आज का Gemini कोटा ख़त्म — इस बारी video नहीं
