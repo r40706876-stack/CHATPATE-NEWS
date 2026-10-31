@@ -1,3 +1,23 @@
-/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/run_daily.py:31: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
-  return dt.datetime.utcnow() + dt.timedelta(hours=5, minutes=30)
-  कोई script इंतज़ार में नहीं
+  विषय: ['shopping-आदत', 'ठगी से बचाव', 'त्योहार-ट्रेंड', 'दफ़्तर-नौकरी', 'नियम/नौकरी', 'फ़िल्म-क्रिकेट फैन', 'महँगाई', 'रील का शौक', 'वायरल वीडियो', 'शादी-रिश्ते', 'सफ़र-जुगाड़'] | हाल के विषय (अभी नहीं): ['त्योहार-ट्रेंड', 'नियम/नौकरी', 'रील का शौक', 'सफ़र-जुगाड़']
+  topics: 33 काम की, 8 वायरल, 4 Trends, 5 त्योहार
+  Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
+    Gemini gemini-flash-latest: 0s
+    Gemini ने prompt रोका: {'blockReason': 'PROHIBITED_CONTENT'}
+    key 1 नहीं चली → key 2
+  Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
+    Gemini gemini-flash-latest: 0s
+    Gemini ने prompt रोका: {'blockReason': 'PROHIBITED_CONTENT'}
+    key 2 नहीं चली → key 3
+  Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
+    Gemini gemini-flash-latest: 0s
+    Gemini ने prompt रोका: {'blockReason': 'PROHIBITED_CONTENT'}
+  खबरों की list Gemini ने नहीं ली, अपराध/मौत वाली हटाकर दोबारा: Blocked("{'blockReason': 'PROHIBITED_CONTENT'}")
+    Gemini gemini-flash-latest: 0s
+    Gemini ने prompt रोका: {'blockReason': 'PROHIBITED_CONTENT'}
+    key 1 नहीं चली → key 2
+    Gemini gemini-flash-latest: 0s
+    Gemini ने prompt रोका: {'blockReason': 'PROHIBITED_CONTENT'}
+    key 2 नहीं चली → key 3
+    Gemini gemini-flash-latest: 0s
+    Gemini ने prompt रोका: {'blockReason': 'PROHIBITED_CONTENT'}
+  script नहीं बनी: Blocked("{'blockReason': 'PROHIBITED_CONTENT'}")
