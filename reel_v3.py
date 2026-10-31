@@ -145,11 +145,22 @@ def visual_frames(src, n, seed):
         g.close()
         return
     if isinstance(src, Path):
-        im = Image.open(src).convert("RGB")
-        for t in range(n):
-            z = 1.18 - 0.16 * t / max(1, n) if seed % 2 else 1.02 + 0.16 * t / max(1, n)
-            yield _cover_img(im, W, TOP, z)
-        return
+        if src.suffix.lower() not in {".jpg", ".jpeg", ".png", ".webp", ".bmp", ".gif"}:
+            src = {"headline": "खबर की तस्वीर उपलब्ध नहीं", "text": "वीडियो जारी है"}
+        elif not src.is_file():
+            src = {"headline": "खबर की तस्वीर उपलब्ध नहीं", "text": "वीडियो जारी है"}
+        else:
+            try:
+                with Image.open(src) as opened:
+                    im = opened.convert("RGB")
+            except (OSError, ValueError):
+                im = None
+            if im is not None:
+                for t in range(n):
+                    z = 1.18 - 0.16 * t / max(1, n) if seed % 2 else 1.02 + 0.16 * t / max(1, n)
+                    yield _cover_img(im, W, TOP, z)
+                return
+            src = {"headline": "खबर की तस्वीर उपलब्ध नहीं", "text": "वीडियो जारी है"}
     card = src or {}
     for t in range(n):
         yield card_frame(card, t, seed)
