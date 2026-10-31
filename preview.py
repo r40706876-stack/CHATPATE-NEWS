@@ -87,6 +87,10 @@ def run(script, out_dir):
                      "voice": te.voice_only(ep, ln) or (shot == "full" and ln.get("who") in te.MASCOT)})
     out = out_dir / "preview.mp4"
     secs = reel_studio.render(ep, segs, te.CHARS, out, out_dir / "first.jpg")
+    if ep.get("style") == "dd":
+        raw = out.with_name("raw.mp4")
+        out.replace(raw)
+        reel_studio.doordarshan(raw, out)
     for name, vf in (("open.jpg", "trim=0:5,fps=4,scale=270:-1,tile=10x2"), ("all.jpg", "fps=1,scale=180:-1,tile=10x8")):
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(out), "-vf", vf, "-frames:v", "1",
                         str(out_dir / name)], check=True)

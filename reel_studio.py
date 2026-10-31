@@ -263,7 +263,9 @@ def talk_frames(talk, shot, n, seed):
 
 
 BAND_Z = 1.22                                         # split में किरदार का चेहरा बड़ा (desk/खाली दीवार कम)
-EARLY_CLEAN = 8                                       # सेकंड: इतने तक कोई logo/badge/transition नहीं
+EARLY_CLEAN = 8
+DD_CROP_Y = 300                                       # dd: 9:16 में से 4:3 का हिस्सा (ऊपर से) — चेहरा बीच में
+DD_STRAP_Y = DD_CROP_Y + 640                          # नाम पट्टी 4:3 हिस्से के निचले भाग में                                       # सेकंड: इतने तक कोई logo/badge/transition नहीं
 
 
 def chrome_safe(d, k):
@@ -793,6 +795,7 @@ def render(ep, segs, chars, out, preview):
     pool = list(dict.fromkeys(p for s in segs for p in (s.get("vis") or []) if isinstance(p, Path) and "own" not in p.name))
     v2 = ep.get("style") in ("v2", "nochar")
     nochar = ep.get("style") == "nochar"                 # बिना किरदार: सिर्फ़ तस्वीर/clip + बड़े अक्षर + आवाज़
+    dd = ep.get("style") == "dd"                         # 31 Oct: Doordarshan जैसा — screen पर लिखा कुछ नहीं, लंबे शांत shot
     k, seed, last_screen, prev_im, last_vis, carry = 0, 0, None, None, [], 0
     shown_ever, shown_n = set(), {}
     cur, credit, clean = None, "", None
@@ -837,14 +840,20 @@ def render(ep, segs, chars, out, preview):
             last_vis = vis
         if list(s.get("vis") or []):
             carry = 0                                           # इस line की अपनी तस्वीर मिली
+        if dd and shot == "full" and not any(isinstance(v, Path) for v in vis):
+            shot, size, vis = "close", (W, H), []               # dd: card नहीं — असली दृश्य न हो तो बोलने वाला
+        if dd:
+            vis = [v for v in vis if isinstance(v, Path)]
         if shot == "full" and not vis:
             shot, size = "split", (SW_, SH_)
         cut_s = CUT - 0.4 * int(ep.get("_fix") or 0)            # जाँच में कमी मिली = दोबारा बनाते वक़्त और जल्दी बदलें
-        if k < FPS * 5:                                         # पहले 5 सेकंड: हर 1.2 सेकंड कुछ बदले (उसके बाद रुकने वाले आख़िर तक रुके)
+        if dd:
+            cut_s = 3.2                                         # dd: लंबे शांत shot (Prakash Bharati: 3-6 सेकंड)
+        elif k < FPS * 5:                                       # पहले 5 सेकंड: हर 1.2 सेकंड कुछ बदले (उसके बाद रुकने वाले आख़िर तक रुके)
             cut_s = min(cut_s, 1.2)
         chunk = max(1, int(cut_s * FPS))                        # हर 2 सेकंड नया नज़ारा
         need = math.ceil(n / chunk) + int(ep.get("_fix") or 0)
-        if shot != "close" and not react and vis and len(vis) < need:
+        if shot != "close" and not react and vis and len(vis) < need and not dd:
             # सिर्फ़ zoom बदलने से वही तस्वीर 5 सेकंड "रुकी" दिखती थी (छठ वाली video) — कमी हो तो: line की मुख्य बात
             # वाला card, फिर इसी खबर की दूसरी असली तस्वीरें (जो अभी इस line में नहीं)
             extra = []
@@ -862,8 +871,8 @@ def render(ep, segs, chars, out, preview):
         if vis and shot != "close" and not react and len(vis) * chunk < n and k >= FPS * 5:   # पहले 5s: खींचो मत, A-B-A तेज़ बदलो
             # तस्वीरें कम, line लंबी: A-B-A-B घुमाने की जगह हर तस्वीर ज़्यादा देर (2.8 सेकंड तक, अलग zoom/कोण से),
             # फिर भी बचे तो line की मुख्य बात वाला card — एक ही फ़ोटो दोबारा लौटकर नहीं आती
-            chunk = min(int(2.8 * FPS), math.ceil(n / len(vis)))   # QA: 3 सेकंड से ज़्यादा एक तस्वीर = रद्द
-            if len(vis) * chunk < n and not any(isinstance(v, dict) for v in vis):
+            chunk = min(int((5.0 if dd else 2.8) * FPS), math.ceil(n / len(vis)))   # QA: 3 सेकंड से ज़्यादा एक तस्वीर = रद्द
+            if len(vis) * chunk < n and not any(isinstance(v, dict) for v in vis) and not dd:
                 key = key_phrase(ln)
                 parts = [x.strip(" ।.!?") for x in re.split(r"…|(?<!\d)\.(?!\d)|।|(?<!\d),(?!\d)|—|\?|:",
                                                              str(ln.get("caption") or ln.get("say") or ""))]
@@ -898,7 +907,7 @@ def render(ep, segs, chars, out, preview):
         last = None                                              # cur/credit पिछली line से चलते रहते हैं (reaction पर भी)
         if shot != "close" and not vis and cur is None:
             cur = _screen_gen({"big": headline}, seed, size, last_screen)
-        wipe_on = si > 0 and not react and ln["who"] != segs[si - 1]["ln"]["who"] and not segs[si - 1].get("react") \
+        wipe_on = not dd and si > 0 and not react and ln["who"] != segs[si - 1]["ln"]["who"] and not segs[si - 1].get("react") \
             and k >= FPS * EARLY_CLEAN                         # पहले 8 सेकंड कोई channel वाला transition नहीं (graph: ठीक वहीं गिरावट)
         first_seen = ln["who"] not in seen and not react
         seen.add(ln["who"])
@@ -924,7 +933,7 @@ def render(ep, segs, chars, out, preview):
                     z = 1.0                                       # स्थिर (30 Oct: zoom अंदर-बाहर झूलता लगता था)
                 else:                                     # reaction: ज़िंदा लगे — धीरे-धीरे पास आना + हल्की साँस
                     z = 1.02
-                im = _zoomr(fr, z, 0.3).copy()
+                im = (_zoomr(fr, 1.7, 0.65) if dd and s.get("sprite_src") else _zoomr(fr, z, 0.3)).copy()   # dd: 4:3 में चेहरा बीच
             elif shot == "full":
                 sf = next(cur)
                 last_screen = sf
@@ -941,7 +950,7 @@ def render(ep, segs, chars, out, preview):
                 im.paste(_zoomr(fr, zb, 0.18), (dx, BAND_Y))
                 clean = im.copy()                                # बिना लिखाई वाला frame (आख़िरी poll के पीछे)
             d = ImageDraw.Draw(im)
-            if k >= FPS * EARLY_CLEAN and ep.get("style") not in ("nochar", "close"):   # vidIQ + virality skill (meme/close-up: कोई channel पट्टी नहीं): पहले 2 सेकंड कोई logo/पट्टी नहीं (हर style में) — सिर्फ़ तस्वीर + 4 शब्द
+            if k >= FPS * EARLY_CLEAN and ep.get("style") not in ("nochar", "close", "dd"):   # vidIQ + virality skill (meme/close-up: कोई channel पट्टी नहीं): पहले 2 सेकंड कोई logo/पट्टी नहीं (हर style में) — सिर्फ़ तस्वीर + 4 शब्द
                 chrome_safe(d, k)
             if shot == "split" and k >= FPS * EARLY_CLEAN:
                 badge = f"खबर {ln['item']}/{ln['items_total']}" if ln.get("item") else "ब्रेकिंग"
@@ -956,7 +965,10 @@ def render(ep, segs, chars, out, preview):
                 bx1, by1 = (SCR[2], SCR[3]) if shot == "split" else (W - 10, 1236)
                 d.rectangle((bx1 - cw - 24, by1 - 38, bx1, by1), fill=(0, 0, 0))
                 d.text((bx1 - 12, by1 - 19), credit, font=f, fill=(220, 220, 220), anchor="rm")
-            if react:
+            if dd:                                              # सिर्फ़ नाम की पट्टी, किरदार पहली बार आए तब
+                if first_seen and not s.get("voice") and t < FPS * 2.5 and shot == "close":
+                    rv.name_strap(d, DD_STRAP_Y, name, role)
+            elif react:
                 d.rounded_rectangle((30, BAND_Y + 380, 560, BAND_Y + 456), 20, fill=RED)
                 d.text((58, BAND_Y + 418), f"{name} का रिएक्शन", font=tt.font(44), fill="white", anchor="lm")
             else:
@@ -983,10 +995,12 @@ def render(ep, segs, chars, out, preview):
                         karaoke_timed(d, cap_text, t / FPS, wtimes, cy)
                     else:
                         karaoke_safe(d, cap_text, t / n, cy, span)
-            if si == 0 and not react and not st_text and t == int(HOOK_EVENT * FPS) and not ep.get("cold_open") \
+            if dd:
+                pass
+            elif si == 0 and not react and not st_text and t == int(HOOK_EVENT * FPS) and not ep.get("cold_open") \
                     and ep.get("style") not in ("nochar", "close"):   # hook का "event" (cold open के joke को न ढके)
                 st_text, st_t = ep.get("hook_stamp") or "अधपकी खबर!", 0
-            if bool(ln.get("punch")) and not react and not st_text and t >= n * 0.6:
+            if bool(ln.get("punch")) and not react and not st_text and t >= n * 0.6 and not dd:
                 st_text = ln.get("stamp") or STAMP_OF.get(ln.get("react_pose"), "")
                 st_t = 0
             asking = False                                      # सवाल अब सिर्फ़ अंत में (पंच line साफ़ सुनाई-दिखाई दे)
@@ -1027,3 +1041,16 @@ def render(ep, segs, chars, out, preview):
     subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", str(out), "-vf",
                     f"fps={12 / max(1, total / FPS)},scale=216:-1,tile=6x2", "-frames:v", "1", str(preview)])
     return total / FPS
+
+
+def doordarshan(src, out):
+    """31 Oct (मालिक को Prakash Bharati का look पसंद): 4:3 हिस्सा + पुराने TV जैसा रंग/दाने/vignette, ऊपर-नीचे काला."""
+    vf = (f"crop=1080:810:0:{DD_CROP_Y},"
+          "eq=saturation=0.32:contrast=1.06:brightness=-0.01,"
+          "colorchannelmixer=.95:.05:0:0:.05:.9:.05:0:0:.08:.8:0,"
+          "noise=alls=10:allf=t,vignette=PI/5,"
+          "pad=1080:1920:0:555:black")
+    subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(src), "-vf", vf, "-c:v", "libx264", "-crf", "20",
+                    "-preset", "veryfast", "-pix_fmt", "yuv420p", "-c:a", "copy", str(out)], check=True)
+    return out
+

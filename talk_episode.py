@@ -246,6 +246,8 @@ def pick_shot(ep, i, ln):
         return "full"
     if style == "close":                                       # A/B (29 Oct): पूरी screen किरदार का close-up, ऊपर बड़ा punch
         return "close"
+    if style == "dd":                                          # 31 Oct: Doordarshan — बोलने वाला पूरा, असली दृश्य हो तो वो
+        return "full" if i > 0 and (ln.get("visuals") or ln.get("photo_hi") or ln.get("visual_files")) else "close"
     if voice_only(ep, ln):
         return "full"
     if i == 0 and ep.get("cold_open"):
@@ -489,6 +491,10 @@ def post_studio(ep):
             ep["_fix"] = tries                            # reel_studio: तस्वीरें और जल्दी बदलें, card ज़्यादा
             print(f"  ♻️ कमी मिली ({'; '.join(issues)}) — ठीक करके दोबारा बना रहे ({tries}/2)")
         secs = reel_studio.render(ep, segs, CHARS, out, ROOT / "preview_episode.jpg")
+        if ep.get("style") == "dd":
+            raw = out.with_name("episode_raw.mp4")
+            out.replace(raw)
+            reel_studio.doordarshan(raw, out)
         try:
             issues = qa.check(out, allow=_close_ranges(segs))
         except Exception as e:                            # noqa: BLE001

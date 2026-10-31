@@ -259,6 +259,10 @@ def do_direct(feed=None):
     if not ep:
         print("  studio episode नहीं बना")
         return
+    if os.getenv("DD", "1") == "1":                    # 31 Oct (मालिक को Prakash Bharati का look पसंद): Doordarshan style —
+        ep["style"] = "dd"                             # screen पर लिखा कुछ नहीं, पुराना TV रंग, असली photo वाला रमेश
+        ep.pop("cold_open", None)
+        (ep.get("sprite") or {}).pop("ramesh", None)
     name = f"episodes/auto_{ist().strftime('%Y%m%d_%H%M')}.json"
     json.dump(ep, open(ROOT / name, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     (ROOT / "studio_job.txt").write_text(name, encoding="utf-8")
