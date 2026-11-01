@@ -1,0 +1,226 @@
+{
+ "premise": "रेलवे ने स्पष्ट किया है कि ट्रेन में सोना मना है, चादर ओढ़कर सोना गैर-कानूनी है, दोनों में अंतर है।",
+ "category": "[सफ़र-जुगाड़]",
+ "breaking": "मुंबई लोकल में चादर तानकर सोए दो यात्री, रेलवे ने दी सफ़ाई",
+ "hook_screen": "ट्रेन लेट नहीं, यात्री सो गए!",
+ "source": "Jagran, Dainik Bhaskar",
+ "tag_who": "उन्हें टैग करो जो लोकल ट्रेन में जगह मिलते ही सो जाते हैं",
+ "ask": "क्या आपने कभी लोकल ट्रेन में सोने की कोशिश की?",
+ "loop_word": "ट्रेन",
+ "open_loop": "रेलवे ने जाँच किस बात पर शुरू की?",
+ "jawab": {
+  "pura": "रेलवे की जाँच का बेतुका कारण जानने के लिए दर्शक अंत तक रुकेगा।",
+  "hasi": "कॉटन और सिंथेटिक चादर की जाँच वाले पंच पर हँसी आएगी।",
+  "share": "रोज़ लोकल से सफ़र करने वाले दोस्त एक-दूसरे को भेजेंगे।",
+  "daily": "लोकल में धक्का-मुक्की और नींद पूरी न होने की आम समस्या।",
+  "follow": "सरकारी बयानों पर सटीक और तीखे व्यंग्य के लिए फॉलो करेंगे।",
+  "like": "मिडिल क्लास सफ़र के दर्द से रिलेट करके लाइक करेंगे।",
+  "save": "ट्रेन अपडेट और मज़ेदार तंज़ के रूप में सेव करेंगे।"
+ },
+ "lines": [
+  {
+   "who": "bablu",
+   "say": "रेलवे ने स्पष्ट किया—ट्रेन लेट नहीं थी, बस यात्री चादर तानकर थोड़ा जल्दी सो गए थे.",
+   "caption": "रेलवे ने स्पष्ट किया—ट्रेन लेट नहीं थी, बस यात्री चादर तानकर थोड़ा जल्दी सो गए थे.",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "mumbai local train engine",
+    "railway official press release",
+    "indian railway station screen"
+   ],
+   "photo_hi": [
+    "मुंबई लोकल यात्री चादर",
+    "रेलवे बयान नोटिस"
+   ],
+   "scene_en": "A news anchor sitting at a desk with a serious expression in front of a railway station backdrop.",
+   "visual": "mumbai local train engine",
+   "scene": "studio",
+   "punch": false,
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "say": "मुंबई लोकल में 2 यात्रियों ने चादर तानकर 45 मिनट की नींद ली, जिस पर शिकायत दर्ज हुई.",
+   "caption": "मुंबई लोकल में 2 यात्रियों ने चादर तानकर 45 मिनट की नींद ली, जिस पर शिकायत दर्ज हुई.",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "passengers sleeping in indian train",
+    "mumbai local train interior crowd",
+    "railway police officer looking at phone"
+   ],
+   "photo_hi": [
+    "मुंबई लोकल एफआईआर",
+    "ट्रेन में सोते यात्री"
+   ],
+   "scene_en": "News anchor presenting official statistics with news graphics of a train carriage.",
+   "visual": "passengers sleeping in indian train",
+   "scene": "chacha",
+   "punch": false,
+   "insta": ""
+  },
+  {
+   "who": "ramesh",
+   "say": "मैं दस साल से खड़े-खड़े झपकी ले रहा हूँ, इन्हें चादर फैलाने की जगह कहाँ मिली?",
+   "caption": "मैं 10 साल से खड़े-खड़े झपकी ले रहा हूँ, इन्हें चादर फैलाने की जगह कहाँ मिली?",
+   "expr": "hairan",
+   "set": "village",
+   "visuals": [
+    "crowded mumbai train platform",
+    "tired indian commuter standing in train",
+    "local train handle holder"
+   ],
+   "photo_hi": [
+    "मुंबई लोकल भीड़",
+    "यात्री खड़े खड़े सोते"
+   ],
+   "punch": true,
+   "stamp": "जगह कहाँ मिली?",
+   "scene_en": "A frustrated young Indian man standing on a crowded railway platform looking confused.",
+   "visual": "crowded mumbai train platform",
+   "scene": "chacha",
+   "insta": ""
+  },
+  {
+   "who": "chacha",
+   "say": "एसी कोच का 500 रुपये किराया बचाकर चादर तान लेना ही असली फ़ाइनेंशियल प्लानिंग है.",
+   "caption": "AC कोच का ₹500 किराया बचाकर चादर तान लेना ही असली फाइनेंशियल प्लानिंग है.",
+   "expr": "tanz",
+   "set": "village",
+   "visuals": [
+    "old indian man reading newspaper",
+    "indian rupee notes wallet",
+    "train general compartment coach"
+   ],
+   "photo_hi": [
+    "भारतीय रेलवे किराया बचत",
+    "बुजुर्ग यात्री तंज़"
+   ],
+   "punch": true,
+   "stamp": "असली फ़ाइनेंशियल प्लान",
+   "scene_en": "An elderly Indian uncle sitting in a courtyard smiling slyly while giving advice.",
+   "visual": "old indian man reading newspaper",
+   "scene": "chacha",
+   "insta": ""
+  },
+  {
+   "who": "bablu",
+   "say": "यह नियम सेव कर लें—लोकल में चादर बिछाने पर 500 रुपये जुर्माना और तकिया जब्त हो सकता है.",
+   "caption": "यह नियम सेव कर लें—लोकल में चादर बिछाने पर ₹500 जुर्माना और तकिया जब्त हो सकता है.",
+   "expr": "gambhir",
+   "set": "studio",
+   "visuals": [
+    "railway rule book fine document",
+    "railway police official warning poster",
+    "train fine receipt paper"
+   ],
+   "photo_hi": [
+    "रेलवे नियम जुर्माना",
+    "लोकल ट्रेन फाइन रुल्स"
+   ],
+   "scene_en": "News anchor holding up an official document looking solemn.",
+   "visual": "railway rule book fine document",
+   "scene": "chacha",
+   "punch": false,
+   "insta": ""
+  },
+  {
+   "who": "ramesh",
+   "say": "जुर्माना लगे न लगे, चादर वाले मंज़िल पर पहुँच गए और मेरी ट्रेन अब भी आउटर पर खड़ी है.",
+   "caption": "जुर्माना लगे न लगे, चादर वाले मंज़िल पर पहुँच गए और मेरी ट्रेन अब भी आउटर पर खड़ी है.",
+   "expr": "udaas",
+   "set": "station",
+   "visuals": [
+    "train stopped at signal outer station",
+    "frustrated passenger waiting on tracks",
+    "mumbai train red signal light"
+   ],
+   "photo_hi": [
+    "लोकल ट्रेन आउटर पर",
+    "ट्रेन लेट मुंबई"
+   ],
+   "scene_en": "Young man looking out of a train window with an annoyed face as the train sits stranded on the tracks.",
+   "visual": "train stopped at signal outer station",
+   "scene": "studio_end",
+   "punch": false,
+   "insta": ""
+  }
+ ],
+ "caption_post": "रेलवे ने स्पष्ट किया—ट्रेन लेट नहीं थी, बस यात्री चादर तानकर थोड़ा जल्दी सो गए थे.\n\nTag करो उसको जो लोकल ट्रेन में चढ़ते ही सो जाता है! 😂\n\nआपकी ट्रेन कभी आउटर पर रुकी है?\n\nस्रोत: Jagran, Dainik Bhaskar\n\n#MumbaiLocal #IndianRailways #BakraNews #LocalTrain #ViralVideo",
+ "topic": "मुंबई लोकल में आराम से चादर तानकर सोते मिले दो बेफिक्र यात्री",
+ "ref_lines": [],
+ "jaanch": {
+  "pura": {
+   "ok": true,
+   "kyon": "लोकल के सफर और आउटर के पंच का मज़ा लिया"
+  },
+  "hasi": {
+   "ok": true,
+   "kyon": "line 0, ~2 सेकंड पर रेलवे के मज़ाक से मुस्कान"
+  },
+  "share": {
+   "ok": true,
+   "kyon": "डेली लोकल से जाने वाले दोस्तों को line 3 पर"
+  },
+  "daily": {
+   "ok": true,
+   "kyon": "लोकल की भीड़ और आउटर पर अटकने की दिक्कत"
+  },
+  "follow": {
+   "ok": false,
+   "kyon": "कंटेंट अच्छा है पर फॉलो करने की अलग वजह नहीं"
+  },
+  "like": {
+   "ok": true,
+   "kyon": "खड़े-खड़े झपकी लेने और आउटर वाले सच पर"
+  },
+  "save": {
+   "ok": false,
+   "kyon": "नियम मज़ाकिया है, सेव करने लायक नहीं"
+  },
+  "ant": {
+   "ok": true,
+   "kyon": "आख़िरी लाइन ने आउटर पर ट्रेन रुकने का सही पंच दिया"
+  },
+  "khabar": {
+   "ok": true,
+   "kyon": "लोकल में चादर तानकर सोने की घटना का ब्योरा मिला"
+  },
+  "dhaga": {
+   "ok": true,
+   "kyon": "लोकल सफर, भीड़ और लेट होने की कड़ियाँ जुड़ी हैं"
+  }
+ },
+ "connect": {
+  "score": 6,
+  "why": "10 में से 8 सवाल पास",
+  "weak": "",
+  "fix": ""
+ },
+ "writer": "psych+punchup",
+ "format": "explain",
+ "label": "काम की खबर",
+ "key_word": "",
+ "icons": [
+  "₹",
+  "NEWS",
+  "%"
+ ],
+ "ticker": [],
+ "hook": "रेलवे ने स्पष्ट किया—ट्रेन लेट नहीं थी, बस यात्री चादर…",
+ "hook_text": "रेलवे ने स्पष्ट किया—ट्रेन लेट नहीं थी, बस यात्री चादर…",
+ "hook_short": "ट्रेन लेट नहीं, यात्री सो",
+ "trend": {
+  "score": 6,
+  "why": "16 अख़बार/चैनल 2 दिन में, 64 खबरें 7 दिन में"
+ },
+ "review_status": "audience_sim",
+ "_loose": true,
+ "sprite": {
+  "chacha": "assets/toon/chacha",
+  "bablu": "assets/toon/bablu"
+ },
+ "production": true,
+ "style": "dd"
+}

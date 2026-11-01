@@ -1,37 +1,37 @@
-/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/run_daily.py:31: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
-  return dt.datetime.utcnow() + dt.timedelta(hours=5, minutes=30)
   विषय: ['shopping-आदत', 'ठगी से बचाव', 'त्योहार-ट्रेंड', 'दफ़्तर-नौकरी', 'नियम/नौकरी', 'फ़िल्म-क्रिकेट फैन', 'महँगाई', 'रील का शौक', 'वायरल वीडियो', 'शादी-रिश्ते', 'सफ़र-जुगाड़'] | हाल के विषय (अभी नहीं): ['त्योहार-ट्रेंड', 'नियम/नौकरी', 'रील का शौक', 'सफ़र-जुगाड़']
-  topics: 33 काम की, 8 वायरल, 6 Trends, 6 त्योहार
+  topics: 33 काम की, 8 वायरल, 5 Trends, 6 त्योहार
   Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
-    Gemini gemini-3.5-flash: 18s
+    Gemini gemini-3.5-flash: 10s
   YT_COOKIES: 22 cookies
   YouTube views नहीं मिले (आज के run में बंद): RuntimeError('ख़ाली')
-  ❌ trend 2/10: बेंगलुरु की भागदौड़ से तंग आकर गोवा शिफ्ट हुआ कपल, स्लो लाइफ की कहानी वायरल | 2 अख़बार/चैनल 2 दिन में, 3 खबरें 7 दिन में
-  ❌ trend 2/10: शेरवानी पहनकर बिन बुलाए भारतीय शादी में घुसा विदेशी युवक, जमकर खाया और नाचा | 1 अख़बार/चैनल 2 दिन में, 1 खबरें 7 दिन में
-  ✅ trend 6/10: ऑफिस में सिर्फ काम करना काफी नहीं, बॉस को काम दिखाना भी है जरूरी | 12 अख़बार/चैनल 2 दिन में, 32 खबरें 7 दिन में
-  ❌ trend 0/10: पार्सल डिलीवरी के बाद वापसी की फर्जी कॉल, ऑनलाइन शॉपिंग करने वाले निशाने पर | 0 अख़बार/चैनल 2 दिन में, 2 खबरें 7 दिन में
-  ❌ trend 3/10: रेलवे शुरू करेगा डोरस्टेप पिकअप सुविधा, अब घर बैठे ट्रेन से भेज सकेंगे सामान | 4 अख़बार/चैनल 2 दिन में, 7 खबरें 7 दिन में
-  ❌ trend 2/10: सड़क पर रील बनाने का चढ़ा खुमार, पुलिस ने काटा 20 हजार का भारी चालान | 1 अख़बार/चैनल 2 दिन में, 1 खबरें 7 दिन में
-  ✅ trend 6/10: महंगे रिचार्ज से परेशान ग्राहकों के लिए राहत, मोबाइल कंपनियों ने निकाले सस्ते प्लान | 12 अख़बार/चैनल 2 दिन में, 14 खबरें 7 दिन में
-  चुने विषय: ['[दफ़्तर-नौकरी]', '[महँगाई]', '[सफ़र-जुगाड़]']
-    429: gemini-flash-latest: 503 {   "error": {     "code": 503,     "message": "This model is currently experiencing high demand. Spikes in demand are u
-    429: gemini-3.5-flash: 429 {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing deta
-    429: gemini-3.6-flash: 429 {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing deta
-    key 1 का कोटा ख़त्म → key 2
-  Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
-    Gemini gemini-3.5-flash: 13s
-  तथ्य: महंगे रिचार्ज से परेशान ग्राहकों के लिए राहत, मोबाइल कंपनियों ने निकाले सस्ते प्लान | दैनिक जागरण, अमर उजाला, नवभारत टाइम्स, हिन्दुस्तान, प्रभात खबर, मनीकंट्रोल | high
-  तथ्य: रेलवे शुरू करेगा डोरस्टेप पिकअप सुविधा, अब घर बैठे ट्रेन से भेज सकेंगे सामान | आजतक, एबीपी न्यूज, नवभारत लाइव, दैनिक जागरण, दैनिक भास्कर, प्रभात खबर, केलो प्रवाह | high
-    Gemini gemini-3.5-flash: 21s
-  💡 महंगे रिचार्ज से परेशान ग्राहकों के लिए राहत, मोबाइल कंपनियों ने निकाले सस्ते प्लान: घर के बड़ों को बिना डेटा वाला रिचार्ज क्रांति लगता है क्योंकि उनके हिस
-  💡 रेलवे शुरू करेगा डोरस्टेप पिकअप सुविधा, अब घर बैठे ट्रेन से भेज सकेंगे सामान: रेलवे की पिकअप सर्विस भी ट्रेन की तरह लेट ही आएगी.
-    429: gemini-3.5-flash: 429 {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing deta
-    429: gemini-3.6-flash: 429 {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing deta
-    429: gemini-3.7-flash: 429 {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing deta
-    key 2 का कोटा ख़त्म → key 3
+  ❌ trend 2/10: कॉन्सर्ट में गाए बिना ₹24 हजार कमाई: 2 घंटे पानी बेचकर किया कमाल | 2 अख़बार/चैनल 2 दिन में, 2 खबरें 7 दिन में
+  ❌ trend 2/10: बिन बुलाए विदेशी बिन न्योते घुसा शादी में, शेरवानी पहन नाचा DJ पर | 1 अख़बार/चैनल 2 दिन में, 1 खबरें 7 दिन में
+  ✅ trend 6/10: ऑफिस में मेहनत कम, बॉस को काम का दिखावा करना ज्यादा जरूरी | 21 अख़बार/चैनल 2 दिन में, 71 खबरें 7 दिन में
+  ✅ trend 6/10: मुंबई लोकल में आराम से चादर तानकर सोते मिले दो बेफिक्र यात्री | 16 अख़बार/चैनल 2 दिन में, 64 खबरें 7 दिन में
+  ✅ trend 6/10: ओरी ने हैलोवीन पर धरा 'तुम्बाड' के हस्तर का डरावना लुक | 10 अख़बार/चैनल 2 दिन में, 17 खबरें 7 दिन में
+  ❌ trend 2/10: हैकर्स ने बनाया फर्जी प्ले स्टोर, किराए पर बांटे ठगी के ऐप्स | 1 अख़बार/चैनल 2 दिन में, 3 खबरें 7 दिन में
+  ❌ trend 2/10: बेंगलुरु के जाम से तंग आकर कपल पहुंचा गोवा, चुनी स्लो लाइफ | 2 अख़बार/चैनल 2 दिन में, 3 खबरें 7 दिन में
+  चुने विषय: ['[दफ़्तर-नौकरी]', '[सफ़र-जुगाड़]', '[फ़िल्म-क्रिकेट फैन]']
+    Gemini gemini-3.5-flash: 14s
+  तथ्य: मुंबई लोकल में आराम से चादर तानकर सोते मिले दो बेफिक्र यात्री | Jagran, Dainik Bhaskar, NDTV India, Hindustan, Navbharat Live | medium
+  तथ्य: ओरी ने हैलोवीन पर धरा 'तुम्बाड' के हस्तर का डरावना लुक | AajTak, Amar Ujala, India TV Hindi, Agniban, Nai Dunia, Zoom TV, News24 Hindi, Punjab Kesari | high
+    Gemini gemini-3.6-flash: 27s
+  💡 मुंबई लोकल में आराम से चादर तानकर सोते मिले दो बेफिक्र यात्री: रेलवे ने स्पष्ट किया है कि ट्रेन में सोना मना है, चादर ओढ़कर सोना गैर-
+  💡 ओरी ने हैलोवीन पर धरा 'तुम्बाड' के हस्तर का डरावना लुक: मम्मी ने फोटो देखकर पूछा—यह कौन सा व्रत है जिसमें पूरे चेहरे पर लाल रं
+    Gemini gemini-3.5-flash: 45s
+    सब models busy — 40s रुककर दोबारा
+    सब models busy — 40s रुककर दोबारा
+    key 1 नहीं चली → key 2
   Gemini models: gemini-flash-latest, gemini-2.5-flash, gemini-3.5-flash, gemini-3.6-flash, gemini-3.7-flash, gemini-pro-latest, gemini-2.5-pro, gemini-flash-latest
     सब models busy — 40s रुककर दोबारा
-    429: gemini-flash-latest: TimeoutError('The read operation timed out')
-    429: gemini-3.5-flash: 503 {   "error": {     "code": 503,     "message": "This model is currently experiencing high demand. Spikes in demand are u
-    429: gemini-3.6-flash: 429 {   "error": {     "code": 429,     "message": "You exceeded your current quota, please check your plan and billing deta
-  आज का Gemini कोटा ख़त्म — इस बारी video नहीं
+    Gemini gemini-3.5-flash: 30s
+    Gemini gemini-3.5-flash: 26s
+    Gemini gemini-3.5-flash: 17s
+  🥊 punch-up जीता: मुंबई लोकल में आराम से चादर तानकर सोते मिले दो बेफिक्र यात्री (फ़ेल अब: ['follow', 'save'])
+  👀 ओरी ने हैलोवीन पर धरा 'तुम्बाड' के हस्तर का डरावना लुक: 5/10, फ़ेल: ['save', 'ant']
+  👀 मुंबई लोकल में आराम से चादर तानकर सोते मिले दो बेफिक्र यात्री: 6/10, फ़ेल: ['follow', 'save']
+  ❌ नियम टूटा, हटाई: मुंबई लोकल में आराम से चादर तानकर सोते मिले दो बेफिक्र यात्री ['hook लंबा (>14 शब्द)']
+  ❌ नियम टूटा, हटाई: ओरी ने हैलोवीन पर धरा 'तुम्बाड' के हस्तर का डरावना लुक ['नेता/राजनीति', 'hook लंबा (>14 शब्द)']
+/home/runner/work/CHATPATE-NEWS/CHATPATE-NEWS/run_daily.py:31: DeprecationWarning: datetime.datetime.utcnow() is deprecated and scheduled for removal in a future version. Use timezone-aware objects to represent datetimes in UTC: datetime.datetime.now(datetime.UTC).
+  return dt.datetime.utcnow() + dt.timedelta(hours=5, minutes=30)
+  सीधा video job: episodes/auto_20261101_1320.json — मुंबई लोकल में आराम से चादर तानकर सोते मिले दो बेफिक्र यात्री
