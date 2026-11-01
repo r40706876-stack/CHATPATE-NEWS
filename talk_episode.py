@@ -78,6 +78,9 @@ def normalize_visual_style(ep):
         ep["style"] = "flow"
     if ep.get("production"):
         ep.setdefault("no_memes", True)
+        ep["lips"] = "sadtalker"
+        if any(ln.get("who") == "ramesh" for ln in ep.get("lines", [])):
+            ep.setdefault("sprite", {})["ramesh"] = "assets/toon/ramesh"
     return ep
 
 
@@ -231,7 +234,7 @@ def add_props(ep):
         print(f"  🧊 3D prop → line {i + 1}: {prop}")
 
 
-REAL_FACE = {"ramesh"}   # 30 Oct रात: मालिक — "पुराना रमेश ले आओ" (नया assets/real/ramesh_new*.png में रखा है)
+REAL_FACE = set()   # 30 Oct रात: मालिक — "पुराना रमेश ले आओ" (नया assets/real/ramesh_new*.png में रखा है)
 _NEW_FACE = {"ramesh"}   # 30 Oct: मालिक का भेजा नया रमेश (assets/real/ramesh.png) — sprite नहीं, उसी photo से SadTalker
 MASCOT = {}   # 30 Oct (मालिक): बकरा भी पसंद नहीं — रमेश की जगह नया चेहरा आने तक रमेश सिर्फ़ आवाज़ (VOICE_ONLY)
 _OLD_MASCOT = {"ramesh": "assets/toon/bakra"}                      # 29 Oct (मालिक): रमेश की सूरत skip करवाती थी → बकरा mascot
@@ -239,6 +242,8 @@ _OLD_MASCOT = {"ramesh": "assets/toon/bakra"}                      # 29 Oct (म
 
 def sprite_of(ep, who):
     """किरदार का sprite folder; रमेश वाली जगह हमेशा बकरा (पुरानी episode JSON में toon/ramesh लिखा हो तब भी)."""
+    if who == "ramesh":
+        return "assets/toon/ramesh"
     if who in REAL_FACE:                                       # अपनी एक photo + SadTalker (मालिक की भेजी, 30 Oct)
         return None
     return MASCOT.get(who) or (ep.get("sprite") or {}).get(who)

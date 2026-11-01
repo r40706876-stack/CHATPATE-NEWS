@@ -261,10 +261,10 @@ def do_direct(feed=None):
         return
     # Final portrait setup: no legacy letterboxing, no appended meme.
     ep["style"] = "flow"
-    ep["lips"] = "sprite"
+    ep["lips"] = "sadtalker"
     ep["renderer"] = "studio"
     ep["no_memes"] = True
-    (ep.get("sprite") or {}).pop("ramesh", None)
+    ep.setdefault("sprite", {})["ramesh"] = "assets/toon/ramesh"
     name = f"episodes/auto_{ist().strftime('%Y%m%d_%H%M')}.json"
     json.dump(ep, open(ROOT / name, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     (ROOT / "studio_job.txt").write_text(name, encoding="utf-8")
