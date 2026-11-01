@@ -7,6 +7,7 @@ import urllib.error
 import urllib.request
 
 BASE = "https://generativelanguage.googleapis.com/v1beta"
+_request_count = 0
 _models = {}                                      # हर key की अपनी model list
 _dead = set()
 _dead = set()                                     # (key, model) जिनका आज का कोटा ख़त्म
@@ -20,6 +21,12 @@ def keys():
 
 
 def _get(url, key, body=None):
+    global _request_count
+    if body is not None:
+        budget = int(os.getenv("GEMINI_REQUEST_BUDGET", "24"))
+        if _request_count >= budget:
+            raise QuotaOver(f"Per-stage Gemini request budget reached ({budget}); use cached assets/fallback")
+        _request_count += 1
     req = urllib.request.Request(url, json.dumps(body).encode() if body else None,
                                  {"Content-Type": "application/json", "x-goog-api-key": key})
     with urllib.request.urlopen(req, timeout=90) as r:
@@ -94,7 +101,8 @@ def _ask(key, prompt, search, json_mode, temperature, prefer, patient=True):
     elif json_mode:
         body["generationConfig"]["responseMimeType"] = "application/json"
     errors = []
-    order = [m for m in models(key) if m not in _gone and (key, m) not in _dead]
+    order = list(dict.fromkeys(m for m in models(key) if m not in _gone and (key, m) not in _dead))
+    order = order[:max(1, int(os.getenv("GEMINI_MODELS_PER_KEY", "3")))]
     if os.getenv("GEMINI_PRO", "0") != "1":           # 31 Oct log: free keys पर pro हर बार 429 (कोटा 0) — उसे गिनना/पूछना बंद;
         order = [m for m in order if "pro" not in m]  # वरना busy flash के साथ मिलकर "कोटा ख़त्म" का झूठा फ़ैसला
     if not order:
@@ -111,6 +119,8 @@ def _ask(key, prompt, search, json_mode, temperature, prefer, patient=True):
                 if not data.get("candidates"):
                     raise Blocked(str(data.get("promptFeedback") or data)[:300])
                 return "".join(p.get("text", "") for p in data["candidates"][0]["content"]["parts"])
+            except QuotaOver:
+                raise
             except urllib.error.HTTPError as e:
                 msg = e.read().decode("utf-8", "ignore")[:3000]
                 errors.append(f"{model}: {e.code} {msg[:120]}")

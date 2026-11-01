@@ -42,7 +42,19 @@ TTS_MODELS = [m for m in (os.getenv("GEMINI_TTS_MODEL"), "gemini-3.8-flash-tts",
 BASE = "https://generativelanguage.googleapis.com/v1beta"
 
 
+_tts_request_count = 0
+_tts_key_requests = {}
+
+
 def _post(url, body, key):
+    global _tts_request_count
+    limit = int(os.getenv("GEMINI_TTS_REQUEST_BUDGET", "12"))
+    if _tts_request_count >= limit:
+        raise RuntimeError("Gemini TTS request budget reached; use backup voice")
+    if _tts_key_requests.get(key, 0) >= 4:
+        raise RuntimeError("This key reached its TTS attempt allowance; try next configured key")
+    _tts_key_requests[key] = _tts_key_requests.get(key, 0) + 1
+    _tts_request_count += 1
     req = urllib.request.Request(url, json.dumps(body).encode(),
                                  {"Content-Type": "application/json", "x-goog-api-key": key})
     with urllib.request.urlopen(req, timeout=120) as r:
@@ -106,6 +118,7 @@ def gemini_line(text, who, expr, key, base=None):
     dead = _gem_ok.setdefault("dead_models", set())
     models = [m for m in dict.fromkeys(([_gem_ok["model"]] if _gem_ok["model"] else []) + TTS_MODELS)
               if (key[-6:], m) not in dead]
+    models = models[:max(1, int(os.getenv("GEMINI_TTS_MODELS_PER_KEY", "2")))]
     for model in models:
         bodies = [
             ("interactions", f"{BASE}/interactions", {

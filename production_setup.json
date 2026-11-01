@@ -1,0 +1,28 @@
+{
+  "timezone": "Asia/Kolkata",
+  "production_start_hours": [
+    7,
+    10,
+    13,
+    16,
+    19
+  ],
+  "cutoff_hour": 20,
+  "ramesh_asset": "assets/real/ramesh.png",
+  "ramesh_animation": "SadTalker 512",
+  "visual_style": "flow",
+  "aspect_ratio": "9:16",
+  "legacy_letterboxing": false,
+  "append_memes": false,
+  "gemini_key_secrets": [
+    "GEMINI_API_KEY",
+    "GEMINI_API_KEY2",
+    "GEMINI_API_KEY3"
+  ],
+  "script_requests_max": 24,
+  "visual_requests_max": 8,
+  "tts_requests_max": 12,
+  "backup_voice": "edge",
+  "delivery": "existing TELEGRAM_CHAT_ID",
+  "reuse_prepared_script_on_retry": true
+}

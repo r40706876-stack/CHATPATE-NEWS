@@ -76,6 +76,8 @@ def normalize_visual_style(ep):
     """Portrait-first visuals; retain legacy letterboxed TV only by explicit opt-in."""
     if ep.get("style") == "dd" and not ep.get("legacy_tv"):
         ep["style"] = "flow"
+    if ep.get("production"):
+        ep.setdefault("no_memes", True)
     return ep
 
 
@@ -199,8 +201,10 @@ def prep(script_path):
         print("  AI दृश्य वाला हिस्सा छोड़ा:", repr(e)[:150])
     fill_sets(ep)
     json.dump(ep, open(IN / "episode.json", "w", encoding="utf-8"), ensure_ascii=False)
-    sprite_lips = ep.get("sprite") and ep.get("lips", "sadtalker") == "sprite"
-    print(json.dumps([] if sprite_lips else [i for i, ln in enumerate(ep["lines"]) if not voice_only(ep, ln) and not mascot_lips(ep, ln)]))   # sprite वाले होंठ = SadTalker की ज़रूरत नहीं
+    needs_face = [i for i, ln in enumerate(ep["lines"])
+                  if not voice_only(ep, ln) and not mascot_lips(ep, ln)
+                  and not (sprite_of(ep, ln["who"]) and ep.get("lips") == "sprite")]
+    print(json.dumps(needs_face))   # sprite वाले होंठ = SadTalker की ज़रूरत नहीं
 
 
 PROP_WORDS = {"coins": r"छुट्टा|छुट्टे|खुल्ल|सिक्क|चिल्लर|पैसे का", "toffee": r"टॉफी|टाफी", "notes": r"लाख|करोड़"}
@@ -227,7 +231,7 @@ def add_props(ep):
         print(f"  🧊 3D prop → line {i + 1}: {prop}")
 
 
-REAL_FACE = set()   # 30 Oct रात: मालिक — "पुराना रमेश ले आओ" (नया assets/real/ramesh_new*.png में रखा है)
+REAL_FACE = {"ramesh"}   # 30 Oct रात: मालिक — "पुराना रमेश ले आओ" (नया assets/real/ramesh_new*.png में रखा है)
 _NEW_FACE = {"ramesh"}   # 30 Oct: मालिक का भेजा नया रमेश (assets/real/ramesh.png) — sprite नहीं, उसी photo से SadTalker
 MASCOT = {}   # 30 Oct (मालिक): बकरा भी पसंद नहीं — रमेश की जगह नया चेहरा आने तक रमेश सिर्फ़ आवाज़ (VOICE_ONLY)
 _OLD_MASCOT = {"ramesh": "assets/toon/bakra"}                      # 29 Oct (मालिक): रमेश की सूरत skip करवाती थी → बकरा mascot
@@ -551,7 +555,10 @@ def post_studio(ep):
     if ep.get("no_send"):                                 # जाँच वाला video: Telegram पर नहीं, सिर्फ़ repo में
         print("  (no_send) Telegram पर नहीं भेजा")
         return
-    telegram.send_video(out, cap or ep.get("breaking", ""))
+    if not telegram.send_video(out, cap or ep.get("breaking", "")):
+        raise RuntimeError("Telegram delivery failed; slot is not marked delivered")
+    import scheduled_production
+    scheduled_production.delivered(ep, secs)
     try:                                                  # data बाद में इसी से जुड़ेगा ("डेटा skip 57 watch 6.2")
         import results
         results.delivered(ep, secs)
@@ -568,7 +575,7 @@ def post_studio(ep):
 def post():
     import reel_v3
     ep = normalize_visual_style(json.load(open(IN / "episode.json", encoding="utf-8")))
-    if ep.get("sprite"):
+    if ep.get("sprite") or ep.get("renderer") == "studio":
         return post_studio(ep)
     n = len(ep["lines"])
     audio = [IN / f"audio/{i:02d}.wav" for i in range(n)]

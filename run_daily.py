@@ -244,7 +244,7 @@ def do_direct(feed=None):
     os.environ["DIRECT"] = "1"
     try:
         news = topics.collect_news(feed)
-        eps = write_scripts(news, 2)
+        eps = write_scripts(news, 1)
     except gemini.QuotaOver:
         print("  आज का Gemini कोटा ख़त्म — इस बारी video नहीं")
         return
@@ -259,10 +259,12 @@ def do_direct(feed=None):
     if not ep:
         print("  studio episode नहीं बना")
         return
-    if os.getenv("DD", "1") == "1":                    # 31 Oct (मालिक को Prakash Bharati का look पसंद): Doordarshan style —
-        ep["style"] = "dd"                             # screen पर लिखा कुछ नहीं, पुराना TV रंग, असली photo वाला रमेश
-        ep.pop("cold_open", None)
-        (ep.get("sprite") or {}).pop("ramesh", None)
+    # Final portrait setup: no legacy letterboxing, no appended meme.
+    ep["style"] = "flow"
+    ep["lips"] = "sprite"
+    ep["renderer"] = "studio"
+    ep["no_memes"] = True
+    (ep.get("sprite") or {}).pop("ramesh", None)
     name = f"episodes/auto_{ist().strftime('%Y%m%d_%H%M')}.json"
     json.dump(ep, open(ROOT / name, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     (ROOT / "studio_job.txt").write_text(name, encoding="utf-8")
@@ -631,7 +633,7 @@ def main():
         mode = "check" if PENDING.exists() else "write"
     if mode == "bulletin":
         return do_bulletin(a.feed)
-    if mode == "check" and direct_due():
+    if mode == "check" and os.getenv("SCHEDULED_ONLY") != "1" and direct_due():
         mode = "direct"                                 # GitHub अपने तय समय वाले run अक्सर छोड़ देता है (31 Oct सुबह 7 वाला
     if mode == "direct":                                # चला ही नहीं) — जो भी run आए, बारी आ गई हो तो वही video बनाए
         LAST_DIRECT.write_text(str(int(time.time())))
