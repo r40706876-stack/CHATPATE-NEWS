@@ -72,8 +72,15 @@ def tighten(wav):
     tmp.replace(wav)
 
 
+def normalize_visual_style(ep):
+    """Portrait-first visuals; retain legacy letterboxed TV only by explicit opt-in."""
+    if ep.get("style") == "dd" and not ep.get("legacy_tv"):
+        ep["style"] = "flow"
+    return ep
+
+
 def prep(script_path):
-    ep = json.load(open(ROOT / script_path, encoding="utf-8"))
+    ep = normalize_visual_style(json.load(open(ROOT / script_path, encoding="utf-8")))
     if ep.get("no_gemini"):
         # Prepared, sourced production: never spend Gemini quota on retries.
         os.environ["TTS_ENGINE"] = "edge"
@@ -560,7 +567,7 @@ def post_studio(ep):
 
 def post():
     import reel_v3
-    ep = json.load(open(IN / "episode.json", encoding="utf-8"))
+    ep = normalize_visual_style(json.load(open(IN / "episode.json", encoding="utf-8")))
     if ep.get("sprite"):
         return post_studio(ep)
     n = len(ep["lines"])
