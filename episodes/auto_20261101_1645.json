@@ -1,0 +1,224 @@
+{
+  "premise": "रोबोटैक्सी में कंकाल आराम से बैठ गए, पर अगर भारत होता तो ऑटो वाला कंकाल को देखकर भी 'उधर का भाड़ा नहीं मिलेगा' बोल देता.",
+  "hook_screen": "कंकाल vs ऑटो वाले भैया",
+  "category": "[वायरल वीडियो]",
+  "breaking": "बिना ड्राइवर वाली टेस्ला कार में कंकाल की सवारी का वीडियो वायरल",
+  "source": "India TV Hindi",
+  "tag_who": "उस दोस्त को जिसका ऑटो वाले ने रोज़ भाड़ा रिजेक्ट किया",
+  "ask": "क्या आपके शहर के ऑटो वाले ने कभी यमलोक जाने से मना किया है?",
+  "loop_word": "भाड़ा",
+  "open_loop": "अगर कंकाल भारत में ऑटो रोकता, तो ऑटो वाले का क्या रिएक्शन होता?",
+  "jawab": {
+    "pura": "कंकाल को देखकर भी ऑटो वाले ने कैसे जाने से मना किया, यह मज़ाक समझने के लिए पूरा वीडियो देखें.",
+    "hasi": "कंकाल का ऑटो वाले के रिजेक्शन के डर से पैदल यमलोक जाना.",
+    "share": "रोज़ ऑटो रिजेक्शन झेलने वाले कॉलेज और दफ़्तर जाने वाले दोस्तों को.",
+    "daily": "ऑटो चालकों का 'उधर की सवारी नहीं मिलेगी' कहकर मुँह मोड़ना.",
+    "follow": "रोज़मर्रा के देसी अनुभवों पर करारे तंज़ के लिए.",
+    "like": "ऑटो वालों के यूनिवर्सल रिजेक्शन डायलॉग पर सहमति.",
+    "save": "टेस्ला रोबोटैक्सी न्यूज़ reference के लिए."
+  },
+  "cold_open": {
+    "kind": "notice",
+    "data": {
+      "big": "कंकाल को भी ऑटो रिजेक्शन",
+      "office": "ऑटो रिक्शा एसोसिएशन",
+      "title": "सवारी इनकार सूचना",
+      "body": "यमलोक या श्मशान घाट की तरफ का भाड़ा नहीं मिलेगा. कंकाल पैदल ही जाएँ.",
+      "sign": "ऑटो भैया"
+    },
+    "lines": [
+      0,
+      1
+    ]
+  },
+  "lines": [
+    {
+      "who": "ramesh",
+      "say": "अमेरिका में रोबोटैक्सी कंकाल को लेकर घूम रही है, यहाँ भारत में ऑटो वाला कंकाल को देखकर भी बोल देता — उधर का भाड़ा नहीं मिलेगा!",
+      "caption": "अमेरिका में रोबोटैक्सी कंकाल को लेकर घूम रही है, यहाँ भारत में ऑटो वाला कंकाल को देखकर भी बोल देता — उधर का भाड़ा नहीं मिलेगा!",
+      "expr": "hairan",
+      "set": "village",
+      "visuals": [
+        "indian auto rickshaw driver rejecting passenger gesture",
+        "busy indian street auto stand daytime",
+        "young man frustrated on roadside"
+      ],
+      "photo_hi": [
+        "भारतीय ऑटो रिक्शा",
+        "ऑटो वाला मना करते हुए"
+      ],
+      "scene_en": "An Indian auto driver shaking head no to a passenger on a crowded street.",
+      "visual": "indian auto rickshaw driver rejecting passenger gesture",
+      "scene": "studio",
+      "punch": false,
+      "insta": ""
+    },
+    {
+      "who": "bablu",
+      "say": "अमेरिका की सड़कों पर हैलोवीन के मौके पर टेस्ला की ड्राइवरलेस कार में कंकालों को बिठाकर सवारी कराई गई.",
+      "caption": "अमेरिका की सड़कों पर हैलोवीन के मौके पर Tesla की बिना ड्राइवर वाली कार में कंकालों को बिठाकर सवारी कराई गई.",
+      "expr": "gambhir",
+      "set": "studio",
+      "visuals": [
+        "tesla driverless vehicle halloween decor visual",
+        "viral news headline broadcast display",
+        "studio anchor talking to camera"
+      ],
+      "photo_hi": [
+        "टेस्ला रोबोटैक्सी",
+        "हैलोवीन कंकाल कार"
+      ],
+      "scene_en": "News anchor delivering report on Tesla driverless halloween stunt.",
+      "visual": "tesla driverless vehicle halloween decor visual",
+      "scene": "pinky",
+      "punch": false,
+      "insta": ""
+    },
+    {
+      "who": "pinky",
+      "say": "यहाँ मैं बीस मिनट से ऑटो वाले भैया के आगे गिड़गिड़ा रही हूँ, और कंकाल अमेरिका में बिना मीटर के रोबोटैक्सी में घूम रहे हैं!",
+      "caption": "यहाँ मैं 20 मिनट से ऑटो वाले भैया के आगे गिड़गिड़ा रही हूँ, और कंकाल अमेरिका में बिना मीटर के रोबोटैक्सी में घूम रहे हैं!",
+      "expr": "gussa",
+      "set": "village",
+      "visuals": [
+        "young indian girl waving hand to stop auto rickshaw",
+        "auto rickshaw driving past ignoring passenger",
+        "frustrated woman on side of road"
+      ],
+      "photo_hi": [
+        "लड़की ऑटो रोकते हुए",
+        "सड़क पर इंतज़ार"
+      ],
+      "scene_en": "Young girl complaining with frustrated expression on city street about auto refusal.",
+      "visual": "young indian girl waving hand to stop auto rickshaw",
+      "scene": "pinky",
+      "punch": false,
+      "insta": ""
+    },
+    {
+      "who": "chacha",
+      "say": "कंकाल ने भी राइड कैंसिल होने के डर से चुपचाप पैदल ही यमलोक जाने का फैसला किया होगा.",
+      "caption": "कंकाल ने भी राइड कैंसिल होने के डर से चुपचाप पैदल ही यमलोक जाने का फैसला किया होगा.",
+      "expr": "tanz",
+      "set": "village",
+      "visuals": [
+        "skeleton walking on side of street funny edit",
+        "elderly man sitting laughing softly",
+        "indian village street evening"
+      ],
+      "photo_hi": [
+        "चाचा का मज़ाक",
+        "पैदल सवारी"
+      ],
+      "scene_en": "Old man delivering sarcastic punchline about ride cancellation fears.",
+      "punch": true,
+      "stamp": "पैदल ही सही!",
+      "visual": "skeleton walking on side of street funny edit",
+      "scene": "chacha",
+      "insta": ""
+    },
+    {
+      "who": "bablu",
+      "say": "टेस्ला रोबोटैक्सी ला सकती है, पर भारतीय ऑटो वाले की मनाही का मुकाबला करने वाला कोई एआई नहीं है, चाहे कितना भी मिले भाड़ा.",
+      "caption": "Tesla रोबोटैक्सी ला सकती है, पर भारतीय ऑटो वाले की मनाही का मुकाबला करने वाला कोई AI नहीं है, चाहे कितना भी मिले भाड़ा.",
+      "expr": "gambhir",
+      "set": "studio",
+      "visuals": [
+        "futuristic AI vehicle icon side by side auto rickshaw icon",
+        "news anchor wrapping up with clean backdrop studio photo",
+        "auto stand sign in india"
+      ],
+      "photo_hi": [
+        "टेस्ला एआई कार",
+        "ऑटो रिक्शा भाड़ा"
+      ],
+      "scene_en": "Anchor presenting strong closing statement on Indian auto drivers vs AI.",
+      "punch": true,
+      "stamp": "ऑटो वाला महान!",
+      "visual": "futuristic AI vehicle icon side by side auto rickshaw icon",
+      "scene": "studio_end",
+      "insta": ""
+    }
+  ],
+  "caption_post": "कंकाल भी टेस्ला रोबोटैक्सी में बैठ गए, पर हमारे ऑटो वाले भैया ने यमलोक जाने से भी मना कर दिया होता! Tag करो ऑटो से परेशान अपने दोस्त को. स्त्रोत: India TV Hindi #Tesla #Robotaxi #AutoRickshaw #Halloween2026 #BakraNews",
+  "topic": "टेस्ला की ड्राइवरलेस कार में हैलोवीन मनाते दिखे कंकाल",
+  "ref_lines": [],
+  "jaanch": {
+    "pura": {
+      "ok": true,
+      "kyon": "Indian auto struggle vs US tech automation ka maza lene ke liye."
+    },
+    "hasi": {
+      "ok": true,
+      "kyon": "line 0, ~2.5 सेकंड (उधर का भाड़ा नहीं मिलेगा)"
+    },
+    "share": {
+      "ok": true,
+      "kyon": "Friends ko line 2 (auto ke aage gidgidana) aur line 3 ke liye."
+    },
+    "daily": {
+      "ok": true,
+      "kyon": "Auto walon ka har jagah jaane se mana kar dena."
+    },
+    "follow": {
+      "ok": true,
+      "kyon": "Daily Indian struggles ko global tech news se connect karna."
+    },
+    "like": {
+      "ok": true,
+      "kyon": "Auto wale bina kisi reason ke mana karte hain."
+    },
+    "save": {
+      "ok": false,
+      "kyon": "Funny reel hai, save karne jaisa data nahi."
+    },
+    "ant": {
+      "ok": true,
+      "kyon": "Akhiri line ne AI vs Auto wala refusal par ekdm accurate conclusion diya."
+    },
+    "khabar": {
+      "ok": true,
+      "kyon": "Line 1 me US Tesla driverless car Halloween ride ki puri khabar hai."
+    },
+    "dhaga": {
+      "ok": true,
+      "kyon": "Saari lines Auto walon ke nakhre aur Tesla robotaxi par sahi baithti hain."
+    }
+  },
+  "connect": {
+    "score": 8,
+    "why": "10 में से 9 सवाल पास",
+    "weak": "",
+    "fix": ""
+  },
+  "writer": "psych",
+  "format": "explain",
+  "label": "काम की खबर",
+  "key_word": "",
+  "icons": [
+    "₹",
+    "NEWS",
+    "%"
+  ],
+  "ticker": [],
+  "hook": "अमेरिका में रोबोटैक्सी कंकाल को लेकर घूम रही है, यहाँ…",
+  "hook_text": "अमेरिका में रोबोटैक्सी कंकाल को लेकर घूम रही है, यहाँ…",
+  "hook_short": "कंकाल vs ऑटो वाले भैया",
+  "trend": {
+    "score": 4,
+    "why": "5 अख़बार/चैनल 2 दिन में, 5 खबरें 7 दिन में"
+  },
+  "review_status": "audience_sim",
+  "_loose": true,
+  "sprite": {
+    "bablu": "assets/toon/bablu",
+    "chacha": "assets/toon/chacha",
+    "pinky": "assets/toon/pinky"
+  },
+  "production": true,
+  "style": "flow",
+  "lips": "sprite",
+  "renderer": "studio",
+  "no_memes": true,
+  "_production_slot": "2026-11-01_16"
+}
