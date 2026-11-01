@@ -1,6 +1,9 @@
 {
-  "status": "dispatched",
+  "status": "delivered",
   "script": "episodes/auto_20261101_1946.json",
   "slot": "2026-11-01_19",
-  "updated_at": 1793542704
+  "updated_at": 1793546834,
+  "telegram_delivered_at": 1793546834,
+  "seconds": 24.36,
+  "topic": "1 नवंबर से दिल्ली-एनसीआर में लागू होंगे गाड़ियों के नए नियम, होगी नो-एंट्री"
 }
