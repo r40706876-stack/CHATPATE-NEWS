@@ -1,6 +1,9 @@
 {
-  "status": "dispatched",
+  "status": "delivered",
   "script": "episodes/auto_20261101_1645.json",
   "slot": "2026-11-01_16",
-  "updated_at": 1793531845
+  "updated_at": 1793538596,
+  "telegram_delivered_at": 1793538596,
+  "seconds": 33.84,
+  "topic": "टेस्ला की ड्राइवरलेस कार में हैलोवीन मनाते दिखे कंकाल"
 }
