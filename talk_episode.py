@@ -523,7 +523,7 @@ def post_studio(ep):
     if issues:                                            # 30 Oct (मालिक): हर 3 घंटे video चाहिए — जाँच रोकेगी नहीं, बस बताएगी
         print("  ⚠️ जाँच में कमी (फिर भी भेज रहे):", "; ".join(issues))
     import memes                                          # पंच के बाद मशहूर meme (अपनी आवाज़ के साथ)
-    used = memes.add(ep, segs, out)
+    used = [] if ep.get('no_memes') else memes.add(ep, segs, out)
     # Validate the final file, including any inserted meme clips.
     try:
         issues = qa.check(out, allow=_close_ranges(segs))
