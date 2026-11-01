@@ -556,7 +556,10 @@ def post():
         clips = sorted((OUT / str(i)).rglob("*.mp4"))
         faces.append(_frames(clips[-1]) if clips else None)
         stills.append(Image.open(IN / f"{i}/source.png").convert("RGB"))
-        vis.append(sorted((IN / "broll").glob(f"{i}_*")) if (IN / "broll").exists() else [])
+        vis.append(sorted(p for p in (IN / "broll").glob(f"{i}_*")
+                          if p.is_file() and p.suffix.lower() in
+                          {".mp4", ".jpg", ".jpeg", ".png", ".webp", ".bmp", ".gif"})
+                   if (IN / "broll").exists() else [])
     out = ROOT / "episode.mp4"
     secs = reel_v3.render(ep, lens, faces, stills, vis, CHARS, out, ROOT / "preview_episode.jpg", audio)
     print(f"बन गया: {out} ({secs:.1f}s)")
