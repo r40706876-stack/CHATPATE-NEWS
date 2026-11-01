@@ -1,0 +1,254 @@
+{
+  "premise": "पुरानी सैंट्रो की बाज़ार में क़ीमत छह हज़ार बची है, और दिल्ली में दो दिन की पार्किंग का पर्चा सात हज़ार का बन रहा है.",
+  "category": "[नियम/नौकरी]",
+  "breaking": "दिल्ली में पुरानी गाड़ियों पर नो-एंट्री, पार्किंग फीस हुई दोगुनी",
+  "hook_screen": "कार से महँगी पार्किंग पर्ची?",
+  "source": "Jagran, India TV Hindi",
+  "tag_who": "पुरानी खटारा गाड़ी रखने वाले दोस्तों और पापा को",
+  "ask": "क्या आपकी पुरानी गाड़ी पार्किंग के लायक बची है?",
+  "loop_word": "पार्किंग",
+  "open_loop": "कनॉट प्लेस में छोड़ी गई कार का पार्किंग वाला क्या करेगा?",
+  "jawab": {
+    "pura": "पुरानी सैंट्रो की नीलामी और पार्किंग पर्ची का बेतुका हिसाब देखने के लिए पूरा देखेंगे.",
+    "hasi": "कार की कीमत से ज्यादा पार्किंग पर्चा निकलने पर 3 सेकंड में जोरदार हँसी आएगी.",
+    "share": "हर वो इंसान शेयर करेगा जिसके पास पुरानी BS-4 या खटारा कार खड़ी है.",
+    "daily": "दिल्ली-एनसीआर में पार्किंग का मनमाना रेट और चालान का रोज का खौफ.",
+    "follow": "सरकारी नियमों और आम आदमी के जेब खर्च का ऐसा देसी हिसाब बकरा न्यूज़ ही लाता है.",
+    "like": "खटारा गाड़ी की बेइज्जती और पार्किंग माफिया के सच पर दर्शक लाइक दबाएगा.",
+    "save": "1 नवंबर से BS-4 नो-एंट्री और दोगुनी पार्किंग फीस के असली नियम जानने के लिए सेव करेंगे."
+  },
+  "cold_open": {
+    "kind": "bill",
+    "data": {
+      "big": "कार सस्ती, पर्ची सात हज़ार",
+      "shop": "मल्टीलेवल पार्किंग, कनॉट प्लेस",
+      "rows": [
+        [
+          "पुरानी सैंट्रो क़ीमत",
+          "₹6,000"
+        ],
+        [
+          "दोगुनी पार्किंग चार्ज",
+          "₹7,200"
+        ]
+      ],
+      "total": "₹7,200",
+      "note": "कार यहीं छोड़ कर जाएँ."
+    },
+    "lines": [
+      0,
+      1
+    ]
+  },
+  "lines": [
+    {
+      "who": "ramesh",
+      "say": "कनॉट प्लेस में एक भाई ने अपनी पुरानी सैंट्रो ही छोड़ दी.",
+      "caption": "कनॉट प्लेस में एक भाई ने पुरानी सैंट्रो ही छोड़ दी.",
+      "expr": "hairan",
+      "set": "village",
+      "visuals": [
+        "old beat-up santro car parked delhi",
+        "connaught place parking lot crowded",
+        "confused driver holding receipt"
+      ],
+      "photo_hi": [
+        "कनॉट प्लेस पार्किंग",
+        "पुरानी कार दिल्ली"
+      ],
+      "scene_en": "An old battered silver hatchback parked in a crowded Connaught Place parking lot under hazy smog.",
+      "visual": "old beat-up santro car parked delhi",
+      "scene": "studio",
+      "punch": false,
+      "insta": ""
+    },
+    {
+      "who": "bablu",
+      "say": "एक नवंबर से दिल्ली में पुरानी गाड़ियाँ बैन हैं और पार्किंग फ़ीस दोगुनी.",
+      "caption": "1 नवंबर से दिल्ली में पुरानी गाड़ियाँ बैन हैं और पार्किंग फ़ीस दोगुनी.",
+      "expr": "gambhir",
+      "set": "studio",
+      "visuals": [
+        "traffic police checking bs4 cars",
+        "delhi border entry barricade",
+        "news studio graphic double parking fee"
+      ],
+      "photo_hi": [
+        "दिल्ली नो एंट्री गाड़ियाँ",
+        "पार्किंग फीस दोगुनी"
+      ],
+      "scene_en": "News anchor in studio explaining traffic rules with red 'NO ENTRY' graphics for BS-4 vehicles.",
+      "visual": "traffic police checking bs4 cars",
+      "scene": "chacha",
+      "punch": false,
+      "insta": ""
+    },
+    {
+      "who": "ramesh",
+      "say": "गाड़ी की क़ीमत छह हज़ार बची है, पर्चा सात हज़ार दो सौ का बन गया.",
+      "caption": "गाड़ी की क़ीमत ₹6,000 बची है, पर्चा ₹7,200 का बन गया.",
+      "expr": "gussa",
+      "set": "road",
+      "punch": true,
+      "stamp": "कार से महँगा… पर्चा!",
+      "visuals": [
+        "parking ticket machine close up",
+        "hand holding torn paper receipt delhi",
+        "rusty car tire bumper"
+      ],
+      "photo_hi": [
+        "पार्किंग पर्ची चालान",
+        "खटारा कार दिल्ली"
+      ],
+      "scene_en": "An upset car owner holding a long thermal paper receipt next to a rusted hatchback bumper.",
+      "visual": "parking ticket machine close up",
+      "scene": "chacha",
+      "insta": ""
+    },
+    {
+      "who": "chacha",
+      "say": "हमारे ज़माने में कबाड़ी पैसे देता था, अब पार्किंग वाले को दान करना पड़ रहा है.",
+      "caption": "हमारे ज़माने में कबाड़ी पैसे देता था, अब पार्किंग में दान करना पड़ रहा है.",
+      "expr": "tanz",
+      "set": "aangan",
+      "visuals": [
+        "old chacha sitting outside holding lathi",
+        "scrap yard vintage cars india",
+        "cynical elder expression"
+      ],
+      "photo_hi": [
+        "कबाड़ गाड़ी दिल्ली",
+        "चाचा चौपाल तंज"
+      ],
+      "scene_en": "Elderly uncle chuckling sarcastically on a wooden chair while adjusting his spectacles.",
+      "visual": "old chacha sitting outside holding lathi",
+      "scene": "chacha",
+      "punch": false,
+      "insta": ""
+    },
+    {
+      "who": "bablu",
+      "say": "प्रशासन ने अपील की है—सख्त नियमों का पालन करें और प्रदूषण घटाएँ.",
+      "caption": "प्रशासन ने अपील की है—सख्त नियमों का पालन करें और प्रदूषण घटाएँ.",
+      "expr": "gambhir",
+      "set": "studio",
+      "visuals": [
+        "delhi traffic police inspector speaking",
+        "tow truck lifting old vehicle delhi",
+        "smoky delhi road divider"
+      ],
+      "photo_hi": [
+        "दिल्ली पुलिस चालान",
+        "ग्रैप नियम पाबंदी"
+      ],
+      "scene_en": "Anchor presenting breaking updates alongside visuals of a municipal tow truck lifting an impounded vehicle.",
+      "visual": "delhi traffic police inspector speaking",
+      "scene": "chacha",
+      "punch": false,
+      "insta": ""
+    },
+    {
+      "who": "ramesh",
+      "say": "पार्किंग वाले ने चाबी फेंक दी, बोला—कार ले जाओ, पहले पार्किंग का खुल्ला दो.",
+      "caption": "पार्किंग वाले ने चाबी फेंक दी, बोला—कार ले जाओ, पहले पार्किंग का खुल्ला दो.",
+      "expr": "tanz",
+      "set": "village",
+      "punch": true,
+      "stamp": "खुल्ला… निकालो!",
+      "visuals": [
+        "parking attendant shouting receipt booth",
+        "car keys falling ground pavement",
+        "congested delhi parking barrier"
+      ],
+      "photo_hi": [
+        "पार्किंग अटेंडेंट झगड़ा",
+        "दिल्ली पार्किंग नियम"
+      ],
+      "scene_en": "A grumpy uniformed parking attendant throwing car keys back through the booth window, demanding cash.",
+      "visual": "parking attendant shouting receipt booth",
+      "scene": "studio_end",
+      "insta": ""
+    }
+  ],
+  "caption_post": "कनॉट प्लेस में एक भाई ने अपनी पुरानी सैंट्रो ही छोड़ दी. Tag करो उसको जिसकी गाड़ी की क़ीमत पार्किंग के पर्चे से कम है! क्या आपकी कार 1 नवंबर के बाद दिल्ली में घुस पाएगी? स्रोत: Jagran / India TV. #DelhiNCR #PollutionRules #OldCarsBan #ParkingCharges #Bakranews (AI से बने किरदार)",
+  "topic": "1 नवंबर से दिल्ली-एनसीआर में लागू होंगे गाड़ियों के नए नियम, होगी नो-एंट्री",
+  "ref_lines": [],
+  "jaanch": {
+    "pura": {
+      "ok": false,
+      "kyon": "कनॉट प्लेस में कार छोड़ने की गढ़ी हुई घटना बोली गई"
+    },
+    "hasi": {
+      "ok": false,
+      "kyon": "शुरुआती 3 सेकंड में कोई हँसी नहीं आई"
+    },
+    "share": {
+      "ok": true,
+      "kyon": "गाड़ी वाले दोस्तों को line 2 की वजह से"
+    },
+    "daily": {
+      "ok": true,
+      "kyon": "दिल्ली में पार्किंग के भारी ख़र्चे की आम समस्या"
+    },
+    "follow": {
+      "ok": false,
+      "kyon": "पेज पर कुछ हटके नहीं लगा"
+    },
+    "like": {
+      "ok": true,
+      "kyon": "गाड़ी की क़ीमत से ज़्यादा पार्किंग पर्चा बनने वाली बात"
+    },
+    "save": {
+      "ok": false,
+      "kyon": "कोई काम की सलाह या रूल गाइड नहीं"
+    },
+    "ant": {
+      "ok": false,
+      "kyon": "line 4 सरकारी सलाह है और line 5 पंच ढीला है"
+    },
+    "khabar": {
+      "ok": true,
+      "kyon": "पहली 2 lines में खबर पूरी समझ आई"
+    },
+    "dhaga": {
+      "ok": true,
+      "kyon": "पार्किंग फ़ीस और पुरानी गाड़ियों पर lines जुड़ी हैं"
+    }
+  },
+  "connect": {
+    "score": 3,
+    "why": "10 में से 5 सवाल पास",
+    "weak": "",
+    "fix": ""
+  },
+  "_loose": true,
+  "writer": "psych",
+  "format": "explain",
+  "label": "काम की खबर",
+  "key_word": "",
+  "icons": [
+    "₹",
+    "NEWS",
+    "%"
+  ],
+  "ticker": [],
+  "hook": "कनॉट प्लेस में एक भाई ने अपनी पुरानी सैंट्रो ही छोड़ दी.",
+  "hook_text": "कनॉट प्लेस में एक भाई ने अपनी पुरानी सैंट्रो ही छोड़ दी.",
+  "hook_short": "कार से महँगी पार्किंग पर्ची?",
+  "trend": {
+    "score": 8,
+    "why": "37 अख़बार/चैनल 2 दिन में, 96 खबरें 7 दिन में"
+  },
+  "review_status": "audience_sim",
+  "sprite": {
+    "bablu": "assets/toon/bablu",
+    "ramesh": "assets/toon/ramesh",
+    "chacha": "assets/toon/chacha"
+  },
+  "production": true,
+  "style": "flow",
+  "lips": "sadtalker",
+  "renderer": "studio",
+  "no_memes": true,
+  "_production_slot": "2026-11-01_19"
+}
