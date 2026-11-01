@@ -1,4 +1,5 @@
 {
-  "requested_at": null,
-  "reason": "Recovery trigger; scheduled cron is primary"
+  "requested_at": "2026-11-01T11:03:00Z",
+  "slot": "2026-11-01_16",
+  "reason": "16:00 IST slot has no state, cached script, or matching active run; one watchdog recovery"
 }
