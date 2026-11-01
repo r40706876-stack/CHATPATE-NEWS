@@ -60,16 +60,19 @@ def main():
  stills=[];shotlog=[]
  for i,ln in enumerate(lines):
   fp=next((Path(args.faces)/str(i)).rglob('*.mp4'))
-  rd=subprocess.Popen(['ffmpeg','-v','error','-threads','1','-i',str(fp),'-vf',f'fps={FPS},scale={W}:{H}','-f','rawvideo','-pix_fmt','rgb24','-'],stdout=subprocess.PIPE)
+  dims=json.loads(subprocess.check_output(['ffprobe','-v','error','-select_streams','v:0','-show_entries','stream=width,height','-of','json',str(fp)]))['streams'][0]
+  fw,fh=dims['width'],dims['height']
+  rd=subprocess.Popen(['ffmpeg','-v','error','-threads','1','-i',str(fp),'-vf',f'fps={FPS}','-f','rawvideo','-pix_fmt','rgb24','-'],stdout=subprocess.PIPE)
   last=Image.open(root/f'{i}/source.png').convert('RGB')
   text=ln.get('caption') or ln['say'];words=text.split();n=bounds[i+1]-bounds[i]
   print(f'line {i+1}: {n/FPS:.2f}s, existing face, original dialogue',flush=True)
   for t in range(n):
-   raw=rd.stdout.read(W*H*3)
-   if len(raw)==W*H*3:last=Image.frombytes('RGB',(W,H),raw)
+   raw=rd.stdout.read(fw*fh*3)
+   if len(raw)==fw*fh*3:last=Image.frombytes('RGB',(fw,fh),raw)
    # Two-second edits; preserve the actual news photo for factual lines.
    beat=int(t/(FPS*2.0));mode=['split','face','photo'][beat%3]
    if i==0 and beat==0:mode='photo'
+   if i in (2,5) and mode=='split':mode='face'
    hero=event if i in (0,1) else crowd if i==2 else train if i in (3,4) else outer
    im=Image.new('RGB',(W,H),CREAM);d=ImageDraw.Draw(im)
    d.rounded_rectangle(box((24,25,253,80)),p(13),fill=NAVY);txt(d,(40,35),'बकरा न्यूज़',31,(255,255,255))
@@ -79,11 +82,12 @@ def main():
    y=220;z=1.015+.045*(t%(FPS*2))/(FPS*2)
    if mode=='split':
     panel(im,(24,y,672,505),hero,z,fx=.47+.05*math.sin(t/70),fy=.5)
-    panel(im,(24,744,672,355),last.crop((0,590,W,1220)),1.0)
+    panel(im,(24,744,672,355),last.crop((0,560,1080,1400)) if i==0 else last,1.0,fy=.12)
     d=ImageDraw.Draw(im)
     d.rounded_rectangle(box((36,1052,325,1090)),p(8),fill=NAVY);txt(d,(50,1057),names.get(ln['who'],ln['who']),22,(255,255,255))
    elif mode=='face':
-    panel(im,(24,y,672,879),last.crop((0,480,W,1900)),1.015)
+    face_view=last.crop((0,480,1080,1900)) if i==0 else last.crop((280,20,920,870)) if i in (1,4) else last.crop((200,0,880,888)) if i==3 else last
+    panel(im,(24,y,672,879),face_view,1.0,fy=.08)
     panel(im,(462,241,214,162),hero,1)
     d=ImageDraw.Draw(im)
     d.rounded_rectangle(box((36,1046,340,1090)),p(8),fill=NAVY);txt(d,(50,1053),names.get(ln['who'],ln['who']),22,(255,255,255))
