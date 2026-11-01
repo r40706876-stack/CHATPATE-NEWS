@@ -1,5 +1,5 @@
 {
-  "requested_at": "2026-11-01T11:03:00Z",
-  "slot": "2026-11-01_16",
-  "reason": "16:00 IST slot has no state, cached script, or matching active run; one watchdog recovery"
+  "requested_at": "2026-11-01T14:04:00Z",
+  "slot": "2026-11-01_19",
+  "reason": "19:00 IST slot has no recorded state or active matching run; one recovery using finalized 3D Ramesh and SadTalker 512 configuration"
 }
