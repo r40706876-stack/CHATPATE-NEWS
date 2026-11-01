@@ -1,0 +1,123 @@
+{
+  "title": "₹147 में कॉल चालू, रील बंद",
+  "topic": "Jio ₹147 voice SMS only plan 22 days no mobile data",
+  "breaking": "Jio voice और SMS plan: ₹147, 22 दिन, mobile data नहीं",
+  "production": true,
+  "no_gemini": true,
+  "no_clips": true,
+  "lips": "sprite",
+  "style": "flow",
+  "sprite": {
+    "bablu": "assets/toon/bablu",
+    "chacha": "assets/toon/chacha"
+  },
+  "hook": "₹147 में रील चलेगी?",
+  "hook_short": "₹147 में रील चलेगी?",
+  "source": "TelecomTalk; Beebom Gadgets, 31 October 2026",
+  "sources": [
+    {
+      "url": "https://telecomtalk.info/reliancejio-offers-four-voice-smsplans-startingat-rs147/1013473/",
+      "date": "2026-10-31"
+    },
+    {
+      "url": "https://gadgets.beebom.com/news/jio-new-voice-only-prepaid-recharge-plans-launched-india",
+      "date": "2026-10-31"
+    }
+  ],
+  "verified_at": "2026-11-01",
+  "caption_post": "₹147 देखकर data वाला plan मत समझ लेना: 22 दिन, unlimited calls, कुल 300 SMS; mobile data शामिल नहीं। स्रोत: TelecomTalk और Beebom Gadgets, 31 Oct 2026. खरीदने से पहले MyJio में लाभ जाँचें। किरदारों की बातचीत काल्पनिक व्यंग्य है; phone visuals हमारी illustration हैं। #BakraNews #Jio #Recharge #HindiComedy #TechNews",
+  "lines": [
+    {
+      "who": "chacha",
+      "say": "एक सौ सैंतालीस का रिचार्ज! अब दिन भर रील देखूँगा!",
+      "expr": "hasi",
+      "big": "रील चलेगी?",
+      "visual_data": {
+        "app": "रिचार्ज की दुकान",
+        "title": "₹147",
+        "status": "उदाहरण दृश्य",
+        "body": "चाचा: अब रील ही रील!",
+        "btn": [
+          "रुको, पहले पढ़ो"
+        ],
+        "footer": "चित्रण • वास्तविक ऐप नहीं"
+      }
+    },
+    {
+      "who": "bablu",
+      "say": "चाचा, इसमें डेटा नहीं! जियो का ये प्लान सिर्फ कॉल और एसएमएस वाला है।",
+      "expr": "hairan",
+      "big": "मोबाइल डेटा नहीं",
+      "visual_data": {
+        "app": "प्लान के लाभ",
+        "title": "डेटा शामिल नहीं",
+        "body": "Unlimited calls + कुल 300 SMS",
+        "btn": [
+          "लाभ पहले पढ़ें"
+        ],
+        "footer": "स्रोत: TelecomTalk • 31 Oct 2026"
+      }
+    },
+    {
+      "who": "chacha",
+      "say": "मतलब फोन पर बात करो, रील देखने पड़ोसी के वाईफाई पर जाओ!",
+      "expr": "tanz",
+      "punch": true,
+      "big": "पड़ोसी का Wi-Fi?",
+      "visual_data": {
+        "app": "काल्पनिक बातचीत",
+        "title": "चाचा का जुगाड़",
+        "body": "कॉल अपनी • Wi-Fi पड़ोसी का?",
+        "btn": [
+          "पासवर्ड कौन देगा?"
+        ],
+        "footer": "व्यंग्य • हमारी illustration"
+      }
+    },
+    {
+      "who": "bablu",
+      "say": "एक सौ सैंतालीस में बाईस दिन, अनलिमिटेड कॉल और कुल तीन सौ एसएमएस। रोज तीन सौ नहीं!",
+      "expr": "gambhir",
+      "big": "300 SMS कुल",
+      "visual_data": {
+        "app": "₹147 • लाभ जाँच",
+        "title": "22 दिन",
+        "body": "Unlimited calls\\n300 SMS पूरे प्लान में\\nMobile data: नहीं",
+        "btn": [
+          "300 रोज़ नहीं"
+        ],
+        "footer": "स्रोत: TelecomTalk • 31 Oct 2026"
+      }
+    },
+    {
+      "who": "chacha",
+      "say": "तो कॉल वाले पापा को बताओ! मुझे तो डेटा वाला प्लान दिखाओ।",
+      "expr": "hasi",
+      "big": "कॉल वाला प्लान",
+      "visual_data": {
+        "app": "ज़रूरत का हिसाब",
+        "title": "कॉल चाहिए?",
+        "body": "यह voice/SMS plan है\\nरील के लिए इंटरनेट अलग चाहिए",
+        "btn": [
+          "अपनी ज़रूरत चुनें"
+        ],
+        "footer": "चित्रण • वास्तविक ऐप नहीं"
+      }
+    },
+    {
+      "who": "bablu",
+      "say": "दाम देखकर रिचार्ज मत करना। पहले डेटा और वैलिडिटी पढ़ना। घर के रिचार्ज मंत्री को भेज दो!",
+      "expr": "tanz",
+      "big": "पहले लाभ पढ़ो",
+      "visual_data": {
+        "app": "रिचार्ज से पहले",
+        "title": "3 चीज़ें जाँचो",
+        "body": "डेटा • वैलिडिटी • SMS",
+        "btn": [
+          "MyJio में पुष्टि करें"
+        ],
+        "footer": "स्रोत: TelecomTalk, Beebom • 31 Oct 2026"
+      }
+    }
+  ]
+}

@@ -74,6 +74,20 @@ def tighten(wav):
 
 def prep(script_path):
     ep = json.load(open(ROOT / script_path, encoding="utf-8"))
+    if ep.get("no_gemini"):
+        # Prepared, sourced production: never spend Gemini quota on retries.
+        os.environ["TTS_ENGINE"] = "edge"
+        for key_name in list(os.environ):
+            if key_name.startswith("GEMINI_API_KEY"):
+                os.environ.pop(key_name, None)
+        import cold_open
+        visual_dir = IN / "prepared_visuals"
+        visual_dir.mkdir(parents=True, exist_ok=True)
+        for i, ln in enumerate(ep["lines"]):
+            if ln.get("visual_data"):
+                visual_path = visual_dir / f"{i}.png"
+                cold_open.render("phone", ln["visual_data"], visual_path)
+                ln["visual_files"] = [str(visual_path)]
     import tts
     ep["_voice"] = tts.speak_script(ep, IN / "audio")             # कौन-सी आवाज़ लगी (gemini / edge / kokoro)
     ep["_voice_err"] = tts.LAST_ERR[:300]
@@ -116,7 +130,7 @@ def prep(script_path):
             ln["_need_vis"] = False                            # 29 Oct: चाचा के "हमारे ज़माने" पर खबर की फ़ोटो (11PM-5AM घड़ी) = बेमेल
     if ep["lines"]:                                            # पहली line (hook) पर हमेशा तस्वीर — पहला सेकंड ही सब तय करता है
         ep["lines"][0]["_need_vis"] = ep["lines"][0].get("shot") != "close"
-    got = visuals.pick_for_lines(ep["lines"], topic=ep.get("breaking") or ep.get("topic", ""),
+    got = {} if ep.get("no_gemini") else visuals.pick_for_lines(ep["lines"], topic=ep.get("breaking") or ep.get("topic", ""),
                                  strict=True)                    # बिना AI जाँच कोई तस्वीर नहीं (cartoon/model वाली ग़लती)
     for i, paths in got.items():
         for j, path in enumerate(paths):
@@ -172,7 +186,8 @@ def prep(script_path):
             print("  clips वाला हिस्सा छोड़ा:", repr(e)[:150])
     try:                                                       # कल्पना/पंच वाली lines पर अपना AI दृश्य ("same same" नहीं)
         import scene_images
-        scene_images.for_episode(ep, IN / "broll")
+        if not ep.get("no_gemini"):
+            scene_images.for_episode(ep, IN / "broll")
     except Exception as e:                                     # noqa: BLE001
         print("  AI दृश्य वाला हिस्सा छोड़ा:", repr(e)[:150])
     fill_sets(ep)

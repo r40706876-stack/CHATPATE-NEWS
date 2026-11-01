@@ -6,7 +6,7 @@ on:
     paths: ['.github/workflows/talk_episode.yml']
   workflow_dispatch:
     inputs:
-      script: {description: "auto = अभी की खबर से नई script; या episode JSON का path", default: "auto"}
+      script: {description: "auto = अभी की खबर से नई script; या episode JSON का path", default: "episodes/jio_voice_20261101.json"}
       prep: {description: "full / extcrop", default: "full"}
       pose: {description: "सिर हिलने का अंदाज़ 0-45", default: "0"}
       still: {description: "सिर स्थिर (yes = सिर्फ़ होंठ/आँख/चेहरा, शांत anchor जैसा)", default: "yes"}
@@ -40,9 +40,11 @@ jobs:
             || (curl -sL --max-time 120 https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz | tar -xJ -C /tmp && sudo cp /tmp/ffmpeg-*-static/ff* /usr/local/bin/)
           ffmpeg -version | head -1
       - id: p
+        shell: bash
         env:
-          REQUESTED_SCRIPT: ${{ inputs.script }}
+          REQUESTED_SCRIPT: ${{ inputs.script || 'episodes/jio_voice_20261101.json' }}
         run: |
+          set -euo pipefail
           /usr/bin/python3 -m pip install -q --break-system-packages numpy scipy pillow edge-tts rembg onnxruntime "yt-dlp[default]"
           curl -fsSL https://deno.land/install.sh | sh -s -- -y >/dev/null 2>&1; export PATH=$HOME/.deno/bin:$PATH   # YouTube के JS challenge के लिए
           script="$REQUESTED_SCRIPT"
@@ -127,7 +129,7 @@ jobs:
         continue-on-error: true
         with: {pattern: "clip-*", path: st_out, merge-multiple: true}
       - run: |
-          ls -R st_out 2>/dev/null | head -40
+          if [ -d st_out ]; then find st_out -name "*.mp4" -print; fi
           /usr/bin/python3 -m pip install -q --break-system-packages numpy scipy pillow rembg onnxruntime
           /usr/bin/python3 talk_episode.py post
       - name: झलक सेव
