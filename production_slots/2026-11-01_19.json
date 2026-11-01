@@ -1,6 +1,6 @@
 {
-  "status": "prepared",
+  "status": "dispatched",
   "script": "episodes/auto_20261101_1946.json",
   "slot": "2026-11-01_19",
-  "updated_at": 1793542617
+  "updated_at": 1793542704
 }
