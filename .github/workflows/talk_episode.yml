@@ -3,7 +3,7 @@ name: talk-episode
 on:
   workflow_dispatch:
     inputs:
-      script: {description: "episode की JSON (repo में)", default: "episodes/bijli.json"}
+      script: {description: "auto = अभी की खबर से नई script; या episode JSON का path", default: "auto"}
       prep: {description: "full / extcrop", default: "full"}
       pose: {description: "सिर हिलने का अंदाज़ 0-45", default: "0"}
       still: {description: "सिर स्थिर (yes = सिर्फ़ होंठ/आँख/चेहरा, शांत anchor जैसा)", default: "yes"}
@@ -33,10 +33,21 @@ jobs:
             || (curl -sL --max-time 120 https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz | tar -xJ -C /tmp && sudo cp /tmp/ffmpeg-*-static/ff* /usr/local/bin/)
           ffmpeg -version | head -1
       - id: p
+        env:
+          REQUESTED_SCRIPT: ${{ inputs.script }}
         run: |
           /usr/bin/python3 -m pip install -q --break-system-packages numpy scipy pillow edge-tts rembg onnxruntime "yt-dlp[default]"
           curl -fsSL https://deno.land/install.sh | sh -s -- -y >/dev/null 2>&1; export PATH=$HOME/.deno/bin:$PATH   # YouTube के JS challenge के लिए
-          /usr/bin/python3 talk_episode.py prep "${{ inputs.script }}" | tee prep.log
+          script="$REQUESTED_SCRIPT"
+          if [ -z "$script" ] || [ "$script" = "auto" ]; then
+            # Never reuse an old demo or a previously queued news script.
+            rm -f studio_job.txt
+            /usr/bin/python3 run_daily.py direct
+            test -s studio_job.txt || { echo "::error::Fresh news script was not generated; refusing old demo fallback"; exit 1; }
+            script=$(cat studio_job.txt)
+            test -f "$script" || { echo "::error::Generated script is missing"; exit 1; }
+          fi
+          /usr/bin/python3 talk_episode.py prep "$script" | tee prep.log
           echo "lines=$(tail -1 prep.log)" >> $GITHUB_OUTPUT
       - uses: actions/upload-artifact@v4
         with: {name: st_in, path: st_in}
