@@ -505,7 +505,7 @@ def _screen_gen(src, seed, size, bg=None, hero=False):
         im = Image.open(src).convert("RGB")
         t = 0
         mode = seed % 3
-        if "own" in src.name and im.width / im.height > 1.3 * w / h:
+        if "own" in src.name and "_source_photo" not in src.name and im.width / im.height > 1.3 * w / h:
             # अपना बना joke-दृश्य (सूचना/WhatsApp/phone) चौड़ा है और screen लंबी (meme/full): काटो मत — पूरा दिखाओ,
             # पीछे उसी का धुंधला रूप (29 Oct A/B preview: सूचना के अक्षर दोनों तरफ़ से कटे)
             bgi = rv._cover_img(im, w, h, 1.1, 0.5).filter(ImageFilter.GaussianBlur(18))
@@ -550,7 +550,7 @@ def key_phrase(ln):
 
 def _credit(src):
     if isinstance(src, Path) and src.with_suffix(".txt").exists():
-        return " ".join(re.sub(r"[\x00-\x1f\x7f-\x9f]", " ", src.with_suffix(".txt").read_text(encoding="utf-8")).split())[:70]
+        return " ".join(re.sub(r"[\x00-\x1f\x7f-\x9f]", " ", src.with_suffix(".txt").read_text(encoding="utf-8").splitlines()[0] if src.with_suffix(".txt").read_text(encoding="utf-8").splitlines() else "").split())[:70]
     return ""
 
 
@@ -852,6 +852,8 @@ def render(ep, segs, chars, out, preview):
         elif k < FPS * 5:                                       # पहले 5 सेकंड: हर 1.2 सेकंड कुछ बदले (उसके बाद रुकने वाले आख़िर तक रुके)
             cut_s = min(cut_s, 1.2)
         chunk = max(1, int(cut_s * FPS))                        # हर 2 सेकंड नया नज़ारा
+        if ep.get("editorial_mode") == "news_first" and s.get("vis"):
+            chunk = max(1, math.ceil(n / len(vis)))  # Hold the selected source photo/graphic for this explanation.
         need = math.ceil(n / chunk) + int(ep.get("_fix") or 0)
         if shot != "close" and not react and vis and len(vis) < need and not dd:
             # सिर्फ़ zoom बदलने से वही तस्वीर 5 सेकंड "रुकी" दिखती थी (छठ वाली video) — कमी हो तो: line की मुख्य बात
@@ -950,7 +952,7 @@ def render(ep, segs, chars, out, preview):
                 im.paste(_zoomr(fr, zb, 0.18), (dx, BAND_Y))
                 clean = im.copy()                                # बिना लिखाई वाला frame (आख़िरी poll के पीछे)
             d = ImageDraw.Draw(im)
-            if k >= FPS * EARLY_CLEAN and ep.get("style") not in ("nochar", "close", "dd"):   # vidIQ + virality skill (meme/close-up: कोई channel पट्टी नहीं): पहले 2 सेकंड कोई logo/पट्टी नहीं (हर style में) — सिर्फ़ तस्वीर + 4 शब्द
+            if k >= FPS * EARLY_CLEAN and ep.get("style") not in ("nochar", "close", "dd") and ep.get("editorial_mode") != "news_first":   # vidIQ + virality skill (meme/close-up: कोई channel पट्टी नहीं): पहले 2 सेकंड कोई logo/पट्टी नहीं (हर style में) — सिर्फ़ तस्वीर + 4 शब्द
                 chrome_safe(d, k)
             if shot == "split" and k >= FPS * EARLY_CLEAN:
                 badge = f"खबर {ln['item']}/{ln['items_total']}" if ln.get("item") else "ब्रेकिंग"

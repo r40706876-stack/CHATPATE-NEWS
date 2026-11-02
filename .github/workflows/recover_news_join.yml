@@ -39,6 +39,17 @@ jobs:
           merge-multiple: true
           run-id: ${{ inputs.source_run || '41454106654' }}
           github-token: ${{ github.token }}
+      - name: Preserve full-screen source photos
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          for p in Path('st_in/broll').glob('*own*.jpg'):
+              target = p.with_name(p.stem + '_source_photo' + p.suffix)
+              p.rename(target)
+              credit = p.with_suffix('.txt')
+              if credit.exists():
+                  credit.rename(target.with_suffix('.txt'))
+          PY
       - name: Join cached visuals and voices; check and deliver
         run: |
           set -euo pipefail
