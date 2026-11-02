@@ -1,6 +1,9 @@
 {
-  "status": "dispatched",
+  "status": "delivered",
   "script": "episodes/auto_20261102_1337.json",
   "slot": "2026-11-02_13",
-  "updated_at": 1793606953
+  "updated_at": 1793613259,
+  "telegram_delivered_at": 1793613259,
+  "seconds": 25.52,
+  "topic": "दफ्तर में सिर्फ मेहनत काफी नहीं, बॉस को काम दिखाना भी है जरूरी"
 }
