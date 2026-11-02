@@ -1,6 +1,9 @@
 {
-  "status": "dispatched",
+  "status": "delivered",
   "script": "episodes/auto_20261102_0734.json",
   "slot": "2026-11-02_07",
-  "updated_at": 1793585127
+  "updated_at": 1793591799,
+  "telegram_delivered_at": 1793591799,
+  "seconds": 35.16,
+  "topic": "महंगे रिचार्ज से राहत का दावा, जियो लेकर आया 147 रुपये वाले सस्ते प्लान"
 }
