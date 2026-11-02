@@ -1,0 +1,231 @@
+{
+  "premise": "पोस्ट ऑफ़िस ने हर लेन-देन पर दस्तावेज़ अनिवार्य कर दिए, इधर मौसा जी पिछले बीस साल से अपनी ही पहचान साबित कर रहे हैं.",
+  "category": "[दफ़्तर-नौकरी]",
+  "breaking": "पोस्ट ऑफिस में हर लेनदेन के लिए दस्तावेज जरूरी",
+  "hook_screen": "डाकघर में जिंदा होने का सबूत",
+  "source": "Jansatta, Jagran",
+  "tag_who": "सरकारी दफ्तर की लाइन में फंसने वाले दोस्तों को",
+  "ask": "सरकारी काम में सबसे फालतू कागज कौन-सा मांगा गया?",
+  "loop_word": "कागज",
+  "open_loop": "जिंदा होने का स्टैम्प कहां से मिलेगा?",
+  "jawab": {
+    "pura": "काउंटर नंबर दो से चार के चक्कर का सच",
+    "hasi": "सांस पर स्टैम्प न होने वाली बात पर",
+    "share": "डाकघर के चक्कर काटने वाले बुजुर्गों के नाम",
+    "daily": "हर काम के लिए एक नया आईडी प्रूफ मांगना",
+    "follow": "सरकारी कायदे-कानूनों की पोल खोलने के लिए",
+    "like": "काउंटर से भटकाए जाने की असली भड़ास है",
+    "save": "पोस्ट ऑफिस के नए कागजी नियम की जानकारी"
+  },
+  "cold_open": {
+    "kind": "bill",
+    "data": {
+      "shop": "भारतीय डाक घर",
+      "rows": [
+        [
+          "फॉर्म",
+          "₹0"
+        ],
+        [
+          "फोटोकॉपी",
+          "₹10"
+        ]
+      ],
+      "total": "सबूत गायब",
+      "note": "काउंटर नंबर 4 पर जाएं",
+      "big": "सांस पर सरकारी स्टैम्प नहीं"
+    },
+    "lines": [
+      0,
+      1
+    ]
+  },
+  "lines": [
+    {
+      "who": "bablu",
+      "say": "पोस्ट ऑफिस में चाचा से उनके जिंदा होने का ओरिजिनल दाखिला मांगा गया।",
+      "caption": "पोस्ट ऑफिस में चाचा से उनके जिंदा होने का ओरिजिनल दाखिला मांगा गया।",
+      "expr": "gambhir",
+      "set": "studio",
+      "visuals": [
+        "post office counter clerk",
+        "elderly man holding document",
+        "official rubber stamp close-up"
+      ],
+      "photo_hi": [
+        "पोस्ट ऑफिस काउंटर",
+        "सरकारी दस्तावेज"
+      ],
+      "scene_en": "News anchor delivering strange headline with composed deadpan look.",
+      "visual": "post office counter clerk",
+      "scene": "studio",
+      "punch": false,
+      "insta": ""
+    },
+    {
+      "who": "bablu",
+      "say": "डाक विभाग ने हर छोटे बड़े ट्रांजैक्शन के लिए पहचान के ओरिजिनल कागज ज़रूरी कर दिए हैं।",
+      "caption": "डाक विभाग ने हर छोटे बड़े ट्रांजैक्शन के लिए पहचान के ओरिजिनल कागज ज़रूरी कर दिए हैं।",
+      "expr": "gambhir",
+      "set": "studio",
+      "visuals": [
+        "post office passbook stamp",
+        "stack of identity cards",
+        "indian postal office crowd"
+      ],
+      "photo_hi": [
+        "पोस्ट ऑफिस नियम",
+        "पासबुक चेकिंग"
+      ],
+      "scene_en": "Anchor showing postal passbook and official notification.",
+      "visual": "post office passbook stamp",
+      "scene": "chacha",
+      "punch": false,
+      "insta": ""
+    },
+    {
+      "who": "chacha",
+      "say": "मैंने क्लर्क के सामने जोर से सांस खींच कर दिखाई, वो बोला इस सांस पर सरकारी स्टैम्प नहीं है।",
+      "caption": "मैंने क्लर्क के सामने जोर से सांस खींच कर दिखाई, वो बोला इस सांस पर सरकारी स्टैम्प नहीं है।",
+      "expr": "tanz",
+      "set": "office",
+      "visuals": [
+        "old indian man breathing heavy",
+        "clerk sitting behind glass window",
+        "post office queue line"
+      ],
+      "photo_hi": [
+        "डाकघर लाइन",
+        "बुजुर्ग नागरिक"
+      ],
+      "scene_en": "An annoyed elderly uncle speaking passionately at a government office desk.",
+      "punch": true,
+      "stamp": "स्टैम्प लाओ!",
+      "visual": "old indian man breathing heavy",
+      "scene": "chacha",
+      "insta": ""
+    },
+    {
+      "who": "ramesh",
+      "say": "काउंटर नंबर चार वाले ने कहा दो पर जाओ, दो वाले ने कहा चार वाले के पास ही ओरिजिनल जमा है।",
+      "caption": "काउंटर नंबर 4 वाले ने कहा 2 पर जाओ, 2 वाले ने कहा 4 वाले के पास ही ओरिजिनल जमा है।",
+      "expr": "gussa",
+      "set": "office",
+      "visuals": [
+        "counter number sign 4",
+        "confused man walking corridors",
+        "government office files background"
+      ],
+      "photo_hi": [
+        "सरकारी काउंटर",
+        "दफ्तर चक्कर"
+      ],
+      "scene_en": "Young man frustratedly gesturing in front of empty government counter windows.",
+      "visual": "counter number sign 4",
+      "scene": "chacha",
+      "punch": false,
+      "insta": ""
+    },
+    {
+      "who": "bablu",
+      "say": "विभाग ने साफ किया है कि ग्राहक जब तक खुद को साबित न करे, उसका जमा पैसा सुरक्षित रहेगा बिना किसी कागज।",
+      "caption": "विभाग ने साफ किया है कि ग्राहक जब तक खुद को साबित न करे, उसका जमा पैसा सुरक्षित रहेगा बिना किसी कागज।",
+      "expr": "gambhir",
+      "set": "studio",
+      "visuals": [
+        "bank locker iron vault",
+        "postal savings passbook tied",
+        "anchor speaking wrap up"
+      ],
+      "photo_hi": [
+        "डाकघर बचत",
+        "सरकारी नियम"
+      ],
+      "scene_en": "Anchor delivering final deadpan concluding remark.",
+      "visual": "bank locker iron vault",
+      "scene": "studio_end",
+      "punch": false,
+      "insta": ""
+    }
+  ],
+  "caption_post": "पोस्ट ऑफिस में जिंदा होने का दाखिला मांगा? Tag करो उनको जो काउंटर 2 और 4 के बीच घूम रहे हैं! स्रोत: Jansatta #BakraNews #PostOfficeRules #SarkariDaftar #PostOfficeScheme #Bureaucracy",
+  "topic": "दफ्तर में सिर्फ मेहनत काफी नहीं, बॉस को काम दिखाना भी है जरूरी",
+  "ref_lines": [],
+  "jaanch": {
+    "pura": {
+      "ok": true,
+      "kyon": "सरकारी बाबुओं की खिंचाई देखने के लिए रुका"
+    },
+    "hasi": {
+      "ok": true,
+      "kyon": "line 0, ~2 सेकंड में जिंदा दाखिले पर"
+    },
+    "share": {
+      "ok": true,
+      "kyon": "पिताजी को, पेंशन कागजात के चक्कर वाली line"
+    },
+    "daily": {
+      "ok": true,
+      "kyon": "सरकारी दफ्तरों में असली कागज की परेशानी"
+    },
+    "follow": {
+      "ok": true,
+      "kyon": "आम आदमी के दर्द पर करारा मज़ाक"
+    },
+    "like": {
+      "ok": true,
+      "kyon": "काउंटर नंबर चार से दो का चक्कर बिल्कुल सच"
+    },
+    "save": {
+      "ok": false,
+      "kyon": "बचाव का कोई सीधा उपाय नहीं बताया"
+    },
+    "ant": {
+      "ok": true,
+      "kyon": "आखरी लाइन ने पूरी व्यवस्था पर तगड़ा वार किया"
+    },
+    "khabar": {
+      "ok": true,
+      "kyon": "डाक विभाग के नए नियम की पूरी जानकारी मिली"
+    },
+    "dhaga": {
+      "ok": true,
+      "kyon": "हर लाइन पोस्ट ऑफिस की परेशानी से जुड़ी है"
+    }
+  },
+  "connect": {
+    "score": 7,
+    "why": "10 में से 9 सवाल पास",
+    "weak": "",
+    "fix": ""
+  },
+  "writer": "psych",
+  "format": "explain",
+  "label": "काम की खबर",
+  "key_word": "",
+  "icons": [
+    "₹",
+    "NEWS",
+    "%"
+  ],
+  "ticker": [],
+  "hook": "पोस्ट ऑफिस में चाचा से उनके जिंदा होने का ओरिजिनल…",
+  "hook_text": "पोस्ट ऑफिस में चाचा से उनके जिंदा होने का ओरिजिनल…",
+  "hook_short": "डाकघर में जिंदा होने का",
+  "trend": {
+    "score": 6,
+    "why": "17 अख़बार/चैनल 2 दिन में, 69 खबरें 7 दिन में"
+  },
+  "review_status": "audience_sim",
+  "sprite": {
+    "ramesh": "assets/toon/ramesh",
+    "chacha": "assets/toon/chacha",
+    "bablu": "assets/toon/bablu"
+  },
+  "production": true,
+  "style": "flow",
+  "lips": "sadtalker",
+  "renderer": "studio",
+  "no_memes": true,
+  "_production_slot": "2026-11-02_13"
+}
