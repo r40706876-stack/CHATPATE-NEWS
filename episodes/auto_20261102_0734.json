@@ -1,0 +1,245 @@
+{
+  "premise": "336 दिन की वैधता का प्लान तो ले लिया, पर उतने दिन तक बात करने के लिए रिश्तेदार ही कम पड़ गए.",
+  "category": "[महँगाई]",
+  "breaking": "जियो लाया ₹147 में बिना डेटा कॉलिंग प्लान",
+  "hook_screen": "रिश्तेदार ही कम पड़ गए!",
+  "source": "Jagran, Amar Ujala",
+  "tag_who": "उस दोस्त को टैग करो जिसके पापा बिना बात के सबको कॉल मिला देते हैं",
+  "ask": "क्या आप बिना इंटरनेट वाला कॉलिंग रिचार्ज कराएंगे?",
+  "loop_word": "रिचार्ज",
+  "open_loop": "336 दिन तक बातें किस रिश्तेदार से होंगी?",
+  "jawab": {
+    "pura": "रिश्तेदार ख़त्म होने के बाद क्या होगा, यह जानने के लिए दर्शक अंत तक देखेगा.",
+    "hasi": "2 सेकंड में फूफाजी से ज़बरदस्ती बातें करने वाले जोक पर पहली हँसी आएगी.",
+    "share": "लोग अपने दोस्तों और रिश्तेदारों को चिढ़ाने के लिए शेयर करेंगे.",
+    "daily": "बिना काम के रिश्तेदारों को कॉल लगाने की भारतीय आदत से जुड़ा है.",
+    "follow": "रोज़मर्रा की सच्चाई पर बेबाक व्यंग्य के लिए पेज फॉलो करेंगे.",
+    "like": "पापा के रिचार्ज वसूलने वाले अंदाज़ पर दर्शक लाइक देंगे.",
+    "save": "147 रुपये वाले कॉलिंग प्लान की जानकारी के लिए वीडियो सेव करेंगे."
+  },
+  "cold_open": {
+    "kind": "notice",
+    "data": {
+      "big": "336 दिन प्लान, रिश्तेदार ख़त्म!",
+      "office": "दूरसंचार सतर्कता विभाग",
+      "title": "अनलिमिटेड कॉलिंग चेतावनी",
+      "body": "रिचार्ज लंबा है, पर सुनने वाले रिश्तेदार फ़िलहाल उपलब्ध नहीं हैं.",
+      "sign": "अध्यक्ष (फ़ोन संपर्क समिति)"
+    },
+    "lines": [
+      0,
+      1
+    ]
+  },
+  "lines": [
+    {
+      "who": "bablu",
+      "say": "जियो का 147 वाला रिचार्ज कराते ही, देश भर के घरों में बात करने के लिए रिश्तेदार कम पड़ गए.",
+      "caption": "Jio का ₹147 वाला रिचार्ज कराते ही बात करने के लिए रिश्तेदार कम पड़ गए.",
+      "expr": "gambhir",
+      "set": "studio",
+      "visuals": [
+        "indian telecom billboard",
+        "man looking at phone screen",
+        "frustrated mobile user"
+      ],
+      "photo_hi": [
+        "जियो रिचार्ज प्लान",
+        "मोबाइल कॉलिंग"
+      ],
+      "scene_en": "A news anchor sitting at a newsroom desk with a serious expression holding a smartphone.",
+      "punch": true,
+      "stamp": "रिश्तेदार कम पड़े!",
+      "visual": "indian telecom billboard",
+      "scene": "studio",
+      "insta": ""
+    },
+    {
+      "who": "bablu",
+      "say": "जियो बिना इंटरनेट के 147 रुपये में 28 दिन अनलिमिटेड कॉलिंग का नया प्लान लाया है.",
+      "caption": "Jio बिना इंटरनेट के ₹147 में 28 दिन अनलिमिटेड कॉलिंग का प्लान लाया है.",
+      "expr": "gambhir",
+      "set": "studio",
+      "visuals": [
+        "jio store front",
+        "recharge voucher banner",
+        "telecom mobile app screen"
+      ],
+      "photo_hi": [
+        "जियो 147 प्लान",
+        "सस्ता रिचार्ज"
+      ],
+      "scene_en": "A news graphics screen displaying a cheap phone plan flyer with low rates.",
+      "visual": "jio store front",
+      "scene": "chacha",
+      "punch": false,
+      "insta": ""
+    },
+    {
+      "who": "ramesh",
+      "say": "पापा ने 147 का प्लान ले लिया, अब सुबह-शाम फूफाजी को कॉल करके ज़बरदस्ती हाल-चाल पूछ रहे हैं.",
+      "caption": "पापा ने ₹147 का प्लान लिया, अब सुबह-शाम फूफाजी से ज़बरदस्ती हाल-चाल पूछ रहे हैं.",
+      "expr": "tanz",
+      "set": "aangan",
+      "visuals": [
+        "middle aged indian father calling",
+        "annoyed relative on phone",
+        "living room phone call"
+      ],
+      "photo_hi": [
+        "पापा फ़ोन कॉलिंग",
+        "रिश्तेदार बात"
+      ],
+      "scene_en": "An annoyed young man in a room pointing towards his father talking loudly on phone.",
+      "visual": "middle aged indian father calling",
+      "scene": "chacha",
+      "punch": false,
+      "insta": ""
+    },
+    {
+      "who": "chacha",
+      "say": "147 रुपये वसूलने के लिए इन्होंने वो मौसा जी भी खोज निकाले, जो कुंभ में खो गए थे.",
+      "caption": "₹147 वसूलने के लिए 1998 में खोए मौसा जी भी खोज निकाले!",
+      "expr": "tanz",
+      "set": "village",
+      "visuals": [
+        "elderly indian man sitting courtyard",
+        "old feature phone vintage",
+        "traditional village porch"
+      ],
+      "photo_hi": [
+        "चाचा आँगन तंज़",
+        "पुराने फ़ोन"
+      ],
+      "scene_en": "An elderly uncle sitting in a courtyard drinking tea while shaking his head in sarcasm.",
+      "visual": "elderly indian man sitting courtyard",
+      "scene": "chacha",
+      "punch": false,
+      "insta": ""
+    },
+    {
+      "who": "bablu",
+      "say": "बकरा न्यूज़ की रिपोर्ट है, 147 का रिचार्ज कराने वाले अब कस्टमर केयर को भी हाल-चाल सुना रहे हैं.",
+      "caption": "बकरा न्यूज़: ₹147 वाले ग्राहक अब कस्टमर केयर को भी हाल सुना रहे हैं.",
+      "expr": "gambhir",
+      "set": "studio",
+      "visuals": [
+        "call center employee headset",
+        "telecom customer care funny graphic",
+        "anchor reporting live"
+      ],
+      "photo_hi": [
+        "कस्टमर केयर कॉल",
+        "बकरा न्यूज़ रिपोर्ट"
+      ],
+      "scene_en": "A news anchor delivering satire about customer care callers with infographics.",
+      "visual": "call center employee headset",
+      "scene": "chacha",
+      "punch": false,
+      "insta": ""
+    },
+    {
+      "who": "ramesh",
+      "say": "सबका फ़ोन कटते ही पापा रॉन्ग नंबर लगाकर पूछ रहे हैं- भाई साहब, आपके रिश्तेदार कम पड़े क्या?",
+      "caption": "रॉन्ग नंबर लगाकर पापा पूछ रहे हैं- भाई साहब, आपके रिश्तेदार कम पड़े क्या?",
+      "expr": "hasi",
+      "set": "room",
+      "visuals": [
+        "man talking to random caller",
+        "calculating mobile bill",
+        "funny middle class household"
+      ],
+      "photo_hi": [
+        "रॉन्ग नंबर कॉल",
+        "रिचार्ज वसूली"
+      ],
+      "scene_en": "A middle-aged man smiling and talking enthusiastically to a wrong number contact.",
+      "punch": true,
+      "stamp": "रिश्तेदार कम पड़े!",
+      "visual": "man talking to random caller",
+      "scene": "studio_end",
+      "insta": ""
+    }
+  ],
+  "caption_post": "तीन सौ छत्तीस दिन कॉलिंग का रिचार्ज कराया तो रिश्तेदार ही कम पड़ गए! Tag करो उसको जो बिना काम के कॉल मिला देता है. क्या आप बिना इंटरनेट वाला प्लान लेंगे? कमेंट में बताएं. \n\nस्रोत: Jagran, Amar Ujala\n#Jio147Plan #VoiceOnlyRecharge #BakraNews #MiddleClassJokes #DesiHumor #RelatableHindi",
+  "topic": "महंगे रिचार्ज से राहत का दावा, जियो लेकर आया 147 रुपये वाले सस्ते प्लान",
+  "ref_lines": [],
+  "jaanch": {
+    "pura": {
+      "ok": true,
+      "kyon": "पापा रिचार्ज वसूलने के लिए क्या करेंगे जानने रुके."
+    },
+    "hasi": {
+      "ok": true,
+      "kyon": "line 0, ~3 सेकंड में रिश्तेदार कम पड़ने पर."
+    },
+    "share": {
+      "ok": true,
+      "kyon": "दोस्तों को, फूफाजी को ज़बरदस्ती कॉल करने वाली line."
+    },
+    "daily": {
+      "ok": true,
+      "kyon": "सस्ते कॉलिंग प्लान पर घर वालों का सबको फ़ोन घुमाना."
+    },
+    "follow": {
+      "ok": false,
+      "kyon": "WhatsApp जोक्स जैसा अंदाज़ है, कुछ अनोखा नहीं दिखा."
+    },
+    "like": {
+      "ok": true,
+      "kyon": "पापा के पैसे वसूलने की आदत से सब वाक़िफ़ हैं."
+    },
+    "save": {
+      "ok": true,
+      "kyon": "बिना नेट 147 में 28 दिन वाले प्लान की जानकारी के लिए."
+    },
+    "ant": {
+      "ok": true,
+      "kyon": "रॉन्ग नंबर वाला पंच पहली line के हुक को ठीक से बंद करता है."
+    },
+    "khabar": {
+      "ok": true,
+      "kyon": "पहली 2 lines में जियो का 147 रुपये, 28 दिन और अनलिमिटेड कॉलिंग साफ़ है."
+    },
+    "dhaga": {
+      "ok": true,
+      "kyon": "पूरी script 147 का रिचार्ज वसूलने की एक ही दिशा में चलती है."
+    }
+  },
+  "connect": {
+    "score": 6,
+    "why": "10 में से 9 सवाल पास",
+    "weak": "",
+    "fix": ""
+  },
+  "writer": "psych+punchup",
+  "format": "explain",
+  "label": "काम की खबर",
+  "key_word": "",
+  "icons": [
+    "₹",
+    "NEWS",
+    "%"
+  ],
+  "ticker": [],
+  "hook": "जियो का 147 वाला रिचार्ज कराते ही, देश भर के…",
+  "hook_text": "जियो का 147 वाला रिचार्ज कराते ही, देश भर के…",
+  "hook_short": "रिश्तेदार ही कम पड़ गए!",
+  "trend": {
+    "score": 7,
+    "why": "15 अख़बार/चैनल 2 दिन में, 19 खबरें 7 दिन में"
+  },
+  "review_status": "audience_sim",
+  "_loose": true,
+  "sprite": {
+    "bablu": "assets/toon/bablu",
+    "ramesh": "assets/toon/ramesh",
+    "chacha": "assets/toon/chacha"
+  },
+  "production": true,
+  "style": "flow",
+  "lips": "sadtalker",
+  "renderer": "studio",
+  "no_memes": true,
+  "_production_slot": "2026-11-02_07"
+}
