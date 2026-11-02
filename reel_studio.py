@@ -550,7 +550,7 @@ def key_phrase(ln):
 
 def _credit(src):
     if isinstance(src, Path) and src.with_suffix(".txt").exists():
-        return src.with_suffix(".txt").read_text(encoding="utf-8")[:70]
+        return " ".join(re.sub(r"[\x00-\x1f\x7f-\x9f]", " ", src.with_suffix(".txt").read_text(encoding="utf-8")).split())[:70]
     return ""
 
 

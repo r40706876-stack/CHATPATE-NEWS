@@ -1,0 +1,69 @@
+name: recover-news-join
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/recover_news_join.yml']
+  workflow_dispatch:
+    inputs:
+      source_run:
+        description: 'Completed prep and lipsync artifacts run ID'
+        default: '41454106654'
+concurrency:
+  group: bakra-recover-news-join
+  cancel-in-progress: false
+jobs:
+  join:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    permissions: {contents: write, actions: read}
+    env:
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install final-render dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg libraqm0
+          /usr/bin/python3 -m pip install -q --break-system-packages numpy scipy pillow rembg onnxruntime
+      - uses: actions/download-artifact@v4
+        with:
+          name: st_in
+          path: st_in
+          run-id: ${{ inputs.source_run || '41454106654' }}
+          github-token: ${{ github.token }}
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: clip-*
+          path: st_out
+          merge-multiple: true
+          run-id: ${{ inputs.source_run || '41454106654' }}
+          github-token: ${{ github.token }}
+      - name: Join cached visuals and voices; check and deliver
+        run: |
+          set -euo pipefail
+          test -s st_in/episode.json
+          test -s st_in/6/still.png
+          test -s st_in/7/still.png
+          /usr/bin/python3 talk_episode.py post
+      - uses: actions/upload-artifact@v4
+        with:
+          name: final-news-video
+          path: |
+            episode.mp4
+            preview_episode.jpg
+            last_quality.json
+            st_in/visual_manifest.json
+          retention-days: 7
+      - name: Save completed video and delivery record
+        run: |
+          set -euo pipefail
+          git config user.name bakra-production
+          git config user.email bot@users.noreply.github.com
+          cp episode.mp4 last_episode.mp4
+          git add -f last_episode.mp4 preview_episode.jpg last_quality.json last_delivered.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Save completed news-first video after successful delivery"
+            git pull --rebase
+            git push
+          fi
