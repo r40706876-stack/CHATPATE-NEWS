@@ -77,6 +77,10 @@ def normalize_visual_style(ep):
     if ep.get("style") == "dd" and not ep.get("legacy_tv"):
         ep["style"] = "flow"
     if ep.get("production"):
+        from news_first import require_national
+        require_national(ep)
+        ep["editorial_mode"] = "news_first"
+        ep["require_gemini_voice"] = True
         ep.setdefault("no_memes", True)
         ep["lips"] = "sadtalker"
         if any(ln.get("who") == "ramesh" for ln in ep.get("lines", [])):
@@ -358,19 +362,23 @@ def quality(ep):
     """video के साथ Telegram पर: कौन-सी आवाज़ लगी, कितनी lines पर असली तस्वीर/clip — ताकि चुपचाप ख़राब video न जाए."""
     n = len(ep["lines"])
     files = [p for p in (IN / "broll").glob("*") if p.suffix != ".txt"] if (IN / "broll").exists() else []
-    real = {p.name.split("_")[0] for p in files if "_set" not in p.name}
+    graphics = {p.name.split("_")[0] for p in files
+                if p.with_suffix(".txt").exists()
+                and "ग्राफिक" in p.with_suffix(".txt").read_text(encoding="utf-8")}
+    real = {p.name.split("_")[0] for p in files if "_set" not in p.name and p.name.split("_")[0] not in graphics}
     sets = {p.name.split("_")[0] for p in files if "_set" in p.name}
     clips_n = sum("clip" in p.name for p in files)
     v, err = ep.get("_voice") or "?", str(ep.get("_voice_err") or "")
-    json.dump({"voice": v, "voice_err": err, "lines": n, "real_visual_lines": len(real), "set_lines": len(sets),
+    json.dump({"voice": v, "voice_err": err, "lines": n, "real_visual_lines": len(real), "fact_graphic_lines": len(graphics), "set_lines": len(sets),
                "clips": clips_n, "format": ep.get("format", "")}, open(ROOT / "last_quality.json", "w", encoding="utf-8"),
               ensure_ascii=False, indent=1)
     msg = (f"📋 Video जाँच — आवाज़: {'Gemini ✅' if v == 'gemini' else v + ' (backup) ⚠️'}"
            + (f"\n   Gemini आवाज़ क्यों नहीं: {err[:160]}" if v != "gemini" and err else "")
            + f"\n🖼 असली तस्वीर/clip वाली lines: {len(real)}/{n} (YouTube clip: {clips_n})"
+           + (f", तथ्य वाले animation: {len(graphics)}" if graphics else "")
            + (f", अपनी AI तस्वीर: {len(sets)}" if sets else ""))
-    if v != "gemini" or len(real) * 2 < n:
-        msg += "\n⚠️ ये video पूरी quality का नहीं — Gemini का कोटा दोपहर 12:30 के बाद नया होता है, तब दोबारा बनवाना बेहतर।"
+    if v != "gemini" or len(real | graphics) * 2 < n:
+        msg += "\n⚠️ आवाज़ या दृश्य coverage की समीक्षा जरूरी है।"
     return msg
 
 
@@ -515,6 +523,11 @@ def _close_ranges(segs):
 
 
 def post_studio(ep):
+    if ep.get("production"):
+        from news_first import require_national
+        require_national(ep)
+        if ep.get("_voice") != "gemini":
+            raise RuntimeError("Gemini voice is required; production delivery blocked")
     import reel_studio
     segs = []
     for i, ln in enumerate(ep["lines"]):
@@ -523,6 +536,8 @@ def post_studio(ep):
         vis = sorted((p for p in (IN / "broll").glob(f"{i}_*") if p.suffix != ".txt"),   # असली clip सबसे पहले
                      key=lambda p: ("clip" not in p.name and "own" not in p.name, p.name)) if (IN / "broll").exists() else []
         shot = "full" if voice_only(ep, ln) else (ln.get("shot") or pick_shot(ep, i, ln))
+        if ep.get("production") and not voice_only(ep, ln) and ep.get("lips") == "sadtalker" and not clips:
+            raise RuntimeError(f"Missing SadTalker clip for speaking line {i}; refusing a frozen talking face")
         talk = None
         sprite = sprite_of(ep, ln["who"])
         if sprite and (ep.get("lips", "sadtalker") == "sprite" or mascot_lips(ep, ln)):
