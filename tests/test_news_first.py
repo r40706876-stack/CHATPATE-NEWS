@@ -4,13 +4,13 @@ import news_first as nf
 
 class NewsFirst(unittest.TestCase):
     def responses(self):
-        facts = {'publishable': True, 'topic': 'जरूरी सूचना', 'facts': [
+        facts = {'scope_class':'national','national_relevance':'देशभर के बैंक ग्राहकों पर लागू', 'publishable': True, 'topic': 'जरूरी सूचना', 'facts': [
             {'id':'f1','text':'विभाग ने सूचना जारी की','source_ids':['s1']}],
             'sources':[{'id':'s1','name':'विभाग','url':'https://example.org/notice'}]}
         # Deliberately long, single-speaker, no punch, tag or loop; all lines must survive.
         ep = {'topic':'जरूरी सूचना','lines':[{'who':'bablu','say':'जरूरी जानकारी ' * 25,
             'fact_ids':['f1']} for _ in range(12)]}
-        return [[{'topic':'जरूरी सूचना'}],facts,ep,{'ok':True,'issues':[]}]
+        return [[{'topic':'जरूरी सूचना','scope_class':'national','national_relevance':'देशभर के बैंक ग्राहक'}],facts,ep,{'ok':True,'national_scope_ok':True,'issues':[]}]
 
     def test_long_serious_news_preserved(self):
         with patch.object(nf.gemini,'ask_json',side_effect=self.responses()):
@@ -32,6 +32,23 @@ class NewsFirst(unittest.TestCase):
 
     def test_editorial_failure_blocks(self):
         data=self.responses();data[-1]={'ok':False,'issues':['तारीख गलत']}
+        with patch.object(nf.gemini,'ask_json',side_effect=data):
+            with self.assertRaises(ValueError): nf.write({})
+
+    def test_local_or_route_only_news_rejected(self):
+        for scope in ['local', 'regional', 'route_only', None]:
+            with self.subTest(scope=scope), self.assertRaises(ValueError):
+                nf.require_national({'scope_class':scope,'national_relevance':'एक रूट के यात्री'})
+
+    def test_research_can_reject_initial_national_claim(self):
+        data=self.responses()
+        data[1]['scope_class']='route_only'
+        with patch.object(nf.gemini,'ask_json',side_effect=data):
+            with self.assertRaises(ValueError): nf.write({})
+
+    def test_reviewer_rejects_national_scope(self):
+        data=self.responses()
+        data[-1]['national_scope_ok']=False
         with patch.object(nf.gemini,'ask_json',side_effect=data):
             with self.assertRaises(ValueError): nf.write({})
 

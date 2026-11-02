@@ -22,12 +22,17 @@
   "script_requests_max": 24,
   "visual_requests_max": 8,
   "tts_requests_max": 12,
-  "backup_voice": "edge",
+  "backup_voice": null,
   "delivery": "existing TELEGRAM_CHAT_ID",
   "reuse_prepared_script_on_retry": true,
   "lipsync": "SadTalker 512 for every speaking character; no amplitude-only sprite mouths",
   "editorial_mode": "news_first",
   "duration_limit_seconds": null,
   "required_comedy": false,
-  "topic_priority": "public importance, urgency, usefulness, source evidence"
+  "topic_priority": "national public impact, importance, urgency, source evidence",
+  "audience_scope": "national",
+  "exclude_local_news": true,
+  "exclude_single_route_train_news": true,
+  "require_national_impact_evidence": true,
+  "required_voice": "gemini"
 }

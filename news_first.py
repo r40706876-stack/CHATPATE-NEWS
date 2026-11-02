@@ -10,14 +10,21 @@ import xml.etree.ElementTree as ET
 import gemini
 
 QUERIES = {
-    'जनहित/नियम': 'भारत जरूरी नया नियम समय सीमा आधिकारिक सूचना',
-    'पैसा/बैंक': 'RBI बैंक ग्राहक UPI पेंशन जरूरी सूचना',
-    'रोजगार/परीक्षा': 'भर्ती परीक्षा तारीख बदलाव आधिकारिक सूचना',
-    'सफर': 'रेलवे यात्री ट्रेन बदलाव आधिकारिक सूचना',
-    'सेवाएं/सुरक्षा': 'बिजली पानी साइबर ठगी चेतावनी उपभोक्ता',
-    'मौसम/स्वास्थ्य': 'IMD मौसम चेतावनी स्वास्थ्य सार्वजनिक सलाह भारत',
+    'जेब/महंगाई': 'भारत राष्ट्रीय LPG पेट्रोल महंगाई उपभोक्ता नया बदलाव',
+    'बैंकिंग/भुगतान': 'RBI NPCI UPI बैंक ग्राहक देशभर नया नियम',
+    'नौकरी/पढ़ाई': 'भारत राष्ट्रीय रोजगार भर्ती परीक्षा शिक्षा महत्वपूर्ण बदलाव',
+    'रेलवे/यात्रा नियम': 'भारतीय रेलवे देशभर यात्री टिकट रिफंड आरक्षण नियम बदलाव',
+    'मोबाइल/डिजिटल सुरक्षा': 'TRAI भारत मोबाइल रिचार्ज स्पैम साइबर ठगी राष्ट्रीय चेतावनी',
+    'जनहित/अधिकार': 'भारत राष्ट्रीय जनहित पेंशन उपभोक्ता अधिकार आधिकारिक सूचना',
 }
-BRIEF = '''बकरा न्यूज़ अब NEWS-FIRST है: जरूरी, ताजा, विश्वसनीय खबर और उसका लोगों पर असर मुख्य है।
+BRIEF = '''दर्शक पूरे भारत में हैं। केवल NATIONAL-RELEVANCE खबर चुनो: अलग-अलग राज्यों के आम लोगों
+की जेब, नौकरी, पढ़ाई, बैंकिंग, मोबाइल, अधिकार या रोजमर्रा पर सीधा और व्यापक असर।
+एक शहर/जिले की घटना, किसी एक रूट पर नई ट्रेन, उद्घाटन, स्थानीय मौसम/अपराध या केवल एक क्षेत्र
+के लोगों के काम की खबर मुख्य विषय नहीं। राष्ट्रीय अखबार में छपना राष्ट्रीय असर का प्रमाण नहीं।
+रेलवे का देशभर में लागू टिकट/रिफंड/आरक्षण नियम लिया जा सकता है; बेंगलुरु-मुंबई जैसी एक ट्रेन नहीं।
+'सब इससे relate करेंगे' कहने भर से local खबर को national मत बनाओ; स्रोतों से व्यापक असर साबित हो।
+देशभर की महत्वपूर्ण खबर न मिले तो साफ रुक जाओ; local/comedy fallback नहीं।
+बकरा न्यूज़ अब NEWS-FIRST है: जरूरी, ताजा, विश्वसनीय खबर और उसका लोगों पर असर मुख्य है।
 खबर को मजाकिया/वायरल/अजीब होने की जरूरत नहीं। महत्व = असर, तात्कालिकता, उपयोगिता और प्रमाण।
 मजाक या हल्का पंच तभी जब स्वाभाविक हो; जरूरत न हो तो बिल्कुल नहीं। पीड़ितों पर मजाक नहीं।
 समय, शब्द, पहली line, lines, किरदारों की संख्या, punch की संख्या का कोई तय कोटा नहीं।
@@ -28,6 +35,12 @@ BRIEF = '''बकरा न्यूज़ अब NEWS-FIRST है: जरू�
 तथ्य, तारीख, राशि, लागू क्षेत्र, प्रस्ताव बनाम लागू नियम और अपवाद सही हों। अज्ञात बात साफ बताओ।
 मनगढ़ंत उद्धरण, फीस, आंकड़ा, 'विशेषज्ञों का कहना है' या मजाक को असली खबर की तरह नहीं लिखना।
 '''
+
+
+def require_national(item):
+    """Editorial audience scope, separate from entertainment/length preferences."""
+    if item.get('scope_class') != 'national' or not str(item.get('national_relevance', '')).strip():
+        raise ValueError('Only nationally relevant news is allowed; local/route-only news is excluded')
 
 
 def collect(feed_file=None):
@@ -83,23 +96,25 @@ def write(c, n=1):
     today = dt.datetime.now(dt.timezone(dt.timedelta(hours=5, minutes=30))).isoformat()
     picks = gemini.ask_json(BRIEF + '\nआज IST: ' + today + '\nखबरों की सूची:\n' + json.dumps(c, ensure_ascii=False) +
         f'\nसिर्फ {n} सबसे महत्वपूर्ण विषय चुनो। हाल की खबर में जरूरी नई जानकारी हो तो फिर ले सकते हो। '
-        'सिर्फ JSON list: [{"topic":"...", "importance_reason":"किस पर क्या असर", "query":"..."}]',
+        'सिर्फ JSON list: [{"topic":"...", "importance_reason":"किस पर क्या असर", "query":"...", "scope_class":"national", "national_relevance":"अलग राज्यों के किन लोगों पर क्या सीधा असर"}]',
         json_mode=True, temperature=0.2)
     if not isinstance(picks, list) or not picks:
         raise ValueError('No important news selected')
     episodes = []
     for pick in picks[:n]:
+        require_national(pick)
         facts = gemini.ask_json(BRIEF + '\nआज IST: ' + today + '\nGoogle Search से इस विषय की वर्तमान जानकारी जाँचो: ' +
             json.dumps(pick, ensure_ascii=False) + '\nशीर्षक से निष्कर्ष मत निकालो। मूल आधिकारिक नोटिस/दस्तावेज '
             'प्राथमिकता है; उपलब्ध न हो तो विश्वसनीय रिपोर्ट का सही श्रेय और सीमा बताओ। '
             'स्रोत में न मिले अंक/तारीख मत जोड़ो। पुष्टि न हो तो publishable=false। '
-            'सिर्फ JSON: {"publishable":true,"topic":"...","importance_reason":"...",'
+            'सिर्फ JSON: {"publishable":true,"topic":"...","importance_reason":"...","scope_class":"national","national_relevance":"स्रोतों से व्यापक असर का प्रमाण",'
             '"facts":[{"id":"f1","text":"...","source_ids":["s1"]}],'
             '"sources":[{"id":"s1","name":"...","url":"https://...","date":"..."}],'
             '"unknowns":[],"scope":"कहां/किस पर लागू","action":"दर्शक को क्या करना है"}',
             search=True, temperature=0.1)
         if not isinstance(facts, dict) or facts.get('publishable') is not True:
             raise ValueError('News facts could not be confirmed')
+        require_national(facts)
         sources = facts.get('sources') or []
         if not sources or any(not isinstance(s, dict) or urllib.parse.urlparse(str(s.get('url', ''))).scheme not in ('https', 'http')
                               or not s.get('name') or not s.get('id') for s in sources):
@@ -124,11 +139,13 @@ def write(c, n=1):
             if line.get('satire') is not True and (not line.get('fact_ids') or not set(line['fact_ids']) <= fact_ids):
                 raise ValueError('News line has no valid fact reference')
         review = gemini.ask_json(BRIEF + '\nतथ्य और script की संपादकीय जाँच करो। अवधि/comedy/tag पर अंक नहीं। '
-            'हर line का दावा प्रमाण से मिलता है? scope/date/exception सही? कोई जरूरी बात छूटी या satire तथ्य जैसा है? '
+            'क्या राष्ट्रीय असर स्रोत में साबित है, या यह केवल स्थानीय/एक रूट की खबर है? national_scope_ok उसी आधार पर दो। हर line का दावा प्रमाण से मिलता है? scope/date/exception सही? कोई जरूरी बात छूटी या satire तथ्य जैसा है? '
             + json.dumps({'facts': facts, 'script': ep}, ensure_ascii=False) +
-            '\nJSON: {"ok":true,"issues":[]}', json_mode=True, temperature=0.1)
-        if not isinstance(review, dict) or review.get('ok') is not True or review.get('issues'):
+            '\nJSON: {"ok":true,"national_scope_ok":true,"issues":[]}', json_mode=True, temperature=0.1)
+        if not isinstance(review, dict) or review.get('ok') is not True or review.get('national_scope_ok') is not True or review.get('issues'):
             raise ValueError('News editorial review failed: ' + str(review))
+        ep['scope_class'] = 'national'
+        ep['national_relevance'] = facts['national_relevance']
         ep['source'] = ', '.join(s['name'] for s in sources)
         ep['sources'], ep['fact_pack'] = sources, facts
         ep = normalize(ep)
