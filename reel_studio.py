@@ -997,7 +997,7 @@ def render(ep, segs, chars, out, preview):
                         karaoke_safe(d, cap_text, t / n, cy, span)
             if dd:
                 pass
-            elif si == 0 and not react and not st_text and t == int(HOOK_EVENT * FPS) and not ep.get("cold_open") \
+            elif si == 0 and not react and not st_text and t == int(HOOK_EVENT * FPS) and not ep.get("cold_open") and ep.get("editorial_mode") != "news_first" \
                     and ep.get("style") not in ("nochar", "close"):   # hook का "event" (cold open के joke को न ढके)
                 st_text, st_t = ep.get("hook_stamp") or "अधपकी खबर!", 0
             if bool(ln.get("punch")) and not react and not st_text and t >= n * 0.6 and not dd:

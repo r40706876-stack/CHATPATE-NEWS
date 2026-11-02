@@ -25,5 +25,9 @@
   "backup_voice": "edge",
   "delivery": "existing TELEGRAM_CHAT_ID",
   "reuse_prepared_script_on_retry": true,
-  "lipsync": "SadTalker 512 for every speaking character; no amplitude-only sprite mouths"
+  "lipsync": "SadTalker 512 for every speaking character; no amplitude-only sprite mouths",
+  "editorial_mode": "news_first",
+  "duration_limit_seconds": null,
+  "required_comedy": false,
+  "topic_priority": "public importance, urgency, usefulness, source evidence"
 }

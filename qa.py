@@ -2,7 +2,6 @@
 बनी video की अपने-आप जाँच (Telegram पर भेजने से पहले) — वही कमियाँ जो बार-बार हाथ से पकड़नी पड़ती थीं:
   1. ऊपर की screen पर एक ही नज़ारा 3 सेकंड से ज़्यादा (video "रुकी" लगती है)
   2. ऊपर की screen ख़ाली/काली/धुंधली
-  3. कुल लंबाई 30 सेकंड से ज़्यादा
   4. पहले 3 सेकंड में ऊपर कोई बदलाव/हरकत नहीं
 नतीजा: [कमियाँ] — ख़ाली list = पास.
 """
@@ -29,9 +28,6 @@ def check(video, tail=0.3, allow=()):
         return ["video बहुत छोटी या पढ़ी नहीं गई"]
     body = f[: max(FPS * 3, len(f) - int(tail * FPS))]       # आख़िरी ठहराव छोड़कर
     issues = []
-    secs = len(f) / FPS
-    if secs > 75:                                         # मालिक (28 Oct): "video भले लंबी बने" — 40 पर अच्छी video रुक जाती थी
-        issues.append(f"लंबाई {secs:.0f} सेकंड (75 से ज़्यादा)")
     # "वही तस्वीर" = zoom/pan होने पर भी बहुत छोटे (16x12) रूप में scene की शुरुआत जैसी दिखे; cut = पिछले frame से बड़ा फ़र्क
     tiny = [b[::8, ::8].ravel() for b in body]
     cut = np.abs(np.diff(body, axis=0)).mean(axis=(1, 2)) > 18
@@ -74,14 +70,14 @@ def _onset(wav):
 
 
 def targets(video, first_wav=None):
-    """virality skill के लक्ष्य (दोबारा बनाने से नहीं बदलते — सिर्फ़ रिपोर्ट): लंबाई 13-20 सेकंड, पहला शब्द ≤ 0.5 सेकंड."""
+    """तकनीकी रिपोर्ट: अवधि और पहली आवाज़ का समय; संपादकीय अवधि की सीमा नहीं."""
     r = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(video)],
                        capture_output=True, text=True).stdout.strip()
     secs = float(r or 0)
-    out = [f"⏱️ लंबाई {secs:.1f} सेकंड " + ("✅" if secs <= 20 else "⚠️ (लक्ष्य 13-18 — 70% देखा जाना मुश्किल)")]
+    out = [f"⏱️ लंबाई {secs:.1f} सेकंड — खबर की जरूरत के अनुसार; कोई तय अवधि नहीं"]
     on = _onset(first_wav) if first_wav else None
     if on is not None:
-        out.append(f"🗣️ पहला शब्द {on:.2f} सेकंड पर " + ("✅" if on <= 0.5 else "⚠️ (0.5 से पहले चाहिए)"))
+        out.append(f"🗣️ पहला शब्द {on:.2f} सेकंड पर")
     return "🎯 Virality जाँच: " + " | ".join(out)
 
 

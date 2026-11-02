@@ -411,6 +411,9 @@ def finish(ep, strict=True):
     """नए v4 ढाँचे वाले episode को पक्का करो. strict=False: लंबाई की सख़्ती ढीली (कुछ भी न बने, उससे अच्छा).
     पक्के नियम (असली आँकड़ों से): पहली line = मज़ाक वाला hook ≤ 12 शब्द, कुल ≤ 78 शब्द, "वीडियो भेजो" वाली line नहीं,
     hook (screen) = पहली बोली गई line, reaction वाला ठहराव नहीं, ज़्यादा से ज़्यादा 2 पंच."""
+    if ep.get("editorial_mode") == "news_first":
+        from news_first import normalize
+        return normalize(ep)
     ep["format"], ep["label"] = "explain", "काम की खबर"
     ep.setdefault("key_word", "")
     ep.setdefault("icons", ["₹", "NEWS", "%"])

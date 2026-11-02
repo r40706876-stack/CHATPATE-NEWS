@@ -48,8 +48,8 @@ def preview(eps):
     out = [f"🐐 बकरा न्यूज़ — आज की {len(eps)} scripts ({ist():%d %b, %I:%M %p})"]
     for i, ep in enumerate(eps, 1):
         out.append(f"\n━━━━━━━━━━  {i}  ━━━━━━━━━━")
-        out.append("🔥 बकरा बहस" if ep.get("format") == "rant" else
-                   "⚡ एक पंच (8-10 सेकंड, loop — retention experiment)" if ep.get("kind") == "punch" else
+        out.append("📰 जरूरी खबर" if ep.get("editorial_mode") == "news_first" else "🔥 बकरा बहस" if ep.get("format") == "rant" else
+                   "⚡ एक पंच" if ep.get("kind") == "punch" else
                    "📺 नकली ऐड (नया format — TV-shop वाला ऑफ़र → असली खबर → चाचा → loop)" if ep.get("kind") == "tvshop" else "📰 वायरल खबर")
         out.append(f"📰 {ep.get('topic') or ep.get('breaking', '')}")
         if ep.get("insta_used"):
@@ -100,80 +100,9 @@ def preview(eps):
 
 
 def write_scripts(news, n):
-    """दोनों format एक साथ (मालिक का फ़ैसला: दोनों डालकर देखेंगे, जो viral होगा उसी पर बढ़ेंगे):
-    आधी "🔥 बकरा बहस" (भड़का anchor-rant) + आधी "📰 वायरल खबर" (पुराना काम-की-खबर ढाँचा). खबरें/तथ्य एक ही बार (Gemini बचे).
-    FORMAT=rant या FORMAT=news हो तो सिर्फ़ वही."""
-    import gemini
-    import news_writer
-    import rant_writer
-    fmt = os.getenv("FORMAT", "both")
-    c = news_writer._safe(news)
-    packs, picks = news_writer.gather(c, n)
-    if news_writer.PSYCH and fmt == "both":
-        # 29 Oct (मालिक: "जो pipeline कल रात बनाई उसी हिसाब से काम करो"): सिर्फ़ नया psych writer (cold open, 10 सवाल,
-        # असली data से सीख). पुराने rant/punch/नकली ऐड writers पहले सारा Gemini कोटा खा जाते थे और नया writer चलता ही नहीं था.
-        eps = news_writer.write_from(c, packs, picks, n)
-        import bakra_rules
-        ok = [e for e in eps if not bakra_rules.violations(e)]
-        for e in eps:
-            if bakra_rules.violations(e):
-                print("  ❌ नियम टूटा, हटाई:", e.get("topic"), bakra_rules.violations(e))
-                e["_loose"] = True
-        return ok or eps
-    n_rant = n if fmt == "rant" else 0 if fmt == "news" else (n + 1) // 2
-    rants, newsy = [], []
-    if n_rant:
-        try:
-            rants = rant_writer.write_from(c, packs, picks, n_rant)
-        except gemini.QuotaOver:
-            raise
-        except (Exception, SystemExit) as e:               # noqa: BLE001
-            print("  बकरा बहस नहीं बनी:", repr(e)[:200])
-    if len(rants) < n:
-        used = set(c.get("rant_topics") or [])
-        rest = [p for p in packs if str(p.get("topic", "")) not in used]
-        rest = rest if len(rest) >= 2 else packs            # अलग खबरें हों तो अलग, वरना वही खबर दूसरे अंदाज़ में
-        try:
-            newsy = news_writer.write_from(c, rest, picks, n - len(rants))
-        except (gemini.QuotaOver, news_writer.NoViral):
-            if not rants:
-                raise
-        except (Exception, SystemExit) as e:               # noqa: BLE001
-            print("  वायरल खबर वाली नहीं बनी:", repr(e)[:200])
-            if not rants:
-                raise
-    for e in newsy:
-        e.setdefault("label", "वायरल खबर")
-    out = []                                               # बारी-बारी: 🔥, 📰, 🔥, 📰…
-    for k in range(max(len(rants), len(newsy))):
-        out += rants[k:k + 1] + newsy[k:k + 1]
-    punch = []                                             # ⚡ एक पंच (8-10 सेकंड, loop) — retention वाला experiment, रोज़ 1 विकल्प
-    if os.getenv("PUNCH", "1") == "1" and fmt == "both" and n >= 3:
-        try:
-            import punch_writer
-            punch = punch_writer.write_from(c, packs, picks, 1)
-        except gemini.QuotaOver:
-            pass
-        except (Exception, SystemExit) as e:               # noqa: BLE001
-            print("  एक पंच नहीं बना:", repr(e)[:200])
-    tv = []                                                # 📺 नकली ऐड — मालिक का चुना नया format (25 Oct), रोज़ 1 विकल्प सबसे ऊपर
-    if os.getenv("TVSHOP", "1") == "1" and fmt == "both":
-        try:
-            import tvshop_writer
-            tv = tvshop_writer.write_from(c, packs, picks, 1)
-        except gemini.QuotaOver:
-            pass
-        except (Exception, SystemExit) as e:               # noqa: BLE001
-            print("  नकली ऐड नहीं बना:", repr(e)[:200])
-    eps = (tv + punch + out)[:n]
-    import bakra_rules                                     # मालिक के पक्के नियम: टूटी script Telegram तक नहीं (सब टूटीं तो ⚠️ के साथ)
-    ok = [e for e in eps if not bakra_rules.violations(e)]
-    for e in eps:
-        v = bakra_rules.violations(e)
-        if v:
-            print("  ❌ नियम टूटा, हटाई:", e.get("topic"), v)
-            e["_loose"] = True
-    return ok or eps
+    """Important, sourced news first; optional natural satire, no duration quota."""
+    import news_first
+    return news_first.write(news, n)
 
 
 def do_write(feed=None):
@@ -182,7 +111,8 @@ def do_write(feed=None):
     import telegram
     import topics
     try:                                               # काम की खबर, देसी अंदाज़ (Gemini के सिर्फ़ 3 call)
-        news = topics.collect_news(feed)
+        import news_first
+        news = news_first.collect(feed)
         try:
             eps = write_scripts(news, 6)
         except (gemini.QuotaOver, news_writer.NoViral):
@@ -237,13 +167,13 @@ def direct_due():
 
 
 def do_direct(feed=None):
-    """30 Oct (मालिक): सुबह 7 से रात 9 तक हर 3 घंटे — सबसे चर्चित खबर पर व्यंग्य script ख़ुद चुनो और सीधे video बनाओ.
-    Telegram पर script नहीं, सिर्फ़ video. मज़ाक कम हो तो भी चलेगा, खबर मुख्य."""
+    """Scheduled news-first production: important news, natural optional satire, no length quota."""
     import gemini
     import topics
     os.environ["DIRECT"] = "1"
     try:
-        news = topics.collect_news(feed)
+        import news_first
+        news = news_first.collect(feed)
         eps = write_scripts(news, 1)
     except gemini.QuotaOver:
         print("  आज का Gemini कोटा ख़त्म — इस बारी video नहीं")
