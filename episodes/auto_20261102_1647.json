@@ -1,0 +1,258 @@
+{
+  "premise": "पति ने मंदिर में पत्नी की शादी प्रेमी से कराई और खुद चाय का बिल भरकर घर लौट आया.",
+  "category": "[शादी-रिश्ते]",
+  "breaking": "पति ने मंदिर में कराई पत्नी और प्रेमी की शादी",
+  "hook_screen": "पति ने खुद थमाया नारियल!",
+  "source": "Prabhat Khabar, Amar Ujala",
+  "tag_who": "शादी और मुकदमों के डर से परेशान शादीशुदा दोस्तों को भेजें",
+  "ask": "क्या 3 लाख की फीस बचाने का यह तरीका सही था?",
+  "loop_word": "शादी",
+  "open_loop": "पति ने पत्नी को प्रेमी संग पकड़कर क्या अनोखा फैसला लिया?",
+  "jawab": {
+    "pura": "वकील की फीस और चाय के बिल वाले तंज़ को सुनने के लिए पूरा देखेंगे.",
+    "hasi": "वकील की फीस बनाम चाय का बिल वाले लॉजिक पर हँसी आएगी.",
+    "share": "पति-पत्नी के चुटकुलों के शौकीन लोग व्हाट्सएप ग्रुप्स में शेयर करेंगे.",
+    "daily": "कोर्ट-कचहरी के लंबे मुकदमों का डर सबको होता है.",
+    "follow": "अनूठे सामाजिक विवादों के व्यंग्य के लिए फॉलो करेंगे.",
+    "like": "तलाक के लंबे मुकदमों पर करारे तंज़ के लिए लाइक करेंगे.",
+    "save": "अनोखी खबर के तौर पर सेव करेंगे."
+  },
+  "cold_open": {
+    "kind": "bill",
+    "data": {
+      "big": "शादी: ₹20 की चाय | वकील: 3 लाख!",
+      "shop": "मंदिर के बाहर चाय की टपरी",
+      "rows": [
+        [
+          "शादी का नारियल",
+          "₹50"
+        ],
+        [
+          "कटिंग चाय x3",
+          "₹30"
+        ],
+        [
+          "वकील की फीस बचत",
+          "-₹3,00,000"
+        ]
+      ],
+      "total": "₹80",
+      "note": "तलाक का त्वरित निपटारा"
+    },
+    "lines": [
+      0,
+      1
+    ]
+  },
+  "lines": [
+    {
+      "who": "bablu",
+      "say": "पति ने पत्नी को प्रेमी संग पकड़ा और तुरंत पंडित जी को नारियल पकड़ा दिया.",
+      "caption": "पति ने पत्नी को प्रेमी संग पकड़ा और तुरंत पंडित जी को नारियल पकड़ा दिया.",
+      "expr": "gambhir",
+      "set": "studio",
+      "visuals": [
+        "indian temple entrance ritual setup",
+        "bride and groom exchanging garlands temple",
+        "man standing calmly watching wedding"
+      ],
+      "photo_hi": [
+        "शाहजहांपुर मंदिर शादी विवाद",
+        "पति पत्नी प्रेमी शादी"
+      ],
+      "scene_en": "A husband calmly handing a wedding coconut to a temple priest while a couple stands behind.",
+      "visual": "indian temple entrance ritual setup",
+      "scene": "studio",
+      "punch": false,
+      "insta": ""
+    },
+    {
+      "who": "bablu",
+      "say": "शाहजहांपुर के मंदिर में पति की सहमति से पत्नी की प्रेमी संग शादी कराई गई.",
+      "caption": "शाहजहांपुर के मंदिर में पति की सहमति से पत्नी की प्रेमी संग शादी कराई गई.",
+      "expr": "gambhir",
+      "set": "studio",
+      "visuals": [
+        "shahjahanpur temple wedding rituals",
+        "marriage agreement paper stamp sheet",
+        "crowd gathered inside temple compound"
+      ],
+      "photo_hi": [
+        "शाहजहांपुर खबर मंदिर विवाह",
+        "पति की सहमति शादी"
+      ],
+      "scene_en": "A priest chanting mantras inside a temple with three people standing quietly around the fire.",
+      "visual": "shahjahanpur temple wedding rituals",
+      "scene": "chacha",
+      "punch": false,
+      "insta": ""
+    },
+    {
+      "who": "ramesh",
+      "say": "पूछा दुख नहीं हुआ? बोला वकील की फीस से तीन लाख रुपये बच गए.",
+      "caption": "पूछा दुख नहीं हुआ? बोला वकील की फीस से ₹3 लाख बच गए.",
+      "expr": "hasi",
+      "set": "village",
+      "punch": true,
+      "stamp": "₹3 लाख की बचत!",
+      "visuals": [
+        "man drinking tea outside court campus",
+        "lawyer carrying heavy bundle of case files",
+        "smiling man counting savings on hand"
+      ],
+      "photo_hi": [
+        "कोर्ट केस वकील फीस",
+        "पति राहत शादी"
+      ],
+      "scene_en": "A relieved young man sipping tea outside a courthouse compound smiling broadly.",
+      "visual": "man drinking tea outside court campus",
+      "scene": "chacha",
+      "insta": ""
+    },
+    {
+      "who": "chacha",
+      "say": "हमारे ज़माने में केस सालों चलते थे, अब चाय के बिल पर फ़ैसले हो रहे हैं.",
+      "caption": "हमारे ज़माने में केस सालों चलते थे, अब चाय के बिल पर फ़ैसले हो रहे हैं.",
+      "expr": "tanz",
+      "set": "village",
+      "visuals": [
+        "old man adjusting reading glasses court outside",
+        "tea stall bill paper receipt close up",
+        "old district court building facade"
+      ],
+      "photo_hi": [
+        "बुजुर्ग केस अनुभव",
+        "चाय का बिल फैसला"
+      ],
+      "scene_en": "An elder sitting on a bench holding a paper tea cup looking thoughtful.",
+      "visual": "old man adjusting reading glasses court outside",
+      "scene": "chacha",
+      "punch": false,
+      "insta": ""
+    },
+    {
+      "who": "bablu",
+      "say": "कानूनी जानकारों का कहना है कि चाय का बिल मुकदमों से ज़्यादा किफ़ायती है.",
+      "caption": "कानूनी जानकारों का कहना है कि चाय का बिल मुकदमों से ज़्यादा किफ़ायती है.",
+      "expr": "gambhir",
+      "set": "studio",
+      "visuals": [
+        "legal scale of justice sitting on desk",
+        "news studio anchor deadpan expression",
+        "advocate signing agreement papers"
+      ],
+      "photo_hi": [
+        "लीगल राय वकील सलाह",
+        "विवाहिक समझौता"
+      ],
+      "scene_en": "News anchor delivering a dry commentary with scales of justice graphic in background.",
+      "visual": "legal scale of justice sitting on desk",
+      "scene": "studio",
+      "punch": false,
+      "insta": ""
+    },
+    {
+      "who": "bablu",
+      "say": "पति घर लौट आया, पर पंडित जी अभी भी शादी के बिल का इंतज़ार कर रहे हैं.",
+      "caption": "पति घर लौट आया, पर पंडित जी अभी भी शादी के बिल का इंतज़ार कर रहे हैं.",
+      "expr": "gambhir",
+      "set": "studio",
+      "punch": true,
+      "stamp": "पंडित जी का बिल!",
+      "visuals": [
+        "husband walking away calmly single",
+        "temple priest looking confused holding register",
+        "temple outer gate view"
+      ],
+      "photo_hi": [
+        "मंदिर विवाह पंडित",
+        "पति घर वापसी"
+      ],
+      "scene_en": "Final shot of a husband walking away satisfied while the temple priest looks at an unpaid bill.",
+      "visual": "husband walking away calmly single",
+      "scene": "studio_end",
+      "insta": ""
+    }
+  ],
+  "caption_post": "मंदिर में पत्नी की प्रेमी से शादी और पति की बचत! Tag करो अपने कंजूस दोस्तों को. क्या वकील की फीस बचाने का यह आइडिया सही है? स्रोत: Amar Ujala #Shahjahanpur #MarriageNews #BakraNews #CourtCase #SatireIndia @bakranews",
+  "topic": "थाने और मंदिर में पत्नी-प्रेमी के विवाह तथा पारिवारिक विवाद के मामले",
+  "ref_lines": [],
+  "jaanch": {
+    "pura": {
+      "ok": true,
+      "kyon": "तीन लाख बचने और शादी के ट्विस्ट से रोका"
+    },
+    "hasi": {
+      "ok": true,
+      "kyon": "line 0, ~2 सेकंड"
+    },
+    "share": {
+      "ok": true,
+      "kyon": "शादीशुदा दोस्तों के ग्रुप में भेजने लायक"
+    },
+    "daily": {
+      "ok": true,
+      "kyon": "वकील की फीस और कोर्ट के चक्कर"
+    },
+    "follow": {
+      "ok": true,
+      "kyon": "अनोखा नज़रिया और मजेदार संवाद शैली"
+    },
+    "like": {
+      "ok": true,
+      "kyon": "वकील की फीस से पैसे बचाने का विचार"
+    },
+    "save": {
+      "ok": false,
+      "kyon": "सेव करने जैसी कोई काम की सूचना नहीं"
+    },
+    "ant": {
+      "ok": true,
+      "kyon": "पंडित जी के बिल का इंतज़ार बढ़िया पंच"
+    },
+    "khabar": {
+      "ok": true,
+      "kyon": "शाहजहांपुर में पति की सहमति से शादी हुई"
+    },
+    "dhaga": {
+      "ok": true,
+      "kyon": "घटना से लेकर पंडित के बिल तक जुड़ाव"
+    }
+  },
+  "connect": {
+    "score": 7,
+    "why": "10 में से 9 सवाल पास",
+    "weak": "",
+    "fix": ""
+  },
+  "writer": "psych",
+  "format": "explain",
+  "label": "काम की खबर",
+  "key_word": "",
+  "icons": [
+    "₹",
+    "NEWS",
+    "%"
+  ],
+  "ticker": [],
+  "hook": "पति ने पत्नी को प्रेमी संग पकड़ा और तुरंत पंडित…",
+  "hook_text": "पति ने पत्नी को प्रेमी संग पकड़ा और तुरंत पंडित…",
+  "hook_short": "पति ने खुद थमाया नारियल!",
+  "trend": {
+    "score": 2,
+    "why": "4 अख़बार/चैनल 2 दिन में, 31 खबरें 7 दिन में"
+  },
+  "review_status": "audience_sim",
+  "_loose": true,
+  "sprite": {
+    "ramesh": "assets/toon/ramesh",
+    "bablu": "assets/toon/bablu",
+    "chacha": "assets/toon/chacha"
+  },
+  "production": true,
+  "style": "flow",
+  "lips": "sadtalker",
+  "renderer": "studio",
+  "no_memes": true,
+  "_production_slot": "2026-11-02_16"
+}
