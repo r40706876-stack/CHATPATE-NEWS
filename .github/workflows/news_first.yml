@@ -1,0 +1,54 @@
+name: news-first-production
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/news_first.yml']
+  workflow_dispatch:
+concurrency:
+  group: bakra-news-first-preview
+  cancel-in-progress: false
+jobs:
+  prepare:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    permissions: {contents: write, actions: write}
+    env:
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GEMINI_API_KEY2: ${{ secrets.GEMINI_API_KEY2 }}
+      GEMINI_API_KEY3: ${{ secrets.GEMINI_API_KEY3 }}
+      GEMINI_REQUEST_BUDGET: '24'
+      GEMINI_MODELS_PER_KEY: '3'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Prepare a fresh important-news episode
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          import datetime as dt
+          import json
+          from pathlib import Path
+          import news_first
+          from run_daily import to_studio
+          ep = to_studio(news_first.write(news_first.collect(), 1)[0])
+          if not ep:
+              raise RuntimeError('Character assets unavailable')
+          ep.update(style='flow', renderer='studio', lips='sadtalker', no_memes=True,
+                    visual_policy='same-news source images or factual animated graphics')
+          stamp = dt.datetime.now(dt.timezone.utc).strftime('%Y%m%d_%H%M%S')
+          path = 'episodes/news_first_' + stamp + '.json'
+          Path(path).write_text(json.dumps(ep, ensure_ascii=False, indent=2), encoding='utf-8')
+          Path('news_first_job.txt').write_text(path, encoding='utf-8')
+          print('Prepared:', path, ep['topic'])
+          PY
+      - name: Save and render the prepared episode
+        env: {GH_TOKEN: '${{ github.token }}'}
+        run: |
+          set -euo pipefail
+          job=$(cat news_first_job.txt)
+          git config user.name bakra-production
+          git config user.email bot@users.noreply.github.com
+          git add "$job"
+          git commit -m "Prepare first important-news episode with matching visuals"
+          git pull --rebase
+          git push
+          gh workflow run talk_episode.yml --ref main -f script="$job"

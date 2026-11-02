@@ -383,10 +383,12 @@ def pick_for_lines(lines, per_line=3, pool=9, topic="", strict=False):   # 3 त
     for n, (i, (qs, hi)) in enumerate(zip(want_lines, queries)):
         cs, seen = [], set()
         ltopic = lines[i].get("topic") or topic                           # bulletin: हर line की अपनी खबर
-        topic_imgs = topic_pool(ltopic) if ltopic else []
+        news_first = bool(lines[i].get('_news_first'))
+        topic_imgs = (news_images.source_images(lines[i].get('_news_sources', [])) if news_first else [])
+        topic_imgs += topic_pool(ltopic) if ltopic else []
         L = len(topic_imgs)                                                # हर line को लेखों की अलग-अलग फ़ोटो पहले
         news = [topic_imgs[(2 * n + k) % L] for k in range(min(3, L))] if L else []
-        for h in hi:                                                       # line की चीज़ वाली अख़बार-फ़ोटो
+        for h in ([] if news_first else hi):                                 # line की चीज़ वाली अख़बार-फ़ोटो
             if h and h != ltopic:
                 news += news_images.article_images(h, n=4)
         lw = _stems(lines[i].get("say", "") + " " + " ".join(hi))           # line की बात
@@ -400,7 +402,7 @@ def pick_for_lines(lines, per_line=3, pool=9, topic="", strict=False):   # 3 त
             c["score"] = c["match"] + 2.5 + 1.5 * ml + 0.5 * mt
             kept.append(c)
         news = kept
-        for qi, q in enumerate(qs):                                        # stock फ़ोटो सिर्फ़ AI जाँच के लिए (बिना जाँच कभी नहीं)
+        for qi, q in enumerate([] if news_first else qs):                    # stock फ़ोटो सिर्फ़ AI जाँच के लिए (बिना जाँच कभी नहीं)
             for c in candidates(q, k=4, free=qi < 2):
                 c["stock"] = True
                 c["score"] = c.get("score", 0) - 2
@@ -431,6 +433,12 @@ def pick_for_lines(lines, per_line=3, pool=9, topic="", strict=False):   # 3 त
             "वही सबसे पहले (हरकत रोकती है); \"score\" 0-10.\n"
             'सिर्फ़ JSON: {"picks": [[पहली line के नंबर], [दूसरी line के नंबर], ...], '
             '"hero": {"line": line नंबर (1 से), "pick": तस्वीर नंबर, "score": 0-10}}')
+    if any(ln.get('_news_first') for ln in lines):
+        head += ("\nNEWS-FIRST: केवल इसी खबर और इसी line से सीधा मेल रखने वाला दृश्य चुनो। "
+                 "लेख का og:image भी प्रतीकात्मक/पुरानी फ़ोटो हो सकता है: उसे असली घटना का प्रमाण मत मानो। "
+                 "सामान्य stock, दूसरी जगह/तारीख की घटना, logo, headline thumbnail, "
+                 "सजावटी चेहरा या असंबंधित शादी/ट्रेन नहीं। निश्चित मेल न हो तो [] दो; "
+                 "वहाँ इसी खबर के source-backed तथ्य का animated graphic बनेगा।")
     picks, heroes = [], []
     for b0 in range(0, len(pools), 3):                     # 3-3 lines, हर line की 9 तक तस्वीरें (पहले 2×14) — कम Gemini calls
         batch = pools[b0:b0 + 3]
@@ -459,6 +467,8 @@ def pick_for_lines(lines, per_line=3, pool=9, topic="", strict=False):   # 3 त
                 break
             except Exception as e:                        # noqa: BLE001
                 print("  AI जाँच में गड़बड़, दोबारा:", repr(e)[:100])
+        if got is None and any(lines[i].get('_news_first') for i, _, _ in batch):
+            got = [[] for _ in batch]  # No unreviewed photo fallback for news-first.
         if got is None and strict:
             # पहले: Gemini का कोटा ख़त्म = कोई तस्वीर नहीं = ऊपर पूरी video काला text-card (28 Oct: real_visual_lines 0).
             # अब: इसी खबर के अख़बार-लेख की अपनी मुख्य फ़ोटो (same_story, title में खबर के 2+ शब्द) बिना AI जाँच भी चलेगी —

@@ -164,7 +164,8 @@ def prep(script_path):
             src = Path(vf) if Path(vf).is_absolute() else ROOT / vf
             if src.exists():
                 shutil.copy(src, IN / f"broll/{i}_0own{k}{src.suffix}")
-    add_props(ep)                                              # Blender के अपने 3D clips (सिक्के/टॉफी/नोट) — बात से सीधे जुड़े
+    if ep.get("editorial_mode") != "news_first":
+        add_props(ep)                                          # Blender के अपने 3D clips (सिक्के/टॉफी/नोट) — बात से सीधे जुड़े
     if not ep.get("no_clips"):                                 # असली खबर के छोटे video clips (पहले सेकंड में हरकत)
         try:
             import clips
@@ -203,6 +204,15 @@ def prep(script_path):
     except Exception as e:                                     # noqa: BLE001
         print("  AI दृश्य वाला हिस्सा छोड़ा:", repr(e)[:150])
     fill_sets(ep)
+    if ep.get("editorial_mode") == "news_first":
+        manifest = {"topic": ep.get("topic"), "sources": ep.get("sources", []), "lines": []}
+        for i, line in enumerate(ep["lines"]):
+            files = [p for p in (IN / "broll").glob(f"{i}_*") if p.suffix != ".txt"]
+            manifest["lines"].append({"line": i, "say": line["say"], "fact_ids": line.get("fact_ids", []),
+                "mode": "source_photo" if files else "speaker_or_animated_fact",
+                "files": [{"name": p.name, "credit": p.with_suffix(".txt").read_text(encoding="utf-8")
+                           if p.with_suffix(".txt").exists() else ""} for p in files]})
+        (IN / "visual_manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
     json.dump(ep, open(IN / "episode.json", "w", encoding="utf-8"), ensure_ascii=False)
     needs_face = [i for i, ln in enumerate(ep["lines"])
                   if not voice_only(ep, ln) and not mascot_lips(ep, ln)
@@ -317,6 +327,8 @@ def fill_sets(ep):
     बेमेल फ़ोटो कभी नहीं; ठीक न बैठे (गाँव/studio) तो कुछ नहीं — screen पर उस line का card चलेगा."""
     import shutil
     import news_writer as nw
+    if ep.get("editorial_mode") == "news_first":
+        return  # Missing photo: animate the actual spoken fact, never a generic set.
     topic = str(ep.get("topic") or ep.get("breaking") or "")
     used = set()                                               # 28 Oct: एक ही "कमरा" 5 lines पर 10 बार = same same.
     for i, ln in enumerate(ep["lines"]):                       # हर set पूरे video में एक ही बार; बाकी lines पर बात वाला card

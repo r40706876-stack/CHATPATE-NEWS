@@ -107,3 +107,29 @@ def article_images(query, n=6):
             seen.add(g["url"])
             out.append(g)
     return out[:n]
+
+
+def source_images(sources):
+    """Candidates from the actual fact sources, still subject to visual relevance review."""
+    out = []
+    for source in sources:
+        url = source.get('url', '')
+        if not url.startswith(('https://', 'http://')):
+            continue
+        try:
+            page = _get(url, timeout=12)
+            match = (re.search(r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)', page)
+                     or re.search(r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image', page))
+            title = re.search(r'<title[^>]*>(.*?)</title>', page, re.S | re.I)
+            if not match:
+                continue
+            image = urllib.parse.urljoin(url, html.unescape(match.group(1)))
+            if BAD.search(image):
+                continue
+            out.append({'id': _id(image), 'url': image, 'thumb': image,
+                        'tags': html.unescape(title.group(1))[:200] if title else '',
+                        'credit': 'स्रोत: ' + _domain(url), 'match': 5, 'india': True,
+                        'news': True, 'source_url': url, 'same_story': True})
+        except Exception as exc:
+            print('Source image unavailable:', _domain(url), type(exc).__name__)
+    return out

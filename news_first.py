@@ -72,6 +72,10 @@ def normalize(ep):
     ep.setdefault('hook', ep['lines'][0]['say'])
     ep.setdefault('hook_text', ep['lines'][0]['say'])
     ep.setdefault('ticker', [])
+    ep['no_clips'] = True  # Search clips are disabled until event provenance is available.
+    for line in ep['lines']:
+        line['_news_first'] = True
+        line['_news_sources'] = ep.get('sources', [])
     return ep
 
 
@@ -127,6 +131,7 @@ def write(c, n=1):
             raise ValueError('News editorial review failed: ' + str(review))
         ep['source'] = ', '.join(s['name'] for s in sources)
         ep['sources'], ep['fact_pack'] = sources, facts
+        ep = normalize(ep)
         ep['importance_reason'] = facts.get('importance_reason') or pick.get('importance_reason', '')
         ep['review_status'] = 'source_mapped_model_review'  # not a human fact-check or a virality prediction
         ep['caption_post'] = str(ep.get('caption_post') or ep['topic']) + '\nस्रोत: ' + '; '.join(s['name'] + ' ' + s['url'] for s in sources)
