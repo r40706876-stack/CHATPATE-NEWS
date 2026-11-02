@@ -1,6 +1,9 @@
 {
-  "status": "dispatched",
+  "status": "delivered",
   "script": "episodes/auto_20261102_1647.json",
   "slot": "2026-11-02_16",
-  "updated_at": 1793618315
+  "updated_at": 1793624614,
+  "telegram_delivered_at": 1793624614,
+  "seconds": 26.88,
+  "topic": "थाने और मंदिर में पत्नी-प्रेमी के विवाह तथा पारिवारिक विवाद के मामले"
 }
