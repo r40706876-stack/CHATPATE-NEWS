@@ -88,10 +88,11 @@ def prep(script_path):
     ep = normalize_visual_style(json.load(open(ROOT / script_path, encoding="utf-8")))
     if ep.get("no_gemini"):
         # Prepared, sourced production: never spend Gemini quota on retries.
-        os.environ["TTS_ENGINE"] = "edge"
-        for key_name in list(os.environ):
-            if key_name.startswith("GEMINI_API_KEY"):
-                os.environ.pop(key_name, None)
+        if ep.get("editorial_mode") != "news_first":
+            os.environ["TTS_ENGINE"] = "edge"
+            for key_name in list(os.environ):
+                if key_name.startswith("GEMINI_API_KEY"):
+                    os.environ.pop(key_name, None)
         import cold_open
         visual_dir = IN / "prepared_visuals"
         visual_dir.mkdir(parents=True, exist_ok=True)

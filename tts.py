@@ -50,7 +50,7 @@ def _post(url, body, key):
     global _tts_request_count
     limit = int(os.getenv("GEMINI_TTS_REQUEST_BUDGET", "12"))
     if _tts_request_count >= limit:
-        raise RuntimeError("Gemini TTS request budget reached; use backup voice")
+        raise RuntimeError("Gemini TTS request budget reached")
     if _tts_key_requests.get(key, 0) >= 4:
         raise RuntimeError("This key reached its TTS attempt allowance; try next configured key")
     _tts_key_requests[key] = _tts_key_requests.get(key, 0) + 1
@@ -108,6 +108,29 @@ RANT = {   # "बकरा बहस": anchor की आवाज़ भड़�
 }
 
 
+
+_tts_model_cache = {}
+
+
+def available_tts_models(key):
+    """Discover model names from the API without logging credentials."""
+    if key not in _tts_model_cache:
+        names = []
+        try:
+            req = urllib.request.Request(BASE + "/models?pageSize=200", headers={"x-goog-api-key": key})
+            with urllib.request.urlopen(req, timeout=20) as response:
+                data = json.load(response)
+            names = [m["name"].split("/")[-1] for m in data.get("models", [])
+                     if "tts" in m.get("name", "").lower()
+                     and "generateContent" in m.get("supportedGenerationMethods", [])]
+            names.sort(key=lambda n: (0 if "flash" in n else 1, 0 if "latest" in n else 1, n))
+        except Exception as exc:
+            print("TTS model discovery unavailable:", type(exc).__name__)
+        _tts_model_cache[key] = list(dict.fromkeys(([os.getenv("GEMINI_TTS_MODEL")] if os.getenv("GEMINI_TTS_MODEL") else []) +
+                                                  names + ["gemini-3.1-flash-tts-preview", "gemini-2.5-flash-preview-tts"]))
+    return _tts_model_cache[key]
+
+
 def gemini_line(text, who, expr, key, base=None):
     voice, style = GEM.get(who, GEM["bablu"])
     style = ", ".join(s for s in (base or style, MOOD.get(expr, expr if len(expr) > 12 else "")) if s)
@@ -116,7 +139,7 @@ def gemini_line(text, who, expr, key, base=None):
     # पहले वो model जो इस video में चल चुका (आवाज़ एक जैसी रहे) — पर उसका रोज़ का कोटा (10/दिन) बीच में ख़त्म हो तो
     # बाकी models भी (हर model का अपना कोटा). पहले सिर्फ़ वही एक आज़माते थे → सीधे backup आवाज़ पर गिर जाते थे.
     dead = _gem_ok.setdefault("dead_models", set())
-    models = [m for m in dict.fromkeys(([_gem_ok["model"]] if _gem_ok["model"] else []) + TTS_MODELS)
+    models = [m for m in dict.fromkeys(([_gem_ok["model"]] if _gem_ok["model"] else []) + available_tts_models(key))
               if (key[-6:], m) not in dead]
     models = models[:max(1, int(os.getenv("GEMINI_TTS_MODELS_PER_KEY", "2")))]
     for model in models:
@@ -133,6 +156,7 @@ def gemini_line(text, who, expr, key, base=None):
                 "generationConfig": {"responseModalities": ["AUDIO"], "speechConfig": {
                     "voiceConfig": {"prebuiltVoiceConfig": {"voiceName": voice}}}}}),
         ]
+        bodies.reverse()  # Supported generateContent audio first; interactions only as fallback.
         for name, url, body in bodies:
             if (key[-6:], model) in dead:
                 break
@@ -339,6 +363,11 @@ def speak_script(script, out):
     gkeys = _g.keys()                                  # पहली key की आवाज़ का कोटा ख़त्म हो तो दूसरी
     key = gkeys[0] if gkeys else None
     order = (["gemini"] * len(gkeys)) + ["edge", "kokoro"]
+    required = script.get("require_gemini_voice", script.get("editorial_mode") == "news_first") or os.getenv("TTS_REQUIRE_GEMINI") == "1"
+    if required:
+        order = ["gemini"] * len(gkeys)
+        if not order:
+            raise RuntimeError("Gemini voice required, but no Gemini key is configured")
     if os.getenv("TTS_ENGINE") in order:
         order = order[order.index(os.getenv("TTS_ENGINE")):]
     last, gi = None, 0
