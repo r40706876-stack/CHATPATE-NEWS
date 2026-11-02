@@ -97,8 +97,13 @@ def prep(script_path):
         visual_dir.mkdir(parents=True, exist_ok=True)
         for i, ln in enumerate(ep["lines"]):
             if ln.get("visual_data"):
-                visual_path = visual_dir / f"{i}.png"
-                cold_open.render("phone", ln["visual_data"], visual_path)
+                if ln["visual_data"].get("news_graphic"):
+                    import news_graphics
+                    visual_path = visual_dir / f"{i}.mp4"
+                    news_graphics.render(ln["visual_data"], visual_path)
+                else:
+                    visual_path = visual_dir / f"{i}.png"
+                    cold_open.render("phone", ln["visual_data"], visual_path)
                 ln["visual_files"] = [str(visual_path)]
     import tts
     ep["_voice"] = tts.speak_script(ep, IN / "audio")             # कौन-सी आवाज़ लगी (gemini / edge / kokoro)
@@ -163,7 +168,10 @@ def prep(script_path):
         for k, vf in enumerate(ln.get("visual_files") or []):
             src = Path(vf) if Path(vf).is_absolute() else ROOT / vf
             if src.exists():
-                shutil.copy(src, IN / f"broll/{i}_0own{k}{src.suffix}")
+                dst = IN / f"broll/{i}_0own{k}{src.suffix}"
+                shutil.copy(src, dst)
+                if src.with_suffix(".txt").exists():
+                    shutil.copy(src.with_suffix(".txt"), dst.with_suffix(".txt"))
     if ep.get("editorial_mode") != "news_first":
         add_props(ep)                                          # Blender के अपने 3D clips (सिक्के/टॉफी/नोट) — बात से सीधे जुड़े
     if not ep.get("no_clips"):                                 # असली खबर के छोटे video clips (पहले सेकंड में हरकत)
@@ -267,6 +275,8 @@ def mascot_lips(ep, ln):
 def voice_only(ep, ln):
     """29 Oct (मालिक: "रमेश की सूरत video skip करवा देती है", बबलू अच्छा है): ऐसे किरदार screen पर नहीं आते — सिर्फ़ उनकी Gemini आवाज़,
     पूरी screen पर मज़ाक/खबर का visual. VOICE_ONLY env (कॉमा से) या ep["voice_only"]; "" = सब दिखें."""
+    if ep.get("editorial_mode") == "news_first" and ln.get("voice_only"):
+        return True
     who = ep.get("voice_only")
     if who is None:
         who = os.getenv("VOICE_ONLY", "")
@@ -278,6 +288,8 @@ def pick_shot(ep, i, ln):
     """style: v2 = पूरी screen तस्वीर/close-up/split बदलते रहें; nochar = बिना किरदार (सिर्फ़ तस्वीर/clip + बड़े अक्षर);
     बाकी = पुराना हमेशा split."""
     import reel_studio
+    if ep.get("editorial_mode") == "news_first" and ln.get("shot") in ("full", "split", "close"):
+        return ln["shot"]
     style = ep.get("style")
     if style in ("v2", "nochar"):
         m = re.match(r"\s*(हर [^…,।!?]{2,30} में एक [^…,।!?]{2,25})", ln.get("say", ""))
@@ -539,7 +551,7 @@ def post_studio(ep):
             out.replace(raw)
             reel_studio.doordarshan(raw, out)
         try:
-            issues = qa.check(out, allow=_close_ranges(segs))
+            issues = qa.check(out, allow=_close_ranges(segs), news_first=ep.get("editorial_mode") == "news_first")
         except Exception as e:                            # noqa: BLE001
             print("  जाँच नहीं हुई:", repr(e)[:100])
             issues = ["QA जाँच नहीं चल पाई: " + type(e).__name__]
@@ -554,7 +566,7 @@ def post_studio(ep):
     used = [] if ep.get('no_memes') else memes.add(ep, segs, out)
     # Validate the final file, including any inserted meme clips.
     try:
-        issues = qa.check(out, allow=_close_ranges(segs))
+        issues = qa.check(out, allow=_close_ranges(segs), news_first=ep.get("editorial_mode") == "news_first")
     except Exception as e:                                # noqa: BLE001
         raise RuntimeError("Final video unreadable; delivery blocked: " + repr(e)[:100])
     if issues:

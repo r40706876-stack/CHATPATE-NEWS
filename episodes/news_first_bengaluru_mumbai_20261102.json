@@ -1,0 +1,147 @@
+{
+  "topic": "बेंगलुरु–मुंबई वंदे भारत स्लीपर: समय, मार्ग और साप्ताहिक अवकाश",
+  "breaking": "बेंगलुरु–मुंबई वंदे भारत स्लीपर",
+  "editorial_mode": "news_first",
+  "writer": "news_first_editor_researched",
+  "review_status": "primary_source_read_and_images_visually_inspected",
+  "production": true,
+  "style": "flow",
+  "renderer": "studio",
+  "lips": "sadtalker",
+  "no_gemini": true,
+  "no_memes": true,
+  "no_clips": true,
+  "source": "PIB / Ministry of Railways, 01 Nov 2026",
+  "sources": [
+    {
+      "id": "pib2331297",
+      "name": "PIB / Ministry of Railways",
+      "url": "https://www.pib.gov.in/PressReleseDetailm.aspx?PRID=2331297&lang=1&reg=1",
+      "date": "2026-11-01"
+    }
+  ],
+  "sprite": {
+    "bablu": "assets/toon/bablu",
+    "ramesh": "assets/toon/ramesh"
+  },
+  "lines": [
+    {
+      "who": "bablu",
+      "say": "बेंगलुरु से मुंबई जाने वालों के लिए नई वंदे भारत स्लीपर की जरूरी जानकारी।",
+      "caption": "बेंगलुरु से मुंबई जाने वालों के लिए नई वंदे भारत स्लीपर की जरूरी जानकारी।",
+      "expr": "gambhir",
+      "set": "studio",
+      "shot": "full",
+      "voice_only": true,
+      "visual_files": [
+        "assets/news/20261101_bengaluru_mumbai/train.jpg"
+      ]
+    },
+    {
+      "who": "bablu",
+      "say": "रेल मंत्रालय के मुताबिक, एक नवंबर को इस ट्रेन को हरी झंडी दिखाई गई।",
+      "caption": "रेल मंत्रालय के मुताबिक, एक नवंबर को इस ट्रेन को हरी झंडी दिखाई गई।",
+      "expr": "gambhir",
+      "set": "studio",
+      "shot": "full",
+      "voice_only": true,
+      "visual_files": [
+        "assets/news/20261101_bengaluru_mumbai/flagoff.jpg"
+      ]
+    },
+    {
+      "who": "bablu",
+      "say": "बेंगलुरु से शाम सात पैंतालीस पर चलकर, अगले दिन सुबह ग्यारह पचपन पर मुंबई पहुँचेगी।",
+      "caption": "बेंगलुरु से शाम सात पैंतालीस पर चलकर, अगले दिन सुबह ग्यारह पचपन पर मुंबई पहुँचेगी।",
+      "expr": "gambhir",
+      "set": "studio",
+      "shot": "full",
+      "voice_only": true,
+      "visual_data": {
+        "news_graphic": true,
+        "title": "बेंगलुरु से मुंबई",
+        "rows": [
+          "SMVT बेंगलुरु  19:45",
+          "अगला दिन",
+          "CSMT मुंबई  11:55"
+        ]
+      }
+    },
+    {
+      "who": "bablu",
+      "say": "वापसी में मुंबई से रात आठ दस पर चलेगी। बेंगलुरु अगले दिन दोपहर बारह बजे पहुँचेगी।",
+      "caption": "वापसी में मुंबई से रात आठ दस पर चलेगी। बेंगलुरु अगले दिन दोपहर बारह बजे पहुँचेगी।",
+      "expr": "gambhir",
+      "set": "studio",
+      "shot": "full",
+      "voice_only": true,
+      "visual_data": {
+        "news_graphic": true,
+        "title": "मुंबई से बेंगलुरु",
+        "rows": [
+          "CSMT मुंबई  20:10",
+          "अगला दिन",
+          "SMVT बेंगलुरु  12:00"
+        ]
+      }
+    },
+    {
+      "who": "bablu",
+      "say": "ध्यान दीजिए, बेंगलुरु से सोमवार और मुंबई से मंगलवार को यह सेवा नहीं चलेगी।",
+      "caption": "ध्यान दीजिए, बेंगलुरु से सोमवार और मुंबई से मंगलवार को यह सेवा नहीं चलेगी।",
+      "expr": "gambhir",
+      "set": "studio",
+      "shot": "full",
+      "voice_only": true,
+      "visual_data": {
+        "news_graphic": true,
+        "title": "इन दिनों सेवा नहीं",
+        "rows": [
+          "बेंगलुरु से: सोमवार",
+          "मुंबई से: मंगलवार",
+          "बाकी छह दिन सेवा"
+        ]
+      }
+    },
+    {
+      "who": "bablu",
+      "say": "रास्ते में अनंतपुर, गुंतकल, रायचूर, यादगिर, वाडी, कलबुर्गी, सोलापुर, पुणे और कल्याण शामिल हैं।",
+      "caption": "रास्ते में अनंतपुर, गुंतकल, रायचूर, यादगिर, वाडी, कलबुर्गी, सोलापुर, पुणे और कल्याण शामिल हैं।",
+      "expr": "gambhir",
+      "set": "studio",
+      "shot": "full",
+      "voice_only": true,
+      "visual_data": {
+        "news_graphic": true,
+        "title": "मार्ग के प्रमुख स्टेशन",
+        "rows": [
+          "बेंगलुरु",
+          "अनंतपुर • गुंतकल",
+          "रायचूर • यादगिर",
+          "वाडी • कलबुर्गी",
+          "सोलापुर • पुणे",
+          "कल्याण • मुंबई"
+        ],
+        "kind": "route"
+      }
+    },
+    {
+      "who": "ramesh",
+      "say": "अब अपनी छुट्टी के साथ ट्रेन की छुट्टी भी देख लेना भैया।",
+      "caption": "अपनी छुट्टी के साथ ट्रेन की छुट्टी भी देखना!",
+      "expr": "tanz",
+      "set": "station",
+      "shot": "close",
+      "satire": true
+    },
+    {
+      "who": "bablu",
+      "say": "यात्रा तय करने से पहले रेलवे के आधिकारिक बुकिंग माध्यम पर तारीख, किराया और उपलब्धता जाँच लें।",
+      "caption": "बुकिंग से पहले तारीख • किराया • उपलब्धता जाँचें",
+      "expr": "gambhir",
+      "set": "studio",
+      "shot": "close"
+    }
+  ],
+  "caption_post": "बेंगलुरु–मुंबई वंदे भारत स्लीपर: प्रस्थान, आगमन और बंद रहने वाले दिन जानें। बुकिंग से पहले रेलवे पर उपलब्धता जाँचें। स्रोत: https://www.pib.gov.in/PressReleseDetailm.aspx?PRID=2331297&lang=1&reg=1 #BakraNews #RailwayNews #VandeBharatSleeper (AI किरदार)"
+}

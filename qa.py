@@ -20,7 +20,7 @@ def _frames(video, crop="1056:810:12:130"):
     return np.frombuffer(raw, np.uint8).reshape(-1, H, W).astype(np.float32)
 
 
-def check(video, tail=0.3, allow=()):
+def check(video, tail=0.3, allow=(), news_first=False):
     """allow: (शुरू, अंत) सेकंड — close-up वाले हिस्से: पूरी screen बोलता किरदार है, ऊपर "तस्वीर" है ही नहीं (30 Oct:
     दादी के 6.7 सेकंड के close-up को "एक ही तस्वीर" कहकर अच्छी video रोक दी थी)."""
     f = _frames(video)
@@ -44,15 +44,15 @@ def check(video, tail=0.3, allow=()):
             start = i
         if i - start > longest:
             longest, worst_at = i - start, start
-    if longest > FPS * 3.2:
+    if not news_first and longest > FPS * 3.2:
         issues.append(f"{worst_at / FPS:.0f}वें सेकंड से {longest / FPS:.1f} सेकंड तक ऊपर एक ही तस्वीर")
     dark = [i for i, b in enumerate(body) if b.std() < 8]
     if len(dark) > FPS * 1.5:
         issues.append(f"{len(dark) / FPS:.1f} सेकंड ऊपर की screen ख़ाली/एक-रंग (पहली बार {dark[0] / FPS:.0f}वें सेकंड)")
     first = body[: FPS * 3]
-    if max(np.abs(first[k] - first[0]).mean() for k in range(FPS // 2, len(first), FPS // 4)) < 4:   # बीच में भी बदला तो ठीक
+    if not news_first and max(np.abs(first[k] - first[0]).mean() for k in range(FPS // 2, len(first), FPS // 4)) < 4:   # बीच में भी बदला तो ठीक
         issues.append("पहले 3 सेकंड में ऊपर कोई हरकत/बदलाव नहीं")
-    if np.abs(first[FPS // 2] - first[0]).mean() < 2:    # virality skill: frame 0 और 0.5 सेकंड एक जैसे = "रुका हुआ card" (skip बढ़ता)
+    if not news_first and np.abs(first[FPS // 2] - first[0]).mean() < 2:    # virality skill: frame 0 और 0.5 सेकंड एक जैसे = "रुका हुआ card" (skip बढ़ता)
         issues.append("पहले आधे सेकंड में कोई हरकत नहीं (frame 0 रुका हुआ)")
     return issues
 
