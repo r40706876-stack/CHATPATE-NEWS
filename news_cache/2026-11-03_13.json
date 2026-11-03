@@ -1,0 +1,599 @@
+{
+  "picks": [
+    {
+      "topic": "रेलवे काउंटर से आरक्षित टिकट लेने वाले यात्रियों को 45 पैसे में 10 लाख रुपये का ट्रैवल इंश्योरेंस देने का नया नियम",
+      "importance_reason": "देशभर में ट्रेन से सफर करने वाले करोड़ों यात्रियों की यात्रा सुरक्षा और रेलवे टिकट नियमों पर सीधा प्रभाव।",
+      "query": "indian railways counter ticket 45 paise travel insurance 10 lakh rule",
+      "scope_class": "national",
+      "national_relevance": "यह नियम किसी एक स्टेशन या राज्य के लिए नहीं, बल्कि पूरे भारत में रेलवे PRS काउंटर से आरक्षित टिकट लेने वाले सभी यात्रियों पर समान रूप से लागू होता है।"
+    }
+  ],
+  "items": {
+    "रेलवे काउंटर से आरक्षित टिकट लेने वाले यात्रियों को 45 पैसे में 10 लाख रुपये का ट्रैवल इंश्योरेंस देने का नया नियम": {
+      "facts": {
+        "publishable": true,
+        "topic": "रेलवे काउंटर से आरक्षित टिकट लेने वाले यात्रियों के लिए 45 पैसे में 10 लाख रुपये का ट्रैवल इंश्योरेंस",
+        "importance_reason": "यह नियम देशभर में ट्रेन से सफर करने वाले करोड़ों यात्रियों की यात्रा सुरक्षा, दुर्घटना बीमा और रेलवे काउंटर भुगतान प्रक्रिया से सीधे जुड़ा है।",
+        "scope_class": "national",
+        "national_relevance": "यह व्यवस्था किसी एक स्टेशन या राज्य तक सीमित न होकर पूरे भारत में रेलवे टिकट आरक्षण (PRS) काउंटरों से टिकट लेने वाले सभी यात्रियों पर लागू होती है।",
+        "facts": [
+          {
+            "id": "f1",
+            "text": "भारतीय रेलवे ने 27 अक्टूबर 2026 से रेलवे काउंटर से आरक्षित कन्फर्म टिकट खरीदने वाले यात्रियों के लिए भी 45 पैसे में 10 लाख रुपये तक की ऐच्छिक (optional) ट्रैवल इंश्योरेंस सुविधा लागू की है।",
+            "source_ids": [
+              "s4a7e0ac655",
+              "sc4f7bf56c3",
+              "s1197261c13"
+            ]
+          },
+          {
+            "id": "f2",
+            "text": "काउंटर से बीमा लेने के लिए नकद भुगतान स्वीकार नहीं होगा; यात्रियों को 45 पैसे के प्रीमियम और टिकट का भुगतान UPI या कार्ड जैसे डिजिटल माध्यमों से ही करना होगा।",
+            "source_ids": [
+              "s4a7e0ac655",
+              "sc4f7bf56c3",
+              "s1197261c13"
+            ]
+          },
+          {
+            "id": "f3",
+            "text": "दुर्घटना में मृत्यु या पूर्ण विकलांगता की स्थिति में 10 लाख रुपये, आंशिक विकलांगता पर 7.50 लाख रुपये और अस्पताल के इलाज खर्च के लिए 2 लाख रुपये तक का कवर दिया जाता है।",
+            "source_ids": [
+              "s4a7e0ac655"
+            ]
+          },
+          {
+            "id": "f4",
+            "text": "डिजिटल भुगतान करने के बाद यात्री के मोबाइल पर एक लिंक भेजा जाता है, जिसमें यात्री को स्वयं व अन्य सदस्यों का विवरण दर्ज करना होता है।",
+            "source_ids": [
+              "s1197261c13"
+            ]
+          }
+        ],
+        "sources": [
+          {
+            "id": "s4a7e0ac655",
+            "name": "marathi.abplive.com",
+            "url": "https://marathi.abplive.com/news/india/indian-railway-travel-insurance-scheme-45-paise-10-lakh-cover-counter-tickets-marathi-news-1443747",
+            "date": "Tue, 27 Oct 2026 12:53:00 GMT"
+          },
+          {
+            "id": "sc4f7bf56c3",
+            "name": "www.whalesbook.com",
+            "url": "https://www.whalesbook.com/news/Hinglish/transportation/Indian-Railways-Mandates-Digital-Payments-for-Counter-Insurance/6adf52e44fc30694db4d10cc",
+            "date": "Mon, 26 Oct 2026 11:47:00 GMT"
+          },
+          {
+            "id": "s1197261c13",
+            "name": "www.jagran.com",
+            "url": "https://www.jagran.com/uttar-pradesh/mau-railway-ticket-insurance-10-lakh-cover-for-45-paise-on-confirmed-counter-tickets-40425213.html",
+            "date": "Mon, 02 Nov 2026 11:54:00 GMT"
+          }
+        ],
+        "unknowns": [
+          "क्या यह बीमा सुविधा भविष्य में अनारक्षित (General Unreserved) टिकटों पर भी शुरू की जाएगी या नहीं, स्रोतों में इसका उल्लेख नहीं है।"
+        ],
+        "scope": "पूरे भारत में रेलवे स्टेशनों के आरक्षण काउंटरों (PRS) से आरक्षित टिकट लेने वाले यात्री।",
+        "action": "रेलवे काउंटर पर टिकट बुक कराते समय यदि आप 10 लाख का यात्रा बीमा चुनना चाहते हैं, तो नकद के बजाय UPI या डेबिट/क्रेडिट कार्ड से डिजिटल भुगतान करें और मोबाइल पर आए लिंक पर यात्री विवरण भरें।"
+      },
+      "script": {
+        "topic": "रेलवे काउंटर टिकटों पर 45 पैसे में 10 लाख का यात्रा बीमा",
+        "breaking": "रेलवे काउंटर से कन्फर्म आरक्षित टिकट लेने वालों को भी 45 पैसे में मिलेगा 10 लाख का बीमा",
+        "hook_short": "रेलवे काउंटर से टिकट लेते हैं? जानिए 45 पैसे के यात्रा बीमे की नई शर्त!",
+        "lines": [
+          {
+            "who": "bablu",
+            "say": "भारतीय रेलवे ने 27 अक्टूबर 2026 से काउंटर से आरक्षित कन्फर्म टिकट खरीदने वाले यात्रियों के लिए भी 45 पैसे में 10 लाख रुपये तक की ऐच्छिक ट्रैवल इंश्योरेंस सुविधा लागू कर दी है।",
+            "caption": "काउंटर टिकट पर 45 पैसे में 10 लाख का बीमा",
+            "fact_ids": [
+              "f1"
+            ],
+            "satire": false,
+            "expr": "gambhir",
+            "set": "studio",
+            "visuals": [
+              "Indian Railways PRS ticket booking counter with passengers in queue"
+            ],
+            "photo_hi": [
+              "रेलवे पैसेंजर रिजर्वेशन काउंटर टिकट विंडो"
+            ],
+            "_news_first": true,
+            "_news_sources": [
+              {
+                "id": "s4a7e0ac655",
+                "name": "marathi.abplive.com",
+                "url": "https://marathi.abplive.com/news/india/indian-railway-travel-insurance-scheme-45-paise-10-lakh-cover-counter-tickets-marathi-news-1443747",
+                "date": "Tue, 27 Oct 2026 12:53:00 GMT"
+              },
+              {
+                "id": "sc4f7bf56c3",
+                "name": "www.whalesbook.com",
+                "url": "https://www.whalesbook.com/news/Hinglish/transportation/Indian-Railways-Mandates-Digital-Payments-for-Counter-Insurance/6adf52e44fc30694db4d10cc",
+                "date": "Mon, 26 Oct 2026 11:47:00 GMT"
+              },
+              {
+                "id": "s1197261c13",
+                "name": "www.jagran.com",
+                "url": "https://www.jagran.com/uttar-pradesh/mau-railway-ticket-insurance-10-lakh-cover-for-45-paise-on-confirmed-counter-tickets-40425213.html",
+                "date": "Mon, 02 Nov 2026 11:54:00 GMT"
+              }
+            ]
+          },
+          {
+            "who": "bablu",
+            "say": "इस बीमा योजना के तहत रेल दुर्घटना में मृत्यु या पूर्ण विकलांगता पर 10 लाख रुपये, आंशिक विकलांगता पर 7.50 लाख रुपये और अस्पताल में इलाज के लिए 2 लाख रुपये तक का कवर दिया जाता है।",
+            "caption": "जानिए कितना मिलेगा बीमा कवर",
+            "fact_ids": [
+              "f3"
+            ],
+            "satire": false,
+            "expr": "gambhir",
+            "set": "studio",
+            "visuals": [
+              "Railway safety and travel insurance cover breakdown graphic"
+            ],
+            "photo_hi": [
+              "ट्रेन दुर्घटना बीमा कवर राशि ग्राफिक्स"
+            ],
+            "_news_first": true,
+            "_news_sources": [
+              {
+                "id": "s4a7e0ac655",
+                "name": "marathi.abplive.com",
+                "url": "https://marathi.abplive.com/news/india/indian-railway-travel-insurance-scheme-45-paise-10-lakh-cover-counter-tickets-marathi-news-1443747",
+                "date": "Tue, 27 Oct 2026 12:53:00 GMT"
+              },
+              {
+                "id": "sc4f7bf56c3",
+                "name": "www.whalesbook.com",
+                "url": "https://www.whalesbook.com/news/Hinglish/transportation/Indian-Railways-Mandates-Digital-Payments-for-Counter-Insurance/6adf52e44fc30694db4d10cc",
+                "date": "Mon, 26 Oct 2026 11:47:00 GMT"
+              },
+              {
+                "id": "s1197261c13",
+                "name": "www.jagran.com",
+                "url": "https://www.jagran.com/uttar-pradesh/mau-railway-ticket-insurance-10-lakh-cover-for-45-paise-on-confirmed-counter-tickets-40425213.html",
+                "date": "Mon, 02 Nov 2026 11:54:00 GMT"
+              }
+            ]
+          },
+          {
+            "who": "bablu",
+            "say": "लेकिन ध्यान दें, काउंटर पर बीमा लेने के लिए नकद भुगतान स्वीकार नहीं किया जाएगा। इसके लिए आपको टिकट और प्रीमियम का भुगतान UPI या डेबिट-क्रेडिट कार्ड जैसे डिजिटल माध्यमों से ही करना होगा।",
+            "caption": "नकद भुगतान पर नहीं मिलेगा बीमा, डिजिटल भुगतान जरूरी",
+            "fact_ids": [
+              "f2"
+            ],
+            "satire": false,
+            "expr": "gambhir",
+            "set": "studio",
+            "visuals": [
+              "Passenger making digital payment via UPI QR code or POS card machine at railway counter"
+            ],
+            "photo_hi": [
+              "रेलवे टिकट काउंटर पर UPI डिजिटल पेमेंट"
+            ],
+            "_news_first": true,
+            "_news_sources": [
+              {
+                "id": "s4a7e0ac655",
+                "name": "marathi.abplive.com",
+                "url": "https://marathi.abplive.com/news/india/indian-railway-travel-insurance-scheme-45-paise-10-lakh-cover-counter-tickets-marathi-news-1443747",
+                "date": "Tue, 27 Oct 2026 12:53:00 GMT"
+              },
+              {
+                "id": "sc4f7bf56c3",
+                "name": "www.whalesbook.com",
+                "url": "https://www.whalesbook.com/news/Hinglish/transportation/Indian-Railways-Mandates-Digital-Payments-for-Counter-Insurance/6adf52e44fc30694db4d10cc",
+                "date": "Mon, 26 Oct 2026 11:47:00 GMT"
+              },
+              {
+                "id": "s1197261c13",
+                "name": "www.jagran.com",
+                "url": "https://www.jagran.com/uttar-pradesh/mau-railway-ticket-insurance-10-lakh-cover-for-45-paise-on-confirmed-counter-tickets-40425213.html",
+                "date": "Mon, 02 Nov 2026 11:54:00 GMT"
+              }
+            ]
+          },
+          {
+            "who": "bablu",
+            "say": "डिजिटल भुगतान करने के बाद आपके मोबाइल नंबर पर एक मैसेज और लिंक भेजा जाएगा, जिस पर जाकर आपको अपना और अन्य यात्रियों का विवरण खुद दर्ज करना होगा।",
+            "caption": "मोबाईल पर प्राप्त लिंक से दर्ज करें विवरण",
+            "fact_ids": [
+              "f4"
+            ],
+            "satire": false,
+            "expr": "gambhir",
+            "set": "studio",
+            "visuals": [
+              "Passenger opening SMS link on smartphone to fill details"
+            ],
+            "photo_hi": [
+              "स्मार्टफोन पर मिला बीमा लिंक भरते हुए"
+            ],
+            "_news_first": true,
+            "_news_sources": [
+              {
+                "id": "s4a7e0ac655",
+                "name": "marathi.abplive.com",
+                "url": "https://marathi.abplive.com/news/india/indian-railway-travel-insurance-scheme-45-paise-10-lakh-cover-counter-tickets-marathi-news-1443747",
+                "date": "Tue, 27 Oct 2026 12:53:00 GMT"
+              },
+              {
+                "id": "sc4f7bf56c3",
+                "name": "www.whalesbook.com",
+                "url": "https://www.whalesbook.com/news/Hinglish/transportation/Indian-Railways-Mandates-Digital-Payments-for-Counter-Insurance/6adf52e44fc30694db4d10cc",
+                "date": "Mon, 26 Oct 2026 11:47:00 GMT"
+              },
+              {
+                "id": "s1197261c13",
+                "name": "www.jagran.com",
+                "url": "https://www.jagran.com/uttar-pradesh/mau-railway-ticket-insurance-10-lakh-cover-for-45-paise-on-confirmed-counter-tickets-40425213.html",
+                "date": "Mon, 02 Nov 2026 11:54:00 GMT"
+              }
+            ]
+          }
+        ],
+        "caption_post": "भारतीय रेलवे ने देश भर में आरक्षित काउंटर (PRS) टिकट लेने वाले यात्रियों के लिए 45 पैसे में 10 लाख रुपये का यात्रा बीमा शुरू किया है। इस सुविधा का लाभ पाने के लिए काउंटर पर नकद की जगह UPI या कार्ड से भुगतान करें और मोबाइल पर आए लिंक पर यात्री विवरण दर्ज करें। (स्रोत: ABP Live Marathi, WhalesBook, Dainik Jagran)\nस्रोत: marathi.abplive.com https://marathi.abplive.com/news/india/indian-railway-travel-insurance-scheme-45-paise-10-lakh-cover-counter-tickets-marathi-news-1443747; www.whalesbook.com https://www.whalesbook.com/news/Hinglish/transportation/Indian-Railways-Mandates-Digital-Payments-for-Counter-Insurance/6adf52e44fc30694db4d10cc; www.jagran.com https://www.jagran.com/uttar-pradesh/mau-railway-ticket-insurance-10-lakh-cover-for-45-paise-on-confirmed-counter-tickets-40425213.html",
+        "editorial_mode": "news_first",
+        "writer": "news_first",
+        "format": "news",
+        "label": "जरूरी खबर",
+        "hook": "भारतीय रेलवे ने 27 अक्टूबर 2026 से काउंटर से आरक्षित कन्फर्म टिकट खरीदने वाले यात्रियों के लिए भी 45 पैसे में 10 लाख रुपये तक की ऐच्छिक ट्रैवल इंश्योरेंस सुविधा लागू कर दी है।",
+        "hook_text": "भारतीय रेलवे ने 27 अक्टूबर 2026 से काउंटर से आरक्षित कन्फर्म टिकट खरीदने वाले यात्रियों के लिए भी 45 पैसे में 10 लाख रुपये तक की ऐच्छिक ट्रैवल इंश्योरेंस सुविधा लागू कर दी है।",
+        "ticker": [],
+        "no_clips": true,
+        "scope_class": "national",
+        "national_relevance": "यह व्यवस्था किसी एक स्टेशन या राज्य तक सीमित न होकर पूरे भारत में रेलवे टिकट आरक्षण (PRS) काउंटरों से टिकट लेने वाले सभी यात्रियों पर लागू होती है।",
+        "source": "marathi.abplive.com, www.whalesbook.com, www.jagran.com",
+        "sources": [
+          {
+            "id": "s4a7e0ac655",
+            "name": "marathi.abplive.com",
+            "url": "https://marathi.abplive.com/news/india/indian-railway-travel-insurance-scheme-45-paise-10-lakh-cover-counter-tickets-marathi-news-1443747",
+            "date": "Tue, 27 Oct 2026 12:53:00 GMT"
+          },
+          {
+            "id": "sc4f7bf56c3",
+            "name": "www.whalesbook.com",
+            "url": "https://www.whalesbook.com/news/Hinglish/transportation/Indian-Railways-Mandates-Digital-Payments-for-Counter-Insurance/6adf52e44fc30694db4d10cc",
+            "date": "Mon, 26 Oct 2026 11:47:00 GMT"
+          },
+          {
+            "id": "s1197261c13",
+            "name": "www.jagran.com",
+            "url": "https://www.jagran.com/uttar-pradesh/mau-railway-ticket-insurance-10-lakh-cover-for-45-paise-on-confirmed-counter-tickets-40425213.html",
+            "date": "Mon, 02 Nov 2026 11:54:00 GMT"
+          }
+        ],
+        "fact_pack": {
+          "publishable": true,
+          "topic": "रेलवे काउंटर से आरक्षित टिकट लेने वाले यात्रियों के लिए 45 पैसे में 10 लाख रुपये का ट्रैवल इंश्योरेंस",
+          "importance_reason": "यह नियम देशभर में ट्रेन से सफर करने वाले करोड़ों यात्रियों की यात्रा सुरक्षा, दुर्घटना बीमा और रेलवे काउंटर भुगतान प्रक्रिया से सीधे जुड़ा है।",
+          "scope_class": "national",
+          "national_relevance": "यह व्यवस्था किसी एक स्टेशन या राज्य तक सीमित न होकर पूरे भारत में रेलवे टिकट आरक्षण (PRS) काउंटरों से टिकट लेने वाले सभी यात्रियों पर लागू होती है।",
+          "facts": [
+            {
+              "id": "f1",
+              "text": "भारतीय रेलवे ने 27 अक्टूबर 2026 से रेलवे काउंटर से आरक्षित कन्फर्म टिकट खरीदने वाले यात्रियों के लिए भी 45 पैसे में 10 लाख रुपये तक की ऐच्छिक (optional) ट्रैवल इंश्योरेंस सुविधा लागू की है।",
+              "source_ids": [
+                "s4a7e0ac655",
+                "sc4f7bf56c3",
+                "s1197261c13"
+              ]
+            },
+            {
+              "id": "f2",
+              "text": "काउंटर से बीमा लेने के लिए नकद भुगतान स्वीकार नहीं होगा; यात्रियों को 45 पैसे के प्रीमियम और टिकट का भुगतान UPI या कार्ड जैसे डिजिटल माध्यमों से ही करना होगा।",
+              "source_ids": [
+                "s4a7e0ac655",
+                "sc4f7bf56c3",
+                "s1197261c13"
+              ]
+            },
+            {
+              "id": "f3",
+              "text": "दुर्घटना में मृत्यु या पूर्ण विकलांगता की स्थिति में 10 लाख रुपये, आंशिक विकलांगता पर 7.50 लाख रुपये और अस्पताल के इलाज खर्च के लिए 2 लाख रुपये तक का कवर दिया जाता है।",
+              "source_ids": [
+                "s4a7e0ac655"
+              ]
+            },
+            {
+              "id": "f4",
+              "text": "डिजिटल भुगतान करने के बाद यात्री के मोबाइल पर एक लिंक भेजा जाता है, जिसमें यात्री को स्वयं व अन्य सदस्यों का विवरण दर्ज करना होता है।",
+              "source_ids": [
+                "s1197261c13"
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "s4a7e0ac655",
+              "name": "marathi.abplive.com",
+              "url": "https://marathi.abplive.com/news/india/indian-railway-travel-insurance-scheme-45-paise-10-lakh-cover-counter-tickets-marathi-news-1443747",
+              "date": "Tue, 27 Oct 2026 12:53:00 GMT"
+            },
+            {
+              "id": "sc4f7bf56c3",
+              "name": "www.whalesbook.com",
+              "url": "https://www.whalesbook.com/news/Hinglish/transportation/Indian-Railways-Mandates-Digital-Payments-for-Counter-Insurance/6adf52e44fc30694db4d10cc",
+              "date": "Mon, 26 Oct 2026 11:47:00 GMT"
+            },
+            {
+              "id": "s1197261c13",
+              "name": "www.jagran.com",
+              "url": "https://www.jagran.com/uttar-pradesh/mau-railway-ticket-insurance-10-lakh-cover-for-45-paise-on-confirmed-counter-tickets-40425213.html",
+              "date": "Mon, 02 Nov 2026 11:54:00 GMT"
+            }
+          ],
+          "unknowns": [
+            "क्या यह बीमा सुविधा भविष्य में अनारक्षित (General Unreserved) टिकटों पर भी शुरू की जाएगी या नहीं, स्रोतों में इसका उल्लेख नहीं है।"
+          ],
+          "scope": "पूरे भारत में रेलवे स्टेशनों के आरक्षण काउंटरों (PRS) से आरक्षित टिकट लेने वाले यात्री।",
+          "action": "रेलवे काउंटर पर टिकट बुक कराते समय यदि आप 10 लाख का यात्रा बीमा चुनना चाहते हैं, तो नकद के बजाय UPI या डेबिट/क्रेडिट कार्ड से डिजिटल भुगतान करें और मोबाइल पर आए लिंक पर यात्री विवरण भरें।"
+        },
+        "importance_reason": "यह नियम देशभर में ट्रेन से सफर करने वाले करोड़ों यात्रियों की यात्रा सुरक्षा, दुर्घटना बीमा और रेलवे काउंटर भुगतान प्रक्रिया से सीधे जुड़ा है।",
+        "review_status": "source_mapped_model_review"
+      },
+      "episode": {
+        "topic": "रेलवे काउंटर टिकटों पर 45 पैसे में 10 लाख का यात्रा बीमा",
+        "breaking": "रेलवे काउंटर से कन्फर्म आरक्षित टिकट लेने वालों को भी 45 पैसे में मिलेगा 10 लाख का बीमा",
+        "hook_short": "रेलवे काउंटर से टिकट लेते हैं? जानिए 45 पैसे के यात्रा बीमे की नई शर्त!",
+        "lines": [
+          {
+            "who": "bablu",
+            "say": "भारतीय रेलवे ने 27 अक्टूबर 2026 से काउंटर से आरक्षित कन्फर्म टिकट खरीदने वाले यात्रियों के लिए भी 45 पैसे में 10 लाख रुपये तक की ऐच्छिक ट्रैवल इंश्योरेंस सुविधा लागू कर दी है।",
+            "caption": "काउंटर टिकट पर 45 पैसे में 10 लाख का बीमा",
+            "fact_ids": [
+              "f1"
+            ],
+            "satire": false,
+            "expr": "gambhir",
+            "set": "studio",
+            "visuals": [
+              "Indian Railways PRS ticket booking counter with passengers in queue"
+            ],
+            "photo_hi": [
+              "रेलवे पैसेंजर रिजर्वेशन काउंटर टिकट विंडो"
+            ],
+            "_news_first": true,
+            "_news_sources": [
+              {
+                "id": "s4a7e0ac655",
+                "name": "marathi.abplive.com",
+                "url": "https://marathi.abplive.com/news/india/indian-railway-travel-insurance-scheme-45-paise-10-lakh-cover-counter-tickets-marathi-news-1443747",
+                "date": "Tue, 27 Oct 2026 12:53:00 GMT"
+              },
+              {
+                "id": "sc4f7bf56c3",
+                "name": "www.whalesbook.com",
+                "url": "https://www.whalesbook.com/news/Hinglish/transportation/Indian-Railways-Mandates-Digital-Payments-for-Counter-Insurance/6adf52e44fc30694db4d10cc",
+                "date": "Mon, 26 Oct 2026 11:47:00 GMT"
+              },
+              {
+                "id": "s1197261c13",
+                "name": "www.jagran.com",
+                "url": "https://www.jagran.com/uttar-pradesh/mau-railway-ticket-insurance-10-lakh-cover-for-45-paise-on-confirmed-counter-tickets-40425213.html",
+                "date": "Mon, 02 Nov 2026 11:54:00 GMT"
+              }
+            ]
+          },
+          {
+            "who": "bablu",
+            "say": "इस बीमा योजना के तहत रेल दुर्घटना में मृत्यु या पूर्ण विकलांगता पर 10 लाख रुपये, आंशिक विकलांगता पर 7.50 लाख रुपये और अस्पताल में इलाज के लिए 2 लाख रुपये तक का कवर दिया जाता है।",
+            "caption": "जानिए कितना मिलेगा बीमा कवर",
+            "fact_ids": [
+              "f3"
+            ],
+            "satire": false,
+            "expr": "gambhir",
+            "set": "studio",
+            "visuals": [
+              "Railway safety and travel insurance cover breakdown graphic"
+            ],
+            "photo_hi": [
+              "ट्रेन दुर्घटना बीमा कवर राशि ग्राफिक्स"
+            ],
+            "_news_first": true,
+            "_news_sources": [
+              {
+                "id": "s4a7e0ac655",
+                "name": "marathi.abplive.com",
+                "url": "https://marathi.abplive.com/news/india/indian-railway-travel-insurance-scheme-45-paise-10-lakh-cover-counter-tickets-marathi-news-1443747",
+                "date": "Tue, 27 Oct 2026 12:53:00 GMT"
+              },
+              {
+                "id": "sc4f7bf56c3",
+                "name": "www.whalesbook.com",
+                "url": "https://www.whalesbook.com/news/Hinglish/transportation/Indian-Railways-Mandates-Digital-Payments-for-Counter-Insurance/6adf52e44fc30694db4d10cc",
+                "date": "Mon, 26 Oct 2026 11:47:00 GMT"
+              },
+              {
+                "id": "s1197261c13",
+                "name": "www.jagran.com",
+                "url": "https://www.jagran.com/uttar-pradesh/mau-railway-ticket-insurance-10-lakh-cover-for-45-paise-on-confirmed-counter-tickets-40425213.html",
+                "date": "Mon, 02 Nov 2026 11:54:00 GMT"
+              }
+            ]
+          },
+          {
+            "who": "bablu",
+            "say": "लेकिन ध्यान दें, काउंटर पर बीमा लेने के लिए नकद भुगतान स्वीकार नहीं किया जाएगा। इसके लिए आपको टिकट और प्रीमियम का भुगतान UPI या डेबिट-क्रेडिट कार्ड जैसे डिजिटल माध्यमों से ही करना होगा।",
+            "caption": "नकद भुगतान पर नहीं मिलेगा बीमा, डिजिटल भुगतान जरूरी",
+            "fact_ids": [
+              "f2"
+            ],
+            "satire": false,
+            "expr": "gambhir",
+            "set": "studio",
+            "visuals": [
+              "Passenger making digital payment via UPI QR code or POS card machine at railway counter"
+            ],
+            "photo_hi": [
+              "रेलवे टिकट काउंटर पर UPI डिजिटल पेमेंट"
+            ],
+            "_news_first": true,
+            "_news_sources": [
+              {
+                "id": "s4a7e0ac655",
+                "name": "marathi.abplive.com",
+                "url": "https://marathi.abplive.com/news/india/indian-railway-travel-insurance-scheme-45-paise-10-lakh-cover-counter-tickets-marathi-news-1443747",
+                "date": "Tue, 27 Oct 2026 12:53:00 GMT"
+              },
+              {
+                "id": "sc4f7bf56c3",
+                "name": "www.whalesbook.com",
+                "url": "https://www.whalesbook.com/news/Hinglish/transportation/Indian-Railways-Mandates-Digital-Payments-for-Counter-Insurance/6adf52e44fc30694db4d10cc",
+                "date": "Mon, 26 Oct 2026 11:47:00 GMT"
+              },
+              {
+                "id": "s1197261c13",
+                "name": "www.jagran.com",
+                "url": "https://www.jagran.com/uttar-pradesh/mau-railway-ticket-insurance-10-lakh-cover-for-45-paise-on-confirmed-counter-tickets-40425213.html",
+                "date": "Mon, 02 Nov 2026 11:54:00 GMT"
+              }
+            ]
+          },
+          {
+            "who": "bablu",
+            "say": "डिजिटल भुगतान करने के बाद आपके मोबाइल नंबर पर एक मैसेज और लिंक भेजा जाएगा, जिस पर जाकर आपको अपना और अन्य यात्रियों का विवरण खुद दर्ज करना होगा।",
+            "caption": "मोबाईल पर प्राप्त लिंक से दर्ज करें विवरण",
+            "fact_ids": [
+              "f4"
+            ],
+            "satire": false,
+            "expr": "gambhir",
+            "set": "studio",
+            "visuals": [
+              "Passenger opening SMS link on smartphone to fill details"
+            ],
+            "photo_hi": [
+              "स्मार्टफोन पर मिला बीमा लिंक भरते हुए"
+            ],
+            "_news_first": true,
+            "_news_sources": [
+              {
+                "id": "s4a7e0ac655",
+                "name": "marathi.abplive.com",
+                "url": "https://marathi.abplive.com/news/india/indian-railway-travel-insurance-scheme-45-paise-10-lakh-cover-counter-tickets-marathi-news-1443747",
+                "date": "Tue, 27 Oct 2026 12:53:00 GMT"
+              },
+              {
+                "id": "sc4f7bf56c3",
+                "name": "www.whalesbook.com",
+                "url": "https://www.whalesbook.com/news/Hinglish/transportation/Indian-Railways-Mandates-Digital-Payments-for-Counter-Insurance/6adf52e44fc30694db4d10cc",
+                "date": "Mon, 26 Oct 2026 11:47:00 GMT"
+              },
+              {
+                "id": "s1197261c13",
+                "name": "www.jagran.com",
+                "url": "https://www.jagran.com/uttar-pradesh/mau-railway-ticket-insurance-10-lakh-cover-for-45-paise-on-confirmed-counter-tickets-40425213.html",
+                "date": "Mon, 02 Nov 2026 11:54:00 GMT"
+              }
+            ]
+          }
+        ],
+        "caption_post": "भारतीय रेलवे ने देश भर में आरक्षित काउंटर (PRS) टिकट लेने वाले यात्रियों के लिए 45 पैसे में 10 लाख रुपये का यात्रा बीमा शुरू किया है। इस सुविधा का लाभ पाने के लिए काउंटर पर नकद की जगह UPI या कार्ड से भुगतान करें और मोबाइल पर आए लिंक पर यात्री विवरण दर्ज करें। (स्रोत: ABP Live Marathi, WhalesBook, Dainik Jagran)\nस्रोत: marathi.abplive.com https://marathi.abplive.com/news/india/indian-railway-travel-insurance-scheme-45-paise-10-lakh-cover-counter-tickets-marathi-news-1443747; www.whalesbook.com https://www.whalesbook.com/news/Hinglish/transportation/Indian-Railways-Mandates-Digital-Payments-for-Counter-Insurance/6adf52e44fc30694db4d10cc; www.jagran.com https://www.jagran.com/uttar-pradesh/mau-railway-ticket-insurance-10-lakh-cover-for-45-paise-on-confirmed-counter-tickets-40425213.html",
+        "editorial_mode": "news_first",
+        "writer": "news_first",
+        "format": "news",
+        "label": "जरूरी खबर",
+        "hook": "भारतीय रेलवे ने 27 अक्टूबर 2026 से काउंटर से आरक्षित कन्फर्म टिकट खरीदने वाले यात्रियों के लिए भी 45 पैसे में 10 लाख रुपये तक की ऐच्छिक ट्रैवल इंश्योरेंस सुविधा लागू कर दी है।",
+        "hook_text": "भारतीय रेलवे ने 27 अक्टूबर 2026 से काउंटर से आरक्षित कन्फर्म टिकट खरीदने वाले यात्रियों के लिए भी 45 पैसे में 10 लाख रुपये तक की ऐच्छिक ट्रैवल इंश्योरेंस सुविधा लागू कर दी है।",
+        "ticker": [],
+        "no_clips": true,
+        "scope_class": "national",
+        "national_relevance": "यह व्यवस्था किसी एक स्टेशन या राज्य तक सीमित न होकर पूरे भारत में रेलवे टिकट आरक्षण (PRS) काउंटरों से टिकट लेने वाले सभी यात्रियों पर लागू होती है।",
+        "source": "marathi.abplive.com, www.whalesbook.com, www.jagran.com",
+        "sources": [
+          {
+            "id": "s4a7e0ac655",
+            "name": "marathi.abplive.com",
+            "url": "https://marathi.abplive.com/news/india/indian-railway-travel-insurance-scheme-45-paise-10-lakh-cover-counter-tickets-marathi-news-1443747",
+            "date": "Tue, 27 Oct 2026 12:53:00 GMT"
+          },
+          {
+            "id": "sc4f7bf56c3",
+            "name": "www.whalesbook.com",
+            "url": "https://www.whalesbook.com/news/Hinglish/transportation/Indian-Railways-Mandates-Digital-Payments-for-Counter-Insurance/6adf52e44fc30694db4d10cc",
+            "date": "Mon, 26 Oct 2026 11:47:00 GMT"
+          },
+          {
+            "id": "s1197261c13",
+            "name": "www.jagran.com",
+            "url": "https://www.jagran.com/uttar-pradesh/mau-railway-ticket-insurance-10-lakh-cover-for-45-paise-on-confirmed-counter-tickets-40425213.html",
+            "date": "Mon, 02 Nov 2026 11:54:00 GMT"
+          }
+        ],
+        "fact_pack": {
+          "publishable": true,
+          "topic": "रेलवे काउंटर से आरक्षित टिकट लेने वाले यात्रियों के लिए 45 पैसे में 10 लाख रुपये का ट्रैवल इंश्योरेंस",
+          "importance_reason": "यह नियम देशभर में ट्रेन से सफर करने वाले करोड़ों यात्रियों की यात्रा सुरक्षा, दुर्घटना बीमा और रेलवे काउंटर भुगतान प्रक्रिया से सीधे जुड़ा है।",
+          "scope_class": "national",
+          "national_relevance": "यह व्यवस्था किसी एक स्टेशन या राज्य तक सीमित न होकर पूरे भारत में रेलवे टिकट आरक्षण (PRS) काउंटरों से टिकट लेने वाले सभी यात्रियों पर लागू होती है।",
+          "facts": [
+            {
+              "id": "f1",
+              "text": "भारतीय रेलवे ने 27 अक्टूबर 2026 से रेलवे काउंटर से आरक्षित कन्फर्म टिकट खरीदने वाले यात्रियों के लिए भी 45 पैसे में 10 लाख रुपये तक की ऐच्छिक (optional) ट्रैवल इंश्योरेंस सुविधा लागू की है।",
+              "source_ids": [
+                "s4a7e0ac655",
+                "sc4f7bf56c3",
+                "s1197261c13"
+              ]
+            },
+            {
+              "id": "f2",
+              "text": "काउंटर से बीमा लेने के लिए नकद भुगतान स्वीकार नहीं होगा; यात्रियों को 45 पैसे के प्रीमियम और टिकट का भुगतान UPI या कार्ड जैसे डिजिटल माध्यमों से ही करना होगा।",
+              "source_ids": [
+                "s4a7e0ac655",
+                "sc4f7bf56c3",
+                "s1197261c13"
+              ]
+            },
+            {
+              "id": "f3",
+              "text": "दुर्घटना में मृत्यु या पूर्ण विकलांगता की स्थिति में 10 लाख रुपये, आंशिक विकलांगता पर 7.50 लाख रुपये और अस्पताल के इलाज खर्च के लिए 2 लाख रुपये तक का कवर दिया जाता है।",
+              "source_ids": [
+                "s4a7e0ac655"
+              ]
+            },
+            {
+              "id": "f4",
+              "text": "डिजिटल भुगतान करने के बाद यात्री के मोबाइल पर एक लिंक भेजा जाता है, जिसमें यात्री को स्वयं व अन्य सदस्यों का विवरण दर्ज करना होता है।",
+              "source_ids": [
+                "s1197261c13"
+              ]
+            }
+          ],
+          "sources": [
+            {
+              "id": "s4a7e0ac655",
+              "name": "marathi.abplive.com",
+              "url": "https://marathi.abplive.com/news/india/indian-railway-travel-insurance-scheme-45-paise-10-lakh-cover-counter-tickets-marathi-news-1443747",
+              "date": "Tue, 27 Oct 2026 12:53:00 GMT"
+            },
+            {
+              "id": "sc4f7bf56c3",
+              "name": "www.whalesbook.com",
+              "url": "https://www.whalesbook.com/news/Hinglish/transportation/Indian-Railways-Mandates-Digital-Payments-for-Counter-Insurance/6adf52e44fc30694db4d10cc",
+              "date": "Mon, 26 Oct 2026 11:47:00 GMT"
+            },
+            {
+              "id": "s1197261c13",
+              "name": "www.jagran.com",
+              "url": "https://www.jagran.com/uttar-pradesh/mau-railway-ticket-insurance-10-lakh-cover-for-45-paise-on-confirmed-counter-tickets-40425213.html",
+              "date": "Mon, 02 Nov 2026 11:54:00 GMT"
+            }
+          ],
+          "unknowns": [
+            "क्या यह बीमा सुविधा भविष्य में अनारक्षित (General Unreserved) टिकटों पर भी शुरू की जाएगी या नहीं, स्रोतों में इसका उल्लेख नहीं है।"
+          ],
+          "scope": "पूरे भारत में रेलवे स्टेशनों के आरक्षण काउंटरों (PRS) से आरक्षित टिकट लेने वाले यात्री।",
+          "action": "रेलवे काउंटर पर टिकट बुक कराते समय यदि आप 10 लाख का यात्रा बीमा चुनना चाहते हैं, तो नकद के बजाय UPI या डेबिट/क्रेडिट कार्ड से डिजिटल भुगतान करें और मोबाइल पर आए लिंक पर यात्री विवरण भरें।"
+        },
+        "importance_reason": "यह नियम देशभर में ट्रेन से सफर करने वाले करोड़ों यात्रियों की यात्रा सुरक्षा, दुर्घटना बीमा और रेलवे काउंटर भुगतान प्रक्रिया से सीधे जुड़ा है।",
+        "review_status": "source_mapped_model_review"
+      }
+    }
+  }
+}
