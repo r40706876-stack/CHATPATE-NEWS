@@ -1,5 +1,5 @@
 {
-  "status": "dispatched",
+  "status": "delivered",
   "last_error": {
     "slot": "2026-11-03_16",
     "error_type": "ValueError",
@@ -8,6 +8,9 @@
     "checkpoint_cached": true
   },
   "slot": "2026-11-03_16",
-  "updated_at": 1793706718,
-  "script": "episodes/auto_20261103_1720.json"
+  "updated_at": 1793717727,
+  "script": "episodes/auto_20261103_1720.json",
+  "telegram_delivered_at": 1793717727,
+  "seconds": 68.48,
+  "topic": "रेलवे काउंटर टिकट बुकिंग और यात्रा बीमा का नया नियम"
 }
