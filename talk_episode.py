@@ -372,6 +372,8 @@ def quality(ep):
                 and "ग्राफिक" in p.with_suffix(".txt").read_text(encoding="utf-8")}
     real = {p.name.split("_")[0] for p in files if "_set" not in p.name
             and not (p.with_suffix('.txt').exists() and 'ग्राफिक' in p.with_suffix('.txt').read_text(encoding='utf-8'))}
+    if ep.get('production') and ep.get('editorial_mode') == 'news_first' and not real:
+        raise RuntimeError('No source-matched photo/document footage was prepared; refusing graphics-only news delivery')
     sets = {p.name.split("_")[0] for p in files if "_set" in p.name}
     clips_n = sum("clip" in p.name for p in files)
     v, err = ep.get("_voice") or "?", str(ep.get("_voice_err") or "")
