@@ -1,5 +1,5 @@
 {
-  "status": "preparation_failed",
+  "status": "prepared",
   "last_error": {
     "slot": "2026-11-03_16",
     "error_type": "ValueError",
@@ -8,5 +8,6 @@
     "checkpoint_cached": true
   },
   "slot": "2026-11-03_16",
-  "updated_at": 1793704024
+  "updated_at": 1793706617,
+  "script": "episodes/auto_20261103_1720.json"
 }

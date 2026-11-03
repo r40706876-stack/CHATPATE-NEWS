@@ -1,0 +1,391 @@
+{
+  "topic": "रेलवे काउंटर टिकट बुकिंग और यात्रा बीमा का नया नियम",
+  "breaking": "27 अक्टूबर 2026 से रेलवे स्टेशन काउंटर पर भी मिलेगा यात्रा बीमा, पर भुगतान केवल डिजिटल माध्यम से ही होगा",
+  "hook_short": "स्टेशन काउंटर से ट्रेन टिकट लेते समय अगर बीमा चुना, तो कैश नहीं चलेगा। जानिए रेलवे का नया नियम।",
+  "lines": [
+    {
+      "who": "bablu",
+      "say": "अगर आप स्टेशन के रिजर्वेशन काउंटर पर जाकर ट्रेन का कंफर्म या आरएसी टिकट लेते हैं, तो रेलवे ने आपके लिए एक बड़ा नियम बदला है।",
+      "caption": "रेलवे काउंटर टिकट यात्रियों के लिए बड़ा बदलाव",
+      "fact_ids": [
+        "f1"
+      ],
+      "satire": false,
+      "expr": "gambhir",
+      "set": "studio",
+      "visuals": [
+        "Indian Railways ticket counter passenger queue"
+      ],
+      "photo_hi": [
+        "भारतीय रेलवे टिकट काउंटर"
+      ],
+      "_news_first": true,
+      "_news_sources": [
+        {
+          "id": "s281b6b763f",
+          "name": "www.thedailyjagran.com",
+          "url": "https://www.thedailyjagran.com/india/news/indian-railways-changes-travel-insurance-rule-from-oct-27-what-passengers-need-to-know-before-booking-tickets-10334171",
+          "date": "Tue, 27 Oct 2026 09:40:00 GMT"
+        },
+        {
+          "id": "s52f167c9e0",
+          "name": "www.nationpathindia.com",
+          "url": "https://www.nationpathindia.com/national/indian-railways-travel-insurance-counter-tickets-october-27-2026",
+          "date": "Tue, 27 Oct 2026 05:07:00 GMT"
+        },
+        {
+          "id": "s0923af9397",
+          "name": "www.business-standard.com",
+          "url": "https://www.business-standard.com/finance/personal-finance/buying-train-tickets-at-counters-make-digital-payment-for-insurance-126102700502_1.html",
+          "date": "Mon, 26 Oct 2026 23:31:00 GMT"
+        }
+      ]
+    },
+    {
+      "who": "bablu",
+      "say": "सुप्रीम कोर्ट के आदेश के बाद रेलवे बोर्ड ने 27 अक्टूबर 2026 से काउंटर से टिकट खरीदने वालों के लिए भी ऐच्छिक यात्रा बीमा सुविधा लागू कर दी है, जो पहले सिर्फ ऑनलाइन बुकिंग पर मिलती थी।",
+      "caption": "27 अक्टूबर 2026 से काउंटर टिकट पर भी ऐच्छिक बीमा",
+      "fact_ids": [
+        "f1"
+      ],
+      "satire": false,
+      "expr": "gambhir",
+      "set": "studio",
+      "visuals": [
+        "Railway reservation counter PRS window ticket booking"
+      ],
+      "photo_hi": [
+        "रेलवे आरक्षण केंद्र"
+      ],
+      "_news_first": true,
+      "_news_sources": [
+        {
+          "id": "s281b6b763f",
+          "name": "www.thedailyjagran.com",
+          "url": "https://www.thedailyjagran.com/india/news/indian-railways-changes-travel-insurance-rule-from-oct-27-what-passengers-need-to-know-before-booking-tickets-10334171",
+          "date": "Tue, 27 Oct 2026 09:40:00 GMT"
+        },
+        {
+          "id": "s52f167c9e0",
+          "name": "www.nationpathindia.com",
+          "url": "https://www.nationpathindia.com/national/indian-railways-travel-insurance-counter-tickets-october-27-2026",
+          "date": "Tue, 27 Oct 2026 05:07:00 GMT"
+        },
+        {
+          "id": "s0923af9397",
+          "name": "www.business-standard.com",
+          "url": "https://www.business-standard.com/finance/personal-finance/buying-train-tickets-at-counters-make-digital-payment-for-insurance-126102700502_1.html",
+          "date": "Mon, 26 Oct 2026 23:31:00 GMT"
+        }
+      ]
+    },
+    {
+      "who": "bablu",
+      "say": "लेकिन यहां एक जरूरी शर्त है—अगर आप काउंटर पर बीमा का विकल्प चुनते हैं, तो पूरे किराए और 45 पैसे प्रति यात्री बीमा प्रीमियम का भुगतान केवल डिजिटल माध्यम से ही करना होगा। इसके लिए कैश स्वीकार नहीं किया जाएगा।",
+      "caption": "बीमा चुनने पर केवल डिजिटल पेमेंट अनिवार्य, कैश बंद",
+      "fact_ids": [
+        "f2"
+      ],
+      "satire": false,
+      "expr": "gambhir",
+      "set": "studio",
+      "visuals": [
+        "UPI QR code payment at railway ticket counter"
+      ],
+      "photo_hi": [
+        "डिजिटल भुगतान यूपीआई"
+      ],
+      "_news_first": true,
+      "_news_sources": [
+        {
+          "id": "s281b6b763f",
+          "name": "www.thedailyjagran.com",
+          "url": "https://www.thedailyjagran.com/india/news/indian-railways-changes-travel-insurance-rule-from-oct-27-what-passengers-need-to-know-before-booking-tickets-10334171",
+          "date": "Tue, 27 Oct 2026 09:40:00 GMT"
+        },
+        {
+          "id": "s52f167c9e0",
+          "name": "www.nationpathindia.com",
+          "url": "https://www.nationpathindia.com/national/indian-railways-travel-insurance-counter-tickets-october-27-2026",
+          "date": "Tue, 27 Oct 2026 05:07:00 GMT"
+        },
+        {
+          "id": "s0923af9397",
+          "name": "www.business-standard.com",
+          "url": "https://www.business-standard.com/finance/personal-finance/buying-train-tickets-at-counters-make-digital-payment-for-insurance-126102700502_1.html",
+          "date": "Mon, 26 Oct 2026 23:31:00 GMT"
+        }
+      ]
+    },
+    {
+      "who": "bablu",
+      "say": "इस 45 पैसे के बीमा में दुर्घटना में मृत्यु या पूर्ण विकलांगता पर 10 लाख रुपये, आंशिक विकलांगता पर 7.5 लाख रुपये, अस्पताल में इलाज के लिए 2 लाख रुपये और पार्थिव शरीर के परिवहन के लिए 10 हजार रुपये तक का कवर मिलता है।",
+      "caption": "45 पैसे में 10 लाख रुपये तक का बीमा कवर",
+      "fact_ids": [
+        "f3"
+      ],
+      "satire": false,
+      "expr": "gambhir",
+      "set": "studio",
+      "visuals": [
+        "Train travel insurance cover detail graphics"
+      ],
+      "photo_hi": [
+        "रेल यात्रा बीमा"
+      ],
+      "_news_first": true,
+      "_news_sources": [
+        {
+          "id": "s281b6b763f",
+          "name": "www.thedailyjagran.com",
+          "url": "https://www.thedailyjagran.com/india/news/indian-railways-changes-travel-insurance-rule-from-oct-27-what-passengers-need-to-know-before-booking-tickets-10334171",
+          "date": "Tue, 27 Oct 2026 09:40:00 GMT"
+        },
+        {
+          "id": "s52f167c9e0",
+          "name": "www.nationpathindia.com",
+          "url": "https://www.nationpathindia.com/national/indian-railways-travel-insurance-counter-tickets-october-27-2026",
+          "date": "Tue, 27 Oct 2026 05:07:00 GMT"
+        },
+        {
+          "id": "s0923af9397",
+          "name": "www.business-standard.com",
+          "url": "https://www.business-standard.com/finance/personal-finance/buying-train-tickets-at-counters-make-digital-payment-for-insurance-126102700502_1.html",
+          "date": "Mon, 26 Oct 2026 23:31:00 GMT"
+        }
+      ]
+    },
+    {
+      "who": "bablu",
+      "say": "पॉलिसी विवरण और जानकारी पाने के लिए फॉर्म भरते समय काउंटर पर अपना सही मोबाइल नंबर दर्ज कराना अनिवार्य है।",
+      "caption": "काउंटर पर सही मोबाइल नंबर देना अनिवार्य",
+      "fact_ids": [
+        "f4"
+      ],
+      "satire": false,
+      "expr": "gambhir",
+      "set": "studio",
+      "visuals": [
+        "Passenger writing mobile number on railway reservation form"
+      ],
+      "photo_hi": [
+        "रेलवे आरक्षण फॉर्म"
+      ],
+      "_news_first": true,
+      "_news_sources": [
+        {
+          "id": "s281b6b763f",
+          "name": "www.thedailyjagran.com",
+          "url": "https://www.thedailyjagran.com/india/news/indian-railways-changes-travel-insurance-rule-from-oct-27-what-passengers-need-to-know-before-booking-tickets-10334171",
+          "date": "Tue, 27 Oct 2026 09:40:00 GMT"
+        },
+        {
+          "id": "s52f167c9e0",
+          "name": "www.nationpathindia.com",
+          "url": "https://www.nationpathindia.com/national/indian-railways-travel-insurance-counter-tickets-october-27-2026",
+          "date": "Tue, 27 Oct 2026 05:07:00 GMT"
+        },
+        {
+          "id": "s0923af9397",
+          "name": "www.business-standard.com",
+          "url": "https://www.business-standard.com/finance/personal-finance/buying-train-tickets-at-counters-make-digital-payment-for-insurance-126102700502_1.html",
+          "date": "Mon, 26 Oct 2026 23:31:00 GMT"
+        }
+      ]
+    },
+    {
+      "who": "bablu",
+      "say": "ध्यान रखें, अगर बीमा लेने के बाद आप टिकट कैंसिल कराते हैं, तो 45 पैसे में से 9 पैसे कटेंगे और 36 पैसे वापस मिलेंगे। यह सामान्य टिकट कैंसिलेशन चार्ज से अलग होगा।",
+      "caption": "टिकट कैंसिलेशन पर बीमा प्रीमियम रिफंड का नियम",
+      "fact_ids": [
+        "f5"
+      ],
+      "satire": false,
+      "expr": "gambhir",
+      "set": "studio",
+      "visuals": [
+        "Railway ticket cancellation process screen"
+      ],
+      "photo_hi": [
+        "रेल टिकट रद्दीकरण"
+      ],
+      "_news_first": true,
+      "_news_sources": [
+        {
+          "id": "s281b6b763f",
+          "name": "www.thedailyjagran.com",
+          "url": "https://www.thedailyjagran.com/india/news/indian-railways-changes-travel-insurance-rule-from-oct-27-what-passengers-need-to-know-before-booking-tickets-10334171",
+          "date": "Tue, 27 Oct 2026 09:40:00 GMT"
+        },
+        {
+          "id": "s52f167c9e0",
+          "name": "www.nationpathindia.com",
+          "url": "https://www.nationpathindia.com/national/indian-railways-travel-insurance-counter-tickets-october-27-2026",
+          "date": "Tue, 27 Oct 2026 05:07:00 GMT"
+        },
+        {
+          "id": "s0923af9397",
+          "name": "www.business-standard.com",
+          "url": "https://www.business-standard.com/finance/personal-finance/buying-train-tickets-at-counters-make-digital-payment-for-insurance-126102700502_1.html",
+          "date": "Mon, 26 Oct 2026 23:31:00 GMT"
+        }
+      ]
+    },
+    {
+      "who": "bablu",
+      "say": "इसलिए अगली बार जब स्टेशन काउंटर पर टिकट लेने जाएं और बीमा का फायदा उठाना चाहें, तो नकद के साथ-साथ यूपीआई या कार्ड जरूर साथ रखें।",
+      "caption": "स्टेशन जाते समय डिजिटल भुगतान का साधन साथ रखें",
+      "fact_ids": [
+        "f2"
+      ],
+      "satire": false,
+      "expr": "gambhir",
+      "set": "studio",
+      "visuals": [
+        "Person paying via UPI phone app at railway counter"
+      ],
+      "photo_hi": [
+        "मोबाइल से ऑनलाइन पेमेंट"
+      ],
+      "_news_first": true,
+      "_news_sources": [
+        {
+          "id": "s281b6b763f",
+          "name": "www.thedailyjagran.com",
+          "url": "https://www.thedailyjagran.com/india/news/indian-railways-changes-travel-insurance-rule-from-oct-27-what-passengers-need-to-know-before-booking-tickets-10334171",
+          "date": "Tue, 27 Oct 2026 09:40:00 GMT"
+        },
+        {
+          "id": "s52f167c9e0",
+          "name": "www.nationpathindia.com",
+          "url": "https://www.nationpathindia.com/national/indian-railways-travel-insurance-counter-tickets-october-27-2026",
+          "date": "Tue, 27 Oct 2026 05:07:00 GMT"
+        },
+        {
+          "id": "s0923af9397",
+          "name": "www.business-standard.com",
+          "url": "https://www.business-standard.com/finance/personal-finance/buying-train-tickets-at-counters-make-digital-payment-for-insurance-126102700502_1.html",
+          "date": "Mon, 26 Oct 2026 23:31:00 GMT"
+        }
+      ]
+    }
+  ],
+  "caption_post": "रेलवे बोर्ड ने 27 अक्टूबर 2026 से स्टेशन काउंटर (PRS) से आरक्षित टिकट लेने वाले यात्रियों के लिए भी ऐच्छिक यात्रा बीमा सुविधा लागू की है। 45 पैसे प्रति यात्री के बीमा विकल्प पर 10 लाख रुपये तक का सुरक्षा कवर मिलता है। हालांकि, बीमा चुनने पर टिकट का पूरा भुगतान केवल डिजिटल माध्यम (UPI/कार्ड) से करना होगा। स्रोत: Jagran, Business Standard, Nation Path India.\nस्रोत: www.thedailyjagran.com https://www.thedailyjagran.com/india/news/indian-railways-changes-travel-insurance-rule-from-oct-27-what-passengers-need-to-know-before-booking-tickets-10334171; www.nationpathindia.com https://www.nationpathindia.com/national/indian-railways-travel-insurance-counter-tickets-october-27-2026; www.business-standard.com https://www.business-standard.com/finance/personal-finance/buying-train-tickets-at-counters-make-digital-payment-for-insurance-126102700502_1.html",
+  "editorial_mode": "news_first",
+  "writer": "news_first",
+  "format": "news",
+  "label": "जरूरी खबर",
+  "hook": "अगर आप स्टेशन के रिजर्वेशन काउंटर पर जाकर ट्रेन का कंफर्म या आरएसी टिकट लेते हैं, तो रेलवे ने आपके लिए एक बड़ा नियम बदला है।",
+  "hook_text": "अगर आप स्टेशन के रिजर्वेशन काउंटर पर जाकर ट्रेन का कंफर्म या आरएसी टिकट लेते हैं, तो रेलवे ने आपके लिए एक बड़ा नियम बदला है।",
+  "ticker": [],
+  "no_clips": true,
+  "scope_class": "national",
+  "national_relevance": "यह नियम भारतीय रेलवे के सभी जोनों और देशभर के रेलवे स्टेशनों के आरक्षण काउंटरों (PRS) पर लागू होता है, जिससे ऑफलाइन टिकट लेने वाले सभी रेल यात्री प्रभावित होते हैं।",
+  "source": "www.thedailyjagran.com, www.nationpathindia.com, www.business-standard.com",
+  "sources": [
+    {
+      "id": "s281b6b763f",
+      "name": "www.thedailyjagran.com",
+      "url": "https://www.thedailyjagran.com/india/news/indian-railways-changes-travel-insurance-rule-from-oct-27-what-passengers-need-to-know-before-booking-tickets-10334171",
+      "date": "Tue, 27 Oct 2026 09:40:00 GMT"
+    },
+    {
+      "id": "s52f167c9e0",
+      "name": "www.nationpathindia.com",
+      "url": "https://www.nationpathindia.com/national/indian-railways-travel-insurance-counter-tickets-october-27-2026",
+      "date": "Tue, 27 Oct 2026 05:07:00 GMT"
+    },
+    {
+      "id": "s0923af9397",
+      "name": "www.business-standard.com",
+      "url": "https://www.business-standard.com/finance/personal-finance/buying-train-tickets-at-counters-make-digital-payment-for-insurance-126102700502_1.html",
+      "date": "Mon, 26 Oct 2026 23:31:00 GMT"
+    }
+  ],
+  "fact_pack": {
+    "publishable": true,
+    "topic": "रेलवे काउंटर से टिकट बुकिंग और यात्रा बीमा का नया नियम",
+    "importance_reason": "देशभर के रेलवे टिकट काउंटरों से आरक्षित टिकट खरीदने वाले करोड़ों रेल यात्रियों के लिए यात्रा बीमा और भुगतान के नियम बदले हैं।",
+    "scope_class": "national",
+    "national_relevance": "यह नियम भारतीय रेलवे के सभी जोनों और देशभर के रेलवे स्टेशनों के आरक्षण काउंटरों (PRS) पर लागू होता है, जिससे ऑफलाइन टिकट लेने वाले सभी रेल यात्री प्रभावित होते हैं।",
+    "facts": [
+      {
+        "id": "f1",
+        "text": "रेलवे बोर्ड ने सर्वोच्च न्यायालय के आदेश के बाद 27 अक्टूबर 2026 से रेलवे आरक्षण काउंटरों से टिकट खरीदने वाले यात्रियों के लिए भी ऐच्छिक यात्रा बीमा सुविधा लागू कर दी है, जो पहले केवल ऑनलाइन बुकिंग पर उपलब्ध थी।",
+        "source_ids": [
+          "s281b6b763f",
+          "s52f167c9e0",
+          "s0923af9397"
+        ]
+      },
+      {
+        "id": "f2",
+        "text": "यदि काउंटर से टिकट लेते समय यात्री बीमा चुनता है, तो टिकट किराए और बीमा प्रीमियम (45 पैसे प्रति यात्री) का पूरा भुगतान केवल डिजिटल माध्यम से करना अनिवार्य है; नकद भुगतान स्वीकार नहीं किया जाएगा।",
+        "source_ids": [
+          "s281b6b763f",
+          "s52f167c9e0",
+          "s0923af9397"
+        ]
+      },
+      {
+        "id": "f3",
+        "text": "इस यात्रा बीमा के तहत दुर्घटना में मृत्यु या पूर्ण स्थायी विकलांगता पर 10 लाख रुपये तक, आंशिक स्थायी विकलांगता पर 7.5 लाख रुपये तक, अस्पताल में इलाज के लिए 2 लाख रुपये तक और पार्थिव शरीर के परिवहन के लिए 10,000 रुपये तक का कवर मिलता है।",
+        "source_ids": [
+          "s52f167c9e0",
+          "s0923af9397"
+        ]
+      },
+      {
+        "id": "f4",
+        "text": "बीमा की जानकारी और पॉलिसी विवरण भेजने के लिए काउंटर पर सही मोबाइल नंबर दर्ज कराना अनिवार्य है।",
+        "source_ids": [
+          "s52f167c9e0",
+          "s0923af9397"
+        ]
+      },
+      {
+        "id": "f5",
+        "text": "यदि कोई यात्री बीमा चुनने के बाद टिकट रद्द कराता है, तो 45 पैसे प्रीमियम में से 9 पैसे काटे जाएंगे (36 पैसे वापस मिलेंगे), जो सामान्य टिकट रद्दीकरण शुल्क से अलग होगा।",
+        "source_ids": [
+          "s281b6b763f",
+          "s0923af9397"
+        ]
+      }
+    ],
+    "sources": [
+      {
+        "id": "s281b6b763f",
+        "name": "www.thedailyjagran.com",
+        "url": "https://www.thedailyjagran.com/india/news/indian-railways-changes-travel-insurance-rule-from-oct-27-what-passengers-need-to-know-before-booking-tickets-10334171",
+        "date": "Tue, 27 Oct 2026 09:40:00 GMT"
+      },
+      {
+        "id": "s52f167c9e0",
+        "name": "www.nationpathindia.com",
+        "url": "https://www.nationpathindia.com/national/indian-railways-travel-insurance-counter-tickets-october-27-2026",
+        "date": "Tue, 27 Oct 2026 05:07:00 GMT"
+      },
+      {
+        "id": "s0923af9397",
+        "name": "www.business-standard.com",
+        "url": "https://www.business-standard.com/finance/personal-finance/buying-train-tickets-at-counters-make-digital-payment-for-insurance-126102700502_1.html",
+        "date": "Mon, 26 Oct 2026 23:31:00 GMT"
+      }
+    ],
+    "unknowns": [],
+    "scope": "देशभर के सभी रेलवे आरक्षण काउंटरों (PRS) से आरक्षित (Confirmed, RAC, Partially Confirmed) टिकट खरीदने वाले यात्रियों पर लागू।",
+    "action": "यदि आप स्टेशन काउंटर से टिकट लेते समय यात्रा बीमा का विकल्प चुनना चाहते हैं, तो नकद के बजाय UPI, डेबिट/क्रेडिट कार्ड जैसे डिजिटल भुगतान का विकल्प साथ रखें और अपना सही मोबाइल नंबर जरूर दर्ज कराएं।"
+  },
+  "importance_reason": "देशभर के रेलवे टिकट काउंटरों से आरक्षित टिकट खरीदने वाले करोड़ों रेल यात्रियों के लिए यात्रा बीमा और भुगतान के नियम बदले हैं।",
+  "review_status": "source_mapped_model_review",
+  "sprite": {
+    "bablu": "assets/toon/bablu",
+    "ramesh": "assets/toon/ramesh"
+  },
+  "production": true,
+  "style": "flow",
+  "lips": "sadtalker",
+  "renderer": "studio",
+  "no_memes": true,
+  "_production_slot": "2026-11-03_16"
+}
