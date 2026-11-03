@@ -51,9 +51,10 @@ def recent_coverage(root=None):
     root = Path(root) if root is not None else Path(__file__).parent
     cutoff = (dt.datetime.now(dt.timezone(dt.timedelta(hours=5, minutes=30))).date() - dt.timedelta(days=7)).strftime('%Y%m%d')
     result = []
-    for path in (root / 'episodes').glob('auto_*.json'):
-        stamp = path.stem.removeprefix('auto_').split('_')[0]
-        if not stamp.isdigit() or stamp < cutoff:
+    for path in (root / 'episodes').glob('*.json'):
+        match = re.search(r'(?:19|20)\d{6}', path.stem)
+        stamp = match.group(0) if match else ''
+        if not stamp or stamp < cutoff:
             continue
         try:
             ep = json.loads(path.read_text(encoding='utf-8'))
