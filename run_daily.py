@@ -176,11 +176,11 @@ def do_direct(feed=None):
         news = news_first.collect(feed)
         eps = write_scripts(news, 1)
     except gemini.QuotaOver:
-        print("  आज का Gemini कोटा ख़त्म — इस बारी video नहीं")
-        return
+        print("  Gemini quota blocked script preparation")
+        raise
     except Exception as e:                             # noqa: BLE001
         print("  script नहीं बनी:", repr(e)[:200])
-        return
+        raise
     if not eps:
         print("  कोई script नहीं")
         return

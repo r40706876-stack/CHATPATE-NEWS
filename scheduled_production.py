@@ -1,6 +1,7 @@
 """Idempotent scheduled production. No secrets are written to repository state."""
 import datetime as dt
 import json
+import os
 import time
 from pathlib import Path
 
@@ -52,6 +53,7 @@ def prepare(now=None, root=ROOT):
     script = state.get("script")
     if not script or not (root / script).is_file():
         import run_daily
+        os.environ["NEWS_CACHE_KEY"] = slot
         run_daily.do_direct()
         if not job.is_file():
             raise RuntimeError("Fresh news script unavailable; no old demo fallback")
@@ -84,9 +86,35 @@ def delivered(ep, seconds, root=ROOT):
                    topic=ep.get("topic") or ep.get("title", "")), root)
 
 
+def failure_message(run_url):
+    path = ROOT / "production_error.json"
+    err = json.loads(path.read_text(encoding="utf-8")) if path.exists() else {}
+    if err.get("script_cached"):
+        progress = "तैयार स्क्रिप्ट सुरक्षित है।"
+    elif err.get("checkpoint_cached"):
+        progress = "तैयारी का अधूरा checkpoint सुरक्षित है; पूरी स्क्रिप्ट अभी नहीं बनी।"
+    else:
+        progress = "इस प्रयास में पूरी स्क्रिप्ट नहीं बन पाई।"
+    cause = "Gemini अनुरोध सीमा" if err.get("error_type") == "QuotaOver" else (err.get("reason") or "तैयारी/dispatch में त्रुटि")
+    return f"⚠️ Bakra News: वीडियो नहीं बना। कारण: {cause}। {progress} Run: {run_url}"
+
+
 if __name__ == "__main__":
     import sys
     if len(sys.argv) > 1 and sys.argv[1] == "dispatched":
         dispatched(sys.argv[2])
     else:
-        prepare()
+        try:
+            prepare()
+        except Exception as exc:
+            slot = slot_for()
+            state = load(slot) if slot else {}
+            script = state.get("script")
+            cached = bool(script and (ROOT / script).is_file())
+            error = {"slot": slot, "error_type": type(exc).__name__, "reason": str(exc)[:600],
+                     "script_cached": cached,
+                     "checkpoint_cached": bool(slot and (ROOT / "news_cache" / f"{slot}.json").is_file())}
+            (ROOT / "production_error.json").write_text(json.dumps(error, ensure_ascii=False), encoding="utf-8")
+            if slot:
+                save(slot, dict(state, status="preparation_failed", last_error=error))
+            raise

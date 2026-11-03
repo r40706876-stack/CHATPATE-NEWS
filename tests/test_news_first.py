@@ -3,6 +3,12 @@ from unittest.mock import patch
 import news_first as nf
 
 class NewsFirst(unittest.TestCase):
+    def setUp(self):
+        source_patch = patch('news_sources.collect', return_value=[
+            {'id':'s1','name':'विभाग','url':'https://example.org/notice','text':'राष्ट्रीय सूचना का स्रोत'}])
+        source_patch.start()
+        self.addCleanup(source_patch.stop)
+
     def responses(self):
         facts = {'scope_class':'national','national_relevance':'देशभर के बैंक ग्राहकों पर लागू', 'publishable': True, 'topic': 'जरूरी सूचना', 'facts': [
             {'id':'f1','text':'विभाग ने सूचना जारी की','source_ids':['s1']}],

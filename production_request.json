@@ -1,5 +1,5 @@
 {
-  "requested_at": "2026-11-03T02:02:25Z",
-  "slot": "2026-11-03_07",
-  "reason": "Latest due slot has no state, cached script or active/queued run; one idempotent recovery. Use news_first national public-impact selection, exact source-matched visuals, Gemini-only voice and SadTalker 512; do not reuse the delivered route sample."
+  "requested_at": "2026-11-03T08:24:31.596Z",
+  "reason": "Recover current national-news slot using direct article evidence, durable preparation checkpoints and truthful failure reporting",
+  "policy": "national news, Gemini voice, matching visuals"
 }

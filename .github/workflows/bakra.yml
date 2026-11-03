@@ -55,7 +55,7 @@ jobs:
         run: |
           git config user.name bakra-production
           git config user.email bot@users.noreply.github.com
-          for path in episodes production_slots done.txt shown.txt last_direct.txt pending.json tg_offset.txt; do
+          for path in episodes production_slots news_cache production_error.json done.txt shown.txt last_direct.txt pending.json tg_offset.txt; do
             if [ -e "$path" ]; then git add "$path"; fi
           done
           if ! git diff --cached --quiet; then
@@ -85,4 +85,4 @@ jobs:
       - name: Report production failure
         if: failure()
         run: |
-          python -c 'import telegram; telegram.send_text("⚠️ Bakra News: इस slot की preparation/dispatch असफल हुई। Cached script सुरक्षित है; duplicate generation नहीं की जाएगी। Run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}")'
+          python -c 'import telegram, scheduled_production as s; telegram.send_text(s.failure_message("https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"))'
