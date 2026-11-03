@@ -1,0 +1,12 @@
+{
+  "status": "preparation_failed",
+  "last_error": {
+    "slot": "2026-11-03_19",
+    "error_type": "QuotaOver",
+    "reason": "सारी Gemini keys का आज का कोटा ख़त्म",
+    "script_cached": false,
+    "checkpoint_cached": true
+  },
+  "slot": "2026-11-03_19",
+  "updated_at": 1793715023
+}
