@@ -1,0 +1,63 @@
+name: deliver-clean-trai-news
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/trai_clean.yml']
+  workflow_dispatch:
+concurrency:
+  group: bakra-clean-trai-delivery
+  cancel-in-progress: false
+jobs:
+  deliver:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions: {contents: read, actions: read}
+    env:
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /build_trai_visuals.py
+            /render_trai_clean.py
+            /telegram.py
+            /talk_test.py
+            /fonts/Poppins-Bold.ttf
+      - name: Install render dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq --no-install-recommends ffmpeg libraqm0
+          python3 -m pip install -q --break-system-packages numpy pillow pymupdf
+      - uses: actions/download-artifact@v4
+        with:
+          name: st_in
+          path: st_in
+          run-id: 41687899446
+          github-token: ${{ github.token }}
+      - name: Render clean scenes with existing Gemini narration
+        run: python3 render_trai_clean.py
+      - name: Decode complete video and deliver
+        run: |
+          ffmpeg -v error -i bakra_news_trai_final.mp4 -f null -
+          python3 - <<'PY'
+          import json, os, time
+          from pathlib import Path
+          import telegram
+          ok = telegram.send_video('bakra_news_trai_final.mp4', 'बकरा न्यूज़ | मोबाइल-इंटरनेट शिकायतों पर TRAI के नए नियम\nसुधरा हुआ संस्करण: साफ़ बदलते दृश्य और Gemini आवाज़।\nस्रोत: TRAI, 2 नवंबर 2026 का आधिकारिक आदेश। लागू होने की अवधि वीडियो में स्पष्ट है।')
+          print('Clean video Telegram delivered:', ok, flush=True)
+          if not ok:
+              raise RuntimeError('Telegram video delivery not confirmed')
+          Path('trai_delivery.json').write_text(json.dumps({'telegram_delivered': True, 'at': int(time.time()), 'run_id': os.environ['GITHUB_RUN_ID'], 'voice': 'gemini', 'file': 'bakra_news_trai_final.mp4'}, indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: final-clean-video
+          path: |
+            bakra_news_trai_final.mp4
+            trai_clean_preview.jpg
+            trai_clean_quality.json
+            trai_delivery.json
+          retention-days: 7
