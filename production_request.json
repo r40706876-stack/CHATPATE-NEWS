@@ -1,5 +1,5 @@
 {
-  "requested_at": "2026-11-02T11:04:36Z",
-  "slot": "2026-11-02_16",
-  "reason": "16:00 IST slot has no state, script or matching active run; one idempotent recovery attempt preserving 3D Ramesh, SadTalker 512 and request caps"
+  "requested_at": "2026-11-03T02:02:25Z",
+  "slot": "2026-11-03_07",
+  "reason": "Latest due slot has no state, cached script or active/queued run; one idempotent recovery. Use news_first national public-impact selection, exact source-matched visuals, Gemini-only voice and SadTalker 512; do not reuse the delivered route sample."
 }
