@@ -1,0 +1,12 @@
+{
+  "status": "preparation_failed",
+  "last_error": {
+    "slot": "2026-11-03_16",
+    "error_type": "ValueError",
+    "reason": "News line has no valid fact reference",
+    "script_cached": false,
+    "checkpoint_cached": true
+  },
+  "slot": "2026-11-03_16",
+  "updated_at": 1793704024
+}
