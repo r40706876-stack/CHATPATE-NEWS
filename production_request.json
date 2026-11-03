@@ -1,5 +1,5 @@
 {
-  "slot": "2026-11-03_16",
-  "reason": "Resume cached 16:00 facts with validated reference-only script repair; leave existing 13:00 video recovery untouched.",
-  "repair": "fact-reference-once-v1"
+  "requested_at": "2026-11-03T14:00:29Z",
+  "slot": "2026-11-03_19",
+  "reason": "Latest due 19:00 slot has no state/script or matching active/queued run. One idempotent recovery with national news_first, direct-source checkpoints, exact news-matched visuals, Gemini-only voice and SadTalker 512. Leave prior 16:00 render 41630955473 and its cached assets running unchanged."
 }
