@@ -53,7 +53,7 @@ jobs:
       - id: p
         shell: bash
         env:
-          REQUESTED_SCRIPT: ${{ inputs.script || 'auto' }}
+          REQUESTED_SCRIPT: ${{ inputs.script || (contains(github.event.head_commit.message, '[bakra-trai]') && 'episodes/national_trai_20261103.json') || 'auto' }}
         run: |
           set -euo pipefail
           /usr/bin/python3 -m pip install -q --break-system-packages numpy scipy pillow edge-tts rembg onnxruntime "yt-dlp[default]"
@@ -66,6 +66,10 @@ jobs:
             test -s studio_job.txt || { echo "::error::Fresh news script was not generated; refusing old demo fallback"; exit 1; }
             script=$(cat studio_job.txt)
             test -f "$script" || { echo "::error::Generated script is missing"; exit 1; }
+          fi
+          if [ "$script" = "episodes/national_trai_20261103.json" ]; then
+            /usr/bin/python3 -m pip install -q --break-system-packages pymupdf
+            /usr/bin/python3 build_trai_visuals.py
           fi
           /usr/bin/python3 talk_episode.py prep "$script" | tee prep.log
           echo "lines=$(tail -1 prep.log)" >> $GITHUB_OUTPUT

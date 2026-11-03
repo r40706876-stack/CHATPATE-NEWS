@@ -221,7 +221,7 @@ def prep(script_path):
         import news_explainer
         for i, line in enumerate(ep['lines']):
             photos = [p for p in (IN / 'broll').glob(f'{i}_*') if p.suffix.lower() in ('.jpg', '.jpeg', '.png', '.mp4')]
-            if line.get('shot') != 'close':
+            if line.get('shot') != 'close' and len(line.get('visual_files') or []) < 2:
                 news_explainer.render(line, ep.get('sources', []), IN / 'broll' / f'{i}_factgraphic.mp4')
         manifest = {"topic": ep.get("topic"), "sources": ep.get("sources", []), "lines": []}
         for i, line in enumerate(ep["lines"]):

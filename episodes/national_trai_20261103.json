@@ -1,0 +1,209 @@
+{
+  "topic": "TRAI के नए ग्राहक शिकायत नियम: 24 घंटे सहायता और अपील की समय सीमा",
+  "breaking": "मोबाइल और इंटरनेट शिकायतों के नए नियम",
+  "hook_short": "कम्पनी ने शिकायत बन्द कर दी?",
+  "editorial_mode": "news_first",
+  "format": "news",
+  "writer": "source_reviewed",
+  "production": true,
+  "scope_class": "national",
+  "national_relevance": "देशभर के एक्सेस सेवा ग्राहकों और नियम के दायरे में आने वाले इंटरनेट सेवा ग्राहकों की शिकायत और अपील प्रक्रिया। किसी एक शहर या राज्य की खबर नहीं।",
+  "sources": [
+    {
+      "id": "trai_order_20261102",
+      "name": "TRAI आधिकारिक आदेश",
+      "url": "https://www.trai.gov.in/sites/default/files/2026-11/Regulation_02112026.pdf",
+      "date": "2026-11-02"
+    }
+  ],
+  "review_status": "primary_regulation_read_and_verified",
+  "no_gemini": true,
+  "require_gemini_voice": true,
+  "no_memes": true,
+  "no_clips": true,
+  "style": "flow",
+  "renderer": "studio",
+  "lips": "sadtalker",
+  "sprite": {
+    "bablu": "assets/toon/bablu",
+    "ramesh": "assets/toon/ramesh"
+  },
+  "lines": [
+    {
+      "who": "bablu",
+      "say": "कम्पनी ने शिकायत बन्द कर दी, तो बात खत्म नहीं। ट्राई ने मोबाइल और इंटरनेट ग्राहकों की शिकायत के नए नियम जारी किए हैं।",
+      "caption": "शिकायत बन्द होने पर भी अपील का रास्ता",
+      "shot": "full",
+      "expr": "gambhir",
+      "set": "studio",
+      "fact_ids": [
+        "f1"
+      ],
+      "satire": false,
+      "visual_files": [
+        "assets/news/trai_20261102/0_source_photo.png",
+        "assets/news/trai_20261102/0_explanation.mp4"
+      ],
+      "_news_first": true,
+      "_news_sources": [
+        {
+          "id": "trai_order_20261102",
+          "name": "TRAI आधिकारिक आदेश",
+          "url": "https://www.trai.gov.in/sites/default/files/2026-11/Regulation_02112026.pdf",
+          "date": "2026-11-02"
+        }
+      ]
+    },
+    {
+      "who": "bablu",
+      "say": "इनमें शिकायत केन्द्र चौबीसों घंटे चलेंगे। लेकिन चौबीसों घंटे इंसान मिलना जरूरी नहीं। मानव प्रतिनिधि कम-से-कम सोलह घंटे उपलब्ध होंगे।",
+      "caption": "24 घंटे सहायता, कम-से-कम 16 घंटे मानव प्रतिनिधि",
+      "shot": "full",
+      "expr": "gambhir",
+      "set": "studio",
+      "fact_ids": [
+        "f2"
+      ],
+      "satire": false,
+      "visual_files": [
+        "assets/news/trai_20261102/1_source_photo.png",
+        "assets/news/trai_20261102/1_explanation.mp4"
+      ],
+      "_news_first": true,
+      "_news_sources": [
+        {
+          "id": "trai_order_20261102",
+          "name": "TRAI आधिकारिक आदेश",
+          "url": "https://www.trai.gov.in/sites/default/files/2026-11/Regulation_02112026.pdf",
+          "date": "2026-11-02"
+        }
+      ]
+    },
+    {
+      "who": "bablu",
+      "say": "कम्पनी की मोबाइल ऐप से भी शिकायत और अपील कर सकेंगे। एआई एजेंट से बात हो, तो आपको बताया जाना चाहिए कि सामने एआई है।",
+      "caption": "ऐप से शिकायत और अपील; AI की पहचान बताना जरूरी",
+      "shot": "full",
+      "expr": "gambhir",
+      "set": "studio",
+      "fact_ids": [
+        "f3"
+      ],
+      "satire": false,
+      "visual_files": [
+        "assets/news/trai_20261102/2_source_photo.png",
+        "assets/news/trai_20261102/2_explanation.mp4"
+      ],
+      "_news_first": true,
+      "_news_sources": [
+        {
+          "id": "trai_order_20261102",
+          "name": "TRAI आधिकारिक आदेश",
+          "url": "https://www.trai.gov.in/sites/default/files/2026-11/Regulation_02112026.pdf",
+          "date": "2026-11-02"
+        }
+      ]
+    },
+    {
+      "who": "bablu",
+      "say": "शिकायत के निपटारे से संतुष्ट नहीं हैं, तो सामान्य अपील अवधि तीस से पन्द्रह दिन होगी। देरी की पर्याप्त वजह हो तो सीमित शर्तों के साथ देर से अपील स्वीकार करने का प्रावधान भी है।",
+      "caption": "सामान्य अपील अवधि: 30 से 15 दिन",
+      "shot": "full",
+      "expr": "gambhir",
+      "set": "studio",
+      "fact_ids": [
+        "f4"
+      ],
+      "satire": false,
+      "visual_files": [
+        "assets/news/trai_20261102/3_source_photo.png",
+        "assets/news/trai_20261102/3_explanation.mp4"
+      ],
+      "_news_first": true,
+      "_news_sources": [
+        {
+          "id": "trai_order_20261102",
+          "name": "TRAI आधिकारिक आदेश",
+          "url": "https://www.trai.gov.in/sites/default/files/2026-11/Regulation_02112026.pdf",
+          "date": "2026-11-02"
+        }
+      ]
+    },
+    {
+      "who": "bablu",
+      "say": "ध्यान रहे: अलग-अलग प्रावधान राजपत्र में प्रकाशन के तीस, साठ या नब्बे दिन बाद लागू होंगे। अपनी शिकायत का नम्बर और कम्पनी का जवाब संभालकर रखें।",
+      "caption": "राजपत्र प्रकाशन के बाद चरणबद्ध लागू",
+      "shot": "full",
+      "expr": "gambhir",
+      "set": "studio",
+      "fact_ids": [
+        "f5"
+      ],
+      "satire": false,
+      "visual_files": [
+        "assets/news/trai_20261102/4_source_photo.png",
+        "assets/news/trai_20261102/4_explanation.mp4"
+      ],
+      "_news_first": true,
+      "_news_sources": [
+        {
+          "id": "trai_order_20261102",
+          "name": "TRAI आधिकारिक आदेश",
+          "url": "https://www.trai.gov.in/sites/default/files/2026-11/Regulation_02112026.pdf",
+          "date": "2026-11-02"
+        }
+      ]
+    }
+  ],
+  "caption_post": "TRAI के 2 नवंबर 2026 के आदेश में शिकायत सहायता, ऐप और अपील प्रक्रिया में बदलाव हैं। सभी बदलाव अभी से लागू मानना सही नहीं: प्रावधान राजपत्र में प्रकाशन के 30/60/90 दिन बाद लागू होंगे। स्रोत: https://www.trai.gov.in/sites/default/files/2026-11/Regulation_02112026.pdf\nदायरा: एक्सेस सेवा प्रदाता; इंटरनेट सेवा प्रदाताओं में पिछले वित्त वर्ष के अंतिम दिन 10,000 से अधिक subscribers वाले प्रदाता। देर से अपील पर छूट पर्याप्त कारण और आदेश में दी गई सीमा के अधीन है।",
+  "fact_pack": {
+    "publishable": true,
+    "scope_class": "national",
+    "national_relevance": "देशभर के एक्सेस सेवा ग्राहकों और नियम के दायरे में आने वाले इंटरनेट सेवा ग्राहकों की शिकायत और अपील प्रक्रिया। किसी एक शहर या राज्य की खबर नहीं।",
+    "sources": [
+      {
+        "id": "trai_order_20261102",
+        "name": "TRAI आधिकारिक आदेश",
+        "url": "https://www.trai.gov.in/sites/default/files/2026-11/Regulation_02112026.pdf",
+        "date": "2026-11-02"
+      }
+    ],
+    "facts": [
+      {
+        "id": "f1",
+        "text": "कम्पनी ने शिकायत बन्द कर दी, तो बात खत्म नहीं। ट्राई ने मोबाइल और इंटरनेट ग्राहकों की शिकायत के नए नियम जारी किए हैं।",
+        "source_ids": [
+          "trai_order_20261102"
+        ]
+      },
+      {
+        "id": "f2",
+        "text": "इनमें शिकायत केन्द्र चौबीसों घंटे चलेंगे। लेकिन चौबीसों घंटे इंसान मिलना जरूरी नहीं। मानव प्रतिनिधि कम-से-कम सोलह घंटे उपलब्ध होंगे।",
+        "source_ids": [
+          "trai_order_20261102"
+        ]
+      },
+      {
+        "id": "f3",
+        "text": "कम्पनी की मोबाइल ऐप से भी शिकायत और अपील कर सकेंगे। एआई एजेंट से बात हो, तो आपको बताया जाना चाहिए कि सामने एआई है।",
+        "source_ids": [
+          "trai_order_20261102"
+        ]
+      },
+      {
+        "id": "f4",
+        "text": "शिकायत के निपटारे से संतुष्ट नहीं हैं, तो सामान्य अपील अवधि तीस से पन्द्रह दिन होगी। देरी की पर्याप्त वजह हो तो सीमित शर्तों के साथ देर से अपील स्वीकार करने का प्रावधान भी है।",
+        "source_ids": [
+          "trai_order_20261102"
+        ]
+      },
+      {
+        "id": "f5",
+        "text": "ध्यान रहे: अलग-अलग प्रावधान राजपत्र में प्रकाशन के तीस, साठ या नब्बे दिन बाद लागू होंगे। अपनी शिकायत का नम्बर और कम्पनी का जवाब संभालकर रखें।",
+        "source_ids": [
+          "trai_order_20261102"
+        ]
+      }
+    ]
+  }
+}
