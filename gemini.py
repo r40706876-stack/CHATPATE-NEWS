@@ -25,7 +25,7 @@ def _get(url, key, body=None):
     if body is not None:
         budget = int(os.getenv("GEMINI_REQUEST_BUDGET", "24"))
         if _request_count >= budget:
-            raise QuotaOver(f"Per-stage Gemini request budget reached ({budget}); use cached assets/fallback")
+            raise RequestBudgetExceeded(f"Per-stage Gemini request budget reached ({budget}); retain prepared assets")
         _request_count += 1
     req = urllib.request.Request(url, json.dumps(body).encode() if body else None,
                                  {"Content-Type": "application/json", "x-goog-api-key": key})
@@ -50,7 +50,7 @@ def models(key):
     except Exception as e:                            # noqa: BLE001
         print("  model list nahi mili:", e)
     def rank(n):
-        return (0 if "flash" in n and "lite" not in n else 1 if "flash" in n else 2,
+        return (-1 if n == "gemini-3.5-flash" else 0 if "flash" in n and "lite" not in n else 1 if "flash" in n else 2,
                 0 if "latest" in n else 1, -len(re.findall(r"\d", n)), n)
     names.sort(key=rank)
     env = os.getenv("GEMINI_MODEL")
@@ -64,6 +64,10 @@ class QuotaOver(RuntimeError):
     """आज का free कोटा ख़त्म — दोबारा कोशिश बेकार."""
 
 
+class RequestBudgetExceeded(QuotaOver):
+    """Local request budget is not evidence that every API key exhausted its quota."""
+
+
 def ask(prompt, search=False, json_mode=False, temperature=0.9, prefer=None, patient=True):
     """पहली key से; उसका आज का कोटा ख़त्म हो तो अगली key से."""
     ks = keys()
@@ -74,6 +78,8 @@ def ask(prompt, search=False, json_mode=False, temperature=0.9, prefer=None, pat
             continue
         try:
             return _ask(key, prompt, search, json_mode, temperature, prefer, patient)
+        except RequestBudgetExceeded:
+            raise
         except QuotaOver:
             _dead.add(key)
             if n < len(ks):
