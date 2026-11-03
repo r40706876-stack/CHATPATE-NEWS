@@ -4,6 +4,7 @@ No comedy quota, viral-score gate, script length, word count or cast quota.
 import datetime as dt
 import json
 import os
+import re
 from pathlib import Path
 import urllib.parse
 import urllib.request
@@ -45,6 +46,32 @@ def require_national(item):
         raise ValueError('Only nationally relevant news is allowed; local/route-only news is excluded')
 
 
+def recent_coverage(root=None):
+    """Include prepared and queued scripts, not only videos already delivered."""
+    root = Path(root) if root is not None else Path(__file__).parent
+    cutoff = (dt.datetime.now(dt.timezone(dt.timedelta(hours=5, minutes=30))).date() - dt.timedelta(days=7)).strftime('%Y%m%d')
+    result = []
+    for path in (root / 'episodes').glob('auto_*.json'):
+        stamp = path.stem.removeprefix('auto_').split('_')[0]
+        if not stamp.isdigit() or stamp < cutoff:
+            continue
+        try:
+            ep = json.loads(path.read_text(encoding='utf-8'))
+            result.append({'topic': ep.get('topic', ''), 'sources': [s.get('url') for s in ep.get('sources', [])]})
+        except (OSError, ValueError, TypeError):
+            continue
+    return result
+
+
+def same_story(a, b):
+    stop = {'भारत', 'भारतीय', 'लिए', 'नया', 'नई', 'नियम', 'जानिए', 'देशभर', 'राष्ट्रीय', 'यात्रियों', 'वाले', 'वाली', 'खबर'}
+    def words(text):
+        return {w[:5] for w in re.findall(r'[\u0900-\u097fa-z0-9]+', str(text).lower()) if len(w) >= 3 and w not in stop}
+    left, right = words(a), words(b)
+    overlap = len(left & right)
+    return overlap >= 3 and overlap / max(1, min(len(left), len(right))) >= 0.55
+
+
 def collect(feed_file=None):
     import topics
     import news_sources
@@ -59,7 +86,10 @@ def collect(feed_file=None):
             seen.add(row['title']);rows.append(dict(row,category=cat))
     if not rows:
         raise RuntimeError('Important-news sources unavailable; refusing old/local fallback')
-    return {'important_news':rows,'recent':[t for _,_,t in topics.history(7)]}
+    coverage = recent_coverage()
+    rows = [row for row in rows if not any(same_story(row.get('title', ''), old['topic']) for old in coverage)]
+    return {'important_news':rows,'recent':[t for _,_,t in topics.history(7)] + [old['topic'] for old in coverage],
+            'recent_coverage': coverage}
 
 
 def _checkpoint(data=None):
@@ -121,13 +151,17 @@ def write(c, n=1):
     today = dt.datetime.now(dt.timezone(dt.timedelta(hours=5, minutes=30))).isoformat()
     cache = _checkpoint()
     picks = cache.get('picks') or gemini.ask_json(BRIEF + '\nआज IST: ' + today + '\nखबरों की सूची:\n' + json.dumps(c, ensure_ascii=False) +
-        f'\nसिर्फ {n} सबसे महत्वपूर्ण विषय चुनो। हाल की खबर में जरूरी नई जानकारी हो तो फिर ले सकते हो। '
+        f'\nसिर्फ {n} सबसे महत्वपूर्ण विषय चुनो। recent और recent_coverage में बनी/कतार में लगी खबरें हैं: इनका विषय या शीर्षक बदलकर दोबारा मत चुनो। अलग महत्वपूर्ण खबर चुनो। '
         'सिर्फ JSON list: [{"topic":"...", "importance_reason":"किस पर क्या असर", "query":"...", "scope_class":"national", "national_relevance":"अलग राज्यों के किन लोगों पर क्या सीधा असर"}]',
         json_mode=True, temperature=0.2)
     if not isinstance(picks, list) or not picks:
         raise ValueError('No important news selected')
     for pick in picks:
         require_national(pick)
+        if any(same_story(pick.get('topic', ''), old.get('topic', '')) for old in c.get('recent_coverage', [])):
+            cache.pop('picks', None)
+            _checkpoint(cache)
+            raise ValueError('Selected story already prepared recently; choose another national story')
     cache['picks'] = picks
     cache.setdefault('items', {})
     _checkpoint(cache)
@@ -230,3 +264,4 @@ def write(c, n=1):
         _checkpoint(cache)
         episodes.append(ep)
     return episodes
+

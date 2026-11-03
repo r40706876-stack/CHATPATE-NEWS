@@ -10,6 +10,32 @@ import json
 import re
 import urllib.parse
 import urllib.request
+from html.parser import HTMLParser
+
+
+class ArticlePhotos(HTMLParser):
+    """Read photos inside article/main and structured NewsArticle data, excluding site chrome."""
+    def __init__(self):
+        super().__init__()
+        self.depth = 0
+        self.images = []
+
+    def handle_starttag(self, tag, attrs):
+        attrs = dict(attrs)
+        if tag in ('article', 'main'):
+            self.depth += 1
+        if tag == 'meta' and attrs.get('property') == 'og:image':
+            self.images.append((attrs.get('content', ''), ''))
+        if tag == 'img' and self.depth:
+            width = str(attrs.get('width', ''))
+            if width.isdigit() and int(width) < 500:
+                return
+            src = attrs.get('data-src') or attrs.get('src', '')
+            self.images.append((src, attrs.get('alt', '')))
+
+    def handle_endtag(self, tag):
+        if tag in ('article', 'main'):
+            self.depth = max(0, self.depth - 1)
 
 UA = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
       "Chrome/124.0 Safari/537.36")
@@ -121,15 +147,19 @@ def source_images(sources):
             match = (re.search(r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)', page)
                      or re.search(r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image', page))
             title = re.search(r'<title[^>]*>(.*?)</title>', page, re.S | re.I)
-            if not match:
-                continue
-            image = urllib.parse.urljoin(url, html.unescape(match.group(1)))
-            if BAD.search(image):
-                continue
-            out.append({'id': _id(image), 'url': image, 'thumb': image,
-                        'tags': html.unescape(title.group(1))[:200] if title else '',
-                        'credit': 'स्रोत: ' + _domain(url), 'match': 5, 'india': True,
-                        'news': True, 'source_url': url, 'same_story': True})
+            parser = ArticlePhotos()
+            parser.feed(page)
+            seen = set()
+            for src, alt in parser.images[:12]:
+                image = urllib.parse.urljoin(url, html.unescape(src))
+                if not src or not image.startswith(('https://', 'http://')) or BAD.search(image) or image in seen:
+                    continue
+                seen.add(image)
+                out.append({'id': _id(image), 'url': image, 'thumb': image,
+                            'tags': (html.unescape(title.group(1)) if title else '')[:150] + ' ' + alt[:100],
+                            'credit': 'स्रोत: ' + _domain(url), 'match': 5, 'india': True,
+                            'news': True, 'source_url': url, 'same_story': True})
         except Exception as exc:
             print('Source image unavailable:', _domain(url), type(exc).__name__)
     return out
+

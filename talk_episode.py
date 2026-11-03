@@ -218,11 +218,16 @@ def prep(script_path):
         print("  AI दृश्य वाला हिस्सा छोड़ा:", repr(e)[:150])
     fill_sets(ep)
     if ep.get("editorial_mode") == "news_first":
+        import news_explainer
+        for i, line in enumerate(ep['lines']):
+            photos = [p for p in (IN / 'broll').glob(f'{i}_*') if p.suffix.lower() in ('.jpg', '.jpeg', '.png', '.mp4')]
+            if line.get('shot') != 'close':
+                news_explainer.render(line, ep.get('sources', []), IN / 'broll' / f'{i}_factgraphic.mp4')
         manifest = {"topic": ep.get("topic"), "sources": ep.get("sources", []), "lines": []}
         for i, line in enumerate(ep["lines"]):
             files = [p for p in (IN / "broll").glob(f"{i}_*") if p.suffix != ".txt"]
             manifest["lines"].append({"line": i, "say": line["say"], "fact_ids": line.get("fact_ids", []),
-                "mode": "source_photo" if files else "speaker_or_animated_fact",
+                "mode": "mixed" if files else "speaker",
                 "files": [{"name": p.name, "credit": p.with_suffix(".txt").read_text(encoding="utf-8")
                            if p.with_suffix(".txt").exists() else ""} for p in files]})
         (IN / "visual_manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -365,7 +370,8 @@ def quality(ep):
     graphics = {p.name.split("_")[0] for p in files
                 if p.with_suffix(".txt").exists()
                 and "ग्राफिक" in p.with_suffix(".txt").read_text(encoding="utf-8")}
-    real = {p.name.split("_")[0] for p in files if "_set" not in p.name and p.name.split("_")[0] not in graphics}
+    real = {p.name.split("_")[0] for p in files if "_set" not in p.name
+            and not (p.with_suffix('.txt').exists() and 'ग्राफिक' in p.with_suffix('.txt').read_text(encoding='utf-8'))}
     sets = {p.name.split("_")[0] for p in files if "_set" in p.name}
     clips_n = sum("clip" in p.name for p in files)
     v, err = ep.get("_voice") or "?", str(ep.get("_voice_err") or "")
@@ -665,3 +671,4 @@ if __name__ == "__main__":
         vischeck(sys.argv[2])
     else:
         post()
+

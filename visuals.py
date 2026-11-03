@@ -387,10 +387,10 @@ def pick_for_lines(lines, per_line=3, pool=9, topic="", strict=False):   # 3 त
         topic_imgs = (news_images.source_images(lines[i].get('_news_sources', [])) if news_first else [])
         topic_imgs += topic_pool(ltopic) if ltopic else []
         L = len(topic_imgs)                                                # हर line को लेखों की अलग-अलग फ़ोटो पहले
-        news = [topic_imgs[(2 * n + k) % L] for k in range(min(3, L))] if L else []
-        for h in ([] if news_first else hi):                                 # line की चीज़ वाली अख़बार-फ़ोटो
+        news = [topic_imgs[(2 * n + k) % L] for k in range(min(pool, L))] if L else []
+        for h in hi[:2]:                                 # More candidates for the actual spoken detail; still visually reviewed.
             if h and h != ltopic:
-                news += news_images.article_images(h, n=4)
+                news += news_images.article_images((str(ltopic) + ' ' + h) if news_first else h, n=4)
         lw = _stems(lines[i].get("say", "") + " " + " ".join(hi))           # line की बात
         tw = _stems(ltopic)                                                # खबर की बात
         kept = []
@@ -526,6 +526,8 @@ def pick_for_lines(lines, per_line=3, pool=9, topic="", strict=False):   # 3 त
         print(f"  line {i + 1}: {len(got)} तस्वीर ({', '.join(qs[:4])})" + ("" if got else "  ❌"))
     # सबसे दमदार तस्वीर (असली घटना) पहले सेकंड पर — पहले वो 30वें सेकंड पर आती थी, जब तक लोग जा चुके होते थे
     heroes.sort(reverse=True)
+    if any(ln.get('_news_first') for ln in lines):
+        return out  # A photo approved for one fact must not be promoted onto another line.
     for hs, hn, hp in heroes:
         hpath = where.get((hn, hp))
         if not hpath or not pools or hs < 5:
@@ -537,3 +539,4 @@ def pick_for_lines(lines, per_line=3, pool=9, topic="", strict=False):   # 3 त
         print(f"  ⭐ सबसे दमदार तस्वीर पहले सेकंड पर: line {hn + 1} से ({hs}/10)")
         break
     return out
+

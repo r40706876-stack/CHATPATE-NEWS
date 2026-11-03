@@ -810,7 +810,7 @@ def render(ep, segs, chars, out, preview):
         if ln.get("big") and vis and not react and shot in ("split", "full"):   # माँग वाली line: पहले बड़े अक्षर, फिर तस्वीर
             card = [{"big": ln["big"], "sub": ln.get("sub", ""), "color": ln.get("card_color")}]
             vis = (vis + card) if si == 0 else (card + vis)   # पहला सेकंड असली तस्वीर का (scroll वहीं रुकता है)
-        if shot in ("split", "full") and not vis and not react and pool and not ln.get("big") and carry < 1:
+        if ep.get('editorial_mode') != 'news_first' and shot in ("split", "full") and not vis and not react and pool and not ln.get("big") and carry < 1:
             # तस्वीर नहीं मिली: ख़ाली/धुंधली screen नहीं (पहली video में 2.5 से 13 सेकंड तक ऊपर काला रहा — ठीक खाई पर) —
             # इसी खबर की दूसरी lines की असली तस्वीरें, जो अभी-अभी न दिखी हों, नए zoom के साथ
             # पहले यहाँ दूसरी lines की फ़ोटो लगती थीं — बोल कुछ और, screen पर कुछ और (मालिक: "mismatch न हो").
@@ -853,9 +853,10 @@ def render(ep, segs, chars, out, preview):
             cut_s = min(cut_s, 1.2)
         chunk = max(1, int(cut_s * FPS))                        # हर 2 सेकंड नया नज़ारा
         if ep.get("editorial_mode") == "news_first" and s.get("vis"):
-            chunk = max(1, math.ceil(n / len(vis)))  # Hold the selected source photo/graphic for this explanation.
+            vis.sort(key=lambda p: 'factgraphic' in str(p))
+            chunk = max(1, min(4 * FPS, math.ceil(n / len(vis))))
         need = math.ceil(n / chunk) + int(ep.get("_fix") or 0)
-        if shot != "close" and not react and vis and len(vis) < need and not dd:
+        if ep.get('editorial_mode') != 'news_first' and shot != "close" and not react and vis and len(vis) < need and not dd:
             # सिर्फ़ zoom बदलने से वही तस्वीर 5 सेकंड "रुकी" दिखती थी (छठ वाली video) — कमी हो तो: line की मुख्य बात
             # वाला card, फिर इसी खबर की दूसरी असली तस्वीरें (जो अभी इस line में नहीं)
             extra = []
@@ -870,7 +871,7 @@ def render(ep, segs, chars, out, preview):
                     break
                 if e_ not in vis:
                     vis.insert(1 if len(vis) == 1 else len(vis), e_)
-        if vis and shot != "close" and not react and len(vis) * chunk < n and k >= FPS * 5:   # पहले 5s: खींचो मत, A-B-A तेज़ बदलो
+        if ep.get('editorial_mode') != 'news_first' and vis and shot != "close" and not react and len(vis) * chunk < n and k >= FPS * 5:   # पहले 5s: खींचो मत, A-B-A तेज़ बदलो
             # तस्वीरें कम, line लंबी: A-B-A-B घुमाने की जगह हर तस्वीर ज़्यादा देर (2.8 सेकंड तक, अलग zoom/कोण से),
             # फिर भी बचे तो line की मुख्य बात वाला card — एक ही फ़ोटो दोबारा लौटकर नहीं आती
             chunk = min(int((5.0 if dd else 2.8) * FPS), math.ceil(n / len(vis)))   # QA: 3 सेकंड से ज़्यादा एक तस्वीर = रद्द
@@ -915,9 +916,9 @@ def render(ep, segs, chars, out, preview):
         seen.add(ln["who"])
         for t in range(n):
             only_cards = all(isinstance(v, dict) for v in vis)
-            if shot != "close" and vis and t % chunk == 0 and not (only_cards and t and len(vis) == 1):
+            if shot != "close" and vis and t % chunk == 0 and not (only_cards and t and len(vis) == 1) and (ep.get('editorial_mode') != 'news_first' or t == 0 or t // chunk < len(vis)):
                 # (अकेला card पूरी line एक ही बार उभरे — हर 2 सेकंड दोबारा उछलना झिलमिल लगता था)
-                j = (t // chunk) % len(vis)
+                j = min(t // chunk, len(vis) - 1) if ep.get('editorial_mode') == 'news_first' else (t // chunk) % len(vis)
                 seed += 1
                 if cur is not None:
                     cur.close()
@@ -1055,4 +1056,5 @@ def doordarshan(src, out):
     subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(src), "-vf", vf, "-c:v", "libx264", "-crf", "20",
                     "-preset", "veryfast", "-pix_fmt", "yuv420p", "-c:a", "copy", str(out)], check=True)
     return out
+
 
