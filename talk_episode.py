@@ -228,7 +228,7 @@ def prep(script_path):
         (IN / "visual_manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding="utf-8")
     json.dump(ep, open(IN / "episode.json", "w", encoding="utf-8"), ensure_ascii=False)
     needs_face = [i for i, ln in enumerate(ep["lines"])
-                  if not voice_only(ep, ln) and not mascot_lips(ep, ln)
+                  if ln.get("shot") != "full" and not voice_only(ep, ln) and not mascot_lips(ep, ln)
                   and not (sprite_of(ep, ln["who"]) and ep.get("lips") == "sprite")]
     print(json.dumps(needs_face))   # sprite वाले होंठ = SadTalker की ज़रूरत नहीं
 
@@ -536,7 +536,7 @@ def post_studio(ep):
         vis = sorted((p for p in (IN / "broll").glob(f"{i}_*") if p.suffix != ".txt"),   # असली clip सबसे पहले
                      key=lambda p: ("clip" not in p.name and "own" not in p.name, p.name)) if (IN / "broll").exists() else []
         shot = "full" if voice_only(ep, ln) else (ln.get("shot") or pick_shot(ep, i, ln))
-        if ep.get("production") and not voice_only(ep, ln) and ep.get("lips") == "sadtalker" and not clips:
+        if ep.get("production") and shot != "full" and not voice_only(ep, ln) and ep.get("lips") == "sadtalker" and not clips:
             raise RuntimeError(f"Missing SadTalker clip for speaking line {i}; refusing a frozen talking face")
         talk = None
         sprite = sprite_of(ep, ln["who"])
