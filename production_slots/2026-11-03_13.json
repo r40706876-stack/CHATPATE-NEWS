@@ -1,6 +1,9 @@
 {
-  "status": "dispatched",
+  "status": "delivered",
   "script": "episodes/auto_20261103_1400.json",
   "slot": "2026-11-03_13",
-  "updated_at": 1793694721
+  "updated_at": 1793709391,
+  "telegram_delivered_at": 1793709391,
+  "seconds": 41.36,
+  "topic": "रेलवे काउंटर टिकटों पर 45 पैसे में 10 लाख का यात्रा बीमा"
 }
