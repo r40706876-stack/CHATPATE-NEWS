@@ -1,0 +1,153 @@
+# पूरी episode: हर line अलग job में एक साथ (parallel) SadTalker → जोड़कर पुराना TV look → Telegram
+name: recover-national-news
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/recover_national_news.yml']
+  workflow_dispatch:
+    inputs:
+      script: {description: "auto = अभी की खबर से नई script; या episode JSON का path", default: "auto"}
+      prep: {description: "full / extcrop", default: "full"}
+      pose: {description: "सिर हिलने का अंदाज़ 0-45", default: "0"}
+      still: {description: "सिर स्थिर (yes = सिर्फ़ होंठ/आँख/चेहरा, शांत anchor जैसा)", default: "yes"}
+      expr: {description: "चेहरे/होंठ के हिलने की ताकत (3D किरदार पर 1.5 अच्छा)", default: "1.5"}
+      size: {description: "SadTalker model: 512 = साफ़ चेहरा (धीमा), 256 = तेज़", default: "512"}
+concurrency:
+  group: bakra-render-${{ inputs.script || github.sha }}
+  cancel-in-progress: false
+env:
+  GEMINI_REQUEST_BUDGET: "8"
+  GEMINI_MODELS_PER_KEY: "2"
+  GEMINI_TTS_REQUEST_BUDGET: "12"
+  GEMINI_TTS_MODELS_PER_KEY: "2"
+  OMP_NUM_THREADS: "2"
+  MKL_NUM_THREADS: "2"
+  OPENBLAS_NUM_THREADS: "2"
+  SCENES: "0"
+  SCENE_GEMINI: "0"
+  GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+  GEMINI_API_KEY2: ${{ secrets.GEMINI_API_KEY2 }}
+  GEMINI_API_KEY3: ${{ secrets.GEMINI_API_KEY3 }}
+  PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+  YT_COOKIES: ${{ secrets.YT_COOKIES }}
+  IG_COOKIES: ${{ secrets.IG_COOKIES }}
+  TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+  TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+jobs:
+  prep:
+    runs-on: ubuntu-24.04
+    permissions: {contents: read, actions: read}
+    outputs: {lines: "${{ steps.p.outputs.lines }}"}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: st_in
+          path: st_in
+          run-id: 41603979408
+          github-token: ${{ github.token }}
+      - id: p
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          ep = json.loads(Path('st_in/episode.json').read_text())
+          lines = [i for i, ln in enumerate(ep['lines']) if ln.get('shot') != 'full']
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+              f.write('lines=' + json.dumps(lines) + '\n')
+          PY
+      - uses: actions/upload-artifact@v4
+        with: {name: st_in, path: st_in}
+
+  face:
+    needs: prep
+    if: needs.prep.outputs.lines != '[]'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix: {line: "${{ fromJSON(needs.prep.outputs.lines) }}"}
+    steps:
+      - uses: actions/download-artifact@v4
+        with: {name: st_in, path: st_in}
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.10"}
+      - uses: actions/cache@v4
+        with: {path: st_models, key: "sadtalker-${{ inputs.size || '512' }}-v1"}
+      - uses: actions/cache@v4
+        with: {path: ~/.cache/pip, key: sadtalker-pip-v1}
+      - name: SadTalker install
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg libsndfile1
+          git clone -q --depth 1 https://github.com/OpenTalker/SadTalker st
+          mkdir -p st_models/checkpoints st_models/gfpgan/weights
+          cd st_models/checkpoints
+          for f in mapping_00109-model.pth.tar mapping_00229-model.pth.tar SadTalker_V0.0.2_${{ inputs.size || '512' }}.safetensors; do
+            test -s $f || wget -q https://github.com/OpenTalker/SadTalker/releases/download/v0.0.2-rc/$f; done
+          cd ../gfpgan/weights
+          test -s alignment_WFLW_4HG.pth || wget -q https://github.com/xinntao/facexlib/releases/download/v0.1.0/alignment_WFLW_4HG.pth
+          test -s detection_Resnet50_Final.pth || wget -q https://github.com/xinntao/facexlib/releases/download/v0.1.0/detection_Resnet50_Final.pth
+          test -s GFPGANv1.4.pth || wget -q https://github.com/TencentARC/GFPGAN/releases/download/v1.3.0/GFPGANv1.4.pth
+          test -s parsing_parsenet.pth || wget -q https://github.com/xinntao/facexlib/releases/download/v0.2.2/parsing_parsenet.pth
+          cd $GITHUB_WORKSPACE
+          ln -s $GITHUB_WORKSPACE/st_models/checkpoints st/checkpoints
+          ln -s $GITHUB_WORKSPACE/st_models/gfpgan st/gfpgan
+          pip install -q torch==1.12.1+cpu torchvision==0.13.1+cpu torchaudio==0.12.1+cpu --extra-index-url https://download.pytorch.org/whl/cpu
+          grep -v gradio st/requirements.txt > st/req.txt
+          pip install -q -r st/req.txt
+      - name: चेहरा हिलाओ (line ${{ matrix.line }})
+        run: |
+          cd st
+          # Avoid excessive CPU worker contention on small hosted runners.
+          sed -i '/^import torch$/a torch.set_num_threads(2)' inference.py
+          time python inference.py --driven_audio ../st_in/${{ matrix.line }}/talk.wav \
+            --source_image ../st_in/${{ matrix.line }}/source.png --result_dir ../st_out/${{ matrix.line }} \
+            --preprocess ${{ inputs.prep || 'full' }} --pose_style ${{ inputs.pose || '0' }} --expression_scale ${{ inputs.expr || '1.5' }} --size ${{ inputs.size || '512' }} --cpu --batch_size 4 \
+            $( [ "${{ inputs.still || 'yes' }}" = "yes" ] && echo --still )
+      - uses: actions/upload-artifact@v4
+        with: {name: "clip-${{ matrix.line }}", path: st_out}
+
+  join:
+    needs: [prep, face]
+    if: always() && needs.prep.result == 'success'
+    runs-on: ubuntu-24.04
+    permissions: {contents: write}
+    steps:
+      - uses: actions/checkout@v4
+      - name: ffmpeg (apt अटके तो static build)
+        timeout-minutes: 12
+        run: |
+          timeout 240 sudo apt-get install -y -qq --no-install-recommends ffmpeg libraqm0 \
+            || (timeout 180 sudo apt-get update -qq && timeout 240 sudo apt-get install -y -qq --no-install-recommends ffmpeg libraqm0) \
+            || (curl -sL --max-time 120 https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz | tar -xJ -C /tmp && sudo cp /tmp/ffmpeg-master-latest-linux64-gpl/bin/ff* /usr/local/bin/) \
+            || (curl -sL --max-time 120 https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz | tar -xJ -C /tmp && sudo cp /tmp/ffmpeg-*-static/ff* /usr/local/bin/)
+          ffmpeg -version | head -1
+      - uses: actions/download-artifact@v4
+        with: {name: st_in, path: st_in}
+      - uses: actions/download-artifact@v4
+        continue-on-error: true
+        with: {pattern: "clip-*", path: st_out, merge-multiple: true}
+      - run: |
+          if [ -d st_out ]; then find st_out -name "*.mp4" -print; fi
+          /usr/bin/python3 -m pip install -q --break-system-packages numpy scipy pillow rembg onnxruntime
+          /usr/bin/python3 talk_episode.py post
+      - uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: final-video
+          path: |
+            episode.mp4
+            preview_episode.jpg
+            last_quality.json
+          retention-days: 7
+      - name: झलक सेव
+        if: always()
+        run: |
+          git config user.name Claude && git config user.email noreply@anthropic.com
+          git add -f preview_episode.jpg last_quality.json last_delivered.json 2>/dev/null || true
+          git add production_slots 2>/dev/null || true
+          if [ -f episode.mp4 ] && [ $(stat -c%s episode.mp4) -lt 45000000 ]; then cp episode.mp4 last_episode.mp4; git add -f last_episode.mp4; fi
+          git diff --cached --quiet && exit 0
+          git commit -m "episode preview"
+          for i in 1 2 3; do git pull --rebase -X theirs && git push && break; sleep 5; done
