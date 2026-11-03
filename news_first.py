@@ -104,6 +104,19 @@ def normalize(ep):
     return ep
 
 
+
+def reference_issues(ep, valid_ids):
+    issues = []
+    for i, line in enumerate(ep.get('lines', [])):
+        if line.get('satire') is True:
+            continue
+        refs = line.get('fact_ids')
+        if not isinstance(refs, list) or not refs or any(
+                not isinstance(ref, str) or ref not in valid_ids for ref in refs):
+            issues.append({'line': i, 'fact_ids': refs})
+    return issues
+
+
 def write(c, n=1):
     today = dt.datetime.now(dt.timezone(dt.timedelta(hours=5, minutes=30))).isoformat()
     cache = _checkpoint()
@@ -164,9 +177,37 @@ def write(c, n=1):
             '"photo_hi":["सटीक हिंदी खोज"]}],"caption_post":"सार और स्रोत"}', json_mode=True, temperature=0.6)
         ep = normalize(ep)
         fact_ids = {f['id'] for f in rows}
-        for line in ep['lines']:
-            if line.get('satire') is not True and (not line.get('fact_ids') or not set(line['fact_ids']) <= fact_ids):
-                raise ValueError('News line has no valid fact reference')
+        issues = reference_issues(ep, fact_ids)
+        if issues:
+            # Preserve the failed draft; repair references once without rewriting speech.
+            item['rejected_script'] = json.loads(json.dumps(ep))
+            item['reference_issues'] = issues
+            _checkpoint(cache)
+            mapping = gemini.ask_json(
+                BRIEF + '\\nRepair ONLY fact references for this unchanged script. '
+                'Use exact IDs from facts. Do not invent IDs, rewrite speech, or mark facts as satire. '
+                'For each factual line return its zero-based index and all supporting fact_ids. '
+                'If any claim lacks support, return repairable=false.\\n' +
+                json.dumps({'facts': facts, 'script': ep, 'issues': issues}, ensure_ascii=False) +
+                '\\nJSON: {"repairable":true,"lines":[{"index":0,"fact_ids":["f1"]}]}',
+                json_mode=True, temperature=0.1)
+            if not isinstance(mapping, dict) or mapping.get('repairable') is not True:
+                raise ValueError('News line has no valid fact reference; unsupported draft saved')
+            entries = mapping.get('lines')
+            if not isinstance(entries, list):
+                raise ValueError('Invalid fact-reference repair')
+            mapped = {}
+            for entry in entries:
+                index = entry.get('index') if isinstance(entry, dict) else None
+                if type(index) is not int or index < 0 or index >= len(ep['lines']) or index in mapped:
+                    raise ValueError('Invalid or duplicate fact-reference line index')
+                mapped[index] = entry.get('fact_ids')
+            for index, line in enumerate(ep['lines']):
+                if line.get('satire') is not True:
+                    line['fact_ids'] = mapped.get(index)
+            if reference_issues(ep, fact_ids):
+                raise ValueError('News line has no valid fact reference after repair; draft saved')
+            item.pop('reference_issues', None)
         item['script'] = ep
         _checkpoint(cache)
         review = gemini.ask_json(BRIEF + '\nतथ्य और script की संपादकीय जाँच करो। अवधि/comedy/tag पर अंक नहीं। '

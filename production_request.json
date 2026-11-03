@@ -1,5 +1,5 @@
 {
-  "requested_at": "2026-11-03T11:02:50Z",
   "slot": "2026-11-03_16",
-  "reason": "16:00 slot has no state or matching preparation/render run. One idempotent recovery using national news_first, source-matched visuals and Gemini-only voice. Preserve prior 13:00 recovery run 41621367924 and all cached script/audio/visuals; do not regenerate that episode."
+  "reason": "Resume cached 16:00 facts with validated reference-only script repair; leave existing 13:00 video recovery untouched.",
+  "repair": "fact-reference-once-v1"
 }
