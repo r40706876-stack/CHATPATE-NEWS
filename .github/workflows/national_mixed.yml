@@ -27,6 +27,7 @@ jobs:
           sparse-checkout: |
             /render_national_mixed.py
             /tts.py
+            /gemini.py
             /talk_test.py
             /telegram.py
             /fonts/Poppins-Bold.ttf
