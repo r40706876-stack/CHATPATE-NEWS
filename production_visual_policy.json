@@ -1,0 +1,9 @@
+{
+  "preferred_reference_run": 41687899446,
+  "rejected_reference_run": 41690142160,
+  "approved_format": "Prominent news-matched photos or source-document visuals mixed with relevant animated explanations and cards only where useful",
+  "disallowed": "Cards-only presentation with real photos reduced to tiny unreadable proof thumbnails",
+  "voice": "Gemini",
+  "editorial": "Important national news; do not repeat recent stories; no fixed script duration",
+  "user_feedback": "पहले में फोटो और कार्ड और animation है जो ठीक है; दूसरे में केवल कार्ड है जो सही नहीं है"
+}
