@@ -1,0 +1,79 @@
+name: national-life-impact-news
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/national_mixed.yml']
+  workflow_dispatch:
+concurrency:
+  group: bakra-national-bonus-news
+  cancel-in-progress: false
+jobs:
+  produce:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    permissions: {contents: read, actions: read}
+    env:
+      GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+      GEMINI_API_KEY2: ${{ secrets.GEMINI_API_KEY2 }}
+      GEMINI_API_KEY3: ${{ secrets.GEMINI_API_KEY3 }}
+      GEMINI_TTS_REQUEST_BUDGET: '12'
+      GEMINI_TTS_MODELS_PER_KEY: '2'
+      TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+      TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /render_national_mixed.py
+            /tts.py
+            /talk_test.py
+            /telegram.py
+            /fonts/Poppins-Bold.ttf
+            /episodes/national_bonus_scam_20261103.json
+      - name: Install media dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq --no-install-recommends ffmpeg libraqm0
+          python3 -m pip install -q --break-system-packages numpy scipy pillow
+      - name: Prepare Gemini narration and reviewed source pictures
+        run: python3 render_national_mixed.py prepare episodes/national_bonus_scam_20261103.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: prepared-national-bonus-news
+          path: national_mixed_work
+          retention-days: 7
+      - name: Render prominent photos with supporting animation and cards
+        run: python3 render_national_mixed.py render
+      - name: Decode and validate complete final video
+        run: ffmpeg -v error -i bakra_news_bonus_scam.mp4 -f null -
+      - uses: actions/upload-artifact@v4
+        with:
+          name: final-national-bonus-news
+          path: |
+            bakra_news_bonus_scam.mp4
+            national_mixed_preview.jpg
+            national_mixed_quality.json
+          retention-days: 7
+      - name: Deliver the new mixed-format national news video
+        run: |
+          python3 - <<'PY'
+          import json, os, time
+          from pathlib import Path
+          import telegram
+          ep = json.loads(Path('national_mixed_work/episode.json').read_text(encoding='utf-8'))
+          if ep.get('_voice') != 'gemini':
+              raise RuntimeError('Gemini voice is mandatory')
+          ok = telegram.send_video('bakra_news_bonus_scam.mp4', ep['caption_post'])
+          print('New national mixed video Telegram delivered:', ok, flush=True)
+          if not ok:
+              raise RuntimeError('Telegram delivery not confirmed; preserve prepared assets')
+          Path('national_news_delivery.json').write_text(json.dumps({'delivered': True, 'topic': ep['topic'], 'voice': 'gemini', 'at': int(time.time()), 'run_id': os.environ['GITHUB_RUN_ID']}))
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: national-news-delivery-record
+          path: national_news_delivery.json
+          retention-days: 7

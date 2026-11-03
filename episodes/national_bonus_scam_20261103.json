@@ -1,0 +1,140 @@
+{
+  "topic": "₹8,000 के फर्जी दिवाली बोनस वाले WhatsApp मैसेज पर PIB की चेतावनी",
+  "editorial_mode": "news_first",
+  "production": true,
+  "scope_class": "national",
+  "national_relevance": "देशभर में WhatsApp इस्तेमाल करने वाले लोगों और उनके परिवारों की निजी जानकारी, बैंकिंग सुरक्षा और मेहनत की कमाई से सीधा संबंध; किसी एक शहर की घटना नहीं।",
+  "importance_reason": "त्योहार में सरकारी आर्थिक सहायता का झांसा किसी भी राज्य के मोबाइल उपयोगकर्ता तक पहुंच सकता है; नुकसान से बचने और सही शिकायत करने की तुरंत काम आने वाली जानकारी।",
+  "selection_priority": "जीवन पर व्यापक प्रत्यक्ष असर पहले; पैसे और डिजिटल सुरक्षा से जुड़ी ताजा राष्ट्रीय चेतावनी",
+  "require_gemini_voice": true,
+  "no_gemini": true,
+  "sources": [
+    {
+      "id": "pib",
+      "name": "PIB Fact Check, 02 Nov 2026",
+      "url": "https://x.com/PIBFactCheck/status/2117134331110105447",
+      "evidence_url": "https://cdn.syndication.twimg.com/tweet-result?id=2117134331110105447&lang=en&token=0"
+    },
+    {
+      "id": "police",
+      "name": "PIB द्वारा साझा Cyber Crimes Hyderabad चेतावनी",
+      "url": "https://x.com/CyberCrimeshyd/status/2116046094153179233",
+      "image_url": "https://pbs.twimg.com/media/HV20sk-bIAA4RPZ?format=jpg&name=large"
+    },
+    {
+      "id": "mha",
+      "name": "गृह मंत्रालय / I4C",
+      "url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2287674&lang=1&reg=1"
+    }
+  ],
+  "review_status": "primary_PIB_post_and_shared_official_warning_checked",
+  "lines": [
+    {
+      "who": "bablu",
+      "say": "सरकार से आठ हजार रुपये का दिवाली बोनस? ऐसा व्हाट्सऐप मैसेज मिले, तो लिंक मत खोलिए। पीआईबी ने इस दावे को फर्जी बताया है।",
+      "caption": "₹8,000 का बोनस? दावा फर्जी है",
+      "scene": "poster",
+      "fact_ids": [
+        "f1"
+      ],
+      "satire": false
+    },
+    {
+      "who": "bablu",
+      "say": "मैसेज में सरकार के नाम पर नकली वेबसाइट पर बुलाया जाता है। वहां आपकी निजी जानकारी मांगी जाती है।",
+      "caption": "सरकारी नाम → नकली लिंक → निजी जानकारी",
+      "scene": "phone",
+      "fact_ids": [
+        "f2"
+      ],
+      "satire": false
+    },
+    {
+      "who": "bablu",
+      "say": "बोनस लेने के लिए ओटीपी, यूपीआई पिन या बैंक की जानकारी मत दीजिए। पैसे मिलने के नाम पर पहले फीस भी मत भेजिए।",
+      "caption": "OTP / UPI PIN नहीं • कोई फीस नहीं",
+      "scene": "money",
+      "fact_ids": [
+        "f3"
+      ],
+      "satire": false
+    },
+    {
+      "who": "bablu",
+      "say": "अगर पैसे चले गए हैं, तो तुरंत बैंक को बताइए। हेल्पलाइन एक नौ तीन शून्य पर कॉल करें और साइबरक्राइम डॉट जीओवी डॉट इन पर शिकायत करें।",
+      "caption": "रकम गई? बैंक + 1930 + cybercrime.gov.in",
+      "scene": "help",
+      "fact_ids": [
+        "f4"
+      ],
+      "satire": false
+    },
+    {
+      "who": "bablu",
+      "say": "यह मैसेज आगे मत बढ़ाइए। सरकारी फायदे की पुष्टि आधिकारिक वेबसाइट से करिए। त्योहार पर बोनस चाहिए, ठग को बोनस नहीं देना है।",
+      "caption": "लिंक न खोलें • आगे न भेजें • पहले पुष्टि करें",
+      "scene": "verify",
+      "fact_ids": [
+        "f3"
+      ],
+      "satire": false
+    }
+  ],
+  "caption_post": "₹8,000 के सरकारी दिवाली बोनस वाला वायरल WhatsApp दावा फर्जी है। अनजान लिंक, OTP/PIN और अग्रिम फीस से सावधान रहें। आर्थिक साइबर धोखाधड़ी हो तो तुरंत बैंक को सूचित करें, 1930 और cybercrime.gov.in पर रिपोर्ट करें।\nस्रोत: PIB Fact Check, 02 Nov 2026 https://x.com/PIBFactCheck/status/2117134331110105447; PIB द्वारा साझा Cyber Crimes Hyderabad चेतावनी https://x.com/CyberCrimeshyd/status/2116046094153179233; गृह मंत्रालय / I4C https://www.pib.gov.in/PressReleasePage.aspx?PRID=2287674&lang=1&reg=1\nदृश्य: आधिकारिक जागरूकता पोस्टर; WhatsApp/रुपयों की तस्वीरें प्रतीकात्मक हैं, किसी वास्तविक पीड़ित की तस्वीर नहीं। फोटोग्राफर श्रेय वीडियो में।",
+  "fact_pack": {
+    "publishable": true,
+    "scope_class": "national",
+    "national_relevance": "देशभर में WhatsApp इस्तेमाल करने वाले लोगों और उनके परिवारों की निजी जानकारी, बैंकिंग सुरक्षा और मेहनत की कमाई से सीधा संबंध; किसी एक शहर की घटना नहीं।",
+    "sources": [
+      {
+        "id": "pib",
+        "name": "PIB Fact Check, 02 Nov 2026",
+        "url": "https://x.com/PIBFactCheck/status/2117134331110105447",
+        "evidence_url": "https://cdn.syndication.twimg.com/tweet-result?id=2117134331110105447&lang=en&token=0"
+      },
+      {
+        "id": "police",
+        "name": "PIB द्वारा साझा Cyber Crimes Hyderabad चेतावनी",
+        "url": "https://x.com/CyberCrimeshyd/status/2116046094153179233",
+        "image_url": "https://pbs.twimg.com/media/HV20sk-bIAA4RPZ?format=jpg&name=large"
+      },
+      {
+        "id": "mha",
+        "name": "गृह मंत्रालय / I4C",
+        "url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2287674&lang=1&reg=1"
+      }
+    ],
+    "facts": [
+      {
+        "id": "f1",
+        "text": "PIB ने ₹8,000 के सरकारी दिवाली बोनस के WhatsApp दावे को फर्जी बताया।",
+        "source_ids": [
+          "pib",
+          "police"
+        ]
+      },
+      {
+        "id": "f2",
+        "text": "लिंक नकली वेबसाइट पर ले जाता है, जहां निजी जानकारी मांगी जाती है।",
+        "source_ids": [
+          "pib"
+        ]
+      },
+      {
+        "id": "f3",
+        "text": "संदिग्ध लिंक न खोलें; OTP, UPI PIN और बैंक विवरण न दें, कोई अग्रिम फीस न चुकाएं, आधिकारिक स्रोत से जांचें और मैसेज आगे न भेजें।",
+        "source_ids": [
+          "police"
+        ]
+      },
+      {
+        "id": "f4",
+        "text": "आर्थिक साइबर धोखाधड़ी पर बैंक से तुरंत संपर्क, 1930 हेल्पलाइन और cybercrime.gov.in पर रिपोर्ट।",
+        "source_ids": [
+          "mha",
+          "police"
+        ]
+      }
+    ]
+  }
+}
