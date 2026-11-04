@@ -1,1 +1,1 @@
-{"slot": "2026-11-04_10", "error_type": "RequestBudgetExceeded", "reason": "Per-stage Gemini request budget reached (24); retain prepared assets", "script_cached": false, "checkpoint_cached": true}
+{"slot": "2026-11-04_13", "error_type": "QuotaOver", "reason": "सारी Gemini keys का आज का कोटा ख़त्म", "script_cached": false, "checkpoint_cached": true}
