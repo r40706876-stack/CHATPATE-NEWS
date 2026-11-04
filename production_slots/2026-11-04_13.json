@@ -1,5 +1,5 @@
 {
-  "status": "dispatched",
+  "status": "delivered",
   "last_error": {
     "slot": "2026-11-04_13",
     "error_type": "QuotaOver",
@@ -8,6 +8,9 @@
     "checkpoint_cached": true
   },
   "slot": "2026-11-04_13",
-  "updated_at": 1793779822,
-  "script": "episodes/auto_20261104_1338.json"
+  "updated_at": 1793790281,
+  "script": "episodes/auto_20261104_1338.json",
+  "telegram_delivered_at": 1793790281,
+  "seconds": 46.96,
+  "topic": "ट्रेन टिकट की एडवांस रिजर्वेशन अवधि घटकर 60 दिन हुई"
 }
