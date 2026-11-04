@@ -355,6 +355,43 @@ def speakable(text):
     return re.sub(r"(\d+)\s*%", r"\1 परसेंट", text)
 
 
+def trim_gaps(a, keep=0.06, max_gap=0.30):
+    """4 Nov (मालिक: "पूरी बात बोलने के बाद 2-3 सेकंड ख़ालीपन, लगता है video ख़त्म"):
+    line के शुरू/आख़िर की चुप्पी हटाओ और बीच का कोई भी ठहराव max_gap सेकंड से लंबा न रहे.
+    Threshold आवाज़ के हिसाब से (साँस/हल्का शोर भी चुप्पी गिना जाता है, -45dB वाला fixed नियम उसे छोड़ देता था)."""
+    if len(a) < SR // 5:
+        return a
+    hop = SR // 100                                       # 10ms
+    n = len(a) // hop
+    e = np.sqrt(np.mean(a[:n * hop].reshape(n, hop) ** 2, axis=1))
+    loud = e > max(0.004, np.percentile(e, 95) * 0.06)
+    idx = np.nonzero(loud)[0]
+    if not len(idx):
+        return a
+    pad = int(keep * 100)
+    s0, s1 = max(0, idx[0] - pad), min(n, idx[-1] + 1 + pad)
+    keep_mask = np.zeros(n, bool)
+    keep_mask[s0:s1] = True
+    gap_frames, k = int(max_gap * 100), s0
+    while k < s1:                                         # बीच का लंबा ठहराव: बीच से काटकर max_gap तक
+        if not loud[k]:
+            j = k
+            while j < s1 and not loud[j]:
+                j += 1
+            if j - k > gap_frames and k > s0 and j < s1:
+                cut0 = k + gap_frames // 2
+                keep_mask[cut0:j - (gap_frames - gap_frames // 2)] = False
+            k = j
+        else:
+            k += 1
+    out = np.concatenate([a[i * hop:(i + 1) * hop] for i in np.nonzero(keep_mask)[0]])
+    f = min(len(out) // 4, int(0.01 * SR))               # जोड़ पर click न हो
+    if f:
+        out[:f] *= np.linspace(0, 1, f)
+        out[-f:] *= np.linspace(1, 0, f)
+    return out
+
+
 def speak_script(script, out):
     """पूरी script एक ही engine से — ताकि किसी किरदार की आवाज़ बीच में न बदले."""
     out.mkdir(parents=True, exist_ok=True)
@@ -385,6 +422,7 @@ def speak_script(script, out):
     else:
         raise RuntimeError(f"कोई आवाज़ नहीं चली: {last}")
     for i, (line, a) in enumerate(zip(script["lines"], audios)):
+        a = trim_gaps(np.asarray(a, np.float32))         # line के बाद का सन्नाटा (हर renderer के लिए)
         tmp = out / f"{i:02d}_raw.wav"
         wavfile.write(tmp, SR, (np.clip(a, -1, 1) * 32767).astype(np.int16))
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(tmp), "-af", f"atempo={TEMPO}",

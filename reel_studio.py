@@ -439,6 +439,111 @@ def _bases():
     return out
 
 
+# 4 Nov (मालिक): खबर के visuals बड़े और साफ़ रहें, बबलू studio के साथ एक छोटी जगह (~1/5 screen) में हमेशा दिखे —
+# ताकि लगे कोई इंसान खबर बता रहा है. ऊपर 1080x1536 = पूरी खबर, नीचे 1080x384 = बाएँ बबलू, दाएँ चलते captions.
+# सबसे नीचे के ~300px पर Instagram का नाम/caption चढ़ता है — इसलिए पट्टी उसके ऊपर (1250-1610), नीचे सिर्फ़ गहरा रंग.
+ANCHOR_VH = 1250
+ANCHOR_BOX = (16, ANCHOR_VH + 16, 500, ANCHOR_VH + 346)  # बबलू वाली खिड़की (x0, y0, x1, y1) ≈ 1/5 screen
+ANCHOR_CROP = (268, 58, 898, 490)                        # 1080x888 studio band में से सिर-कंधे वाला हिस्सा
+
+
+def anchor_fit(frame):
+    """किसी भी visual frame को ऊपर वाले हिस्से (1080x1536) में बिठाओ — बिना कुछ काटे (graphic के अक्षर/स्रोत बचे रहें)."""
+    vw, vh = W, ANCHOR_VH
+    if frame.size == (vw, vh):
+        return frame
+    k = min(vw / frame.width, vh / frame.height)
+    fg = frame.resize((max(1, round(frame.width * k)), max(1, round(frame.height * k))), Image.BILINEAR)
+    if fg.size == (vw, vh):
+        return fg
+    bg = frame.resize((vw // 8, vh // 8), Image.BILINEAR).filter(ImageFilter.GaussianBlur(4)).resize((vw, vh), Image.BILINEAR)
+    bg = Image.blend(bg, Image.new("RGB", (vw, vh)), 0.35)
+    bg.paste(fg, ((vw - fg.width) // 2, (vh - fg.height) // 2))
+    return bg
+
+
+_ANCHOR_BASE = None
+
+
+def anchor_frame(visual, band, name="बबलू", role="रिपोर्टर"):
+    """ऊपर खबर, नीचे बबलू की खिड़की (studio के साथ) — एक ही frame."""
+    global _ANCHOR_BASE
+    if _ANCHOR_BASE is None:
+        base = Image.new("RGB", (W, H), (12, 18, 44))
+        g = np.linspace(0, 1, H - ANCHOR_VH)[:, None, None]
+        strip = (np.array((14, 22, 58))[None, None] * (1 - g) + np.array((8, 12, 30))[None, None] * g)
+        base.paste(Image.fromarray(np.repeat(strip, W, axis=1).astype(np.uint8)), (0, ANCHOR_VH))
+        bd = ImageDraw.Draw(base)
+        bd.rectangle((0, ANCHOR_VH - 4, W, ANCHOR_VH + 4), fill=YEL)
+        bd.rectangle((0, ANCHOR_BOX[3] + 14, W, ANCHOR_BOX[3] + 18), fill=RED)
+        bd.text((W / 2, ANCHOR_BOX[3] + 70), "बकरा न्यूज़ • अधपकी खबर", font=tt.font(34), fill=(120, 132, 175), anchor="mm")
+        _ANCHOR_BASE = base
+    im = _ANCHOR_BASE.copy()
+    im.paste(anchor_fit(visual), (0, 0))
+    ImageDraw.Draw(im).rectangle((0, ANCHOR_VH - 4, W, ANCHOR_VH + 4), fill=YEL)
+    x0, y0, x1, y1 = ANCHOR_BOX
+    face = band.crop(ANCHOR_CROP) if band.size[0] >= ANCHOR_CROP[2] else band
+    face = face.resize((x1 - x0, y1 - y0), Image.BILINEAR)
+    d = ImageDraw.Draw(im)
+    d.rounded_rectangle((x0 - 5, y0 - 5, x1 + 5, y1 + 5), 18, fill=YEL)
+    m = Image.new("L", face.size, 0)
+    ImageDraw.Draw(m).rounded_rectangle((0, 0, face.width - 1, face.height - 1), 14, fill=255)
+    im.paste(face, (x0, y0), m)
+    d = ImageDraw.Draw(im)
+    f = tt.font(28)
+    label = f"{name} • {role}" if f.getlength(f"{name} • {role}") + 28 <= x1 - x0 - 20 else name
+    tw = f.getlength(label) + 28
+    d.rounded_rectangle((x0 + 10, y1 - 50, x0 + 10 + tw, y1 - 10), 10, fill=RED)
+    d.text((x0 + 24, y1 - 30), label, font=f, fill="white", anchor="lm")
+    return im
+
+
+def anchor_caption(d, text, now, times, frac=None, span=(0.0, 1.0)):
+    """बबलू की खिड़की के दाएँ: जो बोला जा रहा है वो 2-3 पंक्तियों में, बोला जा रहा शब्द पीला."""
+    words = str(text).split()
+    if not words:
+        return
+    if times:
+        cur = max(0, int(np.searchsorted(np.array(times), now, side="right")) - 1)
+    else:
+        a, b = span
+        p = min(1.0, max(0.0, ((frac or 0) - a) / max(0.05, b - a)))
+        cur = min(len(words) - 1, int(p * len(words)))
+    chunks, c = [], []
+    for i, w in enumerate(words):
+        c.append(i)
+        if len(c) >= 7 or (w[-1] in PUNCT and len(c) >= 3):
+            chunks.append(c)
+            c = []
+    if c:
+        chunks.append(c)
+    chunk = next((ch for ch in chunks if cur <= ch[-1]), chunks[-1])
+    x0, x1 = ANCHOR_BOX[2] + 30, W - 28
+    for size in (50, 46, 42, 38):
+        f = tt.font(size)
+        rows, row = [], []
+        for i in chunk:
+            trial = row + [i]
+            if row and f.getlength(" ".join(words[j] for j in trial)) > x1 - x0:
+                rows.append(row)
+                row = [i]
+            else:
+                row = trial
+        rows.append(row)
+        if len(rows) <= 3:
+            break
+    lh = int(f.size * 1.3)
+    y = (ANCHOR_BOX[1] + ANCHOR_BOX[3]) / 2 - lh * (len(rows) - 1) / 2
+    for r in rows:
+        x = x0
+        for i in r:
+            w = words[i]
+            d.text((x, y), w, font=f, fill=YEL if i == cur else (255, 255, 255), anchor="lm",
+                   stroke_width=2, stroke_fill=(0, 0, 0))
+            x += f.getlength(w + " ")
+        y += lh
+
+
 _COUNTED = set()
 _WIPE = None
 
@@ -805,9 +910,9 @@ def render(ep, segs, chars, out, preview):
         ln, react = s["ln"], s.get("react")
         shot = s.get("shot") or "split"
         _, name, role = chars[ln["who"]]
-        size = (W, H) if shot == "full" else (SW_, SH_)
+        size = (W, H) if shot == "full" else (W, ANCHOR_VH) if shot == "anchor" else (SW_, SH_)
         vis = list(s.get("vis") or [])
-        if ln.get("big") and vis and not react and shot in ("split", "full"):   # माँग वाली line: पहले बड़े अक्षर, फिर तस्वीर
+        if ln.get("big") and vis and not react and shot in ("split", "full", "anchor"):   # माँग वाली line: पहले बड़े अक्षर, फिर तस्वीर
             card = [{"big": ln["big"], "sub": ln.get("sub", ""), "color": ln.get("card_color")}]
             vis = (vis + card) if si == 0 else (card + vis)   # पहला सेकंड असली तस्वीर का (scroll वहीं रुकता है)
         if ep.get('editorial_mode') != 'news_first' and shot in ("split", "full") and not vis and not react and pool and not ln.get("big") and carry < 1:
@@ -818,7 +923,7 @@ def render(ep, segs, chars, out, preview):
             # line के आख़िरी शब्द बड़े अक्षरों में नहीं — वो बोलने से पहले दिखकर punch बिगाड़ते थे और टूटे टुकड़े ("में? मम्मी के!") बनते थे
             vis = [last_vis[0]] if last_vis and shown_n.get(last_vis[0], 0) < 2 else []   # एक फ़ोटो पूरे video में 2 बार तक
             carry += 1                                          # एक ही तस्वीर 2 lines से ज़्यादा नहीं (पहले 30 सेकंड अटकी रही)
-        if shot in ("split", "full") and not vis and not react:
+        if shot in ("split", "full", "anchor") and not vis and not react:
             kp = key_phrase(ln) or str(ln.get("stamp") or "")
             if ln.get("big"):
                 vis = [{"big": ln["big"], "sub": ln.get("sub", ""), "color": ln.get("card_color")}]
@@ -923,7 +1028,8 @@ def render(ep, segs, chars, out, preview):
                 if cur is not None:
                     cur.close()
                 beat_card = isinstance(vis[j], dict) and vis[j].get("color")
-                cur, credit = _screen_gen(vis[j], seed, size, None if beat_card else last_screen,
+                gsize = (W, H) if shot == "anchor" and "factgraphic" in str(vis[j]) else size   # portrait graphic: पूरा, बिना काटे
+                cur, credit = _screen_gen(vis[j], seed, gsize, None if beat_card else last_screen,
                                           hero=(si == 0 and t == 0)), _credit(vis[j])
             if face:
                 fr = next(face, None) or last or still
@@ -937,6 +1043,12 @@ def render(ep, segs, chars, out, preview):
                 else:                                     # reaction: ज़िंदा लगे — धीरे-धीरे पास आना + हल्की साँस
                     z = 1.02
                 im = (_zoomr(fr, 1.7, 0.65) if dd and s.get("sprite_src") else _zoomr(fr, z, 0.3)).copy()   # dd: 4:3 में चेहरा बीच
+            elif shot == "anchor":                           # 4 Nov: ऊपर पूरी खबर, नीचे छोटी खिड़की में बोलता बबलू
+                sf = next(cur, None) if cur is not None else None
+                sf = sf or last_screen or Image.new("RGB", size)
+                last_screen = sf
+                im = anchor_frame(sf, fr, name, role)
+                clean = im.copy()
             elif shot == "full":
                 sf = next(cur)
                 last_screen = sf
@@ -965,7 +1077,7 @@ def render(ep, segs, chars, out, preview):
             if credit and shot != "close":
                 f = tt.font(22)
                 cw = f.getlength(credit)
-                bx1, by1 = (SCR[2], SCR[3]) if shot == "split" else (W - 10, 1236)
+                bx1, by1 = (SCR[2], SCR[3]) if shot == "split" else (W - 10, ANCHOR_VH - 10) if shot == "anchor" else (W - 10, 1236)
                 d.rectangle((bx1 - cw - 24, by1 - 38, bx1, by1), fill=(0, 0, 0))
                 d.text((bx1 - 12, by1 - 19), credit, font=f, fill=(220, 220, 220), anchor="rm")
             if dd:                                              # सिर्फ़ नाम की पट्टी, किरदार पहली बार आए तब
@@ -978,9 +1090,15 @@ def render(ep, segs, chars, out, preview):
                 hooking = si == 0 and ep.get("hook")              # पहली line: वही बात बड़े पीले hook में (जो सुनाई दे, वही दिखे)
                 cy = 1150 if (v2 and shot == "full") else (SCR[3] + 38 if shot == "split" else BAND_Y + 460)
                 # (split: caption ऊपर-नीचे के बीच की पट्टी पर — 30 Oct, बड़ा चेहरा होने पर caption मुँह ढक रहा था)
-                if first_seen and not s.get("voice") and k >= FPS * EARLY_CLEAN and t < FPS * 2.5 and shot != "close" and not hooking and not (v2 and shot == "full"):
+                if shot == "anchor":                         # caption बबलू की खिड़की के दाएँ — खबर का visual साफ़
+                    if hooking and ep.get("hook_short"):
+                        _hook_big(d, re.sub(r"[\U0001F000-\U0001FFFF\u2600-\u27BF\uFE0F]", "", ep["hook_short"]).strip(), 360)
+                    anchor_caption(d, cap_text, t / FPS, wtimes, t / n, span)
+                elif first_seen and not s.get("voice") and k >= FPS * EARLY_CLEAN and t < FPS * 2.5 and shot != "close" and not hooking and not (v2 and shot == "full"):
                     rv.name_strap(d, (BAND_Y + 84) if shot == "split" else 1130, name, role)
-                if nochar:                                        # हर line ऊपर बड़े अक्षरों में (meme reel जैसा)
+                if shot == "anchor":
+                    pass                                          # ऊपर लिख दिया
+                elif nochar:                                      # हर line ऊपर बड़े अक्षरों में (meme reel जैसा)
                     _hook(d, ep["hook"] if hooking else cap_text, 330)
                 elif hooking and ep.get("hook_short") and not ((ep.get("cold_open") or {}).get("data") or {}).get("big"):
                     # (cold open का "big" ही पहले second का बड़ा शब्द है — ऊपर दूसरा पीला डिब्बा उसे ढकता था)           # पहले 3 सेकंड: 3 lines पढ़नी पड़ती थीं (skip 46%) — अब ≤6 शब्द, बड़े

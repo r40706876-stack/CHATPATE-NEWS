@@ -298,6 +298,9 @@ def pick_shot(ep, i, ln):
     """style: v2 = पूरी screen तस्वीर/close-up/split बदलते रहें; nochar = बिना किरदार (सिर्फ़ तस्वीर/clip + बड़े अक्षर);
     बाकी = पुराना हमेशा split."""
     import reel_studio
+    if ep.get("editorial_mode") == "news_first" and os.getenv("NEWS_LAYOUT", "anchor") == "anchor":
+        # 4 Nov (मालिक): हर line पर ऊपर बड़ी खबर + नीचे ~1/5 हिस्से में studio वाला बबलू (इंसान से जुड़ाव)
+        return "full" if voice_only(ep, ln) else "anchor"
     if ep.get("editorial_mode") == "news_first" and ln.get("shot") in ("full", "split", "close"):
         return ln["shot"]
     style = ep.get("style")

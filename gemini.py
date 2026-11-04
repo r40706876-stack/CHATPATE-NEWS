@@ -26,11 +26,15 @@ def _get(url, key, body=None):
         budget = int(os.getenv("GEMINI_REQUEST_BUDGET", "24"))
         if _request_count >= budget:
             raise RequestBudgetExceeded(f"Per-stage Gemini request budget reached ({budget}); retain prepared assets")
-        _request_count += 1
     req = urllib.request.Request(url, json.dumps(body).encode() if body else None,
                                  {"Content-Type": "application/json", "x-goog-api-key": key})
     with urllib.request.urlopen(req, timeout=90) as r:
-        return json.load(r)
+        data = json.load(r)
+    if body is not None:
+        # 4 Nov: सिर्फ़ सफल जवाब गिनो — "सब models busy" (503/429) वाले retry quota नहीं खाते,
+        # पर पहले यही 24 की सीमा भर देते थे और script आख़िरी कदम पर रुक जाती थी.
+        _request_count += 1
+    return data
 
 
 def models(key):

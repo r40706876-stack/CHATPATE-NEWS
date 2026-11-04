@@ -141,10 +141,17 @@ def normalize(ep):
 
 
 
+def general_ok(line):
+    """शुरुआती/सलाह वाली line (कोई नया तथ्य नहीं): fact-ID ज़रूरी नहीं — पर उसमें अंक/तारीख/₹/% हो तो तथ्य मानो."""
+    return line.get('kind') in ('advice', 'intro') and not re.search(r'[0-9०-९₹%]', str(line.get('say', '')))
+
+
 def reference_issues(ep, valid_ids):
     issues = []
     for i, line in enumerate(ep.get('lines', [])):
         if line.get('satire') is True:
+            continue
+        if general_ok(line):
             continue
         refs = line.get('fact_ids')
         if not isinstance(refs, list) or not refs or any(
@@ -206,10 +213,12 @@ def write(c, n=1):
             raise ValueError('Facts missing source mapping')
         item['facts'] = facts
         _checkpoint(cache)
-        ep = item.get('script') or gemini.ask_json(BRIEF + '\nसिर्फ नीचे के source-backed तथ्य इस्तेमाल करो:\n' + json.dumps(facts, ensure_ascii=False) +
+        # 4 Nov: पिछली बार fact-ID में अटकी script दोबारा लिखवाने की जगह उसी को ठीक करो (quota बचे)
+        ep = item.get('script') or item.get('rejected_script') or gemini.ask_json(BRIEF + '\nसिर्फ नीचे के source-backed तथ्य इस्तेमाल करो:\n' + json.dumps(facts, ensure_ascii=False) +
             '\nएक पूरी Hindi news script लिखो। बबलू मुख्य reporter है, बाकी किरदार जरूरत पर। '
             'स्पष्ट करो: क्या हुआ, किस पर असर, कब/कहाँ लागू, जरूरी अपवाद, अब क्या करें। '
             'प्रत्येक factual line के fact_ids दो; satire line को satire=true और तथ्य से अलग साफ रखो। '
+            'जिस line में कोई नया तथ्य/अंक/तारीख नहीं — सिर्फ़ शुरुआती बात या आम सावधानी (जैसे "OTP किसी को मत बताओ") — उसे "kind":"advice" दो और उसमें कोई अंक मत लिखो। '
             'visuals उसी बात को दिखाएं; काल्पनिक घटना को असली footage मत बताओ। '
             'सिर्फ एक JSON object: {"topic":"...","breaking":"...","hook_short":"...",'
             '"lines":[{"who":"bablu","say":"...","caption":"...","fact_ids":["f1"],'
@@ -227,9 +236,10 @@ def write(c, n=1):
                 BRIEF + '\\nRepair ONLY fact references for this unchanged script. '
                 'Use exact IDs from facts. Do not invent IDs, rewrite speech, or mark facts as satire. '
                 'For each factual line return its zero-based index and all supporting fact_ids. '
+                'A line with no factual claim (intro or common safety advice, no numbers/dates) may return general=true instead of fact_ids. '
                 'If any claim lacks support, return repairable=false.\\n' +
                 json.dumps({'facts': facts, 'script': ep, 'issues': issues}, ensure_ascii=False) +
-                '\\nJSON: {"repairable":true,"lines":[{"index":0,"fact_ids":["f1"]}]}',
+                '\\nJSON: {"repairable":true,"lines":[{"index":0,"fact_ids":["f1"]},{"index":1,"general":true}]}',
                 json_mode=True, temperature=0.1)
             if not isinstance(mapping, dict) or mapping.get('repairable') is not True:
                 raise ValueError('News line has no valid fact reference; unsupported draft saved')
@@ -241,10 +251,13 @@ def write(c, n=1):
                 index = entry.get('index') if isinstance(entry, dict) else None
                 if type(index) is not int or index < 0 or index >= len(ep['lines']) or index in mapped:
                     raise ValueError('Invalid or duplicate fact-reference line index')
-                mapped[index] = entry.get('fact_ids')
+                mapped[index] = 'general' if entry.get('general') is True and not entry.get('fact_ids') else entry.get('fact_ids')
             for index, line in enumerate(ep['lines']):
                 if line.get('satire') is not True:
-                    line['fact_ids'] = mapped.get(index)
+                    if mapped.get(index) == 'general':
+                        line['kind'], line['fact_ids'] = 'advice', []
+                    elif index in mapped:                 # बाकी lines के पहले से सही IDs बने रहें
+                        line['fact_ids'] = mapped[index]
             if reference_issues(ep, fact_ids):
                 raise ValueError('News line has no valid fact reference after repair; draft saved')
             item.pop('reference_issues', None)
