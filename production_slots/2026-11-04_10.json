@@ -1,0 +1,12 @@
+{
+  "status": "preparation_failed",
+  "last_error": {
+    "slot": "2026-11-04_10",
+    "error_type": "RequestBudgetExceeded",
+    "reason": "Per-stage Gemini request budget reached (24); retain prepared assets",
+    "script_cached": false,
+    "checkpoint_cached": true
+  },
+  "slot": "2026-11-04_10",
+  "updated_at": 1793769110
+}
