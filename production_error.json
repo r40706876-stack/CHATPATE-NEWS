@@ -1,1 +1,1 @@
-{"slot": "2026-11-03_19", "error_type": "QuotaOver", "reason": "सारी Gemini keys का आज का कोटा ख़त्म", "script_cached": false, "checkpoint_cached": true}
+{"slot": "2026-11-04_07", "error_type": "ValueError", "reason": "News line has no valid fact reference after repair; draft saved", "script_cached": false, "checkpoint_cached": true}
