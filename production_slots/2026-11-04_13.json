@@ -1,5 +1,5 @@
 {
-  "status": "preparation_failed",
+  "status": "prepared",
   "last_error": {
     "slot": "2026-11-04_13",
     "error_type": "QuotaOver",
@@ -8,5 +8,6 @@
     "checkpoint_cached": true
   },
   "slot": "2026-11-04_13",
-  "updated_at": 1793778700
+  "updated_at": 1793779739,
+  "script": "episodes/auto_20261104_1338.json"
 }
