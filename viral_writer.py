@@ -141,6 +141,16 @@ def check(ep):
     return why
 
 
+def split_hook(ep):
+    """लंबी पहली line: पहले विराम (। , — …) पर दो lines में तोड़ो (शब्द वही, सिर्फ़ बँटवारा)."""
+    first = ep["lines"][0]
+    m = re.search(r"^(.{8,}?[।,—…!])\s*(.+)$", first["say"])
+    if m and len(m.group(1).split()) <= 14 and len(ep["lines"]) < 7:
+        a, b = m.group(1).strip(" ,—"), m.group(2).strip()
+        ep["lines"][0:1] = [dict(first, say=a, caption=a, punch=False), dict(first, say=b, caption=b)]
+    return ep
+
+
 def write(c, recent=()):
     cands = candidates(c)
     if not cands:
@@ -172,6 +182,9 @@ def write(c, recent=()):
         ep = gemini.ask_json(JUDGE.format(script=json.dumps(ep, ensure_ascii=False))
                              + "\n\nये नियम टूटे हैं, ठीक करो: " + "; ".join(why), json_mode=True, temperature=0.4)
         why = check(ep)
+        if why and all(w.startswith("hook लंबा") for w in why):
+            ep = split_hook(ep)
+            why = check(ep)
         if why:
             raise ValueError("वायरल script नियमों पर खरी नहीं: " + "; ".join(why))
     for ln in ep["lines"]:
