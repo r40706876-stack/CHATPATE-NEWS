@@ -1,0 +1,124 @@
+{
+  "topic": "धूम मचाले गाने पर रील बनाते समय बंदा बाइक समेत नाले में गिरा",
+  "breaking": "धूम मचाले पर रील, सीधे नाले में लैंडिंग",
+  "hook_short": "धूम मचाले की नाले में",
+  "facts": [
+    "धूम मचाले गाने पर बंदा रील बनाने के लिए स्टाइल मार रहा था",
+    "बाइक समेत सीधे नाले में गिर गया"
+  ],
+  "source": "ABP News",
+  "judge": {
+    "weak_before": [
+      "देश के युवाओं ने 'धूम मचाले' गाने को नई गहराइयों तक पहुँचा दिया है। (किताबी/धीमी शुरुआत)",
+      "हवा में उड़ता स्टाइल बाइक समेत सीधे खुले नाले में जा गिरा। (दोहराव वाला बेजान वाक्य)"
+    ],
+    "share_reason": "लोग अपने रील-प्रेमी दोस्तों को चिढ़ाने और इस वायरल 'ऑफ़-रोड स्टंट' पर हंसने के लिए शेयर करेंगे।"
+  },
+  "lines": [
+    {
+      "who": "bablu",
+      "say": "धूम मचाले पर रील बनाते हुए बंदे ने बाइक सीधे नाले में उतार दी!",
+      "caption": "धूम मचाले रील और नाले में लैंडिंग",
+      "expr": "hairan",
+      "photo_hi": [
+        "धूम मचाले बाइक स्टंट नाले में गिरा वायरल वीडियो",
+        "धूम मचाले रील स्टंट"
+      ],
+      "visuals": [
+        "man riding bike stunt drain fall viral reel"
+      ],
+      "punch": false,
+      "set": "studio"
+    },
+    {
+      "who": "bablu",
+      "say": "कैमरा ऑन था और बंदा बाइक पर पूरा हीरो वाला स्वैग झाड़ रहा था।",
+      "caption": "बाइक पर हीरो वाला स्वैग",
+      "expr": "tanz",
+      "photo_hi": [
+        "बाइक रील स्टंट"
+      ],
+      "visuals": [
+        "stylish young man riding motorbike viral video capture"
+      ],
+      "punch": false,
+      "set": "studio"
+    },
+    {
+      "who": "pinky",
+      "say": "मुझे लगा धूम का नया पार्ट बन रहा है, पर भैया तो सीधे नाले में गोता लगाने लगे!",
+      "caption": "धूम का स्टंट सीधे नाले में!",
+      "expr": "hairan",
+      "photo_hi": [
+        "हैरान लड़की का चेहरा"
+      ],
+      "visuals": [
+        "shocked teenage girl reaction face"
+      ],
+      "punch": true,
+      "set": "village"
+    },
+    {
+      "who": "bablu",
+      "say": "सारा स्टाइल धरा का धरा रह गया और बाइक समेत नाले के पानी में छपाक!",
+      "caption": "बाइक समेत नाले में छपाक",
+      "expr": "gambhir",
+      "photo_hi": [
+        "नाले में गिरी बाइक"
+      ],
+      "visuals": [
+        "motorbike falling into open sewer drain accident"
+      ],
+      "punch": false,
+      "set": "studio"
+    },
+    {
+      "who": "bablu",
+      "say": "हमारे देश में हीरो बनने का भूत अक्सर नाले के ठंडे पानी में ही उतरता है।",
+      "caption": "हीरो बनने का भूत नाले में उतरा",
+      "expr": "tanz",
+      "photo_hi": [
+        "गंदी सड़क नाला"
+      ],
+      "visuals": [
+        "dirty indian street drain slow motion satire"
+      ],
+      "punch": true,
+      "set": "studio"
+    },
+    {
+      "who": "bablu",
+      "say": "अगली बार रील में धूम मचाने निकलो, तो बाइक के साथ गोताखोर ज़रूर साथ रखना!",
+      "caption": "अगली बार गोताखोर साथ रखना",
+      "expr": "gambhir",
+      "photo_hi": [
+        "गोताखोर और रील"
+      ],
+      "visuals": [
+        "scuba diver swimming satirical reaction"
+      ],
+      "punch": true,
+      "set": "studio"
+    }
+  ],
+  "ask": "आपकी गली के नाले में कौन सा गाना सूट करेगा?",
+  "caption_post": "धूम मचाले पर रील बनाते-बनाते बंदा बाइक समेत सीधे नाले में जा गिरा। रील का भूत और नाले की सीधी लैंडिंग! #BakraNews #ReelFail #DhoomMachale #ViralVideo #DesiJugaad\nस्रोत: ABP News",
+  "format": "viral",
+  "writer": "viral",
+  "label": "अधपकी खबर",
+  "layout": "anchor",
+  "category": "रील का शौक / वायरल वीडियो",
+  "editorial_mode": "viral_mazaak",
+  "style": "flow",
+  "lips": "sadtalker",
+  "renderer": "studio",
+  "no_memes": true,
+  "hook": "धूम मचाले पर रील बनाते हुए बंदे ने बाइक सीधे नाले में उतार दी!",
+  "hook_text": "धूम मचाले पर रील बनाते हुए बंदे ने बाइक सीधे नाले में उतार दी!",
+  "sprite": {
+    "bablu": "assets/toon/bablu",
+    "pinky": "assets/toon/pinky"
+  },
+  "production": true,
+  "_production_slot": "2026-11-05_19"
+}
