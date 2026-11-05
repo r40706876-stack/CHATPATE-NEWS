@@ -1,8 +1,9 @@
-# Production: 07:00, 10:00, 13:00, 16:00, 19:00 Asia/Kolkata.
+# Production (5 Nov, "chuno"): हर 20 मिनट, 06:50-21:30 IST — slot (7/10/13/16/19) की बारी पर पंच Telegram पर,
+# मालिक के चुने नंबर आते ही video.
 name: bakra-news
 on:
   schedule:
-    - cron: "30 1,4,7,10,13 * * *"
+    - cron: "10,30,50 1-15 * * *"
   push:
     branches: [main]
     paths: ["production_request.json"]
@@ -11,7 +12,7 @@ on:
       mode:
         description: "direct = scheduled-slot news video; check/write = manual script tools"
         type: choice
-        options: [direct, check, write]
+        options: [direct, ask, check, write]
         default: direct
 concurrency:
   group: bakra-news-production
@@ -39,14 +40,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with: {ref: main}
+      - name: YouTube search tools
+        run: |
+          python -m pip install -q --break-system-packages "yt-dlp[default]" || python -m pip install -q "yt-dlp[default]"
+          curl -fsSL https://deno.land/install.sh | sh -s -- -y >/dev/null 2>&1 || true
+          echo "$HOME/.deno/bin" >> $GITHUB_PATH
       - name: Prepare one cached production slot
         env:
           MODE: ${{ inputs.mode || 'direct' }}
         run: |
           set -euo pipefail
           python -c 'import gemini; print("Gemini keys configured:", len(gemini.keys()))'
-          if [ "$MODE" = "direct" ]; then
-            python scheduled_production.py
+          if [ "$MODE" = "ask" ]; then
+            python chuno.py ask
+          elif [ "$MODE" = "direct" ]; then
+            python chuno.py
           else
             python run_daily.py "$MODE"
           fi
@@ -58,6 +66,7 @@ jobs:
           for path in episodes production_slots news_cache production_error.json done.txt shown.txt last_direct.txt pending.json tg_offset.txt; do
             if [ -e "$path" ]; then git add "$path"; fi
           done
+          git add -A -- chuno_pending.json 2>/dev/null || true
           if ! git diff --cached --quiet; then
             git commit -m "Cache scheduled news script and slot state"
             git pull --rebase

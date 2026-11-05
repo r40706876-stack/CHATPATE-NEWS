@@ -1029,6 +1029,8 @@ def render(ep, segs, chars, out, preview):
                     cur.close()
                 beat_card = isinstance(vis[j], dict) and vis[j].get("color")
                 gsize = (W, H) if shot == "anchor" and "factgraphic" in str(vis[j]) else size   # portrait graphic: पूरा, बिना काटे
+                if shot == "anchor" and "_clip" in str(vis[j]) and str(vis[j]).endswith(".mp4"):
+                    gsize = (W, 452)                                 # कटा हुआ YouTube clip (~2.4:1): पूरा दिखे (ऊपर-नीचे धुंधली भराई), और न काटो
                 cur, credit = _screen_gen(vis[j], seed, gsize, None if beat_card else last_screen,
                                           hero=(si == 0 and t == 0)), _credit(vis[j])
             if face:

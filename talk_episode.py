@@ -180,10 +180,32 @@ def prep(script_path):
                     shutil.copy(src.with_suffix(".txt"), dst.with_suffix(".txt"))
     if ep.get("editorial_mode") != "news_first":
         add_props(ep)                                          # Blender के अपने 3D clips (सिक्के/टॉफी/नोट) — बात से सीधे जुड़े
+    if ep.get("clip_urls"):
+        # 5 Nov (chuno): मालिक के सामने जो असली video दिखाया गया था, उसी के 3 हिस्से (8-8 सेकंड) — पहली line से ही
+        # (Neeraj/Raju Roy जैसे channels में आधा मज़ा video ख़ुद देता है). हर line पर इसी घटना का एक हिस्सा.
+        try:
+            import clips
+            parts = []
+            for k, start in enumerate((1.0, 10.0, 19.0)):
+                cp = clips.cut_best(ep["clip_urls"][0], clips.CACHE / f"chuno_{k}.mp4", start, look=8.0, secs=8.0)
+                if cp:
+                    parts.append(cp)
+            for i in range(len(ep["lines"]) if parts else 0):
+                for old in (IN / "broll").glob(f"{i}_*"):
+                    old.unlink()
+                cp = parts[i % len(parts)]
+                shutil.copy(cp, IN / f"broll/{i}_clip0.mp4")
+                (IN / f"broll/{i}_clip0.txt").write_text(ep.get("caption_post", "").split("वीडियो:")[-1].strip()[:60]
+                                                         or "वीडियो: YouTube", encoding="utf-8")
+            print(f"  🎬 असली video के {len(parts)} हिस्से, सारी lines पर")
+            if parts:
+                ep["no_clips"] = True
+        except Exception as e:                                 # noqa: BLE001
+            print("  चुना हुआ video नहीं कटा:", repr(e)[:150])
     if not ep.get("no_clips"):                                 # असली खबर के छोटे video clips (पहले सेकंड में हरकत)
         try:
             import clips
-            qs = [q for ln in ep["lines"] for q in (ln.get("photo_hi") or [])][:6]
+            qs =[q for ln in ep["lines"] for q in (ln.get("photo_hi") or [])][:6]
             got_c = clips.for_topic(ep.get("topic") or ep.get("breaking", ""), qs, want=3)
             for k, (cp, _, title) in enumerate(got_c):        # हर clip उसी line पर जिसकी बात उसके title से मिले
                 tw = visuals._stems(title)
