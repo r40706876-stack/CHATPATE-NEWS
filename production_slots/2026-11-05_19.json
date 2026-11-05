@@ -1,0 +1,12 @@
+{
+  "status": "preparation_failed",
+  "last_error": {
+    "slot": "2026-11-05_19",
+    "error_type": "ValueError",
+    "reason": "वायरल script नियमों पर खरी नहीं: hook लंबा (>14 शब्द)",
+    "script_cached": false,
+    "checkpoint_cached": false
+  },
+  "slot": "2026-11-05_19",
+  "updated_at": 1793887154
+}
