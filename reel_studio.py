@@ -1065,7 +1065,7 @@ def render(ep, segs, chars, out, preview):
                 im.paste(_zoomr(fr, zb, 0.18), (dx, BAND_Y))
                 clean = im.copy()                                # बिना लिखाई वाला frame (आख़िरी poll के पीछे)
             d = ImageDraw.Draw(im)
-            if k >= FPS * EARLY_CLEAN and ep.get("style") not in ("nochar", "close", "dd") and ep.get("editorial_mode") != "news_first":   # vidIQ + virality skill (meme/close-up: कोई channel पट्टी नहीं): पहले 2 सेकंड कोई logo/पट्टी नहीं (हर style में) — सिर्फ़ तस्वीर + 4 शब्द
+            if k >= FPS * EARLY_CLEAN and shot != "anchor" and ep.get("style") not in ("nochar", "close", "dd") and ep.get("editorial_mode") != "news_first":   # vidIQ + virality skill (meme/close-up: कोई channel पट्टी नहीं): पहले 2 सेकंड कोई logo/पट्टी नहीं (हर style में) — सिर्फ़ तस्वीर + 4 शब्द
                 chrome_safe(d, k)
             if shot == "split" and k >= FPS * EARLY_CLEAN:
                 badge = f"खबर {ln['item']}/{ln['items_total']}" if ln.get("item") else "ब्रेकिंग"

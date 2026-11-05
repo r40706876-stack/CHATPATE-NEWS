@@ -63,8 +63,9 @@ def prepare(now=None, root=ROOT):
     # Existing prepared script is reused after a failure; never call the writer again.
     ep_path = root / script
     ep = json.loads(ep_path.read_text(encoding="utf-8"))
-    from news_first import require_national
-    require_national(ep)  # Cached local/legacy scripts cannot bypass the current audience policy.
+    if ep.get("editorial_mode", "news_first") == "news_first":
+        from news_first import require_national
+        require_national(ep)  # Cached local/legacy scripts cannot bypass the current audience policy.
     ep["_production_slot"] = slot
     ep_path.write_text(json.dumps(ep, ensure_ascii=False, indent=2), encoding="utf-8")
     save(slot, dict(state, status="prepared", script=script), root)

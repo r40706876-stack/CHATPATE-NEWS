@@ -77,9 +77,10 @@ def normalize_visual_style(ep):
     if ep.get("style") == "dd" and not ep.get("legacy_tv"):
         ep["style"] = "flow"
     if ep.get("production"):
-        from news_first import require_national
-        require_national(ep)
-        ep["editorial_mode"] = "news_first"
+        ep.setdefault("editorial_mode", "news_first")
+        if ep["editorial_mode"] == "news_first":
+            from news_first import require_national
+            require_national(ep)
         ep["require_gemini_voice"] = True
         ep.setdefault("no_memes", True)
         ep["lips"] = "sadtalker"
@@ -298,7 +299,7 @@ def pick_shot(ep, i, ln):
     """style: v2 = पूरी screen तस्वीर/close-up/split बदलते रहें; nochar = बिना किरदार (सिर्फ़ तस्वीर/clip + बड़े अक्षर);
     बाकी = पुराना हमेशा split."""
     import reel_studio
-    if ep.get("editorial_mode") == "news_first" and os.getenv("NEWS_LAYOUT", "anchor") == "anchor":
+    if (ep.get("editorial_mode") == "news_first" or ep.get("layout") == "anchor") and os.getenv("NEWS_LAYOUT", "anchor") == "anchor":
         # 4 Nov (मालिक): हर line पर ऊपर बड़ी खबर + नीचे ~1/5 हिस्से में studio वाला बबलू (इंसान से जुड़ाव)
         return "full" if voice_only(ep, ln) else "anchor"
     if ep.get("editorial_mode") == "news_first" and ln.get("shot") in ("full", "split", "close"):
@@ -535,8 +536,9 @@ def _close_ranges(segs):
 
 def post_studio(ep):
     if ep.get("production"):
-        from news_first import require_national
-        require_national(ep)
+        if ep.get("editorial_mode", "news_first") == "news_first":
+            from news_first import require_national
+            require_national(ep)
         if ep.get("_voice") != "gemini":
             raise RuntimeError("Gemini voice is required; production delivery blocked")
     import reel_studio

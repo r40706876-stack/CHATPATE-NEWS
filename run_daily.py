@@ -171,6 +171,19 @@ def do_direct(feed=None):
     import gemini
     import topics
     os.environ["DIRECT"] = "1"
+    if os.getenv("BAKRA_FORMAT", "viral") == "viral":
+        # 5 Nov: page के आँकड़ों से — वायरल चीज़ + रोज़ की ज़िंदगी पर मज़ाक (13-20 Oct वाली जीतने वाली reels)
+        import topics
+        import viral_writer
+        ep = viral_writer.write(topics.collect_news(feed), [t for _, _, t in topics.history(7)])
+        ep = to_studio(ep)
+        name = f"episodes/viral_{ist().strftime('%Y%m%d_%H%M')}.json"
+        json.dump(ep, open(ROOT / name, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+        (ROOT / "studio_job.txt").write_text(name, encoding="utf-8")
+        with open(ROOT / "shown.txt", "a", encoding="utf-8") as f:
+            f.write(f"{ist().date().isoformat()}|{ep.get('category', 'वायरल')}|{str(ep.get('topic', '')).replace('|', ' ')}\n")
+        print("  सीधा video job:", name, "—", ep.get("topic"))
+        return
     try:
         import news_first
         news = news_first.collect(feed)
