@@ -135,8 +135,21 @@ def write(c, recent=()):
                            + "\n\nखबरें:\n" + json.dumps(cands, ensure_ascii=False), json_mode=True, temperature=0.3)
     if isinstance(pick, list):
         pick = pick[0]
+    i = pick.get("index")
+    if isinstance(i, int) and 0 <= i < len(cands):
+        pick["headlines"] = [cands[i]["title"]] + [str(x) for x in cands[i]["more"] if x]
     print("  🎯 चुनी खबर:", pick.get("topic"), "|", pick.get("why_people_watch", "")[:80])
-    raw = gemini.ask(WRITE.format(winners=WINNERS, pick=json.dumps(pick, ensure_ascii=False)), search=True, temperature=0.8)
+    prompt = WRITE.format(winners=WINNERS, pick=json.dumps(pick, ensure_ascii=False))
+    try:
+        raw = gemini.ask(prompt, search=True, temperature=0.8)
+    except gemini.RequestBudgetExceeded:
+        raise
+    except gemini.QuotaOver:
+        # Google Search वाला कोटा अलग और छोटा है — वो ख़त्म हो तो सिर्फ़ headlines के तथ्यों से (कुछ नया गढ़े बिना)
+        print("  🔎 Search कोटा ख़त्म — सिर्फ़ headlines के तथ्यों से लिख रहे")
+        gemini._dead.clear()
+        raw = gemini.ask(prompt.replace("Google Search से इस खबर के असली तथ्य जाँचो", "सिर्फ़ नीचे दी headlines में लिखे तथ्य इस्तेमाल करो")
+                         + "\nheadlines में जो नहीं लिखा, वो अंक/नाम/जगह/तारीख बिल्कुल मत जोड़ो.", temperature=0.8)
     ep = gemini.json_from(raw)
     ep = gemini.ask_json(JUDGE.format(script=json.dumps(ep, ensure_ascii=False)), json_mode=True, temperature=0.5)
     why = check(ep)
