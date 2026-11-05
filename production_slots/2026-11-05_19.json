@@ -1,5 +1,5 @@
 {
-  "status": "prepared",
+  "status": "dispatched",
   "last_error": {
     "slot": "2026-11-05_19",
     "error_type": "ValueError",
@@ -8,6 +8,6 @@
     "checkpoint_cached": false
   },
   "slot": "2026-11-05_19",
-  "updated_at": 1793887787,
+  "updated_at": 1793887873,
   "script": "episodes/viral_20261105_1939.json"
 }
