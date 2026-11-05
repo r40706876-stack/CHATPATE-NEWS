@@ -199,7 +199,14 @@ def tick():
 
 if __name__ == "__main__":
     import sys
-    if len(sys.argv) > 1 and sys.argv[1] == "ask":
-        ask()
-    else:
-        tick()
+    try:
+        if len(sys.argv) > 1 and sys.argv[1] == "ask":
+            ask()
+        else:
+            tick()
+    except Exception as exc:
+        # Telegram वाला error message production_error.json से बनता है — इसी run की असली वजह लिखो (पुरानी नहीं)
+        (ROOT / "production_error.json").write_text(json.dumps(
+            {"slot": None, "error_type": type(exc).__name__, "reason": str(exc)[:600],
+             "script_cached": False, "checkpoint_cached": False}, ensure_ascii=False), encoding="utf-8")
+        raise
