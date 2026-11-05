@@ -1,124 +1,109 @@
 {
-  "topic": "दिल्ली की कंपनी ने कर्मचारियों को दिवाली बोनस में दिया iPhone 16",
-  "breaking": "दिवाली बोनस में मिला iPhone 16",
-  "hook_short": "सोन पापड़ी का दबदबा टूट",
-  "facts": [
-    "दिल्ली की एक कंपनी ने अपने कर्मचारियों को दिवाली बोनस में iPhone 16 गिफ्ट किया",
-    "सरप्राइज देखकर कर्मचारी खुशी से झूम उठे"
+ "topic": "दिल्ली की कंपनी ने कर्मचारियों को दिवाली बोनस में दिया iPhone 16",
+ "breaking": "दिवाली बोनस में मिला iPhone 16",
+ "hook_short": "सोन पापड़ी का दबदबा टूट",
+ "facts": [
+  "दिल्ली की एक कंपनी ने अपने कर्मचारियों को दिवाली बोनस में iPhone 16 गिफ्ट किया",
+  "सरप्राइज देखकर कर्मचारी खुशी से झूम उठे"
+ ],
+ "source": "Jansatta",
+ "judge": {
+  "weak_before": [
+   "दूसरी line बिना किसी तीखे twist के सिर्फ़ खबर दोहरा रही थी।",
+   "चौथी line का तंज और कॉर्पोरेट Frustration थोड़ा ढीला था।"
   ],
-  "source": "Jansatta",
-  "judge": {
-    "weak_before": [
-      "दूसरी line बिना किसी तीखे twist के सिर्फ़ खबर दोहरा रही थी।",
-      "चौथी line का तंज और कॉर्पोरेट Frustration थोड़ा ढीला था।"
-    ],
-    "share_reason": "हर कॉर्पोरेट कर्मचारी यह वीडियो अपने ऑफिस ग्रुप या HR को चिढ़ाने के लिए शेयर करेगा, जिन्हें बोनस में सिर्फ़ सोन पापड़ी या एक्स्ट्रा काम मिला है।"
+  "share_reason": "हर कॉर्पोरेट कर्मचारी यह वीडियो अपने ऑफिस ग्रुप या HR को चिढ़ाने के लिए शेयर करेगा, जिन्हें बोनस में सिर्फ़ सोन पापड़ी या एक्स्ट्रा काम मिला है।"
+ },
+ "lines": [
+  {
+   "who": "bablu",
+   "say": "इस दिवाली पर सोन पापड़ी का दशकों पुराना एकछत्र साम्राज्य आधिकारिक रूप से ध्वस्त हो गया है।",
+   "caption": "इस दिवाली पर सोन पापड़ी का दशकों पुराना एकछत्र साम्राज्य आधिकारिक रूप से ध्वस्त हो गया है।",
+   "expr": "gambhir",
+   "photo_hi": [
+    "दिवाली बोनस सोन पापड़ी डिब्बा"
+   ],
+   "visuals": [
+    "soan papdi box diwali gift breaking news style"
+   ],
+   "punch": false,
+   "set": "studio"
   },
-  "lines": [
-    {
-      "who": "bablu",
-      "say": "कॉर्पोरेट भारत से राष्ट्रीय बुलेटिन",
-      "caption": "कॉर्पोरेट भारत से राष्ट्रीय बुलेटिन",
-      "expr": "gambhir",
-      "photo_hi": [
-        "Delhi company Diwali gift iPhone 16 viral video",
-        "दिवाली बोनस सोन पापड़ी डिब्बा"
-      ],
-      "visuals": [
-        "soan papdi box diwali gift breaking news style"
-      ],
-      "punch": false,
-      "set": "studio"
-    },
-    {
-      "who": "bablu",
-      "say": "इस दिवाली पर सोन पापड़ी का दशकों पुराना एकछत्र साम्राज्य आधिकारिक रूप से ध्वस्त हो गया है।",
-      "caption": "इस दिवाली पर सोन पापड़ी का दशकों पुराना एकछत्र साम्राज्य आधिकारिक रूप से ध्वस्त हो गया है।",
-      "expr": "gambhir",
-      "photo_hi": [
-        "दिवाली बोनस सोन पापड़ी डिब्बा"
-      ],
-      "visuals": [
-        "soan papdi box diwali gift breaking news style"
-      ],
-      "punch": false,
-      "set": "studio"
-    },
-    {
-      "who": "bablu",
-      "say": "दिल्ली की एक कंपनी ने सरप्राइज बोनस में कर्मचारियों को सीधा iPhone 16 पकड़ा दिया, जिसे देखकर बाकी कंपनियों के बॉसों का बीपी बढ़ गया है।",
-      "caption": "गिफ्ट में मिला iPhone 16",
-      "expr": "hairan",
-      "photo_hi": [
-        "आईफोन 16 बॉक्स दिवाली गिफ्ट"
-      ],
-      "visuals": [
-        "iphone 16 surprise gift box office corporate shocked boss"
-      ],
-      "punch": false,
-      "set": "studio"
-    },
-    {
-      "who": "bablu",
-      "say": "सरप्राइज देखते ही कर्मचारी खुशी से झूम उठे… क्योंकि वो उस सोन पापड़ी के डिब्बे को रिश्तेदारों में री-गिफ्ट करने की मशक्कत से बच गए।",
-      "caption": "कर्मचारी खुशी से झूम उठे",
-      "expr": "tanz",
-      "photo_hi": [
-        "कर्मचारी दफ्तर में खुशी से नाचते हुए"
-      ],
-      "visuals": [
-        "office employees dancing celebration surprise soan papdi passing"
-      ],
-      "punch": false,
-      "set": "studio"
-    },
-    {
-      "who": "chacha",
-      "say": "हमारे ज़माने में तो दिवाली बोनस के नाम पर सिर्फ़ अगले तीन महीने का एक्स्ट्रा टारगेट और मुफ़्त की नसीहतें मिलती थीं!",
-      "caption": "हमारे ज़माने में बोनस!",
-      "expr": "gussa",
-      "photo_hi": [
-        "पुराने जमाने के बॉस गुस्से में"
-      ],
-      "visuals": [
-        "angry boss giving files extra work target old memory"
-      ],
-      "punch": false,
-      "set": "village"
-    },
-    {
-      "who": "bablu",
-      "say": "HR एसोसिएशन ने तुरंत राष्ट्रीय स्पष्टीकरण दिया है — असली कॉर्पोरेट बोनस आईफ़ोन का डिब्बा नहीं, सोन पापड़ी खाकर टारगेट पूरा करने का संयम है!",
-      "caption": "असली बोनस तो सब्र है",
-      "expr": "gambhir",
-      "photo_hi": [
-        "सोन पापड़ी का डिब्बा ऑफिस डेस्क"
-      ],
-      "visuals": [
-        "soan papdi sweet box office desk serious hr announcement"
-      ],
-      "punch": true,
-      "set": "studio"
-    }
-  ],
-  "ask": "आपको इस दिवाली दफ़्तर से क्या मिला — सोन पापड़ी या काम का नया टारगेट? अपने HR और बॉस को टैग करके कमेंट में याद करें!",
-  "caption_post": "दिवाली बोनस में सोन पापड़ी की जगह मिला iPhone 16! 📱🎁 आपके दफ़्तर में क्या मिला? कमेंट में बताओ! #DiwaliBonus #iPhone16 #DelhiCompany #SonPapdi #CorporateLife #BakraNews\nस्रोत: Jansatta",
-  "format": "viral",
-  "writer": "viral",
-  "label": "अधपकी खबर",
-  "layout": "anchor",
-  "category": "त्योहार-ट्रेंड",
-  "editorial_mode": "viral_mazaak",
-  "style": "flow",
-  "lips": "sadtalker",
-  "renderer": "studio",
-  "no_memes": true,
-  "hook": "कॉर्पोरेट भारत से राष्ट्रीय बुलेटिन",
-  "hook_text": "कॉर्पोरेट भारत से राष्ट्रीय बुलेटिन",
-  "sprite": {
-    "bablu": "assets/toon/bablu",
-    "chacha": "assets/toon/chacha"
+  {
+   "who": "bablu",
+   "say": "दिल्ली की एक कंपनी ने सरप्राइज बोनस में कर्मचारियों को सीधा iPhone 16 पकड़ा दिया, जिसे देखकर बाकी कंपनियों के बॉसों का बीपी बढ़ गया है।",
+   "caption": "गिफ्ट में मिला iPhone 16",
+   "expr": "hairan",
+   "photo_hi": [
+    "आईफोन 16 बॉक्स दिवाली गिफ्ट"
+   ],
+   "visuals": [
+    "iphone 16 surprise gift box office corporate shocked boss"
+   ],
+   "punch": false,
+   "set": "studio"
   },
-  "production": true,
-  "_production_slot": "2026-11-05_19"
+  {
+   "who": "bablu",
+   "say": "सरप्राइज देखते ही कर्मचारी खुशी से झूम उठे… क्योंकि वो उस सोन पापड़ी के डिब्बे को रिश्तेदारों में री-गिफ्ट करने की मशक्कत से बच गए।",
+   "caption": "कर्मचारी खुशी से झूम उठे",
+   "expr": "tanz",
+   "photo_hi": [
+    "कर्मचारी दफ्तर में खुशी से नाचते हुए"
+   ],
+   "visuals": [
+    "office employees dancing celebration surprise soan papdi passing"
+   ],
+   "punch": false,
+   "set": "studio"
+  },
+  {
+   "who": "chacha",
+   "say": "हमारे ज़माने में तो दिवाली बोनस के नाम पर सिर्फ़ अगले तीन महीने का एक्स्ट्रा टारगेट और मुफ़्त की नसीहतें मिलती थीं!",
+   "caption": "हमारे ज़माने में बोनस!",
+   "expr": "gussa",
+   "photo_hi": [
+    "पुराने जमाने के बॉस गुस्से में"
+   ],
+   "visuals": [
+    "angry boss giving files extra work target old memory"
+   ],
+   "punch": false,
+   "set": "village"
+  },
+  {
+   "who": "bablu",
+   "say": "HR एसोसिएशन ने तुरंत राष्ट्रीय स्पष्टीकरण दिया है — असली कॉर्पोरेट बोनस आईफ़ोन का डिब्बा नहीं, सोन पापड़ी खाकर टारगेट पूरा करने का संयम है!",
+   "caption": "असली बोनस तो सब्र है",
+   "expr": "gambhir",
+   "photo_hi": [
+    "सोन पापड़ी का डिब्बा ऑफिस डेस्क"
+   ],
+   "visuals": [
+    "soan papdi sweet box office desk serious hr announcement"
+   ],
+   "punch": true,
+   "set": "studio"
+  }
+ ],
+ "ask": "आपको इस दिवाली दफ़्तर से क्या मिला — सोन पापड़ी या काम का नया टारगेट? अपने HR और बॉस को टैग करके कमेंट में याद करें!",
+ "caption_post": "दिवाली बोनस में सोन पापड़ी की जगह मिला iPhone 16! 📱🎁 आपके दफ़्तर में क्या मिला? कमेंट में बताओ! #DiwaliBonus #iPhone16 #DelhiCompany #SonPapdi #CorporateLife #BakraNews\nस्रोत: Jansatta",
+ "format": "viral",
+ "writer": "viral",
+ "label": "अधपकी खबर",
+ "layout": "anchor",
+ "category": "त्योहार-ट्रेंड",
+ "editorial_mode": "viral_mazaak",
+ "style": "flow",
+ "lips": "sadtalker",
+ "renderer": "studio",
+ "no_memes": true,
+ "hook": "इस दिवाली पर सोन पापड़ी का दशकों पुराना एकछत्र साम्राज्य आधिकारिक रूप से ध्वस्त हो गया है।",
+ "hook_text": "इस दिवाली पर सोन पापड़ी का दशकों पुराना एकछत्र साम्राज्य आधिकारिक रूप से ध्वस्त हो गया है।",
+ "sprite": {
+  "bablu": "assets/toon/bablu",
+  "chacha": "assets/toon/chacha"
+ },
+ "production": true,
+ "_production_slot": "2026-11-05_19"
 }

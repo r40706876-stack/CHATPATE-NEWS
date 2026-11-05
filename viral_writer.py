@@ -147,7 +147,10 @@ def split_hook(ep):
     m = re.search(r"^(.{8,}?[।,—…!])\s*(.+)$", first["say"])
     if m and len(m.group(1).split()) <= 14 and len(ep["lines"]) < 7:
         a, b = m.group(1).strip(" ,—"), m.group(2).strip()
-        ep["lines"][0:1] = [dict(first, say=a, caption=a, punch=False), dict(first, say=b, caption=b)]
+        if len(a.split()) <= 5:                          # "राष्ट्रीय बुलेटिन:" जैसा भूमिका-टुकड़ा = पहले 2 सेकंड बर्बाद → हटाओ
+            ep["lines"][0] = dict(first, say=b, caption=b)
+        else:
+            ep["lines"][0:1] = [dict(first, say=a, caption=a, punch=False), dict(first, say=b, caption=b)]
     return ep
 
 
