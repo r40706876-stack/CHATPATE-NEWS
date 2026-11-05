@@ -189,9 +189,9 @@ def tick():
         return
     try:
         sp.save(slot, {"status": "asked" if ask() else "noclip"})
-    except gemini.QuotaOver as e:                        # कोटा ~13:30 IST पर लौटता है — इस slot को छोड़ो, बार-बार error message नहीं
-        sp.save(slot, {"status": "failed", "tries": 2, "last_error": repr(e)[:300]})
-        print("  Gemini कोटा ख़त्म — यह slot छोड़ा")
+    except gemini.QuotaOver as e:                        # कोटा दोपहर ~1:30 IST पर लौटता है — चुपचाप अगली tick में फिर (error message नहीं)
+        sp.save(slot, {"status": "quota", "last_error": repr(e)[:300]})
+        print("  Gemini कोटा ख़त्म — अगली tick में फिर कोशिश")
     except Exception as e:                               # noqa: BLE001 — quota/busy: इस slot में ज़्यादा से ज़्यादा 2 कोशिश
         sp.save(slot, {"status": "failed", "tries": st.get("tries", 0) + 1, "last_error": repr(e)[:300]})
         raise
