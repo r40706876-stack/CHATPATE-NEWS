@@ -1,6 +1,9 @@
 {
-  "status": "dispatched",
+  "status": "delivered",
   "script": "episodes/auto_20261105_1345.json",
   "slot": "2026-11-05_13",
-  "updated_at": 1793866604
+  "updated_at": 1793877017,
+  "telegram_delivered_at": 1793877017,
+  "seconds": 68.48,
+  "topic": "ऑनलाइन फ्रॉड में पैसे कटने पर रिफंड के RBI नियम और बैंक की जिम्मेदारी"
 }
