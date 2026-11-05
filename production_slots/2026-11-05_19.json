@@ -1,5 +1,5 @@
 {
-  "status": "dispatched",
+  "status": "delivered",
   "last_error": {
     "slot": "2026-11-05_19",
     "error_type": "ValueError",
@@ -8,6 +8,9 @@
     "checkpoint_cached": false
   },
   "slot": "2026-11-05_19",
-  "updated_at": 1793887873,
-  "script": "episodes/viral_20261105_1939.json"
+  "updated_at": 1793890784,
+  "script": "episodes/viral_20261105_1939.json",
+  "telegram_delivered_at": 1793890784,
+  "seconds": 36.96,
+  "topic": "दिल्ली की कंपनी ने कर्मचारियों को दिवाली बोनस में दिया iPhone 16"
 }
