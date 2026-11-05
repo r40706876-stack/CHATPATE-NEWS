@@ -1,5 +1,5 @@
 {
-  "status": "prepared",
+  "status": "dispatched",
   "last_error": {
     "slot": "2026-11-05_19",
     "error_type": "QuotaOver",
@@ -8,6 +8,6 @@
     "checkpoint_cached": false
   },
   "slot": "2026-11-05_19",
-  "updated_at": 1793886607,
+  "updated_at": 1793886721,
   "script": "episodes/viral_20261105_1920.json"
 }
