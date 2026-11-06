@@ -1,5 +1,8 @@
 {
-  "status": "dispatched",
+  "status": "delivered",
   "slot": "2026-11-06_13",
-  "updated_at": 1793960902
+  "updated_at": 1793963668,
+  "telegram_delivered_at": 1793963668,
+  "seconds": 30.28,
+  "topic": "बॉस से सरप्राइज में महंगा आईफोन पाकर खुशी से रो पड़े कर्मचारी"
 }
