@@ -1,5 +1,8 @@
 {
-  "status": "dispatched",
+  "status": "delivered",
   "slot": "2026-11-07_07",
-  "updated_at": 1794019651
+  "updated_at": 1794042781,
+  "telegram_delivered_at": 1794042781,
+  "seconds": 26.76,
+  "topic": "ट्रेन में फोन रखने के लिए शख्स ने चाकू से काटी सीट, अनोखा जुगाड़ देख हैरान हुए लोग"
 }
