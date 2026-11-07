@@ -210,6 +210,8 @@ def vision_ok(path, topic):
         r = gemini.json_from(gemini.ask([{"text": q}, part], json_mode=True, temperature=0.1))
         print(f"  👁 clip जाँच: {'✅' if r.get('ok') else '❌'} {str(r.get('why', ''))[:80]}")
         return bool(r.get("ok"))
+    except gemini.QuotaOver:
+        raise                                             # कोटा ख़त्म: बिना जाँचे clip नहीं — slot बाद में फिर कोशिश करेगा
     except Exception as e:                                # noqa: BLE001
         # Gemini नहीं चला: अपनी जाँच — बड़ा सामने वाला चेहरा (anchor/रिपोर्टर) = नहीं (28 Oct: चाचा की line पर anchor आ गई)
         ok = not _anchor_face(tiles)
