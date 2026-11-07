@@ -36,6 +36,15 @@ def _api(method, params=None):
         return json.load(r)
 
 
+def download(file_id, out):
+    """Telegram पर भेजी file (bot के लिए 20 MB तक) → out."""
+    tok = os.getenv("TELEGRAM_BOT_TOKEN")
+    path = _api("getFile", {"file_id": file_id})["result"]["file_path"]
+    with urllib.request.urlopen(f"https://api.telegram.org/file/bot{tok}/{path}", timeout=300) as r:
+        Path(out).write_bytes(r.read())
+    return Path(out)
+
+
 def send_text(text):
     if not (os.getenv("TELEGRAM_BOT_TOKEN") and os.getenv("TELEGRAM_CHAT_ID")):
         print(text)
@@ -55,7 +64,16 @@ def read_replies(offset_file):
     for u in res:
         off = max(off, u["update_id"] + 1)
         m = u.get("message") or {}
-        if str(m.get("chat", {}).get("id")) == str(os.getenv("TELEGRAM_CHAT_ID")) and m.get("text"):
+        if str(m.get("chat", {}).get("id")) != str(os.getenv("TELEGRAM_CHAT_ID")):
+            continue
+        if m.get("text"):
             out.append((m.get("date", 0), m["text"].strip()))
+            continue
+        # 7 Nov: मालिक ख़ुद video file भेजे (या document में video) → "__video__:<file_id>|<size>|<caption>"
+        v = m.get("video") or m.get("animation") or (m.get("document") if str((m.get("document") or {}).get("mime_type", "")).startswith("video") else None)
+        if v:
+            out.append((m.get("date", 0), f"__video__:{v['file_id']}|{v.get('file_size', 0)}|{(m.get('caption') or '').strip()}"))
+        elif m.get("caption"):
+            out.append((m.get("date", 0), m["caption"].strip()))
     Path(offset_file).write_text(str(off))
     return out

@@ -54,7 +54,7 @@ jobs:
                 slot=$(python -c "import scheduled_production as s; print(s.slot_for() or '')")
                 [ -n "$slot" ] && python scheduled_production.py dispatched "$slot" || true
               fi
-              for p in chuno_pending.json tg_offset.txt shown.txt reel_results.json production_slots episodes; do
+              for p in chuno_pending.json tg_offset.txt shown.txt reel_results.json production_slots episodes user_clips; do
                 git add -A -- "$p" 2>/dev/null || true
               done
               if ! git diff --cached --quiet; then

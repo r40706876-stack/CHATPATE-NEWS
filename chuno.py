@@ -173,8 +173,56 @@ def ask_link(url):
     about = (title or desc[:120] or "वायरल वीडियो").replace("\n", " ")
     p = {"topic": about[:140], "category": "वायरल वीडियो", "headlines": [x for x in (title, desc[:400]) if x]}
     clip = {"url": url, "title": about[:90], "channel": str(meta.get("uploader") or meta.get("channel") or "Instagram"),
-            "start": 0.5}
+            "start": 0.5, "trusted": True}
     print("  🔗 मालिक का link:", about[:100])
+    return send_punches(p, clip)
+
+
+def describe(path):
+    """भेजी गई video के 3 frames देखकर: घटना एक वाक्य में + असली है या animation/AI."""
+    import base64
+    import io
+    import subprocess
+    from PIL import Image
+    dur = float(subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", str(path)],
+                               capture_output=True, text=True).stdout.strip() or 6)
+    tiles = []
+    for frac in (0.15, 0.5, 0.85):
+        jpg = Path(str(path) + f".{int(frac * 100)}.jpg")
+        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{dur * frac:.2f}", "-i", str(path), "-frames:v", "1",
+                        "-vf", "scale=360:-2", str(jpg)])
+        if jpg.exists():
+            tiles.append(Image.open(jpg).convert("RGB"))
+            jpg.unlink()
+    sheet = Image.new("RGB", (sum(t.width for t in tiles), max(t.height for t in tiles)))
+    x = 0
+    for t in tiles:
+        sheet.paste(t, (x, 0))
+        x += t.width
+    buf = io.BytesIO()
+    sheet.save(buf, "JPEG", quality=80)
+    part = {"inline_data": {"mime_type": "image/jpeg", "data": base64.b64encode(buf.getvalue()).decode()}}
+    q = ('ये एक वायरल video के 3 frames हैं. सिर्फ JSON: {"event": "video में क्या हो रहा है, हिंदी में एक साफ़ वाक्य (कौन, क्या, कहाँ)", '
+         '"real": true/false (असली कैमरे का video = true, cartoon/animation/AI = false)}')
+    return gemini.json_from(gemini.ask([{"text": q}, part], json_mode=True, temperature=0.2))
+
+
+def ask_file(file_id, size, caption):
+    """मालिक ने Telegram पर video file भेजी: repo में रखो (render वाला runner वहीं से काटेगा) → पंच."""
+    import telegram
+    if int(size or 0) > 20 * 1024 * 1024:
+        telegram.send_text("😕 Telegram bot 20 MB से बड़ी file नहीं ले पाता। छोटी video भेजो या उसका Instagram/YouTube link।")
+        return None
+    rel = f"user_clips/{time.strftime('%Y%m%d_%H%M%S')}.mp4"
+    (ROOT / "user_clips").mkdir(exist_ok=True)
+    telegram.download(file_id, ROOT / rel)
+    d = describe(ROOT / rel)
+    event = str(d.get("event") or caption or "वायरल वीडियो").strip()
+    if d.get("real") is False:
+        telegram.send_text("ℹ️ यह video cartoon/AI जैसा लग रहा है — पंच बना रहा हूँ, पर असली घटना वाले video ज़्यादा चलते हैं।")
+    p = {"topic": event[:140], "category": "वायरल वीडियो", "headlines": [x for x in (caption, event) if x]}
+    clip = {"url": rel, "title": event[:90], "channel": "आपकी भेजी video", "start": 0.5, "trusted": True}
+    print("  📥 मालिक की video:", rel, "—", event[:100])
     return send_punches(p, clip)
 
 
@@ -209,6 +257,7 @@ def build(state, picks):
     return {"topic": state["topic"], "breaking": state.get("breaking") or state["topic"], "category": state["category"],
             "hook": state["hook"], "hook_text": state["hook"], "hook_short": " ".join(str(state.get("breaking") or state["hook"]).split()[:5]),
             "ask": state.get("ask", ""), "lines": lines, "clip_urls": [state["clip"]["url"]], "clip_start": state["clip"].get("start", 6.0), "clip_first": True,
+            "clip_trusted": bool(state["clip"].get("trusted")),
             "caption_post": (state.get("caption_post") or state["topic"]) + f"\nवीडियो: {state['clip']['channel']}",
             "format": "chuno", "writer": "chuno", "label": "अधपकी खबर", "layout": "anchor", "editorial_mode": "viral_mazaak",
             "style": "flow", "lips": "sadtalker", "renderer": "studio", "no_memes": True, "picked": picks}
@@ -220,8 +269,11 @@ def tick():
     import scheduled_production as sp
     import telegram
     msgs = []
-    link = None
+    link = vid = None
     for when, text in telegram.read_replies(OFFSET):
+        if str(text).startswith("__video__:"):
+            vid = str(text)[10:].split("|", 2)
+            continue
         m = LINK.search(str(text))
         if m:
             link = m.group(0)
@@ -231,6 +283,10 @@ def tick():
             telegram.send_text(ans)
         else:
             msgs.append((when, text))
+    if vid:
+        telegram.send_text("📥 video मिली — देखकर पंच बना रहा हूँ (2-3 मिनट)…")
+        PENDING.unlink(missing_ok=True)
+        return ask_file(vid[0], vid[1] if len(vid) > 1 else 0, vid[2] if len(vid) > 2 else "")
     if link:
         telegram.send_text("🔗 link मिला — video देखकर पंच बना रहा हूँ (2-3 मिनट)…")
         PENDING.unlink(missing_ok=True)

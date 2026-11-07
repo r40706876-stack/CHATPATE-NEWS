@@ -73,6 +73,11 @@ def search(query, n=8):
 def cut(url, out, start, secs=CLIP_SECS):
     """url के start सेकंड से secs सेकंड का बिना-आवाज़ clip (720p तक)."""
     out.parent.mkdir(parents=True, exist_ok=True)
+    if Path(url).is_file():                               # 7 Nov: मालिक की भेजी video file (repo में user_clips/)
+        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{start:.1f}", "-i", str(url), "-t", f"{secs}", "-an",
+                        "-vf", "fps=25,scale='min(1280,iw)':-2", "-c:v", "libx264", "-preset", "veryfast", "-crf", "23",
+                        str(out)], timeout=120)
+        return out if out.exists() and out.stat().st_size > 20000 else None
     tmp = out.with_suffix(".src.mp4")
     cmd = _ytdlp() + ["-q", "--no-warnings", "--no-playlist", "-f", "bv*[height<=720][ext=mp4]/bv*[height<=720]/b[height<=720]",
                       "--download-sections", f"*{start:.1f}-{start + secs + 0.5:.1f}", "--force-keyframes-at-cuts",
