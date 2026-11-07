@@ -1,5 +1,8 @@
 {
-  "status": "dispatched",
+  "status": "delivered",
   "slot": "2026-11-07_19",
-  "updated_at": 1794059262
+  "updated_at": 1794060912,
+  "telegram_delivered_at": 1794060912,
+  "seconds": 21.32,
+  "topic": "टीचर ने क्लासरूम में बच्चों के साथ जमकर किया डांस"
 }
