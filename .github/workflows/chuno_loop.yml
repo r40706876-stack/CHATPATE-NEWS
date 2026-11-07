@@ -1,5 +1,5 @@
 # 7 Nov: GitHub की cron "हर 20 मिनट" असल में दिन में ~2 बार चल रही थी (1:24 PM, 9:24 PM) — slot छूटे, मालिक के जवाब
-# घंटों पड़े रहे. यह job ~5.5 घंटे ख़ुद चलता है: 06:40-21:30 IST हर 2 मिनट tick (slot की बारी पर पंच, जवाब आते ही video),
+# घंटों पड़े रहे. यह job ~5.5 घंटे ख़ुद चलता है: 06:40-23:00 IST हर 2 मिनट tick (slot की बारी पर पंच, जवाब आते ही video),
 # फिर अपने-आप को दोबारा शुरू करता है. cron सिर्फ़ बैकअप है अगर loop कभी टूट जाए. Public repo = Actions मुफ़्त.
 name: chuno-loop
 on:
@@ -44,7 +44,7 @@ jobs:
           while [ $(date +%s) -lt $end ]; do
             git pull -q --rebase origin main || { git rebase --abort 2>/dev/null; git reset -q --hard origin/main; }
             h=$(TZ=Asia/Kolkata date +%H%M)
-            if [ "$h" -ge 0640 ] && [ "$h" -le 2130 ]; then
+            if [ "$h" -ge 0640 ] && [ "$h" -le 2300 ]; then
               rm -f studio_job.txt
               timeout 900 python chuno.py || echo "tick error (आगे बढ़ रहे)"
               script=""
