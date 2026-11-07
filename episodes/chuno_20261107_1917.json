@@ -1,0 +1,103 @@
+{
+ "topic": "टीचर ने क्लासरूम में बच्चों के साथ जमकर किया डांस",
+ "breaking": "क्लासरूम बना डांस फ़्लोर, वीडियो वायरल",
+ "category": "वायरल",
+ "hook": "शिक्षा क्रांति का नया मॉडल, क्लासरूम में पढ़ाई छोड़ हुआ डांस।",
+ "hook_text": "शिक्षा क्रांति का नया मॉडल, क्लासरूम में पढ़ाई छोड़ हुआ डांस।",
+ "hook_short": "क्लासरूम बना डांस फ़्लोर, वीडियो",
+ "ask": "क्या आपके स्कूल में कभी ऐसा डांस हुआ था? कमेंट में बताओ!",
+ "lines": [
+  {
+   "who": "bablu",
+   "say": "शिक्षा क्रांति का नया मॉडल, क्लासरूम में पढ़ाई छोड़ हुआ डांस।",
+   "expr": "gambhir",
+   "caption": "शिक्षा क्रांति का नया मॉडल, क्लासरूम में पढ़ाई छोड़ हुआ डांस।",
+   "set": "studio",
+   "photo_hi": [
+    "टीचर ने क्लासरूम में बच्चों के साथ जमकर किया डांस"
+   ],
+   "visuals": []
+  },
+  {
+   "who": "bablu",
+   "say": "धनतेरस की शाम टीचर ने क्लासरूम में बच्चों संग डांस किया।",
+   "expr": "gambhir",
+   "caption": "धनतेरस की शाम टीचर ने क्लासरूम में बच्चों संग डांस किया।",
+   "set": "studio",
+   "photo_hi": [
+    "टीचर ने क्लासरूम में बच्चों के साथ जमकर किया डांस"
+   ],
+   "visuals": []
+  },
+  {
+   "who": "bablu",
+   "say": "शिक्षा विभाग का नया आदेश, गणित के फ़ॉर्मूले अब गानों पर गाए जाएँगे।",
+   "expr": "tanz",
+   "punch": true,
+   "caption": "शिक्षा विभाग का नया आदेश, गणित के फ़ॉर्मूले अब गानों पर गाए जाएँगे।",
+   "set": "studio",
+   "photo_hi": [
+    "टीचर ने क्लासरूम में बच्चों के साथ जमकर किया डांस"
+   ],
+   "visuals": []
+  },
+  {
+   "who": "pinky",
+   "say": "हमें ऐसी टीचर मिलती तो हम कभी क्लास बंक ही नहीं करते।",
+   "expr": "tanz",
+   "punch": true,
+   "caption": "हमें ऐसी टीचर मिलती तो हम कभी क्लास बंक ही नहीं करते।",
+   "set": "village",
+   "photo_hi": [],
+   "visuals": []
+  },
+  {
+   "who": "chacha",
+   "say": "हमारे समय में तो मास्टरजी की छड़ी ही मुर्गा बना देती थी।",
+   "expr": "tanz",
+   "punch": true,
+   "caption": "हमारे समय में तो मास्टरजी की छड़ी ही मुर्गा बना देती थी।",
+   "set": "village",
+   "photo_hi": [],
+   "visuals": []
+  },
+  {
+   "who": "pinky",
+   "say": "अब रिपोर्ट कार्ड से ज़्यादा रील के व्यूज़ मायने रखते हैं।",
+   "expr": "tanz",
+   "punch": true,
+   "caption": "अब रिपोर्ट कार्ड से ज़्यादा रील के व्यूज़ मायने रखते हैं।",
+   "set": "village",
+   "photo_hi": [],
+   "visuals": []
+  }
+ ],
+ "clip_urls": [
+  "https://www.youtube.com/watch?v=ZxWe9f0OxlI"
+ ],
+ "clip_start": 15.0,
+ "clip_first": true,
+ "caption_post": "जब क्लासरूम बना डांस फ़्लोर! देखिए बकरा न्यूज़ की ख़ास रिपोर्ट। #BakraNews #ViralVideo #ClassroomDance #KajraMohabbatWala #SchoolFun\nवीडियो: Loksatya TV",
+ "format": "chuno",
+ "writer": "chuno",
+ "label": "अधपकी खबर",
+ "layout": "anchor",
+ "editorial_mode": "viral_mazaak",
+ "style": "flow",
+ "lips": "sadtalker",
+ "renderer": "studio",
+ "no_memes": true,
+ "picked": [
+  1,
+  2,
+  4,
+  6
+ ],
+ "sprite": {
+  "pinky": "assets/toon/pinky",
+  "bablu": "assets/toon/bablu",
+  "chacha": "assets/toon/chacha"
+ },
+ "production": true,
+ "_production_slot": "2026-11-07_19"
+}
