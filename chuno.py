@@ -170,16 +170,47 @@ def ask_link(url):
     if not sample:
         telegram.send_text("😕 यह link खुला नहीं (private हो सकता है या Instagram ने रोका)। कोई दूसरा link या YouTube का link भेजो।")
         return None
-    about = (title or desc[:120] or "वायरल वीडियो").replace("\n", " ")
-    p = {"topic": about[:140], "category": "वायरल वीडियो", "headlines": [x for x in (title, desc[:400]) if x]}
+    d = {}
+    try:
+        d = describe(sample, _audio(url, clips.CACHE / "chuno_link_audio.mp3"), f"title: {title}. {desc[:300]}")
+    except gemini.QuotaOver:
+        raise
+    except Exception as e:                               # noqa: BLE001 — आवाज़ न मिले तो title/description से
+        print("  link की आवाज़/तस्वीर नहीं समझी:", repr(e)[:120])
+    about = (str(d.get("event") or "") or title or desc[:120] or "वायरल वीडियो").replace("\n", " ")
+    p = {"topic": about[:140], "category": "वायरल वीडियो",
+         "headlines": [x for x in (title, desc[:400], ("video में बोला गया: " + str(d["said"])) if d.get("said") else "") if x and x.strip()]}
     clip = {"url": url, "title": about[:90], "channel": str(meta.get("uploader") or meta.get("channel") or "Instagram"),
             "start": 0.5, "trusted": True}
     print("  🔗 मालिक का link:", about[:100])
     return send_punches(p, clip)
 
 
-def describe(path):
-    """भेजी गई video के 3 frames देखकर: घटना एक वाक्य में + असली है या animation/AI."""
+def _audio(src, out, secs=120):
+    """video/link की आवाज़ (पहले ~2 मिनट) → छोटी mp3 (Gemini इसे सुनकर समझता है)."""
+    import subprocess
+    import clips
+    out = Path(out)
+    if Path(src).is_file():
+        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(src), "-vn", "-ac", "1", "-ar", "16000", "-t", str(secs),
+                        "-b:a", "32k", str(out)], timeout=120)
+    else:
+        raw = out.with_suffix(".src")
+        subprocess.run(clips._ytdlp() + ["-q", "--no-warnings", "--no-playlist", "-f", "bestaudio/best", "--download-sections",
+                                         f"*0-{secs}", "-o", str(raw) + ".%(ext)s"]
+                       + clips._cookies("YT_COOKIES" if "youtu" in str(src) else "IG_COOKIES") + [str(src)],
+                       capture_output=True, timeout=240)
+        got = next(iter(out.parent.glob(raw.name + ".*")), None)
+        if got:
+            subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(got), "-vn", "-ac", "1", "-ar", "16000", "-t", str(secs),
+                            "-b:a", "32k", str(out)], timeout=120)
+            got.unlink(missing_ok=True)
+    return out if out.exists() and out.stat().st_size > 2000 else None
+
+
+def describe(path, audio=None, context=""):
+    """7 Nov (मालिक: "सिर्फ़ चित्र से खबर कैसे कवर होगी"): video के 3 frames + उसकी आवाज़ दोनों —
+    क्या बोला गया, कौन बोल रहा है, असल घटना क्या है. + असली है या animation/AI."""
     import base64
     import io
     import subprocess
@@ -202,9 +233,15 @@ def describe(path):
     buf = io.BytesIO()
     sheet.save(buf, "JPEG", quality=80)
     part = {"inline_data": {"mime_type": "image/jpeg", "data": base64.b64encode(buf.getvalue()).decode()}}
-    q = ('ये एक वायरल video के 3 frames हैं. सिर्फ JSON: {"event": "video में क्या हो रहा है, हिंदी में एक साफ़ वाक्य (कौन, क्या, कहाँ)", '
+    parts = [part]
+    if audio:
+        parts.append({"inline_data": {"mime_type": "audio/mp3", "data": base64.b64encode(Path(audio).read_bytes()).decode()}})
+    q = ('ये एक वायरल video के 3 frames हैं' + (' और उसकी आवाज़ (audio) भी साथ है — उसे ध्यान से सुनो' if audio else '') + '. '
+         + (f'साथ की जानकारी: {context[:500]}. ' if context else '')
+         + 'सिर्फ JSON: {"event": "असल घटना हिंदी में 1-2 साफ़ वाक्य — कौन, क्या, कहाँ, क्यों (आवाज़ और तस्वीर दोनों से)", '
+         '"said": "video में बोली गई मुख्य बातें (हिंदी, 1-3 वाक्य; कोई ख़ास/मज़ेदार line हो तो जस की तस)", '
          '"real": true/false (असली कैमरे का video = true, cartoon/animation/AI = false)}')
-    return gemini.json_from(gemini.ask([{"text": q}, part], json_mode=True, temperature=0.2))
+    return gemini.json_from(gemini.ask([{"text": q}] + parts, json_mode=True, temperature=0.2))
 
 
 def ask_file(file_id, size, caption):
@@ -216,11 +253,13 @@ def ask_file(file_id, size, caption):
     rel = f"user_clips/{time.strftime('%Y%m%d_%H%M%S')}.mp4"
     (ROOT / "user_clips").mkdir(exist_ok=True)
     telegram.download(file_id, ROOT / rel)
-    d = describe(ROOT / rel)
+    d = describe(ROOT / rel, _audio(ROOT / rel, ROOT / "user_clips" / "_tmp_audio.mp3"), caption)
+    (ROOT / "user_clips" / "_tmp_audio.mp3").unlink(missing_ok=True)
     event = str(d.get("event") or caption or "वायरल वीडियो").strip()
     if d.get("real") is False:
         telegram.send_text("ℹ️ यह video cartoon/AI जैसा लग रहा है — पंच बना रहा हूँ, पर असली घटना वाले video ज़्यादा चलते हैं।")
-    p = {"topic": event[:140], "category": "वायरल वीडियो", "headlines": [x for x in (caption, event) if x]}
+    p = {"topic": event[:140], "category": "वायरल वीडियो",
+         "headlines": [x for x in (caption, event, ("video में बोला गया: " + str(d["said"])) if d.get("said") else "") if x and x.strip()]}
     clip = {"url": rel, "title": event[:90], "channel": "आपकी भेजी video", "start": 0.5, "trusted": True}
     print("  📥 मालिक की video:", rel, "—", event[:100])
     return send_punches(p, clip)
