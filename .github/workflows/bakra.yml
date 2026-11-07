@@ -1,9 +1,6 @@
-# Production (5 Nov, "chuno"): हर 20 मिनट, 06:50-21:30 IST — slot (7/10/13/16/19) की बारी पर पंच Telegram पर,
-# मालिक के चुने नंबर आते ही video.
+# 7 Nov: schedule अब chuno_loop.yml में (GitHub cron दिन में ~2 बार ही चलती थी). यह सिर्फ़ हाथ से चलाने के लिए.
 name: bakra-news
 on:
-  schedule:
-    - cron: "10,30,50 1-15 * * *"
   push:
     branches: [main]
     paths: ["production_request.json"]

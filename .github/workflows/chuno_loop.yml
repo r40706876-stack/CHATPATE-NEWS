@@ -1,0 +1,70 @@
+# 7 Nov: GitHub की cron "हर 20 मिनट" असल में दिन में ~2 बार चल रही थी (1:24 PM, 9:24 PM) — slot छूटे, मालिक के जवाब
+# घंटों पड़े रहे. यह job ~5.5 घंटे ख़ुद चलता है: 06:40-21:30 IST हर 2 मिनट tick (slot की बारी पर पंच, जवाब आते ही video),
+# फिर अपने-आप को दोबारा शुरू करता है. cron सिर्फ़ बैकअप है अगर loop कभी टूट जाए. Public repo = Actions मुफ़्त.
+name: chuno-loop
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "5 0,6,12,18 * * *"
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: chuno-loop
+  cancel-in-progress: false
+env:
+  GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+  GEMINI_API_KEY2: ${{ secrets.GEMINI_API_KEY2 }}
+  GEMINI_API_KEY3: ${{ secrets.GEMINI_API_KEY3 }}
+  PIXABAY_API_KEY: ${{ secrets.PIXABAY_API_KEY }}
+  GEMINI_MODELS_PER_KEY: "3"
+  TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+  TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+  YT_COOKIES: ${{ secrets.YT_COOKIES }}
+  GEMINI_REQUEST_BUDGET: "24"
+  GH_TOKEN: ${{ github.token }}
+jobs:
+  loop:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 345
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main}
+      - name: Tools
+        run: |
+          command -v ffmpeg >/dev/null || timeout 300 sudo apt-get install -y -qq --no-install-recommends ffmpeg \
+            || (timeout 180 sudo apt-get update -qq && timeout 300 sudo apt-get install -y -qq --no-install-recommends ffmpeg)
+          python -m pip install -q --break-system-packages "yt-dlp[default]" pillow numpy || python -m pip install -q "yt-dlp[default]" pillow numpy
+          curl -fsSL https://deno.land/install.sh | sh -s -- -y >/dev/null 2>&1 || true
+          echo "$HOME/.deno/bin" >> $GITHUB_PATH
+      - name: Tick every 2 minutes
+        run: |
+          git config user.name "bakra-bot"; git config user.email "bot@users.noreply.github.com"
+          end=$(( $(date +%s) + 330*60 ))
+          while [ $(date +%s) -lt $end ]; do
+            git pull -q --rebase origin main || { git rebase --abort 2>/dev/null; git reset -q --hard origin/main; }
+            h=$(TZ=Asia/Kolkata date +%H%M)
+            if [ "$h" -ge 0640 ] && [ "$h" -le 2130 ]; then
+              rm -f studio_job.txt
+              timeout 900 python chuno.py || echo "tick error (आगे बढ़ रहे)"
+              if [ -f studio_job.txt ]; then
+                script=$(cat studio_job.txt); rm -f studio_job.txt
+                gh workflow run talk_episode.yml --ref main -f script="$script" && echo "▶️ video: $script"
+                slot=$(python -c "import scheduled_production as s; print(s.slot_for() or '')")
+                [ -n "$slot" ] && python scheduled_production.py dispatched "$slot" || true
+              fi
+              for p in chuno_pending.json tg_offset.txt shown.txt reel_results.json production_slots episodes; do
+                git add -A -- "$p" 2>/dev/null || true
+              done
+              if ! git diff --cached --quiet; then
+                git commit -q -m "chuno tick $(TZ=Asia/Kolkata date +%H:%M)"
+                for i in 1 2 3; do git pull -q --rebase origin main && git push -q origin HEAD:main && break; sleep 5; done
+              fi
+              sleep 120
+            else
+              sleep 600
+            fi
+          done
+      - name: Restart loop
+        if: always()
+        run: gh workflow run chuno_loop.yml --ref main
