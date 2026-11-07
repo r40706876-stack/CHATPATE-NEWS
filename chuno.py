@@ -21,7 +21,7 @@ PENDING = ROOT / "chuno_pending.json"
 OFFSET = ROOT / "tg_offset.txt"
 NAME = {"bablu": "बबलू", "chacha": "चाचा", "pinky": "पिंकी"}
 
-PICK = """नीचे आज की वायरल/आदत वाली खबरें हैं. ऐसी 3 खबरें चुनो (सबसे अच्छी पहले) जिनका असली video YouTube पर ज़रूर होगा और
+PICK = """नीचे आज की वायरल/आदत वाली खबरें हैं. ऐसी 5 खबरें चुनो (सबसे अच्छी पहले) जिनका असली video YouTube पर ज़रूर होगा और
 video में ही कुछ अजीब/मज़ेदार/चौंकाने वाला होता दिखे (कोई कुछ करता दिखे — सिर्फ़ घोषणा/बयान/दाम नहीं).
 उस घटना में हमारी रोज़ की ज़िंदगी/सिस्टम/आदत पर मज़ाक की जगह हो. मौत/चोट/अपराध-पीड़ित, नेता/पार्टी, धर्म/जाति, सरकारी नियम नहीं.
 recent वाली खबरें दोबारा नहीं.
@@ -63,9 +63,13 @@ def _clip_for(query, topic):
              if len(want & visuals._stems(t)) >= need and clips.indian(t, c) and (not d or 6 <= d <= 1200)]
     found.sort(key=lambda r: (not r[3] or r[3] > 90))
     for url, title, ch, dur in found[:3]:
-        sample = clips.cut_best(url, clips.CACHE / "chuno_check.mp4", 1.0, look=20.0, crop="crop=iw:ih*0.80:0:ih*0.10")
-        if sample and clips.vision_ok(sample, topic):
-            return {"url": url, "title": title, "channel": ch}
+        # 7 Nov: पहले सेकंड में अक्सर channel का intro/BREAKING graphic होता है — उसके बाद के दो हिस्से जाँचो
+        for start in (6.0, 15.0):
+            if dur and start + 4 > dur:
+                continue
+            sample = clips.cut_best(url, clips.CACHE / "chuno_check.mp4", start, look=8.0, crop="crop=iw:ih*0.80:0:ih*0.10")
+            if sample and clips.vision_ok(sample, topic):
+                return {"url": url, "title": title, "channel": ch, "start": start}
     return None
 
 
@@ -98,7 +102,7 @@ def ask(exclude=()):
     if isinstance(picks, dict):
         picks = [picks]
     chosen = None
-    for p in picks[:3]:
+    for p in picks[:5]:
         clip = _clip_for(p.get("clip_query") or p.get("topic", ""), p.get("topic", ""))
         print("  🎯", p.get("topic"), "→ clip:", (clip or {}).get("title", "नहीं मिला"))
         if clip:
@@ -166,7 +170,7 @@ def build(state, picks):
         ln["visuals"] = []
     return {"topic": state["topic"], "breaking": state.get("breaking") or state["topic"], "category": state["category"],
             "hook": state["hook"], "hook_text": state["hook"], "hook_short": " ".join(str(state.get("breaking") or state["hook"]).split()[:5]),
-            "ask": state.get("ask", ""), "lines": lines, "clip_urls": [state["clip"]["url"]], "clip_first": True,
+            "ask": state.get("ask", ""), "lines": lines, "clip_urls": [state["clip"]["url"]], "clip_start": state["clip"].get("start", 6.0), "clip_first": True,
             "caption_post": (state.get("caption_post") or state["topic"]) + f"\nवीडियो: {state['clip']['channel']}",
             "format": "chuno", "writer": "chuno", "label": "अधपकी खबर", "layout": "anchor", "editorial_mode": "viral_mazaak",
             "style": "flow", "lips": "sadtalker", "renderer": "studio", "no_memes": True, "picked": picks}

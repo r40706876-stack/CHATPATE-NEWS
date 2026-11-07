@@ -186,7 +186,7 @@ def prep(script_path):
         try:
             import clips
             parts = []
-            for k, start in enumerate((ep.get("clip_start", 1.0), 10.0, 19.0)):
+            for k, start in enumerate(sorted({float(ep.get("clip_start", 6.0)), 6.0, 15.0, 24.0})[:3]):
                 cp = clips.cut_best(ep["clip_urls"][0], clips.CACHE / f"chuno_{k}.mp4", start, look=8.0, secs=8.0,
                                     crop="crop=iw:ih*0.80:0:ih*0.10")
                 # 7 Nov: iPhone की खबर पर ABP की anchor + पार्किंग की गाड़ियाँ चलीं — हर हिस्सा आँख से जाँचो
