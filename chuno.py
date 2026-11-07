@@ -38,7 +38,8 @@ headline/स्रोत: {headlines}
 
 लिखो:
 - "hook": पहली line, उल्टा headline (≤10 शब्द) — घटना को उपलब्धि/गंभीर ब्रेकिंग की तरह. हाँ/ना सवाल नहीं.
-- "facts": 2-3 सीधी lines (हर एक ≤14 शब्द) जो घटना पूरी समझा दें — सिर्फ़ headline/video title में लिखी बातें, कोई नया अंक/नाम/जगह नहीं.
+- "facts": ठीक 2 सीधी lines (हर एक ≤14 शब्द) — सिर्फ़ इसी एक घटना की, हर line hook से अलग नई बात बताए (hook को दोहराए नहीं).
+  सिर्फ़ headline/video title में लिखी बातें; कोई दूसरी खबर, नया अंक/नाम/जगह नहीं.
 - "punches": ठीक 10 पंच (हर एक ≤16 शब्द). हर पंच अलग निशाने पर: हमारा सिस्टम (सड़क, नाले, दफ़्तर, ट्रेन, कंपनी के वादे),
   हमारी आदत (views की भूख, दिखावा, return), पहचाने लोग (मम्मी, चाचा, बॉस, रिश्तेदार, EMI वाला दोस्त, पड़ोसन).
   घटना वाले इंसान का मज़ाक नहीं. "सरकारी बयान + उसी शब्द पर twist" ढाँचा अच्छा चलता है. सुनते ही समझ आए.
@@ -50,16 +51,40 @@ headline/स्रोत: {headlines}
 "caption_post": "..."}}"""
 
 
-def _clip_for(query):
-    """इसी घटना का YouTube video (title में खोज के 2+ शब्द, भारत का) — download नहीं, सिर्फ़ खोज."""
+def _clip_for(query, topic):
+    """इसी घटना का असली video: title मिले + 3 frames आँख से जाँचे (घटना दिखे; anchor/studio/दूसरी खबर नहीं).
+    7 Nov: सिर्फ़ title मिलाने से iPhone की खबर पर ABP bulletin (anchor + पार्किंग की गाड़ियाँ) लग गया था.
+    छोटे video (≤90s, अक्सर असली वायरल video/Shorts) पहले, लंबे news bulletin बाद में."""
     import clips
     import visuals
-    want = visuals._stems(query)
+    want = visuals._stems(query) | visuals._stems(topic)
     need = 2 if len(want) >= 3 else 1
-    for url, title, ch, dur in clips.search(query, n=10):
-        if len(want & visuals._stems(title)) >= need and clips.indian(title, ch) and (not dur or 8 <= dur <= 1200):
+    found = [(u, t, c, d) for u, t, c, d in clips.search(query, n=12)
+             if len(want & visuals._stems(t)) >= need and clips.indian(t, c) and (not d or 6 <= d <= 1200)]
+    found.sort(key=lambda r: (not r[3] or r[3] > 90))
+    for url, title, ch, dur in found[:3]:
+        sample = clips.cut_best(url, clips.CACHE / "chuno_check.mp4", 1.0, look=20.0, crop="crop=iw:ih*0.80:0:ih*0.10")
+        if sample and clips.vision_ok(sample, topic):
             return {"url": url, "title": title, "channel": ch}
     return None
+
+
+def _same(a, b):
+    import visuals
+    x, y = visuals._stems(a), visuals._stems(b)
+    return bool(x and y) and len(x & y) / min(len(x), len(y)) >= 0.6
+
+
+def clean_facts(hook, facts, about):
+    """7 Nov: 3 lines में एक ही बात ("बॉस ने iPhone दिया, कर्मचारी रोए") + बीच में दूसरी खबर (उदयपुर) घुस गई थी.
+    तथ्य वही रखो जो इसी खबर के शब्दों से जुड़े हों और hook/पिछले तथ्य से अलग हों. ज़्यादा से ज़्यादा 2."""
+    import visuals
+    key = visuals._stems(about)
+    out = []
+    for f in (str(x).strip() for x in facts or []):
+        if f and visuals._stems(f) & key and not _same(f, hook) and not any(_same(f, o) for o in out):
+            out.append(f)
+    return out[:2]
 
 
 def ask(exclude=()):
@@ -74,7 +99,7 @@ def ask(exclude=()):
         picks = [picks]
     chosen = None
     for p in picks[:3]:
-        clip = _clip_for(p.get("clip_query") or p.get("topic", ""))
+        clip = _clip_for(p.get("clip_query") or p.get("topic", ""), p.get("topic", ""))
         print("  🎯", p.get("topic"), "→ clip:", (clip or {}).get("title", "नहीं मिला"))
         if clip:
             i = p.get("index")
@@ -92,7 +117,7 @@ def ask(exclude=()):
     punches = [x for x in out.get("punches", []) if isinstance(x, dict) and str(x.get("say", "")).strip()][:10]
     for x in punches:
         x["who"] = x.get("who") if x.get("who") in NAME else "bablu"
-    facts = [str(f) for f in out.get("facts", []) if str(f).strip()][:3]
+    facts = clean_facts(out.get("hook", ""), out.get("facts", []), p["topic"] + " " + " ".join(p["headlines"]))
     if len(punches) < 4 or not facts or not out.get("hook"):
         raise ValueError("पंच/तथ्य अधूरे मिले")
     state = {"sent_at": int(time.time()), "topic": p["topic"], "category": p.get("category", "वायरल"), "clip": clip,
@@ -122,7 +147,11 @@ def parse(text, n):
 
 def build(state, picks):
     """hook → तथ्य और चुने पंच बारी-बारी → आख़िरी चुना पंच सबसे आख़िर में. (Gemini नहीं)"""
-    chosen = [state["punches"][k - 1] for k in picks]
+    chosen = []
+    for k in picks:                                      # एक जैसे दो पंच नहीं
+        x = state["punches"][k - 1]
+        if not any(_same(x["say"], c["say"]) for c in chosen):
+            chosen.append(x)
     body, mid = [], chosen[:-1]
     for i, fact in enumerate(state["facts"]):
         body.append({"who": "bablu", "say": fact, "expr": "gambhir"})

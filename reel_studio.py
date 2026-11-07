@@ -912,7 +912,10 @@ def render(ep, segs, chars, out, preview):
         _, name, role = chars[ln["who"]]
         size = (W, H) if shot == "full" else (W, ANCHOR_VH) if shot == "anchor" else (SW_, SH_)
         vis = list(s.get("vis") or [])
-        if ln.get("big") and vis and not react and shot in ("split", "full", "anchor"):   # माँग वाली line: पहले बड़े अक्षर, फिर तस्वीर
+        chunky = ep.get("format") == "chuno"                    # 7 Nov: असली video पूरी line चले — बीच में नीले text card नहीं
+        if chunky and any(isinstance(v, Path) for v in vis):
+            vis = [v for v in vis if isinstance(v, Path)]
+        if ln.get("big") and vis and not react and shot in ("split", "full", "anchor") and not chunky:   # माँग वाली line: पहले बड़े अक्षर, फिर तस्वीर
             card = [{"big": ln["big"], "sub": ln.get("sub", ""), "color": ln.get("card_color")}]
             vis = (vis + card) if si == 0 else (card + vis)   # पहला सेकंड असली तस्वीर का (scroll वहीं रुकता है)
         if ep.get('editorial_mode') != 'news_first' and shot in ("split", "full") and not vis and not react and pool and not ln.get("big") and carry < 1:
@@ -961,7 +964,9 @@ def render(ep, segs, chars, out, preview):
             vis.sort(key=lambda p: 'factgraphic' in str(p))
             chunk = max(1, min(4 * FPS, math.ceil(n / len(vis))))
         need = math.ceil(n / chunk) + int(ep.get("_fix") or 0)
-        if ep.get('editorial_mode') != 'news_first' and shot != "close" and not react and vis and len(vis) < need and not dd:
+        if chunky and vis:
+            chunk, need = n, 1                                  # एक clip पूरी line
+        if ep.get('editorial_mode') != 'news_first' and not chunky and shot != "close" and not react and vis and len(vis) < need and not dd:
             # सिर्फ़ zoom बदलने से वही तस्वीर 5 सेकंड "रुकी" दिखती थी (छठ वाली video) — कमी हो तो: line की मुख्य बात
             # वाला card, फिर इसी खबर की दूसरी असली तस्वीरें (जो अभी इस line में नहीं)
             extra = []
@@ -976,7 +981,7 @@ def render(ep, segs, chars, out, preview):
                     break
                 if e_ not in vis:
                     vis.insert(1 if len(vis) == 1 else len(vis), e_)
-        if ep.get('editorial_mode') != 'news_first' and vis and shot != "close" and not react and len(vis) * chunk < n and k >= FPS * 5:   # पहले 5s: खींचो मत, A-B-A तेज़ बदलो
+        if ep.get('editorial_mode') != 'news_first' and not chunky and vis and shot != "close" and not react and len(vis) * chunk < n and k >= FPS * 5:   # पहले 5s: खींचो मत, A-B-A तेज़ बदलो
             # तस्वीरें कम, line लंबी: A-B-A-B घुमाने की जगह हर तस्वीर ज़्यादा देर (2.8 सेकंड तक, अलग zoom/कोण से),
             # फिर भी बचे तो line की मुख्य बात वाला card — एक ही फ़ोटो दोबारा लौटकर नहीं आती
             chunk = min(int((5.0 if dd else 2.8) * FPS), math.ceil(n / len(vis)))   # QA: 3 सेकंड से ज़्यादा एक तस्वीर = रद्द
@@ -1030,7 +1035,7 @@ def render(ep, segs, chars, out, preview):
                 beat_card = isinstance(vis[j], dict) and vis[j].get("color")
                 gsize = (W, H) if shot == "anchor" and "factgraphic" in str(vis[j]) else size   # portrait graphic: पूरा, बिना काटे
                 if shot == "anchor" and "_clip" in str(vis[j]) and str(vis[j]).endswith(".mp4"):
-                    gsize = (W, 452)                                 # कटा हुआ YouTube clip (~2.4:1): पूरा दिखे (ऊपर-नीचे धुंधली भराई), और न काटो
+                    gsize = (W, ANCHOR_VH)                           # 7 Nov: ऊपर का पूरा हिस्सा video से भरा — पतली पट्टी + काली धुंध नहीं
                 cur, credit = _screen_gen(vis[j], seed, gsize, None if beat_card else last_screen,
                                           hero=(si == 0 and t == 0)), _credit(vis[j])
             if face:

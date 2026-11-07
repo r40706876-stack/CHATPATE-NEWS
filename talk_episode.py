@@ -186,9 +186,11 @@ def prep(script_path):
         try:
             import clips
             parts = []
-            for k, start in enumerate((1.0, 10.0, 19.0)):
-                cp = clips.cut_best(ep["clip_urls"][0], clips.CACHE / f"chuno_{k}.mp4", start, look=8.0, secs=8.0)
-                if cp:
+            for k, start in enumerate((ep.get("clip_start", 1.0), 10.0, 19.0)):
+                cp = clips.cut_best(ep["clip_urls"][0], clips.CACHE / f"chuno_{k}.mp4", start, look=8.0, secs=8.0,
+                                    crop="crop=iw:ih*0.80:0:ih*0.10")
+                # 7 Nov: iPhone की खबर पर ABP की anchor + पार्किंग की गाड़ियाँ चलीं — हर हिस्सा आँख से जाँचो
+                if cp and clips.vision_ok(cp, ep.get("topic", "")):
                     parts.append(cp)
             for i in range(len(ep["lines"]) if parts else 0):
                 for old in (IN / "broll").glob(f"{i}_*"):

@@ -108,7 +108,7 @@ def _motion(path, a, secs):
     return sum(v) / len(v) / 40 if v else 0.0
 
 
-def cut_best(url, out, start, look=24.0, secs=CLIP_SECS):
+def cut_best(url, out, start, look=24.0, secs=CLIP_SECS, crop="crop=iw*0.86:ih*0.64:iw*0.07:ih*0.16"):
     """पहले video का 24 सेकंड का हिस्सा, फिर उसमें से वो 3 सेकंड चुनो जहाँ असली घटना दिखे:
     ज़्यादा shot-change + ज़्यादा हरकत (anchor का बोलता चेहरा स्थिर होता है — पहले 25% वाली अंधी जगह से कट लगता था,
     वहाँ अक्सर anchor ही होता था और Gemini clip ठुकरा देता था, इसलिए clip लगभग कभी नहीं लगा)."""
@@ -130,7 +130,7 @@ def cut_best(url, out, start, look=24.0, secs=CLIP_SECS):
         # news channel के clip में ऊपर-नीचे उनकी पट्टी, logo, चलती लिखाई होती है (28 Oct: "…ट लेने वालो को" कटा हुआ,
         # @CNBCAWAAZINDIA) — सिर्फ़ बीच का 64% रखो
         subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-ss", f"{best:.2f}", "-i", str(long), "-t", f"{secs}",
-                        "-vf", "crop=iw*0.86:ih*0.64:iw*0.07:ih*0.16", "-an", "-c:v", "libx264", "-preset", "veryfast",
+                        "-vf", crop, "-an", "-c:v", "libx264", "-preset", "veryfast",
                         "-crf", "23", str(out)], check=True, timeout=60)
         print(f"  ✂️ clip का सबसे दमदार हिस्सा: {start + best:.1f}s (score {best_s:.2f})")
         return out if out.exists() and out.stat().st_size > 20000 else None
