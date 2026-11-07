@@ -47,9 +47,9 @@ jobs:
             if [ "$h" -ge 0640 ] && [ "$h" -le 2130 ]; then
               rm -f studio_job.txt
               timeout 900 python chuno.py || echo "tick error (आगे बढ़ रहे)"
+              script=""
               if [ -f studio_job.txt ]; then
                 script=$(cat studio_job.txt); rm -f studio_job.txt
-                gh workflow run talk_episode.yml --ref main -f script="$script" && echo "▶️ video: $script"
                 slot=$(python -c "import scheduled_production as s; print(s.slot_for() or '')")
                 [ -n "$slot" ] && python scheduled_production.py dispatched "$slot" || true
               fi
@@ -59,6 +59,12 @@ jobs:
               if ! git diff --cached --quiet; then
                 git commit -q -m "chuno tick $(TZ=Asia/Kolkata date +%H:%M)"
                 for i in 1 2 3; do git pull -q --rebase origin main && git push -q origin HEAD:main && break; sleep 5; done
+              fi
+              # 7 Nov: पहले script GitHub पर, फिर video (उल्टे क्रम में video को script मिली ही नहीं थी)
+              if [ -n "$script" ]; then
+                git ls-remote --exit-code origin >/dev/null && git fetch -q origin main && git cat-file -e "origin/main:$script" \
+                  && gh workflow run talk_episode.yml --ref main -f script="$script" && echo "▶️ video: $script" \
+                  || echo "::error::script push नहीं हुई: $script"
               fi
               sleep 120
             else
