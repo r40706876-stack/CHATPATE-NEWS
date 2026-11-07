@@ -1,0 +1,112 @@
+{
+ "topic": "ट्रेन के कोच में कपल के रोमांस से असहज नजर आए आसपास के यात्री",
+ "breaking": "चलती ट्रेन में मुफ़्त रोमांस शो शुरू",
+ "category": "सफ़र-जुगाड़",
+ "hook": "भारतीय रेल में यात्रियों को मिला मुफ़्त रोमांस शो।",
+ "hook_text": "भारतीय रेल में यात्रियों को मिला मुफ़्त रोमांस शो।",
+ "hook_short": "चलती ट्रेन में मुफ़्त रोमांस",
+ "ask": "क्या ट्रेन के अंदर ऐसे कारनामों पर तुरंत जुर्माना लगना चाहिए?",
+ "lines": [
+  {
+   "who": "bablu",
+   "say": "भारतीय रेल में यात्रियों को मिला मुफ़्त रोमांस शो।",
+   "expr": "gambhir",
+   "caption": "भारतीय रेल में यात्रियों को मिला मुफ़्त रोमांस शो।",
+   "set": "studio",
+   "photo_hi": [
+    "ट्रेन के कोच में कपल के रोमांस से असहज नजर आए आसपास के यात्री"
+   ],
+   "visuals": []
+  },
+  {
+   "who": "bablu",
+   "say": "चलती ट्रेन के दरवाजे पर कपल का रोमांस वीडियो वायरल हुआ।",
+   "expr": "gambhir",
+   "caption": "चलती ट्रेन के दरवाजे पर कपल का रोमांस वीडियो वायरल हुआ।",
+   "set": "studio",
+   "photo_hi": [
+    "ट्रेन के कोच में कपल के रोमांस से असहज नजर आए आसपास के यात्री"
+   ],
+   "visuals": []
+  },
+  {
+   "who": "pinky",
+   "say": "रील बनाने का जुनून रहा तो लोग इंजन पर बैठकर भी डांस कर देंगे।",
+   "expr": "tanz",
+   "punch": true,
+   "caption": "रील बनाने का जुनून रहा तो लोग इंजन पर बैठकर भी डांस कर देंगे।",
+   "set": "village",
+   "photo_hi": [
+    "ट्रेन के कोच में कपल के रोमांस से असहज नजर आए आसपास के यात्री"
+   ],
+   "visuals": []
+  },
+  {
+   "who": "bablu",
+   "say": "कोच में बैठे आसपास के यात्री इससे बेहद असहज दिखाई दिए।",
+   "expr": "gambhir",
+   "caption": "कोच में बैठे आसपास के यात्री इससे बेहद असहज दिखाई दिए।",
+   "set": "studio",
+   "photo_hi": [],
+   "visuals": []
+  },
+  {
+   "who": "bablu",
+   "say": "यात्रियों को सलाह दी गई है कि वो अपनी आँखें घर पर ही छोड़ आएँ।",
+   "expr": "tanz",
+   "punch": true,
+   "caption": "यात्रियों को सलाह दी गई है कि वो अपनी आँखें घर पर ही छोड़ आएँ।",
+   "set": "studio",
+   "photo_hi": [],
+   "visuals": []
+  },
+  {
+   "who": "chacha",
+   "say": "पड़ोस वाले चाचा बोले, अब तो ट्रेन में सफ़र के लिए भी संस्कार चाहिए।",
+   "expr": "tanz",
+   "punch": true,
+   "caption": "पड़ोस वाले चाचा बोले, अब तो ट्रेन में सफ़र के लिए भी संस्कार चाहिए।",
+   "set": "village",
+   "photo_hi": [],
+   "visuals": []
+  },
+  {
+   "who": "bablu",
+   "say": "सड़क के गड्ढे और ट्रेन का रोमांस, दोनों फ़िलहाल प्रशासन की पकड़ से बाहर हैं।",
+   "expr": "tanz",
+   "punch": true,
+   "caption": "सड़क के गड्ढे और ट्रेन का रोमांस, दोनों फ़िलहाल प्रशासन की पकड़ से बाहर हैं।",
+   "set": "studio",
+   "photo_hi": [],
+   "visuals": []
+  }
+ ],
+ "clip_urls": [
+  "https://www.youtube.com/watch?v=WCzy-gdiFtQ"
+ ],
+ "clip_start": 15.0,
+ "clip_first": true,
+ "caption_post": "चलती ट्रेन में कपल के कारनामे से यात्री हुए असहज! देखिए बबलू गंभीर की ख़ास रिपोर्ट। #BakraNews #TrainViralVideo #BabluGambhir #IndianRailways #ViralStory\nवीडियो: AB NEWS INDIA",
+ "format": "chuno",
+ "writer": "chuno",
+ "label": "अधपकी खबर",
+ "layout": "anchor",
+ "editorial_mode": "viral_mazaak",
+ "style": "flow",
+ "lips": "sadtalker",
+ "renderer": "studio",
+ "no_memes": true,
+ "picked": [
+  2,
+  3,
+  9,
+  10
+ ],
+ "sprite": {
+  "chacha": "assets/toon/chacha",
+  "bablu": "assets/toon/bablu",
+  "pinky": "assets/toon/pinky"
+ },
+ "production": true,
+ "_production_slot": "2026-11-07_16"
+}
