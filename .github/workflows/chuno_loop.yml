@@ -21,6 +21,7 @@ env:
   TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
   TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
   YT_COOKIES: ${{ secrets.YT_COOKIES }}
+  IG_COOKIES: ${{ secrets.IG_COOKIES }}
   GEMINI_REQUEST_BUDGET: "24"
   GH_TOKEN: ${{ github.token }}
 jobs:

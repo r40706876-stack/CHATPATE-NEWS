@@ -112,9 +112,15 @@ def ask(exclude=()):
             break
     if not chosen:
         import telegram
-        telegram.send_text("🔍 इस बार किसी वायरल खबर का असली video नहीं मिला, इसलिए पंच नहीं भेजे। अगली बारी में फिर कोशिश होगी।")
+        telegram.send_text("🔍 इस बार किसी वायरल खबर का असली video नहीं मिला, इसलिए पंच नहीं भेजे। 40 मिनट बाद फिर ढूँढूँगा।\n"
+                           "💡 कोई मज़ेदार वायरल video दिखे तो उसका Instagram/YouTube link यहीं भेज दो — उसी पर पंच बनेंगे।")
         return None
-    p, clip = chosen
+    return send_punches(*chosen)
+
+
+def send_punches(p, clip):
+    """चुनी खबर + जाँचा हुआ video → Gemini से hook, 2 तथ्य, 10 पंच → Telegram."""
+    import viral_writer
     out = gemini.ask_json(PUNCH.format(winners=viral_writer.WINNERS, topic=p["topic"],
                                        headlines=json.dumps(p["headlines"], ensure_ascii=False),
                                        clip=f'{clip["title"]} ({clip["channel"]})'), json_mode=True, temperature=0.9)
@@ -131,13 +137,45 @@ def ask(exclude=()):
     msg = [f"🎬 खबर: {p['topic']}", f"📹 असली video: {clip['title']} — {clip['channel']}", "",
            f"🎤 बबलू (शुरुआत): {out['hook']}"] + [f"   • {f}" for f in facts] + ["", "😂 पंच चुनो:"]
     msg += [f"{k}. [{NAME[x['who']]}] {x['say']}" for k, x in enumerate(punches, 1)]
-    msg += ["", "👉 2-3 नंबर भेजो, जैसे: 4 7 2  (आख़िरी नंबर = video का आख़िरी पंच)", "0 = दूसरी खबर"]
+    msg += ["", "👉 2-3 नंबर भेजो, जैसे: 4 7 2  (आख़िरी नंबर = video का आख़िरी पंच)", "0 = दूसरी खबर",
+            "🔗 या कोई वायरल video का link भेजो — उस पर नए पंच"]
     import telegram
     telegram.send_text("\n".join(msg))
     with open(ROOT / "shown.txt", "a", encoding="utf-8") as f:
         f.write(f"{time.strftime('%Y-%m-%d')}|{state['category']}|{p['topic'].replace('|', ' ')}\n")
     print("  पंच Telegram पर भेजे —", p["topic"])
     return state
+
+
+LINK = re.compile(r"https?://(?:www\.|m\.)?(?:youtube\.com|youtu\.be|instagram\.com)/\S+", re.I)
+
+
+def ask_link(url):
+    """मालिक का भेजा Instagram/YouTube link: उसी video पर पंच (मालिक ने ख़ुद चुना है, इसलिए aankh-jaanch नहीं)."""
+    import subprocess
+    import clips
+    import telegram
+    url = url.rstrip(").,>")
+    meta = {}
+    try:
+        r = subprocess.run(clips._ytdlp() + ["-q", "--no-warnings", "--skip-download", "--dump-json", "--no-playlist"]
+                           + clips._cookies("YT_COOKIES" if "youtu" in url else "IG_COOKIES") + [url],
+                           capture_output=True, text=True, timeout=120)
+        meta = json.loads(r.stdout.strip().splitlines()[-1]) if r.stdout.strip() else {}
+    except Exception as e:                               # noqa: BLE001
+        print("  link की जानकारी नहीं मिली:", repr(e)[:120])
+    title = str(meta.get("title") or meta.get("fulltitle") or "").strip()
+    desc = re.sub(r"#\S+", "", str(meta.get("description") or "")).strip()
+    sample = clips.cut_best(url, clips.CACHE / "chuno_link.mp4", 0.5, look=20.0, crop="crop=iw:ih*0.80:0:ih*0.10")
+    if not sample:
+        telegram.send_text("😕 यह link खुला नहीं (private हो सकता है या Instagram ने रोका)। कोई दूसरा link या YouTube का link भेजो।")
+        return None
+    about = (title or desc[:120] or "वायरल वीडियो").replace("\n", " ")
+    p = {"topic": about[:140], "category": "वायरल वीडियो", "headlines": [x for x in (title, desc[:400]) if x]}
+    clip = {"url": url, "title": about[:90], "channel": str(meta.get("uploader") or meta.get("channel") or "Instagram"),
+            "start": 0.5}
+    print("  🔗 मालिक का link:", about[:100])
+    return send_punches(p, clip)
 
 
 def parse(text, n):
@@ -182,12 +220,21 @@ def tick():
     import scheduled_production as sp
     import telegram
     msgs = []
+    link = None
     for when, text in telegram.read_replies(OFFSET):
+        m = LINK.search(str(text))
+        if m:
+            link = m.group(0)
+            continue
         ans = results.record(text)                       # "डेटा skip 57 watch 6.2" वाले जवाब पहले की तरह
         if ans:
             telegram.send_text(ans)
         else:
             msgs.append((when, text))
+    if link:
+        telegram.send_text("🔗 link मिला — video देखकर पंच बना रहा हूँ (2-3 मिनट)…")
+        PENDING.unlink(missing_ok=True)
+        return ask_link(link)
     state = json.loads(PENDING.read_text(encoding="utf-8")) if PENDING.exists() else None
     if state:
         got = None
@@ -217,11 +264,14 @@ def tick():
             return
     slot = sp.slot_for()
     st = sp.load(slot) if slot else {}
-    if not slot or st.get("status") in ("asked", "noclip", "dispatched", "delivered") or st.get("tries", 0) >= 2:
+    retry = (st.get("status") == "noclip" and st.get("noclip_tries", 1) < 2
+             and time.time() - float(st.get("updated_at") or 0) >= 40 * 60)       # 40 मिनट बाद एक बार और
+    if not slot or (st.get("status") in ("asked", "noclip", "dispatched", "delivered") and not retry) or st.get("tries", 0) >= 2:
         print("  अभी कुछ नहीं:", slot, st.get("status"))
         return
     try:
-        sp.save(slot, {"status": "asked" if ask() else "noclip"})
+        n = st.get("noclip_tries", 0) + (1 if retry else 0)
+        sp.save(slot, {"status": "asked"} if ask() else {"status": "noclip", "noclip_tries": n + (0 if retry else 1)})
     except gemini.QuotaOver as e:                        # कोटा दोपहर ~1:30 IST पर लौटता है — चुपचाप अगली tick में फिर (error message नहीं)
         sp.save(slot, {"status": "quota", "last_error": repr(e)[:300]})
         print("  Gemini कोटा ख़त्म — अगली tick में फिर कोशिश")
