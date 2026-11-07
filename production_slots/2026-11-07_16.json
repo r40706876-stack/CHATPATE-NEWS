@@ -1,5 +1,8 @@
 {
-  "status": "dispatched",
+  "status": "delivered",
   "slot": "2026-11-07_16",
-  "updated_at": 1794053464
+  "updated_at": 1794055239,
+  "telegram_delivered_at": 1794055239,
+  "seconds": 24.48,
+  "topic": "ट्रेन के कोच में कपल के रोमांस से असहज नजर आए आसपास के यात्री"
 }
