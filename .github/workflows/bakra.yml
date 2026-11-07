@@ -53,7 +53,8 @@ jobs:
           if [ "$MODE" = "ask" ]; then
             python chuno.py ask
           elif [ "$MODE" = "direct" ]; then
-            python chuno.py
+            python chuno.py                     # पहले Telegram के जवाब
+            [ -s studio_job.txt ] || python chuno.py ask   # 7 Nov: हाथ से चलाया = अभी नए पंच भेजो (पुराने बिना जवाब वाले की जगह)
           else
             python run_daily.py "$MODE"
           fi

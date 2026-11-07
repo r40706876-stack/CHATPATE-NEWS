@@ -7,7 +7,7 @@ on:
     paths: ['.github/workflows/talk_episode.yml']
   workflow_dispatch:
     inputs:
-      script: {description: "auto = अभी की खबर से नई script; या episode JSON का path", default: "auto"}
+      script: {description: "auto = असली video वाली खबर + 10 पंच Telegram पर (नंबर भेजो); या episode JSON का path", default: "auto"}
       prep: {description: "full / extcrop", default: "full"}
       pose: {description: "सिर हिलने का अंदाज़ 0-45", default: "0"}
       still: {description: "सिर स्थिर (yes = सिर्फ़ होंठ/आँख/चेहरा, शांत anchor जैसा)", default: "yes"}
@@ -60,12 +60,14 @@ jobs:
           curl -fsSL https://deno.land/install.sh | sh -s -- -y >/dev/null 2>&1; export PATH=$HOME/.deno/bin:$PATH   # YouTube के JS challenge के लिए
           script="$REQUESTED_SCRIPT"
           if [ -z "$script" ] || [ "$script" = "auto" ]; then
-            # Never reuse an old demo or a previously queued news script.
-            rm -f studio_job.txt
-            /usr/bin/python3 run_daily.py direct
-            test -s studio_job.txt || { echo "::error::Fresh news script was not generated; refusing old demo fallback"; exit 1; }
-            script=$(cat studio_job.txt)
-            test -f "$script" || { echo "::error::Generated script is missing"; exit 1; }
+            # 7 Nov: हाथ से "auto" चलाने पर भी नया तरीका — असली video वाली खबर + 10 पंच Telegram पर; नंबर भेजते ही
+            # chuno-loop video बनाता है. (पहले यहाँ पुराना automatic writer चलता था जो hook नियम पर फेल होता था.)
+            /usr/bin/python3 chuno.py ask
+            git config user.name "bakra-bot"; git config user.email "bot@users.noreply.github.com"
+            git add -A -- chuno_pending.json shown.txt 2>/dev/null || true
+            git diff --cached --quiet || { git commit -q -m "manual ask"; for i in 1 2 3; do git pull -q --rebase origin main && git push -q origin HEAD:main && break; sleep 5; done; }
+            echo "### ✅ पंच Telegram पर भेज दिए — 2-3 नंबर भेजो, video अपने-आप बनेगा" >> $GITHUB_STEP_SUMMARY
+            GH_TOKEN=${{ github.token }} gh run cancel ${{ github.run_id }}; sleep 120; exit 0
           fi
           if [ "$script" = "episodes/national_trai_20261103.json" ]; then
             /usr/bin/python3 -m pip install -q --break-system-packages pymupdf
