@@ -1,1 +1,1 @@
-{"slot": null, "error_type": "ModuleNotFoundError", "reason": "No module named 'PIL'", "script_cached": false, "checkpoint_cached": false}
+{"slot": null, "error_type": "AttributeError", "reason": "module 'cv2' has no attribute 'CascadeClassifier'", "script_cached": false, "checkpoint_cached": false}
