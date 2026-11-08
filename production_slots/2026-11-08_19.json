@@ -1,5 +1,8 @@
 {
-  "status": "dispatched",
+  "status": "delivered",
   "slot": "2026-11-08_19",
-  "updated_at": 1794148107
+  "updated_at": 1794149832,
+  "telegram_delivered_at": 1794149832,
+  "seconds": 27.0,
+  "topic": "हाथी को चिढ़ाते और उसकी पूंछ खींचते युवकों का वीडियो वायरल"
 }
