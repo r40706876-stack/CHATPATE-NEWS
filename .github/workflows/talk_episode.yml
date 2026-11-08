@@ -88,7 +88,22 @@ jobs:
       max-parallel: 6
       matrix: {line: "${{ fromJSON(needs.prep.outputs.lines) }}"}
     steps:
-      - uses: actions/download-artifact@v4
+      # 8 Nov: GitHub के artifact server ने 504 दिया → 4 चेहरे नहीं बने → पूरी video फेल. 3 कोशिश.
+      - id: dl1
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with: {name: st_in, path: st_in}
+      - if: steps.dl1.outcome == 'failure'
+        run: sleep 45
+      - id: dl2
+        if: steps.dl1.outcome == 'failure'
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with: {name: st_in, path: st_in}
+      - if: steps.dl1.outcome == 'failure' && steps.dl2.outcome == 'failure'
+        run: sleep 90
+      - if: steps.dl1.outcome == 'failure' && steps.dl2.outcome == 'failure'
+        uses: actions/download-artifact@v4
         with: {name: st_in, path: st_in}
       - uses: actions/setup-python@v5
         with: {python-version: "3.10"}
@@ -142,9 +157,23 @@ jobs:
             || (curl -sL --max-time 120 https://github.com/BtbN/FFmpeg-Builds/releases/download/latest/ffmpeg-master-latest-linux64-gpl.tar.xz | tar -xJ -C /tmp && sudo cp /tmp/ffmpeg-master-latest-linux64-gpl/bin/ff* /usr/local/bin/) \
             || (curl -sL --max-time 120 https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz | tar -xJ -C /tmp && sudo cp /tmp/ffmpeg-*-static/ff* /usr/local/bin/)
           ffmpeg -version | head -1
-      - uses: actions/download-artifact@v4
+      - id: jdl1
+        uses: actions/download-artifact@v4
+        continue-on-error: true
         with: {name: st_in, path: st_in}
-      - uses: actions/download-artifact@v4
+      - if: steps.jdl1.outcome == 'failure'
+        run: sleep 45
+      - if: steps.jdl1.outcome == 'failure'
+        uses: actions/download-artifact@v4
+        with: {name: st_in, path: st_in}
+      - id: cdl1
+        uses: actions/download-artifact@v4
+        continue-on-error: true
+        with: {pattern: "clip-*", path: st_out, merge-multiple: true}
+      - if: steps.cdl1.outcome == 'failure'
+        run: sleep 45
+      - if: steps.cdl1.outcome == 'failure'
+        uses: actions/download-artifact@v4
         continue-on-error: true
         with: {pattern: "clip-*", path: st_out, merge-multiple: true}
       - run: |
