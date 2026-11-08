@@ -1,5 +1,8 @@
 {
-  "status": "dispatched",
+  "status": "delivered",
   "slot": "2026-11-08_13",
-  "updated_at": 1794130450
+  "updated_at": 1794147122,
+  "telegram_delivered_at": 1794147122,
+  "seconds": 30.84,
+  "topic": "हाईवे पर अचानक बिखर गए शादी के कार्ड, कार्ड समेटने के लिए थम गया पूरा ट्रैफिक"
 }
