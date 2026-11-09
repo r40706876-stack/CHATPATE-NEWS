@@ -1,5 +1,8 @@
 {
-  "status": "dispatched",
+  "status": "delivered",
   "slot": "2026-11-09_07",
-  "updated_at": 1794190639
+  "updated_at": 1794191941,
+  "telegram_delivered_at": 1794191941,
+  "seconds": 23.76,
+  "topic": "कॉमेडियन सुनील ग्रोवर दिवाली के मौके पर सड़क किनारे बैठकर फूल और मालाएं बेचते नजर आए"
 }
