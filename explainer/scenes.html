@@ -1,0 +1,147 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:'PopB';src:url('../fonts/Poppins-Bold.ttf')}
+@font-face{font-family:'PopM';src:url('../fonts/Poppins-Medium.ttf')}
+:root{--acc:#ffc928;--ok:#22c55e;--bad:#ef4444;--blue:#3b82f6;--card:#17171c;--line:#2b2b33}
+*{box-sizing:border-box}
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;color:#fff;
+  font-family:'PopM','Noto Color Emoji',sans-serif;
+  background:radial-gradient(ellipse at 50% 38%,#2d2416 0,#141210 45%,#09090b 80%)}
+#stage{position:absolute;inset:0}
+.badge{position:absolute;top:210px;left:50%;transform:translateX(-50%);background:var(--acc);color:#111;font-weight:700;font-family:'PopB','Noto Color Emoji';
+  font-size:30px;padding:8px 22px;border-radius:10px;letter-spacing:1px;white-space:nowrap}
+.title{position:absolute;top:270px;left:60px;right:60px;text-align:center;font-weight:700;font-family:'PopB','Noto Color Emoji';font-size:72px;line-height:1.25;
+  text-transform:uppercase}
+.title b,.hl{color:var(--acc)}
+.handle{position:absolute;top:120px;right:60px;font-size:24px;color:#888;font-weight:700}
+#cap{position:absolute;left:70px;right:70px;bottom:250px;text-align:center;font-size:58px;font-weight:700;font-family:'PopB','Noto Color Emoji';line-height:1.25}
+#cap span{opacity:.4}#cap span.on{opacity:1;color:var(--acc)}
+.center{position:absolute;left:0;right:0;top:640px;display:flex;justify-content:center}
+.phone{width:520px;height:780px;border-radius:72px;background:#121216;border:7px solid #2d2d35;box-shadow:0 40px 140px #000c;
+  position:relative;overflow:hidden}
+.phone .top{height:120px;background:#1b1b22;display:flex;align-items:center;gap:20px;padding:30px 34px 0}
+.ava{width:62px;height:62px;border-radius:31px;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:34px}
+.msg{max-width:360px;margin:22px 30px;padding:20px 26px;border-radius:26px;font-size:32px;line-height:1.3}
+.msg.me{margin-left:auto;background:var(--blue);border-bottom-right-radius:6px}
+.msg.them{background:#26262e;border-bottom-left-radius:6px}
+.num{text-align:center;font-size:var(--nf,120px);white-space:nowrap;font-weight:700;font-family:'PopB','Noto Color Emoji';margin-top:110px}
+.lbl{text-align:center;color:var(--acc);font-size:36px;margin-top:4px}
+.keys{display:grid;grid-template-columns:repeat(3,100px);gap:22px;justify-content:center;margin-top:40px}
+.k{width:100px;height:100px;border-radius:50px;background:#24242b;display:flex;align-items:center;justify-content:center;font-size:48px}
+.call{width:104px;height:104px;border-radius:52px;background:var(--ok);margin:26px auto 0}
+.q{font-size:420px;font-weight:700;font-family:'PopB','Noto Color Emoji';color:var(--acc);text-shadow:0 20px 60px #000}
+.qt{position:absolute;top:1180px;left:80px;right:80px;text-align:center;font-size:60px;font-weight:700;font-family:'PopB','Noto Color Emoji'}
+.posts{display:flex;gap:60px;align-items:flex-end}
+.post{display:flex;flex-direction:column;align-items:center}
+.sign{width:200px;height:170px;border-radius:22px;background:#f4f1ea;color:#111;font-size:110px;font-weight:700;font-family:'PopB','Noto Color Emoji';display:flex;
+  align-items:center;justify-content:center;box-shadow:0 18px 50px #000a;position:relative}
+.sign.act{background:var(--acc);box-shadow:0 0 0 10px #ffc92844,0 18px 60px #ffc92888}
+.stick{width:22px;height:330px;background:linear-gradient(#8a6a40,#5b4426)}
+.slbl{margin-top:24px;font-size:38px;font-weight:700;font-family:'PopB','Noto Color Emoji';max-width:240px;text-align:center;line-height:1.2}
+.tick{position:absolute;top:-30px;right:-30px;width:76px;height:76px;border-radius:38px;background:var(--ok);font-size:46px;
+  display:flex;align-items:center;justify-content:center}
+.card{width:880px;background:var(--card);border:3px solid var(--line);border-radius:40px;padding:50px 54px;box-shadow:0 30px 100px #000b}
+.card .ico{font-size:120px;text-align:center}
+.card .ct{font-size:54px;font-weight:700;font-family:'PopB','Noto Color Emoji';text-align:center;margin:18px 0 26px;color:var(--acc)}
+.card .ln{font-size:40px;padding:16px 0;border-top:2px solid var(--line);line-height:1.3}
+.big{font-size:300px;font-weight:700;font-family:'PopB','Noto Color Emoji';line-height:1;color:var(--acc);text-align:center}
+.unit{font-size:80px;font-weight:700;font-family:'PopB','Noto Color Emoji';text-align:center;margin-top:-10px}
+.note{font-size:44px;text-align:center;color:#ccc;margin-top:30px;max-width:860px}
+.clock{width:250px;height:250px;border-radius:50%;background:#fff;position:relative;margin:36px auto 0;box-shadow:0 20px 60px #000a}
+.hand{position:absolute;left:50%;top:50%;width:10px;height:100px;background:#111;border-radius:5px;transform-origin:50% 0}
+.cal{width:520px;border-radius:40px;overflow:hidden;background:#fff;color:#111;box-shadow:0 30px 100px #000b}
+.cal .ch{background:var(--bad);color:#fff;font-size:52px;font-weight:700;font-family:'PopB','Noto Color Emoji';text-align:center;padding:22px}
+.cal .big{color:#111;padding:30px 0}
+.form{width:900px;border-radius:30px;background:#fff;color:#111;overflow:hidden;box-shadow:0 30px 100px #000b}
+.form .bar{background:#e8e8ee;padding:18px 28px;font-size:30px;color:#555}
+.form .fb{padding:34px 40px}
+.form .ft{font-size:48px;font-weight:700;font-family:'PopB','Noto Color Emoji';color:#1d4ed8;margin-bottom:22px}
+.fld{margin:16px 0}.fld .fl{font-size:28px;color:#666}.fld .fv{font-size:38px;border:3px solid #ccd;border-radius:14px;padding:14px 18px;margin-top:6px}
+.btn{background:#1d4ed8;color:#fff;font-size:40px;font-weight:700;font-family:'PopB','Noto Color Emoji';text-align:center;border-radius:16px;padding:20px;margin-top:24px}
+.row{display:flex;justify-content:space-between;font-size:46px;padding:22px 0;border-top:2px solid var(--line)}
+.row.total{color:var(--ok);font-weight:700;font-family:'PopB','Noto Color Emoji';font-size:58px;border-top:4px solid var(--acc)}
+.paper{width:900px;background:#f6f1e3;color:#222;border-radius:12px;padding:40px 46px;box-shadow:0 30px 100px #000b;transform:rotate(-2deg)}
+.paper .src{font-size:28px;color:#a33;font-weight:700;font-family:'PopB','Noto Color Emoji';border-bottom:3px solid #222;padding-bottom:10px}
+.paper .nh{font-size:52px;font-weight:700;font-family:'PopB','Noto Color Emoji';margin:22px 0;line-height:1.2}
+.paper .nb{font-size:34px;line-height:1.4;color:#444}
+.stamp{position:absolute;right:120px;top:1260px;border:8px solid var(--ok);color:var(--ok);font-size:64px;font-weight:700;font-family:'PopB','Noto Color Emoji';
+  padding:10px 30px;border-radius:16px;transform:rotate(-12deg)}
+.emoji{font-size:280px;text-align:center}
+.tag{display:inline-block;background:var(--acc);color:#111;font-size:70px;font-weight:700;font-family:'PopB','Noto Color Emoji';padding:14px 34px;border-radius:20px;margin-top:30px}
+.follow{width:540px;border-radius:50px;background:#121216;border:6px solid #2d2d35;padding:60px 40px;text-align:center}
+.follow .fbn{background:var(--acc);color:#111;font-size:46px;font-weight:700;font-family:'PopB','Noto Color Emoji';border-radius:20px;padding:20px;margin-top:40px}
+/* animations (all started at 0 when a scene is built; seek() moves them) */
+@keyframes up{from{transform:translateY(70px);opacity:0}to{transform:none;opacity:1}}
+@keyframes pop{0%{transform:scale(.2);opacity:0}70%{transform:scale(1.08);opacity:1}100%{transform:scale(1)}}
+@keyframes inl{from{transform:translateX(-120px);opacity:0}to{transform:none;opacity:1}}
+@keyframes inr{from{transform:translateX(120px);opacity:0}to{transform:none;opacity:1}}
+@keyframes drop{from{transform:translateY(-700px)}to{transform:none}}
+@keyframes spin{from{transform:rotate(-180deg) scale(.2);opacity:0}to{transform:none;opacity:1}}
+@keyframes turn{from{transform:rotate(180deg)}to{transform:rotate(900deg)}}
+@keyframes pulse{0%{box-shadow:0 0 0 0 #22c55eaa}100%{box-shadow:0 0 0 46px #22c55e00}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-22px)}}
+@keyframes stampin{from{transform:rotate(-12deg) scale(3);opacity:0}to{transform:rotate(-12deg) scale(1);opacity:1}}
+</style></head>
+<body><div id="stage"></div><div class="handle" id="handle"></div><div id="cap"></div>
+<script>
+const A=(name,dur,delay,ease)=>`animation:${name} ${dur}s ${ease||'cubic-bezier(.2,1.3,.4,1)'} ${delay}s both`;
+const esc=s=>String(s??'').replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const hl=(s,words)=>{s=esc(s);(words||[]).forEach(w=>{if(w)s=s.split(esc(w)).join(`<b>${esc(w)}</b>`)});return s};
+const badge=sc=>sc.badge?`<div class="badge" style="${A('pop',.4,0)}">${esc(sc.badge)}</div>`:'';
+const title=(sc,top)=>sc.title?`<div class="title" style="${top?`top:${top}px;`:''}${A('up',.5,.1)}">${hl(sc.title,sc.hl)}</div>`:'';
+const T={
+ hook:sc=>`${title(sc,330)}<div class="center" style="top:760px"><div style="text-align:center">
+   <div class="emoji" style="${A('drop',.7,.2,'cubic-bezier(.3,1.5,.5,1)')}">${esc(sc.emoji||'📦')}</div>
+   ${sc.tag?`<div class="tag" style="${A('pop',.4,.8)}">${esc(sc.tag)}</div>`:''}</div></div>`,
+ chat:sc=>`${badge(sc)}${title(sc)}<div class="center"><div class="phone" style="${A('pop',.6,.2)}">
+   <div class="top"><div class="ava">🎧</div><div style="font-size:32px;font-weight:700;font-family:'PopB','Noto Color Emoji'">${esc(sc.header||'Customer Care')}</div></div>
+   ${(sc.msgs||[]).map((m,i)=>`<div class="msg ${m.me?'me':'them'}" style="${A(m.me?'inr':'inl',.4,.7+i*.9)}">${esc(m.text)}</div>`).join('')}
+   </div></div>`,
+ dialer:sc=>`${badge(sc)}${title(sc)}<div class="center"><div class="phone" style="${A('pop',.6,.2)}">
+   <div class="num" style="--nf:${Math.min(120,Math.floor(800/Math.max(4,String(sc.number||'').length)))}px;${A('up',.4,.6)}">${esc(sc.number)}</div><div class="lbl" style="${A('up',.4,.7)}">${esc(sc.label||'')}</div>
+   <div class="keys">${[1,2,3,4,5,6,7,8,9,'*',0,'#'].map((n,i)=>`<div class="k" style="${A('pop',.3,.8+i*.05)}">${n}</div>`).join('')}</div>
+   <div class="call" style="${A('pop',.4,1.5)};animation:pop .4s 1.5s both,pulse 1s 1.9s infinite"></div></div></div>`,
+ question:sc=>`${badge(sc)}${title(sc)}<div class="center" style="top:560px"><div class="q" style="${A('spin',.8,.2)}">?</div></div>
+   ${sc.text?`<div class="qt" style="${A('up',.5,.9)}">${hl(sc.text,sc.hl)}</div>`:''}`,
+ steps:sc=>{const L=sc.labels||[];const act=Math.max(1,Math.min(L.length,sc.active||1));return `${badge(sc)}${title(sc)}
+   <div class="center" style="top:760px"><div class="posts">${L.map((l,i)=>`<div class="post" style="${A('drop',.6,.3+i*.25,'cubic-bezier(.3,1.4,.5,1)')}">
+   <div class="sign ${i+1===act?'act':''}">${i+1}${i+1===act?`<div class="tick" style="${A('pop',.4,1.4)}">✓</div>`:''}</div>
+   <div class="stick"></div><div class="slbl">${esc(l)}</div></div>`).join('')}</div></div>`},
+ card:sc=>`${badge(sc)}${title(sc)}<div class="center" style="top:${sc.title?700:560}px"><div class="card" style="${A('pop',.5,.3)}">
+   <div class="ico" style="${A('pop',.5,.6)}">${esc(sc.emoji||'📌')}</div><div class="ct">${esc(sc.card_title||'')}</div>
+   ${(sc.lines||[]).map((l,i)=>`<div class="ln" style="${A('inl',.4,.9+i*.35)}">${esc(l)}</div>`).join('')}</div></div>`,
+ deadline:sc=>`${badge(sc)}${title(sc)}<div class="center" style="top:640px"><div>
+   <div class="big" style="${A('pop',.6,.3)}">${esc(sc.big)}</div><div class="unit" style="${A('up',.4,.6)}">${esc(sc.unit||'')}</div>
+   <div class="clock" style="${A('pop',.5,.8)}"><div class="hand" style="animation:turn 4s linear .8s both"></div></div>
+   ${sc.note?`<div class="note" style="${A('up',.4,1.1)}">${esc(sc.note)}</div>`:''}</div></div>`,
+ calendar:sc=>`${badge(sc)}${title(sc)}<div class="center" style="top:${sc.title?720:600}px"><div>
+   <div class="cal" style="${A('pop',.6,.3)}"><div class="ch">${esc(sc.unit||'दिन')}</div><div class="big">${esc(sc.big)}</div></div>
+   ${sc.note?`<div class="note" style="${A('up',.4,.9)}">${esc(sc.note)}</div>`:''}</div></div>`,
+ form:sc=>`${badge(sc)}${title(sc)}<div class="center" style="top:${sc.title?700:560}px"><div class="form" style="${A('up',.6,.3)}">
+   <div class="bar">🔒 ${esc(sc.site||'')}</div><div class="fb"><div class="ft">${esc(sc.form_title||'')}</div>
+   ${(sc.fields||[]).map((f,i)=>`<div class="fld" style="${A('inl',.4,.8+i*.35)}"><div class="fl">${esc(f[0])}</div><div class="fv">${esc(f[1])}</div></div>`).join('')}
+   <div class="btn" style="${A('pop',.4,.9+(sc.fields||[]).length*.35)}">${esc(sc.button||'Submit')}</div></div></div></div>`,
+ money:sc=>`${badge(sc)}${title(sc)}<div class="center" style="top:${sc.title?720:600}px"><div class="card" style="${A('pop',.5,.3)}">
+   <div class="ct">${esc(sc.card_title||'')}</div>
+   ${(sc.rows||[]).map((r,i)=>`<div class="row" style="${A('inl',.4,.7+i*.35)}"><span>${esc(r[0])}</span><span>${esc(r[1])}</span></div>`).join('')}
+   ${sc.total?`<div class="row total" style="${A('pop',.5,.8+(sc.rows||[]).length*.35)}"><span>${esc(sc.total[0])}</span><span>${esc(sc.total[1])} ✓</span></div>`:''}
+   </div></div>`,
+ news:sc=>`${badge(sc)}${title(sc)}<div class="center" style="top:${sc.title?720:600}px"><div class="paper" style="${A('pop',.6,.3)}">
+   <div class="src">${esc(sc.source||'')}</div><div class="nh">${esc(sc.headline||'')}</div><div class="nb">${esc(sc.body||'')}</div></div></div>
+   ${sc.stamp?`<div class="stamp" style="animation:stampin .35s 1.3s cubic-bezier(.3,1.5,.5,1) both">${esc(sc.stamp)}</div>`:''}`,
+ outro:sc=>`${title(sc,330)}<div class="center" style="top:760px"><div class="follow" style="${A('pop',.6,.3)}">
+   <div style="font-size:120px">🔔</div><div style="font-size:46px;font-weight:700;font-family:'PopB','Noto Color Emoji';margin-top:20px">${esc(sc.handle||'')}</div>
+   <div class="fbn" style="animation:pop .4s .9s both,bob 1.2s 1.4s infinite">${esc(sc.button||'Follow')}</div></div></div>`,
+};
+let SPEC=null,cur=-1;
+window.load=spec=>{SPEC=spec;document.getElementById('handle').textContent=spec.handle||''};
+function build(i){const sc=SPEC.scenes[i];const f=T[sc.type]||T.card;document.getElementById('stage').innerHTML=f(sc);
+ const cap=document.getElementById('cap');cap.innerHTML=(sc.say||'').split(/\s+/).filter(Boolean).map(w=>`<span>${esc(w)} </span>`).join('');cur=i}
+window.seek=t=>{let i=SPEC.scenes.findIndex(s=>t<s.end);if(i<0)i=SPEC.scenes.length-1;if(i!==cur)build(i);const sc=SPEC.scenes[i];
+ const lt=t-sc.start;document.getAnimations().forEach(a=>{a.pause();a.currentTime=Math.max(0,lt*1000)});
+ const ws=[...document.getElementById('cap').children];const tot=ws.reduce((s,w)=>s+w.textContent.length,0)||1;let acc=0,on=-1;
+ const p=lt/Math.max(.1,sc.end-sc.start-.15);ws.forEach((w,k)=>{if(acc/tot<=p)on=k;acc+=w.textContent.length});
+ ws.forEach((w,k)=>w.classList.toggle('on',k===on));
+ const fade=Math.min(1,Math.max(0,(sc.end-t)/0.18),Math.max(0,lt/0.12));document.getElementById('stage').style.opacity=i===SPEC.scenes.length-1?Math.min(1,lt/0.12):fade};
+</script></body></html>

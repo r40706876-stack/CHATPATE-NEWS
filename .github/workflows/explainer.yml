@@ -1,0 +1,44 @@
+# "काम की बात" motion-graphics explainer (9 Nov demo): topic → Gemini दृश्य-योजना → Gemini आवाज़ →
+# HTML/CSS animated templates (explainer/scenes.html) → Playwright frames → mp4 → Telegram.
+name: explainer
+on:
+  workflow_dispatch:
+    inputs:
+      topic:
+        description: "विषय (खाली = ग़लत UPI ट्रांसफ़र का पैसा वापस)"
+        default: "ग़लत UPI ट्रांसफ़र हो जाए तो पैसा वापस कैसे पाएँ"
+permissions:
+  contents: read
+env:
+  GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+  GEMINI_API_KEY2: ${{ secrets.GEMINI_API_KEY2 }}
+  GEMINI_API_KEY3: ${{ secrets.GEMINI_API_KEY3 }}
+  GEMINI_MODELS_PER_KEY: "3"
+  GEMINI_REQUEST_BUDGET: "12"
+  TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+  TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+  PAGE_HANDLE: "@bakra_news"
+jobs:
+  make:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - name: Tools
+        run: |
+          timeout 300 sudo apt-get install -y -qq --no-install-recommends ffmpeg fonts-noto-color-emoji \
+            || (timeout 180 sudo apt-get update -qq && timeout 300 sudo apt-get install -y -qq --no-install-recommends ffmpeg fonts-noto-color-emoji)
+          /usr/bin/python3 -m pip install -q --break-system-packages numpy scipy pillow edge-tts
+          cd explainer && npm init -y >/dev/null && npm i -q playwright@1.48.2 && npx playwright install --with-deps chromium >/dev/null
+      - name: Make explainer
+        run: |
+          export NODE_PATH="$PWD/explainer/node_modules"
+          /usr/bin/python3 explainer/make.py "${{ github.event.inputs.topic }}"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: explainer
+          path: |
+            explainer_out/*.mp4
+            explainer_out/spec.json
+          if-no-files-found: ignore

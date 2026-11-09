@@ -7,3 +7,6 @@ choice.json
 visuals_cache/
 frames/
 mix.wav
+explainer_out/
+explainer/node_modules/
+explainer/package*.json
