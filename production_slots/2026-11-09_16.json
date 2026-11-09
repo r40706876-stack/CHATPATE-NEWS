@@ -1,5 +1,8 @@
 {
-  "status": "dispatched",
+  "status": "delivered",
   "slot": "2026-11-09_16",
-  "updated_at": 1794222859
+  "updated_at": 1794225758,
+  "telegram_delivered_at": 1794225758,
+  "seconds": 30.2,
+  "topic": "भोपाल में लोगों ने अनोखी परंपरा निभाते हुए पेड़ों की उतारी आरती"
 }
