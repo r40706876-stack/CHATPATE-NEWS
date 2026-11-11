@@ -40,7 +40,8 @@ jobs:
       - name: YouTube search tools
         run: |
           command -v ffmpeg >/dev/null || timeout 300 sudo apt-get install -y -qq --no-install-recommends ffmpeg \
-            || (timeout 180 sudo apt-get update -qq && timeout 300 sudo apt-get install -y -qq --no-install-recommends ffmpeg)
+            || (timeout 180 sudo apt-get update -qq && timeout 300 sudo apt-get install -y -qq --no-install-recommends ffmpeg) \
+            || echo "::warning::ffmpeg install नहीं हुआ (apt धीमा) — आगे बढ़ रहे"
           python -m pip install -q --break-system-packages "yt-dlp[default]" pillow numpy || python -m pip install -q "yt-dlp[default]" pillow numpy
           curl -fsSL https://deno.land/install.sh | sh -s -- -y >/dev/null 2>&1 || true
           echo "$HOME/.deno/bin" >> $GITHUB_PATH
