@@ -9,7 +9,7 @@ on:
       mode:
         description: "direct = scheduled-slot news video; check/write = manual script tools"
         type: choice
-        options: [direct, ask, check, write]
+        options: [direct, ask, skit, check, write]
         default: direct
 concurrency:
   group: bakra-news-production
@@ -50,7 +50,9 @@ jobs:
         run: |
           set -euo pipefail
           python -c 'import gemini; print("Gemini keys configured:", len(gemini.keys()))'
-          if [ "$MODE" = "ask" ]; then
+          if [ "$MODE" = "skit" ]; then
+            python skit.py                      # 11 Nov demo: पूरी screen किरदार + एक चुटकुला (slot को नहीं छूता)
+          elif [ "$MODE" = "ask" ]; then
             python chuno.py ask
           elif [ "$MODE" = "direct" ]; then
             python chuno.py                     # पहले Telegram के जवाब
@@ -73,7 +75,7 @@ jobs:
             git push
           fi
       - name: Start video from prepared script
-        env: {GH_TOKEN: "${{ github.token }}"}
+        env: {GH_TOKEN: "${{ github.token }}", MODE: "${{ inputs.mode || 'direct' }}"}
         run: |
           set -euo pipefail
           if [ ! -s studio_job.txt ]; then
@@ -84,7 +86,7 @@ jobs:
           test -f "$job"
           gh workflow run talk_episode.yml --ref main -f script="$job"
           slot=$(python -c 'import scheduled_production as s; print(s.slot_for() or "")')
-          if [ -n "$slot" ]; then
+          if [ -n "$slot" ] && [ "$MODE" != "skit" ]; then
             python scheduled_production.py dispatched "$slot"
             git add production_slots
             git commit -m "Mark scheduled slot dispatched"
