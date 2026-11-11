@@ -1,7 +1,5 @@
 {
-  "status": "failed",
-  "tries": 1,
-  "last_error": "AttributeError(\"module 'cv2' has no attribute 'CascadeClassifier'\")",
+  "status": "asked",
   "slot": "2026-11-11_19",
-  "updated_at": 1794403894
+  "updated_at": 1794404092
 }
