@@ -77,6 +77,9 @@ jobs:
           GEMINI_TTS_VOICE: hi-in-training-1
           DEEP_TAKE_SAVE: demo_out/deep/take_c${{ inputs.clause }}.wav
         run: python deep/deep_demo.py deep/auto_c${{ inputs.clause }}${SUF}.html demo_out/deep/clause${{ inputs.clause }}_auto.mp4
+      - name: Cover + caption + chapters
+        if: success()
+        run: python deep/auto_cover.py ${{ inputs.clause }} demo_out/deep/clause${{ inputs.clause }}_auto.mp4 || true
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -91,7 +94,7 @@ jobs:
         if: success()
         run: |
           N=${{ inputs.clause }}
-          mkdir -p /tmp/o && cp demo_out/deep/clause${N}_auto.mp4 deep/auto/c${N}${SUF}_script.md /tmp/o/
+          mkdir -p /tmp/o && cp demo_out/deep/clause${N}_auto.mp4 deep/auto/c${N}${SUF}_script.md /tmp/o/ && cp demo_out/deep/clause${N}_cover.jpg demo_out/deep/clause${N}_post.txt /tmp/o/ 2>/dev/null || true
           cd /tmp/o && git init -q && git checkout -q -b postal-deep-out
           git config user.name "github-actions[bot]"; git config user.email "github-actions[bot]@users.noreply.github.com"
           git add . && git commit -qm "postal deep c${N} (run ${{ github.run_id }})"
