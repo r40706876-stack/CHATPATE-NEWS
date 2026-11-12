@@ -15,6 +15,9 @@ on:
       style:
         description: "classic / safar (Ramesh ka safar)"
         default: "classic"
+      new_voice:
+        description: "1 = pichhle run ki script par NAYI awaaz (lines badli hon tab)"
+        default: "0"
       from_run:
         description: "pichhle run ki script + awaaz dobara (run id) - khaali = nayi"
         default: ""
@@ -62,7 +65,7 @@ jobs:
           N=${{ inputs.clause }}
           if [ -f prev/deep/auto/c${N}${SUF}_spec.json ]; then
             mkdir -p deep/auto demo_out/deep && cp prev/deep/auto/* deep/auto/ && cp prev/demo_out/deep/take_c${N}.wav demo_out/deep/
-            echo "DEEP_TAKE=demo_out/deep/take_c${N}.wav" >> $GITHUB_ENV
+            [ "${{ inputs.new_voice }}" = "1" ] || echo "DEEP_TAKE=demo_out/deep/take_c${N}.wav" >> $GITHUB_ENV
           else
             python deep/auto_plan.py $N
           fi
