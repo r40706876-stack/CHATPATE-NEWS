@@ -1,0 +1,65 @@
+name: POSTAL WALA deep class TEST (Bakra ki Gemini keys par)
+
+# 2026-11-12: Postal Wala ki deep class ke experiment yahan chalte hain, taaki Postal Wala ki
+# daily reels ka Gemini quota na lage. Code Postal Wala repo (public) se aata hai; Bakra News ka koi
+# code/file nahi chhuta. Nateeja: is run ke "Artifacts" me (video + script). Kuch commit nahi hota.
+on:
+  workflow_dispatch:
+    inputs:
+      clause:
+        description: "Clause number"
+        default: "7"
+      key:
+        description: "kaunsi Gemini key: 1 / 2 / 3"
+        default: "3"
+
+permissions:
+  contents: read
+
+jobs:
+  deep:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-automation
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Packages
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends ffmpeg fonts-noto-core libraqm0 poppler-utils
+          pip install requests pypdf pillow numpy edge-tts playwright==1.47.0 faster-whisper
+          python -m playwright install --with-deps chromium
+      - name: Key chuno
+        run: |
+          case "${{ inputs.key }}" in
+            1) echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" >> $GITHUB_ENV ;;
+            2) echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY2 }}" >> $GITHUB_ENV ;;
+            *) echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY3 }}" >> $GITHUB_ENV ;;
+          esac
+      - name: Script (Gemini + tathya-jaanch)
+        run: |
+          N=${{ inputs.clause }}
+          python deep/auto_plan.py $N
+          python deep/build_auto.py $N
+          cat deep/auto/c${N}_script.md || true
+      - name: Banao (awaaz + animation + sound)
+        env:
+          GEMINI_TTS_MODEL: gemini-3.8-flash-tts
+          GEMINI_TTS_VOICE: hi-in-training-1
+          DEEP_TAKE_SAVE: demo_out/deep/take_c${{ inputs.clause }}.wav
+        run: python deep/deep_demo.py deep/auto_c${{ inputs.clause }}.html demo_out/deep/clause${{ inputs.clause }}_auto.mp4
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: postal-deep-c${{ inputs.clause }}
+          path: |
+            demo_out/deep/clause${{ inputs.clause }}_auto.mp4
+            demo_out/deep/clause${{ inputs.clause }}_auto.mp4.cues.json
+            demo_out/deep/take_c${{ inputs.clause }}.wav
+            deep/auto/
+          retention-days: 7
