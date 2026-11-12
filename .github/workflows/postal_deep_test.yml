@@ -75,6 +75,7 @@ jobs:
         env:
           GEMINI_TTS_MODEL: gemini-3.8-flash-tts
           GEMINI_TTS_VOICE: hi-in-training-1
+          GEMINI_TTS_STYLE: "lively elder-brother teacher: warm, clear and expressive with natural ups and downs - curious on questions, firm and serious on warnings, happy on answers, calm on examples; small natural pauses"
           DEEP_TAKE_SAVE: demo_out/deep/take_c${{ inputs.clause }}.wav
         run: python deep/deep_demo.py deep/auto_c${{ inputs.clause }}${SUF}.html demo_out/deep/clause${{ inputs.clause }}_auto.mp4
       - name: Cover + caption + chapters
