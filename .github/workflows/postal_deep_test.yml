@@ -48,6 +48,7 @@ jobs:
         run: |
           echo "DEEP_STYLE=${{ inputs.style }}" >> $GITHUB_ENV
           if [ "${{ inputs.style }}" = "classic" ]; then echo "SUF=" >> $GITHUB_ENV; else echo "SUF=_${{ inputs.style }}" >> $GITHUB_ENV; fi
+          case "${{ inputs.style }}" in classic|board) echo "SPECSUF=" >> $GITHUB_ENV ;; *) echo "SPECSUF=_${{ inputs.style }}" >> $GITHUB_ENV ;; esac
           case "${{ inputs.key }}" in
             1) echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" >> $GITHUB_ENV ;;
             2) echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY2 }}" >> $GITHUB_ENV ;;
@@ -63,7 +64,7 @@ jobs:
       - name: Script (Gemini + tathya-jaanch)
         run: |
           N=${{ inputs.clause }}
-          if [ -f prev/deep/auto/c${N}${SUF}_spec.json ]; then
+          if [ -f prev/deep/auto/c${N}${SPECSUF}_spec.json ]; then
             mkdir -p deep/auto demo_out/deep && cp prev/deep/auto/* deep/auto/ && cp prev/demo_out/deep/take_c${N}.wav demo_out/deep/
             [ "${{ inputs.new_voice }}" = "1" ] || echo "DEEP_TAKE=demo_out/deep/take_c${N}.wav" >> $GITHUB_ENV
           else
@@ -95,7 +96,7 @@ jobs:
         if: success()
         run: |
           N=${{ inputs.clause }}
-          mkdir -p /tmp/o && cp demo_out/deep/clause${N}_auto.mp4 deep/auto/c${N}${SUF}_script.md /tmp/o/ && cp demo_out/deep/clause${N}_cover.jpg demo_out/deep/clause${N}_post.txt /tmp/o/ 2>/dev/null || true
+          mkdir -p /tmp/o && cp demo_out/deep/clause${N}_auto.mp4 deep/auto/c${N}${SPECSUF}_script.md /tmp/o/ && cp demo_out/deep/clause${N}_cover.jpg demo_out/deep/clause${N}_post.txt /tmp/o/ 2>/dev/null || true
           cd /tmp/o && git init -q && git checkout -q -b postal-deep-out
           git config user.name "github-actions[bot]"; git config user.email "github-actions[bot]@users.noreply.github.com"
           git add . && git commit -qm "postal deep c${N} (run ${{ github.run_id }})"
