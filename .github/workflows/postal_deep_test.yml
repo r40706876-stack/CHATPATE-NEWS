@@ -12,9 +12,13 @@ on:
       key:
         description: "kaunsi Gemini key: 1 / 2 / 3"
         default: "3"
+      from_run:
+        description: "pichhle run ki script + awaaz dobara (run id) - khaali = nayi"
+        default: ""
 
 permissions:
-  contents: read
+  contents: write
+  actions: read
 
 jobs:
   deep:
@@ -41,10 +45,22 @@ jobs:
             2) echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY2 }}" >> $GITHUB_ENV ;;
             *) echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY3 }}" >> $GITHUB_ENV ;;
           esac
+      - uses: actions/download-artifact@v4
+        if: inputs.from_run != ''
+        with:
+          name: postal-deep-c${{ inputs.clause }}
+          run-id: ${{ inputs.from_run }}
+          github-token: ${{ github.token }}
+          path: prev
       - name: Script (Gemini + tathya-jaanch)
         run: |
           N=${{ inputs.clause }}
-          python deep/auto_plan.py $N
+          if [ -f prev/deep/auto/c${N}_spec.json ]; then
+            mkdir -p deep/auto demo_out/deep && cp prev/deep/auto/* deep/auto/ && cp prev/demo_out/deep/take_c${N}.wav demo_out/deep/
+            echo "DEEP_TAKE=demo_out/deep/take_c${N}.wav" >> $GITHUB_ENV
+          else
+            python deep/auto_plan.py $N
+          fi
           python deep/build_auto.py $N
           cat deep/auto/c${N}_script.md || true
       - name: Banao (awaaz + animation + sound)
@@ -60,6 +76,15 @@ jobs:
           path: |
             demo_out/deep/clause${{ inputs.clause }}_auto.mp4
             demo_out/deep/clause${{ inputs.clause }}_auto.mp4.cues.json
-            demo_out/deep/take_c${{ inputs.clause }}.wav
+            demo_out/deep/take_c${{ inputs.clause }}*.wav
             deep/auto/
           retention-days: 7
+      - name: Video alag branch par (postal-deep-out) - Bakra ka main nahi chhuta
+        if: success()
+        run: |
+          N=${{ inputs.clause }}
+          mkdir -p /tmp/o && cp demo_out/deep/clause${N}_auto.mp4 deep/auto/c${N}_script.md /tmp/o/
+          cd /tmp/o && git init -q && git checkout -q -b postal-deep-out
+          git config user.name "github-actions[bot]"; git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add . && git commit -qm "postal deep c${N} (run ${{ github.run_id }})"
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" postal-deep-out
