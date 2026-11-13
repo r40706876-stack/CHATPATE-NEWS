@@ -1,0 +1,52 @@
+name: POSTAL WALA deep NOTES TEST (Bakra ki Gemini keys par)
+
+# 2026-11-13: Postal Wala ke gehre Hindi notes (PDF) - code Postal Wala repo (public) se.
+# Bakra ka koi code nahi chhuta. Nateeja branch "postal-notes-out" par.
+on:
+  workflow_dispatch:
+    inputs:
+      clause:
+        description: "Clause number"
+        default: "7"
+      key:
+        description: "kaunsi Gemini key: 1 / 2 / 3"
+        default: "3"
+
+permissions:
+  contents: write
+
+jobs:
+  notes:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-automation
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Packages
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends fonts-noto-core poppler-utils
+          pip install requests pypdf pillow numpy edge-tts playwright==1.47.0
+          python -m playwright install --with-deps chromium
+      - name: Key chuno
+        run: |
+          case "${{ inputs.key }}" in
+            1) echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY }}" >> $GITHUB_ENV ;;
+            2) echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY2 }}" >> $GITHUB_ENV ;;
+            *) echo "GEMINI_API_KEY=${{ secrets.GEMINI_API_KEY3 }}" >> $GITHUB_ENV ;;
+          esac
+      - name: Notes banao
+        run: python deep/notes_deep.py ${{ inputs.clause }}
+      - name: Notes alag branch par
+        run: |
+          N=${{ inputs.clause }}
+          mkdir -p /tmp/o && cp deep/notes/c${N}_deep_hi.pdf deep/notes/c${N}_deep_hi.html deep/notes/c${N}_deep.json /tmp/o/
+          cd /tmp/o && git init -q && git checkout -q -b postal-notes-out
+          git config user.name "github-actions[bot]"; git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add . && git commit -qm "postal deep notes c${N} (run ${{ github.run_id }})"
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" postal-notes-out
