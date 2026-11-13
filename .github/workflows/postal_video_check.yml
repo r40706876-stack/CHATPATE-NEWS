@@ -25,10 +25,12 @@ jobs:
           pip install -q faster-whisper
           ffmpeg -v error -y -i "v/${{ inputs.file }}" -ac 1 -ar 16000 a.wav
           python - <<'PY'
-          import json
+          import json, numpy as np
           from faster_whisper import WhisperModel
+          import wave
+          w = wave.open("a.wav"); A = np.frombuffer(w.readframes(w.getnframes()), dtype="<i2").astype(np.float32) / 32768
           m = WhisperModel("medium", device="cpu", compute_type="int8")
-          segs, _ = m.transcribe("a.wav", language="hi", word_timestamps=True, vad_filter=False, beam_size=5,
+          segs, _ = m.transcribe(A, language="hi", word_timestamps=True, vad_filter=False, beam_size=5,
                                  initial_prompt="डाकघर, RMS, नाइट पोस्ट ऑफिस, लेट फीस, फ्रैंक, रजिस्टर्ड अखबार, तार शाखा")
           out = [{"s": round(s.start, 2), "e": round(s.end, 2), "t": s.text.strip(),
                   "w": [[round(w.start, 2), round(w.end, 2), w.word] for w in (s.words or [])]} for s in segs]
