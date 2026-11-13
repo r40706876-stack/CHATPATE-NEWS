@@ -77,7 +77,7 @@ jobs:
           fi
           if [ "${{ inputs.my_voice }}" = "1" ] && [ -f deep/my_voice/c${N}.flac ]; then   # apni awaaz: tez/dheema nahi
             mkdir -p demo_out/deep && ffmpeg -v error -y -i deep/my_voice/c${N}.flac -ar 44100 -ac 1 -c:a pcm_s16le demo_out/deep/my_take_c${N}.wav
-            { echo "DEEP_TAKE=demo_out/deep/my_take_c${N}.wav"; echo "VOICE_SPEEDUP=1.0"; echo "BHAROSA_SPEED=1.0"; } >> $GITHUB_ENV
+            { echo "DEEP_TAKE=demo_out/deep/my_take_c${N}.wav"; echo "VOICE_SPEEDUP=1.0"; echo "BHAROSA_SPEED=1.0"; echo "WHISPER_MODEL=medium"; echo "DEEP_WHISPER_VAD=1"; } >> $GITHUB_ENV
           fi
           if [ ! -f prev/deep/auto/c${N}${SPECSUF}_spec.json ]; then
             python deep/auto_plan.py $N
