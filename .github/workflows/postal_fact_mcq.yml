@@ -1,0 +1,81 @@
+name: Postal zaroori baaton se naye premium MCQ
+# Dono bade notes PDF (scan + toota Hindi font) -> page-dar-page saaf text (deep/notes_ocr.py).
+# Nateeja: core repo branch 'postal-fm' -> notes_text.json (deep vishleshan ka saboot). Dobara chalao to bache page.
+on:
+  workflow_dispatch:
+    inputs:
+      calls:
+        description: "har key par kitne page"
+        default: "45"
+permissions:
+  contents: read
+concurrency:
+  group: postal-fact-mcq
+  cancel-in-progress: false
+jobs:
+  ocr:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-core
+          token: ${{ secrets.CORE_TOKEN }}
+          ref: main
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: sudo apt-get install -y -qq poppler-utils >/dev/null; pip install -q requests pypdf pillow numpy
+      - name: Pichhla padha hua lo
+        run: |
+          git fetch -q origin postal-fm 2>/dev/null && git show FETCH_HEAD:fm_${{ matrix.shard }}.json > fm_${{ matrix.shard }}.json 2>/dev/null || rm -f fm_${{ matrix.shard }}.json
+      - name: Padho
+        run: |
+          case "${{ matrix.shard }}" in
+            0) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY }}" ;;
+            1) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY2 }}" ;;
+            *) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY3 }}" ;;
+          esac
+          SHARD=${{ matrix.shard }} NSHARD=3 FM_MAX_CALLS=${{ inputs.calls || '120' }} python deep/fact_mcq.py fm_${{ matrix.shard }}.json 2>&1 | tail -n 60
+          [ -f fm_${{ matrix.shard }}.json ] || echo "{}" > fm_${{ matrix.shard }}.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fm${{ matrix.shard }}
+          path: fm_${{ matrix.shard }}.json
+
+  save:
+    needs: ocr
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-core
+          token: ${{ secrets.CORE_TOKEN }}
+          path: bk
+          fetch-depth: 1
+      - uses: actions/download-artifact@v4
+        with:
+          path: dl
+          merge-multiple: true
+      - name: postal-fm branch par rakho
+        run: |
+          mkdir o && cp dl/fm_*.json o/ && cd o && python3 - <<'PY'
+          import json, glob
+          t = {}
+          for f in sorted(glob.glob("fm_*.json")):
+              t.update(json.load(open(f, encoding="utf-8")))
+          json.dump(dict(sorted(t.items(), key=lambda kv: kv[0])),
+                    open("fm_done.json", "w", encoding="utf-8"), ensure_ascii=False, indent=0)
+          print("kul baatein:", len(t), "sawal:", sum(len(v) for v in t.values()))
+          PY
+          git init -q && git checkout -q -b postal-fm
+          git config user.name "github-actions[bot]"; git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add . && git commit -qm "zaroori baaton se MCQ (run ${{ github.run_id }})"
+          git remote add origin "$(git -C ../bk remote get-url origin)"
+          git -c http.extraheader="$(git -C ../bk config --get http.https://github.com/.extraheader)" push -qf origin HEAD:postal-fm
