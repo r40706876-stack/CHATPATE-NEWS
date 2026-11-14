@@ -1,0 +1,120 @@
+name: Postal PYQ bank + deep vishleshan (Bakra ki 3 Gemini keys)
+
+# 1) naye papers ke sawal bank me (jawab = paper ki answer key)  2) har sawal ka deep vishleshan (3 keys, 3 hisse)
+# Nateeja branch postal-pyq-out par (pyq_bank.json) - agli run wahin se aage badhti hai.
+on:
+  workflow_dispatch:
+    inputs:
+      bank_calls:
+        description: "naye sawal: kitni AI calls (12 sawal/call)"
+        default: "40"
+      explain_calls:
+        description: "vyakhya: har key par kitni AI calls (4 sawal/call)"
+        default: "45"
+
+permissions:
+  contents: write
+
+jobs:
+  bank:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-automation
+          ref: main
+      - uses: actions/checkout@v4
+        with:
+          path: bk
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Packages
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y --no-install-recommends poppler-utils
+          pip install -q requests pypdf pillow numpy
+      - name: Pichhla nateeja lo
+        run: |
+          if git -C bk ls-remote --exit-code origin postal-pyq-out >/dev/null; then
+            git -C bk fetch -q origin postal-pyq-out && git -C bk show FETCH_HEAD:pyq_bank.json > pyq_papers/pyq_bank.json && echo "pichhla bank liya"
+          fi
+          python -c "import json;b=json.load(open('pyq_papers/pyq_bank.json'));print('bank',len(b['items']),'vyakhya',sum(1 for x in b['items'] if x.get('an')))"
+      - name: Naye sawal (key 1)
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          BANK_MAX_CALLS: ${{ inputs.bank_calls }}
+        run: python pyq_daily.py bank 2>&1 | grep -vE "^\s*$" | tail -n 30
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bank1
+          path: pyq_papers/pyq_bank.json
+
+  explain:
+    needs: bank
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-automation
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Packages
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y --no-install-recommends poppler-utils
+          pip install -q requests pypdf pillow numpy
+      - uses: actions/download-artifact@v4
+        with:
+          name: bank1
+          path: pyq_papers
+      - name: Vyakhya
+        run: |
+          case "${{ matrix.shard }}" in
+            0) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY }}" ;;
+            1) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY2 }}" ;;
+            *) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY3 }}" ;;
+          esac
+          SHARD=${{ matrix.shard }} NSHARD=3 EXPLAIN_MAX_CALLS=${{ inputs.explain_calls }} python deep/pyq_explain.py an_${{ matrix.shard }}.json 2>&1 | tail -n 40
+          [ -f an_${{ matrix.shard }}.json ] || echo "{}" > an_${{ matrix.shard }}.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: an${{ matrix.shard }}
+          path: an_${{ matrix.shard }}.json
+
+  save:
+    needs: explain
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dl
+          merge-multiple: true
+      - name: Jodo + branch par
+        run: |
+          python3 - <<'PY'
+          import json, glob
+          b = json.load(open("dl/pyq_bank.json", encoding="utf-8"))
+          an = {}
+          for f in glob.glob("dl/an_*.json"):
+              an.update(json.load(open(f, encoding="utf-8")))
+          n = 0
+          for x in b["items"]:
+              if x["id"] in an and not x.get("an"):
+                  x["an"] = an[x["id"]]; n += 1
+          json.dump(b, open("pyq_bank.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+          tot = sum(1 for x in b["items"] if x.get("an"))
+          print(f"is run me {n} nayi vyakhya; kul sawal {len(b['items'])}, vyakhya wale {tot}")
+          PY
+          mkdir -p o && mv pyq_bank.json o/ && cd o && git init -q && git checkout -q -b postal-pyq-out
+          git config user.name "github-actions[bot]"; git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add . && git commit -qm "postal pyq bank (run ${{ github.run_id }})"
+          git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" postal-pyq-out:postal-pyq-out
