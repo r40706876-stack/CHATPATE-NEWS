@@ -1,0 +1,29 @@
+name: Gemini search test (ek baar)
+on: workflow_dispatch
+jobs:
+  t:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Har model par google_search ek baar
+        env:
+          K: ${{ secrets.GEMINI_API_KEY }}
+        run: |
+          python3 - <<'PY'
+          import os, json, urllib.request, urllib.error
+          k = os.environ["K"].strip()
+          base = "https://generativelanguage.googleapis.com/v1beta/models"
+          js = json.load(urllib.request.urlopen(f"{base}?key={k}&pageSize=200"))
+          names = [m["name"].split("/")[-1] for m in js["models"] if "generateContent" in m.get("supportedGenerationMethods", [])]
+          names = [n for n in names if n.startswith("gemini") and not any(b in n for b in ("tts","image","live","audio","embedding","robotics"))]
+          body = json.dumps({"contents":[{"parts":[{"text":"What is the current Speed Post tariff for 50 g local in India? One line."}]}],"tools":[{"google_search":{}}]}).encode()
+          for n in names:
+              try:
+                  r = urllib.request.urlopen(urllib.request.Request(f"{base}/{n}:generateContent?key={k}", body, {"Content-Type":"application/json"}), timeout=90)
+                  c = json.load(r)["candidates"][0]
+                  print("OK ", n, "| grounded:", bool(c.get("groundingMetadata", {}).get("groundingChunks")))
+              except urllib.error.HTTPError as e:
+                  msg = json.loads(e.read() or b"{}").get("error", {}).get("message", "")
+                  print(e.code, n, "|", msg[:160].replace("\n"," "))
+              except Exception as e:
+                  print("ERR", n, e)
+          PY
