@@ -1,0 +1,53 @@
+name: POSTAL WALA Clause 8 full format demo (Gemini voice)
+# Postal Wala ka experiment: Bakra News ki key 3 par. Bakra ka koi code nahi chhuta.
+on:
+  push:
+    branches: [c8-full]
+permissions:
+  contents: write
+jobs:
+  render:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-core
+          token: ${{ secrets.CORE_TOKEN }}
+      - uses: actions/checkout@v4
+        with:
+          path: mine
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Packages
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends ffmpeg fonts-noto-core libraqm0 poppler-utils
+          pip install requests pypdf pillow numpy edge-tts playwright==1.47.0 faster-whisper
+          python -m playwright install --with-deps chromium
+      - name: Banao (Gemini awaaz + animation)
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY3 }}
+          GEMINI_TTS_MODEL: gemini-3.8-flash-tts
+          GEMINI_TTS_VOICE: hi-in-training-1
+          GEMINI_TTS_STYLE: "lively elder-brother teacher: warm, clear and expressive with natural ups and downs - curious on questions, firm and serious on warnings, happy on answers, calm on examples; small natural pauses"
+          DEEP_TAKE_SAVE: out/take_c8_full.wav
+        run: |
+          mkdir -p out
+          python mine/demo/c8full/build.py deep/c8_full_demo.html
+          python deep/deep_demo.py deep/c8_full_demo.html out/Clause8_Full_Format.mp4
+          cp out/Clause8_Full_Format.mp4.cues.json out/ 2>/dev/null || true
+          ls -la out
+      - name: Save to branch c8-full-out
+        run: |
+          mkdir -p /tmp/o && cp out/Clause8_Full_Format.mp4 out/take_c8_full.wav /tmp/o/ && cp out/*.cues.json /tmp/o/ 2>/dev/null || true
+          cd mine
+          git config user.name "postal-demo-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git checkout --orphan out
+          git rm -rfq .
+          cp /tmp/o/* .
+          git add -A
+          git commit -qm "Clause 8 full format demo"
+          git push -f origin out:c8-full-out

@@ -1,0 +1,155 @@
+<style>
+.numbig{position:absolute;left:0;right:0;text-align:center;font:800 170px/1 Poppins;color:#fff;text-shadow:0 0 50px rgba(77,163,255,.55)}
+.part{position:absolute;top:250px;width:210px;text-align:center;opacity:0}
+.part .n{font:800 120px/1 Poppins}
+.part .l{font:800 21px/1.25 'Baloo 2';margin-top:8px;padding:6px 10px;border-radius:12px}
+.eq{position:absolute;left:0;right:0;top:470px;text-align:center;font:800 30px 'Baloo 2';color:#ffd84a;opacity:0}
+.cal3{position:absolute;top:120px;width:146px;height:220px;border-radius:14px;background:#fff;box-shadow:0 16px 32px rgba(0,0,0,.4);overflow:hidden;opacity:0;transform-origin:50% 0}
+.cal3 .tri{height:44px;background:linear-gradient(180deg,#ff9933 0 33%,#fff 33% 66%,#138808 66%)}
+.cal3 .d{font:800 70px/1 Poppins;text-align:center;margin-top:16px;color:#1f2937}
+.cal3 .m{font:800 22px 'Baloo 2';text-align:center;color:#dc2626}
+.cal3 .x{font:800 17px/1.2 'Baloo 2';text-align:center;color:#1e3a8a;margin-top:8px;padding:0 6px}
+.grp{position:absolute;left:14px;right:14px;height:60px;display:flex;align-items:center;gap:8px;opacity:0}
+.grp .g{flex:0 0 96px;font:800 17px/1.1 'Baloo 2';color:#fff;border-radius:12px;padding:8px 6px;text-align:center}
+.grp .g small{display:block;font:800 22px Poppins}
+.tile{flex:1;min-width:0;font:700 14.5px/1.15 'Baloo 2';color:#111;background:#fff;border-radius:10px;padding:6px 4px;text-align:center;box-shadow:0 4px 10px rgba(0,0,0,.25);opacity:0;display:flex;flex-direction:column;align-items:center;gap:2px}
+.tile svg{width:26px;height:22px}
+#cnt11{position:absolute;right:16px;top:12px;width:84px;height:84px;border-radius:50%;background:#ffd84a;color:#111;text-align:center;font:800 40px/70px Poppins;box-shadow:0 0 0 6px rgba(255,216,74,.25);z-index:4}
+#cnt11 small{display:block;font:800 12px/0 'Baloo 2';margin-top:-6px}
+.slot{position:absolute;top:150px;width:130px;height:62px;border:3px dashed rgba(255,255,255,.5);border-radius:14px}
+.fchip{position:absolute;font:800 18px/56px 'Baloo 2';color:#111;background:#fde68a;border-radius:12px;width:130px;text-align:center;box-shadow:0 8px 16px rgba(0,0,0,.3);opacity:0}
+.book{position:absolute;left:24px;top:90px;width:220px;height:300px;background:linear-gradient(90deg,#d6c29a,#efe3c4 12%,#f5ecd4);border-radius:6px 14px 14px 6px;box-shadow:0 18px 36px rgba(0,0,0,.45),inset 8px 0 0 #b9a273;padding:22px 16px 16px 26px;opacity:0;filter:sepia(.35)}
+.book .bt{font:700 13px Poppins;color:#6b5a35;letter-spacing:1px}
+.book .bl{font:700 16px/1.6 Hind;color:#3f3423;margin-top:10px}
+.book .bn{font:800 40px/1.1 Poppins;color:#5b4a2a;margin-top:12px}
+.paperR{position:absolute;right:24px;top:110px;width:200px;background:#fff;border-radius:12px;padding:16px;box-shadow:0 18px 36px rgba(0,0,0,.45);opacity:0;text-align:center}
+.paperR .pn{font:800 84px/1 Poppins;color:#16a34a}
+.wopt{display:inline-block;font:800 24px/44px Poppins;color:#fff;background:#475569;border-radius:12px;width:80px;margin:0 8px;position:relative;opacity:0}
+.wopt i{position:absolute;left:8px;right:8px;top:50%;height:5px;background:#ef4444;border-radius:3px;transform-origin:0 50%;transform:scaleX(0)}
+</style>
+<div id="stage">
+<!-- S open: board -->
+<div class="sc board" id="s_open"><div class="grid"></div>
+ <svg class="bsvg" viewBox="0 0 508 540" style="position:absolute;inset:0"><g filter="url(#rough)">
+  <rect class="fl" data-after="cal" x="70" y="96" width="200" height="44" fill="#1e3a8a"/><rect class="fl" data-after="cal" x="70" y="140" width="200" height="160" fill="#fff7ed"/>
+  <path class="dr" data-op="cal" d="M70,96 H270 V300 H70 Z"/><path class="dr" data-op="cal" d="M70,140 H270"/><path class="dr" data-op="cal" d="M110,80 V112 M230,80 V112"/>
+  <text class="tx hand" data-op="calT" x="170" y="240" text-anchor="middle" font-size="64" fill="#1e3a8a">365</text>
+  <text class="tx hand" data-op="calT2" x="170" y="284" text-anchor="middle" font-size="22" fill="#6b7280">दिन</text>
+  <path class="fl" data-after="po" d="M310,236 L380,200 L450,236 Z" fill="#e2554b"/><rect class="fl" data-after="po" x="320" y="236" width="120" height="96" fill="#fde7c4"/>
+  <path class="dr" data-op="po" d="M310,236 L380,200 L450,236 Z"/><path class="dr" data-op="po" d="M320,236 V332 H440 V236"/><path class="dr" data-op="po" d="M362,332 V286 H398 V332"/>
+  <text class="tx" data-op="poT" x="380" y="262" text-anchor="middle" font-size="16" fill="#7c2d12">डाकघर</text>
+  <text class="tx hand" data-op="qT" x="254" y="400" text-anchor="middle" font-size="34" fill="#dc2626">कितने दिन बंद?</text>
+ </g>
+  <text id="qmark" x="440" y="190" text-anchor="middle" font-size="90" font-weight="800" fill="#f59e0b" opacity="0" style="font-family:Poppins">?</text>
+ </svg>
+ <div id="cl8" style="position:absolute;left:0;right:0;top:170px;text-align:center;opacity:0;z-index:5"><div style="display:inline-block;background:#1e3a8a;color:#fff;border-radius:18px;padding:16px 28px;box-shadow:0 18px 40px rgba(0,0,0,.4)"><div style="font:700 15px Poppins;letter-spacing:3px;color:#ffd84a">CLAUSE 7 ✓ → अब</div><div style="font:800 52px/1.1 'Baloo 2'">Clause 8</div><div style="font:700 19px Hind;color:#c7d2fe">डाकघर की छुट्टियाँ</div></div></div>
+ <div class="bframe"></div><div class="live"><i></i>क्लास</div>
+</div>
+<!-- S q1 -->
+<div class="sc board" id="s_q1"><div class="grid"></div>
+ <div class="banner" id="bn1"><span>ये भी पेपर में आया</span></div>
+ <div class="card" id="cq1"><div class="ch"><span><b>DELHI</b> • MTS/PM/MG 2025 • पेपर-1</span><span>प्रश्न <b>1</b></span></div>
+  <div class="cq">डाकघर गाइड भाग-1 के किस क्लॉज में डाकघर की छुट्टियों की जानकारी है?</div>
+  <div class="op" id="q1a"><b>(A)</b>क्लॉज 7</div><div class="op" id="q1b"><b>(B)</b>क्लॉज 8</div><div class="op" id="q1c"><b>(C)</b>क्लॉज 9</div><div class="op" id="q1d"><b>(D)</b>क्लॉज 10</div>
+  <div class="stamp" id="stq1" style="right:12px;bottom:12px">DELHI 2025<small>ASLI PAPER</small></div></div>
+ <div class="pills" style="top:440px"><span class="pill" id="pl_bh"><i></i>बिहार 2021 • प्रश्न 6 में भी</span></div>
+ <svg class="ink" viewBox="0 0 508 540" style="position:absolute;inset:0;z-index:4;pointer-events:none"></svg>
+ <div class="bframe"></div>
+</div>
+<!-- S num -->
+<div class="sc" id="s_num" style="background:radial-gradient(90% 70% at 50% 40%,#1e2a5e,#070b1c)">
+ <div class="numbig" id="n17" style="top:150px">17</div>
+ <div style="position:absolute;left:0;right:0;top:66px;text-align:center;font:800 24px 'Baloo 2';color:#c7d2fe;opacity:0" id="n17t">कुल डाक छुट्टियाँ</div>
+ <div class="part" id="p14" style="left:36px"><div class="n" style="color:#4ade80">14</div><div class="l" style="background:#166534;color:#fff">पक्की • पूरे देश में एक जैसी</div></div>
+ <div class="part" id="p3" style="right:36px"><div class="n" style="color:#fb923c">3</div><div class="l" style="background:#9a3412;color:#fff">सर्किल अपने हिसाब से चुनता है</div></div>
+ <div id="plus" style="position:absolute;left:0;right:0;top:290px;text-align:center;font:800 70px Poppins;color:#fff;opacity:0">+</div>
+ <div class="eq" id="eq">सर्किल = डाक विभाग का बड़ा इलाका (राज्य स्तर)</div>
+ <div class="term" id="tm_num" style="top:14px">पेपर का शब्द:<b>Post Office holidays</b></div>
+</div>
+<!-- S nat -->
+<div class="sc" id="s_nat" style="background:radial-gradient(90% 70% at 50% 35%,#24345f,#0b1229)">
+ <div style="position:absolute;left:0;right:0;top:30px;text-align:center;font:800 26px 'Baloo 2';color:#ffd84a" id="natT">पक्की 14 में: 3 राष्ट्रीय पर्व</div>
+ <div class="cal3" id="k1" style="left:20px"><div class="tri"></div><div class="d">26</div><div class="m">जनवरी</div><div class="x">गणतंत्र दिवस</div></div>
+ <div class="cal3" id="k2" style="left:181px"><div class="tri"></div><div class="d">15</div><div class="m">अगस्त</div><div class="x">स्वतंत्रता दिवस</div></div>
+ <div class="cal3" id="k3" style="left:342px"><div class="tri"></div><div class="d">2</div><div class="m">अक्टूबर</div><div class="x">गांधी जयंती</div></div>
+ <div id="natB" style="position:absolute;left:0;right:0;top:390px;text-align:center;opacity:0"><span style="font:800 22px/44px 'Baloo 2';color:#111;background:#fff;padding:0 18px;border-radius:22px">3 राष्ट्रीय ✓ • बाकी 11 ?</span></div>
+</div>
+<!-- S fest -->
+<div class="sc" id="s_fest" style="background:linear-gradient(170deg,#1e1b4b,#0b1029)">
+ <div style="position:absolute;left:16px;top:22px;font:800 24px/1.2 'Baloo 2';color:#ffd84a;width:330px" id="festT">11 धार्मिक त्योहार<br><span style="font:700 16px Hind;color:#c7d2fe">धर्म के हिसाब से याद करो</span></div>
+ <div id="cnt11">0<small>/11</small></div>
+ <div class="grp" id="g1" style="top:118px"><div class="g" style="background:#ea580c">हिंदू<small>2</small></div><div class="tile"><svg viewBox="0 0 26 22"><path d="M4,20 Q13,-4 22,20" fill="none" stroke="#b45309" stroke-width="2.5"/><path d="M2,12 H24" stroke="#b45309" stroke-width="2"/></svg>दशहरा</div><div class="tile"><svg viewBox="0 0 26 22"><path d="M3,14 Q13,24 23,14 Z" fill="#f59e0b"/><path d="M13,4 Q16,9 13,12 Q10,9 13,4" fill="#ef4444"/></svg>दिवाली</div><div class="tile" style="visibility:hidden"></div><div class="tile" style="visibility:hidden"></div></div>
+ <div class="grp" id="g2" style="top:186px"><div class="g" style="background:#15803d">मुस्लिम<small>4</small></div><div class="tile"><svg viewBox="0 0 26 22"><path d="M15,2 a9,9 0 1,0 6,15 a7,7 0 1,1 -6,-15 Z" fill="#15803d"/></svg>ईद-उल-फ़ित्र</div><div class="tile"><svg viewBox="0 0 26 22"><path d="M15,2 a9,9 0 1,0 6,15 a7,7 0 1,1 -6,-15 Z" fill="#15803d"/><circle cx="21" cy="6" r="2" fill="#15803d"/></svg>बकरीद</div><div class="tile"><svg viewBox="0 0 26 22"><path d="M15,2 a9,9 0 1,0 6,15 a7,7 0 1,1 -6,-15 Z" fill="#334155"/></svg>मुहर्रम</div><div class="tile"><svg viewBox="0 0 26 22"><path d="M15,2 a9,9 0 1,0 6,15 a7,7 0 1,1 -6,-15 Z" fill="#0d9488"/><path d="M21,14 v6" stroke="#f59e0b" stroke-width="3"/></svg>ईद-ए-मिलाद</div></div>
+ <div class="grp" id="g3" style="top:254px"><div class="g" style="background:#1d4ed8">ईसाई<small>2</small></div><div class="tile"><svg viewBox="0 0 26 22"><path d="M13,1 L22,17 H4 Z" fill="#16a34a"/><rect x="11" y="17" width="4" height="4" fill="#92400e"/></svg>क्रिसमस</div><div class="tile"><svg viewBox="0 0 26 22"><path d="M13,2 V20 M7,8 H19" stroke="#1d4ed8" stroke-width="3"/></svg>गुड फ्राइडे</div><div class="tile" style="visibility:hidden"></div><div class="tile" style="visibility:hidden"></div></div>
+ <div class="grp" id="g4" style="top:322px"><div class="g" style="background:#7c3aed">सिख • बौद्ध • जैन<small>1 • 1 • 1</small></div><div class="tile"><svg viewBox="0 0 26 22"><circle cx="13" cy="11" r="5" fill="#f59e0b"/><path d="M13,1 v4 M13,17 v4 M3,11 h4 M19,11 h4" stroke="#f59e0b" stroke-width="2"/></svg>गुरु नानक जयंती</div><div class="tile"><svg viewBox="0 0 26 22"><circle cx="13" cy="11" r="9" fill="#fde68a" stroke="#ca8a04" stroke-width="1.5"/></svg>बुद्ध पूर्णिमा</div><div class="tile"><svg viewBox="0 0 26 22"><path d="M8,20 V9 a2,2 0 0,1 4,0 V5 a2,2 0 0,1 4,0 V9 a2,2 0 0,1 4,0 V20 Z" fill="#fb923c"/></svg>महावीर जयंती</div><div class="tile" style="visibility:hidden"></div></div>
+ <div id="festSum" style="position:absolute;left:0;right:0;top:410px;text-align:center;opacity:0"><span style="font:800 26px/50px Poppins;color:#111;background:#ffd84a;padding:0 22px;border-radius:25px">2 + 4 + 2 + 1 + 1 + 1 = 11</span></div>
+</div>
+<!-- S q2 -->
+<div class="sc board" id="s_q2"><div class="grid"></div>
+ <div class="banner" id="bn2"><span>जो अभी समझा → वही पेपर में आया</span></div>
+ <div class="card" id="cq2"><div class="ch"><span><b>HARYANA</b> • MTS/PM/MG 2020</span><span>प्रश्न <b>26</b></span></div>
+  <div class="cq">किन छुट्टियों को डाकघर की छुट्टियों के रूप में मनाया जाता है?</div>
+  <div class="op" id="q2a"><b>(A)</b>गणतंत्र दिवस</div><div class="op" id="q2b"><b>(B)</b>स्वतंत्रता दिवस</div><div class="op" id="q2c"><b>(C)</b>गुरु नानक जयंती</div><div class="op" id="q2d"><b>(D)</b>उपरोक्त सभी</div>
+  <div class="stamp" id="stq2" style="right:12px;bottom:12px">HARYANA 2020<small>ASLI PAPER</small></div></div>
+ <svg class="ink" viewBox="0 0 508 540" style="position:absolute;inset:0;z-index:4;pointer-events:none"></svg>
+ <div class="bframe"></div>
+</div>
+<!-- S cmp -->
+<div class="sc" id="s_cmp">
+ <div class="half" id="hL" style="left:0;background:linear-gradient(180deg,#166534,#14532d);color:#fff;padding-top:64px">
+  <h3>डाक छुट्टी ✓</h3><p style="font-size:16px">हमारी 11 में हैं</p>
+  <div class="verdict" id="vL1" style="background:#fff;color:#166534;margin-top:12px">बुद्ध पूर्णिमा</div><div class="verdict" id="vL2" style="background:#fff;color:#166534;margin-top:8px">महावीर जयंती</div><div class="verdict" id="vL3" style="background:#fff;color:#166534;margin-top:8px">गुड फ्राइडे</div></div>
+ <div class="half" id="hR" style="right:0;background:linear-gradient(180deg,#991b1b,#7f1d1d);color:#fff;padding-top:64px">
+  <h3>डाक छुट्टी नहीं ✗</h3><p style="font-size:16px">सूची में नहीं</p>
+  <div class="verdict" id="vR1" style="background:#fff;color:#991b1b;margin-top:40px;font-size:30px;line-height:58px">रक्षाबंधन</div></div>
+ <div id="vs">VS</div>
+ <div class="stamp" id="stcmp" style="left:270px;top:400px;color:#fff;border-color:#fff;background:rgba(127,29,29,.6);box-shadow:none">RAJASTHAN 2022<small>ASLI PAPER • प्रश्न 2</small></div>
+ <div style="position:absolute;left:0;right:0;top:14px;text-align:center;z-index:4" id="cmpQ"><span style="font:800 17px/32px 'Baloo 2';color:#111;background:#ffd84a;padding:0 14px;border-radius:16px">कौन सी डाक छुट्टी नहीं है?</span></div>
+</div>
+<!-- S circ -->
+<div class="sc" id="s_circ" style="background:radial-gradient(90% 70% at 50% 30%,#3b1d5e,#120a24)">
+ <div style="position:absolute;left:0;right:0;top:26px;text-align:center;font:800 25px 'Baloo 2';color:#fff">आपका सर्किल चुनता है <span style="color:#fb923c">3</span></div>
+ <div style="position:absolute;left:0;right:0;top:66px;text-align:center;font:700 16px Hind;color:#e9d5ff">इलाके के बड़े त्योहार देखकर</div>
+ <div id="circBox" style="position:absolute;left:26px;right:26px;top:118px;height:126px;border-radius:18px;background:rgba(255,255,255,.08);border:2px solid rgba(255,255,255,.25)"></div>
+ <div class="slot" style="left:44px"></div><div class="slot" style="left:189px"></div><div class="slot" style="left:334px"></div>
+ <div style="position:absolute;left:0;right:0;top:300px;text-align:center;font:800 17px 'Baloo 2';color:#c4b5fd">वैकल्पिक सूची में से</div>
+ <div class="fchip" id="fc1">होली</div><div class="fchip" id="fc2">गणेश चतुर्थी</div><div class="fchip" id="fc3">महाशिवरात्रि</div>
+ <div class="fchip" id="fc4" style="background:#e9d5ff">…</div><div class="fchip" id="fc5" style="background:#e9d5ff">…</div>
+ <div class="term" id="tm_circ" style="top:470px">पेपर का शब्द:<b>Optional holiday</b></div>
+</div>
+<!-- S q3 -->
+<div class="sc board" id="s_q3"><div class="grid"></div>
+ <div class="card" id="cq3" style="top:22px"><div class="ch"><span><b>JAMMU-KASHMIR</b> • MTS/PM/MG 2021</span><span>प्रश्न <b>3</b></span></div>
+  <div class="cq">निम्नलिखित में से कौन सी एक वैकल्पिक छुट्टी (Optional Holiday) है?</div>
+  <div class="op" id="q3a"><b>(A)</b>होली</div><div class="op" id="q3b"><b>(B)</b>गणेश चतुर्थी</div><div class="op" id="q3c"><b>(C)</b>महा शिवरात्रि</div><div class="op" id="q3d"><b>(D)</b>ये सभी</div>
+  <div class="stamp" id="stq3" style="right:12px;top:92px">J&K 2021<small>ASLI PAPER</small></div></div>
+ <div class="mini" id="mn_tl" style="border-left-color:#16a34a"><div class="h">TELANGANA • MTS 2020 • प्रश्न 6</div>
+  <div class="q">एक कैलेंडर वर्ष में कितनी डाकघर छुट्टियाँ? (15 / 16 / 17 / 18)</div><div class="s" style="background:#16a34a">जवाब: 17 ✓</div></div>
+ <svg class="ink" viewBox="0 0 508 540" style="position:absolute;inset:0;z-index:4;pointer-events:none"></svg>
+ <div class="bframe"></div>
+</div>
+<!-- S book -->
+<div class="sc" id="s_book" style="background:linear-gradient(170deg,#3f2d14,#120c05)">
+ <div class="book" id="bk"><div class="bt">PO GUIDE PART I • पुरानी सूची</div><div class="bl">11 छुट्टियों की सूची<br>+ सर्किल वाली</div><div class="bn">11 + 5</div>
+  <div class="stamp" id="stOld" style="left:30px;top:200px;color:#78350f;border-color:#78350f;background:rgba(245,236,212,.7);box-shadow:none">पुराना</div></div>
+ <div class="paperR" id="pr"><div style="font:700 13px Poppins;color:#6b7280;letter-spacing:1px">अब पेपर में</div><div class="pn">17</div><div style="font:800 17px 'Baloo 2';color:#166534">14 + 3 ✓</div><div style="font:700 12px Poppins;color:#6b7280;margin-top:6px">TELANGANA 2020</div></div>
+ <div style="position:absolute;left:0;right:0;top:430px;text-align:center"><span class="wopt" id="w16">16<i></i></span><span class="wopt" id="w5">5<i></i></span></div>
+ <div id="noFall" style="position:absolute;left:0;right:0;top:490px;text-align:center;opacity:0;font:800 19px 'Baloo 2';color:#fecaca">इन options में मत फँसना</div>
+</div>
+<!-- S rec -->
+<div class="sc" id="s_rec" style="background:radial-gradient(90% 70% at 50% 30%,#1e2a5e,#0a1024)">
+ <div style="position:absolute;left:0;right:0;top:26px;text-align:center;font:800 26px 'Baloo 2';color:#ffd84a">एक साँस में पूरा Clause 8</div>
+ <div class="note" id="n1" style="top:90px;background:#fde68a"><b>1</b>कुल 17 = 14 पक्की + 3 सर्किल</div>
+ <div class="note" id="n2" style="top:186px;background:#bfdbfe"><b>2</b>14 = 3 राष्ट्रीय + 11 धार्मिक</div>
+ <div class="note" id="n3" style="top:282px;background:#bbf7d0"><b>3</b>11 = 2 + 4 + 2 + 1 + 1 + 1</div>
+ <div class="note" id="n4" style="top:378px;background:#fecaca"><b>4</b>रक्षाबंधन, होली: पक्की सूची में नहीं</div>
+</div>
+</div>
+<!-- full: trick -->
+<div class="full kbg" id="f_trick">
+ <div class="k1" style="top:180px;font-size:40px;color:#c7d2fe" id="tk1">Trick याद रखो</div>
+ <div id="digs" style="position:absolute;left:0;right:0;top:250px;text-align:center"></div>
+ <div id="trN" style="position:absolute;left:0;right:0;top:520px;text-align:center;font:800 26px 'Baloo 2';color:#fff;opacity:0">6 राज्य • 6 पेपर</div>
+ <div class="pills" id="trP" style="top:560px"><span class="pill"><i></i>दिल्ली</span><span class="pill"><i></i>बिहार</span><span class="pill"><i></i>हरियाणा</span><span class="pill"><i></i>राजस्थान</span><span class="pill"><i></i>J&K</span><span class="pill"><i></i>तेलंगाना</span></div>
+ <div id="fol" style="position:absolute;left:0;right:0;top:628px;text-align:center;opacity:0"><span style="font:800 22px/48px 'Baloo 2';color:#111;background:#ffd84a;padding:0 24px;border-radius:24px;box-shadow:0 0 0 6px rgba(255,216,74,.25)">अगला Clause कल • फ़ॉलो करो</span></div>
+</div>
