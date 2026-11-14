@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="hi"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Hind:wght@500;600;700&family=Kalam:wght@400;700&display=block" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:540px;height:960px;overflow:hidden;background:#050a18}
+#root{position:absolute;inset:0;overflow:hidden;font-family:Hind,sans-serif}
+#bg{position:absolute;inset:-40px;background:radial-gradient(120% 70% at 50% 30%,#13224a 0%,#0a1330 45%,#040814 100%)}
+.orb{position:absolute;border-radius:50%;filter:blur(40px);opacity:.35}
+#grain{position:absolute;inset:-60px;opacity:.07;pointer-events:none;mix-blend-mode:overlay;
+ background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='220' height='220' filter='url(%23n)'/></svg>")}
+#top{position:absolute;left:0;right:0;top:14px;height:104px;text-align:center}
+#logo{position:absolute;left:18px;top:6px;width:52px;height:52px;border-radius:14px;background:linear-gradient(145deg,#e23b3b,#a3141c);box-shadow:0 6px 18px rgba(226,59,59,.45),inset 0 1px 0 rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center}
+#ttl{font:800 33px/1.15 'Baloo 2';color:#ff9a3c;letter-spacing:.3px;text-shadow:0 2px 14px rgba(255,140,40,.35)}
+#sub{font:700 21px/1.3 'Baloo 2';color:#ffd84a;letter-spacing:.4px}
+#rail{position:absolute;left:96px;right:96px;top:92px;height:6px;display:flex;gap:6px}
+#rail i{flex:1;border-radius:3px;background:rgba(255,255,255,.14);position:relative;overflow:hidden}
+#rail i b{position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,#ffd84a,#ff9a3c);border-radius:3px}
+#boardWrap{position:absolute;left:16px;top:128px;width:508px;height:540px;transform-origin:50% 50%}
+#frame{position:absolute;inset:0;border-radius:18px;padding:8px;
+ background:linear-gradient(160deg,#e9edf3 0%,#9aa3b1 35%,#dfe4ea 55%,#7d8796 100%);
+ box-shadow:0 28px 60px rgba(0,0,0,.6),0 0 0 1px rgba(255,255,255,.08),0 0 80px rgba(77,163,255,.12)}
+#screen{position:relative;width:492px;height:524px;border-radius:11px;overflow:hidden;background:#fbfbf6}
+#grid{position:absolute;inset:0;opacity:.55;background-image:linear-gradient(rgba(30,58,138,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(30,58,138,.07) 1px,transparent 1px);background-size:24px 24px}
+#night{position:absolute;inset:0;background:radial-gradient(90% 80% at 70% 15%,#26346e 0%,#141c40 55%,#0b1029 100%);opacity:0}
+#svg{position:absolute;left:0;top:0;width:492px;height:524px}
+#sheen{position:absolute;top:-50%;bottom:-50%;width:120px;left:-200px;transform:rotate(18deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);mix-blend-mode:soft-light;pointer-events:none}
+#power{position:absolute;left:0;right:0;top:50%;height:2px;background:#fff;box-shadow:0 0 30px 10px rgba(160,210,255,.9);opacity:0}
+#live{position:absolute;right:10px;top:10px;font:700 12px/20px Hind;color:#b91c1c;background:rgba(255,255,255,.92);border:1px solid rgba(185,28,28,.25);padding:0 8px;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.08)}
+#live i{display:inline-block;width:7px;height:7px;border-radius:50%;background:#e11d48;margin-right:5px;vertical-align:1px}
+#chip{position:absolute;left:12px;top:10px;font:800 17px/30px 'Baloo 2';color:#fff;background:linear-gradient(135deg,#1e3a8a,#2f55c9);padding:0 14px 0 6px;border-radius:16px;box-shadow:0 4px 12px rgba(30,58,138,.35);opacity:0;white-space:nowrap}
+#chip span{display:inline-block;width:22px;height:22px;border-radius:50%;background:#ffd84a;color:#1e3a8a;text-align:center;font:800 14px/22px 'Baloo 2';margin-right:7px;vertical-align:1px}
+#term{position:absolute;left:50%;top:48px;transform:translateX(-50%);white-space:nowrap;font:600 13px/26px Hind;color:#1e3a8a;background:#fff;border:1.5px solid #c7d2fe;border-radius:13px;padding:0 12px 0 8px;opacity:0;box-shadow:0 3px 10px rgba(30,58,138,.12)}
+#term b{font:700 15px Poppins,Hind;color:#b91c1c;margin-left:4px}
+#dim{position:absolute;inset:0;background:rgba(10,16,40,.0)}
+.card{position:absolute;left:22px;right:22px;top:58px;background:#fffdf5;border-radius:10px;padding:14px 16px 14px 26px;opacity:0;
+ box-shadow:0 18px 40px rgba(0,0,0,.35),0 2px 0 #e8dfc8;background-image:linear-gradient(rgba(0,0,0,0) 31px,rgba(59,130,246,.08) 32px);background-size:100% 32px}
+.card:before{content:"";position:absolute;left:14px;top:0;bottom:0;width:2px;background:rgba(220,38,38,.35)}
+.ch{font:700 12.5px/18px Poppins,Hind;color:#6b7280;letter-spacing:.4px;margin-bottom:8px;display:flex;justify-content:space-between}
+.ch b{color:#1e3a8a}
+.cq{font:700 21px/1.38 Hind;color:#111827;margin-bottom:10px}
+.op{position:relative;font:600 19px/1.25 Hind;color:#1f2937;padding:6px 10px;margin:5px 0;border-radius:8px;opacity:0}
+.op b{font:700 17px Poppins;color:#1e3a8a;margin-right:8px}
+.stamp{position:absolute;font:800 22px/1 Poppins;letter-spacing:1.5px;color:#c81e1e;border:3.5px solid #c81e1e;border-radius:8px;padding:6px 10px 4px;opacity:0;
+ box-shadow:inset 0 0 0 2px #fffdf5,inset 0 0 0 4px rgba(200,30,30,.8);background:rgba(255,253,245,.6);white-space:nowrap}
+.stamp small{display:block;font:700 10px Poppins;letter-spacing:2px;text-align:center;margin-top:3px}
+#banner{position:absolute;left:0;right:0;top:12px;text-align:center;opacity:0}
+#banner span{font:800 16px/30px 'Baloo 2';color:#1e3a8a;background:#ffd84a;padding:0 14px;border-radius:15px;box-shadow:0 4px 12px rgba(0,0,0,.25)}
+#pills{position:absolute;left:0;right:0;top:420px;text-align:center}
+.pill{display:inline-block;font:700 14px/28px 'Baloo 2';color:#fff;background:#7c3aed;border-radius:14px;padding:0 11px 0 8px;margin:3px 3px;opacity:0;box-shadow:0 4px 10px rgba(124,58,237,.35);position:relative}
+.pill i{display:inline-block;width:8px;height:8px;border-radius:50%;background:#ffd84a;margin-right:6px;vertical-align:1px}
+#pillsT{position:absolute;left:0;right:0;top:394px;text-align:center;font:700 14px Hind;color:#e5e7eb;opacity:0}
+#tape{position:absolute;left:-40px;right:-40px;top:300px;height:42px;transform:rotate(-7deg);opacity:0;
+ background:repeating-linear-gradient(45deg,#ffd400 0 22px,#111 22px 44px);box-shadow:0 8px 20px rgba(0,0,0,.4)}
+#tape div{position:absolute;left:50%;top:5px;transform:translateX(-50%);background:#111;color:#ffd400;font:800 22px/32px Poppins;letter-spacing:6px;padding:0 18px;border-radius:4px}
+#trapNote{position:absolute;left:0;right:0;top:356px;text-align:center;opacity:0}
+#trapNote span{font:800 20px/36px 'Baloo 2';color:#fff;background:#dc2626;padding:0 16px;border-radius:18px;box-shadow:0 6px 16px rgba(220,38,38,.45)}
+#pencil{position:absolute;left:0;top:0;width:150px;height:30px;transform-origin:0 50%;opacity:0;pointer-events:none;filter:drop-shadow(4px 10px 6px rgba(0,0,0,.28))}
+#cap{position:absolute;left:18px;right:18px;top:692px;height:170px;text-align:center;font:800 37px/1.3 'Baloo 2';color:#fff;
+ text-shadow:0 3px 0 #000,0 -2px 0 #000,2px 0 0 #000,-2px 0 0 #000,0 8px 24px rgba(0,0,0,.6)}
+#cap .w{display:inline-block;margin:0 4px}
+#cap .hl{color:#ffd84a}
+#foot{position:absolute;left:0;right:0;top:884px;text-align:center}
+#foot .h{font:800 25px/1.2 'Baloo 2';color:#4da3ff;letter-spacing:.5px}
+#foot .s{font:600 16px/1.4 Hind;color:#8aa4d6}
+#teaser{position:absolute;left:30px;right:30px;top:300px;text-align:center;opacity:0}
+#teaser div{display:inline-block;font:800 24px/1.35 'Baloo 2';color:#fff;background:linear-gradient(135deg,#1e3a8a,#7c3aed);padding:14px 22px;border-radius:16px;box-shadow:0 14px 34px rgba(0,0,0,.45)}
+#teaser small{display:block;font:700 15px Hind;color:#ffd84a}
+</style></head><body><div id="root">
+<div id="bg"></div>
+<div class="orb" id="o1" style="width:260px;height:260px;background:#2f55c9;left:-80px;top:120px"></div>
+<div class="orb" id="o2" style="width:220px;height:220px;background:#ff7a2f;right:-90px;top:520px;opacity:.18"></div>
+<div id="grain"></div>
+
+<div id="top">
+ <div id="logo"><svg width="30" height="30" viewBox="0 0 30 30"><rect x="3" y="7" width="24" height="16" rx="3" fill="#fff"/><path d="M4 9 L15 17 L26 9" fill="none" stroke="#c81e1e" stroke-width="2.4" stroke-linejoin="round"/></svg></div>
+ <div id="ttl">Clause 7 • रविवार और छुट्टी</div>
+ <div id="sub">GDS से MTS • Postman • PA</div>
+ <div id="rail"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
+</div>
+
+<div id="boardWrap"><div id="frame"><div id="screen">
+ <div id="grid"></div><div id="night"></div>
+ <svg id="svg" viewBox="0 0 492 524">
+  <defs>
+   <filter id="glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="9"/></filter>
+   <filter id="rough"><feTurbulence baseFrequency=".035" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="2.2"/></filter>
+   <clipPath id="cpA"><rect id="cpAr" x="0" y="0" width="0" height="524"/></clipPath>
+  </defs>
+  <!-- S1: kahani -->
+  <g id="s1" filter="url(#rough)">
+   <rect class="fl" data-after="cal" x="40" y="80" width="150" height="35" fill="#ef4444"/>
+   <rect class="fl" data-after="cal" x="40" y="115" width="150" height="95" fill="#fff7ed"/>
+   <path class="dr" data-op="cal" d="M40,80 H190 V210 H40 Z"/>
+   <path class="dr" data-op="cal" d="M40,115 H190"/>
+   <path class="dr" data-op="cal" d="M72,66 V94 M158,66 V94"/>
+   <text class="tx" data-op="calT" x="115" y="178" text-anchor="middle" font-size="34" fill="#dc2626">रविवार</text>
+   <rect class="fl" data-after="env" x="290" y="74" width="160" height="106" fill="#fde68a"/>
+   <path class="dr" data-op="env" d="M290,74 H450 V180 H290 Z"/>
+   <path class="dr" data-op="env" d="M290,74 L370,132 L450,74"/>
+   <text class="tx" data-op="envT" x="370" y="214" text-anchor="middle" font-size="24" fill="#1f2937">ज़रूरी चिट्ठी</text>
+   <path class="fl" data-after="po" d="M135,300 L250,240 L365,300 Z" fill="#e2554b"/>
+   <rect class="fl" data-after="po" x="150" y="300" width="200" height="170" fill="#fde7c4"/>
+   <rect class="fl" data-after="po" x="225" y="390" width="50" height="80" fill="#9a6232"/>
+   <rect class="fl" data-after="po" x="185" y="314" width="130" height="28" fill="#1e3a8a"/>
+   <path class="dr" data-op="po" d="M135,300 L250,240 L365,300 Z"/>
+   <path class="dr" data-op="po" d="M150,300 V470 H350 V300"/>
+   <path class="dr" data-op="po" d="M225,470 V390 H275 V470"/>
+   <path class="dr" data-op="po" d="M185,314 H315 V342 H185 Z"/>
+   <path class="dr" data-op="po" d="M166,362 H206 V396 H166 Z M294,362 H334 V396 H294 Z"/>
+   <path class="dr" data-op="po" d="M120,470 H380"/>
+   <text class="tx" data-op="poT" x="250" y="336" text-anchor="middle" font-size="20" fill="#fff">डाकघर</text>
+   <g id="lock"><path d="M236,412 v-12 a14,14 0 0,1 28,0 v12" fill="none" stroke="#6b7280" stroke-width="5"/>
+    <rect x="228" y="410" width="44" height="34" rx="6" fill="#f59e0b" stroke="#92400e" stroke-width="2.5"/><circle cx="250" cy="425" r="4" fill="#78350f"/><path d="M250,427 v8" stroke="#78350f" stroke-width="3"/></g>
+   <text id="band" x="395" y="420" text-anchor="middle" font-size="36" font-weight="700" fill="#dc2626" opacity="0" style="font-family:Kalam">बंद!</text>
+  </g>
+  <!-- S2: kya band -->
+  <g id="s2" opacity="0" filter="url(#rough)">
+   <rect class="fl" data-after="ctr" x="35" y="95" width="120" height="75" fill="#dbeafe"/>
+   <path class="dr" data-op="ctr" d="M35,70 H155 V170 H35 Z"/>
+   <path class="dr" data-op="ctr" d="M35,95 H155 M65,95 V170 M95,95 V170 M125,95 V170"/>
+   <path class="dr" data-op="ctr" d="M22,170 H168"/>
+   <text class="tx" data-op="ctrT" x="95" y="206" text-anchor="middle" font-size="22" fill="#1f2937">काउंटर</text>
+   <rect class="fl" data-after="bike" x="196" y="110" width="28" height="22" fill="#d9363e"/>
+   <path class="dr" data-op="bike" d="M188,150 a22,22 0 1,0 44,0 a22,22 0 1,0 -44,0 M263,150 a22,22 0 1,0 44,0 a22,22 0 1,0 -44,0"/>
+   <path class="dr" data-op="bike" d="M210,150 L240,115 L285,150 M240,115 H264 L285,150 M232,106 H254"/>
+   <path class="dr" data-op="bike" d="M196,110 H224 V132 H196 Z"/>
+   <text class="tx" data-op="bikeT" x="247" y="206" text-anchor="middle" font-size="22" fill="#1f2937">डिलीवरी</text>
+   <path class="fl" data-after="box" d="M370,182 V100 a30,30 0 0,1 60,0 V182 Z" fill="#d9363e"/>
+   <path class="dr" data-op="box" d="M370,182 V100 a30,30 0 0,1 60,0 V182 Z"/>
+   <path class="dr" data-op="box" d="M385,112 H415 M358,182 H442"/>
+   <text class="tx" data-op="boxT" x="400" y="206" text-anchor="middle" font-size="22" fill="#1f2937">लेटर बॉक्स</text>
+   <path class="dr red" data-op="x1" d="M48,84 L142,176 M142,84 L48,176"/>
+   <path class="dr red" data-op="x2" d="M196,96 L298,176 M298,96 L196,176"/>
+   <path class="dr red" data-op="x3" d="M352,78 L448,184 M448,78 L352,184"/>
+   <rect class="fl" data-after="van" x="110" y="296" width="190" height="90" rx="6" fill="#ffe3a3"/>
+   <path class="fl" data-after="van" d="M300,326 H360 L385,356 V386 H300 Z" fill="#d9363e"/>
+   <path class="dr" data-op="van" d="M110,296 H300 V386 H110 Z"/>
+   <path class="dr" data-op="van" d="M300,326 H360 L385,356 V386 H300"/>
+   <path class="dr" data-op="van" d="M312,336 H352 L366,354 H312 Z"/>
+   <path class="dr" data-op="van" d="M140,396 a20,20 0 1,0 40,0 a20,20 0 1,0 -40,0 M310,396 a20,20 0 1,0 40,0 a20,20 0 1,0 -40,0"/>
+   <text class="tx" data-op="vanT" x="205" y="350" text-anchor="middle" font-size="23" fill="#1f2937">मोबाइल डाकघर</text>
+   <path class="dr red" data-op="x4" d="M100,286 L392,420 M392,286 L100,420"/>
+   <text class="tx" data-op="vanL" x="246" y="470" text-anchor="middle" font-size="26" fill="#dc2626">मोबाइल डाकघर भी बंद</text>
+  </g>
+  <!-- S4: raat -->
+  <g id="s4" opacity="0">
+   <g id="stars"></g>
+   <path class="fl" data-after="moon" d="M402,64 a42,42 0 1,0 34,72 a34,34 0 1,1 -34,-72 Z" fill="#fff3b0"/>
+   <path class="dr wh" data-op="moon" d="M402,64 a42,42 0 1,0 34,72 a34,34 0 1,1 -34,-72 Z"/>
+   <rect id="win1g" x="150" y="330" width="56" height="48" fill="#ffcf4a" filter="url(#glow)" opacity="0"/>
+   <rect id="win2g" x="286" y="330" width="56" height="48" fill="#ffcf4a" filter="url(#glow)" opacity="0"/>
+   <rect id="doorg" x="216" y="372" width="60" height="96" fill="#ffb84a" filter="url(#glow)" opacity="0"/>
+   <path class="fl" data-after="npo" d="M120,270 L246,206 L372,270 Z" fill="#3b4a8f"/>
+   <rect class="fl" data-after="npo" x="136" y="270" width="220" height="200" fill="#232d63"/>
+   <rect id="win1" x="156" y="336" width="44" height="36" fill="#2b3672"/>
+   <rect id="win2" x="292" y="336" width="44" height="36" fill="#2b3672"/>
+   <rect id="door" x="222" y="378" width="48" height="92" fill="#2b3672"/>
+   <rect class="fl" data-after="npo" x="170" y="284" width="152" height="30" fill="#c81e1e"/>
+   <path class="dr wh" data-op="npo" d="M120,270 L246,206 L372,270 Z"/>
+   <path class="dr wh" data-op="npo" d="M136,270 V470 H356 V270"/>
+   <path class="dr wh" data-op="npo" d="M156,336 H200 V372 H156 Z M292,336 H336 V372 H292 Z"/>
+   <path class="dr wh" data-op="npo" d="M222,470 V378 H270 V470"/>
+   <path class="dr wh" data-op="npo" d="M170,284 H322 V314 H170 Z M104,470 H388"/>
+   <text class="tx" data-op="npoS" x="246" y="306" text-anchor="middle" font-size="19" fill="#fff">NIGHT P.O.</text>
+   <text class="tx" data-op="npoT" x="246" y="506" text-anchor="middle" font-size="30" fill="#ffffff">नाइट पोस्ट ऑफिस</text>
+   <text class="tx" data-op="npoY" x="246" y="180" text-anchor="middle" font-size="26" fill="#ffd84a">छुट्टी में भी खुला!</text>
+  </g>
+  <!-- card par pen ke nishaan -->
+  <g id="ink"></g>
+ </svg>
+ <div id="dim"></div>
+ <div id="banner"><span>जो अभी समझा → वही पेपर में आया</span></div>
+ <div class="card" id="c8">
+  <div class="ch"><span><b>PUNJAB</b> • MTS/PM/MG 2024 • पेपर-1</span><span>प्रश्न <b>8</b></span></div>
+  <div class="cq">मोबाइल डाकघर किस दिन बंद रहते हैं?</div>
+  <div class="op" id="c8a"><b>(A)</b>रविवार</div>
+  <div class="op" id="c8b"><b>(B)</b>छुट्टियाँ</div>
+  <div class="op" id="c8c"><b>(C)</b>रविवार और छुट्टियाँ दोनों</div>
+  <div class="stamp" id="st8" style="right:16px;bottom:16px">PUNJAB 2024<small>ASLI PAPER</small></div>
+ </div>
+ <div class="card" id="c4">
+  <div class="ch"><span><b>PUNJAB</b> • MTS/PM/MG 2024 • पेपर-1</span><span>प्रश्न <b>4</b></span></div>
+  <div class="cq">एक डाकघर जो रविवार और छुट्टियों के दिन भी खोला जाता है, कहलाता है:</div>
+  <div class="op" id="c4a"><b>(A)</b>मोबाइल डाकघर</div>
+  <div class="op" id="c4b"><b>(B)</b>प्रधान डाकघर</div>
+  <div class="op" id="c4c"><b>(C)</b>शाखा डाकघर</div>
+  <div class="op" id="c4d"><b>(D)</b>रात्रि डाकघर</div>
+  <div class="stamp" id="st4" style="right:14px;top:96px">PUNJAB 2024<small>ASLI PAPER</small></div>
+ </div>
+ <div id="pillsT">यही नियम इन पेपरों में आ चुका है</div>
+ <div id="pills"><span class="pill"><i></i>पंजाब 2024</span><span class="pill"><i></i>गुजरात 2024</span><span class="pill"><i></i>दिल्ली 2023</span><span class="pill"><i></i>झारखंड 2022</span></div>
+ <div id="tape"><div>TRAP</div></div>
+ <div id="trapNote"><span>मोबाइल डाकघर? वो तो बंद रहता है!</span></div>
+ <svg id="ink2" viewBox="0 0 492 524" style="position:absolute;left:0;top:0;width:492px;height:524px;pointer-events:none"></svg>
+ <div id="chip"><span>1</span><em style="font-style:normal"></em></div>
+ <div id="term">पेपर का शब्द:<b></b></div>
+ <div id="live"><i></i>क्लास</div>
+ <div id="teaser"><div><small>अगले हिस्से में</small>② ज़रूरी चिट्ठी का रास्ता — RMS</div></div>
+ <div id="sheen"></div><div id="power"></div>
+</div></div></div>
+
+<svg id="pencil" viewBox="0 0 150 30">
+ <polygon points="0,15 22,6 22,24" fill="#f3d2a2"/><polygon points="0,15 8,12 8,18" fill="#222"/>
+ <rect x="22" y="6" width="98" height="18" fill="#ffc21a"/><rect x="22" y="6" width="98" height="6" fill="#ffd95a"/><rect x="22" y="18" width="98" height="6" fill="#e0a300"/>
+ <rect x="120" y="5" width="12" height="20" fill="#b8bec7"/><rect x="132" y="5" width="16" height="20" rx="4" fill="#f08aa0"/>
+</svg>
+<div id="cap"></div>
+<div id="foot"><div class="h">@POSTAL_WALA</div><div class="s">सीखो आसान भाषा में • हर नियम पेपर से जुड़ा</div></div>
+</div>
+<script>/*ENGINE*/</script>
+<script>/*SCENE*/</script>
+</body></html>
