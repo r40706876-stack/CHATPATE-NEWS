@@ -1,8 +1,0 @@
-name: Free web search test (ek baar)
-on: workflow_dispatch
-jobs:
-  t:
-    runs-on: ubuntu-24.04
-    steps:
-      - uses: actions/checkout@v4
-      - run: python3 tools/web_search_test.py

@@ -8,8 +8,8 @@ on:
         description: "chhanni: har key par kitni AI calls (15 sawal/call)"
         default: "60"
       web_calls:
-        description: "web jaanch: har key par kitni search calls (3 sawal/call)"
-        default: "40"
+        description: "web jaanch: har key par kitni search calls (3 sawal/call; free key par Google Search band hai -> 0)"
+        default: "0"
       hfix_calls:
         description: "tooti Hindi: har key par kitni AI calls (20 sawal/call)"
         default: "40"
@@ -63,7 +63,7 @@ jobs:
             1) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY2 }}" ;;
             *) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY3 }}" ;;
           esac
-          SHARD=${{ matrix.shard }} NSHARD=3 DOUBT_MAX_CALLS=${{ inputs.screen_calls || '60' }} DOUBT_WEB_MAX=${{ inputs.web_calls || '40' }} python deep/pyq_doubt.py dt_${{ matrix.shard }}.json 2>&1 | tail -n 40
+          SHARD=${{ matrix.shard }} NSHARD=3 DOUBT_MAX_CALLS=${{ inputs.screen_calls || '60' }} DOUBT_WEB_MAX=${{ inputs.web_calls || '0' }} python deep/pyq_doubt.py dt_${{ matrix.shard }}.json 2>&1 | tail -n 40
           [ -f dt_${{ matrix.shard }}.json ] || echo "{}" > dt_${{ matrix.shard }}.json
       - uses: actions/upload-artifact@v4
         with:
@@ -106,7 +106,9 @@ jobs:
               dt.update(json.load(open(f, encoding="utf-8")))
           for x in b["items"]:
               d = dt.get(x["id"])
-              if d and d.get("v") in ("changed", "doubt", "unknown"):
+              if d and d.get("q") and d.get("why") == "time" and not x.get("dt"):
+                  x["dt"] = {"v": "time"}               # samay ke saath badalne wala: website par saal wala note
+              elif d and d.get("v") in ("changed", "doubt", "unknown"):
                   x["dt"] = {k: d[k] for k in ("v", "now", "why") if k in d}
               elif d and (d.get("s") or d.get("v") == "same"):
                   x.pop("dt", None)
