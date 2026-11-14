@@ -22,10 +22,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: r40706876-stack/postal-wala-automation
+          repository: r40706876-stack/postal-wala-core
+          token: ${{ secrets.CORE_TOKEN }}
           ref: main
       - uses: actions/checkout@v4
         with:
+          repository: r40706876-stack/postal-wala-core
+          token: ${{ secrets.CORE_TOKEN }}
           path: bk
           fetch-depth: 0
       - uses: actions/setup-python@v5
@@ -61,6 +64,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          repository: r40706876-stack/postal-wala-core
+          token: ${{ secrets.CORE_TOKEN }}
           ref: postal-pyq-out
           path: o
       - uses: actions/download-artifact@v4
