@@ -1,0 +1,95 @@
+name: Postal PYQ shak-jaanch (Bakra ki 3 Gemini keys + Google Search)
+
+# Bank (postal-pyq-out) ke har postal/gk sawal ki chhanni; jinme shak -> web se jaanch. Nateeja wapas usi branch par.
+on:
+  workflow_dispatch:
+    inputs:
+      screen_calls:
+        description: "chhanni: har key par kitni AI calls (15 sawal/call)"
+        default: "60"
+      web_calls:
+        description: "web jaanch: har key par kitni search calls (3 sawal/call)"
+        default: "40"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: postal-pyq-out
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-automation
+          ref: main
+      - uses: actions/checkout@v4
+        with:
+          path: bk
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: pip install -q requests pypdf pillow numpy
+      - name: Bank + pichhli jaanch lo
+        run: |
+          git -C bk fetch -q origin postal-pyq-out
+          git -C bk show FETCH_HEAD:pyq_bank.json > pyq_papers/pyq_bank.json
+          git -C bk show FETCH_HEAD:dt_${{ matrix.shard }}.json > dt_${{ matrix.shard }}.json 2>/dev/null || rm -f dt_${{ matrix.shard }}.json
+      - name: Jaanch
+        run: |
+          case "${{ matrix.shard }}" in
+            0) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY }}" ;;
+            1) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY2 }}" ;;
+            *) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY3 }}" ;;
+          esac
+          SHARD=${{ matrix.shard }} NSHARD=3 DOUBT_MAX_CALLS=${{ inputs.screen_calls || '60' }} DOUBT_WEB_MAX=${{ inputs.web_calls || '40' }} python deep/pyq_doubt.py dt_${{ matrix.shard }}.json 2>&1 | tail -n 40
+          [ -f dt_${{ matrix.shard }}.json ] || echo "{}" > dt_${{ matrix.shard }}.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dt${{ matrix.shard }}
+          path: dt_${{ matrix.shard }}.json
+
+  save:
+    needs: check
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: postal-pyq-out
+          path: o
+      - uses: actions/download-artifact@v4
+        with:
+          path: dl
+          merge-multiple: true
+      - name: Bank me jodo + branch par
+        run: |
+          cp dl/dt_*.json o/ 2>/dev/null || true
+          cd o && python3 - <<'PY'
+          import json, glob
+          from collections import Counter
+          b = json.load(open("pyq_bank.json", encoding="utf-8"))
+          dt = {}
+          for f in glob.glob("dt_*.json"):
+              dt.update(json.load(open(f, encoding="utf-8")))
+          for x in b["items"]:
+              d = dt.get(x["id"])
+              if d and d.get("v") in ("changed", "doubt", "unknown"):
+                  x["dt"] = {k: d[k] for k in ("v", "now", "why") if k in d}
+              elif d and (d.get("s") or d.get("v") == "same"):
+                  x.pop("dt", None)
+          json.dump(b, open("pyq_bank.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+          print("jaanch:", dict(Counter(d.get("v") or ("saaf" if d.get("s") else "web baaki") for d in dt.values())),
+                "| bank sawal", len(b["items"]))
+          PY
+          git config user.name "github-actions[bot]"; git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add . && git commit -qm "pyq shak-jaanch (run ${{ github.run_id }})" && git push -q origin HEAD:postal-pyq-out
