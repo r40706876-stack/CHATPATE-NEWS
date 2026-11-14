@@ -3,6 +3,8 @@ name: Postal PYQ bank + deep vishleshan (Bakra ki 3 Gemini keys)
 # 1) naye papers ke sawal bank me (jawab = paper ki answer key)  2) har sawal ka deep vishleshan (3 keys, 3 hisse)
 # Nateeja branch postal-pyq-out par (pyq_bank.json) - agli run wahin se aage badhti hai.
 on:
+  schedule:
+    - cron: '40 8 * * *'      # roz 2:10 PM IST (Gemini ki roz ki seema 1:30 PM IST par nayi hoti hai)
   workflow_dispatch:
     inputs:
       bank_calls:
@@ -51,7 +53,7 @@ jobs:
             1) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY2 }}" ;;
             *) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY3 }}" ;;
           esac
-          SHARD=${{ matrix.shard }} NSHARD=3 EXTRACT_MAX_CALLS=${{ inputs.bank_calls }} OUT=extract_${{ matrix.shard }}.json python deep/pyq_extract.py 2>&1 | grep -vE "^\s*$|edge-tts" | tail -n 70
+          SHARD=${{ matrix.shard }} NSHARD=3 EXTRACT_MAX_CALLS=${{ inputs.bank_calls || '50' }} OUT=extract_${{ matrix.shard }}.json python deep/pyq_extract.py 2>&1 | grep -vE "^\s*$|edge-tts" | tail -n 70
           [ -f extract_${{ matrix.shard }}.json ] || echo '{"done":[],"items":[]}' > extract_${{ matrix.shard }}.json
       - uses: actions/upload-artifact@v4
         with:
@@ -124,7 +126,7 @@ jobs:
             1) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY2 }}" ;;
             *) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY3 }}" ;;
           esac
-          SHARD=${{ matrix.shard }} NSHARD=3 EXPLAIN_MAX_CALLS=${{ inputs.explain_calls }} python deep/pyq_explain.py an_${{ matrix.shard }}.json 2>&1 | tail -n 40
+          SHARD=${{ matrix.shard }} NSHARD=3 EXPLAIN_MAX_CALLS=${{ inputs.explain_calls || '45' }} python deep/pyq_explain.py an_${{ matrix.shard }}.json 2>&1 | tail -n 40
           [ -f an_${{ matrix.shard }}.json ] || echo "{}" > an_${{ matrix.shard }}.json
       - uses: actions/upload-artifact@v4
         with:
