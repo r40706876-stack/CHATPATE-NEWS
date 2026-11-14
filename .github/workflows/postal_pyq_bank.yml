@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       bank_calls:
-        description: "naye sawal: kitni AI calls (12 sawal/call)"
+        description: "paper padhna: har key par kitni AI calls"
         default: "40"
       explain_calls:
         description: "vyakhya: har key par kitni AI calls (4 sawal/call)"
@@ -16,9 +16,13 @@ permissions:
   contents: write
 
 jobs:
-  bank:
+  extract:
     runs-on: ubuntu-24.04
-    timeout-minutes: 60
+    timeout-minutes: 120
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -34,22 +38,59 @@ jobs:
       - name: Packages
         run: |
           sudo apt-get update -qq && sudo apt-get install -y --no-install-recommends poppler-utils
-          pip install -q requests pypdf pillow numpy
-      - name: Pichhla nateeja lo
+          pip install -q requests pypdf pillow numpy edge-tts
+      - name: Pichhla padha hua lo
+        run: |
+          if git -C bk ls-remote --exit-code origin postal-pyq-out >/dev/null; then
+            git -C bk fetch -q origin postal-pyq-out && (git -C bk show FETCH_HEAD:extract_${{ matrix.shard }}.json > extract_${{ matrix.shard }}.json 2>/dev/null || rm -f extract_${{ matrix.shard }}.json)
+          fi
+      - name: Paper padho (Gemini)
+        run: |
+          case "${{ matrix.shard }}" in
+            0) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY }}" ;;
+            1) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY2 }}" ;;
+            *) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY3 }}" ;;
+          esac
+          SHARD=${{ matrix.shard }} NSHARD=3 EXTRACT_MAX_CALLS=${{ inputs.bank_calls }} OUT=extract_${{ matrix.shard }}.json python deep/pyq_extract.py 2>&1 | grep -vE "^\s*$|edge-tts" | tail -n 70
+          [ -f extract_${{ matrix.shard }}.json ] || echo '{"done":[],"items":[]}' > extract_${{ matrix.shard }}.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ex${{ matrix.shard }}
+          path: extract_${{ matrix.shard }}.json
+
+  bank:
+    needs: extract
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-automation
+          ref: main
+      - uses: actions/checkout@v4
+        with:
+          path: bk
+          fetch-depth: 0
+      - name: Pichhla bank lo
         run: |
           if git -C bk ls-remote --exit-code origin postal-pyq-out >/dev/null; then
             git -C bk fetch -q origin postal-pyq-out && git -C bk show FETCH_HEAD:pyq_bank.json > pyq_papers/pyq_bank.json && echo "pichhla bank liya"
           fi
-          python -c "import json;b=json.load(open('pyq_papers/pyq_bank.json'));print('bank',len(b['items']),'vyakhya',sum(1 for x in b['items'] if x.get('an')))"
-      - name: Naye sawal (key 1)
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          BANK_MAX_CALLS: ${{ inputs.bank_calls }}
-        run: python pyq_daily.py bank 2>&1 | grep -vE "^\s*$" | tail -n 30
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: ex*
+          path: exs
+          merge-multiple: true
+      - name: Bank me jodo
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y --no-install-recommends poppler-utils
+          python3 deep/pyq_merge.py exs/extract_0.json exs/extract_1.json exs/extract_2.json
       - uses: actions/upload-artifact@v4
         with:
           name: bank1
-          path: pyq_papers/pyq_bank.json
+          path: |
+            pyq_papers/pyq_bank.json
+            exs/
 
   explain:
     needs: bank
@@ -74,7 +115,8 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: bank1
-          path: pyq_papers
+          path: dl1
+      - run: cp dl1/pyq_papers/pyq_bank.json pyq_papers/pyq_bank.json
       - name: Vyakhya
         run: |
           case "${{ matrix.shard }}" in
@@ -102,7 +144,7 @@ jobs:
         run: |
           python3 - <<'PY'
           import json, glob
-          b = json.load(open("dl/pyq_bank.json", encoding="utf-8"))
+          b = json.load(open("dl/pyq_papers/pyq_bank.json", encoding="utf-8"))
           an = {}
           for f in glob.glob("dl/an_*.json"):
               an.update(json.load(open(f, encoding="utf-8")))
@@ -114,7 +156,7 @@ jobs:
           tot = sum(1 for x in b["items"] if x.get("an"))
           print(f"is run me {n} nayi vyakhya; kul sawal {len(b['items'])}, vyakhya wale {tot}")
           PY
-          mkdir -p o && mv pyq_bank.json o/ && cd o && git init -q && git checkout -q -b postal-pyq-out
+          mkdir -p o && mv pyq_bank.json o/ && cp dl/exs/extract_*.json o/ 2>/dev/null; cd o && git init -q && git checkout -q -b postal-pyq-out
           git config user.name "github-actions[bot]"; git config user.email "github-actions[bot]@users.noreply.github.com"
           git add . && git commit -qm "postal pyq bank (run ${{ github.run_id }})"
           git push -f "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" postal-pyq-out:postal-pyq-out
