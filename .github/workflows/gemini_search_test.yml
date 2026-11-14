@@ -1,4 +1,4 @@
-name: Gemini search test (ek baar)
+name: Free web search test (ek baar)
 on: workflow_dispatch
 jobs:
   t:
@@ -9,21 +9,29 @@ jobs:
           K1: ${{ secrets.GEMINI_API_KEY }}
           K2: ${{ secrets.GEMINI_API_KEY2 }}
           K3: ${{ secrets.GEMINI_API_KEY3 }}
-        run: |
-          python3 - <<'PY'
-          import os, json, urllib.request, urllib.error
-          base = "https://generativelanguage.googleapis.com/v1beta/models"
-          for kn in ("K1", "K2", "K3"):
-              k = os.environ[kn].strip()
-              for n in ("gemini-3.8-flash", "gemini-3.5-flash-lite"):
-                  for search in (False, True):
-                      b = {"contents":[{"parts":[{"text":"Current Speed Post tariff 50 g local India? One line."}]}]}
-                      if search: b["tools"] = [{"google_search":{}}]
-                      try:
-                          r = urllib.request.urlopen(urllib.request.Request(f"{base}/{n}:generateContent?key={k}", json.dumps(b).encode(), {"Content-Type":"application/json"}), timeout=90)
-                          print(kn, n, "search" if search else "plain", "OK")
-                      except urllib.error.HTTPError as e:
-                          err = json.loads(e.read() or b"{}").get("error", {})
-                          det = json.dumps(err.get("details", []))[:300]
-                          print(kn, n, "search" if search else "plain", e.code, det)
+        run:           python3 - <<'PY'
+          import re, urllib.request, urllib.parse, html
+          UA = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36"}
+          def get(u, data=None):
+              r = urllib.request.urlopen(urllib.request.Request(u, data, UA), timeout=30)
+              return r.status, r.read().decode("utf-8", "ignore")
+          qs = ["India Post Speed Post tariff 2025", "Sukanya Samriddhi Yojana interest rate current quarter", "registered post merged speed post 2025"]
+          for q in qs:
+              for name, url, data in [("ddg-html", "https://html.duckduckgo.com/html/", urllib.parse.urlencode({"q": q}).encode()),
+                                      ("ddg-lite", "https://lite.duckduckgo.com/lite/", urllib.parse.urlencode({"q": q}).encode()),
+                                      ("bing", "https://www.bing.com/search?" + urllib.parse.urlencode({"q": q}), None)]:
+                  try:
+                      st, t = get(url, data)
+                      links = re.findall(r'href="(https?://[^"]+)"', t)
+                      links = [l for l in links if not re.search(r"duckduckgo|bing\.com|microsoft|go\.microsoft", l)]
+                      print(name, "|", q[:30], "|", st, len(t), "| links:", len(links), links[:3])
+                  except Exception as e:
+                      print(name, "|", q[:30], "| ERR", str(e)[:100])
+          for u in ["https://www.indiapost.gov.in/", "https://www.indiapost.gov.in/Financial/Pages/Content/Post-Office-Saving-Schemes.aspx", "https://pib.gov.in/"]:
+              try:
+                  st, t = get(u); txt = re.sub(r"<[^>]+>", " ", t)
+                  print("fetch", u, st, len(" ".join(txt.split())))
+              except Exception as e:
+                  print("fetch", u, "ERR", str(e)[:100])
           PY
+Y
