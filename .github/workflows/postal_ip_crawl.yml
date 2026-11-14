@@ -5,7 +5,7 @@ on:
       max_pages:
         default: "250"
 permissions:
-  contents: read
+  contents: write
 jobs:
   crawl:
     runs-on: ubuntu-24.04
@@ -17,7 +17,13 @@ jobs:
           ref: main
       - run: sudo apt-get install -y -qq poppler-utils >/dev/null; pip install -q requests
       - run: CRAWL_MAX=${{ inputs.max_pages || '250' }} python deep/ip_crawl.py ip_pages.json 2>&1 | tail -n 400
-      - uses: actions/upload-artifact@v4
+      - uses: actions/checkout@v4
         with:
-          name: ip_pages
-          path: ip_pages.json
+          path: bk
+      - name: postal-ip branch par rakho
+        run: |
+          mkdir o && cp ip_pages.json o/ && cd o && git init -q && git checkout -q -b postal-ip
+          git config user.name "github-actions[bot]"; git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add . && git commit -qm "India Post pages (run ${{ github.run_id }})"
+          git remote add origin "$(git -C ../bk remote get-url origin)"
+          git -c http.extraheader="$(git -C ../bk config --get http.https://github.com/.extraheader)" push -qf origin HEAD:postal-ip
