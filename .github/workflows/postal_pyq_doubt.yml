@@ -1,6 +1,6 @@
 name: Postal PYQ shak-jaanch (Bakra ki 3 Gemini keys + Google Search)
 
-# Bank (postal-pyq-out) ke har postal/gk sawal ki chhanni; jinme shak -> web se jaanch. Nateeja wapas usi branch par.
+# Pehle tooti Hindi theek (deep/pyq_hindi_fix.py), phir: bank (postal-pyq-out) ke har postal/gk sawal ki chhanni; jinme shak -> web se jaanch. Nateeja wapas usi branch par.
 on:
   workflow_dispatch:
     inputs:
@@ -9,6 +9,9 @@ on:
         default: "60"
       web_calls:
         description: "web jaanch: har key par kitni search calls (3 sawal/call)"
+        default: "40"
+      hfix_calls:
+        description: "tooti Hindi: har key par kitni AI calls (20 sawal/call)"
         default: "40"
 
 permissions:
@@ -44,6 +47,15 @@ jobs:
           git -C bk fetch -q origin postal-pyq-out
           git -C bk show FETCH_HEAD:pyq_bank.json > pyq_papers/pyq_bank.json
           git -C bk show FETCH_HEAD:dt_${{ matrix.shard }}.json > dt_${{ matrix.shard }}.json 2>/dev/null || rm -f dt_${{ matrix.shard }}.json
+      - name: Tooti Hindi theek
+        run: |
+          case "${{ matrix.shard }}" in
+            0) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY }}" ;;
+            1) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY2 }}" ;;
+            *) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY3 }}" ;;
+          esac
+          SHARD=${{ matrix.shard }} NSHARD=3 HFIX_MAX_CALLS=${{ inputs.hfix_calls || '40' }} python deep/pyq_hindi_fix.py hf_${{ matrix.shard }}.json 2>&1 | tail -n 15
+          [ -f hf_${{ matrix.shard }}.json ] || echo "{}" > hf_${{ matrix.shard }}.json
       - name: Jaanch
         run: |
           case "${{ matrix.shard }}" in
@@ -56,7 +68,9 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: dt${{ matrix.shard }}
-          path: dt_${{ matrix.shard }}.json
+          path: |
+            dt_${{ matrix.shard }}.json
+            hf_${{ matrix.shard }}.json
 
   save:
     needs: check
@@ -74,10 +88,19 @@ jobs:
       - name: Bank me jodo + branch par
         run: |
           cp dl/dt_*.json o/ 2>/dev/null || true
+          mkdir -p hf && cp dl/hf_*.json hf/ 2>/dev/null || true
           cd o && python3 - <<'PY'
           import json, glob
           from collections import Counter
           b = json.load(open("pyq_bank.json", encoding="utf-8"))
+          hf = {}
+          for f in glob.glob("../hf/hf_*.json"):
+              hf.update(json.load(open(f, encoding="utf-8")))
+          for x in b["items"]:
+              h = hf.get(x["id"])
+              if h:
+                  x["q"], x["opts"], x["hfix"] = h["q"], h["opts"], 1
+          print("Hindi theek:", sum(1 for x in b["items"] if x["id"] in hf))
           dt = {}
           for f in glob.glob("dt_*.json"):
               dt.update(json.load(open(f, encoding="utf-8")))
