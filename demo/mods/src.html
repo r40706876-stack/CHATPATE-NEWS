@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="hi"><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Hind:wght@500;600;700&family=Kalam:wght@400;700&family=Poppins:wght@600;700;800&display=block" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:540px;height:960px;overflow:hidden;background:#050a18}
+#root{position:absolute;inset:0;overflow:hidden;font-family:Hind,sans-serif}
+#bg{position:absolute;inset:-40px;background:radial-gradient(120% 70% at 50% 30%,#13224a 0%,#0a1330 45%,#040814 100%)}
+.orb{position:absolute;border-radius:50%;filter:blur(40px);opacity:.33}
+#top{position:absolute;left:0;right:0;top:14px;height:104px;text-align:center}
+#logo{position:absolute;left:18px;top:6px;width:52px;height:52px;border-radius:14px;background:linear-gradient(145deg,#e23b3b,#a3141c);box-shadow:0 6px 18px rgba(226,59,59,.45),inset 0 1px 0 rgba(255,255,255,.35);display:flex;align-items:center;justify-content:center}
+#ttl{font:800 33px/1.15 'Baloo 2';color:#ff9a3c;text-shadow:0 2px 14px rgba(255,140,40,.35)}
+#sub{font:700 21px/1.3 'Baloo 2';color:#ffd84a}
+#rail{position:absolute;left:96px;right:96px;top:92px;height:6px;display:flex;gap:6px}
+#rail i{flex:1;border-radius:3px;background:rgba(255,255,255,.14);position:relative;overflow:hidden}
+#rail i b{position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,#ffd84a,#ff9a3c)}
+#stage{position:absolute;left:16px;top:128px;width:508px;height:540px;border-radius:18px;overflow:hidden;box-shadow:0 28px 60px rgba(0,0,0,.6),0 0 0 1.5px rgba(255,255,255,.12)}
+.m{position:absolute;inset:0;opacity:0;overflow:hidden}
+.tag{position:absolute;right:10px;top:10px;font:800 13px/24px 'Baloo 2';color:#fff;background:rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.25);padding:0 10px;border-radius:12px;z-index:5}
+.term{position:absolute;left:50%;top:14px;transform:translateX(-50%);white-space:nowrap;font:600 13px/26px Hind;color:#1e3a8a;background:#fff;border:1.5px solid #c7d2fe;border-radius:13px;padding:0 12px 0 8px;box-shadow:0 3px 10px rgba(30,58,138,.18);opacity:0;z-index:4}
+.term b{font:700 15px Poppins;color:#b91c1c;margin-left:4px}
+svg text{font-family:'Baloo 2'}
+#cap{position:absolute;left:18px;right:18px;top:692px;height:170px;text-align:center;font:800 37px/1.3 'Baloo 2';color:#fff;text-shadow:0 3px 0 #000,0 -2px 0 #000,2px 0 0 #000,-2px 0 0 #000,0 8px 24px rgba(0,0,0,.6)}
+#cap .w{display:inline-block;margin:0 4px}#cap .hl{color:#ffd84a}
+#foot{position:absolute;left:0;right:0;top:884px;text-align:center}
+#foot .h{font:800 25px/1.2 'Baloo 2';color:#4da3ff}#foot .s{font:600 16px/1.4 Hind;color:#8aa4d6}
+#wipe{position:absolute;top:-300px;bottom:-300px;width:420px;left:-900px;transform:rotate(14deg);z-index:50;
+ background:linear-gradient(90deg,#7f0d14 0%,#d61f2c 18%,#e8323d 50%,#d61f2c 82%,#7f0d14 100%);box-shadow:0 0 60px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center}
+#wipe div{transform:rotate(-14deg);font:800 30px/1 Poppins;color:#fff;letter-spacing:4px;white-space:nowrap;text-shadow:0 3px 0 rgba(0,0,0,.25)}
+#kin{position:absolute;inset:0;z-index:40;opacity:0;background:radial-gradient(80% 60% at 50% 45%,#22180a 0%,#0b0b0d 70%)}
+#kin .k1{position:absolute;left:0;right:0;top:300px;text-align:center;font:800 64px/1 'Baloo 2';color:#fff}
+#kin .k2{position:absolute;left:0;right:0;top:400px;text-align:center;font:800 110px/1 'Baloo 2';color:#ffd84a;text-shadow:0 0 40px rgba(255,200,60,.45),0 6px 0 #a16207}
+#kin .k3{position:absolute;left:0;right:0;top:560px;text-align:center;font:700 24px Hind;color:#e5e7eb}
+.coin{position:absolute;width:46px;height:46px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff3b0,#f5b70a 55%,#a16207);box-shadow:0 4px 10px rgba(0,0,0,.4);font:800 22px/46px Poppins;color:#7c4a03;text-align:center;opacity:0}
+/* flashcard */
+#fc{position:absolute;left:44px;right:44px;top:70px;height:390px;perspective:1100px}
+#fcIn{position:absolute;inset:0;transform-style:preserve-3d}
+.face{position:absolute;inset:0;border-radius:22px;backface-visibility:hidden;padding:26px 24px;box-shadow:0 24px 50px rgba(0,0,0,.45)}
+#fFront{background:linear-gradient(150deg,#1e3a8a,#312e81);color:#fff}
+#fBack{background:linear-gradient(150deg,#fff,#fef2f2);transform:rotateY(180deg)}
+/* compare */
+.half{position:absolute;top:0;bottom:0;width:254px;display:flex;flex-direction:column;align-items:center;padding-top:70px}
+.half h3{font:800 28px/1.2 'Baloo 2';margin-top:14px}
+.half p{font:700 22px/1.3 Hind;margin-top:12px}
+.verdict{margin-top:16px;font:800 24px/44px 'Baloo 2';padding:0 18px;border-radius:22px}
+#vs{position:absolute;left:50%;top:248px;width:64px;height:64px;margin-left:-32px;border-radius:50%;background:#ffd84a;color:#111;font:800 24px/64px Poppins;text-align:center;box-shadow:0 0 0 6px rgba(255,216,74,.25),0 10px 24px rgba(0,0,0,.4);z-index:3}
+/* counter */
+.big{font:800 120px/1 Poppins;color:#fff;text-shadow:0 0 30px rgba(77,163,255,.5)}
+.chip7{display:inline-block;font:700 15px/30px 'Baloo 2';color:#fff;background:#7c3aed;border-radius:15px;padding:0 12px;margin:4px;opacity:0;box-shadow:0 4px 10px rgba(124,58,237,.4)}
+</style></head><body><div id="root">
+<div id="bg"></div>
+<div class="orb" id="o1" style="width:260px;height:260px;background:#2f55c9;left:-80px;top:120px"></div>
+<div class="orb" id="o2" style="width:220px;height:220px;background:#ff7a2f;right:-90px;top:520px;opacity:.18"></div>
+<div id="top">
+ <div id="logo"><svg width="30" height="30" viewBox="0 0 30 30"><rect x="3" y="7" width="24" height="16" rx="3" fill="#fff"/><path d="M4 9 L15 17 L26 9" fill="none" stroke="#c81e1e" stroke-width="2.4" stroke-linejoin="round"/></svg></div>
+ <div id="ttl">Clause 7 • रविवार और छुट्टी</div>
+ <div id="sub">GDS से MTS • Postman • PA</div>
+ <div id="rail"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>
+</div>
+
+<div id="stage">
+ <!-- M0 sting -->
+ <div class="m" id="m0" style="background:radial-gradient(90% 70% at 50% 40%,#1b2b63,#0a1230)">
+  <svg viewBox="0 0 508 540" style="position:absolute;inset:0">
+   <g id="letter0"><rect x="134" y="200" width="240" height="170" rx="8" fill="#fffdf5"/>
+    <text x="254" y="262" text-anchor="middle" font-size="32" font-weight="800" fill="#1e3a8a">Clause 7</text>
+    <text x="254" y="300" text-anchor="middle" font-size="21" font-weight="700" fill="#b91c1c">छुट्टी में डाक कैसे जाए?</text>
+    <text x="254" y="334" text-anchor="middle" font-size="16" font-weight="700" fill="#6b7280">भाग 3 • RMS और लेट फीस</text></g>
+   <rect x="114" y="250" width="280" height="190" rx="10" fill="#d61f2c"/>
+   <path d="M114,440 L254,330 L394,440 Z" fill="#b5121d"/>
+   <path id="flap0" d="M114,250 L254,350 L394,250 Z" fill="#e8323d" style="transform-origin:254px 250px"/>
+   <circle cx="254" cy="352" r="22" fill="#ffd84a"/><text x="254" y="360" text-anchor="middle" font-size="20" font-weight="800" fill="#7f0d14">PW</text>
+  </svg>
+ </div>
+ <!-- M1 ghadi -->
+ <div class="m" id="m1">
+  <div id="sky" style="position:absolute;inset:0"></div>
+  <svg viewBox="0 0 508 540" style="position:absolute;inset:0">
+   <circle id="sun" cx="80" cy="120" r="34" fill="#ffd84a"/>
+   <path id="moon1" d="M430,60 a36,36 0 1,0 30,62 a29,29 0 1,1 -30,-62 Z" fill="#fff3b0" opacity="0"/>
+   <g id="stars1"></g>
+   <g id="city"></g>
+   <g transform="translate(70,420)"><rect x="0" y="0" width="120" height="84" fill="#7c2d12"/><path d="M-10,0 L60,-36 L130,0Z" fill="#991b1b"/>
+    <rect x="18" y="12" width="84" height="20" fill="#1e3a8a"/><text x="60" y="27" text-anchor="middle" font-size="13" font-weight="700" fill="#fff">डाकघर</text>
+    <rect x="44" y="44" width="32" height="40" fill="#3f1d0b"/><g id="lk1"><rect x="50" y="56" width="20" height="16" rx="3" fill="#f59e0b"/><path d="M54,56 v-5 a6,6 0 0,1 12,0 v5" fill="none" stroke="#9ca3af" stroke-width="3"/></g>
+    <text id="band1" x="60" y="-46" text-anchor="middle" font-size="22" font-weight="800" fill="#ef4444" opacity="0">बंद</text></g>
+   <g transform="translate(318,410)"><rect x="0" y="0" width="130" height="94" fill="#1f2a5c"/><path d="M-10,0 L65,-38 L140,0Z" fill="#2d3a7c"/>
+    <rect id="npoSign" x="14" y="10" width="102" height="22" rx="3" fill="#374151"/><text id="npoTxt" x="65" y="26" text-anchor="middle" font-size="13" font-weight="800" fill="#9ca3af">NIGHT P.O.</text>
+    <rect id="npoW1" x="16" y="44" width="28" height="22" fill="#374151"/><rect id="npoW2" x="86" y="44" width="28" height="22" fill="#374151"/><rect id="npoD" x="50" y="50" width="30" height="44" fill="#374151"/>
+    <text id="khula1" x="65" y="-48" text-anchor="middle" font-size="22" font-weight="800" fill="#22c55e" opacity="0">खुला</text></g>
+   <g id="clk" transform="translate(254,230)">
+    <circle r="104" fill="rgba(255,255,255,.95)" stroke="#1e3a8a" stroke-width="8"/>
+    <g id="ticks"></g>
+    <line id="hh" x1="0" y1="0" x2="0" y2="-52" stroke="#111827" stroke-width="8" stroke-linecap="round"/>
+    <line id="mh" x1="0" y1="0" x2="0" y2="-80" stroke="#dc2626" stroke-width="4" stroke-linecap="round"/>
+    <circle r="7" fill="#111827"/>
+    <rect x="-56" y="24" width="112" height="30" rx="8" fill="#1e3a8a"/><text id="clkT" x="0" y="45" text-anchor="middle" font-size="18" font-weight="800" fill="#fff">सुबह 9:00</text>
+   </g>
+   <g transform="translate(18,18)"><rect width="104" height="44" rx="8" fill="#ef4444"/><text x="52" y="30" text-anchor="middle" font-size="22" font-weight="800" fill="#fff">रविवार</text></g>
+  </svg>
+  <div class="tag">डेमो ① घड़ी</div>
+ </div>
+ <!-- M2 naksha -->
+ <div class="m" id="m2" style="background:#e8eddf">
+  <svg viewBox="0 0 508 540" style="position:absolute;inset:0"><g id="mapG">
+   <rect x="-60" y="-60" width="640" height="660" fill="#e8eddf"/>
+   <path d="M-40,470 C80,430 150,520 260,480 S430,420 560,470 L560,620 L-40,620Z" fill="#a5d8f3"/>
+   <rect x="40" y="250" width="90" height="70" rx="12" fill="#bfe3a8"/><rect x="330" y="330" width="120" height="60" rx="12" fill="#bfe3a8"/>
+   <g stroke="#cfd5c4" stroke-width="30" stroke-linecap="round" fill="none"><path d="M-40,200 H560"/><path d="M-40,410 H560"/><path d="M110,140 V600"/><path d="M290,140 V600"/><path d="M430,140 V420"/></g>
+   <g stroke="#fff" stroke-width="22" stroke-linecap="round" fill="none"><path d="M-40,200 H560"/><path d="M-40,410 H560"/><path d="M110,140 V600"/><path d="M290,140 V600"/><path d="M430,140 V420"/></g>
+   <g stroke="#e5e7eb" stroke-width="2" stroke-dasharray="10 10" fill="none"><path d="M-40,200 H560"/><path d="M-40,410 H560"/></g>
+   <rect x="-40" y="104" width="600" height="22" fill="#9ca3af"/><path d="M-40,108 H560 M-40,122 H560" stroke="#4b5563" stroke-width="3"/>
+   <g stroke="#6b7280" stroke-width="4"><path id="sleepers" d="" /></g>
+   <g id="train"><rect x="0" y="98" width="120" height="34" rx="8" fill="#dc2626"/><rect x="8" y="104" width="22" height="14" rx="3" fill="#fde68a"/><rect x="36" y="104" width="22" height="14" rx="3" fill="#fde68a"/><rect x="64" y="104" width="22" height="14" rx="3" fill="#fde68a"/><rect x="92" y="104" width="22" height="14" rx="3" fill="#fde68a"/><text x="60" y="130" text-anchor="middle" font-size="9" font-weight="800" fill="#fff">RMS MAIL</text></g>
+   <g transform="translate(330,138)"><rect width="150" height="56" rx="6" fill="#1e3a8a"/><path d="M-8,0 L75,-22 L158,0Z" fill="#1e40af"/><text x="75" y="24" text-anchor="middle" font-size="17" font-weight="800" fill="#fff">RMS</text><text x="75" y="44" text-anchor="middle" font-size="13" font-weight="700" fill="#bfdbfe">रेलवे स्टेशन</text></g>
+   <g transform="translate(150,260)"><rect width="110" height="64" rx="6" fill="#fde7c4" stroke="#9a3412" stroke-width="2"/><path d="M-8,0 L55,-26 L118,0Z" fill="#e2554b"/><text x="55" y="26" text-anchor="middle" font-size="16" font-weight="800" fill="#7c2d12">डाकघर</text>
+    <g id="mLock" transform="translate(42,34)"><rect width="26" height="22" rx="4" fill="#f59e0b"/><path d="M5,0 v-6 a8,8 0 0,1 16,0 v6" fill="none" stroke="#6b7280" stroke-width="3"/></g></g>
+   <g transform="translate(330,440)"><rect width="70" height="50" rx="5" fill="#fff" stroke="#6b7280" stroke-width="2"/><path d="M-6,0 L35,-22 L76,0Z" fill="#60a5fa"/></g>
+   <path id="r1" d="M365,430 V410 H290 V330 H260" fill="none" stroke="#dc2626" stroke-width="7" stroke-dasharray="14 10" stroke-linecap="round"/>
+   <path id="r2" d="M372,430 V410 H430 V200 H405 V194" fill="none" stroke="#16a34a" stroke-width="7" stroke-linecap="round"/>
+   <g id="xMark" transform="translate(205,292)" opacity="0"><circle r="34" fill="rgba(220,38,38,.15)" stroke="#dc2626" stroke-width="5"/><path d="M-16,-16 L16,16 M16,-16 L-16,16" stroke="#dc2626" stroke-width="7" stroke-linecap="round"/></g>
+   <g id="pinMe" transform="translate(365,430)"><path d="M0,0 C-18,-24 -20,-34 -20,-42 A20,20 0 1,1 20,-42 C20,-34 18,-24 0,0Z" fill="#7c3aed"/><circle cy="-42" r="8" fill="#fff"/><rect x="-26" y="4" width="52" height="24" rx="12" fill="#7c3aed"/><text y="22" text-anchor="middle" font-size="15" font-weight="800" fill="#fff">आप</text></g>
+   <g id="pinOk" transform="translate(405,190)" opacity="0"><circle r="24" fill="#16a34a"/><path d="M-11,0 L-3,9 L12,-9" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/></g>
+  </g></svg>
+  <div id="feeTag" style="position:absolute;left:230px;top:300px;opacity:0;font:800 18px/34px 'Baloo 2';color:#111;background:#ffd84a;padding:0 12px;border-radius:17px;box-shadow:0 6px 14px rgba(0,0,0,.25)">लेट फीस देकर ✓</div>
+  <div class="term" id="t2">पेपर का शब्द:<b>RMS = Railway Mail Service</b></div>
+  <div class="tag">डेमो ② नक्शा</div>
+ </div>
+ <!-- M4 lens -->
+ <div class="m" id="m4" style="background:linear-gradient(160deg,#e9d3ad,#caa676)">
+  <div style="position:absolute;inset:0;opacity:.18;background:repeating-linear-gradient(95deg,#6b4423 0 2px,transparent 2px 26px)"></div>
+  <svg viewBox="0 0 508 540" style="position:absolute;inset:0">
+   <defs><clipPath id="lensClip"><circle id="lensC" cx="0" cy="0" r="66"/></clipPath>
+    <g id="envArt"><rect x="60" y="150" width="330" height="210" rx="10" fill="#fffdf5" stroke="#d6cfc0" stroke-width="2"/>
+     <path d="M60,150 L225,260 L390,150" fill="none" stroke="#e5ded0" stroke-width="2"/>
+     <g transform="translate(266,166)"><rect width="110" height="70" rx="4" fill="none" stroke="#d61f2c" stroke-width="3"/><text x="55" y="20" text-anchor="middle" font-size="11" font-weight="800" fill="#d61f2c" style="font-family:Poppins">INDIA POSTAGE</text><text x="55" y="46" text-anchor="middle" font-size="22" font-weight="800" fill="#d61f2c" style="font-family:Poppins">₹ 25.00</text><text x="55" y="62" text-anchor="middle" font-size="8" font-weight="700" fill="#d61f2c" style="font-family:Poppins">FRANKING MACHINE</text></g>
+     <path d="M150,180 q14,-8 28,0 t28,0 t28,0 t28,0 M150,194 q14,-8 28,0 t28,0 t28,0 t28,0 M150,208 q14,-8 28,0 t28,0 t28,0 t28,0" fill="none" stroke="#d61f2c" stroke-width="2.5"/>
+     <path d="M100,290 h170 M100,312 h150 M100,334 h120" stroke="#9ca3af" stroke-width="5" stroke-linecap="round"/></g></defs>
+   <g id="envG"><use href="#envArt"/></g>
+   <g id="boxG" opacity="0" transform="translate(410,300)"><path d="M0,140 V40 a40,40 0 0,1 80,0 V140 Z" fill="#d61f2c"/><rect x="18" y="40" width="44" height="8" rx="4" fill="#3b0a0d"/><rect x="-6" y="140" width="92" height="12" rx="3" fill="#7f1d1d"/></g>
+   <g id="noG" opacity="0" transform="translate(300,330)"><circle r="46" fill="rgba(255,255,255,.85)" stroke="#dc2626" stroke-width="9"/><path d="M-32,-32 L32,32" stroke="#dc2626" stroke-width="9"/></g>
+   <g id="lensG"><g clip-path="url(#lensClip)"><rect x="-80" y="-80" width="160" height="160" fill="#fffdf5"/><g id="zoomArt"><use href="#envArt"/></g></g>
+    <circle r="66" fill="none" stroke="#374151" stroke-width="9"/><circle r="66" fill="none" stroke="#d1d5db" stroke-width="3"/>
+    <path d="M47,47 L100,100" stroke="#111827" stroke-width="18" stroke-linecap="round"/><path d="M-30,-44 a52,52 0 0,1 40,-8" stroke="rgba(255,255,255,.8)" stroke-width="5" fill="none" stroke-linecap="round"/></g>
+  </svg>
+  <div id="lensLbl" style="position:absolute;left:24px;top:420px;right:24px;text-align:center;opacity:0"><span style="font:800 21px/40px 'Baloo 2';color:#fff;background:#1e3a8a;padding:0 16px;border-radius:20px;box-shadow:0 6px 16px rgba(0,0,0,.3)">टिकट नहीं — मशीन की छाप</span></div>
+  <div class="term" id="t4">पेपर का शब्द:<b>Machine franked</b></div>
+  <div class="tag">डेमो ④ लेंस</div>
+ </div>
+ <!-- M5 tulna -->
+ <div class="m" id="m5">
+  <div class="half" id="hL" style="left:0;background:linear-gradient(180deg,#1e3a8a,#172554);color:#fff">
+   <svg width="120" height="84" viewBox="0 0 120 84"><rect x="4" y="4" width="112" height="76" rx="8" fill="#fffdf5"/><path d="M4,4 L60,46 L116,4" fill="none" stroke="#9ca3af" stroke-width="3"/><rect x="88" y="10" width="22" height="26" fill="#ef4444"/></svg>
+   <h3>आम चिट्ठी</h3><p>छुट्टी में RMS बॉक्स</p>
+   <div class="coin" id="cL" style="position:relative;opacity:1;margin-top:18px">₹</div>
+   <div class="verdict" id="vL" style="background:#ffd84a;color:#111">लेट फीस लगेगी ✓</div>
+  </div>
+  <div class="half" id="hR" style="right:0;background:linear-gradient(180deg,#0f766e,#134e4a);color:#fff">
+   <svg width="120" height="84" viewBox="0 0 120 84"><rect x="6" y="6" width="108" height="72" rx="4" fill="#f9fafb"/><rect x="14" y="12" width="92" height="12" fill="#111827"/><path d="M14,34 h40 M14,44 h40 M14,54 h40 M14,64 h40" stroke="#9ca3af" stroke-width="4"/><rect x="62" y="32" width="44" height="34" fill="#d1d5db"/></svg>
+   <h3>रजिस्टर्ड अखबार</h3><p>छुट्टी में भी</p>
+   <div style="position:relative;margin-top:18px;width:46px;height:46px"><div class="coin" id="cR" style="position:absolute;opacity:1">₹</div>
+    <svg id="cRx" width="70" height="70" viewBox="0 0 70 70" style="position:absolute;left:-12px;top:-12px"><path id="cRxp" d="M10,60 L60,10" stroke="#ef4444" stroke-width="8" stroke-linecap="round" fill="none"/></svg></div>
+   <div class="verdict" id="vR" style="background:#fff;color:#0f766e">लेट फीस नहीं ✗</div>
+  </div>
+  <div id="vs">VS</div>
+  <div class="tag">डेमो ⑤ तुलना</div>
+ </div>
+ <!-- M6 ginti -->
+ <div class="m" id="m6" style="background:radial-gradient(90% 70% at 50% 35%,#1e2a5e,#0a1024)">
+  <div style="position:absolute;left:0;right:0;top:44px;text-align:center;font:800 22px 'Baloo 2';color:#ffd84a">Clause 7 से पेपरों में आए सवाल</div>
+  <div style="position:absolute;left:30px;width:210px;top:110px;text-align:center"><div class="big" id="n1">0</div><div style="font:800 26px 'Baloo 2';color:#c7d2fe">राज्य</div></div>
+  <div style="position:absolute;right:30px;width:210px;top:110px;text-align:center"><div class="big" id="n2">0</div><div style="font:800 26px 'Baloo 2';color:#c7d2fe">पेपर</div></div>
+  <div style="position:absolute;left:254px;top:120px;width:2px;height:150px;background:rgba(255,255,255,.2)"></div>
+  <div id="chips7" style="position:absolute;left:20px;right:20px;top:330px;text-align:center"></div>
+  <div class="tag">डेमो ⑥ गिनती</div>
+ </div>
+ <!-- M7 flashcard -->
+ <div class="m" id="m7" style="background:radial-gradient(90% 70% at 50% 35%,#24345f,#0b1229)">
+  <div id="fc"><div id="fcIn">
+   <div class="face" id="fFront">
+    <div style="font:800 15px Poppins;letter-spacing:2px;color:#ffd84a">FLASHCARD • CLAUSE 7</div>
+    <div style="font:800 27px/1.4 'Baloo 2';margin-top:22px">छुट्टी के दिन मशीन फ्रैंक लेख — मेल वैन के बॉक्स में डाल सकते हैं?</div>
+    <div style="display:flex;gap:14px;margin-top:26px"><div style="flex:1;text-align:center;font:800 24px/52px 'Baloo 2';background:rgba(255,255,255,.12);border-radius:14px">हाँ</div><div style="flex:1;text-align:center;font:800 24px/52px 'Baloo 2';background:rgba(255,255,255,.12);border-radius:14px">नहीं</div></div>
+    <svg width="76" height="76" viewBox="0 0 76 76" style="position:absolute;right:20px;bottom:18px"><circle cx="38" cy="38" r="32" stroke="rgba(255,255,255,.2)" stroke-width="7" fill="none"/><circle id="ring7" cx="38" cy="38" r="32" stroke="#ffd84a" stroke-width="7" fill="none" stroke-linecap="round" transform="rotate(-90 38 38)" stroke-dasharray="201" stroke-dashoffset="0"/><text id="cnt7" x="38" y="48" text-anchor="middle" font-size="28" font-weight="800" fill="#fff">3</text></svg>
+   </div>
+   <div class="face" id="fBack">
+    <div style="font:800 15px Poppins;letter-spacing:2px;color:#b91c1c">जवाब</div>
+    <div style="font:800 64px/1.1 'Baloo 2';color:#dc2626;margin-top:14px">नहीं ✗</div>
+    <div style="font:700 23px/1.45 Hind;color:#111827;margin-top:14px">मशीन फ्रैंक लेख डाकघर या मेल वैन के लेटर बॉक्स में <b style="color:#b91c1c">नहीं</b> डाले जाते।</div>
+    <div style="position:absolute;left:24px;bottom:20px;font:800 15px/30px 'Baloo 2';color:#fff;background:#7c3aed;padding:0 12px;border-radius:15px">PYQ • राजस्थान 2024 • आंध्र 2020</div>
+   </div>
+  </div></div>
+  <div class="tag">डेमो ⑦ फ्लैशकार्ड</div>
+ </div>
+ <!-- M8 outro -->
+ <div class="m" id="m8" style="background:radial-gradient(90% 70% at 50% 40%,#1b2b63,#0a1230)">
+  <svg viewBox="0 0 508 540" style="position:absolute;inset:0">
+   <g id="letter8"><rect x="144" y="150" width="220" height="150" rx="8" fill="#fffdf5"/><text x="254" y="210" text-anchor="middle" font-size="26" font-weight="800" fill="#1e3a8a">Clause 7 ✓</text><text x="254" y="246" text-anchor="middle" font-size="18" font-weight="700" fill="#b91c1c">अगला: Clause 8</text></g>
+   <rect x="114" y="250" width="280" height="190" rx="10" fill="#d61f2c"/>
+   <path d="M114,440 L254,330 L394,440 Z" fill="#b5121d"/>
+   <path id="flap8" d="M114,250 L254,350 L394,250 Z" fill="#e8323d" style="transform-origin:254px 250px"/>
+   <g id="seal8" transform="translate(254,352)"><circle r="44" fill="#ffd84a" stroke="#7f0d14" stroke-width="4"/><text y="-4" text-anchor="middle" font-size="15" font-weight="800" fill="#7f0d14" style="font-family:Poppins">POSTAL</text><text y="16" text-anchor="middle" font-size="15" font-weight="800" fill="#7f0d14" style="font-family:Poppins">WALA</text></g>
+  </svg>
+  <div id="fol" style="position:absolute;left:0;right:0;top:462px;text-align:center;opacity:0"><span style="font:800 22px/46px 'Baloo 2';color:#111;background:#ffd84a;padding:0 22px;border-radius:23px;box-shadow:0 0 0 6px rgba(255,216,74,.25)">रोज़ एक Clause • फ़ॉलो करो</span></div>
+  <div class="tag">डेमो ⑧ पहचान</div>
+ </div>
+</div>
+
+<div id="kin"><div class="k1">शर्त?</div><div class="k2">लेट फीस</div><div class="k3">छुट्टी में चिट्ठी डालने की एक शर्त</div>
+ <div class="coin" style="left:250px;top:440px">₹</div><div class="coin" style="left:250px;top:440px">₹</div><div class="coin" style="left:250px;top:440px">₹</div><div class="coin" style="left:250px;top:440px">₹</div><div class="coin" style="left:250px;top:440px">₹</div><div class="coin" style="left:250px;top:440px">₹</div>
+ <div style="position:absolute;right:26px;top:150px;font:800 13px/24px 'Baloo 2';color:#fff;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);padding:0 10px;border-radius:12px">डेमो ③ बड़ा शब्द</div></div>
+<div id="wipe"><div>✉ POSTAL WALA</div></div>
+<div id="cap"></div>
+<div id="foot"><div class="h">@POSTAL_WALA</div><div class="s">सीखो आसान भाषा में • हर नियम पेपर से जुड़ा</div></div>
+</div>
+<script>/*ENGINE*/</script>
+<script>/*SCENE*/</script>
+</body></html>

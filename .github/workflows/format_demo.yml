@@ -1,7 +1,7 @@
-name: POSTAL WALA full smart-board demo
+name: POSTAL WALA format showcase demo
 on:
   push:
-    branches: [fullboard-demo]
+    branches: [format-demo]
 permissions:
   contents: write
 jobs:
@@ -20,21 +20,21 @@ jobs:
           pip install playwright==1.47.0 numpy
           python -m playwright install --with-deps chromium
       - name: Render
-        working-directory: demo/fullboard
+        working-directory: demo/mods
         run: |
           python build.py
           FPS=30 python render_deep.py demo.html video.mp4
           python mix_audio.py video.mp4.meta.json a.wav
-          ffmpeg -y -loglevel error -i video.mp4 -i a.wav -map 0:v -map 1:a -c:v copy -c:a aac -b:a 192k -af volume=1.8 -shortest Clause7_FullBoard_Demo.mp4
+          ffmpeg -y -loglevel error -i video.mp4 -i a.wav -map 0:v -map 1:a -c:v copy -c:a aac -b:a 192k -af volume=1.8 -shortest Clause7_Format_Showcase.mp4
           ls -la
-      - name: Save to branch fullboard-demo-out
+      - name: Save to branch format-demo-out
         run: |
-          cp demo/fullboard/Clause7_FullBoard_Demo.mp4 /tmp/
+          cp demo/mods/Clause7_Format_Showcase.mp4 /tmp/
           git config user.name "postal-demo-bot"
           git config user.email "actions@users.noreply.github.com"
           git checkout --orphan out
           git rm -rfq .
-          cp /tmp/Clause7_FullBoard_Demo.mp4 .
-          git add Clause7_FullBoard_Demo.mp4
+          cp /tmp/Clause7_Format_Showcase.mp4 .
+          git add Clause7_Format_Showcase.mp4
           git commit -qm "full board demo"
-          git push -f origin out:fullboard-demo-out
+          git push -f origin out:format-demo-out
