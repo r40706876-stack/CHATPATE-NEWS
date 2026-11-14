@@ -1,29 +1,90 @@
-name: Postal India Post site padho (official niyam)
+name: Postal India Post site padho (official niyam + kaam ki baatein)
 on:
   workflow_dispatch:
     inputs:
       max_pages:
-        default: "250"
+        default: "450"
+      fact_calls:
+        description: "har key par kitni AI calls (1 page-hissa/call)"
+        default: "70"
 permissions:
   contents: write
 jobs:
   crawl:
     runs-on: ubuntu-24.04
-    timeout-minutes: 60
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
         with:
           repository: r40706876-stack/postal-wala-automation
           ref: main
       - run: sudo apt-get install -y -qq poppler-utils >/dev/null; pip install -q requests
-      - run: CRAWL_MAX=${{ inputs.max_pages || '250' }} python deep/ip_crawl.py ip_pages.json 2>&1 | tail -n 400
+      - run: CRAWL_MAX=${{ inputs.max_pages || '450' }} python deep/ip_crawl.py ip_pages.json 2>&1 | tail -n 600
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ip_pages
+          path: ip_pages.json
+
+  facts:
+    needs: crawl
+    runs-on: ubuntu-24.04
+    timeout-minutes: 240
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-automation
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: pip install -q requests pypdf pillow numpy
+      - uses: actions/download-artifact@v4
+        with:
+          name: ip_pages
+      - name: Kaam ki baatein
+        run: |
+          case "${{ matrix.shard }}" in
+            0) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY }}" ;;
+            1) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY2 }}" ;;
+            *) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY3 }}" ;;
+          esac
+          SHARD=${{ matrix.shard }} NSHARD=3 FACTS_MAX_CALLS=${{ inputs.fact_calls || '70' }} python deep/ip_facts.py ip_pages.json ip_facts_${{ matrix.shard }}.json 2>&1 | tail -n 200
+          [ -f ip_facts_${{ matrix.shard }}.json ] || echo "{}" > ip_facts_${{ matrix.shard }}.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ipf${{ matrix.shard }}
+          path: ip_facts_${{ matrix.shard }}.json
+
+  save:
+    needs: [crawl, facts]
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
       - uses: actions/checkout@v4
         with:
           path: bk
+      - uses: actions/download-artifact@v4
+        with:
+          path: dl
+          merge-multiple: true
       - name: postal-ip branch par rakho
         run: |
-          mkdir o && cp ip_pages.json o/ && cd o && git init -q && git checkout -q -b postal-ip
+          mkdir o && cp dl/ip_pages.json o/ && cp dl/ip_facts_*.json o/ 2>/dev/null || true
+          cd o && python3 - <<'PY'
+          import json, glob
+          allf = {}
+          for f in sorted(glob.glob("ip_facts_*.json")):
+              allf.update(json.load(open(f, encoding="utf-8")))
+          facts = [dict(x, src=v["url"]) for v in allf.values() for x in v["facts"]]
+          json.dump(facts, open("ip_facts.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+          print("kul baatein:", len(facts))
+          PY
+          git init -q && git checkout -q -b postal-ip
           git config user.name "github-actions[bot]"; git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add . && git commit -qm "India Post pages (run ${{ github.run_id }})"
+          git add . && git commit -qm "India Post pages + baatein (run ${{ github.run_id }})"
           git remote add origin "$(git -C ../bk remote get-url origin)"
           git -c http.extraheader="$(git -C ../bk config --get http.https://github.com/.extraheader)" push -qf origin HEAD:postal-ip
