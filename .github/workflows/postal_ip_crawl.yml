@@ -1,0 +1,23 @@
+name: Postal India Post site padho (official niyam)
+on:
+  workflow_dispatch:
+    inputs:
+      max_pages:
+        default: "250"
+permissions:
+  contents: read
+jobs:
+  crawl:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-automation
+          ref: main
+      - run: sudo apt-get install -y -qq poppler-utils >/dev/null; pip install -q requests
+      - run: CRAWL_MAX=${{ inputs.max_pages || '250' }} python deep/ip_crawl.py ip_pages.json 2>&1 | tail -n 400
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ip_pages
+          path: ip_pages.json
