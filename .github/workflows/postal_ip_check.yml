@@ -1,0 +1,96 @@
+name: Postal PYQ + clause ko India Post website se milao
+# ip_facts.json (postal-ip) se: PYQ par 'pehle/ab' note, apne clause sawal par naya niyam. Gemini bina search.
+on:
+  workflow_dispatch:
+    inputs:
+      calls:
+        description: "har key par kitni AI calls"
+        default: "120"
+permissions:
+  contents: write
+concurrency:
+  group: postal-pyq-out
+  cancel-in-progress: false
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-automation
+          ref: main
+      - uses: actions/checkout@v4
+        with:
+          path: bk
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: pip install -q requests pypdf pillow numpy
+      - name: Bank + India Post baatein lo
+        run: |
+          git -C bk fetch -q origin postal-pyq-out postal-ip
+          git -C bk show origin/postal-pyq-out:pyq_bank.json > pyq_papers/pyq_bank.json
+          git -C bk show origin/postal-ip:ip_facts.json > ip_facts.json
+          for m in pyq clause; do git -C bk show origin/postal-pyq-out:ipc_${m}_${{ matrix.shard }}.json > ipc_${m}_${{ matrix.shard }}.json 2>/dev/null || rm -f ipc_${m}_${{ matrix.shard }}.json; done
+      - name: Milao
+        run: |
+          case "${{ matrix.shard }}" in
+            0) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY }}" ;;
+            1) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY2 }}" ;;
+            *) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY3 }}" ;;
+          esac
+          for m in clause pyq; do
+            SHARD=${{ matrix.shard }} NSHARD=3 IPC_MAX_CALLS=${{ inputs.calls || '120' }} python deep/ip_check.py $m ip_facts.json ipc_${m}_${{ matrix.shard }}.json 2>&1 | tail -n 20
+            [ -f ipc_${m}_${{ matrix.shard }}.json ] || echo "{}" > ipc_${m}_${{ matrix.shard }}.json
+          done
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ipc${{ matrix.shard }}
+          path: ipc_*_${{ matrix.shard }}.json
+
+  save:
+    needs: check
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: postal-pyq-out
+          path: o
+      - uses: actions/download-artifact@v4
+        with:
+          path: dl
+          merge-multiple: true
+      - name: Bank me jodo + branch par
+        run: |
+          cp dl/ipc_*.json o/ 2>/dev/null || true
+          cd o && python3 - <<'PY'
+          import json, glob
+          from collections import Counter
+          b = json.load(open("pyq_bank.json", encoding="utf-8"))
+          r = {}
+          for f in glob.glob("ipc_pyq_*.json"):
+              r.update(json.load(open(f, encoding="utf-8")))
+          for x in b["items"]:
+              d = r.get(x["id"])
+              if not d or (x.get("dt") or {}).get("v") not in ("time", "changed", "same"):
+                  continue
+              if d["v"] == "changed":
+                  x["dt"] = {"v": "changed", "now": d["now"], "from": d.get("from", ""), "src": d.get("src", ""), "fact": d.get("fact", "")}
+              elif d["v"] == "same":
+                  x["dt"] = {"v": "same", "src": d.get("src", "")}
+          json.dump(b, open("pyq_bank.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+          c = {}
+          for f in glob.glob("ipc_clause_*.json"):
+              c.update(json.load(open(f, encoding="utf-8")))
+          json.dump(c, open("ip_clause.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+          print("PYQ:", dict(Counter(v["v"] for v in r.values())), "| clause:", dict(Counter(v["v"] for v in c.values())))
+          PY
+          git config user.name "github-actions[bot]"; git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add . && git commit -qm "India Post website se milaan (run ${{ github.run_id }})" && git push -q origin HEAD:postal-pyq-out
