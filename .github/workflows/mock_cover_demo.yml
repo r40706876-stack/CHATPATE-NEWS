@@ -1,7 +1,7 @@
-name: POSTAL WALA mock reel auto test (Bakra key 2)
+name: POSTAL WALA mock cover demo
 on:
   push:
-    branches: [mock-auto-test]
+    branches: [mock-cover-demo]
 permissions:
   contents: write
 jobs:
@@ -23,20 +23,15 @@ jobs:
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y --no-install-recommends ffmpeg fonts-noto-core libraqm0 poppler-utils
-          pip install requests pypdf pillow numpy edge-tts playwright==1.47.0 faster-whisper
+          pip install requests pillow playwright==1.47.0
           python -m playwright install --with-deps chromium
-      - name: Mock reel banao (apne aap sawal chuno)
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY2 }}
-          GEMINI_TTS_MODEL: gemini-3.8-flash-tts
-          GEMINI_TTS_VOICE: hi-in-training-1
-          GEMINI_TTS_STYLE: "lively elder-brother teacher: warm, clear and expressive with natural ups and downs - curious on questions, firm and serious on warnings, happy on answers, calm on examples; small natural pauses"
+      - name: Cover banao
         run: |
-          python mock_reel.py build
+          python mock_reel.py cover p_9ad2b1d2e4 $(python -c "import json;print(' '.join(x['id'] for x in json.load(open('pyq_papers/pyq_bank.json'))['items'] if 'रात्रि' in x.get('q','') and 'नहीं' in x.get('q',''))[:1]))") || true
           ls -la mock_reels
       - name: Save to branch mock-auto-out
         run: |
-          mkdir -p /tmp/o && cp mock_reels/*.mp4 mock_reels/*_caption.txt mock_reels/*_script.json mock_reels/*_cover.jpg /tmp/o/ 2>/dev/null || true
+          mkdir -p /tmp/o && cp mock_reels/cover_test_*.jpg /tmp/o/ 2>/dev/null || true
           cd mine
           git config user.name "postal-demo-bot"
           git config user.email "actions@users.noreply.github.com"
@@ -45,4 +40,4 @@ jobs:
           cp /tmp/o/* . 2>/dev/null || echo "kuch nahi bana" > NOTHING.txt
           git add -A
           git commit -qm "mock auto test"
-          git push -f origin out:mock-auto-out
+          git push -f origin out:mock-cover-out
