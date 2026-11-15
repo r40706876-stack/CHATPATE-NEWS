@@ -22,7 +22,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shard: [0, 1, 2]
+        shard: [0, 1, 2, 3]
     steps:
       - uses: actions/checkout@v4
         with:
@@ -42,9 +42,10 @@ jobs:
           case "${{ matrix.shard }}" in
             0) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY }}" ;;
             1) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY2 }}" ;;
-            *) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY3 }}" ;;
+            2) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY3 }}" ;;
+            *) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY4 }}" ;;
           esac
-          SHARD=${{ matrix.shard }} NSHARD=3 EXPLAIN_BANK=pyq_papers/hard_bank.json EXPLAIN_MAX_CALLS=${{ inputs.calls || '120' }} python deep/pyq_explain.py hx_${{ matrix.shard }}.json 2>&1 | tail -n 60
+          SHARD=${{ matrix.shard }} NSHARD=4 EXPLAIN_BANK=pyq_papers/hard_bank.json EXPLAIN_MAX_CALLS=${{ inputs.calls || '120' }} python deep/pyq_explain.py hx_${{ matrix.shard }}.json 2>&1 | tail -n 60
           [ -f hx_${{ matrix.shard }}.json ] || echo "{}" > hx_${{ matrix.shard }}.json
       - uses: actions/upload-artifact@v4
         with:
