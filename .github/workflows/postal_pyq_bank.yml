@@ -174,7 +174,7 @@ jobs:
           json.dump(b, open("pyq_bank.json", "w", encoding="utf-8"), ensure_ascii=False, indent=1)
           tot = sum(1 for x in b["items"] if x.get("an"))
           print(f"is run me {n} nayi vyakhya; kul sawal {len(b['items'])}, vyakhya wale {tot}")
-          left = sum(1 for x in b["items"] if (x.get("sec") or "postal") == "postal" and not x.get("an") and x.get("anx", 0) < 3)
+          left = sum(1 for x in b["items"] if (x.get("sec") or "postal") == "postal" and not x.get("an") and x.get("anx", 0) < 4)
           print("baaki daak sawal:", left)
           open("cont.txt", "w").write("1" if (n > 0 and left > 0) else "0")
           PY
