@@ -1,11 +1,13 @@
-name: Postal mock reel demo (4 Gemini key, TTS)
+name: Postal roz ki mock reel (v6) + demo (4 Gemini key)
 # Mock reel ka demo (post nahi): core repo mock_reel.py build --id X. Awaaz ke liye chaaron key baari-baari (TTS quota).
 on:
+  schedule:
+    - cron: '5 9 * * *'      # 14:35 IST: aaj ki mock reel banao (4:30 PM post public repo karta hai)
   workflow_dispatch:
     inputs:
       demo:
         description: "sawal id (mock_tpl30/manual/<id>.json ho to 30 sec haath ki script)"
-        default: "transit_mo"
+        default: ""
 permissions:
   contents: read
 concurrency:
@@ -32,14 +34,16 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY4 }}
           GEMINI_TTS_KEYS: ${{ secrets.GEMINI_API_KEY3 }},${{ secrets.GEMINI_API_KEY2 }},${{ secrets.GEMINI_API_KEY }}
+          MOCK_V: "6"
           GEMINI_TTS_MODEL: gemini-3.8-flash-tts
           GEMINI_TTS_VOICE: hi-in-training-1
           GEMINI_TTS_STYLE: "lively elder-brother teacher: warm, clear and expressive with natural ups and downs - curious on questions, firm and serious on warnings, happy on answers, calm on examples; small natural pauses"
-        run: python mock_reel.py build --id "${{ inputs.demo }}"
+        run: |
+          if [ -n "${{ inputs.demo }}" ]; then python mock_reel.py build --id "${{ inputs.demo }}"; else python mock_reel.py build; fi
       - name: Core me rakho
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add mock_reels
-          git diff --cached --quiet || git commit -m "Mock reel demo [skip ci]"
+          git diff --cached --quiet || git commit -m "Mock reel (v6) [skip ci]"
           git pull --rebase -q origin main && git push
