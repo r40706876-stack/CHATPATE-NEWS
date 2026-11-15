@@ -4,6 +4,7 @@ name: Postal website taaza (raat ke nateeje -> core -> website)
 on:
   schedule:
     - cron: '17 */2 * * *'
+    - cron: '5 0 * * *'       # 05:35 IST: aaj ka naya daily mock
   workflow_dispatch:
 permissions:
   contents: read
