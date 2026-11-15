@@ -27,7 +27,7 @@ jobs:
           python -m playwright install --with-deps chromium
       - name: Cover banao
         run: |
-          python mock_reel.py cover p_9ad2b1d2e4 $(python -c "import json;print(' '.join(x['id'] for x in json.load(open('pyq_papers/pyq_bank.json'))['items'] if 'रात्रि' in x.get('q','') and 'नहीं' in x.get('q',''))[:1]))") || true
+          python mock_reel.py cover p_cfd754505b || true
           ls -la mock_reels
       - name: Save to branch mock-auto-out
         run: |
