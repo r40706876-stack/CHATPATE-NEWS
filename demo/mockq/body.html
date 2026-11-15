@@ -1,0 +1,116 @@
+<style>
+.mock{position:absolute;left:18px;right:18px;top:30px;border-radius:16px;background:linear-gradient(160deg,#1e3a8a,#172554);color:#fff;padding:16px 18px;box-shadow:0 18px 40px rgba(0,0,0,.45);opacity:0}
+.mock .mh{display:flex;justify-content:space-between;font:800 13px/22px Poppins;letter-spacing:1px;color:#ffd84a}
+.mock .mq{font:800 22px/1.4 'Baloo 2';margin:10px 0 8px}
+.mo{position:relative;font:700 19px/1.25 Hind;padding:9px 12px;margin:7px 0;border-radius:10px;background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.18);opacity:0}
+.mo b{font:800 16px Poppins;color:#ffd84a;margin-right:8px}
+.mo .tk{position:absolute;right:12px;top:6px;font:800 22px Poppins;color:#4ade80;opacity:0}
+.dt{position:absolute;top:150px;width:136px;height:170px;border-radius:16px;background:#fff;box-shadow:0 12px 26px rgba(0,0,0,.3);text-align:center;opacity:0}
+.dt .h{height:40px;border-radius:16px 16px 0 0;font:800 18px/40px 'Baloo 2';color:#fff}
+.dt .n{font:800 70px/1.3 Poppins;color:#1f2937}
+.dt .l{font:800 17px 'Baloo 2';color:#6b7280}
+.imp{position:absolute;width:150px;height:96px;border-radius:8px;background:#fffdf5;box-shadow:0 10px 22px rgba(0,0,0,.3);opacity:0}
+.imp .box{position:absolute;right:8px;top:8px;width:80px;height:50px;border:2.5px solid #d61f2c;border-radius:4px;text-align:center;font:800 11px/1.25 Poppins;color:#d61f2c;padding-top:4px}
+.imp .box span{display:block;font:800 15px Poppins}
+.sec{position:absolute;left:26px;right:26px;border-radius:14px;padding:10px 14px;font:800 20px/1.25 'Baloo 2';color:#111;opacity:0;box-shadow:0 8px 18px rgba(0,0,0,.25)}
+.sec small{display:block;font:600 14px/1.35 Hind;color:#374151;margin-top:3px}
+.sec i{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:8px;vertical-align:1px}
+.row2{position:absolute;left:18px;right:18px;font:800 20px/1.25 'Baloo 2';padding:10px 12px;border-radius:12px;opacity:0;background:rgba(255,255,255,.95);color:#111;box-shadow:0 6px 14px rgba(0,0,0,.15)}
+.row2 b{float:right;font:800 20px Poppins}
+</style>
+<div id="stage">
+<!-- question -->
+<div class="sc" id="s_q" style="background:radial-gradient(90% 70% at 50% 30%,#24345f,#0b1229)">
+ <div class="mock" id="mk1"><div class="mh"><span>POSTAL WALA MOCK</span><span>प्रश्न 1/25</span></div>
+  <div class="mq">इनमें से कौन से फ्रैंक लेख अवैतनिक (Unpaid) माने जाएँगे?</div>
+  <div class="mo" id="o1a"><b>A</b>पिछली तारीख वाले</div><div class="mo" id="o1b"><b>B</b>अगली तारीख वाले</div><div class="mo" id="o1c"><b>C</b>लेटर बॉक्स में डाले गए</div><div class="mo" id="o1d"><b>D</b>उपरोक्त सभी</div></div>
+ <svg id="tm3" width="120" height="120" viewBox="0 0 120 120" style="position:absolute;left:194px;top:400px;opacity:0"><circle cx="60" cy="60" r="50" stroke="rgba(255,255,255,.2)" stroke-width="10" fill="rgba(0,0,0,.4)"/><circle id="tmR" cx="60" cy="60" r="50" stroke="#ffd84a" stroke-width="10" fill="none" stroke-linecap="round" transform="rotate(-90 60 60)" stroke-dasharray="314"/><text id="tmN" x="60" y="76" text-anchor="middle" font-size="46" font-weight="800" fill="#fff" style="font-family:Poppins">3</text></svg>
+</div>
+<!-- machine -->
+<div class="sc board" id="s_mach"><div class="grid"></div>
+ <svg class="bsvg" viewBox="0 0 508 540" style="position:absolute;inset:0"><g filter="url(#rough)">
+  <rect class="fl" data-after="stack" x="40" y="96" width="150" height="100" fill="#fffdf5"/>
+  <path class="dr" data-op="stack" d="M40,96 H190 V196 H40 Z M40,96 L115,150 L190,96 M52,84 H202 V184 M64,72 H214 V172"/>
+  <text class="tx hand" data-op="stackT" x="128" y="236" text-anchor="middle" font-size="22" fill="#1f2937">रोज़ सैकड़ों चिट्ठियाँ</text>
+  <rect class="fl" data-after="mach" x="270" y="110" width="190" height="120" fill="#cbd5e1"/>
+  <path class="dr" data-op="mach" d="M270,110 H460 V230 H270 Z M300,230 V250 M430,230 V250 M330,110 V70 H400 V110"/>
+  <path class="dr" data-op="mach" d="M290,130 H360 V170 H290 Z"/>
+  <text class="tx" data-op="machT" x="365" y="212" text-anchor="middle" font-size="18" fill="#1e3a8a">फ्रैंकिंग मशीन</text>
+ </g></svg>
+ <div class="imp" id="fEnv" style="left:290px;top:300px"><div class="box">INDIA POSTAGE<span>₹ 25.00</span><em id="impD" style="font-style:normal">15-11-2026</em></div></div>
+ <div id="zoomImp" style="position:absolute;left:40px;right:40px;top:300px;opacity:0;z-index:5;background:#fffdf5;border-radius:16px;padding:16px;box-shadow:0 18px 40px rgba(0,0,0,.4);text-align:center">
+  <div style="display:inline-block;border:4px solid #d61f2c;border-radius:8px;padding:10px 22px;font:800 20px/1.3 Poppins;color:#d61f2c">INDIA POSTAGE<br><span style="font-size:34px">₹ 25.00</span><br><span id="zD" style="background:#fde68a;padding:0 8px;border-radius:6px">15-11-2026</span></div>
+  <div style="font:800 20px 'Baloo 2';color:#111;margin-top:10px">तारीख = इस सवाल की चाबी</div></div>
+ <div class="term" id="tm_mach">पेपर का शब्द:<b>Franking machine</b></div>
+ <div class="bframe"></div><div class="live"><i></i>क्लास</div>
+</div>
+<!-- rule -->
+<div class="sc board" id="s_rule"><div class="grid"></div>
+ <svg class="bsvg" viewBox="0 0 508 540" style="position:absolute;inset:0"><g filter="url(#rough)">
+  <rect class="fl" data-after="win" x="60" y="90" width="230" height="170" fill="#fde7c4"/>
+  <path class="dr" data-op="win" d="M60,90 H290 V260 H60 Z M110,140 H240 V220 H110 Z M110,180 H240 M40,260 H310"/>
+  <text class="tx hand" data-op="winT" x="175" y="125" text-anchor="middle" font-size="20" fill="#7c2d12">डाकघर की खिड़की</text>
+ </g></svg>
+ <div class="dt" id="calR" style="left:340px;top:90px"><div class="h" style="background:#16a34a">आज</div><div class="n">15</div><div class="l">नवंबर</div></div>
+ <div class="row2" id="ru1" style="top:330px;left:40px;right:40px">छाप पर उसी दिन की तारीख <b style="color:#16a34a">✓</b></div>
+ <div class="row2" id="ru2" style="top:400px;left:40px;right:40px">डाकघर की खिड़की पर जमा <b style="color:#16a34a">✓</b></div>
+ <div class="term" id="tm_rule">पेपर का शब्द:<b>Tendered at the window</b></div>
+ <div class="bframe"></div><div class="live"><i></i>क्लास</div>
+</div>
+<!-- dates -->
+<div class="sc" id="s_dates" style="background:radial-gradient(90% 70% at 50% 30%,#1e2a5e,#0a1024)">
+ <div class="dt" id="d14" style="left:24px"><div class="h" style="background:#64748b">पिछली</div><div class="n">14</div><div class="l">कल</div></div>
+ <div class="dt" id="d15" style="left:186px"><div class="h" style="background:#16a34a">आज जमा</div><div class="n">15</div><div class="l">आज</div></div>
+ <div class="dt" id="d16" style="left:348px"><div class="h" style="background:#64748b">अगली</div><div class="n">16</div><div class="l">आने वाला कल</div></div>
+ <div class="imp" id="dEnv" style="left:179px;top:40px;transform:scale(.9)"><div class="box">PAID<span>₹ 25.00</span><em id="dEnvD" style="font-style:normal">14-11-2026</em></div></div>
+ <div class="stamp" id="stA" style="left:30px;top:350px;font-size:24px">A • अवैतनिक</div>
+ <div class="stamp" id="stB" style="right:30px;top:350px;font-size:24px">B • अवैतनिक</div>
+ <div id="bairang" style="position:absolute;left:30px;right:30px;top:420px;text-align:center;opacity:0"><span style="font:800 19px/1.4 'Baloo 2';color:#111;background:#fde68a;padding:8px 14px;border-radius:14px;display:inline-block">अवैतनिक = बिना भुगतान = बैरंग जैसी<br><small style="font:700 14px Hind;color:#7c2d12">याद है? Clause 9</small></span></div>
+ <div class="term" id="tm_dates" style="top:12px">पेपर का शब्द:<b>Unpaid</b></div>
+</div>
+<!-- box -->
+<div class="sc" id="s_box">
+ <div class="half" id="hL" style="left:0;background:linear-gradient(180deg,#166534,#14532d);color:#fff;padding-top:50px"><svg width="120" height="110" viewBox="0 0 120 110"><rect x="10" y="10" width="100" height="70" rx="6" fill="#fde7c4"/><rect x="30" y="26" width="60" height="40" fill="#1e3a8a"/><path d="M0,84 H120" stroke="#fff" stroke-width="6"/></svg><h3>खिड़की पर जमा</h3><div class="verdict" id="vL" style="background:#fff;color:#166534">सही तरीका ✓</div></div>
+ <div class="half" id="hR" style="right:0;background:linear-gradient(180deg,#991b1b,#7f1d1d);color:#fff;padding-top:50px"><svg width="120" height="110" viewBox="0 0 120 110"><path d="M30,108 V40 a30,30 0 0,1 60,0 V108 Z" fill="#ef4444" stroke="#fff" stroke-width="3"/><rect x="44" y="40" width="32" height="7" rx="3" fill="#3b0a0d"/></svg><h3>लेटर बॉक्स में</h3><div class="verdict" id="vR" style="background:#fff;color:#991b1b">C • अवैतनिक ✗</div></div>
+ <div id="vs">VS</div>
+ <div class="imp" id="bxEnv" style="left:300px;top:20px;transform:scale(.55)"><div class="box">INDIA POSTAGE<span>₹ 25.00</span>15-11-2026</div></div>
+</div>
+<!-- answer -->
+<div class="sc" id="s_ans" style="background:radial-gradient(90% 70% at 50% 30%,#24345f,#0b1229)">
+ <div class="mock" id="mk2" style="opacity:1"><div class="mh"><span>POSTAL WALA MOCK • जवाब</span><span>प्रश्न 1/25</span></div>
+  <div class="mq">इनमें से कौन से फ्रैंक लेख अवैतनिक (Unpaid) माने जाएँगे?</div>
+  <div class="mo" id="o2a" style="opacity:1"><b>A</b>पिछली तारीख वाले<span class="tk">✓</span></div><div class="mo" id="o2b" style="opacity:1"><b>B</b>अगली तारीख वाले<span class="tk">✓</span></div><div class="mo" id="o2c" style="opacity:1"><b>C</b>लेटर बॉक्स में डाले गए<span class="tk">✓</span></div><div class="mo" id="o2d" style="opacity:1"><b>D</b>उपरोक्त सभी<span class="tk">✓</span></div></div>
+ <div id="ansB" style="position:absolute;left:0;right:0;top:420px;text-align:center;opacity:0"><span style="font:800 24px/48px 'Baloo 2';color:#111;background:#4ade80;padding:0 22px;border-radius:24px">तीनों सही → जवाब D</span></div>
+ <div class="pills" id="ansP" style="top:480px"><span class="pill"><i></i>महाराष्ट्र 2022</span><span class="pill"><i></i>आंध्र 2023</span><span class="pill"><i></i>महाराष्ट्र 2023</span></div>
+</div>
+<!-- cta -->
+<div class="sc" id="s_cta" style="background:linear-gradient(170deg,#0f172a,#1e1b4b)">
+ <div style="position:absolute;left:0;right:0;top:20px;text-align:center;font:800 24px 'Baloo 2';color:#ffd84a" id="ctaT">हर सवाल का पूरा एनालिसिस</div>
+ <div class="sec" id="sc1" style="top:76px;background:#dcfce7"><i style="background:#16a34a"></i>सही क्यों<small>छाप की तारीख और खिड़की, दोनों शर्तें ज़रूरी</small></div>
+ <div class="sec" id="sc2" style="top:160px;background:#fee2e2"><i style="background:#dc2626"></i>बाकी गलत क्यों<small>A, B, C अकेले अधूरे हैं, तीनों मिलकर पूरा जवाब</small></div>
+ <div class="sec" id="sc3" style="top:244px;background:#fef3c7"><i style="background:#d97706"></i>जाल<small>लेटर बॉक्स देखकर C पर रुक जाना</small></div>
+ <div class="sec" id="sc4" style="top:328px;background:#e0e7ff"><i style="background:#4f46e5"></i>Trick<small>उसी दिन की तारीख + खिड़की पर जमा</small></div>
+ <div id="mockBtn" style="position:absolute;left:0;right:0;top:430px;text-align:center;opacity:0"><span style="font:800 26px/56px 'Baloo 2';color:#111;background:#ffd84a;padding:0 26px;border-radius:28px;box-shadow:0 0 0 8px rgba(255,216,74,.25)">कमेंट में लिखो: MOCK</span></div>
+</div>
+</div>
+<!-- full: hook -->
+<div class="full kbg" id="f_hook">
+ <div class="k1" id="hk1" style="top:200px;font-size:44px;color:#c7d2fe">एक सवाल</div>
+ <div class="k2" id="hk2" style="top:270px;font-size:96px">3 बार</div>
+ <div class="k1" id="hk3" style="top:390px;font-size:30px;color:#fff">पेपर में आ चुका है</div>
+ <div class="pills" id="hkP" style="top:450px"><span class="pill"><i></i>महाराष्ट्र 2022</span><span class="pill"><i></i>आंध्र प्रदेश 2023</span><span class="pill"><i></i>महाराष्ट्र 2023</span></div>
+ <div class="stamp" id="hkS" style="left:50%;top:540px;font-size:26px;color:#f87171;border-color:#f87171;background:rgba(127,29,29,.4);box-shadow:none">ज़्यादातर लोग यहीं गलत</div>
+</div>
+<!-- full: trap -->
+<div class="full kbg" id="f_trap">
+ <div class="k1" style="top:220px;font-size:40px;color:#fca5a5" id="tp1">जाल</div>
+ <div class="k2" id="tp2" style="top:290px;font-size:80px;color:#f87171;text-shadow:0 0 40px rgba(248,113,113,.4),0 6px 0 #7f1d1d">C पर मत रुको!</div>
+ <div class="k1" id="tp3" style="top:420px;font-size:32px;color:#fff">पहले चारों option पढ़ो</div>
+</div>
+<!-- full: trick -->
+<div class="full kbg" id="f_trick">
+ <div class="k1" id="tk1" style="top:180px;font-size:40px;color:#c7d2fe">Trick याद रखो</div>
+ <div class="sec" id="tc1" style="top:260px;left:50px;right:50px;background:#dcfce7;font-size:24px"><i style="background:#16a34a"></i>1. छाप पर उसी दिन की तारीख</div>
+ <div class="sec" id="tc2" style="top:340px;left:50px;right:50px;background:#dcfce7;font-size:24px"><i style="background:#16a34a"></i>2. डाकघर की खिड़की पर जमा</div>
+ <div class="k2" id="tk3" style="top:440px;font-size:46px;color:#f87171;text-shadow:0 4px 0 #7f1d1d">एक भी टूटी = अवैतनिक</div>
+</div>
