@@ -183,6 +183,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
+          gh workflow run postal_site_refresh.yml -R ${{ github.repository }} || true   # nateeje website par
           if [ "$(cat cont.txt 2>/dev/null)" = "1" ]; then
             gh workflow run postal_pyq_bank.yml -R ${{ github.repository }} -f bank_calls=5 -f explain_calls=${{ inputs.explain_calls || '45' }} && echo "agla daur shuru"
           fi
