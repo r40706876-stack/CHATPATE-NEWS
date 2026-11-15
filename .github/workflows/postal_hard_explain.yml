@@ -82,10 +82,10 @@ jobs:
           git config user.name "github-actions[bot]"; git config user.email "github-actions[bot]@users.noreply.github.com"
           git add . && git commit -qm "kathin PYQ vishleshan (run ${{ github.run_id }})"
           git remote add origin "$(git -C ../bk remote get-url origin)"
-          prev=$(git -C ../bk fetch -q origin postal-hx 2>/dev/null && git -C ../bk show FETCH_HEAD:hx_done.json 2>/dev/null | python3 -c "import json,sys;print(len(json.load(sys.stdin)))" 2>/dev/null || echo 0)
-          now=$(python3 -c "import json;print(len(json.load(open('hx_done.json'))))")
+          prev=$(git -C ../bk fetch -q origin postal-hx 2>/dev/null && git -C ../bk show FETCH_HEAD:hx_done.json 2>/dev/null | python3 -c "import json,sys;print(sum(1 for v in json.load(sys.stdin).values() if not v.get('fail')))" 2>/dev/null || echo 0)
+          now=$(python3 -c "import json;print(sum(1 for v in json.load(open('hx_done.json')).values() if not v.get('fail')))")
           tot=$(python3 -c "import json;print(sum(1 for x in json.load(open('../bk/pyq_papers/hard_bank.json'))['items'] if x.get('sec')=='postal'))")
-          echo "pehle $prev, ab $now, kul $tot"
+          echo "pakki vyakhya: pehle $prev, ab $now, kul $tot"
           if [ "$now" -gt "$prev" ] && [ "$now" -lt "$tot" ]; then echo 1 > ../cont.txt; fi
           git -c http.extraheader="$(git -C ../bk config --get http.https://github.com/.extraheader)" push -qf origin HEAD:postal-hx
       - name: Kaam baaki ho to agla daur khud chalao
