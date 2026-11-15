@@ -28,7 +28,7 @@ jobs:
       - name: Nateeje lo + jodo + site
         run: |
           mkdir -p /tmp/r
-          for b in "postal-pyq-out:pyq_bank.json" "postal-hx:hx_done.json" "postal-fm:fm_done.json" "postal-tg:tg_done.json" "postal-notes:notes_text.json"; do
+          for b in "postal-pyq-out:pyq_bank.json" "postal-hx:hx_done.json" "postal-fm:fm_done.json" "postal-qg:qg_done.json" "postal-tg:tg_done.json" "postal-notes:notes_text.json"; do
             br=${b%%:*}; f=${b##*:}
             git fetch -q --depth=1 origin $br 2>/dev/null && git show FETCH_HEAD:$f > /tmp/r/$f 2>/dev/null || rm -f /tmp/r/$f
           done
