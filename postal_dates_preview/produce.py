@@ -1,4 +1,4 @@
-import json,os,pathlib,subprocess,sys
+import json,os,pathlib,subprocess,sys,shutil
 ROOT=pathlib.Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
 from deep import deep_demo as D
 from playwright.sync_api import sync_playwright
@@ -11,7 +11,17 @@ with sync_playwright() as p:
  for t in [2,10,20,30,40,50]:
   page.evaluate('(t)=>window.seek(t)',t);page.screenshot(path=str(out.parent/f'layout_{t}.png'))
  b.close()
-D.sys.argv=['deep_demo.py',str(src),str(out)];D.main()
+previous=out.parent/'previous_render.mp4'
+cuefile=pathlib.Path(str(out)+'.cues.json')
+if out.exists() and cuefile.exists():
+ shutil.copy2(out,previous)
+ silent=out.parent/'dates_new_silent.mp4'
+ print('REUSE_VERIFIED_NARRATION_AND_CUES: no Gemini generation',flush=True)
+ subprocess.run([sys.executable,str(ROOT/'deep/render_deep.py'),str(src),str(silent),str(cuefile)],check=True)
+ subprocess.run(['ffmpeg','-v','error','-y','-i',str(silent),'-i',str(previous),'-map','0:v:0','-map','1:a:0','-c:v','copy','-c:a','copy','-shortest','-movflags','+faststart',str(out)],check=True)
+ previous.unlink();silent.unlink()
+else:
+ D.sys.argv=['deep_demo.py',str(src),str(out)];D.main()
 info=json.loads(subprocess.check_output(['ffprobe','-v','error','-show_streams','-show_format','-of','json',str(out)]));v=next(x for x in info['streams'] if x['codec_type']=='video');a=next(x for x in info['streams'] if x['codec_type']=='audio');assert (v['width'],v['height'])==(1080,1920);assert v['codec_name']=='h264' and a['codec_name']=='aac';assert 30<float(info['format']['duration'])<110
 subprocess.run(['ffmpeg','-v','error','-i',str(out),'-f','null','-'],check=True)
 for t in [2,10,18,26,34,42]:

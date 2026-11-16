@@ -5,6 +5,7 @@ on:
     paths: [postal_dates_preview/**, .github/workflows/postal_dates_preview.yml]
 permissions:
   contents: read
+  actions: read
 jobs:
   render:
     runs-on: ubuntu-24.04
@@ -31,6 +32,22 @@ jobs:
           mkdir -p core/postal_dates_preview/assets
           cp production/postal_dates_preview/*.py production/postal_dates_preview/*.html core/postal_dates_preview/
           curl -fLsS --retry 2 https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js -o core/postal_dates_preview/assets/gsap.min.js
+      - name: Wait for reusable narration artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          for i in $(seq 1 60); do
+            S=$(gh api repos/r40706876-stack/CHATPATE-NEWS/actions/runs/43813999408 --jq .status)
+            [ "$S" = completed ] && exit 0
+            sleep 10
+          done
+          echo 'Prior preview still running'; exit 1
+      - uses: actions/download-artifact@v4
+        with:
+          name: Postal-Wala-GDS-Dates-Animation
+          run-id: 43813999408
+          github-token: ${{ github.token }}
+          path: core/demo_out/rule3_dates
       - name: Gemini narration and animated dates video
         working-directory: core
         env:
