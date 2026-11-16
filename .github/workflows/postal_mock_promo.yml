@@ -1,0 +1,52 @@
+name: Postal Wala free mock promo append segment
+on:
+  push:
+    branches: [codex/postal-mock-promo-20261116]
+    paths: [postal_promo_preview/**, .github/workflows/postal_mock_promo.yml]
+permissions:
+  contents: read
+jobs:
+  render:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: production
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-core
+          token: ${{ secrets.CORE_TOKEN }}
+          path: core
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Prepare
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends ffmpeg fonts-noto-core libraqm0
+          pip install -q requests pypdf pillow numpy edge-tts playwright==1.47.0 faster-whisper
+          python -m playwright install --with-deps chromium
+          mkdir -p core/postal_promo_preview/assets
+          cp production/postal_promo_preview/*.py production/postal_promo_preview/*.html core/postal_promo_preview/
+          curl -fLsS --retry 2 https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js -o core/postal_promo_preview/assets/gsap.min.js
+      - name: Gemini promo narration and animation
+        working-directory: core
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY4 }}
+          GEMINI_TTS_VOICE: Charon
+          GEMINI_TTS_GENDER: male
+          GEMINI_TTS_STYLE: 'Warm confident professional Hindi male teacher. Friendly, clear, natural emphasis on correct answers. Read only supplied script, no extra words.'
+          VOICE_SPEEDUP: '1.0'
+          BHAROSA_SPEED: '1.0'
+          WHISPER_MODEL: small
+          DEEP_TAKE_SAVE: demo_out/mock_promo/narration.wav
+          FPS: '30'
+        run: python -u postal_promo_preview/produce.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Postal-Wala-Mock-Promo
+          path: core/demo_out/mock_promo/
+          retention-days: 14
