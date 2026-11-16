@@ -5,6 +5,7 @@ on:
     paths: [postal_rule3_preview/**, .github/workflows/postal_rule3_professional.yml]
 permissions:
   contents: read
+  actions: read
 jobs:
   render:
     runs-on: ubuntu-24.04
@@ -32,6 +33,12 @@ jobs:
           mkdir -p core/postal_rule3_preview/assets
           cp production/postal_rule3_preview/*.py production/postal_rule3_preview/*.html core/postal_rule3_preview/
           curl --fail --retry 2 -LsS https://postalwala.pages.dev/img/bhaiya.webp -o core/postal_rule3_preview/assets/bhaiya.webp
+      - uses: actions/download-artifact@v4
+        with:
+          name: Postal-Wala-GDS-Rule3-professional
+          run-id: 43809599000
+          github-token: ${{ github.token }}
+          path: core/demo_out/rule3
       - name: Gemini male narration and 1080p animation
         working-directory: core
         env:
@@ -43,6 +50,7 @@ jobs:
           BHAROSA_SPEED: '1.0'
           WHISPER_MODEL: small
           DEEP_TAKE_SAVE: demo_out/rule3/narration.wav
+          DEEP_TAKE: demo_out/rule3/narration.wav
           FPS: '30'
         run: |
           test -n "$GEMINI_API_KEY" || { echo 'Selected key4 is not configured'; exit 1; }
