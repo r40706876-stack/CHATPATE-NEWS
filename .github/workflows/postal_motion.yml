@@ -1,0 +1,79 @@
+name: Postal motion v2 and save prompt
+on:
+  push:
+    branches: [codex/postal-motion-v2-20261116]
+    paths: [postal_motion/**, .github/workflows/postal_motion.yml]
+permissions:
+  contents: read
+jobs:
+  animate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - kind: norm
+            source_ref: codex/postal-rule3-professional-20261116
+          - kind: dates
+            source_ref: codex/postal-rule3-dates-20261116
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: production
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ matrix.source_ref }}
+          path: base
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Prepare
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends ffmpeg fonts-noto-core
+          pip install -q pillow playwright==1.47.0
+          python -m playwright install --with-deps chromium
+          mkdir -p base/postal_rule3_preview/assets base/postal_dates_preview/assets
+          curl -fLsS --retry 2 https://postalwala.pages.dev/img/bhaiya.webp -o base/postal_rule3_preview/assets/bhaiya.webp
+          curl -fLsS --retry 2 https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js -o base/postal_dates_preview/assets/gsap.min.js
+      - name: Render speech-timed motion
+        working-directory: production
+        run: python -u postal_motion/render_remote.py ${{ matrix.kind }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Postal-Motion-${{ matrix.kind }}
+          path: |
+            out/*.mp4
+            out/*.json
+            out/pose_*.jpg
+          retention-days: 14
+  save-voice:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: production
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-core
+          token: ${{ secrets.CORE_TOKEN }}
+          path: core
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: pip install -q requests pypdf pillow numpy edge-tts
+      - working-directory: core
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY4 }}
+          GEMINI_TTS_VOICE: Charon
+          GEMINI_TTS_STYLE: 'Professional Hindi male postal explainer. Natural brisk reel delivery; exactly the supplied Hindi text, no long pauses.'
+        run: python -u ../production/postal_motion/save_voice.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Postal-Save-Prompt
+          path: core/save_prompt/
+          retention-days: 14
