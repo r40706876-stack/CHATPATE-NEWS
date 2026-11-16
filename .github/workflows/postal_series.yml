@@ -1,0 +1,39 @@
+name: Postal doubt series intros and follow teasers
+on:
+  push:
+    branches: [codex/postal-doubt-series-20261116]
+    paths: [postal_series/**, .github/workflows/postal_series.yml]
+permissions:
+  contents: read
+jobs:
+  voice:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: production
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-core
+          token: ${{ secrets.CORE_TOKEN }}
+          path: core
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: pip install -q requests pypdf pillow numpy edge-tts
+      - name: Short narration
+        working-directory: core
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY4 }}
+          GEMINI_TTS_VOICE: Charon
+          GEMINI_TTS_GENDER: male
+          GEMINI_TTS_STYLE: 'Professional Hindi male teacher. Brisk and clear reel delivery. Read exactly the supplied script, no extra words, no long pauses.'
+          VOICE_SPEEDUP: '1.0'
+        run: python -u ../production/postal_series/voice.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Postal-Doubt-Series-Voices
+          path: core/demo_out/postal_series/
+          retention-days: 14
