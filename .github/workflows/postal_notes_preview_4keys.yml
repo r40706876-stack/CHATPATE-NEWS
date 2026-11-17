@@ -56,10 +56,12 @@ jobs:
           python - <<'PY'
           import json, notes_reel as n
           from pathlib import Path
-          qa=Path('notes_editorial.py')
-          src=qa.read_text()
-          assert 'r.top<166' in src
-          qa.write_text(src.replace('r.top<166','r.top<162'))
+          scene=Path('reels/src/notes_scene.html')
+          src=scene.read_text()
+          old='.overview p{font-size:21px;line-height:1.4;padding:10px 0;'
+          assert old in src
+          scene.write_text(src.replace(old,'.overview p{font-size:21px;line-height:1.4;padding:7px 0;'))
+          assert 'r.top<166' in Path('notes_editorial.py').read_text()
           topics=n.all_topics()
           state=json.load(open(n.STATE))
           k=(state['next']+1)//2 if state['next']%2 else state['next']//2
