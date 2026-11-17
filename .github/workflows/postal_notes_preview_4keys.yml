@@ -44,58 +44,32 @@ jobs:
           sudo apt-get update -qq && sudo apt-get install -y --no-install-recommends ffmpeg fonts-noto-core fonts-freefont-ttf >/dev/null
           pip install playwright==1.47.0 numpy requests pypdf pillow edge-tts >/dev/null
           python -m playwright install --with-deps chromium >/dev/null
-      - name: Reel banao
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY4 }}
-          GEMINI_TTS_KEYS: ${{ secrets.GEMINI_API_KEY3 }},${{ secrets.GEMINI_API_KEY2 }},${{ secrets.GEMINI_API_KEY }}
-          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
-          NOTES_GEMINI_ONLY: '1'
-          NOTES_LAYOUT_QA: '1'
-          NOTES_MAX_SEC: '55'
-        if: ${{ !inputs.only_post }}
+      - name: Edit existing video without Gemini
         run: |
-          git show 8176c5be2d5b5b2ca5da209b2aa458360b59958d:notes_reel.py > notes_reel.py
-          git show 8176c5be2d5b5b2ca5da209b2aa458360b59958d:reels/src/notes_scene.html > reels/src/notes_scene.html
+          git show 9a8c42c:notes_reels/notes_2026-11-18_franking_hi.mp4 > /tmp/original.mp4
+          fc-list :lang=hi | head
           python - <<'PY'
+          from playwright.sync_api import sync_playwright
           from pathlib import Path
-          p=Path('notes_reel.py')
-          s=p.read_text()
-          s=s.replace('    sc = write_script(sel, lang, q, thin=thin)', '''    sc = {"hook":"फ्रैंकिंग मशीन की छाप लाल होती है या नीली? परीक्षा में यहीं गलती होती है।","lines":["फ्रैंकिंग मशीन डाक शुल्क की छाप लगाती है।","लाइसेंस डिवीजन प्रमुख देते हैं। सरकारी विभाग के लिए पी एम जी।","लाइसेंस पाँच साल का, फीस तीन सौ पचहत्तर रुपये।"],"trap":"पुरानी मशीन की छाप लाल, लेकिन आर एम एफ एम की छाप नीली होती है, साथ में टू डी बारकोड।","trick":"फ्रैंक लेख लेटर बॉक्स में डालने पर अदत्त माना जाता है।","cta":"फ्री पीडीएफ चाहिए तो कमेंट में पीडीएफ लिखें। अगली वीडियो के लिए फॉलो करें।","thumb_q":"फ्रैंकिंग मशीन की छाप किस रंग की?"}
-              sel["pyq"]=["MP 2022","केरल 2021"]
-              shots["lines"]=shots["lines"][:3]
-              assert len(shots["lines"])==3''')
-          s=s.replace('for k2 in ("tiles", "trap", "trick", "quiz"):', 'for k2 in ("trap", "trick"):')
-          s=s.replace('    order.append(("cta", sc["cta"]))','    order.append(("surprise", "आपके लिए सरप्राइज गिफ्ट!"))\n    order.append(("cta", sc["cta"]))')
-          s=s.replace('    while est() > MAX_SEC and len(li) > 2:', '    while False:')
-          s=s.replace('"lines": [rel(p) for p in shots["lines"]],','"point_text": sc["lines"], "lines": [rel(p) for p in shots["lines"]],')
-          s=s.replace('    silent = os.path.join(tmp, "silent.mp4")','    name = "notes_2026-11-18_franking_hi"\n    silent = os.path.join(tmp, "silent.mp4")')
-          s=s.replace('PDF लिंक बायो में ↑','कमेंट में PDF लिखें').replace('लिंक बायो में','कमेंट में PDF लिखें')
-          p.write_text(s)
-          h=Path('reels/src/notes_scene.html')
-          t=h.read_text()
-          start=t.index('// lines')
-          end=t.index('// tiles',start)
-          t=t[:start]+'''// lines
-          D.lines.forEach((p,n)=>{const r=scene('line'+n,`<div class="cnt">1 / 2</div><div class="tableNotes"><h2>फ्रैंकिंग मशीन</h2>${["डाक शुल्क की छाप लगाने वाली मशीन","लाइसेंस: SP / SSP · सरकारी विभाग: PMG","वैधता: 5 साल · फीस: ₹375"].map((v,i)=>`<div class="noteRow ${i===n?'active':''}">${v}</div>`).join('')}<small>PYQ · MP 2022 · केरल 2021</small></div>`,'in');});
-          '''+t[end:]
-          t=t.replace('</style>', '.tableNotes{width:100%;background:#fff9e9;border:2px solid #13245c;border-radius:12px;padding:16px;font-family:"Kalam","Hind",sans-serif;font-size:26px;line-height:1.4}.tableNotes h2{color:#c62828;font-size:30px}.noteRow{padding:14px 4px;border-bottom:1px solid #b9c9df;color:#13245c}.noteRow.active{background:#ffe67a}.tableNotes small{color:#6b2bd9;font-size:17px}.gift{background:#fff5c9;border:3px solid #e5aa25;border-radius:24px;padding:24px;text-align:center;font-size:26px}</style>')
-          t=t.replace('// cta', '''scene('surprise','<div class="gift">🎁 आपके लिए सरप्राइज़!<h2>फ्री हैंडराइटिंग नोट्स PDF</h2>वीडियो लाइक करें और 3 GDS साथियों को शेयर करें</div>','pop');
-          // cta''')
-          start=t.index('// trap / trick')
-          end=t.index('// quiz',start)
-          t=t[:start]+'''// trap / trick
-          scene('trap','<div class="tableNotes" style="border:3px solid #c62828"><h2>⚠ परीक्षा TRAP</h2><div class="noteRow">पुरानी मशीन: <b style="color:#c62828">लाल छाप</b></div><div class="noteRow active">RMFM: <b style="color:#174ba0">नीली छाप</b> + 2D बारकोड</div></div>','pop');
-          scene('trick','<div class="tableNotes" style="background:#fff59a"><h2>★ जरूरी नियम</h2>फ्रैंक लेख लेटर बॉक्स में नहीं। डाला तो <b>Unpaid (अदत्त)</b>।</div>','pop');
-          '''+t[end:]
-          t=t.replace('POSTAL WALA</b>','PosTak · Postal Wala</b>')
-          h.write_text(t)
+          html="""<html lang="hi"><meta charset="utf-8"><style>body{margin:0;background:#13245c;color:white;font-family:'Noto Sans Devanagari',sans-serif;width:1080px;height:1920px;display:flex;align-items:center;justify-content:center;text-align:center}.wrap{width:850px}.brand{font-size:42px;color:#ffe14d;font-weight:bold}.tag{font-size:42px;margin:65px 0 30px;color:#ffe14d}h1{font-size:76px;line-height:1.35;margin:0}p{font-size:48px;line-height:1.5}.btn{background:#ffe14d;color:#13245c;border-radius:60px;padding:25px;font-size:55px;font-weight:bold;margin:55px 0}.foot{font-size:35px;color:#dce5ff}</style><div class="wrap"><div class="brand">PosTak · By Postal Wala</div><div class="tag">अगली वीडियो में</div><h1>फ्रैंकिंग मशीन के<br>रिचार्ज और छूट के नियम</h1><p>अभी कई महत्वपूर्ण नियम बाकी हैं।<br>कोई नियम छूटने मत देना!</p><div class="btn">अभी FOLLOW करें</div><div class="foot">GDS → MTS · Postman · PA</div></div></html>"""
+          Path('/tmp/end.html').write_text(html)
+          with sync_playwright() as p:
+              b=p.chromium.launch()
+              page=b.new_page(viewport={'width':1080,'height':1920})
+              page.goto('file:///tmp/end.html')
+              page.evaluate('document.fonts.ready')
+              page.screenshot(path='/tmp/end.png')
+              b.close()
           PY
-          python notes_reel.py build --demo '01:ज़रूरी बातें:hi'
+          ffprobe -v error -show_streams /tmp/original.mp4
+          ffmpeg -v error -y -loop 1 -i /tmp/end.png -f lavfi -i anullsrc=r=48000:cl=stereo -t 4 -vf "fade=t=in:st=0:d=0.25,format=yuv420p" -r 30 -c:v libx264 -c:a aac /tmp/end.mp4
+          ffmpeg -v error -y -i /tmp/original.mp4 -i /tmp/end.mp4 -filter_complex "[0:v]scale=1080:1920,setsar=1,fps=30[v0];[1:v]setsar=1[v1];[0:a]aformat=sample_rates=48000:channel_layouts=stereo[a0];[1:a]aformat=sample_rates=48000:channel_layouts=stereo[a1];[v0][a0][v1][a1]concat=n=2:v=1:a=1[v][a]" -map "[v]" -map "[a]" -c:v libx264 -crf 18 -preset fast -c:a aac -b:a 160k -movflags +faststart notes_reels/notes_2026-11-18_franking_hi_edited.mp4
+          ffprobe -v error -show_entries format=duration -of default=nw=1 notes_reels/notes_2026-11-18_franking_hi_edited.mp4
+          cp /tmp/end.png notes_reels/franking_next_topic_qa.png
       - name: Save
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add notes_reels
           git diff --cached --quiet || git commit -m "Notes reel [skip ci]"
-          git restore -- reels/src/notes_scene.html notes_reel.py
           git pull --rebase -q origin main && git push
