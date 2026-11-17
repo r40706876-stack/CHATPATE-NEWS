@@ -86,16 +86,16 @@ jobs:
           anchor="    for i in range(n):"
           assert anchor in rr
           rr=rr.replace(anchor, """    assert not errors, errors
-    segments=pg.evaluate("D.tl")
-    for seg in segments:
-        if not seg['k'].startswith('line'): continue
-        t=(seg['t']+seg['d']/2)*1000
-        pg.evaluate("t=>{for(const a of document.getAnimations()){a.pause();a.currentTime=t}}",t)
-        visible=pg.evaluate("()=>Array.from(document.querySelectorAll('.spoken-rule')).filter(e=>Number(getComputedStyle(e.parentElement).opacity)>.8 && Number(getComputedStyle(e).opacity)>.8 && e.getBoundingClientRect().height>20 && e.textContent.trim().length>5).map(e=>e.textContent)")
-        assert visible, ('Blank teaching screen',seg)
-        print('VISIBLE TEACHING TEXT:',visible,flush=True)
-    assert not errors, errors
-"""+anchor)
+              segments=pg.evaluate("D.tl")
+              for seg in segments:
+                  if not seg['k'].startswith('line'): continue
+                  t=(seg['t']+seg['d']/2)*1000
+                  pg.evaluate("t=>{for(const a of document.getAnimations()){a.pause();a.currentTime=t}}",t)
+                  visible=pg.evaluate("()=>Array.from(document.querySelectorAll('.spoken-rule')).filter(e=>Number(getComputedStyle(e.parentElement).opacity)>.8 && Number(getComputedStyle(e).opacity)>.8 && e.getBoundingClientRect().height>20 && e.textContent.trim().length>5).map(e=>e.textContent)")
+                  assert visible, ('Blank teaching screen',seg)
+                  print('VISIBLE TEACHING TEXT:',visible,flush=True)
+              assert not errors, errors
+          """+anchor)
           renderer.write_text(rr)
           PY
           python notes_reel.py build --demo '01:पूर्व भुगतान क्यों ज़रूरी:hi'
