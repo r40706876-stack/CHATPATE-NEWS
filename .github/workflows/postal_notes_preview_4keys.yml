@@ -44,41 +44,48 @@ jobs:
           sudo apt-get update -qq && sudo apt-get install -y --no-install-recommends ffmpeg fonts-noto-core fonts-freefont-ttf >/dev/null
           pip install playwright==1.47.0 numpy requests pypdf pillow edge-tts >/dev/null
           python -m playwright install --with-deps chromium >/dev/null
-      - name: Edit existing video with one approved Gemini voice line
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY4 }}
-          GEMINI_TTS_KEYS: ${{ secrets.GEMINI_API_KEY3 }},${{ secrets.GEMINI_API_KEY2 }},${{ secrets.GEMINI_API_KEY }}
-          NOTES_GEMINI_ONLY: '1'
+      - name: Reorder approved voice and animate question without API
         run: |
+          git show 6ddc82b:notes_reels/notes_2026-11-18_franking_hi_final.mp4 > /tmp/previous.mp4
           git show 9a8c42c:notes_reels/notes_2026-11-18_franking_hi.mp4 > /tmp/original.mp4
-          fc-list :lang=hi | head
           python - <<'PY'
+          import subprocess as s, json, math
           from playwright.sync_api import sync_playwright
           from pathlib import Path
-          html="""<html lang="hi"><meta charset="utf-8"><style>body{margin:0;background:#13245c;color:white;font-family:'Noto Sans Devanagari',sans-serif;width:1080px;height:1920px;display:flex;align-items:center;justify-content:center;text-align:center}.wrap{width:850px}.brand{font-size:42px;color:#ffe14d;font-weight:bold}.tag{font-size:42px;margin:65px 0 30px;color:#ffe14d}h1{font-size:76px;line-height:1.35;margin:0}p{font-size:48px;line-height:1.5}.btn{background:#ffe14d;color:#13245c;border-radius:60px;padding:25px;font-size:55px;font-weight:bold;margin:55px 0}.foot{font-size:35px;color:#dce5ff}</style><div class="wrap"><div class="brand">PosTak · By Postal Wala</div><div class="tag">अगली वीडियो में</div><h1>फ्रैंकिंग मशीन की छाप<br>लाल होती है या नीली?</h1><p>सही जवाब और पूरा एक्सप्लेनेशन<br>अगली वीडियो में</p><div class="btn">अभी FOLLOW करें</div><div class="foot">GDS → MTS · Postman · PA</div></div></html>"""
+          def duration(p):
+              return float(s.check_output(['ffprobe','-v','error','-show_entries','format=duration','-of','csv=p=0',p]))
+          base=duration('/tmp/original.mp4')-7.3
+          end=duration('/tmp/previous.mp4')
+          # Locate CTA by the last original scene transition, using frame differences in its final seconds.
+          import numpy as np
+          raw=s.check_output(['ffmpeg','-v','error','-ss',str(base-8),'-i','/tmp/previous.mp4','-t','8','-vf','fps=10,scale=96:170,format=gray','-f','rawvideo','-'])
+          frames=np.frombuffer(raw,np.uint8).reshape(-1,170,96).astype(float)
+          diff=np.abs(np.diff(frames,axis=0)).mean(axis=(1,2))
+          candidates=[i for i in range(len(diff)) if 2.0<=i/10<=4.5]
+          idx=max(candidates,key=lambda i:diff[i])
+          cut=base-8+(idx+1)/10
+          print('CTA boundary',cut,'scene difference',diff[idx],'base',base,'end',end)
+          assert diff[idx]>3, 'CTA transition not reliably found'
+          Path('/tmp/times').write_text(f'{cut} {base} {end-base}')
+          html="""<html lang="hi"><meta charset="utf-8"><style>body{margin:0;width:1080px;height:1920px;background:#fff8e8;color:#13245c;font-family:'Noto Sans Devanagari',sans-serif;display:flex;align-items:center;justify-content:center;text-align:center}.wrap{width:850px}.brand{font-size:42px;font-weight:bold;color:#b32329}.tag{font-size:40px;margin:55px 0 30px}h1{font-size:74px;line-height:1.35;margin:0}.stamps{display:flex;justify-content:center;gap:55px;margin:50px 0}.stamp{border:6px dashed currentColor;border-radius:16px;padding:25px 50px;font-size:65px;font-weight:bold}.red{color:#c62828}.blue{color:#1459ba}.q{font-size:150px;font-weight:bold;color:#b32329;line-height:1.1}p{font-size:45px;line-height:1.5}.btn{background:#13245c;color:#fff;border-radius:60px;padding:25px;font-size:55px;font-weight:bold;margin:35px 0}</style><div class="wrap"><div class="brand">PosTak · By Postal Wala</div><div class="tag">अब सवाल ये है...</div><h1>फ्रैंकिंग मशीन की छाप</h1><div class="stamps"><div class="stamp red">लाल</div><div class="stamp blue">नीली</div></div><div class="q">?</div><p>सही जवाब पूरे एक्सप्लेनेशन के साथ<br>अगली वीडियो में</p><div class="btn">अभी FOLLOW करें</div></div><script>window.draw=t=>{let show=(sel,start,scale=0.9)=>{let e=document.querySelector(sel),x=Math.max(0,Math.min(1,(t-start)/.45));e.style.opacity=x;e.style.transform='translateY('+((1-x)*35)+'px) scale('+(scale+(1-scale)*x)+')'};show('.tag',0);show('h1',.2);show('.red',1.8);show('.blue',2.7);show('.q',3.2,.4);show('.btn',5.0,.7);show('p',7.2);if(t>3.7)document.querySelector('.q').style.transform='scale('+(1+.07*Math.sin(t*5))+')';if(t>5.5)document.querySelector('.btn').style.transform='scale('+(1+.025*Math.sin(t*5))+')'}</script></html>"""
           Path('/tmp/end.html').write_text(html)
           with sync_playwright() as p:
               b=p.chromium.launch()
               page=b.new_page(viewport={'width':1080,'height':1920})
               page.goto('file:///tmp/end.html')
               page.evaluate('document.fonts.ready')
-              page.screenshot(path='/tmp/end.png')
+              enc=s.Popen(['ffmpeg','-v','error','-y','-f','image2pipe','-vcodec','mjpeg','-r','30','-i','-','-c:v','libx264','-pix_fmt','yuv420p','-preset','fast','/tmp/animated.mp4'],stdin=s.PIPE)
+              for i in range(math.ceil((end-base)*30)):
+                  page.evaluate('t=>window.draw(t)',i/30)
+                  enc.stdin.write(page.screenshot(type='jpeg',quality=90))
+              enc.stdin.close()
+              assert enc.wait()==0
+              page.screenshot(path='notes_reels/franking_next_topic_qa.png')
               b.close()
           PY
-          git show 8176c5be2d5b5b2ca5da209b2aa458360b59958d:notes_reel.py > /tmp/historical_notes.py
-          cp /tmp/historical_notes.py ./approved_voice.py
-          python - <<'PY'
-          import approved_voice as v
-          a,sr,used=v.voice(["अब सवाल ये है कि फ्रैंकिंग मशीन की छाप लाल होती है या नीली? इस कन्फ्यूजन को दूर करना है तो अभी फॉलो कर लो, क्योंकि अगली वीडियो में इसका सही जवाब पूरे एक्सप्लेनेशन के साथ जानेंगे।"],"hi")
-          v._wav('/tmp/ending.wav',a[0],sr)
-          PY
-          # Original timing from the successful TTS log; remove the answer scene, retaining all other original scenes.
-          ffmpeg -v error -y -i /tmp/original.mp4 -i /tmp/end.png -i /tmp/ending.wav -filter_complex "[0:v]trim=end=17.5,setpts=PTS-STARTPTS[v0];[0:a]atrim=end=17.5,asetpts=PTS-STARTPTS[a0];[0:v]trim=start=24.8,setpts=PTS-STARTPTS[v1];[0:a]atrim=start=24.8,asetpts=PTS-STARTPTS[a1];[v0][a0][v1][a1]concat=n=2:v=1:a=1[vbase][abase]" -map "[vbase]" -map "[abase]" -c:v libx264 -crf 18 -c:a aac /tmp/base.mp4
-          ffmpeg -v error -y -loop 1 -i /tmp/end.png -i /tmp/ending.wav -vf "fade=t=in:st=0:d=0.25,format=yuv420p" -r 30 -c:v libx264 -c:a aac -shortest /tmp/end.mp4
-          ffmpeg -v error -y -i /tmp/base.mp4 -i /tmp/end.mp4 -filter_complex "[0:v]scale=1080:1920,setsar=1,fps=30[v0];[1:v]setsar=1[v1];[0:a]aformat=sample_rates=48000:channel_layouts=stereo[a0];[1:a]aformat=sample_rates=48000:channel_layouts=stereo[a1];[v0][a0][v1][a1]concat=n=2:v=1:a=1[v][a]" -map "[v]" -map "[a]" -c:v libx264 -crf 18 -preset fast -c:a aac -b:a 160k -movflags +faststart notes_reels/notes_2026-11-18_franking_hi_final.mp4
-          ffprobe -v error -show_entries format=duration -of default=nw=1 notes_reels/notes_2026-11-18_franking_hi_final.mp4
-          cp /tmp/end.png notes_reels/franking_next_topic_qa.png
-          rm approved_voice.py
+          read CUT BASE DUR < /tmp/times || true
+          ffmpeg -v error -y -i /tmp/previous.mp4 -i /tmp/animated.mp4 -filter_complex "[0:v]trim=end=${CUT},setpts=PTS-STARTPTS[v0];[0:a]atrim=end=${CUT},asetpts=PTS-STARTPTS[a0];[1:v]setpts=PTS-STARTPTS[v1];[0:a]atrim=start=${BASE},asetpts=PTS-STARTPTS[a1];[0:v]trim=start=${CUT}:end=${BASE},setpts=PTS-STARTPTS[v2];[0:a]atrim=start=${CUT}:end=${BASE},asetpts=PTS-STARTPTS[a2];[v0][a0][v1][a1][v2][a2]concat=n=3:v=1:a=1[v][a]" -map "[v]" -map "[a]" -c:v libx264 -crf 18 -preset fast -c:a aac -movflags +faststart notes_reels/notes_2026-11-18_franking_hi_animated.mp4
+          ffprobe -v error -show_entries format=duration -of default=nw=1 notes_reels/notes_2026-11-18_franking_hi_animated.mp4
       - name: Save
         run: |
           git config user.name "github-actions[bot]"
