@@ -65,13 +65,18 @@ jobs:
           s=s.replace(marker,'    from notes_editorial import check_layout\n    check_layout(scene, data)\n    assert total <= 40, f"Duration {total} exceeds 40 seconds"\n'+marker)
           s=s.replace('पूरी PDF लिंक बायो में, फॉलो करो!', 'फ्री पीडीएफ चाहिए? कमेंट में पीडीएफ लिखें।').replace('PDF लिंक बायो में ↑','कमेंट में PDF लिखें ↓').replace('लिंक बायो में','कमेंट में PDF लिखें')
           s=s.replace('    order.append(("cta", sc["cta"]))','    order.append(("surprise", "आपके लिए सरप्राइज गिफ्ट!"))\n    order.append(("cta", sc["cta"]))')
+          s=s.replace('for k2 in ("tiles", "trap", "trick", "quiz"):', 'for k2 in ("trap",):')
+          s=s.replace('"lines": [rel(p) for p in shots["lines"]],', '"point_text": [spoken for nm, spoken in order if nm.startswith("line")], "lines": [rel(p) for p in shots["lines"]],')
+          s=s.replace('याद रखने की ट्रिक','जरूरी नियम')
           p.write_text(s)
           scene=Path('reels/src/notes_scene.html')
           h=scene.read_text()
           assert '// cta' in h
           h=h.replace('</style>', '''.gift{width:100%;background:#fff5c9;border:3px solid #e5aa25;border-radius:24px;padding:28px 24px;text-align:center;box-shadow:0 15px 35px #13245c22}.gift-tag{font-size:20px;background:var(--navy);color:white;padding:5px 14px;border-radius:20px;display:inline-block}.gift h2{font-size:34px;line-height:1.25;margin:18px 0}.gift p{font-size:27px;line-height:1.4;margin:8px 0}.gift small{display:block;font-size:20px;margin-top:20px;color:#476a3a}@keyframes revealCard{from{clip-path:inset(0 100% 0 0);opacity:.4}to{clip-path:inset(0);opacity:1}}@keyframes floatIcon{50%{transform:translateY(-5px)}}.study-icon{font-size:38px;display:block;text-align:center}</style>''')
           h=h.replace('// cta', '''{const r=scene('surprise',`<div class="gift"><div class="gift-tag">आपके लिए सरप्राइज़!</div><h2>🎁 सरप्राइज़ गिफ्ट मिलेगा</h2><p>फ्री हैंडराइटिंग नोट्स PDF</p><small>अगली स्क्रीन पर जानें कैसे मिलेगा →</small></div>`,'pop');if(r){r[0].querySelector('.gift h2').style.animation=\`pulse .65s \${r[1].t+.25}s 2\`}}\n// cta''')
-          h=h.replace("if(r){r[0].querySelector('.mk')", """if(r){const card=r[0].querySelector('.card');const icon=document.createElement('span');icon.className='study-icon';const spoken=(D.point_text||[])[n]||'';icon.textContent=/टिकट|स्टाम्प/.test(spoken)?'🏷️':/भुगतान|शुल्क/.test(spoken)?'💰':'✉️';card.prepend(icon);icon.style.animation='floatIcon 1s '+r[1].t+'s 3';card.querySelector('img').style.animation='revealCard .55s '+(r[1].t+.1)+'s both';r[0].querySelector('.mk')""")
+          h=h.replace('</style>', '.spoken-rule{font-size:29px;line-height:1.4;font-weight:800;color:#13245c;background:#fff;border:2px solid #dce3ee;border-radius:14px;padding:14px;width:100%;text-align:center}.card img{max-height:210px;object-fit:contain}</style>')
+          h=h.replace('<div class="card"><img src="${p}"><i class="mk"></i></div>', '<div class="spoken-rule">${esc((D.point_text||[])[n]||"")}</div><div class="card"><img src="${p}"><i class="mk"></i></div>')
+          h=h.replace("if(r){r[0].querySelector('.mk')", "if(r){r[0].querySelector('.spoken-rule').style.animation='pop .35s '+r[1].t+'s both';r[0].querySelector('.mk')")
           scene.write_text(h)
           PY
           python notes_reel.py build --demo '01:पूर्व भुगतान क्यों ज़रूरी:hi'
