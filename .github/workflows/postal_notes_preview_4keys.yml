@@ -63,7 +63,14 @@ jobs:
           marker='    subprocess.run([sys.executable, os.path.join(ROOT, "reels", "src", "render.py"), scene'
           assert marker in s
           s=s.replace(marker,'    from notes_editorial import check_layout\n    check_layout(scene, data)\n    assert total <= 40, f"Duration {total} exceeds 40 seconds"\n'+marker)
+          s=s.replace('पूरी PDF लिंक बायो में, फॉलो करो!', 'फ्री पीडीएफ चाहिए? कमेंट में पीडीएफ लिखें।').replace('PDF लिंक बायो में ↑','कमेंट में PDF लिखें ↓').replace('लिंक बायो में','कमेंट में PDF लिखें')
+          s=s.replace('    order.append(("cta", sc["cta"]))','    order.append(("surprise", "सरप्राइज!"))\n    order.append(("cta", sc["cta"]))')
           p.write_text(s)
+          scene=Path('reels/src/notes_scene.html')
+          h=scene.read_text()
+          assert '// cta' in h
+          h=h.replace('// cta', '''scene('surprise',`<div class="stamp" style="background:#ffcc33;color:#14265d;font-size:38px;padding:18px 28px">🎁 SURPRISE!</div>`,'pop');\n// cta''')
+          scene.write_text(h)
           PY
           python notes_reel.py build --demo '01:पूर्व भुगतान क्यों ज़रूरी:hi'
       - name: Save
