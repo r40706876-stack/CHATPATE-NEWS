@@ -44,14 +44,18 @@ jobs:
           sudo apt-get update -qq && sudo apt-get install -y --no-install-recommends ffmpeg fonts-noto-core fonts-freefont-ttf >/dev/null
           pip install playwright==1.47.0 numpy requests pypdf pillow edge-tts >/dev/null
           python -m playwright install --with-deps chromium >/dev/null
-      - name: Edit existing video without Gemini
+      - name: Edit existing video with one approved Gemini voice line
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY4 }}
+          GEMINI_TTS_KEYS: ${{ secrets.GEMINI_API_KEY3 }},${{ secrets.GEMINI_API_KEY2 }},${{ secrets.GEMINI_API_KEY }}
+          NOTES_GEMINI_ONLY: '1'
         run: |
           git show 9a8c42c:notes_reels/notes_2026-11-18_franking_hi.mp4 > /tmp/original.mp4
           fc-list :lang=hi | head
           python - <<'PY'
           from playwright.sync_api import sync_playwright
           from pathlib import Path
-          html="""<html lang="hi"><meta charset="utf-8"><style>body{margin:0;background:#13245c;color:white;font-family:'Noto Sans Devanagari',sans-serif;width:1080px;height:1920px;display:flex;align-items:center;justify-content:center;text-align:center}.wrap{width:850px}.brand{font-size:42px;color:#ffe14d;font-weight:bold}.tag{font-size:42px;margin:65px 0 30px;color:#ffe14d}h1{font-size:76px;line-height:1.35;margin:0}p{font-size:48px;line-height:1.5}.btn{background:#ffe14d;color:#13245c;border-radius:60px;padding:25px;font-size:55px;font-weight:bold;margin:55px 0}.foot{font-size:35px;color:#dce5ff}</style><div class="wrap"><div class="brand">PosTak · By Postal Wala</div><div class="tag">अगली वीडियो में</div><h1>फ्रैंकिंग मशीन के<br>रिचार्ज और छूट के नियम</h1><p>अभी कई महत्वपूर्ण नियम बाकी हैं।<br>कोई नियम छूटने मत देना!</p><div class="btn">अभी FOLLOW करें</div><div class="foot">GDS → MTS · Postman · PA</div></div></html>"""
+          html="""<html lang="hi"><meta charset="utf-8"><style>body{margin:0;background:#13245c;color:white;font-family:'Noto Sans Devanagari',sans-serif;width:1080px;height:1920px;display:flex;align-items:center;justify-content:center;text-align:center}.wrap{width:850px}.brand{font-size:42px;color:#ffe14d;font-weight:bold}.tag{font-size:42px;margin:65px 0 30px;color:#ffe14d}h1{font-size:76px;line-height:1.35;margin:0}p{font-size:48px;line-height:1.5}.btn{background:#ffe14d;color:#13245c;border-radius:60px;padding:25px;font-size:55px;font-weight:bold;margin:55px 0}.foot{font-size:35px;color:#dce5ff}</style><div class="wrap"><div class="brand">PosTak · By Postal Wala</div><div class="tag">अगली वीडियो में</div><h1>फ्रैंकिंग मशीन की छाप<br>लाल होती है या नीली?</h1><p>सही जवाब और पूरा एक्सप्लेनेशन<br>अगली वीडियो में</p><div class="btn">अभी FOLLOW करें</div><div class="foot">GDS → MTS · Postman · PA</div></div></html>"""
           Path('/tmp/end.html').write_text(html)
           with sync_playwright() as p:
               b=p.chromium.launch()
@@ -61,11 +65,20 @@ jobs:
               page.screenshot(path='/tmp/end.png')
               b.close()
           PY
-          ffprobe -v error -show_streams /tmp/original.mp4
-          ffmpeg -v error -y -loop 1 -i /tmp/end.png -f lavfi -i anullsrc=r=48000:cl=stereo -t 4 -vf "fade=t=in:st=0:d=0.25,format=yuv420p" -r 30 -c:v libx264 -c:a aac /tmp/end.mp4
-          ffmpeg -v error -y -i /tmp/original.mp4 -i /tmp/end.mp4 -filter_complex "[0:v]scale=1080:1920,setsar=1,fps=30[v0];[1:v]setsar=1[v1];[0:a]aformat=sample_rates=48000:channel_layouts=stereo[a0];[1:a]aformat=sample_rates=48000:channel_layouts=stereo[a1];[v0][a0][v1][a1]concat=n=2:v=1:a=1[v][a]" -map "[v]" -map "[a]" -c:v libx264 -crf 18 -preset fast -c:a aac -b:a 160k -movflags +faststart notes_reels/notes_2026-11-18_franking_hi_edited.mp4
-          ffprobe -v error -show_entries format=duration -of default=nw=1 notes_reels/notes_2026-11-18_franking_hi_edited.mp4
+          git show 8176c5be2d5b5b2ca5da209b2aa458360b59958d:notes_reel.py > /tmp/historical_notes.py
+          cp /tmp/historical_notes.py ./approved_voice.py
+          python - <<'PY'
+          import approved_voice as v
+          a,sr,used=v.voice(["अब सवाल ये है कि फ्रैंकिंग मशीन की छाप लाल होती है या नीली? इस कन्फ्यूजन को दूर करना है तो अभी फॉलो कर लो, क्योंकि अगली वीडियो में इसका सही जवाब पूरे एक्सप्लेनेशन के साथ जानेंगे।"],"hi")
+          v._wav('/tmp/ending.wav',a[0],sr)
+          PY
+          # Original timing from the successful TTS log; remove the answer scene, retaining all other original scenes.
+          ffmpeg -v error -y -i /tmp/original.mp4 -i /tmp/end.png -i /tmp/ending.wav -filter_complex "[0:v]trim=end=17.5,setpts=PTS-STARTPTS[v0];[0:a]atrim=end=17.5,asetpts=PTS-STARTPTS[a0];[0:v]trim=start=24.8,setpts=PTS-STARTPTS[v1];[0:a]atrim=start=24.8,asetpts=PTS-STARTPTS[a1];[v0][a0][v1][a1]concat=n=2:v=1:a=1[vbase][abase]" -map "[vbase]" -map "[abase]" -c:v libx264 -crf 18 -c:a aac /tmp/base.mp4
+          ffmpeg -v error -y -loop 1 -i /tmp/end.png -i /tmp/ending.wav -vf "fade=t=in:st=0:d=0.25,format=yuv420p" -r 30 -c:v libx264 -c:a aac -shortest /tmp/end.mp4
+          ffmpeg -v error -y -i /tmp/base.mp4 -i /tmp/end.mp4 -filter_complex "[0:v]scale=1080:1920,setsar=1,fps=30[v0];[1:v]setsar=1[v1];[0:a]aformat=sample_rates=48000:channel_layouts=stereo[a0];[1:a]aformat=sample_rates=48000:channel_layouts=stereo[a1];[v0][a0][v1][a1]concat=n=2:v=1:a=1[v][a]" -map "[v]" -map "[a]" -c:v libx264 -crf 18 -preset fast -c:a aac -b:a 160k -movflags +faststart notes_reels/notes_2026-11-18_franking_hi_final.mp4
+          ffprobe -v error -show_entries format=duration -of default=nw=1 notes_reels/notes_2026-11-18_franking_hi_final.mp4
           cp /tmp/end.png notes_reels/franking_next_topic_qa.png
+          rm approved_voice.py
       - name: Save
         run: |
           git config user.name "github-actions[bot]"
