@@ -73,11 +73,30 @@ jobs:
           h=scene.read_text()
           assert '// cta' in h
           h=h.replace('</style>', '''.gift{width:100%;background:#fff5c9;border:3px solid #e5aa25;border-radius:24px;padding:28px 24px;text-align:center;box-shadow:0 15px 35px #13245c22}.gift-tag{font-size:20px;background:var(--navy);color:white;padding:5px 14px;border-radius:20px;display:inline-block}.gift h2{font-size:34px;line-height:1.25;margin:18px 0}.gift p{font-size:27px;line-height:1.4;margin:8px 0}.gift small{display:block;font-size:20px;margin-top:20px;color:#476a3a}@keyframes revealCard{from{clip-path:inset(0 100% 0 0);opacity:.4}to{clip-path:inset(0);opacity:1}}@keyframes floatIcon{50%{transform:translateY(-5px)}}.study-icon{font-size:38px;display:block;text-align:center}</style>''')
-          h=h.replace('// cta', '''{const r=scene('surprise',`<div class="gift"><div class="gift-tag">आपके लिए सरप्राइज़!</div><h2>🎁 सरप्राइज़ गिफ्ट मिलेगा</h2><p>फ्री हैंडराइटिंग नोट्स PDF</p><small>अगली स्क्रीन पर जानें कैसे मिलेगा →</small></div>`,'pop');if(r){r[0].querySelector('.gift h2').style.animation=\`pulse .65s \${r[1].t+.25}s 2\`}}\n// cta''')
+          h=h.replace('// cta', '''{const r=scene('surprise',`<div class="gift"><div class="gift-tag">आपके लिए सरप्राइज़!</div><h2>🎁 सरप्राइज़ गिफ्ट मिलेगा</h2><p>फ्री हैंडराइटिंग नोट्स PDF</p><small>अगली स्क्रीन पर जानें कैसे मिलेगा →</small></div>`,'pop');if(r){r[0].querySelector('.gift h2').style.animation=`pulse .65s ${r[1].t+.25}s 2`}}\n// cta''')
           h=h.replace('</style>', '.spoken-rule{font-size:29px;line-height:1.4;font-weight:800;color:#13245c;background:#fff;border:2px solid #dce3ee;border-radius:14px;padding:14px;width:100%;text-align:center}.card img{max-height:210px;object-fit:contain}</style>')
           h=h.replace('<div class="card"><img src="${p}"><i class="mk"></i></div>', '<div class="spoken-rule">${esc((D.point_text||[])[n]||"")}</div><div class="card"><img src="${p}"><i class="mk"></i></div>')
           h=h.replace("if(r){r[0].querySelector('.mk')", "if(r){r[0].querySelector('.spoken-rule').style.animation='pop .35s '+r[1].t+'s both';r[0].querySelector('.mk')")
           scene.write_text(h)
+          renderer=Path('reels/src/render.py')
+          rr=renderer.read_text()
+          anchor="    pg.goto(pathlib.Path(html).resolve().as_uri());"
+          assert anchor in rr
+          rr=rr.replace(anchor, "    errors=[]\n    pg.on('pageerror', lambda e: errors.append(str(e)))\n"+anchor)
+          anchor="    for i in range(n):"
+          assert anchor in rr
+          rr=rr.replace(anchor, """    assert not errors, errors
+    segments=pg.evaluate("D.tl")
+    for seg in segments:
+        if not seg['k'].startswith('line'): continue
+        t=(seg['t']+seg['d']/2)*1000
+        pg.evaluate("t=>{for(const a of document.getAnimations()){a.pause();a.currentTime=t}}",t)
+        visible=pg.evaluate("()=>Array.from(document.querySelectorAll('.spoken-rule')).filter(e=>Number(getComputedStyle(e.parentElement).opacity)>.8 && Number(getComputedStyle(e).opacity)>.8 && e.getBoundingClientRect().height>20 && e.textContent.trim().length>5).map(e=>e.textContent)")
+        assert visible, ('Blank teaching screen',seg)
+        print('VISIBLE TEACHING TEXT:',visible,flush=True)
+    assert not errors, errors
+"""+anchor)
+          renderer.write_text(rr)
           PY
           python notes_reel.py build --demo '01:पूर्व भुगतान क्यों ज़रूरी:hi'
       - name: Save
@@ -86,5 +105,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add notes_reels
           git diff --cached --quiet || git commit -m "Notes reel [skip ci]"
-          git restore -- reels/src/notes_scene.html notes_reel.py
+          git restore -- reels/src/notes_scene.html notes_reel.py reels/src/render.py
           git pull --rebase -q origin main && git push
