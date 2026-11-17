@@ -35,6 +35,7 @@ jobs:
         with:
           repository: r40706876-stack/postal-wala-core
           token: ${{ secrets.CORE_TOKEN }}
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: "3.10"
@@ -53,38 +54,23 @@ jobs:
           NOTES_MAX_SEC: '40'
         if: ${{ !inputs.only_post }}
         run: |
+          git show 8176c5be2d5b5b2ca5da209b2aa458360b59958d:notes_reel.py > notes_reel.py
+          git show 8176c5be2d5b5b2ca5da209b2aa458360b59958d:reels/src/notes_scene.html > reels/src/notes_scene.html
           python - <<'PY'
-          import json, notes_reel as n
           from pathlib import Path
-          scene=Path('reels/src/notes_scene.html')
-          src=scene.read_text()
-          old='.overview p{font-size:21px;line-height:1.4;padding:10px 0;'
-          assert old in src
-          scene.write_text(src.replace(old,'.overview p{font-size:21px;line-height:1.4;padding:7px 0;'))
-          assert 'r.top<166' in Path('notes_editorial.py').read_text()
-          topics=n.all_topics()
-          state=json.load(open(n.STATE))
-          k=(state['next']+1)//2 if state['next']%2 else state['next']//2
-          while k < len(topics) and ('अवकाश' in topics[k]['hi'] or 'छुट्ट' in topics[k]['hi']):
-              k+=1
-          t=topics[k]
-          print('NEXT SOURCE TOPIC:',t,flush=True)
-          assert 'फ्रैंकिंग' not in t['hi'] and 'Franking' not in t['en'] and 'ज़रूरी बातें' not in t['hi'], 'Franking requires curated split before rendering'
-          original=n.write_script
-          def script(sel,lang,quiz,thin=False):
-              if sel['title']!='पूर्व भुगतान क्यों ज़रूरी':
-                  return original(sel,lang,quiz,thin)
-              lines=['पूरा शुल्क दिया है? लेख पहली डाक से जाएगा और जल्दी बँटेगा।','कम या बिना भुगतान वाले लेख रोके जा सकते हैं; विशेष वितरण नहीं मिलता।','अब डाक टिकट और स्टेशनरी का नियम।','भारत सरकार के अधिकार से भारतीय डाक टिकट जारी करता है।','छपी स्टेशनरी पर शुल्क कम पड़े तो अतिरिक्त टिकट लगाएँ।','फ्रैंकिंग मशीन की छाप से भी शुल्क दे सकते हैं।','विदेशी फिलेटली ऑर्डर बॉम्बे जीपीओ के भारतीय फिलेटली ब्यूरो को।']
-              assert len(sel['lines'])==len(lines)
-              return dict(hook='राजस्व टिकट से डाक भेज सकते हैं? परीक्षा में यह गलती मत करना।',lines=lines,tiles='',trap='राजस्व टिकट से डाक शुल्क नहीं दे सकते।',trick='',thumb_q='क्या *राजस्व टिकट* से डाक भेज सकते हैं?',written_explanations=[x['say'] for x in sel['lines']],overview='इन नियमों को सेव कर लें।')
-          n.write_script=script
-          n.build(t['part']+':'+t['hi']+':hi')
+          p=Path('notes_reel.py')
+          s=p.read_text()
+          marker='    subprocess.run([sys.executable, os.path.join(ROOT, "reels", "src", "render.py"), scene'
+          assert marker in s
+          s=s.replace(marker,'    from notes_editorial import check_layout\n    check_layout(scene, data)\n    assert total <= 40, f"Duration {total} exceeds 40 seconds"\n'+marker)
+          p.write_text(s)
           PY
+          python notes_reel.py build --demo '01:पूर्व भुगतान क्यों ज़रूरी:hi'
       - name: Save
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add notes_reels
           git diff --cached --quiet || git commit -m "Notes reel [skip ci]"
-          git restore -- reels/src/notes_scene.html
+          git restore -- reels/src/notes_scene.html notes_reel.py
           git pull --rebase -q origin main && git push
