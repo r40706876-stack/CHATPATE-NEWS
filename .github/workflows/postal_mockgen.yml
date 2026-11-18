@@ -1,14 +1,16 @@
 name: Postal mock ke naye sawal (ganit, GK, Vol V, Paper-II)
 # Poore MTS / Postman mock ke liye kami wale hisson ke naye sawal, asli PYQ jaise (deep/mockgen.py).
-# Nateeja: core repo branch 'postal-mg' -> mg_done.json. Chaaron Gemini key barabar; kaam baaki ho to khud agla daur.
+# Nateeja: core repo branch 'postal-mg' -> mg_done.json. Chaaron Gemini key barabar; chhote daur (90 call/key) taaki
+# har ~1 ghante nateeje website par aayein; kaam baaki ho aur pichhle daur me kuch bana ho to khud agla daur.
 on:
   schedule:
-    - cron: '41 9 * * *'     # 15:11 IST roz, jab tak kaam baaki
+    - cron: '10 8 * * *'     # 13:40 IST: Gemini ka roz ka quota naya hote hi
+    - cron: '40 11 * * *'    # 17:10 IST: dobara (agar beech me ruka ho)
   workflow_dispatch:
     inputs:
       calls:
         description: "har key par kitni AI calls"
-        default: "400"
+        default: "90"
 permissions:
   contents: read
   actions: write
@@ -45,7 +47,7 @@ jobs:
             2) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY3 }}" ;;
             *) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY4 }}" ;;
           esac
-          SHARD=${{ matrix.shard }} NSHARD=4 MG_MAX_CALLS=${{ inputs.calls || '400' }} python deep/mockgen.py mg_${{ matrix.shard }}.json 2>&1 | tail -n 60
+          SHARD=${{ matrix.shard }} NSHARD=4 MG_MAX_CALLS=${{ inputs.calls || '90' }} python deep/mockgen.py mg_${{ matrix.shard }}.json 2>&1 | tail -n 60
           [ -f mg_${{ matrix.shard }}.json ] || echo "{}" > mg_${{ matrix.shard }}.json
       - uses: actions/upload-artifact@v4
         with:
@@ -93,4 +95,4 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh workflow run postal_site_refresh.yml -R ${{ github.repository }} || true   # nateeje website par
-          if [ -f cont.txt ]; then gh workflow run postal_mockgen.yml -R ${{ github.repository }} -f calls=400 && echo "agla daur shuru"; fi
+          if [ -f cont.txt ]; then gh workflow run postal_mockgen.yml -R ${{ github.repository }} -f calls=90 && echo "agla daur shuru"; fi
