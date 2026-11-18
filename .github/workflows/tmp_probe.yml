@@ -5,5 +5,6 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - run: |
-          curl -sSL -m 60 -A "Mozilla/5.0" "https://indiapost.gov.in/VAS/Pages/RTI/RTI-Manual-5.aspx" -o p.html; grep -oiE 'href="[^"]+\.pdf"' p.html | head -60
-          for u in "https://indiapost.gov.in/VAS/DOP_RTI/PM_VOL_7.pdf" "https://www.indiapost.gov.in/VAS/DOP_RTI/PM_VOL_7.pdf" "https://Indiapost.gov.in/VAS/DOP_RTI/PM_VOL_7.pdf"; do curl -sSL -m 60 -A "Mozilla/5.0" -o x.pdf "$u"; echo "$u"; file x.pdf; done
+          sudo apt-get install -y -qq poppler-utils >/dev/null
+          curl -sSL -m 120 -A "Mozilla/5.0" -o v6.pdf "https://utilities.cept.gov.in/dop/pdfbind.ashx?id=5576"; pdftotext v6.pdf v6.txt; wc -c v6.txt; grep -c "" v6.txt; sed -n 1,60p v6.txt | tr -s ' \n' | head -c 2500; echo; grep -iE "^ *[0-9]+\. " v6.txt | head -40
+          curl -sSL -m 60 -A "Mozilla/5.0" "https://app.indiapost.gov.in/enterpriseportal/rti/rti-manual-five" | grep -oiE '(https?:)?[^"'"'"' ]+\.(pdf|ashx[^"'"'"' ]*)' | head -30
