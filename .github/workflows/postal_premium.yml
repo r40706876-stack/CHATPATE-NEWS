@@ -1,0 +1,77 @@
+name: Postal PREMIUM deep class (Bakra ki keys)
+
+# 2026-11-18: Postak by Postal Wala - Clause 1-5 demo videos. Script Claude ki (core: deep/premium/cN.json),
+# premium animation, poori awaaz EK baar (kaati nahi jaati) - Bakra News ki Gemini keys (2,3,4,1) se.
+# Bakra ka code/main nahi chhuta. Naya clause: neeche CLAUSE badlo aur commit karo (ya Run workflow).
+# Video + awaaz -> postal-wala-core branch "premium-out" (awaaz save -> dobara bane to Gemini call nahi).
+on:
+  workflow_dispatch:
+    inputs:
+      clause:
+        description: "Clause number"
+        default: "1"
+  push:
+    branches: [main]
+    paths: ['.github/workflows/postal_premium.yml']
+
+env:
+  CLAUSE: "1"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: postal-premium
+  cancel-in-progress: false
+
+jobs:
+  premium:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 170
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-core
+          token: ${{ secrets.CORE_TOKEN }}
+          ref: main
+      - name: Clause + purani awaaz
+        run: |
+          N="${{ inputs.clause }}"; N="${N:-$CLAUSE}"
+          echo "N=$N" >> $GITHUB_ENV
+          mkdir -p demo_out/deep /tmp/keep
+          if git fetch -q --depth=1 origin premium-out 2>/dev/null; then
+            git archive FETCH_HEAD | tar -x -C /tmp/keep
+            if [ -f /tmp/keep/take_premium_c$N.wav ]; then cp /tmp/keep/take_premium_c$N.wav demo_out/deep/; echo "DEEP_TAKE=demo_out/deep/take_premium_c$N.wav" >> $GITHUB_ENV; echo "purani awaaz mili - Gemini call nahi"; fi
+          fi
+          ls -la /tmp/keep || true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Packages
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends ffmpeg fonts-noto-core libraqm0 poppler-utils
+          pip install requests pypdf pillow numpy edge-tts playwright==1.47.0 faster-whisper
+          python -m playwright install --with-deps chromium
+      - name: Build (Claude script -> premium HTML)
+        run: python deep/premium/build.py $N
+      - name: Banao (awaaz + animation + sound)
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY2 }}
+          GEMINI_TTS_KEYS: ${{ secrets.GEMINI_API_KEY3 }},${{ secrets.GEMINI_API_KEY4 }},${{ secrets.GEMINI_API_KEY }}
+          GEMINI_TTS_MODEL: gemini-3.8-flash-tts
+          GEMINI_TTS_VOICE: hi-in-training-1
+          GEMINI_TTS_STYLE: "lively elder-brother teacher: warm, clear and expressive with natural ups and downs - curious on questions, firm and serious on warnings, happy on answers, calm on examples; small natural pauses"
+          WHISPER_MODEL: medium
+        run: |
+          export DEEP_TAKE_SAVE=demo_out/deep/take_premium_c$N.wav
+          python deep/premium/voice_premium.py deep/premium_c$N.html demo_out/deep/clause${N}_premium.mp4
+      - name: Save (core branch premium-out) - awaaz hamesha, video ho to
+        if: always()
+        run: |
+          for f in demo_out/deep/take_premium_c$N.wav demo_out/deep/clause${N}_premium.mp4 demo_out/deep/clause${N}_premium.mp4.cues.json; do [ -f "$f" ] && cp "$f" /tmp/keep/; done
+          ls -la /tmp/keep
+          cd /tmp/keep && git init -q && git checkout -q -b premium-out
+          git config user.name "github-actions[bot]"; git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A && git commit -qm "premium clause $N (run ${{ github.run_id }})"
+          git push -f "https://x-access-token:${{ secrets.CORE_TOKEN }}@github.com/r40706876-stack/postal-wala-core.git" premium-out:premium-out
