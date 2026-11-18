@@ -1,0 +1,9 @@
+name: tmp probe
+on: workflow_dispatch
+jobs:
+  p:
+    runs-on: ubuntu-24.04
+    steps:
+      - run: |
+          curl -sSL -m 60 -A "Mozilla/5.0" "https://indiapost.gov.in/VAS/Pages/RTI/RTI-Manual-5.aspx" -o p.html; grep -oiE 'href="[^"]+\.pdf"' p.html | head -60
+          for u in "https://indiapost.gov.in/VAS/DOP_RTI/PM_VOL_7.pdf" "https://www.indiapost.gov.in/VAS/DOP_RTI/PM_VOL_7.pdf" "https://Indiapost.gov.in/VAS/DOP_RTI/PM_VOL_7.pdf"; do curl -sSL -m 60 -A "Mozilla/5.0" -o x.pdf "$u"; echo "$u"; file x.pdf; done
