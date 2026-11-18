@@ -1,0 +1,19 @@
+name: tmp probe
+on: workflow_dispatch
+jobs:
+  p:
+    runs-on: ubuntu-24.04
+    steps:
+      - run: |
+          sudo apt-get install -y -qq poppler-utils >/dev/null 2>&1
+          curl -sSL -m 120 -A "Mozilla/5.0" -o v6.pdf "https://utilities.cept.gov.in/dop/pdfbind.ashx?id=5576"
+          for i in 1 2 3 4; do curl -sSL -m 180 -A "Mozilla/5.0" -o v7.pdf "https://web.archive.org/web/2024id_/https://www.indiapost.gov.in/VAS/DOP_RTI/PM_VOL_7.pdf"; file v7.pdf | grep -q PDF && break; sleep 30; done
+          file v6.pdf v7.pdf; pdftotext v6.pdf pm_vol6_p3.txt; pdftotext v7.pdf pm_vol7.txt; wc -c pm_*.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: src
+          path: |
+            pm_vol6_p3.txt
+            pm_vol7.txt
+            v6.pdf
+            v7.pdf
