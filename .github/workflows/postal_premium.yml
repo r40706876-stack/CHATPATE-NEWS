@@ -2,7 +2,7 @@ name: Postal PREMIUM deep class (Bakra ki keys)
 
 # 2026-11-18: Postak by Postal Wala - Clause 1-5 demo videos. Script Claude ki (core: deep/premium/cN.json),
 # premium animation, poori awaaz EK baar (kaati nahi jaati) - Bakra News ki Gemini keys (2,3,4,1) se.
-# Bakra ka code/main nahi chhuta. Naya clause: neeche CLAUSE badlo aur commit karo (ya Run workflow). [run: c2 bhag 2]
+# Bakra ka code/main nahi chhuta. Naya clause: neeche CLAUSE badlo aur commit karo (ya Run workflow). [run: c2 bhag 2 dobara - 100MB fix]
 # Video + awaaz -> postal-wala-core branch "premium-<CLAUSE>" (har bhag alag branch, runs saath chal sakte) (awaaz save -> dobara bane to Gemini call nahi).
 on:
   workflow_dispatch:
@@ -66,12 +66,25 @@ jobs:
         run: |
           export DEEP_TAKE_SAVE=demo_out/deep/take_premium_c$N.wav
           python deep/premium/voice_premium.py deep/premium_c$N.html demo_out/deep/clause${N}_premium.mp4
-      - name: Save (core branch premium-out) - awaaz hamesha, video ho to
+      - name: Save (core branch premium-<N>) - awaaz pehle, video 95MB se chhoti karke
         if: always()
         run: |
-          for f in demo_out/deep/take_premium_c$N.wav demo_out/deep/clause${N}_premium.mp4 demo_out/deep/clause${N}_premium.mp4.cues.json; do [ -f "$f" ] && cp "$f" /tmp/keep/; done
+          for f in demo_out/deep/take_premium_c$N.wav demo_out/deep/clause${N}_premium.mp4.cues.json; do [ -f "$f" ] && cp "$f" /tmp/keep/; done
+          V=demo_out/deep/clause${N}_premium.mp4
+          if [ -f "$V" ]; then
+            SZ=$(stat -c %s "$V")
+            if [ "$SZ" -gt 95000000 ]; then
+              echo "video $SZ bytes > 95MB -> chhoti kar rahe"
+              ffmpeg -y -loglevel error -i "$V" -c:v libx264 -preset veryfast -crf 24 -profile:v high -pix_fmt yuv420p -c:a copy -movflags +faststart /tmp/small.mp4
+              CRF=24; while [ $(stat -c %s /tmp/small.mp4) -gt 95000000 ] && [ $CRF -lt 32 ]; do CRF=$((CRF+2)); ffmpeg -y -loglevel error -i "$V" -c:v libx264 -preset veryfast -crf $CRF -pix_fmt yuv420p -c:a copy -movflags +faststart /tmp/small.mp4; done
+              cp /tmp/small.mp4 /tmp/keep/clause${N}_premium.mp4
+            else cp "$V" /tmp/keep/; fi
+          fi
           ls -la /tmp/keep
           cd /tmp/keep && git init -q && git checkout -q -b premium-out
           git config user.name "github-actions[bot]"; git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -A && git commit -qm "premium clause $N (run ${{ github.run_id }})"
-          git push -f "https://x-access-token:${{ secrets.CORE_TOKEN }}@github.com/r40706876-stack/postal-wala-core.git" premium-out:premium-$N
+          U="https://x-access-token:${{ secrets.CORE_TOKEN }}@github.com/r40706876-stack/postal-wala-core.git"
+          git add -- *.wav *.json 2>/dev/null || true
+          git commit -qm "premium clause $N awaaz (run ${{ github.run_id }})" && git push -f "$U" premium-out:premium-$N || true
+          git add -A && git commit -qm "premium clause $N video (run ${{ github.run_id }})" || true
+          git push -f "$U" premium-out:premium-$N
