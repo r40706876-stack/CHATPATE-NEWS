@@ -35,15 +35,8 @@ jobs:
         with:
           python-version: '3.10'
       - run: sudo apt-get install -y -qq poppler-utils >/dev/null; pip install -q requests pypdf pillow numpy
-      - name: Sarkari PDF ka text (Vol VI Part III, Vol VII)
-        run: |
-          mkdir -p pyq_papers/law
-          curl -sSL -m 120 -A "Mozilla/5.0" -o v6.pdf "https://utilities.cept.gov.in/dop/pdfbind.ashx?id=5576"
-          curl -sSL -m 120 -A "Mozilla/5.0" -o v7.pdf "https://web.archive.org/web/2024id_/https://www.indiapost.gov.in/VAS/DOP_RTI/PM_VOL_7.pdf"   # indiapost ka asli PDF (naye portal par purana link band)
-          file v6.pdf v7.pdf
-          pdftotext v6.pdf pyq_papers/law/pm_vol6_p3.txt; pdftotext v7.pdf pyq_papers/law/pm_vol7.txt
-          wc -c pyq_papers/law/pm_vol6_p3.txt pyq_papers/law/pm_vol7.txt
-          for f in pyq_papers/law/pm_vol6_p3.txt pyq_papers/law/pm_vol7.txt; do [ $(wc -c < $f) -gt 30000 ] || { echo "$f me text kam (scan?)"; exit 1; }; done
+      - name: Sarkari text maujood? (core repo: pyq_papers/law/pm_vol6_p3.txt, pm_vol7.txt)
+        run: wc -c pyq_papers/law/pm_vol6_p3.txt pyq_papers/law/pm_vol7.txt
       - name: Pichhla padha hua lo
         run: |
           git fetch -q origin postal-p2 2>/dev/null && git show FETCH_HEAD:p2_${{ matrix.shard }}.json > p2_${{ matrix.shard }}.json 2>/dev/null || rm -f p2_${{ matrix.shard }}.json
