@@ -1,0 +1,105 @@
+name: Postal Postman Paper-II naye sawal (Vol VI Part III, Vol VII)
+# Postman ke 150 mock ke liye: Postal Manual Vol VI Part III + Vol VII ke sarkari PDF (indiapost / cept) ka text ->
+# har tukde se 3 daur me naye MCQ + deep vishleshan (deep/qgen.py: saboot, andhi jaanch, dohraav jaanch).
+# Nateeja: core repo branch 'postal-p2' -> p2_done.json. Chaaron Gemini key barabar; kaam badhe to khud agla daur.
+on:
+  schedule:
+    - cron: '51 8 * * *'     # Gemini quota naya hone ke baad (14:01 IST) roz, jab tak kaam baaki
+  workflow_dispatch:
+    inputs:
+      calls:
+        description: "har key par kitni AI calls"
+        default: "400"
+permissions:
+  contents: read
+  actions: write
+concurrency:
+  group: postal-p2gen
+  cancel-in-progress: false
+jobs:
+  ocr:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 340
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-core
+          token: ${{ secrets.CORE_TOKEN }}
+          ref: main
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: sudo apt-get install -y -qq poppler-utils >/dev/null; pip install -q requests pypdf pillow numpy
+      - name: Sarkari PDF ka text (Vol VI Part III, Vol VII)
+        run: |
+          mkdir -p pyq_papers/law
+          curl -sSL -m 120 -A "Mozilla/5.0" -o v6.pdf "https://utilities.cept.gov.in/dop/pdfbind.ashx?id=5576"
+          curl -sSL -m 120 -A "Mozilla/5.0" -o v7.pdf "https://www.indiapost.gov.in/VAS/DOP_RTI/PM_VOL_7.pdf"
+          file v6.pdf v7.pdf
+          pdftotext v6.pdf pyq_papers/law/pm_vol6_p3.txt; pdftotext v7.pdf pyq_papers/law/pm_vol7.txt
+          wc -c pyq_papers/law/pm_vol6_p3.txt pyq_papers/law/pm_vol7.txt
+          for f in pyq_papers/law/pm_vol6_p3.txt pyq_papers/law/pm_vol7.txt; do [ $(wc -c < $f) -gt 30000 ] || { echo "$f me text kam (scan?)"; exit 1; }; done
+      - name: Pichhla padha hua lo
+        run: |
+          git fetch -q origin postal-p2 2>/dev/null && git show FETCH_HEAD:p2_${{ matrix.shard }}.json > p2_${{ matrix.shard }}.json 2>/dev/null || rm -f p2_${{ matrix.shard }}.json
+      - name: Padho
+        run: |
+          case "${{ matrix.shard }}" in
+            0) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY }}" ;;
+            1) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY2 }}" ;;
+            2) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY3 }}" ;;
+            *) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY4 }}" ;;
+          esac
+          QG_SRC=pyq_papers/law/pm_vol6_p3.txt:vol6,pyq_papers/law/pm_vol7.txt:vol7 QG_ROUNDS=3 QG_PER=5 SHARD=${{ matrix.shard }} NSHARD=4 QG_MAX_CALLS=${{ inputs.calls || '400' }} python deep/qgen.py p2_${{ matrix.shard }}.json 2>&1 | tail -n 60
+          [ -f p2_${{ matrix.shard }}.json ] || echo "{}" > p2_${{ matrix.shard }}.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: p2${{ matrix.shard }}
+          path: p2_${{ matrix.shard }}.json
+
+  save:
+    needs: ocr
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-core
+          token: ${{ secrets.CORE_TOKEN }}
+          path: bk
+          fetch-depth: 1
+      - uses: actions/download-artifact@v4
+        with:
+          path: dl
+          merge-multiple: true
+      - name: postal-p2 branch par rakho
+        run: |
+          mkdir o && cp dl/p2_*.json o/ && cd o && python3 - <<'PY'
+          import json, glob
+          t = {}
+          for f in sorted(glob.glob("p2_*.json")):
+              t.update(json.load(open(f, encoding="utf-8")))
+          json.dump(dict(sorted(t.items(), key=lambda kv: kv[0])),
+                    open("p2_done.json", "w", encoding="utf-8"), ensure_ascii=False, indent=0)
+          print("kul tukde-daur:", len(t), "naye sawal:", sum(len(v) for v in t.values()))
+          PY
+          git init -q && git checkout -q -b postal-p2
+          git config user.name "github-actions[bot]"; git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add . && git commit -qm "Postman Paper-II naye sawal (run ${{ github.run_id }})"
+          git remote add origin "$(git -C ../bk remote get-url origin)"
+          prev=$(git -C ../bk fetch -q origin postal-p2 2>/dev/null && git -C ../bk show FETCH_HEAD:p2_done.json 2>/dev/null | python3 -c "import json,sys;print(len(json.load(sys.stdin)))" 2>/dev/null || echo 0)
+          now=$(python3 -c "import json;print(len(json.load(open('p2_done.json'))))")
+          echo "pehle $prev, ab $now"
+          if [ "$now" -gt "$prev" ]; then echo 1 > ../cont.txt; fi
+          git -c http.extraheader="$(git -C ../bk config --get http.https://github.com/.extraheader)" push -qf origin HEAD:postal-p2
+      - name: Kaam baaki ho to agla daur khud chalao
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run postal_site_refresh.yml -R ${{ github.repository }} || true   # nateeje website par
+          if [ -f cont.txt ]; then gh workflow run postal_p2gen.yml -R ${{ github.repository }} -f calls=400 && echo "agla daur shuru"; fi
