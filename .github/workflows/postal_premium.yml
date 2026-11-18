@@ -2,8 +2,8 @@ name: Postal PREMIUM deep class (Bakra ki keys)
 
 # 2026-11-18: Postak by Postal Wala - Clause 1-5 demo videos. Script Claude ki (core: deep/premium/cN.json),
 # premium animation, poori awaaz EK baar (kaati nahi jaati) - Bakra News ki Gemini keys (2,3,4,1) se.
-# Bakra ka code/main nahi chhuta. Naya clause: neeche CLAUSE badlo aur commit karo (ya Run workflow). [run: c2 bhag 1 PostalEdge]
-# Video + awaaz -> postal-wala-core branch "premium-out" (awaaz save -> dobara bane to Gemini call nahi).
+# Bakra ka code/main nahi chhuta. Naya clause: neeche CLAUSE badlo aur commit karo (ya Run workflow). [run: c2 bhag 2]
+# Video + awaaz -> postal-wala-core branch "premium-<CLAUSE>" (har bhag alag branch, runs saath chal sakte) (awaaz save -> dobara bane to Gemini call nahi).
 on:
   workflow_dispatch:
     inputs:
@@ -15,13 +15,13 @@ on:
     paths: ['.github/workflows/postal_premium.yml']
 
 env:
-  CLAUSE: "2_1"
+  CLAUSE: "2_2"
 
 permissions:
   contents: read
 
 concurrency:
-  group: postal-premium
+  group: postal-premium-${{ github.sha }}
   cancel-in-progress: false
 
 jobs:
@@ -39,7 +39,7 @@ jobs:
           N="${{ inputs.clause }}"; N="${N:-$CLAUSE}"
           echo "N=$N" >> $GITHUB_ENV
           mkdir -p demo_out/deep /tmp/keep
-          if git fetch -q --depth=1 origin premium-out 2>/dev/null; then
+          if git fetch -q --depth=1 origin premium-$N 2>/dev/null; then
             git archive FETCH_HEAD | tar -x -C /tmp/keep
             if [ -f /tmp/keep/take_premium_c$N.wav ]; then cp /tmp/keep/take_premium_c$N.wav demo_out/deep/; echo "DEEP_TAKE=demo_out/deep/take_premium_c$N.wav" >> $GITHUB_ENV; echo "purani awaaz mili - Gemini call nahi"; fi
           fi
@@ -74,4 +74,4 @@ jobs:
           cd /tmp/keep && git init -q && git checkout -q -b premium-out
           git config user.name "github-actions[bot]"; git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -A && git commit -qm "premium clause $N (run ${{ github.run_id }})"
-          git push -f "https://x-access-token:${{ secrets.CORE_TOKEN }}@github.com/r40706876-stack/postal-wala-core.git" premium-out:premium-out
+          git push -f "https://x-access-token:${{ secrets.CORE_TOKEN }}@github.com/r40706876-stack/postal-wala-core.git" premium-out:premium-$N
