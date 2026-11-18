@@ -35,7 +35,7 @@ jobs:
         with:
           python-version: '3.10'
       - run: sudo apt-get install -y -qq poppler-utils >/dev/null; pip install -q requests pypdf pillow numpy
-      - name: Sarkari text maujood? (core repo: pyq_papers/law/pm_vol6_p3.txt, pm_vol7.txt)
+      - name: Sarkari text maujood (Vol VI Part III, Vol VII)
         run: wc -c pyq_papers/law/pm_vol6_p3.txt pyq_papers/law/pm_vol7.txt
       - name: Pichhla padha hua lo
         run: |
