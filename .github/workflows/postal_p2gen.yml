@@ -39,7 +39,7 @@ jobs:
         run: |
           mkdir -p pyq_papers/law
           curl -sSL -m 120 -A "Mozilla/5.0" -o v6.pdf "https://utilities.cept.gov.in/dop/pdfbind.ashx?id=5576"
-          curl -sSL -m 120 -A "Mozilla/5.0" -o v7.pdf "https://www.indiapost.gov.in/VAS/DOP_RTI/PM_VOL_7.pdf"
+          curl -sSL -m 120 -A "Mozilla/5.0" -o v7.pdf "https://web.archive.org/web/2024id_/https://www.indiapost.gov.in/VAS/DOP_RTI/PM_VOL_7.pdf"   # indiapost ka asli PDF (naye portal par purana link band)
           file v6.pdf v7.pdf
           pdftotext v6.pdf pyq_papers/law/pm_vol6_p3.txt; pdftotext v7.pdf pyq_papers/law/pm_vol7.txt
           wc -c pyq_papers/law/pm_vol6_p3.txt pyq_papers/law/pm_vol7.txt

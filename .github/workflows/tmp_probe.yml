@@ -1,9 +1,0 @@
-name: tmp probe
-on: workflow_dispatch
-jobs:
-  p:
-    runs-on: ubuntu-24.04
-    steps:
-      - run: |
-          sudo apt-get install -y -qq poppler-utils >/dev/null 2>&1
-          for u in "https://web.archive.org/web/2024id_/https://www.indiapost.gov.in/VAS/DOP_RTI/PM_VOL_7.pdf" "https://web.archive.org/web/2023id_/https://Indiapost.gov.in/VAS/DOP_RTI/PM_VOL_7.pdf" "https://web.archive.org/web/2022id_/https://www.indiapost.gov.in/VAS/DOP_RTI/PM_VOL_7.pdf"; do curl -sSL -m 120 -A "Mozilla/5.0" -o v7.pdf "$u"; echo "$u"; file v7.pdf; if file v7.pdf | grep -q PDF; then pdftotext v7.pdf v7.txt; wc -c v7.txt; head -c 600 v7.txt; break; fi; done
