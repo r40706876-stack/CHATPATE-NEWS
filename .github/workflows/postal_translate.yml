@@ -1,0 +1,111 @@
+name: Postal Edge anuvad (website + mock + bank, doosri bhasha)
+# Website ke shabd, phir free/daily mock ke sawal, phir mock 1,2,3.. aur poora bank -> doosri bhasha (deep/translate.py).
+# Nateeja: core repo branch 'postal-tr' -> tr_<lang>.json. Chaaron Gemini key barabar; chhote daur, kaam baaki ho to khud agla daur.
+on:
+  schedule:
+    - cron: '20 8 * * *'     # 13:50 IST: Gemini ka roz ka quota naya hote hi
+    - cron: '50 12 * * *'    # 18:20 IST: dobara (agar beech me ruka ho)
+  workflow_dispatch:
+    inputs:
+      calls:
+        description: "har key par kitni AI calls"
+        default: "120"
+      lang:
+        description: "bhasha: mr (Marathi) / gu (Gujarati) / ta (Tamil)"
+        default: "mr"
+permissions:
+  contents: read
+  actions: write
+concurrency:
+  group: postal-translate
+  cancel-in-progress: false
+jobs:
+  ocr:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 340
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-core
+          token: ${{ secrets.CORE_TOKEN }}
+          ref: main
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: sudo apt-get install -y -qq poppler-utils >/dev/null; pip install -q requests pypdf pillow numpy
+      - name: Pichhla padha hua lo
+        run: |
+          L=${{ inputs.lang || 'mr' }}; mkdir -p tr
+          if git fetch -q origin postal-tr 2>/dev/null; then
+            git show FETCH_HEAD:q_${L}_${{ matrix.shard }}.json > tr/q_${L}_${{ matrix.shard }}.json 2>/dev/null || rm -f tr/q_${L}_${{ matrix.shard }}.json
+            git show FETCH_HEAD:ui_${L}.json > tr/ui_${L}.json 2>/dev/null || rm -f tr/ui_${L}.json
+          fi
+      - name: Padho
+        run: |
+          case "${{ matrix.shard }}" in
+            0) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY }}" ;;
+            1) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY2 }}" ;;
+            2) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY3 }}" ;;
+            *) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY4 }}" ;;
+          esac
+          L=${{ inputs.lang || 'mr' }}
+          TR_LANG=$L SHARD=${{ matrix.shard }} NSHARD=4 TR_MAX_CALLS=${{ inputs.calls || '120' }} python deep/translate.py tr 2>&1 | tail -n 40
+          [ -f tr/q_${L}_${{ matrix.shard }}.json ] || echo "{}" > tr/q_${L}_${{ matrix.shard }}.json
+          [ "${{ matrix.shard }}" = "0" ] || rm -f tr/ui_${L}.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: tr${{ matrix.shard }}
+          path: tr/
+
+  save:
+    needs: ocr
+    if: always()
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-core
+          token: ${{ secrets.CORE_TOKEN }}
+          path: bk
+          fetch-depth: 1
+      - uses: actions/download-artifact@v4
+        with:
+          path: dl
+          merge-multiple: true
+      - name: postal-tr branch par rakho
+        run: |
+          L=${{ inputs.lang || 'mr' }}
+          mkdir o
+          if git -C bk fetch -q origin postal-tr 2>/dev/null; then (cd bk && git archive FETCH_HEAD | tar -x -C ../o); fi
+          cp dl/*.json o/ 2>/dev/null || true
+          cd o && L=$L python3 - <<'PY'
+          import json, glob, os
+          L = os.environ["L"]
+          q = {}
+          for f in sorted(glob.glob(f"q_{L}_*.json")):
+              q.update(json.load(open(f, encoding="utf-8")))
+          ui = json.load(open(f"ui_{L}.json", encoding="utf-8")) if os.path.exists(f"ui_{L}.json") else {}
+          json.dump({"ui": ui, "q": q}, open(f"tr_{L}.json", "w", encoding="utf-8"), ensure_ascii=False, separators=(",", ":"))
+          print(L, "shabd:", len(ui), "sawal:", len(q))
+          open("../n.txt", "w").write(str(len(q)))
+          PY
+          rm -rf .git; git init -q && git checkout -q -b postal-tr
+          git config user.name "github-actions[bot]"; git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add . && git commit -qm "anuvad $L (run ${{ github.run_id }})"
+          git remote add origin "$(git -C ../bk remote get-url origin)"
+          prev=$(git -C ../bk show FETCH_HEAD:tr_$L.json 2>/dev/null | python3 -c "import json,sys;print(len(json.load(sys.stdin)['q']))" 2>/dev/null || echo 0)
+          now=$(cat ../n.txt)
+          echo "pehle $prev, ab $now"
+          if [ "$now" -gt "$prev" ]; then echo 1 > ../cont.txt; fi
+          git -c http.extraheader="$(git -C ../bk config --get http.https://github.com/.extraheader)" push -qf origin HEAD:postal-tr
+      - name: Kaam baaki ho to agla daur khud chalao
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run postal_site_refresh.yml -R ${{ github.repository }} || true   # nateeje website par
+          if [ -f cont.txt ]; then gh workflow run postal_translate.yml -R ${{ github.repository }} -f calls=120 -f lang=${{ inputs.lang || 'mr' }} && echo "agla daur shuru"; fi
