@@ -15,7 +15,7 @@ on:
     paths: ['.github/workflows/postal_premium.yml']
 
 env:
-  CLAUSE: "2_1"
+  CLAUSE: "2_2"
   LAND: "1"          # 1 = YouTube 16:9 (1920x1080), branch premium-<N>-yt
   TRUST_TAKE: "1"    # 1 = purani awaaz bina sha ke bhi (script na badli ho tab hi)
 
