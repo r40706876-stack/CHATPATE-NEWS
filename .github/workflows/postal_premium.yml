@@ -2,7 +2,7 @@ name: Postal PREMIUM deep class (Bakra ki keys)
 
 # 2026-11-18: Postak by Postal Wala - Clause 1-5 demo videos. Script Claude ki (core: deep/premium/cN.json),
 # premium animation, poori awaaz EK baar (kaati nahi jaati) - Bakra News ki Gemini keys (2,3,4,1) se.
-# Bakra ka code/main nahi chhuta. Naya clause: neeche CLAUSE badlo aur commit karo (ya Run workflow). [run: c2_3 YouTube 16:9 + naya niyam]
+# Bakra ka code/main nahi chhuta. Naya clause: neeche CLAUSE badlo aur commit karo (ya Run workflow). [run: c2_3 YouTube 16:9 + naya niyam, dobara]
 # Video + awaaz -> postal-wala-core branch "premium-<CLAUSE>" (har bhag alag branch, runs saath chal sakte) (awaaz save -> dobara bane to Gemini call nahi).
 on:
   workflow_dispatch:
@@ -47,7 +47,7 @@ jobs:
             rm -rf /tmp/try && mkdir -p /tmp/try
             git fetch -q --depth=1 origin "$B" 2>/dev/null || continue
             git archive FETCH_HEAD | tar -x -C /tmp/try
-            OLD=$(cat /tmp/try/script_c$N.sha 2>/dev/null); echo "$B: script sha $SH, saved: $OLD"
+            OLD=$(cat /tmp/try/script_c$N.sha 2>/dev/null || true); echo "$B: script sha $SH, saved: $OLD"
             if [ -f /tmp/try/take_premium_c$N.wav ] && { [ "$OLD" = "$SH" ] || { [ -z "$OLD" ] && [ "$TRUST_TAKE" = "1" ]; }; }; then
               cp /tmp/try/take_premium_c$N.wav demo_out/deep/; cp /tmp/try/take_premium_c$N.wav /tmp/keep/
               echo "DEEP_TAKE=demo_out/deep/take_premium_c$N.wav" >> $GITHUB_ENV; echo "purani awaaz mili ($B) - Gemini call nahi"; break
@@ -98,4 +98,4 @@ jobs:
           git add -- *.wav *.json *.sha 2>/dev/null || true
           git commit -qm "premium clause $N awaaz (run ${{ github.run_id }})" && git push -f "$U" premium-out:$BR || true
           git add -A && git commit -qm "premium clause $N video (run ${{ github.run_id }})" || true
-          git push -f "$U" premium-out:$BR
+          git rev-parse -q --verify HEAD >/dev/null && git push -f "$U" premium-out:$BR || echo "save karne ko kuch nahi"
