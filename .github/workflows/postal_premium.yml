@@ -2,7 +2,7 @@ name: Postal PREMIUM deep class (Bakra ki keys)
 
 # 2026-11-18: Postak by Postal Wala - Clause 1-5 demo videos. Script Claude ki (core: deep/premium/cN.json),
 # premium animation, poori awaaz EK baar (kaati nahi jaati) - Bakra News ki Gemini keys (2,3,4,1) se.
-# Bakra ka code/main nahi chhuta. Naya clause: neeche CLAUSE badlo aur commit karo (ya Run workflow). [run: c3 naya niyam ke saath]
+# Bakra ka code/main nahi chhuta. Naya clause: neeche CLAUSE badlo aur commit karo (ya Run workflow). [run: c3 naya niyam ke saath, awaaz sirf same script par reuse]
 # Video + awaaz -> postal-wala-core branch "premium-<CLAUSE>" (har bhag alag branch, runs saath chal sakte) (awaaz save -> dobara bane to Gemini call nahi).
 on:
   workflow_dispatch:
@@ -41,7 +41,8 @@ jobs:
           mkdir -p demo_out/deep /tmp/keep
           if git fetch -q --depth=1 origin premium-$N 2>/dev/null; then
             git archive FETCH_HEAD | tar -x -C /tmp/keep
-            if [ -f /tmp/keep/take_premium_c$N.wav ]; then cp /tmp/keep/take_premium_c$N.wav demo_out/deep/; echo "DEEP_TAKE=demo_out/deep/take_premium_c$N.wav" >> $GITHUB_ENV; echo "purani awaaz mili - Gemini call nahi"; fi
+            SH=$(sha256sum deep/premium/c$N.json | cut -c1-16); echo "script sha $SH, saved: $(cat /tmp/keep/script_c$N.sha 2>/dev/null)"
+            if [ -f /tmp/keep/take_premium_c$N.wav ] && [ "$(cat /tmp/keep/script_c$N.sha 2>/dev/null)" = "$SH" ]; then cp /tmp/keep/take_premium_c$N.wav demo_out/deep/; echo "DEEP_TAKE=demo_out/deep/take_premium_c$N.wav" >> $GITHUB_ENV; echo "purani awaaz mili - Gemini call nahi"; fi
           fi
           ls -la /tmp/keep || true
       - uses: actions/setup-python@v5
@@ -69,6 +70,7 @@ jobs:
       - name: Save (core branch premium-<N>) - awaaz pehle, video 95MB se chhoti karke
         if: always()
         run: |
+          [ -f demo_out/deep/take_premium_c$N.wav ] && sha256sum deep/premium/c$N.json | cut -c1-16 > /tmp/keep/script_c$N.sha
           for f in demo_out/deep/take_premium_c$N.wav demo_out/deep/clause${N}_premium.mp4.cues.json; do [ -f "$f" ] && cp "$f" /tmp/keep/; done
           V=demo_out/deep/clause${N}_premium.mp4
           if [ -f "$V" ]; then
@@ -84,7 +86,7 @@ jobs:
           cd /tmp/keep && git init -q && git checkout -q -b premium-out
           git config user.name "github-actions[bot]"; git config user.email "github-actions[bot]@users.noreply.github.com"
           U="https://x-access-token:${{ secrets.CORE_TOKEN }}@github.com/r40706876-stack/postal-wala-core.git"
-          git add -- *.wav *.json 2>/dev/null || true
+          git add -- *.wav *.json *.sha 2>/dev/null || true
           git commit -qm "premium clause $N awaaz (run ${{ github.run_id }})" && git push -f "$U" premium-out:premium-$N || true
           git add -A && git commit -qm "premium clause $N video (run ${{ github.run_id }})" || true
           git push -f "$U" premium-out:premium-$N
