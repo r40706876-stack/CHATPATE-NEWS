@@ -1,0 +1,73 @@
+name: Postal doubts ep03 - chhutti ke paise (Bakra ki 4 Gemini keys)
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/postal_doubts_ep03.yml'
+permissions:
+  contents: write
+concurrency:
+  group: postal-doubts-ep03-bakra
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-core
+          token: ${{ secrets.CORE_TOKEN }}
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Renderer dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends ffmpeg fonts-noto-core libraqm0 poppler-utils
+          pip install requests pypdf pillow numpy edge-tts playwright==1.47.0 faster-whisper
+          python -m playwright install --with-deps chromium
+      - name: Build ep03 with Gemini one-take voice (tries every Gemini key)
+        env:
+          K1: ${{ secrets.GEMINI_API_KEY4 }}
+          K2: ${{ secrets.GEMINI_API_KEY3 }}
+          K3: ${{ secrets.GEMINI_API_KEY2 }}
+          K4: ${{ secrets.GEMINI_API_KEY }}
+          K5: ''
+          GEMINI_TTS_MODEL: gemini-3.8-flash-tts
+          GEMINI_TTS_VOICE: hi-in-training-1
+          DEEP_PER_LINE: '0'
+          DEEP_STRICT_ONE_TAKE: '1'
+          DEEP_FAST_QUOTA_FAIL: '1'
+          DEEP_VOICE_CACHE: doubts_reels/voice_cache
+          DEEP_GAP_LINE: '0.08'
+          DEEP_GAP_SCENE: '0.18'
+        run: |
+          set -uo pipefail
+          ok=0
+          for n in 1 2 3 4 5; do
+            v="K$n"; key="${!v:-}"
+            [ -z "$key" ] && { echo "key $n khali"; continue; }
+            echo "=== Gemini key $n ==="
+            if GEMINI_API_KEY="$key" python doubts_ep03.py; then ok=1; break; fi
+          done
+          [ "$ok" = 1 ] || { echo "Sabhi Gemini keys ka TTS quota khatam"; exit 1; }
+          ffmpeg -y -v error -i doubts_reels/ep03_chutti_paise.mp4 -vf "fps=1/4,scale=216:384,tile=5x3" -frames:v 1 doubts_reels/ep03_contact.jpg
+      - name: Save in core
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add doubts_reels
+          git diff --cached --quiet || git commit -m "GDS doubts ep03 preview [skip ci]"
+          for i in 1 2 3; do git pull --rebase -X theirs origin main && git push origin HEAD:main && break; sleep 5; done
+      - name: Publish preview to branch postal-doubts-out-ep03
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          mkdir -p /tmp/o && cp doubts_reels/ep03_chutti_paise.mp4 doubts_reels/ep03_contact.jpg doubts_reels/ep03_chutti_paise_caption.txt /tmp/o/
+          cd /tmp/o && git init -q && git checkout -q -b postal-doubts-out-ep03 && git add . && git -c user.name=bot -c user.email=bot@x commit -qm "ep03 preview" && git push -f "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git" postal-doubts-out-ep03
