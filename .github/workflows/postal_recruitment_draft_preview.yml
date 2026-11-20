@@ -50,7 +50,7 @@ jobs:
         with:
           name: Postal_Edge_GDS_Postman_Mail_Guard_Draft
           path: |
-            core/recruitment_preview/Postal_Edge_GDS_Draft.mp4
+            core/recruitment_preview/Postal_Edge_GDS_5_to_3_Years.mp4
             core/recruitment_preview/cover.jpg
             core/recruitment_preview/contact.jpg
             core/recruitment_preview/report.json

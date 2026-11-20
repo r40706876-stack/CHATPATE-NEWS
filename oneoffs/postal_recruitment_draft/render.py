@@ -1,6 +1,4 @@
 """One-off preview using the Postal Edge deep renderer and approved 2D puppet rig."""
-import base64
-from concurrent.futures import ThreadPoolExecutor
 import io
 import json
 import math
@@ -13,7 +11,7 @@ import wave
 
 import fitz
 import numpy as np
-from PIL import Image, ImageOps
+from PIL import Image
 import requests
 
 ROOT = Path.cwd()
@@ -23,16 +21,11 @@ SOURCE = "https://utilities.cept.gov.in/dop/pdfbind.ashx?id=15720"
 FPS = 30
 RIG_FPS = 15
 SCENES = [
-    ("hook", "जी डी एस में तीन साल पूरे? पोस्टमैन या मेल गार्ड की परीक्षा का मौका मिल सकता है।"),
-    ("service", "डाक विभाग ने पाँच की जगह तीन साल की नियमित जी डी एस सेवा का प्रस्ताव रखा है।"),
-    ("study", "सिर्फ़ दसवीं पास हैं तो? मसौदे में बारहवीं, तीन साल का डिप्लोमा या मान्य समकक्ष योग्यता प्रस्तावित है।"),
-    ("division", "परीक्षा भर्ती करने वाले डिवीजन के जी डी एस तक सीमित रखने का प्रस्ताव है।"),
-    ("reply", "ये अभी मसौदा है। आप सुझाव भेज सकते हैं। दसवीं पास जी डी एस के लिए आपकी क्या राय है?"),
-]
-PROMPTS = [
-    "Sunlit rural Indian post office courtyard, old brick architecture, sandalwood shutters, muted red Indian postbox with no insignia, soft monsoon trees",
-    "Vintage Indian postal sorting desk, warm rays on stacked envelopes and an unmarked wooden calendar stand",
-    "Rural Indian study desk with blank notebooks, pen and an old red canvas mailbag, soft morning light",
+    ("hook", "जी डी एस में तीन साल पूरे हैं? पोस्टमैन या मेल गार्ड की परीक्षा के लिए इंतज़ार घट सकता है।"),
+    ("service", "डाक विभाग का प्रस्ताव है कि नियमित जी डी एस सेवा की शर्त पाँच साल से घटाकर तीन साल की जाए।"),
+    ("example", "मान लो आपके तीन साल पूरे हैं। पाँच साल की शर्त में दो साल और लगते। प्रस्ताव लागू हुआ तो सेवा की शर्त वहीं पूरी हो सकती है।"),
+    ("qualification", "ये अभी मसौदा है। पढ़ाई के लिए बारहवीं, तीन साल का डिप्लोमा या मान्य समकक्ष योग्यता का प्रस्ताव है।"),
+    ("website", "तैयारी शुरू करने का अच्छा मौका है। पोस्टल एज डॉट इन पर फ्री मॉक टेस्ट, पिछले साल के सवाल और पी ओ गाइड नोट्स देखें।"),
 ]
 
 def run(*args, **kwargs):
@@ -68,41 +61,6 @@ def source_cards():
         assert len(pdf) == 7 and "20.11.2026" in pdf[0].get_text()
         proof(pdf, 5, "worked regularly for three years in that capacity", "service")
         proof(pdf, 4, "3 years Diploma course or equivalent", "study")
-        proof(pdf, 5, "recruiting Postal Division", "division")
-        proof(pdf, 1, "spn1.dop@gov.in", "reply")
-
-def background(index, description, keys):
-    model = "gemini-2.5-flash-image"
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent"
-    prompt = ("Cinematic editorial background for a vertical motion graphics film, realistic Indian detail, "
-              "rich restrained navy shadows and amber light, broad composition, no people or characters, "
-              "no text or symbols, no overlays. " + description)
-    body = {"contents": [{"parts": [{"text": prompt}]}],
-            "generationConfig": {"responseModalities": ["IMAGE"], "imageConfig": {"aspectRatio": "9:16"}}}
-    available = keys[index:] + keys[:index]
-    for number, key in available:
-        try:
-            response = requests.post(url, headers={"x-goog-api-key": key}, json=body, timeout=50)
-            print(f"Background {index + 1}, Gemini slot {number}: HTTP {response.status_code}", flush=True)
-            if not response.ok:
-                continue
-            for candidate in response.json().get("candidates", []):
-                for part in candidate.get("content", {}).get("parts", []):
-                    inline = part.get("inlineData", {})
-                    if inline.get("mimeType", "").startswith("image/"):
-                        with Image.open(io.BytesIO(base64.b64decode(inline["data"]))) as image:
-                            image = ImageOps.fit(image.convert("RGB"), (720, 1280))
-                            image.save(OUT / f"bg{index}.jpg", quality=92)
-                        return number
-        except (requests.RequestException, ValueError, OSError) as exc:
-            print(f"Background {index + 1}, Gemini slot {number}: {type(exc).__name__}", flush=True)
-    return None
-
-def background_with_backup(index, description, keys):
-    slot = background(index, description, keys)
-    if slot is None:
-        shutil.copyfile(HERE / f"art{index}.jpg", OUT / f"bg{index}.jpg")
-    return slot
 
 def narration(keys):
     sys.path.insert(0, str(ROOT))
@@ -166,10 +124,10 @@ def rigs(cues, duration, samples):
                            (.64 + .23 * math.sin(t * 4), actions[scene][idx]), gaze, hop, .10 * math.sin(t * 2))
             image.save(folder / f"{frame:04d}.png")
 
-def render(cues, duration, backgrounds):
+def render(cues, duration):
     html = OUT / "preview.html"
     html.write_text((HERE / "scenes.html").read_text().replace("__DATA__", json.dumps({
-        "cues": cues, "total": duration, "painted": [True for _ in backgrounds],
+        "cues": cues, "total": duration,
         "frames": math.ceil(duration * RIG_FPS),
     })))
     # The original renderer decodes the two approved puppet images before each frame.
@@ -180,13 +138,13 @@ def render(cues, duration, backgrounds):
     renderer.write_text(code.replace(selector, selector + ",#golu,#bhaiya"))
     silent = OUT / "silent.mp4"
     run(sys.executable, str(renderer), str(html), str(silent))
-    final = OUT / "Postal_Edge_GDS_Draft.mp4"
+    final = OUT / "Postal_Edge_GDS_5_to_3_Years.mp4"
     run("ffmpeg", "-y", "-v", "error", "-i", str(silent), "-i", str(OUT / "narration.wav"),
-        "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-af", "loudnorm=I=-16:TP=-1.5:LRA=8",
+        "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-af", "loudnorm=I=-16:TP=-1.5:LRA=8", "-ar", "48000",
         "-shortest", "-movflags", "+faststart", str(final))
     return final
 
-def quality(final, cues, slot, images):
+def quality(final, cues, slot):
     run("ffmpeg", "-v", "error", "-xerror", "-i", str(final), "-f", "null", "-")
     report = json.loads(subprocess.check_output(["ffprobe", "-v", "error", "-show_streams",
                                                 "-show_format", "-of", "json", str(final)]))
@@ -196,7 +154,7 @@ def quality(final, cues, slot, images):
     assert (video["width"], video["height"], video["r_frame_rate"]) == (1080, 1920, "30/1")
     assert 24 <= duration <= 48 and abs(float(audio["duration"]) - duration) < .2
     sheet = Image.new("RGB", (810, 960), "#10192b")
-    for i, time in enumerate([0.9, *[t + 1.3 for t in cues[1:]], duration - .8]):
+    for i, time in enumerate([0.9, *[t + (5.6 if i == 2 else 1.4) for i, t in enumerate(cues[1:], 1)], duration - .8]):
         data = subprocess.check_output(["ffmpeg", "-v", "error", "-ss", str(time), "-i", str(final),
                                        "-frames:v", "1", "-f", "image2pipe", "-vcodec", "png", "-"])
         im = Image.open(io.BytesIO(data))
@@ -205,8 +163,8 @@ def quality(final, cues, slot, images):
         sheet.paste(im.resize((270, 480)), ((i % 3) * 270, (i // 3) * 480))
     sheet.save(OUT / "contact.jpg", quality=94)
     summary = {"seconds": duration, "resolution": "1080x1920", "fps": FPS, "voice": "hi-in-concierge-10",
-               "narration_key_slot": slot, "gemini_background_slots": images,
-               "background_sources": ["Gemini" if x else "generated postal illustration" for x in images], "source": SOURCE,
+               "narration_key_slot": slot, "source": SOURCE, "website": "https://postaledge.in",
+               "background_sources": "Three approved prior-cut backgrounds reused",
                "characters": "Approved Postal Edge Golu and Dakia Bhaiya", "scope": "Preview"}
     (OUT / "report.json").write_text(json.dumps(summary, indent=2))
     print(json.dumps(summary), flush=True)
@@ -218,14 +176,13 @@ def main():
     if not keys:
         raise RuntimeError("No configured Bakra News Gemini keys available to this run")
     print("Configured Gemini slots:", [i for i, _ in keys], flush=True)
-    with ThreadPoolExecutor(max_workers=3) as pool:
-        art = [pool.submit(background_with_backup, i, prompt, keys) for i, prompt in enumerate(PROMPTS)]
-        scenes, rate, slot = narration(keys)
-        images = [task.result() for task in art]
+    for index in range(3):
+        shutil.copyfile(HERE / f"art{index}.jpg", OUT / f"bg{index}.jpg")
+    scenes, rate, slot = narration(keys)
     cues, duration, samples = audio_track(scenes, rate)
     rigs(cues, duration, samples)
-    final = render(cues, duration, images)
-    quality(final, cues, slot, images)
+    final = render(cues, duration)
+    quality(final, cues, slot)
 
 if __name__ == "__main__":
     main()
