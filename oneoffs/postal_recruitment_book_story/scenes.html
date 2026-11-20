@@ -1,0 +1,136 @@
+<!doctype html><html lang="hi"><meta charset="utf-8">
+<style>
+*{box-sizing:border-box}body{margin:0;width:540px;height:960px;overflow:hidden;background:#0f1c2e;color:#fff8ea;font-family:"Noto Sans Devanagari","Noto Sans",sans-serif}
+#background,#shade{position:absolute;inset:0;width:100%;height:100%}#background{object-fit:cover;transform-origin:center center}
+#shade{background:linear-gradient(180deg,#071425e9 0%,#0b1b31aa 25%,#0e1d34a0 52%,#0e1d342d 69%,#071425ed 97%)}
+header{position:absolute;top:56px;left:46px;right:46px;display:flex;justify-content:space-between;align-items:center}
+.brand{font:850 21px/1.06 "Noto Sans",sans-serif}.brand small{display:block;font-size:10px;color:#dce6ee;font-weight:600;margin-top:4px}
+.flag{font-size:14px;color:#332713;background:#ffdf96;border-radius:15px;padding:7px 12px 4px;font-weight:800}
+#story{position:absolute;top:142px;left:45px;right:45px;text-align:center}
+h1{font-size:43px;line-height:1.14;font-weight:850;margin:9px 0 8px;text-wrap:balance;letter-spacing:-.6px}
+.kicker{color:#ffe4a6;font-size:18px;font-weight:800}
+.turn{display:none}.turn.active{display:block}.caption{font-size:21px;line-height:1.23;margin:10px 0;font-weight:700;color:#fcf6e7}
+.panel{background:#101e34ea;border:1px solid #f7dc9766;border-radius:18px;padding:12px 15px 9px;margin:15px auto;max-width:411px;box-shadow:0 14px 45px #07122469}
+.big{display:flex;gap:16px;align-items:center;justify-content:center;color:#ffdf91;font:850 56px/1 "Noto Sans",sans-serif;letter-spacing:-1px}
+.big small{font-size:26px}.old{color:#f4eee2}.evidence{display:block;margin:7px auto 3px;max-width:100%;height:65px;object-fit:contain}.note{font-size:13px;color:#e9e5da}
+.pill{display:inline-block;padding:9px 14px 4px;border-radius:13px;background:#ffdf96;color:#152845;font-weight:850;font-size:19px}
+.tracker{display:flex;justify-content:center;gap:7px;margin:5px 0 8px}.tracker b{display:grid;place-items:center;width:49px;height:43px;color:#182b43;background:#ffde90;border-radius:8px;font:850 22px "Noto Sans",sans-serif}
+.tracker .checked{background:#b8ecd3}.tracker .away{background:#75534b;color:#ffe6c8}
+.domain{font:850 40px/1.05 "Noto Sans",sans-serif;color:#ffe3a0}.website{display:block;width:220px;margin:10px auto 0;border-radius:7px}
+.cast{position:absolute;inset:0;pointer-events:none}.cast img{position:absolute;bottom:129px;width:229px;height:auto;filter:drop-shadow(0 11px 10px #0912259c);transform-origin:center bottom}
+#golu{left:51px}#bhaiya{right:50px}
+#prop[hidden]{display:none}#prop{position:absolute;inset:0;pointer-events:none;z-index:4}
+#crate{position:absolute;left:147px;top:696px;width:110px;height:66px;border-radius:7px;background:#765133;border:2px solid #51331f;box-shadow:0 10px 14px #0008}
+#crate::before{content:"";position:absolute;top:-17px;left:-3px;width:110px;height:29px;transform-origin:50% 30%;transform:skewX(-14deg);border-radius:6px;background:#362518;border:5px solid #9b7044}
+#crate::after{content:"";position:absolute;top:10px;left:42px;width:24px;height:8px;border-radius:6px;background:#3d2a1a}
+#studyBook{position:absolute;left:191px;top:636px;width:58px;height:73px;border-radius:4px 7px 7px 3px;background:linear-gradient(90deg,#101c4b 10%,#254e78 11%,#19365b 95%);border:2px solid #d3b371;box-shadow:0 5px 5px #0008;color:#ffe1a1;font-size:10px;font-weight:900;padding:11px 4px;text-align:center;transform-origin:50% 90%}
+#studyBook::after{content:"";position:absolute;bottom:0;left:3px;right:3px;height:7px;background:repeating-linear-gradient(#d9cdb1 0 1px,#fff2d7 1px 2px);border-radius:0 0 5px 2px}
+.bookPanel{perspective:900px}.bookPanel img{transform-origin:15% center}
+#draftFolder{position:absolute;z-index:3;left:233px;top:634px;width:104px;height:65px;transform-origin:right center;perspective:600px;filter:drop-shadow(0 8px 7px #0009)}
+#draftFolder[hidden]{display:none}.folderBase,.folderCover,.folderSheet{position:absolute;inset:0;border-radius:6px;transform-origin:100% 50%}
+.folderBase{background:#c8914f;border:2px solid #916232}.folderSheet{inset:6px 9px 8px 6px;background:repeating-linear-gradient(#fff9e8 0 9px,#ddd0b9 9px 10px);border:1px solid #e6dcc8}
+.folderCover{display:grid;place-items:center;color:#513625;background:#e5ba77;border:2px solid #96663e;font-weight:850;font-size:13px;backface-visibility:visible}
+#draftEvidence{transform-origin:right bottom}.lessonPanel{padding:9px 9px 5px}.lessonFrame{display:block;width:100%;aspect-ratio:16/9;border:1px solid #f1d28e4d;border-radius:9px}
+.lessonPanel .domain{font-size:30px;margin:8px 0 3px}
+#speaker{position:absolute;bottom:111px;background:#ffe29b;color:#1a2a41;font-size:14px;font-weight:850;border-radius:13px;padding:4px 13px 1px}
+footer{position:absolute;left:48px;right:48px;bottom:77px;color:#f9ead3;font-size:13px;text-align:center;font-weight:700}
+#salary{position:absolute;inset:0;width:540px;height:960px;z-index:10;transform-origin:center center}
+#progress{height:3px;background:#f5e3af21;border-radius:9px;margin-top:8px;overflow:hidden}#progress b{display:block;height:100%;width:100%;background:#ffe2a8;transform-origin:left}
+</style>
+<img id="background" src="location0.jpg" alt=""><div id="shade"></div>
+<header><div class="brand">POSTAL EDGE<small>by Postal Wala</small></div><div class="flag">भर्ती नियमों का मसौदा</div></header>
+<main id="story">
+  <section class="turn"><div class="kicker">GDS की तैयारी</div><h1>किताब बक्से में क्यों?</h1></section>
+  <section class="turn"><div class="kicker">गोलू के 3 साल पूरे</div><h1>अभी 2 साल और?</h1><div class="panel"><div class="tracker"><b>1</b><b>2</b><b class="checked">3 ✓</b><b class="away">4</b><b class="away">5</b></div></div></section>
+  <section class="turn"><div class="kicker">डाक विभाग का मसौदा</div><h1>ये लाइन पढ़ो…</h1></section>
+  <section class="turn"><div class="kicker">गोलू ने मसौदे में पढ़ा</div><h1>तीन साल?</h1><div class="panel evidenceWrap"><img class="evidence" src="service.png" alt=""><div class="note">20 नवंबर 2026 · पेज 5, 7 · कॉलम 10(b)</div></div></section>
+  <section class="turn"><div class="kicker">Postman और Mail Guard</div><h1>सेवा की शर्त बदलने का प्रस्ताव</h1><div class="panel"><div class="big"><span class="old">5</span><small>→</small><span>3 साल</span></div><div class="note">नियमित GDS सेवा · अंतिम अधिसूचना बाकी</div></div></section>
+  <section class="turn"><div class="kicker">गोलू का सवाल</div><h1>पहले MTS बनना पड़ेगा?</h1></section>
+  <section class="turn"><div class="kicker">प्रस्ताव लागू हुआ तो</div><h1>GDS से सीधे परीक्षा</h1><div class="panel"><div class="pill">Postman / Mail Guard</div><div class="note">बाकी पात्रता और लागू कटऑफ भी ज़रूरी</div></div></section>
+  <section class="turn"><div class="kicker">चयन होने पर</div><h1>हाथ में कितनी सैलरी?</h1><div class="pill">Pay Level 3 · दिल्ली का उदाहरण</div></section>
+  <section class="turn"></section>
+  <section class="turn"><div class="kicker">गोलू ने फिर से तैयारी शुरू की</div><h1>भैया, किताब वापस देना!</h1></section>
+  <section class="turn"><div class="kicker">Postal Edge · PO Guide</div><h1>फ्री डेमो क्लास</h1><div class="panel lessonPanel bookPanel"><img class="lessonFrame" id="lessonClip" src="lesson/000.jpg" alt="मोबाइल डाकघर क्लास का अंश"><div class="domain">postaledge.in</div></div></section>
+</main>
+<div class="cast"><img id="golu" alt=""><img id="bhaiya" alt=""></div>
+<div id="prop" hidden><div id="crate"></div><div id="studyBook">POSTMAN</div></div><div id="draftFolder" hidden><div class="folderBase"></div><div class="folderSheet"></div><div class="folderCover">मसौदा</div></div><div id="speaker"></div>
+<footer><span id="foot">India Post · 20 नवंबर 2026</span><div id="progress"><b></b></div></footer>
+<img id="salary" src="salary.png" alt="दिल्ली में अनुमानित मासिक सैलरी" hidden>
+<script>
+const cfg=__DATA__, turns=[...document.querySelectorAll('.turn')], bg=document.getElementById('background'), salary=document.getElementById('salary');
+const ids=['golu','bhaiya'], actor=ids.map(x=>document.getElementById(x)), label=document.getElementById('speaker');
+const foot=document.getElementById('foot'), progress=document.querySelector('#progress b');
+const clamp=t=>Math.max(0,Math.min(1,t));
+const ease=t=>1-Math.pow(1-clamp(t),3);
+const lastFrame=Math.ceil(cfg.duration*15)-1;
+const stage=[0,0,1,1,1,1,1,1,2,3,3];
+const folder=document.getElementById('draftFolder'), cover=folder.querySelector('.folderCover');
+const evidence=document.querySelector('.evidenceWrap'), lesson=document.getElementById('lessonClip');
+const prop=document.getElementById('prop'), crate=document.getElementById('crate'), book=document.getElementById('studyBook');
+window.TOTAL=cfg.duration;
+window.seek=t=>{
+  const i=cfg.cues.reduce((n,s,j)=>t+1e-6>=s?j:n,0);
+  const scene=stage[i], from=t-cfg.cues[i], first=stage.indexOf(scene), phase=t-cfg.cues[first];
+  folder.hidden=i!==2&&i!==3;
+  prop.hidden=!(i<=1||i===9);
+  if(!prop.hidden){
+    const stop=ease((t-.15)/.9), back=ease((from-.10)/.73);
+    crate.hidden=i===9;
+    book.style.transform=i===9
+      ? 'translate('+(72-24*back)+'px,'+(-9-17*back)+'px) rotate('+(-20+14*back)+'deg)'
+      : 'translate('+(-10+12*stop)+'px,'+(26*stop)+'px) rotate('+(-15+22*stop)+'deg)';
+  }
+  salary.hidden=scene!==2;
+  if(scene===2){
+    salary.style.transform='scale('+(1+.011*ease(phase/.6))+')';
+    return;
+  }
+  const image='location'+({0:0,1:1,3:5}[scene])+'.jpg';
+  if(bg.getAttribute('src')!==image)bg.src=image;
+  bg.style.objectPosition=(44+9*clamp(phase/13))+'% 56%';
+  bg.style.transform='scale('+(1.04+.07*clamp(phase/(scene===1?14:6)))+')';
+  turns.forEach((turn,j)=>turn.classList.toggle('active',j===i));
+  turns[i].style.opacity=String(.55+.45*ease(from/.25));
+  turns[i].style.transform='translateY('+8*(1-ease(from/.27))+'px)';
+  if(i===2||i===3){
+    const motion=i===2?from:cfg.cues[3]-cfg.cues[2]+from;
+    const reach=ease((motion-.10)/.4), open=ease((motion-.44)/.56), reveal=i===3?ease(from/.22):0;
+    folder.style.opacity=String(reach*(1-.40*reveal));
+    folder.style.transform='translateX('+(20*(1-reach))+'px) translateY('+(-9*open)+'px)';
+    cover.style.transform='rotateY('+(125*open)+'deg)';
+    evidence.style.opacity=String(reveal);
+    evidence.style.transform='translateY('+24*(1-reveal)+'px) scale('+(.91+.09*reveal)+')';
+  }
+  if(i===10){
+    const opening=ease(from/.62);
+    lesson.style.transform='rotateY('+(-66*(1-opening))+'deg) scaleX('+(.88+.12*opening)+')';
+    lesson.style.opacity=String(.4+.6*opening);
+    const frame=Math.min(cfg.lessonFrames-1,Math.floor(clamp((from-.38)/4)*cfg.lessonFrames));
+    const path='lesson/'+String(frame).padStart(3,'0')+'.jpg';
+    if(lesson.getAttribute('src')!==path)lesson.src=path;
+  }
+  if(i===4) turns[i].querySelectorAll('.away').forEach((node,k)=>{
+    const p=ease((from-1.1-k*.24)/.5);
+    node.style.opacity=1-.88*p;
+    node.style.transform='translateY('+12*p+'px)';
+  });
+  const frame=String(Math.min(lastFrame,Math.floor(t*15))).padStart(4,'0');
+  actor.forEach((node,j)=>{
+    const path=ids[j]+'/'+frame+'.png';
+    if(node.getAttribute('src')!==path)node.src=path;
+    const talking=cfg.roles[i]===ids[j];
+    const move=scene===0?(j?22:-30)*(1-ease(phase/.6)):0;
+    node.style.transform='translateX('+move+'px) scale('+(talking?1+.022*ease(from/.36):1)+')';
+  });
+  label.textContent=cfg.roles[i]==='golu'?'गोलू':'डाकिया भैया';
+  label.style.left=cfg.roles[i]==='golu'?'101px':'auto';
+  label.style.right=cfg.roles[i]==='bhaiya'?'88px':'auto';
+  foot.textContent=scene===3?'Postal Edge by Postal Wala':'India Post · 20 नवंबर 2026';
+  progress.style.transform='scaleX('+clamp(t/cfg.duration)+')';
+};
+window.READY=async()=>{
+  await Promise.all([0,1,5].map(async i=>{const img=new Image();img.src='location'+i+'.jpg';await img.decode()}));
+  seek(0);
+  await Promise.all([...document.images].map(img=>img.decode()));
+};
+</script>
