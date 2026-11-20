@@ -1,0 +1,58 @@
+name: Postal Edge recruitment draft preview
+run-name: Postal Edge | Postman and Mail Guard draft | preview
+on:
+  push:
+    branches: ['preview/postal-recruitment-draft-20261120']
+    paths: ['.github/workflows/postal_recruitment_draft_preview.yml', 'oneoffs/postal_recruitment_draft/*']
+permissions:
+  contents: read
+concurrency:
+  group: postal-recruitment-draft-preview
+  cancel-in-progress: true
+jobs:
+  render:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: production
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-core
+          token: ${{ secrets.CORE_TOKEN }}
+          path: core
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install Postal renderer dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg fonts-noto-core fonts-noto-color-emoji
+          pip install -q requests pypdf pymupdf pillow numpy scipy playwright==1.47.0 edge-tts faster-whisper
+          playwright install --with-deps chromium
+      - name: Render draft explainer
+        working-directory: core
+        env:
+          POSTAL_KEY_1: ${{ secrets.GEMINI_API_KEY }}
+          POSTAL_KEY_2: ${{ secrets.GEMINI_API_KEY2 }}
+          POSTAL_KEY_3: ${{ secrets.GEMINI_API_KEY3 }}
+          POSTAL_KEY_4: ${{ secrets.GEMINI_API_KEY4 }}
+          GEMINI_TTS_MODEL: gemini-3.8-flash-tts
+          GEMINI_TTS_VOICE: hi-in-concierge-10
+          WHISPER_MODEL: small
+          FB_POST: '0'
+          FPS: '30'
+        run: python -u ../production/oneoffs/postal_recruitment_draft/render.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Postal_Edge_GDS_Postman_Mail_Guard_Draft
+          path: |
+            core/recruitment_preview/Postal_Edge_GDS_Draft.mp4
+            core/recruitment_preview/cover.jpg
+            core/recruitment_preview/contact.jpg
+            core/recruitment_preview/report.json
+          if-no-files-found: error
+          retention-days: 30
