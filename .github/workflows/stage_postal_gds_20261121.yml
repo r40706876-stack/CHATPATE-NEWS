@@ -1,0 +1,30 @@
+name: Stage approved Postal Edge GDS reel
+on:
+  push:
+    branches: [preview/postal-recruitment-draft-20261120]
+    paths: [release_20261121/cover.jpg]
+permissions:
+  actions: read
+  contents: write
+jobs:
+  stage:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 44804855462
+          github-token: ${{ github.token }}
+          name: Postal_Edge_GDS_Postman_Book_Story
+          path: approved
+      - name: Stage exactly the approved video and cover
+        run: |
+          cp approved/Postal_Edge_GDS_Postman_Book_Story.mp4 release_20261121/reel.mp4
+          sha256sum -c <<'EOF'
+          4b5fd6b48e4a5573da93bd6fb17a8053f53fa9e4134bb3bdb9a03940c9e8f8b8  release_20261121/reel.mp4
+          8381efa8708825460c6b4db078b766aa015288d8cf5132aa5c66e6dd6e661ee8  release_20261121/cover.jpg
+          EOF
+          git add -f release_20261121/reel.mp4
+          git -c user.name=github-actions[bot] -c user.email=41898282+github-actions[bot]@users.noreply.github.com commit -m 'Stage verified 35-second Postal Edge reel'
+          git push origin "HEAD:${GITHUB_REF_NAME}"
