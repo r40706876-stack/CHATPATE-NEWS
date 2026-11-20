@@ -1,0 +1,49 @@
+name: Postal Edge Postman X-city salary cut
+run-name: Postal Edge | Add full-screen X-city salary breakdown
+on:
+  push:
+    branches: ['preview/postal-recruitment-draft-20261120']
+    paths: ['.github/workflows/postal_recruitment_x_city_salary.yml', 'oneoffs/postal_recruitment_x_city_salary/*']
+permissions:
+  actions: read
+  contents: read
+jobs:
+  salary-cut:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 44774004295
+          github-token: ${{ github.token }}
+          name: Postal_Edge_GDS_Postman_Mail_Guard_Draft
+          path: previous
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install release tools
+        run: |
+          sudo apt-get -o Acquire::Retries=2 update -qq
+          sudo apt-get install -y -qq ffmpeg fonts-noto-core libraqm0
+          pip install -q Pillow
+      - name: Replace the existing pay scene and retain the approved narration
+        run: |
+          mkdir final
+          python oneoffs/postal_recruitment_x_city_salary/salary_card.py final/Postman_X_City_Salary.png
+          ffmpeg -nostdin -v error -xerror -y \
+            -i previous/Postal_Edge_GDS_Postman_Big_Change.mp4 \
+            -loop 1 -framerate 30 -i final/Postman_X_City_Salary.png \
+            -filter_complex "[0:v][1:v]overlay=enable='gte(t,24.82)*lt(t,31.75)':shortest=1[cut]" \
+            -map '[cut]' -map 0:a:0 -c:v libx264 -preset fast -crf 18 -pix_fmt yuv420p \
+            -c:a copy -movflags +faststart final/Postal_Edge_GDS_Postman_X_City.mp4
+          ffmpeg -v error -xerror -i final/Postal_Edge_GDS_Postman_X_City.mp4 -f null -
+          cp previous/cover.jpg final/cover.jpg
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Postal_Edge_GDS_Postman_X_City_Final
+          path: final/
+          if-no-files-found: error
+          retention-days: 30
