@@ -1,0 +1,57 @@
+name: Postal Edge Postman dialogue cut
+run-name: Postal Edge | Golu and Dakia Bhaiya dialogue
+on:
+  push:
+    branches: ['preview/postal-recruitment-draft-20261120']
+    paths: ['.github/workflows/postal_recruitment_two_voices.yml', 'oneoffs/postal_recruitment_two_voices/*']
+permissions:
+  actions: read
+  contents: read
+jobs:
+  action-cut:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 24
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: production
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-core
+          token: ${{ secrets.CORE_TOKEN }}
+          path: core
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 44776357014
+          github-token: ${{ github.token }}
+          name: Postal_Edge_GDS_Postman_X_City_Final
+          path: approved
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: |
+          sudo apt-get -o Acquire::Retries=2 update -qq
+          sudo apt-get install -y -qq ffmpeg fonts-noto-core fonts-noto-color-emoji
+          pip install -q requests pymupdf pypdf pillow numpy scipy edge-tts playwright==1.47.0
+          playwright install --with-deps chromium
+      - name: Synthesize two voices and render the dialogue
+        working-directory: core
+        env:
+          FPS: '30'
+          POSTAL_KEY_1: ${{ secrets.GEMINI_API_KEY }}
+          POSTAL_KEY_2: ${{ secrets.GEMINI_API_KEY2 }}
+          POSTAL_KEY_3: ${{ secrets.GEMINI_API_KEY3 }}
+          POSTAL_KEY_4: ${{ secrets.GEMINI_API_KEY4 }}
+        run: python -u ../production/oneoffs/postal_recruitment_two_voices/render.py ../approved/Postman_X_City_Salary.png
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Postal_Edge_GDS_Postman_Two_Voices
+          path: |
+            core/recruitment_preview/Postal_Edge_GDS_Postman_Two_Voices.mp4
+            core/recruitment_preview/cover.jpg
+            core/recruitment_preview/contact.jpg
+            core/recruitment_preview/report.json
+          if-no-files-found: error
+          retention-days: 30
