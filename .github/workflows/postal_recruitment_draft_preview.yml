@@ -1,5 +1,5 @@
 name: Postal Edge recruitment draft preview
-run-name: Postal Edge | GDS 5 to 3 years + video course demo
+run-name: Postal Edge | Can a GDS sit for Postman at three years?
 on:
   push:
     branches: ['preview/postal-recruitment-draft-20261120']
@@ -50,7 +50,7 @@ jobs:
         with:
           name: Postal_Edge_GDS_Postman_Mail_Guard_Draft
           path: |
-            core/recruitment_preview/Postal_Edge_GDS_Exam_Update.mp4
+            core/recruitment_preview/Postal_Edge_GDS_Postman_Big_Change.mp4
             core/recruitment_preview/cover.jpg
             core/recruitment_preview/contact.jpg
             core/recruitment_preview/report.json
