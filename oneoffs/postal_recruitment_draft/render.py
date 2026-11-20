@@ -12,6 +12,7 @@ import wave
 import fitz
 import numpy as np
 from PIL import Image
+from playwright.sync_api import sync_playwright
 import requests
 
 ROOT = Path.cwd()
@@ -21,11 +22,11 @@ SOURCE = "https://utilities.cept.gov.in/dop/pdfbind.ashx?id=15720"
 FPS = 30
 RIG_FPS = 15
 SCENES = [
-    ("hook", "जी डी एस में तीन साल पूरे हैं? पोस्टमैन या मेल गार्ड की परीक्षा के लिए इंतज़ार घट सकता है।"),
-    ("service", "डाक विभाग का प्रस्ताव है कि नियमित जी डी एस सेवा की शर्त पाँच साल से घटाकर तीन साल की जाए।"),
-    ("example", "मान लो आपके तीन साल पूरे हैं। पाँच साल की शर्त में दो साल और लगते। प्रस्ताव लागू हुआ तो सेवा की शर्त वहीं पूरी हो सकती है।"),
-    ("qualification", "ये अभी मसौदा है। पढ़ाई के लिए बारहवीं, तीन साल का डिप्लोमा या मान्य समकक्ष योग्यता का प्रस्ताव है।"),
-    ("website", "तैयारी शुरू करने का अच्छा मौका है। पोस्टल एज डॉट इन पर फ्री मॉक टेस्ट, पिछले साल के सवाल और पी ओ गाइड नोट्स देखें।"),
+    ("hook", "जी डी एस में तीन साल पूरे? एम टी एस के साथ सीधे पोस्टमैन या मेल गार्ड की परीक्षा का मौका भी मिल सकता है।"),
+    ("service", "अभी एम टी एस की परीक्षा के लिए तीन साल की नियमित जी डी एस सेवा चाहिए। पोस्टमैन और मेल गार्ड के लिए पाँच की जगह तीन साल का मसौदा जारी हुआ है।"),
+    ("example", "प्रस्ताव इसी रूप में लागू हुआ और बाकी शर्तें पूरी हैं, तो तीन साल की सेवा पर, एम टी एस बने बिना, सीधे परीक्षा दे सकेंगे।"),
+    ("status", "एम टी एस के लिए एक साल? इस मसौदे में ऐसा कोई बदलाव नहीं है। अंतिम नियम राजपत्र में आने बाकी हैं।"),
+    ("website", "तैयारी अभी से शुरू करें। पोस्टल एज डॉट इन पर वीडियो कोर्स का फ्री डेमो देखें। आसान भाषा और चित्रों से नियम ऐसे समझाए जाते हैं कि क्लास में ही बात समझ आए और याद हो जाए। रटने की ज़रूरत नहीं पड़ेगी।"),
 ]
 
 def run(*args, **kwargs):
@@ -61,6 +62,38 @@ def source_cards():
         assert len(pdf) == 7 and "20.11.2026" in pdf[0].get_text()
         proof(pdf, 5, "worked regularly for three years in that capacity", "service")
         proof(pdf, 4, "3 years Diploma course or equivalent", "study")
+
+def capture_demo():
+    """Capture the public course section if the site exposes it to an anonymous visitor."""
+    import re
+
+    with sync_playwright() as playwright:
+        browser = playwright.chromium.launch()
+        page = browser.new_page(viewport={"width": 440, "height": 900}, device_scale_factor=2)
+        try:
+            page.goto("https://postaledge.in/", wait_until="domcontentloaded", timeout=18000)
+            page.evaluate("document.fonts.ready")
+            cta = page.get_by_text(re.compile(r"डेमो|demo|वीडियो कोर्स|video course", re.I))
+            for i in range(min(cta.count(), 25)):
+                match = cta.nth(i)
+                if not match.is_visible():
+                    continue
+                bounds = match.bounding_box()
+                if not bounds or not 18 <= bounds["height"] <= 330:
+                    continue
+                match.scroll_into_view_if_needed(timeout=3000)
+                frame = page.evaluate("""node => {
+                    const r=node.getBoundingClientRect();
+                    const y=Math.max(0, Math.min(innerHeight-360, r.top-100));
+                    return {x:0,y,width:innerWidth,height:360};
+                }""", match.element_handle())
+                page.screenshot(path=str(OUT / "website.jpg"), type="jpeg", quality=92, clip=frame)
+                return True
+        except Exception as exc:
+            print("Public course capture:", type(exc).__name__, flush=True)
+        finally:
+            browser.close()
+    return False
 
 def narration(keys):
     sys.path.insert(0, str(ROOT))
@@ -117,17 +150,17 @@ def rigs(cues, duration, samples):
         for idx, folder in enumerate(folders):
             golu = idx == 0
             gaze = .65 if golu else -.66
-            speaking = mouths[min(frame, len(mouths) - 1)] if not golu else None
+            speaking = mouths[min(frame, len(mouths) - 1)] if golu == (scene == 0) else None
             mood = ("surprise" if scene in (0, 2) else "happy") if golu else "happy"
             hop = max(0, math.sin(elapsed * 5)) * .8 if golu and scene == 0 and elapsed < .62 else 0
             image = puppet(golu, t, .50 * math.exp(-elapsed * 4), gaze, speaking, mood,
                            (.64 + .23 * math.sin(t * 4), actions[scene][idx]), gaze, hop, .10 * math.sin(t * 2))
             image.save(folder / f"{frame:04d}.png")
 
-def render(cues, duration):
+def render(cues, duration, demo):
     html = OUT / "preview.html"
     html.write_text((HERE / "scenes.html").read_text().replace("__DATA__", json.dumps({
-        "cues": cues, "total": duration,
+        "cues": cues, "total": duration, "demo": demo,
         "frames": math.ceil(duration * RIG_FPS),
     })))
     # The original renderer decodes the two approved puppet images before each frame.
@@ -138,13 +171,13 @@ def render(cues, duration):
     renderer.write_text(code.replace(selector, selector + ",#golu,#bhaiya"))
     silent = OUT / "silent.mp4"
     run(sys.executable, str(renderer), str(html), str(silent))
-    final = OUT / "Postal_Edge_GDS_5_to_3_Years.mp4"
+    final = OUT / "Postal_Edge_GDS_Exam_Update.mp4"
     run("ffmpeg", "-y", "-v", "error", "-i", str(silent), "-i", str(OUT / "narration.wav"),
         "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-af", "loudnorm=I=-16:TP=-1.5:LRA=8", "-ar", "48000",
         "-shortest", "-movflags", "+faststart", str(final))
     return final
 
-def quality(final, cues, slot):
+def quality(final, cues, slot, demo):
     run("ffmpeg", "-v", "error", "-xerror", "-i", str(final), "-f", "null", "-")
     report = json.loads(subprocess.check_output(["ffprobe", "-v", "error", "-show_streams",
                                                 "-show_format", "-of", "json", str(final)]))
@@ -152,9 +185,9 @@ def quality(final, cues, slot):
     audio = next(x for x in report["streams"] if x["codec_type"] == "audio")
     duration = float(report["format"]["duration"])
     assert (video["width"], video["height"], video["r_frame_rate"]) == (1080, 1920, "30/1")
-    assert 24 <= duration <= 48 and abs(float(audio["duration"]) - duration) < .2
+    assert 25 <= duration <= 60 and abs(float(audio["duration"]) - duration) < .2
     sheet = Image.new("RGB", (810, 960), "#10192b")
-    for i, time in enumerate([0.9, *[t + (5.6 if i == 2 else 1.4) for i, t in enumerate(cues[1:], 1)], duration - .8]):
+    for i, time in enumerate([2.1, cues[1]+4.0, cues[2]+4.0, cues[3]+3.0, cues[4]+2.4, duration-.8]):
         data = subprocess.check_output(["ffmpeg", "-v", "error", "-ss", str(time), "-i", str(final),
                                        "-frames:v", "1", "-f", "image2pipe", "-vcodec", "png", "-"])
         im = Image.open(io.BytesIO(data))
@@ -164,7 +197,7 @@ def quality(final, cues, slot):
     sheet.save(OUT / "contact.jpg", quality=94)
     summary = {"seconds": duration, "resolution": "1080x1920", "fps": FPS, "voice": "hi-in-concierge-10",
                "narration_key_slot": slot, "source": SOURCE, "website": "https://postaledge.in",
-               "background_sources": "Three approved prior-cut backgrounds reused",
+               "background_sources": "Three newly generated custom postal scenes", "live_demo_screen": demo,
                "characters": "Approved Postal Edge Golu and Dakia Bhaiya", "scope": "Preview"}
     (OUT / "report.json").write_text(json.dumps(summary, indent=2))
     print(json.dumps(summary), flush=True)
@@ -181,8 +214,9 @@ def main():
     scenes, rate, slot = narration(keys)
     cues, duration, samples = audio_track(scenes, rate)
     rigs(cues, duration, samples)
-    final = render(cues, duration)
-    quality(final, cues, slot)
+    demo = capture_demo()
+    final = render(cues, duration, demo)
+    quality(final, cues, slot, demo)
 
 if __name__ == "__main__":
     main()
