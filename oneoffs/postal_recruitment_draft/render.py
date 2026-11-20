@@ -6,6 +6,7 @@ import json
 import math
 import os
 from pathlib import Path
+import shutil
 import subprocess
 import sys
 import wave
@@ -97,6 +98,12 @@ def background(index, description, keys):
             print(f"Background {index + 1}, Gemini slot {number}: {type(exc).__name__}", flush=True)
     return None
 
+def background_with_backup(index, description, keys):
+    slot = background(index, description, keys)
+    if slot is None:
+        shutil.copyfile(HERE / f"art{index}.jpg", OUT / f"bg{index}.jpg")
+    return slot
+
 def narration(keys):
     sys.path.insert(0, str(ROOT))
     sys.path.insert(0, str(ROOT / "deep"))
@@ -162,7 +169,7 @@ def rigs(cues, duration, samples):
 def render(cues, duration, backgrounds):
     html = OUT / "preview.html"
     html.write_text((HERE / "scenes.html").read_text().replace("__DATA__", json.dumps({
-        "cues": cues, "total": duration, "painted": [x is not None for x in backgrounds],
+        "cues": cues, "total": duration, "painted": [True for _ in backgrounds],
         "frames": math.ceil(duration * RIG_FPS),
     })))
     # The original renderer decodes the two approved puppet images before each frame.
@@ -198,7 +205,8 @@ def quality(final, cues, slot, images):
         sheet.paste(im.resize((270, 480)), ((i % 3) * 270, (i // 3) * 480))
     sheet.save(OUT / "contact.jpg", quality=94)
     summary = {"seconds": duration, "resolution": "1080x1920", "fps": FPS, "voice": "hi-in-concierge-10",
-               "narration_key_slot": slot, "gemini_background_slots": images, "source": SOURCE,
+               "narration_key_slot": slot, "gemini_background_slots": images,
+               "background_sources": ["Gemini" if x else "generated postal illustration" for x in images], "source": SOURCE,
                "characters": "Approved Postal Edge Golu and Dakia Bhaiya", "scope": "Preview"}
     (OUT / "report.json").write_text(json.dumps(summary, indent=2))
     print(json.dumps(summary), flush=True)
@@ -211,7 +219,7 @@ def main():
         raise RuntimeError("No configured Bakra News Gemini keys available to this run")
     print("Configured Gemini slots:", [i for i, _ in keys], flush=True)
     with ThreadPoolExecutor(max_workers=3) as pool:
-        art = [pool.submit(background, i, prompt, keys) for i, prompt in enumerate(PROMPTS)]
+        art = [pool.submit(background_with_backup, i, prompt, keys) for i, prompt in enumerate(PROMPTS)]
         scenes, rate, slot = narration(keys)
         images = [task.result() for task in art]
     cues, duration, samples = audio_track(scenes, rate)
