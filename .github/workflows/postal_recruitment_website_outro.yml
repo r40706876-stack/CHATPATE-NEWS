@@ -1,0 +1,35 @@
+name: Postal Edge reel with real free course cards
+run-name: Postal Edge | GDS eligibility and free video course
+on:
+  push:
+    branches: ['preview/postal-recruitment-draft-20261120']
+    paths: ['.github/workflows/postal_recruitment_website_outro.yml', 'oneoffs/postal_recruitment_website_outro/*']
+permissions:
+  actions: read
+  contents: read
+jobs:
+  final-cut:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          run-id: 44770209573
+          github-token: ${{ github.token }}
+          name: Postal_Edge_GDS_Postman_Mail_Guard_Draft
+          path: original
+      - name: Composite previously approved website visual and verify MP4
+        run: |
+          mkdir final
+          bash oneoffs/postal_recruitment_website_outro/overlay.sh original/Postal_Edge_GDS_Exam_Update.mp4 oneoffs/postal_recruitment_website_outro/website-courses.jpg final/Postal_Edge_GDS_Exam_Update.mp4
+          ffmpeg -v error -ss 33 -i final/Postal_Edge_GDS_Exam_Update.mp4 -frames:v 1 final/website-preview.jpg
+          cp original/cover.jpg final/cover.jpg
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Postal_Edge_GDS_Exam_Update_Final
+          path: final/
+          if-no-files-found: error
+          retention-days: 30
