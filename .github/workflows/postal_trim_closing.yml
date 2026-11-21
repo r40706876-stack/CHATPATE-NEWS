@@ -1,0 +1,48 @@
+name: Postal Edge short closing cut
+run-name: Postal Edge | Trim the silent closing
+on:
+  push:
+    branches: ['preview/postal-recruitment-draft-20261120']
+    paths: ['.github/workflows/postal_trim_closing.yml']
+permissions:
+  contents: read
+jobs:
+  edit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-core
+          token: ${{ secrets.CORE_TOKEN }}
+          ref: dae118a2dc1b2b1960fdda89f79dd1e286bcecf8
+          path: core
+          persist-credentials: false
+      - name: Trim only the silent tail and verify the MP4
+        shell: bash
+        run: |
+          if ! command -v ffmpeg >/dev/null; then
+            sudo apt-get -o Acquire::Retries=2 update -qq
+            sudo apt-get install -y -qq ffmpeg
+          fi
+          mkdir -p result
+          source=core/previews/Postal_Edge_Postman_Final_50s.mp4
+          output=result/Postal_Edge_Postman_Final_Trim.mp4
+          ffmpeg -v error -xerror -i "$source" -t 47.55 -map 0:v:0 -map 0:a:0 -c:v libx264 -preset fast -crf 22 -pix_fmt yuv420p -c:a aac -b:a 128k -movflags +faststart "$output"
+          ffmpeg -v error -xerror -i "$output" -f null -
+          ffprobe -v error -show_entries format=duration:stream=codec_type,width,height -of json "$output" > result/verification.json
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          media = json.loads(Path("result/verification.json").read_text())
+          assert 47.53 <= float(media["format"]["duration"]) <= 47.59, media
+          assert [stream["codec_type"] for stream in media["streams"]] == ["video", "audio"], media
+          assert [media["streams"][0]["width"], media["streams"][0]["height"]] == [1080, 1920], media
+          print(media)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Postal_Edge_Postman_Final_Trim
+          path: result/
+          if-no-files-found: error
+          retention-days: 14
