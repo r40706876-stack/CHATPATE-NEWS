@@ -1,0 +1,55 @@
+name: Postal Edge final 50–50 explainer
+on:
+  push:
+    branches: ['preview/postal-seat-split-final-20261121']
+    paths: ['.github/workflows/postal_seat_split_final.yml', 'oneoffs/postal_seat_split/finish.py']
+permissions:
+  contents: read
+  actions: read
+jobs:
+  final:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: production
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-core
+          token: ${{ secrets.CORE_TOKEN }}
+          ref: 135c9104ca85845e3c11254f8a08102faa86e51c
+          path: core
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          name: Postal_Edge_Postman_50_50_Tree_Demo
+          github-token: ${{ github.token }}
+          run-id: 44929294936
+          path: previous
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install video and voice tools
+        run: |
+          sudo apt-get -o Acquire::Retries=2 update -qq
+          sudo apt-get install -y -qq ffmpeg fonts-noto-core fonts-dejavu-core
+          python -m pip install -q numpy scipy pillow requests playwright==1.47.0 edge-tts pymupdf pypdf
+      - name: Render the new calculation and Golu's CTA
+        working-directory: core
+        env:
+          POSTAL_KEY_1: ${{ secrets.GEMINI_API_KEY }}
+          POSTAL_KEY_2: ${{ secrets.GEMINI_API_KEY2 }}
+          POSTAL_KEY_3: ${{ secrets.GEMINI_API_KEY3 }}
+          POSTAL_KEY_4: ${{ secrets.GEMINI_API_KEY4 }}
+        run: python -u ../production/oneoffs/postal_seat_split/finish.py render ../previous/Postal_Edge_Postman_50_50_Tree_Demo.mp4
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Postal_Edge_Postman_50_50_Final
+          path: |
+            core/reel-work/Postal_Edge_Postman_50_50_Final.mp4
+            core/reel-work/final-review-*.jpg
+            core/reel-work/final-check.json
+          if-no-files-found: error
+          retention-days: 14
