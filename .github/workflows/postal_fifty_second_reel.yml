@@ -1,0 +1,53 @@
+name: Postal Edge fifty-second reel preview
+run-name: Postal Edge | full Postman draft reel
+on:
+  push:
+    branches: ['preview/postal-recruitment-draft-20261120']
+    paths: ['.github/workflows/postal_fifty_second_reel.yml', 'oneoffs/postal_fifty_second_reel/*']
+permissions:
+  contents: read
+  actions: read
+jobs:
+  render-preview:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: production
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-core
+          token: ${{ secrets.CORE_TOKEN }}
+          ref: e60fdf3089b8aaac49562cb99030371051793fee
+          path: core
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install video tools
+        run: |
+          sudo apt-get -o Acquire::Retries=2 update -qq
+          sudo apt-get install -y -qq ffmpeg fonts-noto-core
+          python -m pip install -q pillow numpy scipy
+      - name: Open the approved hook and existing dialogue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p core/reel-work/assets core/reel-work/voices
+          unzip -q core/previews/postal-edge-full-reel-assets.zip -d core/reel-work/assets
+          gh run download 44891274879 --repo r40706876-stack/CHATPATE-NEWS -n postal-edge-full-reel-dialogue -D core/reel-work/voices
+      - name: Render and verify the fifty-second MP4
+        working-directory: core
+        run: python -u ../production/oneoffs/postal_fifty_second_reel/render.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Postal_Edge_Postman_Draft_50s
+          path: |
+            core/reel-work/Postal_Edge_Postman_Draft_50s.mp4
+            core/reel-work/checks.jpg
+            core/reel-work/timing.json
+            core/reel-work/verification.json
+          if-no-files-found: error
+          retention-days: 14
