@@ -21,9 +21,9 @@ OUT,ASSETS = r.OUT,r.ASSETS
 PRIOR=office_cut.PRIOR
 LENGTH=43
 ORDER=(0,2,1,3,4,5,6,7,8)
-GOLU={2,4,6}
+GOLU={2,4,6,9}
 NAME="Postal_Edge_Postman_Final_50s.mp4"
-OFFICES={0:1,2:1,1:1,3:1,4:0,5:0,6:2,7:2,8:2}
+OFFICES={0:1,2:1,1:1,3:1,4:0,5:0,6:2,7:2,8:2,9:2}
 
 def samples(start,end):
     return np.frombuffer(sp.check_output(["ffmpeg","-v","error","-ss",str(start),"-i",str(PRIOR),
@@ -41,7 +41,7 @@ def prepare_audio(cues):
     for index in ORDER:
         end = cues[index+1]-.025 if index+1<len(cues) else 50
         line=trim_trailing(samples(cues[index],end))
-        speed=1 if index in GOLU else 1.22
+        speed=office_cut.PACE if index in GOLU else 1.22
         if speed!=1:
             line=np.frombuffer(sp.check_output(["ffmpeg","-v","error","-f","f32le","-ar",str(RATE),"-ac","1","-i","-",
                 "-af",f"atempo={speed}","-f","f32le","-"],input=line.tobytes()),dtype="<f4")
@@ -50,8 +50,21 @@ def prepare_audio(cues):
         speech_end=at+len(line)/RATE
         shots.append({"index":index,"start":round(at,4),"end":round(speech_end,4),"speed":speed})
         at=speech_end+.13
-    # Keep the website visible during a moving sample from the class.
-    finish=shots[-1]["end"]
+    close=trim_trailing(np.frombuffer(sp.check_output(["ffmpeg","-v","error","-i",str(OUT/"voice0.wav"),
+        "-af","silenceremove=start_periods=1:start_duration=0.025:start_threshold=-45dB,loudnorm=I=-17:TP=-2:LRA=7",
+        "-ar",str(RATE),"-ac","1","-f","f32le","-"]),dtype="<f4"))
+    max_seconds=LENGTH-1.18-at
+    assert max_seconds>4
+    if len(close)>max_seconds*RATE:
+        speed=len(close)/(max_seconds*RATE)*1.02
+        close=np.frombuffer(sp.check_output(["ffmpeg","-v","error","-f","f32le","-ar",str(RATE),"-ac","1","-i","-",
+            "-af",f"atempo={speed:.5f}","-f","f32le","-"],input=close.tobytes()),dtype="<f4")
+    else:
+        speed=1
+    start=round(at*RATE)
+    track[start:start+len(close)]=close
+    finish=at+len(close)/RATE
+    shots.append({"index":9,"start":round(at,4),"end":round(finish,4),"speed":round(speed,4)})
     assert 29<finish<LENGTH-.9,finish
     mix=track.copy()
     t=np.arange(round(RATE*.54))/RATE
@@ -85,6 +98,11 @@ def board(frame,d,i,dt,proof,site,lesson,remaining):
         r.text(d,540,670,"पढ़ाई आज से शुरू करो",67)
         r.box(d,(228,755,852,876),39,r.GOLD)
         r.text(d,540,814,"आगे वक्त कम मिल सकता है",45,r.RED)
+    elif i==9:
+        r.box(d,(122,498,958,1001),54,r.CREAM,"#e5c799",3)
+        r.text(d,540,625,"साथी को भेजें",67)
+        r.box(d,(216,750,864,883),44,r.GOLD)
+        r.text(d,540,816,"postaledge.in",51,r.RED)
     elif i>=7:
         r.box(d,(70,489,1010,1192),52,r.CREAM,"#e5c799",3)
         r.text(d,540,592,"फ्री वीडियो क्लास",61,r.RED)
@@ -121,6 +139,8 @@ def puppet_at(frame,t,dt,i,mouths,close):
 def captions(d,i):
     if i==1:
         words=["Postman और Mail Guard", "के लिए 5 की जगह 3 साल की बात।"]
+    elif i==9:
+        words=["Postman की तैयारी कर रहे", "साथी को ये वीडियो भेजें।"]
     else:
         words=r.CAPTIONS[i]
     r.box(d,(84,1547,996,1724),42,r.WHITE,"#e5c799",3)
@@ -138,7 +158,7 @@ def picture(t,shoot,starts,mouths,proof,site,lesson):
     d=ImageDraw.Draw(frame)
     r.box(d,(413,256,981,367),22,"#a72223","#f4c774",4)
     r.text(d,697,311,office_cut.OFFICE_LABELS[OFFICES[i]],56,"#fff4d6")
-    close=i in GOLU
+    close=i in GOLU and i!=9
     if not close:
         board(frame,d,i,dt,proof,site,lesson,remaining)
     puppet_at(frame,t,dt,i,mouths,close)
