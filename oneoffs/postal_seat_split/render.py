@@ -29,17 +29,19 @@ from postal_edge_lip_shapes import measure_mouth
 OUT = CORE / "reel-work"
 ASSETS = OUT / "assets"
 W, H, RATE, FPS, LENGTH = 720, 1280, 48000, 24, 50
-STARTS = (0, 3, 9, 15, 22, 28, 33, 40, 43)
+STARTS = (0, 1.82, 3, 9, 15, 22, 28, 31.65, 33.5, 40, 42.25)
 LINES = [
     ("golu", "सारे पद जी डी एस के?", "सारे पद GDS के?"),
-    ("bhaiya", "ड्राफ्ट में पैंतालीस हज़ार आठ सौ निन्यानवे पोस्टमैन और एक हज़ार आठ सौ सत्तर मेल गार्ड के पद दर्ज हैं।", "45,899 Postman • 1,870 Mail Guard"),
+    ("bhaiya", "ये देखो।", "ये देखो"),
+    ("bhaiya", "ड्राफ्ट में पैंतालीस हज़ार आठ सौ निन्यानवे पोस्टमैन और एक हज़ार आठ सौ सत्तर मेल गार्ड के पद दर्ज हैं।", "45,899 Postman  |  1,870 Mail Guard"),
     ("bhaiya", "ये कुल पद हैं। भर्ती में कितनी सीटें निकलेंगी, वो नोटिफिकेशन में पता चलेगा।", "ये ड्राफ्ट में दर्ज कुल पद हैं"),
-    ("bhaiya", "लेकिन सबसे चौंकाने वाली बात ये है कि पोस्टमैन की आधी भर्ती एम टी एस के विभागीय एग्जाम से,", "50% • MTS का विभागीय एग्जाम"),
-    ("bhaiya", "और आधी जी डी एस के एग्जाम से करने का प्रस्ताव है। मेल गार्ड में भी यही बँटवारा है।", "50% • GDS का एग्जाम"),
+    ("bhaiya", "लेकिन सबसे चौंकाने वाली बात ये है कि पोस्टमैन की आधी भर्ती एम टी एस के विभागीय एग्जाम से,", "50%  |  MTS का विभागीय एग्जाम"),
+    ("bhaiya", "और आधी जी डी एस के एग्जाम से करने का प्रस्ताव है। मेल गार्ड में भी यही बँटवारा है।", "50%  |  GDS का एग्जाम"),
     ("bhaiya", "अभी ये ड्राफ्ट है। बहुत से साथी फाइनल नियमों का इंतज़ार करेंगे।", "अभी ये प्रस्ताव है"),
-    ("bhaiya", "तुम आज से पढ़ना शुरू करो। जब वो शुरू करेंगे, तुम अपना पहला रिविज़न कर रहे होगे।", "तैयारी आज से शुरू करो"),
+    ("golu", "तो पढ़ाई कब से?", "तो पढ़ाई कब से?"),
+    ("bhaiya", "आज से। जब वो शुरू करेंगे, तुम अपना पहला रिविज़न कर रहे होगे।", "तैयारी आज से शुरू करो"),
     ("bhaiya", "और सुनो, किसी को मत बताना।", "किसी को मत बताना…"),
-    ("bhaiya", "पोस्टल एज पर मुश्किल टॉपिक भी चित्रों से, बिल्कुल शुरुआत से, आसान भाषा में समझाए हैं।", "चित्रों से समझो • आसान भाषा में"),
+    ("bhaiya", "पोस्टल एज पर मुश्किल टॉपिक भी चित्रों से, बिल्कुल शुरुआत से, आसान भाषा में समझाए हैं।", "चित्रों से समझो  |  आसान भाषा में"),
 ]
 voices.OUT = OUT
 voices.DIALOGUE = [(role, line) for role, line, _ in LINES]
@@ -65,7 +67,7 @@ def voice_audio():
             data = sp.check_output(["ffmpeg","-v","error","-f","f32le","-ar",str(RATE),"-ac","1","-i","-",
                                    "-af",",".join(stages),"-f","f32le","-"],input=samples.tobytes())
             samples = np.frombuffer(data,dtype="<f4")
-        assert 0.4 < len(samples)/RATE <= cap+.06, (i,len(samples)/RATE,cap)
+        assert 0.38 < len(samples)/RATE <= cap+.06, (i,len(samples)/RATE,cap)
         offset = round((start+.08)*RATE)
         dry[offset:offset+len(samples)] = samples
         cuts.append({"scene":i,"start":start,"speech_seconds":round(len(samples)/RATE,2),"tempo":round(speed,2)})
@@ -95,8 +97,8 @@ def actors(im,t,i,mouth,is_hook=False):
 
 def hook(im,t):
     pull=69*art.ease((t-.36)/1.1)-16*art.ease((t-1.8)/.34)
-    art.lay(im,art.mts_tray.resize((245,185)),(179,639),4)
-    art.lay(im,art.gds_tray.resize((245,185)),(538,639),-4)
+    art.lay(im,art.mts_tray.resize((245,185)),(179,672),4)
+    art.lay(im,art.gds_tray.resize((245,185)),(538,672),-4)
     art.lay(im,art.envelope.resize((465,372)),(351+pull,423),4-10*art.ease(t/1.6),True)
     if t>.48:
         art.lay(im,art.golu.resize((223,112)),(760-185*art.ease((t-.48)/.4),473),183,True)
@@ -125,16 +127,16 @@ def numbers(im,t,i):
 def split(im,t,i):
     page=int(t>=25.3)
     art.txt(im,(61,230),"MAIL GUARD" if page else "POSTMAN",40,art.white,anchor="lm")
-    art.txt(im,(63,287),"पेज 7 • कॉलम 10" if page else "पेज 5 • कॉलम 10",22,art.aqua,True,anchor="lm")
+    art.txt(im,(63,287),"पेज 7  |  कॉलम 10" if page else "पेज 5  |  कॉलम 10",22,art.aqua,True,anchor="lm")
     art.rr(im,(58,335,662,678),14,"#152934","#435b67",2)
     take=PROOFS[page]
     im.alpha_composite(take,(334,365))
     for j,(y,label,color) in enumerate([(392,"MTS",art.gold),(542,"GDS",art.aqua)]):
-        focused=(i==3 and j==0) or (i==4)
+        focused=(i==4 and j==0) or (i==5)
         art.txt(im,(78,y),"50%",64,color if focused else art.slate,anchor="lm")
         art.txt(im,(85,y+55),label,27,art.white,anchor="lm")
         if focused:
-            oy=y-28
+            oy=(365 if j==0 else 542)
             sheet=Image.new("RGBA",im.size)
             art.rr(sheet,(336,oy,635,oy+24),4,(255,197,76,73))
             im.alpha_composite(sheet)
@@ -182,24 +184,24 @@ def main():
         for n in range(FPS*LENGTH):
             t=n/FPS
             i=bisect_right(STARTS,t)-1
-            if 5 <= i <= 6:
+            if 6 <= i <= 8:
                 im=location("counter").copy()
-            elif i>=7:
+            elif i>=9:
                 im=location("lesson").copy()
             else:
                 im=art.base.copy()
             art.masthead(im,i>=3)
-            if i==0:
+            if i<=1:
                 hook(im,t)
-            elif i<=2:
+            elif i<=3:
                 numbers(im,t,i)
-            elif i<=4:
+            elif i<=5:
                 split(im,t,i)
-            elif i<=6:
+            elif i<=8:
                 plan(im,t,i)
             else:
                 study(im,t)
-            actors(im,t,i,mouths[min(n,len(mouths)-1)],i==0)
+            actors(im,t,i,mouths[min(n,len(mouths)-1)],i<=1)
             art_caption(im,i)
             result=im.convert("RGB")
             if n in {0,42,120,385,570,625,768,860,1043,1190}:
