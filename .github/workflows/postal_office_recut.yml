@@ -1,0 +1,50 @@
+name: Postal Edge post office recut
+run-name: Postal Edge | Faster post office cut
+on:
+  push:
+    branches: ['preview/postal-recruitment-draft-20261120']
+    paths: ['.github/workflows/postal_office_recut.yml', 'oneoffs/postal_office_recut/*']
+permissions:
+  contents: read
+jobs:
+  preview:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: production
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-core
+          token: ${{ secrets.CORE_TOKEN }}
+          ref: 5b02019f02afc4ae581c552a5af57c7b6509bbcf
+          path: core
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install render tools
+        run: |
+          sudo apt-get -o Acquire::Retries=2 update -qq
+          sudo apt-get install -y -qq ffmpeg fonts-noto-core
+          python -m pip install -q numpy scipy pillow
+      - name: Open the approved video and post-office scenes
+        run: |
+          mkdir -p core/reel-work/assets
+          unzip -q core/previews/postal-edge-full-reel-assets.zip -d core/reel-work/assets
+          unzip -q core/previews/postal-office-scene-assets.zip -d core/reel-work/assets
+          cp production/oneoffs/postal_office_recut/original-timing.json core/reel-work/
+      - name: Keep the approved opening and render the faster post-office scenes
+        working-directory: core
+        run: python -u ../production/oneoffs/postal_office_recut/revise.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Postal_Edge_Postman_Post_Office_50s
+          path: |
+            core/reel-work/Postal_Edge_Postman_Post_Office_50s.mp4
+            core/reel-work/checks.jpg
+            core/reel-work/pace-check.json
+          if-no-files-found: error
+          retention-days: 14
