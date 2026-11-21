@@ -1,0 +1,50 @@
+name: Postal Edge final reel
+run-name: Postal Edge | Final review cut
+on:
+  push:
+    branches: ['preview/postal-recruitment-draft-20261120']
+    paths: ['.github/workflows/postal_final_review_cut.yml', 'oneoffs/postal_final_review_cut/*']
+permissions:
+  contents: read
+jobs:
+  render-review:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: production
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-core
+          token: ${{ secrets.CORE_TOKEN }}
+          ref: 135c9104ca85845e3c11254f8a08102faa86e51c
+          path: core
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install render tools
+        run: |
+          sudo apt-get -o Acquire::Retries=2 update -qq
+          sudo apt-get install -y -qq ffmpeg fonts-noto-core
+          python -m pip install -q numpy scipy pillow
+      - name: Open the approved media
+        run: |
+          mkdir -p core/reel-work/assets
+          unzip -q core/previews/postal-edge-full-reel-assets.zip -d core/reel-work/assets
+          unzip -q core/previews/postal-office-scene-assets.zip -d core/reel-work/assets
+          cp production/oneoffs/postal_office_recut/original-timing.json core/reel-work/
+      - name: Render and review
+        working-directory: core
+        run: python -u ../production/oneoffs/postal_final_review_cut/finalize.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Postal_Edge_Postman_Final_50s
+          path: |
+            core/reel-work/Postal_Edge_Postman_Final_50s.mp4
+            core/reel-work/review.jpg
+            core/reel-work/final-check.json
+          if-no-files-found: error
+          retention-days: 14
