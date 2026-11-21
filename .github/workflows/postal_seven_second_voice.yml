@@ -1,0 +1,40 @@
+name: Postal Edge seven-second preview voices
+on:
+  push:
+    branches: ['preview/postal-recruitment-draft-20261120']
+    paths: ['.github/workflows/postal_seven_second_voice.yml', 'oneoffs/postal_seven_second_voice/*']
+permissions:
+  contents: read
+jobs:
+  voice-preview:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: production
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-core
+          token: ${{ secrets.CORE_TOKEN }}
+          path: core
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install -q numpy scipy pillow requests playwright==1.47.0 edge-tts pymupdf pypdf
+      - name: Record voices
+        working-directory: core
+        env:
+          POSTAL_KEY_1: ${{ secrets.GEMINI_API_KEY }}
+          POSTAL_KEY_2: ${{ secrets.GEMINI_API_KEY2 }}
+          POSTAL_KEY_3: ${{ secrets.GEMINI_API_KEY3 }}
+          POSTAL_KEY_4: ${{ secrets.GEMINI_API_KEY4 }}
+        run: python -u ../production/oneoffs/postal_seven_second_voice/voices.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: postal-edge-hook-dialogue
+          path: core/recruitment_preview/voice*.wav
+          if-no-files-found: error
+          retention-days: 7
