@@ -1,0 +1,54 @@
+name: Postal Edge seat split preview
+run-name: Postal Edge | Postman and Mail Guard 50–50
+on:
+  push:
+    branches: ['preview/postal-seat-split-20261121']
+    paths: ['.github/workflows/postal_seat_split_preview.yml', 'oneoffs/postal_seat_split/**']
+permissions:
+  contents: read
+jobs:
+  render:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: production
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-core
+          token: ${{ secrets.CORE_TOKEN }}
+          ref: 135c9104ca85845e3c11254f8a08102faa86e51c
+          path: core
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install render tools
+        run: |
+          sudo apt-get -o Acquire::Retries=2 update -qq
+          sudo apt-get install -y -qq ffmpeg fonts-noto-core fonts-dejavu-core
+          python -m pip install -q numpy scipy pillow requests playwright==1.47.0 edge-tts pymupdf pypdf
+      - name: Open the approved characters and lesson
+        run: |
+          mkdir -p core/reel-work/assets
+          unzip -q core/previews/postal-edge-full-reel-assets.zip -d core/reel-work/assets
+          unzip -oq core/previews/postal-office-scene-assets.zip -d core/reel-work/assets
+      - name: Record both voices and render 50 seconds
+        working-directory: core
+        env:
+          POSTAL_KEY_1: ${{ secrets.GEMINI_API_KEY }}
+          POSTAL_KEY_2: ${{ secrets.GEMINI_API_KEY2 }}
+          POSTAL_KEY_3: ${{ secrets.GEMINI_API_KEY3 }}
+          POSTAL_KEY_4: ${{ secrets.GEMINI_API_KEY4 }}
+        run: python -u ../production/oneoffs/postal_seat_split/render.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Postal_Edge_Postman_50_50_Full_Reel
+          path: |
+            core/reel-work/Postal_Edge_Postman_50_50_Full_Reel.mp4
+            core/reel-work/seat-review.jpg
+            core/reel-work/seat-check.json
+          if-no-files-found: error
+          retention-days: 14
