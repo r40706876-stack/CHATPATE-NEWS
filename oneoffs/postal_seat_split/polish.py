@@ -41,12 +41,10 @@ def counter(im,x,y,target,t,size,color,center=False,prefix=""):
     p=art.ease(t)
     if p<=0:
         return
-    amount=round(target*(1-(1-p)**2))
-    draw_value(im,x,y,prefix+f"{amount:,}",size,color,min(1,p*3.5),center)
+    draw_value(im,x,y,prefix+f"{target:,}",size,color,min(1,p*2.0),center)
 
 draft=Image.open(Path(__file__).with_name("schedule.jpg")).convert("RGBA")
 def doc(im,n):
-    p=(n-DOC_START_FRAME)/(DOC_FRAMES-1)
     overlay=Image.new("RGBA",im.size)
     card(overlay,(51,213,669,684),"#142a34",BORDER,21)
     art.txt(overlay,(76,258),"ड्राफ्ट की असली कॉपी",31,art.white,True,anchor="lm")
@@ -58,7 +56,7 @@ def doc(im,n):
     card(overlay,(70,304,650,540),"#f0e8d7",None,9)
     overlay.alpha_composite(paper,(77,315))
     # The table's actual printed number is retained, including the footnote marker.
-    art.rr(overlay,(192,436,258,470),5,(0,0,0,0),"#d28d20",2)
+    ImageDraw.Draw(overlay).rounded_rectangle((192,436,258,470),5,outline="#d28d20",width=2)
     art.txt(overlay,(360,594),"45,899 कुल पोस्टमैन पद",38,art.gold,True)
     art.txt(overlay,(360,642),"स्रोत  |  20 नवंबर 2026 का ड्राफ्ट",21,art.slate,True)
     a=min(1,(n-DOC_START_FRAME+.65)/1.8,(DOC_START_FRAME+DOC_FRAMES-n+.3)/1.8)
