@@ -1,0 +1,37 @@
+name: Postal Edge animated final
+on:
+  push:
+    branches: ['preview/postal-seat-split-animated-20261121']
+    paths: ['.github/workflows/postal_seat_split_animated.yml', 'oneoffs/postal_seat_split/polish.py', 'oneoffs/postal_seat_split/schedule.jpg']
+permissions:
+  contents: read
+  actions: read
+jobs:
+  animate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          name: Postal_Edge_Postman_50_50_Final
+          github-token: ${{ github.token }}
+          run-id: 44931030367
+          path: previous
+      - name: Install visual finishing tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg fonts-noto-core fonts-dejavu-core
+          python -m pip install -q pillow numpy
+      - name: Animate numbers and show the signed-off draft excerpt
+        run: python -u oneoffs/postal_seat_split/polish.py previous/Postal_Edge_Postman_50_50_Final.mp4 polished
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Postal_Edge_Postman_50_50_Animated_Final
+          path: |
+            polished/Postal_Edge_Postman_50_50_Animated_Final.mp4
+            polished/polish-review-*.jpg
+          if-no-files-found: error
+          retention-days: 14
