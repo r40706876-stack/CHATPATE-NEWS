@@ -1,0 +1,48 @@
+name: Postal Edge tree demo recut
+on:
+  push:
+    branches: ['preview/postal-seat-split-tree-20261121']
+    paths: ['.github/workflows/postal_seat_split_tree.yml', 'oneoffs/postal_seat_split/recut_tree.py']
+permissions:
+  contents: read
+  actions: read
+jobs:
+  recut:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-core
+          token: ${{ secrets.CORE_TOKEN }}
+          ref: bdd964d2f8288886f466df5cbfd6b6f7a30fe9b6
+          sparse-checkout: deep/premium
+          path: lesson-source
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          name: Postal_Edge_Postman_50_50_Full_Reel
+          github-token: ${{ github.token }}
+          run-id: 44927886982
+          path: previous
+      - name: Install video and browser tools
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg fonts-noto-core
+          python -m pip install -q playwright==1.47.0
+          python -m playwright install --with-deps chromium
+      - name: Render the original tree animation and tighten dialogue
+        run: |
+          LAND=1 python lesson-source/deep/premium/build.py 2_1
+          python -u oneoffs/postal_seat_split/recut_tree.py lesson-source previous/Postal_Edge_Postman_50_50_Full_Reel.mp4 recut
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Postal_Edge_Postman_50_50_Tree_Demo
+          path: |
+            recut/Postal_Edge_Postman_50_50_Tree_Demo.mp4
+            recut/review-*.jpg
+          if-no-files-found: error
+          retention-days: 14
