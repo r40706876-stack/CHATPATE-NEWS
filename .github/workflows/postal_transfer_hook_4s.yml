@@ -1,5 +1,5 @@
 name: Postal Edge four-second transfer hook
-run-name: "Postal Edge | Four-second transfer hook preview"
+run-name: "Postal Edge | Four-second transfer hook | Natural Golu"
 on:
   push:
     branches: ['preview/postal-edge-transfer-hook-4s']
@@ -41,23 +41,7 @@ jobs:
           python -m pip install -q pillow numpy scipy requests playwright edge-tts pymupdf pypdf
       - name: Extract the counter from the approved reference reel assets
         run: unzip -j core/previews/postal-office-scene-assets.zip '*office1.jpg' -d reference
-      - name: Wait for the previously recorded Golu take
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          for attempt in $(seq 1 30); do
-            state=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/45047956439" --jq .status)
-            [ "$state" = "completed" ] && break
-            sleep 6
-          done
-      - uses: actions/download-artifact@v4
-        continue-on-error: true
-        with:
-          github-token: ${{ github.token }}
-          run-id: 45047956439
-          name: Postal_Edge_Transfer_Hook_4s
-          path: previous
-      - name: Render the approved Golu hook
+      - name: Render the natural Golu hook
         working-directory: core
         env:
           POSTAL_KEY_1: ${{ secrets.GEMINI_API_KEY }}
@@ -66,9 +50,8 @@ jobs:
           POSTAL_KEY_4: ${{ secrets.GEMINI_API_KEY4 }}
           GEMINI_TTS_MODEL: gemini-3.8-flash-tts
           DEEP_FAST_QUOTA_FAIL: '1'
-          HOOK_AUDIO: ../previous/Postal_Edge_Transfer_Hook_4s.mp4
         run: >-
-          python -u ../production/oneoffs/postal_transfer_hook/render_final.py
+          python -u ../production/oneoffs/postal_transfer_hook/render_natural.py
           ../reference/office1.jpg
           ../reference/oneoffs/postal_recruitment_two_voices/render.py
       - uses: actions/upload-artifact@v4
