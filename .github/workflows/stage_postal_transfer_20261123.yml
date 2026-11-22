@@ -1,0 +1,38 @@
+name: Stage the approved GDS transfer reel
+on:
+  push:
+    branches: ['preview/postal-edge-transfer-hook-4s']
+    paths: ['.github/workflows/stage_postal_transfer_20261123.yml']
+permissions:
+  actions: read
+  contents: write
+jobs:
+  stage:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ github.token }}
+          run-id: 45058078735
+          name: Postal_Edge_Transfer_Original_Golu
+          path: archive
+      - name: Verify and stage the final pair
+        run: |
+          mv archive/Postal_Edge_GDS_Transfer_Postman_Draft.mp4 approved-transfer-20261123/reel.mp4
+          cd approved-transfer-20261123
+          sha256sum -c <<'EOF'
+          afc596c98879b9b344363ae9e150db0f327032527341327a6b428f750a5759df  reel.mp4
+          75a0fa2bbe03a9cc7423e69f7b9e050a88724be3235335278b14f1c9bdfddbc8  cover.jpg
+          EOF
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add reel.mp4
+          git commit -m "Stage the approved transfer reel and thumbnail"
+          git push origin HEAD:${GITHUB_REF_NAME}
+          git rev-parse HEAD | tee ../asset-sha.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: postal-transfer-ready-20261123
+          path: asset-sha.txt
