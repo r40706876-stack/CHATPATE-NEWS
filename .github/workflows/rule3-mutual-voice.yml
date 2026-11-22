@@ -34,7 +34,7 @@ jobs:
           python-version: '3.11'
       - name: Prepare the established narration engine
         run: |
-          command -v ffmpeg >/dev/null || sudo apt-get install -y -qq ffmpeg
+          command -v ffmpeg >/dev/null || { sudo apt-get update -qq -o Acquire::Retries=2 && sudo apt-get install -y -qq ffmpeg; }
           pip install -q playwright numpy pillow scipy requests edge-tts pypdf
       - name: Record only the revised mutual-transfer line
         env:
