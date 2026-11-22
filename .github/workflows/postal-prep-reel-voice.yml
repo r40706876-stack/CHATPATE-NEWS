@@ -27,7 +27,7 @@ jobs:
             /*.ttf
             /deep/
             /rebrand_reels/rule3_transfer_2026/
-            /docs/transfer/
+            /rebrand_reels/promo_v2/img/
             /docs/icon-192.png
       - uses: actions/setup-python@v5
         with:
