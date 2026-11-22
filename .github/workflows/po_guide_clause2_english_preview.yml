@@ -1,0 +1,116 @@
+name: PO Guide Clause 2 Part 1 English preview
+on:
+  push:
+    branches: [preview/postal-clause-2-part-1-english]
+    paths:
+      - .github/workflows/po_guide_clause2_english_preview.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: po-guide-clause-2-part-1-english-preview
+  cancel-in-progress: false
+
+jobs:
+  render:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 80
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-automation
+          ref: ade2367bf1580e2eacef8740c4276698eb5d0c52
+          path: automation
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-core
+          token: ${{ secrets.CORE_TOKEN }}
+          ref: bdd964d2f8288886f466df5cbfd6b6f7a30fe9b6
+          path: core
+          sparse-checkout: |
+            assets
+            deep/premium
+            deep/clips
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - name: Install original render dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends ffmpeg fonts-noto-core libraqm0 poppler-utils
+          pip install requests pypdf pillow numpy edge-tts playwright==1.47.0 faster-whisper
+          python -m playwright install --with-deps chromium
+      - name: Localize and build the original 16:9 scenes
+        working-directory: core
+        env:
+          BAKRA_KEY_1: ${{ secrets.GEMINI_API_KEY }}
+          BAKRA_KEY_2: ${{ secrets.GEMINI_API_KEY2 }}
+          BAKRA_KEY_3: ${{ secrets.GEMINI_API_KEY3 }}
+          BAKRA_KEY_4: ${{ secrets.GEMINI_API_KEY4 }}
+          LAND: '1'
+        run: |
+          localized=0
+          for slot in 1 2 3 4; do
+            entry="BAKRA_KEY_$slot"
+            if [ -z "${!entry}" ]; then
+              echo "::warning::Bakra Gemini slot $slot is empty"
+              continue
+            fi
+            if GEMINI_API_KEY="${!entry}" python ../automation/tools/po_guide_clause2_english_preview.py; then
+              localized=1
+              break
+            fi
+            echo "::warning::Localization could not use Bakra Gemini slot $slot"
+          done
+          test "$localized" = 1
+          python deep/premium/build.py 2_1
+      - name: Render English narration and animation
+        working-directory: core
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_TTS_KEYS: ${{ secrets.GEMINI_API_KEY2 }},${{ secrets.GEMINI_API_KEY3 }},${{ secrets.GEMINI_API_KEY4 }}
+          GEMINI_TTS_STYLE: 'Speak only the supplied script in clear, natural Indian English. Friendly male teacher, conversational pacing, with clear letter-by-letter postal acronyms and no added words.'
+          WHISPER_MODEL: medium
+          DEEP_FAST_QUOTA_FAIL: '1'
+          DEEP_TAKE_SAVE: english-preview/narration-checkpoint.wav
+        run: |
+          mkdir -p english-preview
+          python deep/premium/voice_premium.py deep/premium_c2_1.html english-preview/Postal_Edge_PO_Guide_Clause_2_Part_1_English.mp4
+      - name: Verify and save preview in the private repository
+        working-directory: core
+        run: |
+          filename=english-preview/Postal_Edge_PO_Guide_Clause_2_Part_1_English.mp4
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0 "$filename")" = 1920,1080
+          test "$(ffprobe -v error -select_streams a:0 -show_entries stream=codec_name -of csv=p=0 "$filename")" = aac
+          bytes=$(stat -c %s "$filename")
+          if [ "$bytes" -gt 99000000 ]; then
+            duration=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$filename")
+            bitrate=$(awk -v duration="$duration" 'BEGIN { print int(720000000 / duration - 160000) }')
+            ffmpeg -nostdin -v error -i "$filename" -c:v libx264 -preset fast -b:v "$bitrate" -maxrate "$bitrate" -bufsize "$bitrate" -c:a copy -movflags +faststart "english-preview/packed.mp4"
+            mv english-preview/packed.mp4 "$filename"
+          fi
+          test "$(stat -c %s "$filename")" -lt 100000000
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add --sparse -f "$filename" deep/premium/c2_1.json
+          git commit -m "English PO Guide Clause 2 Part 1 preview [skip ci]"
+          branch="preview/po-guide-clause-2-part-1-english-${GITHUB_RUN_ID}"
+          git push origin "HEAD:refs/heads/$branch"
+          commit=$(git rev-parse HEAD)
+          printf '[Download English MP4](https://github.com/r40706876-stack/postal-wala-core/raw/%s/%s)\n' "$commit" "$filename" >> "$GITHUB_STEP_SUMMARY"
+      - name: Keep the generated English source and voice if video processing fails
+        if: failure()
+        working-directory: core
+        run: |
+          test -f deep/premium_c2_1.html || exit 0
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add --sparse -f deep/premium_c2_1.html deep/premium/c2_1.json
+          for file in english-preview/narration-checkpoint.wav english-preview/narration-checkpoint.wav.voice.json; do
+            if [ -f "$file" ]; then git add --sparse -f "$file"; fi
+          done
+          git diff --cached --quiet && exit 0
+          git commit -m "Save English preview recovery files [skip ci]"
+          git push origin "HEAD:refs/heads/preview/po-guide-english-recovery-${GITHUB_RUN_ID}"
