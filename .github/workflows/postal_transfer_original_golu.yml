@@ -1,0 +1,88 @@
+name: Postal Edge original Golu voice
+run-name: Postal Edge | restore original Golu delivery
+on:
+  push:
+    branches: ['preview/postal-edge-transfer-hook-4s']
+    paths: ['.github/workflows/postal_transfer_original_golu.yml']
+permissions:
+  contents: read
+  actions: read
+jobs:
+  motion:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: production
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: preview/postal-recruitment-draft-20261120
+          path: reference
+          persist-credentials: false
+          sparse-checkout: oneoffs/postal_recruitment_two_voices
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-core
+          token: ${{ secrets.CORE_TOKEN }}
+          ref: 135c9104ca85845e3c11254f8a08102faa86e51c
+          path: core
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ github.token }}
+          run-id: 45056327886
+          name: Postal_Edge_Transfer_Polished
+          path: previous
+      - uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ github.token }}
+          run-id: 45051963130
+          name: Postal_Edge_Transfer_Motion_Checked
+          path: original-audio
+      - uses: actions/download-artifact@v4
+        with:
+          github-token: ${{ github.token }}
+          run-id: 44929294936
+          name: Postal_Edge_Postman_50_50_Tree_Demo
+          path: lesson
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install render tools and open the existing post-office locations
+        run: |
+          command -v ffmpeg || (sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg)
+          test -f /usr/share/fonts/truetype/noto/NotoSansDevanagari-Bold.ttf || (sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-core fonts-dejavu-core)
+          python -m pip install -q pillow numpy scipy requests playwright edge-tts pymupdf pypdf
+          unzip -j core/previews/postal-office-scene-assets.zip '*office*.jpg' -d reference/office
+      - name: Restore the historical Golu voice direction
+        working-directory: core
+        env:
+          POSTAL_KEY_1: ${{ secrets.GEMINI_API_KEY }}
+          POSTAL_KEY_2: ${{ secrets.GEMINI_API_KEY2 }}
+          POSTAL_KEY_3: ${{ secrets.GEMINI_API_KEY3 }}
+          POSTAL_KEY_4: ${{ secrets.GEMINI_API_KEY4 }}
+          GEMINI_TTS_MODEL: gemini-3.8-flash-tts
+          DEEP_FAST_QUOTA_FAIL: '1'
+        run: >-
+          python -u ../production/oneoffs/postal_transfer_hook/render_original_golu.py
+          ../previous/Postal_Edge_GDS_Transfer_Postman_Draft.mp4
+          ../original-audio/Postal_Edge_GDS_Transfer_Postman_Draft.mp4
+          ../reference/oneoffs/postal_recruitment_two_voices/render.py
+          ../reference/office
+          ../lesson/Postal_Edge_Postman_50_50_Tree_Demo.mp4
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Postal_Edge_Transfer_Original_Golu
+          path: core/transfer-golu-output/Postal_Edge_GDS_Transfer_Postman_Draft.mp4
+          if-no-files-found: error
+          retention-days: 14
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Postal_Edge_Transfer_Original_Golu_QC
+          path: |
+            core/transfer-golu-output/qc-*.jpg
+            core/transfer-golu-output/check.json
+          if-no-files-found: error
+          retention-days: 7
