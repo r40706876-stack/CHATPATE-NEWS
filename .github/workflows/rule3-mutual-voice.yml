@@ -1,0 +1,102 @@
+name: Postal Edge Rule-3 mutual transfer voice pickup
+run-name: Postal Edge | Rule-3 mutual transfer voice pickup
+on:
+  push:
+    branches: [preview/rule3-transfer-2026]
+    paths: ['.github/workflows/rule3-mutual-voice.yml']
+permissions:
+  contents: read
+concurrency:
+  group: rule3-transfer-voice-pickup
+  cancel-in-progress: false
+jobs:
+  render:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-core
+          token: ${{ secrets.CORE_TOKEN }}
+          ref: 212e56242b9fe5797a789d0d56b41bbb2ded0838
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /*.py
+            /*.json
+            /*.ttf
+            /deep/
+            /rebrand_reels/rule3_transfer_2026/
+            /docs/transfer/
+            /docs/icon-192.png
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Prepare the established narration engine
+        run: |
+          command -v ffmpeg >/dev/null || sudo apt-get install -y -qq ffmpeg
+          pip install -q playwright numpy pillow scipy requests edge-tts pypdf
+      - name: Record only the revised mutual-transfer line
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_API_KEY2: ${{ secrets.GEMINI_API_KEY2 }}
+          GEMINI_API_KEY3: ${{ secrets.GEMINI_API_KEY3 }}
+          GEMINI_API_KEY4: ${{ secrets.GEMINI_API_KEY4 }}
+        run: |
+          python -u - <<'PY'
+          import os, sys
+          sys.path.insert(0, "rebrand_reels/rule3_transfer_2026")
+          from render_preview import record_voice
+          keys = list(dict.fromkeys(os.environ[name] for name in (
+              "GEMINI_API_KEY4", "GEMINI_API_KEY3", "GEMINI_API_KEY2", "GEMINI_API_KEY",
+          ) if os.environ.get(name)))
+          if not keys:
+              raise SystemExit("Approved voice engine is unavailable")
+          record_voice("d", [("dmutual", "पोस्टल एज डॉट इन पर मेरा रूट खोलें। कैडर और दोनों डिवीज़न डालें। उसी कैडर का उलटा रूट हो, तो मेरे मैच में मुफ़्त देखें।")], keys)
+          PY
+      - name: Encrypt the preview before handing it off
+        if: always()
+        shell: bash
+        run: |
+          shopt -s nullglob
+          files=(rule3-preview/*)
+          if (( ${#files[@]} == 0 )); then exit 0; fi
+          cert=$(mktemp)
+          cat > "$cert" <<'RULE3_CERT'
+          -----BEGIN CERTIFICATE-----
+          MIIELTCCApWgAwIBAgIUdzVBcbDQmMDQJ4f8433Qds+y91cwDQYJKoZIhvcNAQEL
+          BQAwJjEkMCIGA1UEAwwbUG9zdGFsIEVkZ2UgUHJpdmF0ZSBQcmV2aWV3MB4XDTI2
+          MTEyMjAxMjAwNVoXDTI2MTEyOTAxMjAwNVowJjEkMCIGA1UEAwwbUG9zdGFsIEVk
+          Z2UgUHJpdmF0ZSBQcmV2aWV3MIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKC
+          AYEA52Lj2BPP8Mw62fBeoE/XvW34qtNmoPWyxxzq8nPOnvuHZJu8278xROdWINeN
+          dp2jAOwWqN/UdZzeqrglvR7w4gql8W39N+L8cb7ovrUbX1g8XzSuGbpQS+x9JKdo
+          JtRBD1wEQ09Fis3xoJ8PQg10hj3FWAbIbziKW72P7iJFHsx4P/qafXDSJ9b2syMq
+          Ckuf9fQhR78U0q8zN5EEgUt7OK7KWOOUYdTYWGq8d/pGVvqlAkpTbb5PmyfkeiiR
+          Vxmc89Kzx+W854HXbTeWtVD4sjIUzaFee/PU1FHkrK+ApnqevNkxV1RXSSHUoPBb
+          JkvbXj1GJtpgu1i2dxe4CvIGpG0DWEjOU4yjCB0sExuAFHu/cZVaIYz3No9dp7C4
+          nPT959RpbG9yW5PeJeCyMmEYuk6ApTbsgnkgfz3WYmplUufqi3MuwscRmFqRWSYt
+          Ka6uomv6a2w34lEROQdRL23xMlahqbKaAxI+8alwkh8J8yCOArg1304WDXZKqsw2
+          8qI9AgMBAAGjUzBRMB0GA1UdDgQWBBS9pTN8LWUhk1MoZ34nBabjkE7H3TAfBgNV
+          HSMEGDAWgBS9pTN8LWUhk1MoZ34nBabjkE7H3TAPBgNVHRMBAf8EBTADAQH/MA0G
+          CSqGSIb3DQEBCwUAA4IBgQA1+vVdtDYpaYblM3mhiyeL4NacikjPwrQZLQnH+2VZ
+          l+Vrx0ZVkbiwJQgmpRPvkU4l5iX3//uGKcO6jGX5Q1p5uqIpaayz0jhnRhcKyJQp
+          A7MYle9ghDnU7YIICEbSeMLwlrWjMjvm1/dYXlHTkl9jMO4sMqxZH+mLfYXf3F4S
+          pw5Xc7o9X2TWQcKxOk9XvARBzm01ZLAB95CFAivMBEHz08ElYIYB8GBosXEMO6OH
+          voMiiLwSl9tjUBVp75lNsBn5drOkoe6hkNnBhxIcJHHTJUS4ho85KzKoWrqN/SbZ
+          s8vYjRQAbz5qGhQ8graAxVwHFpC8L1l0r0yT36smb43uJBzWsdcM91soQv6d3l8P
+          oanNYQzScAJEXW80+3ujxEPAaZZLlO+mJLB9j6gG3RonRYYFdwKZaD+7GMajYSdd
+          ql68yVLJ5Zcf1PnaV+nraLwDZp3CbwZk7VimyTHuirMn9WwTLmpo/vRyycrJ3TDn
+          kZiULjoM4C6SxuadMBuKyV4=
+          -----END CERTIFICATE-----
+          RULE3_CERT
+          cd rule3-preview
+          zip -q ../preview-bundle.zip ./*
+          cd ..
+          openssl cms -encrypt -binary -aes256 -outform DER -in preview-bundle.zip -out preview.cms "$cert"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rule3-mutual-voice-private
+          path: preview.cms
+          if-no-files-found: warn
+          retention-days: 2
