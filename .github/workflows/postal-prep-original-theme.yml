@@ -1,0 +1,125 @@
+name: Edit the original Postal Edge promo timeline in its new theme
+run-name: Postal Edge | Original promo visual edit with saved timing
+on:
+  push:
+    branches: [preview/rule3-transfer-2026]
+    paths: ['.github/workflows/postal-prep-original-theme.yml']
+permissions:
+  contents: read
+concurrency:
+  group: postal-prep-original-theme
+  cancel-in-progress: false
+jobs:
+  restyle:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 16
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-core
+          token: ${{ secrets.CORE_TOKEN }}
+          ref: 71d53ef083cdb2a7be27d2df5cabc457e11f31c4
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /rebrand_reels/promo_v2/promo.html
+            /rebrand_reels/promo_v2/img/
+            /rebrand_reels/promo_v2/out/postal_edge_promo_v2.mp4.cues.json
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install browser and fonts
+        run: |
+          sudo apt-get update -qq -o Acquire::Retries=2
+          sudo apt-get install -y -qq ffmpeg fonts-noto-core
+          pip install -q playwright==1.47.0
+          python -m playwright install --with-deps chromium
+      - name: Render the original animation timeline with a sage-green palette
+        run: |
+          python -u - <<'PY'
+          import json, os, pathlib, subprocess
+          from playwright.sync_api import sync_playwright
+          root=pathlib.Path("rebrand_reels/promo_v2")
+          data=json.loads((root/"out/postal_edge_promo_v2.mp4.cues.json").read_text())
+          css="""
+          html,body{background:#f5f7ee;color:#153d2d}
+          #bg{background:radial-gradient(120% 100% at 85% 11%,#dbe8d5 0%,#f6f7ee 61%,#e2eddb 100%)}
+          #warm{background:radial-gradient(110% 85% at 50% 20%,#e7efd5 0%,#d8e8d1 45%,#f4f7ee 100%)}
+          #b1{background:#a7c5a0}#b2{background:#bdd7b0}#b3{background:#e9eec8}
+          #dots{background-image:radial-gradient(#17473113 1px,transparent 1.4px)}
+          #logo{background:#215a41;box-shadow:none}
+          #bn small,#foot{color:#486b58}#url{background:#fffffff0;border-color:#b7cdb7;color:#28533e}
+          .kick,.y,.g{color:#2e6d4a}.r{color:#955238}
+          .ttl{text-shadow:none}.card{box-shadow:0 10px 32px #28533e30,0 0 0 1px #bfd3bc}
+          .av,#bar{visibility:hidden !important}.chip,.bub,.urlbar{color:#174733;box-shadow:0 6px 14px #285c3d33}
+          .stamp{border-color:#98603f;color:#98603f;box-shadow:0 5px 18px #17463135}
+          .big{color:#295e42;text-shadow:none}
+          .ring,.tap{border-color:#63a967;box-shadow:0 0 0 5px #81ae7060}
+          .fr,.mini{background:#ecf5e9;border-color:#6d9984}.frl{color:#264e3c}
+          #cap{color:#173e2d;text-shadow:none}#cap .past{color:#173e2d}#cap .fut{color:#526d5e}#cap .on{color:#297147}
+          .btn{background:linear-gradient(#488d60,#1c5538);color:#fff;box-shadow:0 12px 26px #1f583b44}
+          #phone{box-shadow:0 20px 36px #123c3270}
+          """
+          output=pathlib.Path("promo-theme")
+          output.mkdir()
+          fps=24
+          frames=list(range(0,716))+list(range(929,1148))
+          command=["ffmpeg","-v","error","-y","-f","image2pipe","-framerate",str(fps),"-vcodec","mjpeg","-i","-",
+                   "-c:v","libx264","-pix_fmt","yuv420p","-preset","veryfast","-crf","17",str(output/"recolored-original-scenes.mp4")]
+          with sync_playwright() as pw, subprocess.Popen(command,stdin=subprocess.PIPE) as ff:
+              browser=pw.chromium.launch(args=["--no-sandbox"])
+              page=browser.new_page(viewport={"width":540,"height":960},device_scale_factor=1.5)
+              page.add_init_script("window.CUES="+json.dumps(data)+";")
+              page.goto((root/"promo.html").resolve().as_uri(),wait_until="load")
+              page.add_style_tag(content=css)
+              page.evaluate("document.fonts.ready")
+              page.evaluate("window.READY ? window.READY() : null")
+              assert page.evaluate("typeof window.seek")=="function"
+              for i,frame in enumerate(frames):
+                  page.evaluate("t => window.seek(t)",frame/fps)
+                  ff.stdin.write(page.screenshot(type="jpeg",quality=91,timeout=18000))
+                  if i%150==0:
+                      print("Restyled original frame",i,"of",len(frames),flush=True)
+              ff.stdin.close()
+              if ff.wait():
+                  raise RuntimeError("Video encoding failed")
+              browser.close()
+          print("Original timeline and artwork preserved",len(frames),flush=True)
+          PY
+      - name: Encrypt the restyled frame track before handoff
+        run: |
+          cert=$(mktemp)
+          cat > "$cert" <<'POSTAL_THEME_CERT'
+          -----BEGIN CERTIFICATE-----
+          MIIELTCCApWgAwIBAgIUdzVBcbDQmMDQJ4f8433Qds+y91cwDQYJKoZIhvcNAQEL
+          BQAwJjEkMCIGA1UEAwwbUG9zdGFsIEVkZ2UgUHJpdmF0ZSBQcmV2aWV3MB4XDTI2
+          MTEyMjAxMjAwNVoXDTI2MTEyOTAxMjAwNVowJjEkMCIGA1UEAwwbUG9zdGFsIEVk
+          Z2UgUHJpdmF0ZSBQcmV2aWV3MIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKC
+          AYEA52Lj2BPP8Mw62fBeoE/XvW34qtNmoPWyxxzq8nPOnvuHZJu8278xROdWINeN
+          dp2jAOwWqN/UdZzeqrglvR7w4gql8W39N+L8cb7ovrUbX1g8XzSuGbpQS+x9JKdo
+          JtRBD1wEQ09Fis3xoJ8PQg10hj3FWAbIbziKW72P7iJFHsx4P/qafXDSJ9b2syMq
+          Ckuf9fQhR78U0q8zN5EEgUt7OK7KWOOUYdTYWGq8d/pGVvqlAkpTbb5PmyfkeiiR
+          Vxmc89Kzx+W854HXbTeWtVD4sjIUzaFee/PU1FHkrK+ApnqevNkxV1RXSSHUoPBb
+          JkvbXj1GJtpgu1i2dxe4CvIGpG0DWEjOU4yjCB0sExuAFHu/cZVaIYz3No9dp7C4
+          nPT959RpbG9yW5PeJeCyMmEYuk6ApTbsgnkgfz3WYmplUufqi3MuwscRmFqRWSYt
+          Ka6uomv6a2w34lEROQdRL23xMlahqbKaAxI+8alwkh8J8yCOArg1304WDXZKqsw2
+          8qI9AgMBAAGjUzBRMB0GA1UdDgQWBBS9pTN8LWUhk1MoZ34nBabjkE7H3TAfBgNV
+          HSMEGDAWgBS9pTN8LWUhk1MoZ34nBabjkE7H3TAPBgNVHRMBAf8EBTADAQH/MA0G
+          CSqGSIb3DQEBCwUAA4IBgQA1+vVdtDYpaYblM3mhiyeL4NacikjPwrQZLQnH+2VZ
+          l+Vrx0ZVkbiwJQgmpRPvkU4l5iX3//uGKcO6jGX5Q1p5uqIpaayz0jhnRhcKyJQp
+          A7MYle9ghDnU7YIICEbSeMLwlrWjMjvm1/dYXlHTkl9jMO4sMqxZH+mLfYXf3F4S
+          pw5Xc7o9X2TWQcKxOk9XvARBzm01ZLAB95CFAivMBEHz08ElYIYB8GBosXEMO6OH
+          voMiiLwSl9tjUBVp75lNsBn5drOkoe6hkNnBhxIcJHHTJUS4ho85KzKoWrqN/SbZ
+          s8vYjRQAbz5qGhQ8graAxVwHFpC8L1l0r0yT36smb43uJBzWsdcM91soQv6d3l8P
+          oanNYQzScAJEXW80+3ujxEPAaZZLlO+mJLB9j6gG3RonRYYFdwKZaD+7GMajYSdd
+          ql68yVLJ5Zcf1PnaV+nraLwDZp3CbwZk7VimyTHuirMn9WwTLmpo/vRyycrJ3TDn
+          kZiULjoM4C6SxuadMBuKyV4=
+          -----END CERTIFICATE-----
+          POSTAL_THEME_CERT
+          openssl cms -encrypt -binary -aes256 -outform DER -in promo-theme/recolored-original-scenes.mp4 -out promo-theme.cipher "$cert"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: postal-prep-original-theme-private
+          path: promo-theme.cipher
+          if-no-files-found: error
+          retention-days: 2
