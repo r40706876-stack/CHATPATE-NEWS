@@ -52,7 +52,11 @@ jobs:
           ) if os.environ.get(name)))
           if not keys:
               raise SystemExit("Approved voice engine is unavailable")
-          record_voice("d", [("dpoint", "यहाँ पत्र पर इक्कीस नवंबर लिखा है। और यहाँ पच्चीस नवंबर की एस ओ पी का ज़िक्र है। पत्र फेक हो सकता है। जब तक डाक विभाग साफ़ न करे, इसे सही न मानें।")], keys)
+          record_voice("d", [
+              ("dpoint", "पत्र पर इक्कीस नवंबर लिखा है, और इसमें पच्चीस नवंबर की एस ओ पी का ज़िक्र है। बाद की तारीख देखकर शक होता है।"),
+              ("dpage", "ऊपर दिसंबर से जनवरी लिखा है, लेकिन दिख रही तालिका इकतीस दिसंबर पर खत्म है। इस फोटो में अधिकारी के हस्ताक्षर भी नहीं दिखते। हो सकता है अगला पन्ना हो।"),
+              ("dverify", "जिन पुराने आदेशों का हवाला है, उनकी प्रतियाँ भी साथ नहीं हैं। पत्र फेक हो सकता है। इसे सही तभी मानें जब डाक विभाग का आधिकारिक नोटिफिकेशन इसकी पुष्टि करे।"),
+          ], keys)
           PY
       - name: Encrypt the preview before handing it off
         if: always()
@@ -96,7 +100,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: rule3-letter-point-voice-private
+          name: rule3-complete-factcheck-voice-private
           path: preview.cms
           if-no-files-found: warn
           retention-days: 2
