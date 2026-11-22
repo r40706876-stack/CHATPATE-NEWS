@@ -1,0 +1,68 @@
+name: Postal Edge full transfer reel
+run-name: "Postal Edge | Full Postman draft transfer reel"
+on:
+  push:
+    branches: ['preview/postal-edge-transfer-hook-4s']
+    paths: ['.github/workflows/postal_transfer_full.yml', 'oneoffs/postal_transfer_hook/render_full.py']
+permissions:
+  contents: read
+  actions: read
+jobs:
+  render:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: production
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: preview/postal-recruitment-draft-20261120
+          path: reference
+          persist-credentials: false
+          sparse-checkout: |
+            oneoffs/postal_recruitment_action_cut
+            oneoffs/postal_recruitment_two_voices
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-core
+          token: ${{ secrets.CORE_TOKEN }}
+          ref: 135c9104ca85845e3c11254f8a08102faa86e51c
+          path: core
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install rendering tools
+        run: |
+          command -v ffmpeg || (sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg)
+          test -f /usr/share/fonts/truetype/noto/NotoSansDevanagari-Bold.ttf || (sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-core fonts-dejavu-core)
+          python -m pip install -q pillow numpy scipy requests playwright edge-tts pymupdf pypdf
+      - name: Extract the counter from the approved reference reel assets
+        run: unzip -j core/previews/postal-office-scene-assets.zip '*office1.jpg' -d reference
+      - name: Render the full reel with both original voices
+        working-directory: core
+        env:
+          POSTAL_KEY_1: ${{ secrets.GEMINI_API_KEY }}
+          POSTAL_KEY_2: ${{ secrets.GEMINI_API_KEY2 }}
+          POSTAL_KEY_3: ${{ secrets.GEMINI_API_KEY3 }}
+          POSTAL_KEY_4: ${{ secrets.GEMINI_API_KEY4 }}
+          GEMINI_TTS_MODEL: gemini-3.8-flash-tts
+          DEEP_FAST_QUOTA_FAIL: '1'
+        run: >-
+          python -u ../production/oneoffs/postal_transfer_hook/render_full.py
+          ../reference/office1.jpg
+          ../reference/oneoffs/postal_recruitment_two_voices/render.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Postal_Edge_GDS_Transfer_Postman_Draft
+          path: core/transfer-full-output/Postal_Edge_GDS_Transfer_Postman_Draft.mp4
+          if-no-files-found: error
+          retention-days: 14
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Transfer_Full_QC
+          path: core/transfer-full-output/review/*
+          if-no-files-found: error
+          retention-days: 7
