@@ -36,7 +36,7 @@ jobs:
         run: |
           command -v ffmpeg >/dev/null || { sudo apt-get update -qq -o Acquire::Retries=2 && sudo apt-get install -y -qq ffmpeg; }
           pip install -q playwright numpy pillow scipy requests edge-tts pypdf
-      - name: Record the opening warning and conditional date introduction
+      - name: Record the date discrepancy in Bhaiya’s approved voice
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           GEMINI_API_KEY2: ${{ secrets.GEMINI_API_KEY2 }}
@@ -52,8 +52,7 @@ jobs:
           ) if os.environ.get(name)))
           if not keys:
               raise SystemExit("Approved voice engine is unavailable")
-          record_voice("g", [("gwarn", "साथियो, इस सर्कुलर की आधिकारिक पुष्टि नहीं हुई। ये फेक भी हो सकता है।")], keys)
-          record_voice("d", [("dsource", "इसमें तारीख इक्कीस नवंबर लिखी है। आवेदन के लिए पंद्रह से सत्रह दिसंबर बताए गए हैं।")], keys)
+          record_voice("d", [("dsource", "पत्र पर इक्कीस नवंबर लिखा है, लेकिन इसमें पच्चीस नवंबर की एस ओ पी का ज़िक्र है। इसलिए पहले आधिकारिक आदेश से मिलाएँ।")], keys)
           PY
       - name: Encrypt the preview before handing it off
         if: always()
@@ -97,7 +96,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: rule3-warning-voice-private
+          name: rule3-date-check-voice-private
           path: preview.cms
           if-no-files-found: warn
           retention-days: 2
