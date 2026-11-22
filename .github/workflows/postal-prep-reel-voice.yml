@@ -1,0 +1,132 @@
+name: Postal Edge prep Reel voice and lesson assets
+run-name: Postal Edge | Prep Reel voice and actual HO SO BO footage
+on:
+  push:
+    branches: [preview/rule3-transfer-2026]
+    paths: ['.github/workflows/postal-prep-reel-voice.yml']
+permissions:
+  contents: read
+concurrency:
+  group: postal-prep-reel-voice-pickup
+  cancel-in-progress: false
+jobs:
+  render:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-core
+          token: ${{ secrets.CORE_TOKEN }}
+          ref: 212e56242b9fe5797a789d0d56b41bbb2ded0838
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /*.py
+            /*.json
+            /*.ttf
+            /deep/
+            /rebrand_reels/rule3_transfer_2026/
+            /docs/transfer/
+            /docs/icon-192.png
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-core
+          token: ${{ secrets.CORE_TOKEN }}
+          ref: 135c9104ca85845e3c11254f8a08102faa86e51c
+          path: approved-lesson
+          persist-credentials: false
+          sparse-checkout-cone-mode: false
+          sparse-checkout: |
+            /previews/postal-office-scene-assets.zip
+            /previews/postal-edge-full-reel-assets.zip
+      - name: Prepare the established speech and video dependencies
+        run: |
+          command -v ffmpeg >/dev/null || { sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg; }
+          pip install -q playwright numpy pillow scipy requests edge-tts pypdf
+      - name: Collect the actual lesson footage and saved website captures
+        run: |
+          mkdir -p rule3-preview tmp-lesson
+          unzip -oq approved-lesson/previews/postal-edge-full-reel-assets.zip -d tmp-lesson
+          unzip -oq approved-lesson/previews/postal-office-scene-assets.zip -d tmp-lesson
+          source=$(find tmp-lesson -iname 'lesson.mp4' -print -quit)
+          test -n "$source"
+          ffmpeg -v error -y -i "$source" -t 36 -vf "scale=720:-2" -c:v libx264 -preset fast -crf 19 -c:a aac -b:a 96k rule3-preview/ho_so_bo_lesson.mp4
+          for file in home_top.jpg phone_home.jpg notes.jpg papers.jpg wrong.jpg; do
+            cp "rebrand_reels/promo_v2/img/$file" rule3-preview/
+          done
+      - name: Record Golu and Dakia Bhaiya in the approved voices
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_API_KEY2: ${{ secrets.GEMINI_API_KEY2 }}
+          GEMINI_API_KEY3: ${{ secrets.GEMINI_API_KEY3 }}
+          GEMINI_API_KEY4: ${{ secrets.GEMINI_API_KEY4 }}
+        run: |
+          python -u - <<'PY'
+          import os,sys
+          from concurrent.futures import ThreadPoolExecutor
+          sys.path.insert(0,"rebrand_reels/rule3_transfer_2026")
+          from render_preview import record_voice
+          keys=list(dict.fromkeys(os.environ[key] for key in ("GEMINI_API_KEY4","GEMINI_API_KEY3","GEMINI_API_KEY2","GEMINI_API_KEY") if os.environ.get(key)))
+          if not keys:
+              raise SystemExit("Approved voice engine unavailable")
+          record_voice("g", [
+              ("ghook", "एच ओ, एस ओ, बी ओ में फ़र्क? ये देखो!"),
+              ("gmock", "तो पढ़ने के बाद मॉक भी लगा सकते हैं?"),
+          ], keys)
+          record_voice("d", [
+              ("dclass", "हाँ, ऐसी फ्री डेमो क्लास में चित्रों से नियम समझो।"),
+              ("dnotes", "हाथ से लिखे नोट्स से रिविज़न करो। फिर पिछले साल के सवालों से अपनी तैयारी जाँचो।"),
+              ("dmock", "मॉक लगाओ, और देखो हर जवाब सही या गलत क्यों है।"),
+              ("dcta", "पोस्टल एज डॉट इन खोलो, फ्री डेमो देखो और अपना पहला मॉक लगाओ।"),
+          ], keys[1:]+keys[:1])
+          PY
+      - name: Encrypt the preview before handing it off
+        if: always()
+        shell: bash
+        run: |
+          shopt -s nullglob
+          files=(rule3-preview/*)
+          if (( ${#files[@]} == 0 )); then exit 0; fi
+          cert=$(mktemp)
+          cat > "$cert" <<'RULE3_CERT'
+          -----BEGIN CERTIFICATE-----
+          MIIELTCCApWgAwIBAgIUdzVBcbDQmMDQJ4f8433Qds+y91cwDQYJKoZIhvcNAQEL
+          BQAwJjEkMCIGA1UEAwwbUG9zdGFsIEVkZ2UgUHJpdmF0ZSBQcmV2aWV3MB4XDTI2
+          MTEyMjAxMjAwNVoXDTI2MTEyOTAxMjAwNVowJjEkMCIGA1UEAwwbUG9zdGFsIEVk
+          Z2UgUHJpdmF0ZSBQcmV2aWV3MIIBojANBgkqhkiG9w0BAQEFAAOCAY8AMIIBigKC
+          AYEA52Lj2BPP8Mw62fBeoE/XvW34qtNmoPWyxxzq8nPOnvuHZJu8278xROdWINeN
+          dp2jAOwWqN/UdZzeqrglvR7w4gql8W39N+L8cb7ovrUbX1g8XzSuGbpQS+x9JKdo
+          JtRBD1wEQ09Fis3xoJ8PQg10hj3FWAbIbziKW72P7iJFHsx4P/qafXDSJ9b2syMq
+          Ckuf9fQhR78U0q8zN5EEgUt7OK7KWOOUYdTYWGq8d/pGVvqlAkpTbb5PmyfkeiiR
+          Vxmc89Kzx+W854HXbTeWtVD4sjIUzaFee/PU1FHkrK+ApnqevNkxV1RXSSHUoPBb
+          JkvbXj1GJtpgu1i2dxe4CvIGpG0DWEjOU4yjCB0sExuAFHu/cZVaIYz3No9dp7C4
+          nPT959RpbG9yW5PeJeCyMmEYuk6ApTbsgnkgfz3WYmplUufqi3MuwscRmFqRWSYt
+          Ka6uomv6a2w34lEROQdRL23xMlahqbKaAxI+8alwkh8J8yCOArg1304WDXZKqsw2
+          8qI9AgMBAAGjUzBRMB0GA1UdDgQWBBS9pTN8LWUhk1MoZ34nBabjkE7H3TAfBgNV
+          HSMEGDAWgBS9pTN8LWUhk1MoZ34nBabjkE7H3TAPBgNVHRMBAf8EBTADAQH/MA0G
+          CSqGSIb3DQEBCwUAA4IBgQA1+vVdtDYpaYblM3mhiyeL4NacikjPwrQZLQnH+2VZ
+          l+Vrx0ZVkbiwJQgmpRPvkU4l5iX3//uGKcO6jGX5Q1p5uqIpaayz0jhnRhcKyJQp
+          A7MYle9ghDnU7YIICEbSeMLwlrWjMjvm1/dYXlHTkl9jMO4sMqxZH+mLfYXf3F4S
+          pw5Xc7o9X2TWQcKxOk9XvARBzm01ZLAB95CFAivMBEHz08ElYIYB8GBosXEMO6OH
+          voMiiLwSl9tjUBVp75lNsBn5drOkoe6hkNnBhxIcJHHTJUS4ho85KzKoWrqN/SbZ
+          s8vYjRQAbz5qGhQ8graAxVwHFpC8L1l0r0yT36smb43uJBzWsdcM91soQv6d3l8P
+          oanNYQzScAJEXW80+3ujxEPAaZZLlO+mJLB9j6gG3RonRYYFdwKZaD+7GMajYSdd
+          ql68yVLJ5Zcf1PnaV+nraLwDZp3CbwZk7VimyTHuirMn9WwTLmpo/vRyycrJ3TDn
+          kZiULjoM4C6SxuadMBuKyV4=
+          -----END CERTIFICATE-----
+          RULE3_CERT
+          cd rule3-preview
+          zip -q ../preview-bundle.zip ./*
+          cd ..
+          openssl cms -encrypt -binary -aes256 -outform DER -in preview-bundle.zip -out preview.cms "$cert"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: postal-prep-reel-private-source
+          path: preview.cms
+          if-no-files-found: warn
+          retention-days: 2
