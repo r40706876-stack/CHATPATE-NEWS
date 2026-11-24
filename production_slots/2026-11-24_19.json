@@ -1,6 +1,6 @@
 {
-  "status": "noclip",
-  "noclip_tries": 1,
+  "status": "quota",
+  "last_error": "QuotaOver('सारी Gemini keys का आज का कोटा ख़त्म')",
   "slot": "2026-11-24_19",
-  "updated_at": 1795527617
+  "updated_at": 1795530687
 }
