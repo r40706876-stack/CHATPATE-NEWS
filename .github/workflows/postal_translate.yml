@@ -54,7 +54,7 @@ jobs:
             *) export GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY4 }}" ;;
           esac
           L=${{ inputs.lang || 'mr' }}
-          TR_LANG=$L SHARD=${{ matrix.shard }} NSHARD=4 TR_MAX_CALLS=${{ inputs.calls || '120' }} python deep/translate.py tr 2>&1 | tail -n 40
+          TR_LANG=$L SHARD=${{ matrix.shard }} NSHARD=4 TR_MAX_CALLS=${{ inputs.calls || '40' }} python deep/translate.py tr 2>&1 | tail -n 40
           [ -f tr/q_${L}_${{ matrix.shard }}.json ] || echo "{}" > tr/q_${L}_${{ matrix.shard }}.json
           [ "${{ matrix.shard }}" = "0" ] || rm -f tr/ui_${L}.json
       - uses: actions/upload-artifact@v4
@@ -108,4 +108,5 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh workflow run postal_site_refresh.yml -R ${{ github.repository }} || true   # nateeje website par
-          if [ -f cont.txt ]; then gh workflow run postal_translate.yml -R ${{ github.repository }} -f calls=120 -f lang=${{ inputs.lang || 'mr' }} && echo "agla daur shuru"; fi
+          # धीमी रफ़्तार: अपने-आप अगला दौर नहीं; बाकी काम अगले तय समय (दिन में 2 बार) पर
+          if [ -f cont.txt ]; then echo "काम बाकी है — अगले तय समय पर आगे बढ़ेगा"; fi
