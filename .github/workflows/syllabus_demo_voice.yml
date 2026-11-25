@@ -36,6 +36,7 @@ jobs:
           GEMINI_TTS_MODEL: gemini-3.8-flash-tts
           CORE_DIR: core
           OUT_DIR: /tmp/o
+          URL_STYLE: "Say the website name very clearly and a little slower, with short clean pauses: पोस्टल-एज (pause) डॉट (pause) इन, so a viewer can type it correctly."
           HOOK_STYLE: "Same warm adult male Hindi postman, but now an urgent, alarmed warning straight at the viewer, as if stopping a friend from a costly mistake. Hit the first words hard and loud with a short pause after them, then speak fast and tense with rising intensity. Serious, gripping, not shouting cartoonishly, not an announcer."
         run: |
           python oneoffs/syllabus_demo/tts.py

@@ -16,7 +16,7 @@ assert keys, "no Gemini keys"
 report = []
 for n, (i, who, text, say, style) in enumerate(LINES):
     v = VOICES[who]
-    deep.M.GEMINI_TTS_VOICE, deep.M.GEMINI_TTS_STYLE = v["voice"], (os.environ["HOOK_STYLE"] if style == "urgent" else v["direction"])
+    deep.M.GEMINI_TTS_VOICE, deep.M.GEMINI_TTS_STYLE = v["voice"], (os.environ["HOOK_STYLE"] if style == "urgent" else (v["direction"] + " " + os.environ["URL_STYLE"] if style == "url" else v["direction"]))
     for key in keys[n % len(keys):] + keys[:n % len(keys)]:
         deep.M.GEMINI_API_KEY = key
         try:
