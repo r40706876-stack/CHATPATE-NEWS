@@ -10,18 +10,18 @@ os.chdir(CORE)
 import deep_demo as deep
 
 VOICES = json.load(open(CORE / "brand_config.json"))["character_voices"]
-LINES = json.load(open(Path(__file__).with_name("lines.json"))) * 2
+LINES = json.load(open(Path(__file__).with_name("lines.json")))
 keys = [k for k in (os.environ.get(f"K{n}", "") for n in (1, 2, 3, 4)) if k.strip()]
 assert keys, "no Gemini keys"
 report = []
-for i, (who, text) in enumerate(LINES):
+for n, (i, who, text, say, style) in enumerate(LINES):
     v = VOICES[who]
-    deep.M.GEMINI_TTS_VOICE, deep.M.GEMINI_TTS_STYLE = v["voice"], os.environ.get("HOOK_STYLE") or v["direction"]
-    for key in keys[i % len(keys):] + keys[:i % len(keys)]:
+    deep.M.GEMINI_TTS_VOICE, deep.M.GEMINI_TTS_STYLE = v["voice"], (os.environ["HOOK_STYLE"] if style == "urgent" else v["direction"])
+    for key in keys[n % len(keys):] + keys[:n % len(keys)]:
         deep.M.GEMINI_API_KEY = key
         try:
-            audio = deep.M._gemini_tts_once([text], voice=v["voice"])
-            clip, = deep.cut_lines(audio, [(str(i), text)])
+            audio = deep.M._gemini_tts_once([say], voice=v["voice"])
+            clip, = deep.cut_lines(audio, [(str(i), say)])
             assert 0.5 < len(clip) / deep.M.SR < 15
             break
         except Exception as exc:
