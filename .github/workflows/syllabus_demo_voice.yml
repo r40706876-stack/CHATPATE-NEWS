@@ -36,7 +36,9 @@ jobs:
           GEMINI_TTS_MODEL: gemini-3.8-flash-tts
           CORE_DIR: core
           OUT_DIR: /tmp/o
-        run: python oneoffs/syllabus_demo/tts.py
+        run: |
+          python oneoffs/syllabus_demo/imgs.py || true
+          python oneoffs/syllabus_demo/tts.py
       - name: Publish
         env:
           GH_TOKEN: ${{ github.token }}
