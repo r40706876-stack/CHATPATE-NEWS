@@ -7,14 +7,15 @@ OUT = Path(os.environ["OUT_DIR"]); OUT.mkdir(parents=True, exist_ok=True)
 STYLE = ("photorealistic, cinematic, warm golden light, shallow depth of field, high detail, "
          "no people, no text, no letters, no watermark, vertical 9:16")
 SCENES = {
- "counter": "Interior of a grand old Indian head post office: long polished wooden public counter with brass grille windows, "
-            "red India Post colour accents, ceiling fans, tall arched windows with sunlight beams, marble floor, brass queue posts",
- "outside": "Exterior of a heritage red-brick Indian post office building with arches and steps, a classic red cylindrical "
-            "Indian letter box in front, trees, clear blue morning sky",
- "verandah": "Arched verandah corridor of a heritage red-brick Indian post office, terracotta arches, potted plants, "
-             "soft daylight, stone floor, a red letter box at the far end",
- "desk": "Indian post office back-office sorting desk with stacks of letters, parcels, rubber stamps, ink pad, "
-         "postal scale and pigeon-hole sorting rack, warm lamp light",
+ "counter": "Inside a busy-looking but empty Indian government post office: a long wooden public counter with several brass-grille "
+            "teller windows, rubber stamps and ink pads on the counter, a red cylindrical Indian letter box standing beside the counter, "
+            "parcels on a weighing scale, old wall clock, ceiling fans, cream walls with red trim, sunlight through arched windows",
+ "outside": "Front of a small Indian town post office building painted cream and red, a red cylindrical Indian letter box on the "
+            "footpath in front, bicycle parked near the gate, steps and veranda, neem tree, bright morning",
+ "sorting": "Indian post office sorting room: wooden pigeon-hole sorting rack full of letters and postcards, khaki mail bags with "
+            "drawstrings, a wooden table with bundles of letters tied with string, rubber stamps, warm window light",
+ "letterbox": "Close view of a classic red cylindrical Indian post box with a dome top on a village street outside a post office, "
+              "soft golden evening light, blurred background",
 }
 keys = [k for k in (os.environ.get(f"K{n}", "") for n in (1, 2, 3, 4)) if k.strip()]
 
@@ -40,7 +41,7 @@ def pollinations(prompt, seed):
     url = "https://image.pollinations.ai/prompt/" + urllib.parse.quote(prompt)
     for attempt in range(4):
         try:
-            r = requests.get(url, params={"width": 1080, "height": 1920, "model": "flux", "nologo": "true",
+            r = requests.get(url, params={"width": 864, "height": 1536, "model": "flux", "nologo": "true",
                                           "seed": seed, "enhance": "false"}, timeout=240)
             if r.status_code == 200 and len(r.content) > 20000: return r.content
             print("poll", r.status_code, len(r.content))
@@ -51,9 +52,6 @@ def pollinations(prompt, seed):
 
 for name, desc in SCENES.items():
     prompt = f"{desc}. {STYLE}"
-    data = gemini(prompt)
-    if data:
-        (OUT / f"{name}_gemini.png").write_bytes(data); print("gemini ok", name)
-    for seed in (11, 29):
+    for seed in (3, 17, 41, 77):
         data = pollinations(prompt, seed)
         if data: (OUT / f"{name}_flux_{seed}.jpg").write_bytes(data); print("flux ok", name, seed)

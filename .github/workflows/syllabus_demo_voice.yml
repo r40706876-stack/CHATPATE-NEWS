@@ -37,11 +37,10 @@ jobs:
           CORE_DIR: core
           OUT_DIR: /tmp/o
         run: |
-          python oneoffs/syllabus_demo/imgs.py || true
-          python oneoffs/syllabus_demo/tts.py
+          python oneoffs/syllabus_demo/imgs.py
       - name: Publish
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
         run: |
-          cd /tmp/o && git init -q && git checkout -q -b syllabus-demo-out && git add . && git -c user.name=bot -c user.email=bot@x commit -qm "voice ${GITHUB_RUN_ID}" && git push -f "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git" syllabus-demo-out
+          cd /tmp/o && git init -q && git checkout -q -b syllabus-demo-imgs && git add . && git -c user.name=bot -c user.email=bot@x commit -qm "voice ${GITHUB_RUN_ID}" && git push -f "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git" syllabus-demo-imgs
