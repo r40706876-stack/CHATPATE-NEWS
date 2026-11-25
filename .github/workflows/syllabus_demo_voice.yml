@@ -21,14 +21,6 @@ jobs:
           token: ${{ secrets.CORE_TOKEN }}
           path: core
           fetch-depth: 1
-          sparse-checkout: |
-            main.py
-            bharosa.py
-            branding.py
-            brand_config.json
-            deep
-            assets
-          sparse-checkout-cone-mode: false
       - uses: actions/setup-python@v5
         with:
           python-version: '3.10'
