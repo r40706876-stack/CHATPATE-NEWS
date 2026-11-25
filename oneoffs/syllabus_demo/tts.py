@@ -10,13 +10,13 @@ os.chdir(CORE)
 import deep_demo as deep
 
 VOICES = json.load(open(CORE / "brand_config.json"))["character_voices"]
-LINES = json.load(open(Path(__file__).with_name("lines.json")))
+LINES = json.load(open(Path(__file__).with_name("lines.json"))) * 2
 keys = [k for k in (os.environ.get(f"K{n}", "") for n in (1, 2, 3, 4)) if k.strip()]
 assert keys, "no Gemini keys"
 report = []
 for i, (who, text) in enumerate(LINES):
     v = VOICES[who]
-    deep.M.GEMINI_TTS_VOICE, deep.M.GEMINI_TTS_STYLE = v["voice"], v["direction"]
+    deep.M.GEMINI_TTS_VOICE, deep.M.GEMINI_TTS_STYLE = v["voice"], os.environ.get("HOOK_STYLE") or v["direction"]
     for key in keys[i % len(keys):] + keys[:i % len(keys)]:
         deep.M.GEMINI_API_KEY = key
         try:
