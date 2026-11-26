@@ -40,3 +40,13 @@ for r in report:
     segs, _ = model.transcribe(str(OUT / f"line{r['i']}.wav"), language="hi", word_timestamps=True, beam_size=5)
     r["words"] = [[w.word.strip(), round(w.start, 3), round(w.end, 3)] for s in segs for w in s.words]
 json.dump(report, open(OUT / "lines_report.json", "w"), ensure_ascii=False, indent=1)
+
+# Didi raw video: word timings for cutting + captions
+didi = Path(__file__).with_name("didi.flac")
+if didi.exists():
+    m2 = WhisperModel("medium", device="cpu", compute_type="int8")
+    prompt = "GDS वालो! एक बिल्कुल फ्री मॉक टेस्ट दो, पूरा वीडियो कोर्स फ्री जीत लो। पहले नंबर वाले को 1099 वाला पूरा वीडियो कोर्स। शॉर्ट नोट्स। डेमो वेबसाइट पर फ्री है। MTS, Postman। 5 दिसंबर, 6 दिसंबर, फ़ॉलो, बायो।"
+    segs, _ = m2.transcribe(str(didi), language="hi", word_timestamps=True, beam_size=5, initial_prompt=prompt, vad_filter=False)
+    out = [{"s": round(s.start, 3), "e": round(s.end, 3), "t": s.text.strip(), "w": [[w.word.strip(), round(w.start, 3), round(w.end, 3)] for w in s.words]} for s in segs]
+    json.dump(out, open(OUT / "didi_words.json", "w"), ensure_ascii=False, indent=1)
+    print("didi segs", len(out), flush=True)
