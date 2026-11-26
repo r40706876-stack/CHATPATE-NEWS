@@ -1,0 +1,48 @@
+name: Postal promo didi voice (locked Golu/Bhaiya, Bakra keys)
+on:
+  workflow_dispatch:
+  push:
+    branches: [preview/promo-didi]
+    paths: ['oneoffs/promo_didi/**', '.github/workflows/promo_didi_voice.yml']
+permissions:
+  contents: write
+concurrency:
+  group: promo-didi-voice
+  cancel-in-progress: true
+jobs:
+  voice:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-core
+          token: ${{ secrets.CORE_TOKEN }}
+          path: core
+          fetch-depth: 1
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: |
+          sudo apt-get update -qq && sudo apt-get install -y --no-install-recommends ffmpeg libraqm0
+          pip install -q requests pillow numpy scipy pypdf faster-whisper
+      - name: TTS
+        env:
+          K1: ${{ secrets.GEMINI_API_KEY4 }}
+          K2: ${{ secrets.GEMINI_API_KEY3 }}
+          K3: ${{ secrets.GEMINI_API_KEY2 }}
+          K4: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_TTS_MODEL: gemini-3.8-flash-tts
+          CORE_DIR: core
+          OUT_DIR: /tmp/o
+          URL_STYLE: "Say the website name very clearly and a little slower, with short clean pauses: पोस्टल-एज (pause) डॉट (pause) इन, so a viewer can type it correctly."
+          HOOK_STYLE: "Same warm adult male Hindi postman, but now an urgent, alarmed warning straight at the viewer, as if stopping a friend from a costly mistake. Hit the first words hard and loud with a short pause after them, then speak fast and tense with rising intensity. Serious, gripping, not shouting cartoonishly, not an announcer."
+        run: |
+          python oneoffs/promo_didi/tts.py
+      - name: Publish
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          cd /tmp/o && git init -q && git checkout -q -b promo-didi-voice && git add . && git -c user.name=bot -c user.email=bot@x commit -qm "voice ${GITHUB_RUN_ID}" && git push -f "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git" promo-didi-voice
