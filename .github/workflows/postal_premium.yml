@@ -2,7 +2,7 @@ name: Postal PREMIUM deep class (Bakra ki keys)
 
 # 2026-11-18: Postak by Postal Wala - Clause 1-5 demo videos. Script Claude ki (core: deep/premium/cN.json),
 # premium animation, poori awaaz EK baar (kaati nahi jaati) - Bakra News ki Gemini keys (2,3,4,1) se.
-# Bakra ka code/main nahi chhuta. Naya clause: neeche CLAUSE badlo aur commit karo (ya Run workflow). [run: c2_3 YouTube 16:9 + naya niyam, dobara]
+# Bakra ka code/main nahi chhuta. Naya clause: neeche CLAUSE badlo aur commit karo (ya Run workflow). [run: demo 1 v2 - Golu+Bhaiya, landscape-native]
 # Video + awaaz -> postal-wala-core branch "premium-<CLAUSE>" (har bhag alag branch, runs saath chal sakte) (awaaz save -> dobara bane to Gemini call nahi).
 on:
   workflow_dispatch:
@@ -15,8 +15,9 @@ on:
     paths: ['.github/workflows/postal_premium.yml']
 
 env:
-  CLAUSE: "4"
+  CLAUSE: "2_1"
   LAND: "1"          # 1 = YouTube 16:9 (1920x1080), branch premium-<N>-yt
+  BR_SUFFIX: "-v2"    # alag branch, purani demo file na mite
   TRUST_TAKE: "0"    # 1 = purani awaaz bina sha ke bhi (script na badli ho tab hi)
 
 permissions:
@@ -41,7 +42,7 @@ jobs:
           N="${{ inputs.clause }}"; N="${N:-$CLAUSE}"
           echo "N=$N" >> $GITHUB_ENV
           mkdir -p demo_out/deep /tmp/keep
-          BR="premium-$N"; [ "$LAND" = "1" ] && BR="premium-$N-yt"; echo "BR=$BR" >> $GITHUB_ENV
+          BR="premium-$N"; [ "$LAND" = "1" ] && BR="premium-$N-yt"; BR="$BR$BR_SUFFIX"; echo "BR=$BR" >> $GITHUB_ENV
           SH=$(sha256sum deep/premium/c$N.json | cut -c1-16)
           for B in "$BR" "premium-$N" "premium-out"; do
             rm -rf /tmp/try && mkdir -p /tmp/try
@@ -50,7 +51,9 @@ jobs:
             OLD=$(cat /tmp/try/script_c$N.sha 2>/dev/null || true); echo "$B: script sha $SH, saved: $OLD"
             if [ -f /tmp/try/take_premium_c$N.wav ] && { [ "$OLD" = "$SH" ] || { [ -z "$OLD" ] && [ "$TRUST_TAKE" = "1" ]; }; }; then
               cp /tmp/try/take_premium_c$N.wav demo_out/deep/; cp /tmp/try/take_premium_c$N.wav /tmp/keep/
-              echo "DEEP_TAKE=demo_out/deep/take_premium_c$N.wav" >> $GITHUB_ENV; echo "purani awaaz mili ($B) - Gemini call nahi"; break
+              echo "DEEP_TAKE=demo_out/deep/take_premium_c$N.wav" >> $GITHUB_ENV; echo "purani awaaz mili ($B) - Gemini call nahi"
+              if [ -f /tmp/try/take_premium_c${N}_g.wav ]; then cp /tmp/try/take_premium_c${N}_g.wav demo_out/deep/; cp /tmp/try/take_premium_c${N}_g.wav /tmp/keep/; echo "DEEP_TAKE_G=demo_out/deep/take_premium_c${N}_g.wav" >> $GITHUB_ENV; echo "Golu ki purani awaaz bhi mili"; fi
+              break
             fi
           done
           ls -la /tmp/keep || true
@@ -75,12 +78,13 @@ jobs:
           WHISPER_MODEL: medium
         run: |
           export DEEP_TAKE_SAVE=demo_out/deep/take_premium_c$N.wav
+          export DEEP_TAKE_SAVE_G=demo_out/deep/take_premium_c${N}_g.wav
           python deep/premium/voice_premium.py deep/premium_c$N.html demo_out/deep/clause${N}_premium.mp4
       - name: Save (core branch premium-<N>) - awaaz pehle, video 95MB se chhoti karke
         if: always()
         run: |
           [ -f demo_out/deep/take_premium_c$N.wav ] && sha256sum deep/premium/c$N.json | cut -c1-16 > /tmp/keep/script_c$N.sha
-          for f in demo_out/deep/take_premium_c$N.wav demo_out/deep/clause${N}_premium.mp4.cues.json; do [ -f "$f" ] && cp "$f" /tmp/keep/; done
+          for f in demo_out/deep/take_premium_c$N.wav demo_out/deep/take_premium_c${N}_g.wav demo_out/deep/clause${N}_premium.mp4.cues.json; do [ -f "$f" ] && cp "$f" /tmp/keep/; done
           V=demo_out/deep/clause${N}_premium.mp4
           if [ -f "$V" ]; then
             SZ=$(stat -c %s "$V")
