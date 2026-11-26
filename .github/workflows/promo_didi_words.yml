@@ -1,0 +1,32 @@
+name: Promo didi word timings (whisper)
+on:
+  push:
+    branches: [preview/promo-didi]
+    paths: ['oneoffs/promo_didi_words/**', '.github/workflows/promo_didi_words.yml']
+permissions:
+  contents: write
+jobs:
+  words:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      - run: pip install -q faster-whisper
+      - run: |
+          mkdir -p /tmp/o && python - <<'PY'
+          import json
+          from faster_whisper import WhisperModel
+          m = WhisperModel("medium", device="cpu", compute_type="int8")
+          segs, _ = m.transcribe("oneoffs/promo_didi_words/didi.wav", language="hi", word_timestamps=True, beam_size=5)
+          out = [[w.word.strip(), round(w.start, 2), round(w.end, 2)] for s in segs for w in s.words]
+          json.dump(out, open("/tmp/o/didi_words.json", "w"), ensure_ascii=False)
+          print(out)
+          PY
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+        run: |
+          cd /tmp/o && git init -q && git checkout -q -b promo-didi-words && git add . && git -c user.name=bot -c user.email=bot@x commit -qm words && git push -f "https://x-access-token:${GH_TOKEN}@github.com/${REPO}.git" promo-didi-words
