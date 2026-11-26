@@ -41,12 +41,13 @@ for r in report:
     r["words"] = [[w.word.strip(), round(w.start, 3), round(w.end, 3)] for s in segs for w in s.words]
 json.dump(report, open(OUT / "lines_report.json", "w"), ensure_ascii=False, indent=1)
 
-# Didi raw video: word timings for cutting + captions
-didi = Path(__file__).with_name("didi.flac")
-if didi.exists():
+# Didi raw video: short chunks, word timings
+for nm, prompt in (("didiA", "पेपर तक फ्री। दूसरे नंबर वाले को सारे मॉक और शॉर्ट नोट्स, और तीसरे नंबर वाले को पूरे शॉर्ट नोट्स।"),
+                   ("didiB", "मॉक टेस्ट है, तो पोस्टमैन वाले भी ज़रूर दें।")):
+    f = Path(__file__).with_name(nm + ".flac")
+    if not f.exists(): continue
     m2 = WhisperModel("medium", device="cpu", compute_type="int8")
-    prompt = "हाँ! दूसरे को सारे मॉक और शॉर्ट नोट्स, तीसरे को पूरे शॉर्ट नोट्स। जीतने से पहले खुद देख लो इनाम कैसा है, हर नियम शून्य से एनिमेशन में समझाया है, पुराना भी नया भी। डेमो वेबसाइट पर फ्री है। असली GDS से MTS पेपर जैसा फुल सिलेबस मॉक, तो Postman वाले भी ज़रूर दें। GDS वालो! एक बिल्कुल फ्री मॉक टेस्ट दो, पूरा वीडियो कोर्स फ्री जीत लो। पहले नंबर वाले को 1099 वाला पूरा वीडियो कोर्स। शॉर्ट नोट्स। डेमो वेबसाइट पर फ्री है। MTS, Postman। 5 दिसंबर, 6 दिसंबर, फ़ॉलो, बायो।"
-    segs, _ = m2.transcribe(str(didi), language="hi", word_timestamps=True, beam_size=5, initial_prompt=prompt, vad_filter=True, condition_on_previous_text=False)
+    segs, _ = m2.transcribe(str(f), language="hi", word_timestamps=True, beam_size=5, initial_prompt=prompt, vad_filter=False, condition_on_previous_text=False)
     out = [{"s": round(s.start, 3), "e": round(s.end, 3), "t": s.text.strip(), "w": [[w.word.strip(), round(w.start, 3), round(w.end, 3)] for w in s.words]} for s in segs]
-    json.dump(out, open(OUT / "didi_words.json", "w"), ensure_ascii=False, indent=1)
-    print("didi segs", len(out), flush=True)
+    json.dump(out, open(OUT / (nm + "_words.json"), "w"), ensure_ascii=False, indent=1)
+    print(nm, [s["t"] for s in out], flush=True)
