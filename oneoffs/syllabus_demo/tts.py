@@ -41,13 +41,15 @@ for r in report:
     r["words"] = [[w.word.strip(), round(w.start, 3), round(w.end, 3)] for s in segs for w in s.words]
 json.dump(report, open(OUT / "lines_report.json", "w"), ensure_ascii=False, indent=1)
 
-# Didi raw video: short chunks, word timings
-for nm, prompt in (("didiA", "पेपर तक फ्री। दूसरे नंबर वाले को सारे मॉक और शॉर्ट नोट्स, और तीसरे नंबर वाले को पूरे शॉर्ट नोट्स।"),
-                   ("didiB", "मॉक टेस्ट है, तो पोस्टमैन वाले भी ज़रूर दें।")):
-    f = Path(__file__).with_name(nm + ".flac")
-    if not f.exists(): continue
+# Didi raw video: 14 s chunks (start = 13*i), word timings
+import glob as _g
+fl = sorted(_g.glob(str(Path(__file__).with_name("v2_*.flac"))))
+if fl:
     m2 = WhisperModel("medium", device="cpu", compute_type="int8")
-    segs, _ = m2.transcribe(str(f), language="hi", word_timestamps=True, beam_size=5, initial_prompt=prompt, vad_filter=False, condition_on_previous_text=False)
-    out = [{"s": round(s.start, 3), "e": round(s.end, 3), "t": s.text.strip(), "w": [[w.word.strip(), round(w.start, 3), round(w.end, 3)] for w in s.words]} for s in segs]
-    json.dump(out, open(OUT / (nm + "_words.json"), "w"), ensure_ascii=False, indent=1)
-    print(nm, [s["t"] for s in out], flush=True)
+    for f in fl:
+        nm = Path(f).stem; off = 13 * int(nm.split("_")[1])
+        segs, _ = m2.transcribe(f, language="hi", word_timestamps=True, beam_size=5, vad_filter=False, condition_on_previous_text=False,
+                                initial_prompt="GDS साथियो, Postal Edge, postaledge.in, मॉक टेस्ट, वीडियो कोर्स, PO Guide, MTS, पोस्टमैन।")
+        out = [{"s": round(s.start + off, 3), "e": round(s.end + off, 3), "t": s.text.strip(), "w": [[w.word.strip(), round(w.start + off, 3), round(w.end + off, 3)] for w in s.words]} for s in segs]
+        json.dump(out, open(OUT / (nm + "_words.json"), "w"), ensure_ascii=False, indent=1)
+        print(nm, [s["t"] for s in out], flush=True)
