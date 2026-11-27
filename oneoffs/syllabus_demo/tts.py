@@ -47,7 +47,7 @@ fl = sorted(_g.glob(str(Path(__file__).with_name("v2_*.flac"))))
 if fl:
     m2 = WhisperModel("medium", device="cpu", compute_type="int8")
     for f in fl:
-        nm = Path(f).stem; off = 13 * int(nm.split("_")[1])
+        nm = Path(f).stem; off = 10.8
         segs, _ = m2.transcribe(f, language="hi", word_timestamps=True, beam_size=5, vad_filter=False, condition_on_previous_text=False,
                                 initial_prompt="GDS साथियो, Postal Edge, postaledge.in, मॉक टेस्ट, वीडियो कोर्स, PO Guide, MTS, पोस्टमैन।")
         out = [{"s": round(s.start + off, 3), "e": round(s.end + off, 3), "t": s.text.strip(), "w": [[w.word.strip(), round(w.start + off, 3), round(w.end + off, 3)] for w in s.words]} for s in segs]
