@@ -2,7 +2,7 @@ name: Postal PREMIUM deep class (Bakra ki keys)
 
 # 2026-11-18: Postak by Postal Wala - Clause 1-5 demo videos. Script Claude ki (core: deep/premium/cN.json),
 # premium animation, poori awaaz EK baar (kaati nahi jaati) - Bakra News ki Gemini keys (2,3,4,1) se.
-# Bakra ka code/main nahi chhuta. Naya clause: neeche CLAUSE badlo aur commit karo (ya Run workflow). [run: demo 1 v3b - mohar span fix, awaaz reuse; English: dispatch clause=2_1_en]
+# Bakra ka code/main nahi chhuta. Naya clause: neeche CLAUSE badlo aur commit karo (ya Run workflow). [run: Clause 2 bhag 2 (Demo 2) Hindi; English: dispatch clause=2_2_en]
 # Video + awaaz -> postal-wala-core branch "premium-<CLAUSE>" (har bhag alag branch, runs saath chal sakte) (awaaz save -> dobara bane to Gemini call nahi).
 on:
   workflow_dispatch:
@@ -15,7 +15,7 @@ on:
     paths: ['.github/workflows/postal_premium.yml']
 
 env:
-  CLAUSE: "2_1"
+  CLAUSE: "2_2"
   LAND: "1"          # 1 = YouTube 16:9 (1920x1080), branch premium-<N>-yt
   BR_SUFFIX: "-v2"    # alag branch, purani demo file na mite
   TRUST_TAKE: "0"    # 1 = purani awaaz bina sha ke bhi (script na badli ho tab hi)
