@@ -2,7 +2,7 @@ name: Postal PREMIUM deep class (Bakra ki keys)
 
 # 2026-11-18: Postak by Postal Wala - Clause 1-5 demo videos. Script Claude ki (core: deep/premium/cN.json),
 # premium animation, poori awaaz EK baar (kaati nahi jaati) - Bakra News ki Gemini keys (2,3,4,1) se.
-# Bakra ka code/main nahi chhuta. Naya clause: neeche CLAUSE badlo aur commit karo (ya Run workflow). [run: demo 1 v3 FX - mohar, intro, chapters, awaaz reuse]
+# Bakra ka code/main nahi chhuta. Naya clause: neeche CLAUSE badlo aur commit karo (ya Run workflow). [run: demo 1 v3b - mohar span fix, awaaz reuse; English: dispatch clause=2_1_en]
 # Video + awaaz -> postal-wala-core branch "premium-<CLAUSE>" (har bhag alag branch, runs saath chal sakte) (awaaz save -> dobara bane to Gemini call nahi).
 on:
   workflow_dispatch:
@@ -26,7 +26,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: postal-premium-${{ github.sha }}
+  group: postal-premium-${{ github.sha }}-${{ inputs.clause }}
   cancel-in-progress: false
 
 jobs:
@@ -79,6 +79,7 @@ jobs:
           GEMINI_TTS_STYLE: "patient elder-brother teacher explaining to a complete beginner: a little slower than normal speed, very clear words, warm and expressive - curious on questions, firm on warnings, happy on answers, calm on examples; a short natural pause after every important line"
           WHISPER_MODEL: medium
         run: |
+          case "$N" in *_en) export VOICE_LANG=en; echo "English video (wahi locked awaaz)";; esac
           export DEEP_TAKE_SAVE=demo_out/deep/take_premium_c$N.wav
           export DEEP_TAKE_SAVE_G=demo_out/deep/take_premium_c${N}_g.wav
           python deep/premium/voice_premium.py deep/premium_c$N.html demo_out/deep/clause${N}_premium.mp4
