@@ -20,8 +20,9 @@ def rank(n):
     bad = any(x in n for x in ["tts", "image", "audio", "live", "embedding", "lite", "thinking-exp", "native", "robotics", "computer"])
     return (not bad, "pro" in n, v, "preview" not in n)
 cands = sorted([m for m in ms if m.startswith("gemini")], key=rank, reverse=True)
-MODEL = os.getenv("MODEL") or (cands[0] if cands else "gemini-flash-latest")
-P("MODEL:", MODEL, "| next:", cands[1:4])
+CHAIN = [m for m in (os.getenv("MODEL") or "").split(",") if m] or [m for m in ["gemini-4-argon", "gemini-4-carbon", "gemini-4-neon", "gemini-4-hydrogen", "gemini-3.1-pro-preview", "gemini-2.5-pro", "gemini-3.8-flash", "gemini-3.7-flash", "gemini-3.5-flash"] if m in ms]
+MODEL = CHAIN[0]
+P("CHAIN:", CHAIN)
 
 RULES = """You are a senior motion designer who writes animated explainer scenes as code for an Indian exam-prep YouTube course (Hindi, premium look).
 Write ONE self-contained scene for a 960x540 canvas. Output ONLY a JSON object (no markdown) with two string fields:
@@ -63,7 +64,18 @@ Scene lasts 31 s. Cards must not overlap the tree.""",
 Scene lasts 27 s.""",
 }
 
-def ask(prompt, tries=3):
+def ask(prompt, tries=2):
+    global MODEL
+    last = None
+    for m in CHAIN:
+        MODEL = m
+        try:
+            r = ask1(prompt, tries); P("  model used:", m); return r
+        except Exception as e:
+            last = e; P("  ", m, "fail:", str(e)[:160])
+    raise RuntimeError(last)
+
+def ask1(prompt, tries=2):
     body = {"contents": [{"role": "user", "parts": [{"text": RULES + "\n\n" + prompt}]}],
             "generationConfig": {"temperature": 0.6, "responseMimeType": "application/json", "maxOutputTokens": 32000}}
     last = None
@@ -72,13 +84,17 @@ def ask(prompt, tries=3):
             try:
                 r = requests.post(f"{API}/models/{MODEL}:generateContent?key={k}", json=body, timeout=600)
                 if not r.ok:
-                    last = f"{r.status_code} {r.text[:300]}"; continue
+                    last = f"{r.status_code} {r.text[:300]}"
+                    if r.status_code in (404, 400): raise RuntimeError(last)
+                    continue
                 txt = "".join(p.get("text", "") for p in r.json()["candidates"][0]["content"]["parts"])
                 txt = re.sub(r"^```(json)?|```$", "", txt.strip()).strip()
                 return json.loads(txt), r.json().get("usageMetadata")
+            except RuntimeError:
+                raise
             except Exception as e:
                 last = repr(e)[:300]
-        time.sleep(20)
+        if last and '429' in last and a == 0: time.sleep(15)
     raise RuntimeError(last)
 
 PAGE = """<!doctype html><html><head><meta charset="utf-8"><style>*{margin:0;padding:0;box-sizing:border-box}body{width:960px;height:540px;overflow:hidden;background:radial-gradient(120% 80% at 50% 0%,#1d2a6e 0%,#0d1440 55%,#070b24 100%);font-family:'Baloo 2','Hind',sans-serif;color:#fff}</style></head>
