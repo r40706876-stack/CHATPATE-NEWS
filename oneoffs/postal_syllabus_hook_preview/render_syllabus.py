@@ -3,6 +3,7 @@ import argparse
 from functools import lru_cache
 import json
 import math
+import re
 from pathlib import Path
 import subprocess
 
@@ -29,17 +30,31 @@ MIN_DURATIONS = (3, 4.3, 3.4, 3.4, 5.0, 2.5, 5.0, 4.0, 4.8, 3.4)
 
 
 @lru_cache
-def font(size):
-    return ImageFont.truetype("/usr/share/fonts/truetype/noto/NotoSansDevanagari-Bold.ttf", size)
+def font(size, hindi=False):
+    family = "NotoSansDevanagari" if hindi else "NotoSans"
+    return ImageFont.truetype(f"/usr/share/fonts/truetype/noto/{family}-Bold.ttf", size)
+
+
+def runs(content, size):
+    for group in re.findall(r"[\u0900-\u097f]+|[^\u0900-\u097f]+", content):
+        yield group, font(size, "\u0900" <= group[0] <= "\u097f")
+
+
+def text_width(draw, content, size):
+    return sum(draw.textlength(group, font=face) for group, face in runs(content, size))
 
 
 def label(draw, x, y, content, size, color):
-    face = font(size)
-    while draw.textlength(content, font=face) > 590:
+    while text_width(draw, content, size) > 590:
         size -= 1
-        face = font(size)
-    a, b, c, d = draw.textbbox((0, 0), content, font=face)
-    draw.text((x - (a+c)/2, y - (b+d)/2), content, font=face, fill=color)
+    pieces = list(runs(content, size))
+    bounds = [draw.textbbox((0, 0), group, font=face, anchor="ls") for group, face in pieces]
+    baseline = y - (min(bounds_row[1] for bounds_row in bounds)
+                    + max(bounds_row[3] for bounds_row in bounds))/2
+    left = x - text_width(draw, content, size)/2
+    for group, face in pieces:
+        draw.text((left, baseline), group, font=face, fill=color, anchor="ls")
+        left += draw.textlength(group, font=face)
 
 
 def box(draw, bounds, fill, radius=16, outline=None):
@@ -56,7 +71,7 @@ def caption(draw, text, speaker):
     lines = [""]
     for word in words:
         candidate = (lines[-1] + " " + word).strip()
-        if lines[-1] and draw.textlength(candidate, font=font(32)) > 575:
+        if lines[-1] and text_width(draw, candidate, 32) > 575:
             lines.append(word)
         else:
             lines[-1] = candidate
@@ -66,7 +81,7 @@ def caption(draw, text, speaker):
     for index, line in enumerate(lines):
         y = 1032 + (index - (len(lines)-1)/2)*40
         if index == len(lines) - 1:
-            width = min(574, draw.textlength(line, font=font(32)) + 18)
+            width = min(574, text_width(draw, line, 32) + 18)
             box(draw, (360-width/2, y-18, 360+width/2, y+18), "#ffe38b", 7)
         label(draw, 360, y, line, 32, INK)
 
