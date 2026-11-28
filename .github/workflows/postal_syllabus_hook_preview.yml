@@ -1,0 +1,69 @@
+name: Postal Edge syllabus three-second preview
+run-name: Postal Edge • Syllabus hook • 3 seconds
+on:
+  push:
+    branches: ['preview/syllabus-demo']
+    paths: ['.github/workflows/postal_syllabus_hook_preview.yml']
+permissions:
+  contents: read
+jobs:
+  preview:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 14
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-core
+          path: core
+          token: ${{ secrets.CORE_TOKEN }}
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Set up the established renderer
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg fonts-noto-core unzip
+          python -m pip install -q numpy scipy pillow requests pypdf edge-tts playwright pymupdf
+          mkdir -p /tmp/syllabus/office /tmp/syllabus/voice
+          unzip -jo core/previews/postal-office-scene-assets.zip '*office*.jpg' -d /tmp/syllabus/office
+      - name: Record the hook with the locked Bhaiya voice
+        env:
+          K1: ${{ secrets.GEMINI_API_KEY4 }}
+          K2: ${{ secrets.GEMINI_API_KEY3 }}
+          K3: ${{ secrets.GEMINI_API_KEY2 }}
+          K4: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_TTS_MODEL: gemini-3.8-flash-tts
+          DEEP_FAST_QUOTA_FAIL: '1'
+        run: |
+          python oneoffs/postal_syllabus_hook_preview/record.py hook
+      - name: Render and check the three-second hook
+        env:
+          PYTHONPATH: core
+        run: |
+          python oneoffs/postal_syllabus_hook_preview/render_syllabus.py --office /tmp/syllabus/office --lines oneoffs/postal_syllabus_hook_preview/lines.json --audio /tmp/syllabus/voice --output /tmp/syllabus/Postal_Edge_Syllabus_Hook_3s.mp4 --part hook
+          test "$(ffprobe -v error -show_entries format=duration -of csv=p=0 /tmp/syllabus/Postal_Edge_Syllabus_Hook_3s.mp4)" = "3.000000"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Postal_Edge_Syllabus_Hook_3s
+          path: /tmp/syllabus/Postal_Edge_Syllabus_Hook_3s.mp4
+          if-no-files-found: error
+      - name: Record remaining lines for the local edit
+        env:
+          K1: ${{ secrets.GEMINI_API_KEY4 }}
+          K2: ${{ secrets.GEMINI_API_KEY3 }}
+          K3: ${{ secrets.GEMINI_API_KEY2 }}
+          K4: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_TTS_MODEL: gemini-3.8-flash-tts
+          DEEP_FAST_QUOTA_FAIL: '1'
+        run: |
+          python oneoffs/postal_syllabus_hook_preview/record.py body
+          ffmpeg -v error -y -f concat -safe 0 -i /tmp/syllabus/voice/concat.txt -c:a libopus -b:a 30k /tmp/syllabus/voice/body.opus
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Postal_Edge_Syllabus_Voice
+          path: /tmp/syllabus/voice
+          if-no-files-found: error
