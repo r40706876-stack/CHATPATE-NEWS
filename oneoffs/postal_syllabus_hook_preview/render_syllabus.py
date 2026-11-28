@@ -95,7 +95,7 @@ def scene(background, index, t, speaker, line, mouth):
     label(draw, 148, 121, "POSTAL EDGE", 25, RED)
     label(draw, 563, 121, "postaledge.in", 22, NAVY)
     box(draw, (148, 160, 572, 207), NAVY, 17)
-    label(draw, 360, 184, "GDS → MTS / Postman 2027", 26, "#fff1c2")
+    label(draw, 360, 184, "GDS to MTS / Postman 2027", 26, "#fff1c2")
     title, details = BOARDS[index]
     if index == 0:
         box(draw, (73, 252, 647, 493), CREAM, 25, "#edc8a9")
