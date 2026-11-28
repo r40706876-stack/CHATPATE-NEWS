@@ -20,16 +20,24 @@ jobs:
           path: core
           token: ${{ secrets.CORE_TOKEN }}
           persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          repository: r40706876-stack/postal-wala-core
+          ref: 135c9104ca85845e3c11254f8a08102faa86e51c
+          path: reference-assets
+          token: ${{ secrets.CORE_TOKEN }}
+          sparse-checkout: previews
+          persist-credentials: false
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
       - name: Set up the established renderer
         run: |
-          sudo apt-get update -qq
-          sudo apt-get install -y -qq ffmpeg fonts-noto-core unzip
+          command -v ffmpeg >/dev/null || (sudo apt-get update -qq && sudo apt-get install -y -qq ffmpeg)
+          test -f /usr/share/fonts/truetype/noto/NotoSans-Bold.ttf || (sudo apt-get update -qq && sudo apt-get install -y -qq fonts-noto-core)
           python -m pip install -q numpy scipy pillow requests pypdf edge-tts playwright pymupdf
           mkdir -p /tmp/syllabus/office /tmp/syllabus/voice
-          unzip -jo core/previews/postal-office-scene-assets.zip '*office*.jpg' -d /tmp/syllabus/office
+          unzip -jo reference-assets/previews/postal-office-scene-assets.zip '*office*.jpg' -d /tmp/syllabus/office
       - name: Record the hook with the locked Bhaiya voice
         env:
           K1: ${{ secrets.GEMINI_API_KEY4 }}
